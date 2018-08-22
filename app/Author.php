@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereYtchannel($value)
  * @mixin \Eloquent
+ * @property int|null $visits
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereVisits($value)
  */
 class Author extends Model
 {

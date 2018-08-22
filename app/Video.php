@@ -22,6 +22,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereUrl($value)
  * @mixin \Eloquent
+ * @property int|null $visits
+ * @property-read \App\Author|null $author
+ * @property-read \App\SongTranslation|null $songTranslation
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereVisits($value)
  */
 class Video extends Model
 {
@@ -54,7 +58,7 @@ class Video extends Model
     {
         if (empty($this->author_id) || empty($this->song_translation_id))
         {
-            return $this->url;
+            return "Video $this->id";
         }
         else
         {

@@ -17,6 +17,20 @@
             @endforeach
         </div>
         <div class="col-sm-4">
+            <script>
+                (function() {
+                    var cx = '007397572785069727063:fb8ec8z7fcu';
+                    var gcse = document.createElement('script');
+                    gcse.type = 'text/javascript';
+                    gcse.async = true;
+                    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(gcse, s);
+                })();
+            </script>
+            <gcse:search></gcse:search>
+
+
             <h3>Rejstřík</h3>
 
             <a class="btn btn-primary" style="width: 100%; margin-bottom:10px;" href="{{route('song.list')}}">Abecední
@@ -30,6 +44,8 @@
             <p>Překlady: <b>{{$translations}} <i class="fas fa-language"></i></b></p>
             <p>Autoři: <b>{{$authors}} <i class="fas fa-user"></i></b></p>
             <p>Videa: <b>{{$videos}} <i class="fas fa-video"></i></b></p>
+
+            <p>{{$lyrics_percentage}}% písní má přidaný text</p>
 
             {{--<a class="btn btn-primary" style="width: 100%; margin-bottom:10px;" href="{{route('author.list')}}">--}}
                 {{--Něco mi tu chybí!</a>--}}

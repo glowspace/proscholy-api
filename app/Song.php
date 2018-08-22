@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereVisible($value)
  * @mixin \Eloquent
+ * @property int|null $visits
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereVisits($value)
  */
 class Song extends Model
 {
@@ -59,5 +61,12 @@ class Song extends Model
         {
             return null;
         }
+    }
+
+    public function getLink()
+    {
+        $link = '<a href="' . route('song.single', ['id' => $this->id]) . '">' . $this->name . '</a>';
+
+        return $link;
     }
 }

@@ -36,6 +36,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongTranslation whereSongId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongTranslation whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $visits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[] $videos
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\SongTranslation whereVisits($value)
  */
 class SongTranslation extends Model
 {
