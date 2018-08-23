@@ -25,6 +25,7 @@ class CreateSongTranslationsTable extends Migration {
 			$table->integer('song_id')->nullable();
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();
+			$table->integer('visits')->nullable();
 			$table->timestamps();
 		});
 	}

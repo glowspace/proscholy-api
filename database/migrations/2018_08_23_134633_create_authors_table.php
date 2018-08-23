@@ -15,14 +15,15 @@ class CreateAuthorsTable extends Migration {
 		Schema::create('authors', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('type')->nullable();
+			$table->string('name', 191)->nullable();
 			$table->string('url', 191)->nullable();
 			$table->string('ytchannel', 191)->nullable();
-			$table->text('descpription', 65535)->nullable();
+			$table->text('description', 65535)->nullable();
 			$table->string('email', 191)->nullable();
 			$table->text('password', 65535)->nullable();
-			$table->string('name', 191)->nullable();
-            $table->timestamps();
+			$table->integer('type')->nullable()->default(0);
+			$table->integer('visits')->nullable()->default(0);
+			$table->timestamps();
 		});
 	}
 

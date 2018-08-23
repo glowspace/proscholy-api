@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAudioTable extends Migration {
+class CreateAuthorSongTranslationTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,11 @@ class CreateAudioTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('audio', function(Blueprint $table)
+		Schema::create('author_song_translation', function(Blueprint $table)
 		{
-			$table->integer('type')->nullable();
+			$table->integer('id', true);
+			$table->integer('author_id')->nullable();
 			$table->integer('song_translation_id')->nullable();
-			$table->integer('licence_type')->nullable();
-			$table->text('licence_content', 65535)->nullable();
-            $table->timestamps();
 		});
 	}
 
@@ -30,7 +28,7 @@ class CreateAudioTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('audio');
+		Schema::drop('author_song_translation');
 	}
 
 }

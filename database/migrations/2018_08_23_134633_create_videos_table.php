@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAuthorMembershipTable extends Migration {
+class CreateVideosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,15 @@ class CreateAuthorMembershipTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('author_membership', function(Blueprint $table)
+		Schema::create('videos', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('is_member_of')->nullable();
 			$table->integer('author_id')->nullable();
-            $table->timestamps();
+			$table->integer('song_translation_id')->nullable();
+			$table->integer('type')->nullable();
+			$table->integer('visits')->nullable();
+			$table->text('url', 65535)->nullable();
+			$table->timestamps();
 		});
 	}
 
@@ -29,7 +32,7 @@ class CreateAuthorMembershipTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('author_membership');
+		Schema::drop('videos');
 	}
 
 }

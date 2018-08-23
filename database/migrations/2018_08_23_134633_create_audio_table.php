@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateVideosTable extends Migration {
+class CreateAudioTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,13 @@ class CreateVideosTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('videos', function(Blueprint $table)
+		Schema::create('audio', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('author_id')->nullable();
-			$table->text('url', 65535)->nullable();
 			$table->integer('type')->nullable();
-            $table->timestamps();
+			$table->integer('song_translation_id')->nullable();
+			$table->integer('licence_type')->nullable();
+			$table->text('licence_content', 65535)->nullable();
+			$table->timestamps();
 		});
 	}
 
@@ -30,7 +30,7 @@ class CreateVideosTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('videos');
+		Schema::drop('audio');
 	}
 
 }
