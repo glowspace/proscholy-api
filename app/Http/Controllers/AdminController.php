@@ -23,24 +23,23 @@ class AdminController extends Controller
     public function renderTodo()
     {
         return view('admin.todo', [
-            'videos'                        => Video::all()->where('author_id', '')->concat(Video::all()
-                ->where('song_translation_id', ''))->shuffle(),
+            'videos'                        => Video::where('author_id', '')->orWhere('song_translation_id', '')->get()->shuffle(),
+            // DANGEROUS TYPE MIXING
             'songs_w_author'                => Song::whereDoesntHave('authors')->get()->concat(SongTranslation::whereDoesntHave
             ('authors')->get()->where('is_original', '0'))->shuffle(),
-            'songbook_record_w_translation' => SongbookRecord::all()->where('song_translation_id', ''),
-            'song_translations_w_lyrics'    => SongTranslation::all()->where('lyrics', ''),
+            'songbook_record_w_translation' => SongbookRecord::where('song_translation_id', '')->get(),
+            'song_translations_w_lyrics'    => SongTranslation::where('lyrics', '')->get(),
         ]);
     }
 
     public function renderTodoRandom()
     {
-        $videos_w_author = Video::all()->where('author_id', '')->concat(Video::all()
-            ->where('song_translation_id', ''));
+        $videos_w_author = Video::where('author_id', '')->orWhere('song_translation_id', '')->get();
         $songs_w_author  = Song::whereDoesntHave('authors')->get()->concat(SongTranslation::whereDoesntHave
         ('authors')->get()->where('is_original', '0'))->shuffle();
 
-        $songbook_record_w_translation = SongbookRecord::all()->where('song_translation_id', '');
-        $song_translations_w_lyrics    = SongTranslation::all()->where('lyrics', '')->shuffle();
+        $songbook_record_w_translation = SongbookRecord::where('song_translation_id', '')->get();
+        $song_translations_w_lyrics    = SongTranslation::where('lyrics', '')->get()->shuffle();
 
         if (
             $videos_w_author->count() == 0 && $songs_w_author->count() == 0 && $songbook_record_w_translation->count() == 0
@@ -116,22 +115,22 @@ class AdminController extends Controller
         $song->approved = 0;
         $song->save();
 
-        $translation                = new SongTranslation();
-        $translation->name          = $request['name'];
-        $translation->song_id       = $song->id;
-        $translation->is_authorized = 1;
-        $translation->is_original   = 1;
-        $translation->save();
-
-        if ( ! empty($request['translation_name']))
-        {
             $translation                = new SongTranslation();
-            $translation->name          = $request['translation_name'];
+            $translation->name          = $request['name'];
             $translation->song_id       = $song->id;
-            $translation->is_authorized = 0;
-            $translation->is_original   = 0;
+            $translation->is_authorized = 1;
+            $translation->is_original   = 1;
             $translation->save();
-        }
+
+            if ( ! empty($request['translation_name']))
+            {
+                $translation                = new SongTranslation();
+                $translation->name          = $request['translation_name'];
+                $translation->song_id       = $song->id;
+                $translation->is_authorized = 0;
+                $translation->is_original   = 0;
+                $translation->save();
+            }
 
         return redirect()->route('admin.song.new');
     }
@@ -209,7 +208,7 @@ class AdminController extends Controller
     {
         return view('admin.videos', [
             'videos' => Video::all(),
-            'todo'   => Video::all()->where('author_id', '')->concat(Video::all()->where('song_translation_id', '')),
+            'todo'   => Video::where('author_id', '')->orWhere('song_translation_id', '')->get(),
         ]);
     }
 
@@ -285,7 +284,7 @@ class AdminController extends Controller
 
     private function checkIfVideoExists($url)
     {
-        $videos = Video::all()->where('url', $url)->count();
+        $videos = Video::where('url', $url)->count();
 
         if ($videos > 0)
         {

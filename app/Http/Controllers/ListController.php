@@ -11,7 +11,7 @@ class ListController extends Controller
     public function renderSongListAlphabetical()
     {
         $songs        = Song::all();
-        $translations = SongTranslation::all()->where('is_original',0);
+        $translations = SongTranslation::where('is_original',0)->get();
 
         $list = $songs->concat($translations)->sortBy('name');
 
@@ -23,7 +23,7 @@ class ListController extends Controller
     public function renderAuthorListAlphabetical()
     {
         return view('author_list', [
-            'authors' => Author::all()->sortBy('name'),
+            'authors' => Author::orderBy('name')->get(),
         ]);
     }
 }

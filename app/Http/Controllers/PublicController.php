@@ -13,6 +13,8 @@ class PublicController extends Controller
     {
         // Top songs
         $songs        = Song::all();
+        
+        // DANGEROUS TUPE MIXING
         $translations = SongTranslation::where('is_original', 0)->get();
         $list         = $songs->concat($translations);
         $top_songs    = $list->sortByDesc('visits')->take(15);
@@ -28,9 +30,7 @@ class PublicController extends Controller
 
 
         // Top authors
-
-        // TODO: refactor to use eloquent instead of array manipulation
-        $top_authors = Author::all()->sortByDesc('visits')->take(15);
+        $top_authors = Author::orderBy('visits', 'desc')->take(15)->get();
 
         return view('home', [
             'songs_count'             => Song::count(),

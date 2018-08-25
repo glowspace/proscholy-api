@@ -11,7 +11,7 @@ class SongbookController extends Controller
     {
         return view('songbook', [
             'songbook' => Songbook::findOrFail($id),
-            'records'  => SongbookRecord::all()->where('songbook_id', $id),
+            'records'  => SongbookRecord::where('songbook_id', $id)->get(),
         ]);
     }
 }

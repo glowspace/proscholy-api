@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
     <div class="row">
         <div class="col-sm-4">
             <h4>Nejnavštěvovanější písně</h4>
