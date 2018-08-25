@@ -17,8 +17,14 @@ class PublicController extends Controller
         $list         = $songs->concat($translations);
         $top_songs    = $list->sortByDesc('visits')->take(15);
 
-        $lyrics_percentage = SongTranslation::where('lyrics', '!=', '')->count() / SongTranslation::all()->count() * 100;
-        $lyrics_percentage = floor($lyrics_percentage);
+        $translations_count = SongTranslation::count();
+
+        if ($translations_count) {
+            $lyrics_percentage = SongTranslation::where('lyrics', '!=', '')->count() / $translations_count * 100;
+            $lyrics_percentage = floor($lyrics_percentage);
+        } else {
+            $lyrics_percentage = 0;
+        }
 
 
         // Top authors
