@@ -31,10 +31,10 @@ class PublicController extends Controller
         $top_authors = Author::all()->sortByDesc('visits')->take(15);
 
         return view('home', [
-            'songs'             => Song::all()->count(),
+            'songs'             => Song::count(),
             'translations'      => SongTranslation::all()->where('is_original', 0)->count(),
-            'authors'           => Author::all()->count(),
-            'videos'            => Video::all()->count(),
+            'authors'           => Author::count(),
+            'videos'            => Video::count(),
             'lyrics_percentage' => $lyrics_percentage,
             'top_songs'         => $top_songs,
             'top_authors'       => $top_authors,
