@@ -13,7 +13,7 @@ class PublicController extends Controller
     {
         // Top songs
         $songs        = Song::all();
-        $translations = SongTranslation::all()->where('is_original', 0);
+        $translations = SongTranslation::where('is_original', 0)->get();
         $list         = $songs->concat($translations);
         $top_songs    = $list->sortByDesc('visits')->take(15);
 
@@ -32,7 +32,7 @@ class PublicController extends Controller
 
         return view('home', [
             'songs'             => Song::count(),
-            'translations'      => SongTranslation::all()->where('is_original', 0)->count(),
+            'translations'      => SongTranslation::where('is_original', 0)->count(),
             'authors'           => Author::count(),
             'videos'            => Video::count(),
             'lyrics_percentage' => $lyrics_percentage,
