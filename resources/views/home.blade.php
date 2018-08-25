@@ -40,10 +40,10 @@
 
             <h4>Zpěvník v počtech</h4>
 
-            <p>Písně: <b>{{$songs}} <i class="fas fa-music"></i></b></p>
-            <p>Překlady: <b>{{$translations}} <i class="fas fa-language"></i></b></p>
-            <p>Autoři: <b>{{$authors}} <i class="fas fa-user"></i></b></p>
-            <p>Videa: <b>{{$videos}} <i class="fas fa-video"></i></b></p>
+            <p>Písně: <b>{{$songs_count}} <i class="fas fa-music"></i></b></p>
+            <p>Překlady: <b>{{$translations_count}} <i class="fas fa-language"></i></b></p>
+            <p>Autoři: <b>{{$authors_count}} <i class="fas fa-user"></i></b></p>
+            <p>Videa: <b>{{$videos_count}} <i class="fas fa-video"></i></b></p>
 
             <p>{{$lyrics_percentage}}% písní má přidaný text</p>
 

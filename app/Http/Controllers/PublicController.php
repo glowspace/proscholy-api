@@ -28,13 +28,15 @@ class PublicController extends Controller
 
 
         // Top authors
+
+        // TODO: refactor to use eloquent instead of array manipulation
         $top_authors = Author::all()->sortByDesc('visits')->take(15);
 
         return view('home', [
-            'songs'             => Song::count(),
-            'translations'      => SongTranslation::where('is_original', 0)->count(),
-            'authors'           => Author::count(),
-            'videos'            => Video::count(),
+            'songs_count'             => Song::count(),
+            'translations_count'      => SongTranslation::where('is_original', 0)->count(),
+            'authors_count'           => Author::count(),
+            'videos_count'            => Video::count(),
             'lyrics_percentage' => $lyrics_percentage,
             'top_songs'         => $top_songs,
             'top_authors'       => $top_authors,
