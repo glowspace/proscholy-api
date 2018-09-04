@@ -21,6 +21,7 @@ class CreateSongLyricssTable extends Migration {
 			$table->text('description', 65535)->nullable();
 			$table->text('lyrics', 65535)->nullable();
 			$table->boolean('is_opensong')->nullable();
+			// TODO: some lang code instead of id
 			$table->integer('lang_id')->nullable();
 			$table->integer('song_id')->nullable();
 			$table->integer('licence_type')->nullable();
