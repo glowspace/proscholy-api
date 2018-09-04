@@ -15,13 +15,14 @@ class CreateAuthorsTable extends Migration {
 		Schema::create('authors', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name', 191)->nullable();
+			$table->string('name', 191);
 			$table->string('email', 191)->nullable();
 			// TODO: generate url from something later
 			$table->string('url', 191)->nullable();
 			// TODO: one to many author links
-			$table->string('ytchannel', 191)->nullable();
-			$table->text('description', 65535)->nullable();
+			$table->string('ytchannel', 191);
+			$table->text('description', 65535);
+			// ?? rather to bind with an existing user account
 			$table->text('password', 65535)->nullable();
 			// TODO: rather string type..? enum..?
 			$table->integer('type')->nullable()->default(0);
