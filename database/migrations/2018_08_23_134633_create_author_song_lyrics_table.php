@@ -16,10 +16,19 @@ class CreateAuthorSongLyricsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->unsignedInteger('author_id');
-			$table->unsignedInteger('song_lyrics_id');
+			$table->unsignedInteger('song_lyric_id');
 
 			// types: lyrics, music, lyrics_translation, ...
 			$table->string('type', 191);
+		});
+
+
+		Schema::table('author_song_lyrics', function(Blueprint $table)
+		{
+			$table->foreign('author_id')->references('id')->on('authors')
+				->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('song_lyric_id')->references('id')->on('song_lyrics')
+                ->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 
@@ -33,5 +42,4 @@ class CreateAuthorSongLyricsTable extends Migration {
 	{
 		Schema::drop('author_song_lyrics');
 	}
-
 }

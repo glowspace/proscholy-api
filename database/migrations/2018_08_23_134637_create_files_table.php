@@ -16,14 +16,23 @@ class CreateFilesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('filename', 191);
-			$table->unsignedInteger('song_lyric_id');
-			$table->unsignedInteger('author_id');
+			$table->unsignedInteger('song_lyric_id')->nullable();
+			$table->unsignedInteger('author_id')->nullable();
 
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();
 
 			$table->string('decription', 191);
 			$table->timestamps();
+		});
+
+		Schema::table('files', function(Blueprint $table)
+		{
+			$table->foreign('song_lyric_id')->references('id')->on('song_lyrics')
+				->onUpdate('cascade')->onDelete('set null');
+
+			$table->foreign('author_id')->references('id')->on('authors')
+				->onUpdate('cascade')->onDelete('set null');
 		});
 	}
 

@@ -18,6 +18,15 @@ class CreateAuthorMembershipTable extends Migration {
 			$table->unsignedInteger('is_member_of');
 			$table->unsignedInteger('author_id');
 		});
+
+		Schema::table('author_membership', function(Blueprint $table)
+		{
+			$table->foreign('is_member_of')->references('id')->on('authors')
+				->onUpdate('cascade')->onDelete('cascade');
+
+			$table->foreign('author_id')->references('id')->on('authors')
+				->onUpdate('cascade')->onDelete('cascade');
+		});
 	}
 
 
