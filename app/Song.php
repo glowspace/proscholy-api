@@ -23,35 +23,36 @@ class Song extends Model
 {
     public function authors()
     {
-        return $this->belongsToMany(Author::class);
+        // TODO: return all authors of the SongLyrics combined ... but rather not necessary
+        Log::error("get authors not implemented");
     }
 
     /**
-     * Vrátí všechny překlady kromě originálu.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Returns all SongLyrics instances
      */
-    public function translations()
+    public function song_lyrics()
     {
-        $collection = $this->hasMany(SongLyric::class);
-        $collection->where('is_original', 0);
+        return $this->hasMany(SongLyric::class);
+    }
 
-        return $collection;
+    public function getOriginalSongLyricAttribute()
+    {
+        return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }
 
 
-    public function getOriginalTranslation()
-    {
-        $count = $this->hasMany(SongLyric::class)->where('is_original', 1)->count();
-        if ($count > 0)
-        {
-            return $this->hasMany(SongLyric::class)->where('is_original', 1)->first();
-        }
-        else
-        {
-            return null;
-        }
-    }
+    // // public function getOriginalTranslation()
+    // // {
+    // //     $count = $this->hasMany(SongLyric::class)->where('is_original', 1)->count();
+    // //     if ($count > 0)
+    // //     {
+    // //         return $this->hasMany(SongLyric::class)->where('is_original', 1)->first();
+    // //     }
+    // //     else
+    // //     {
+    // //         return null;
+    // //     }
+    // // }
 
     // TODO: return only plain link, not an html element
     public function getLink()

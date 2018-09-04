@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $isMemberOf
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $members
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Song[]            $songs
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[]           $videos
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereDescription($value)
@@ -38,11 +37,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model
 {
-    public function songs()
-    {
-        return $this->belongsToMany(Song::class);
-    }
-
     public function songLyrics()
     {
         return $this->belongsToMany(SongLyric::class);

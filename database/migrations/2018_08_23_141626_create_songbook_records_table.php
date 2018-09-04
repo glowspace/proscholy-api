@@ -16,7 +16,7 @@ class CreateSongbookRecordsTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('songbook_id')->nullable();
-			$table->integer('song_translation_id')->nullable();
+			$table->integer('song_lyric_id')->nullable();
 			$table->string('number', 20)->nullable();
 			$table->string('placeholder', 191)->nullable();
 			$table->timestamp('updated_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));

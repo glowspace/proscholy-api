@@ -17,6 +17,8 @@ class CreateAuthorSongLyricsTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('author_id')->nullable();
 			$table->integer('song_lyrics_id')->nullable();
+
+			// types: lyrics, music, lyrics_translation, ...
 			$table->string('type', 191)->nullable();
 		});
 	}
