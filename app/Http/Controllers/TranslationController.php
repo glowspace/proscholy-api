@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\SongTranslation;
+use App\SongLyric;
 
 class TranslationController extends Controller
 {
     public function renderTranslation($id)
     {
-        $translation         = SongTranslation::findOrFail($id);
+        $translation         = SongLyric::findOrFail($id);
         $translation->visits = $translation->visits + 1;
         $translation->save();
 

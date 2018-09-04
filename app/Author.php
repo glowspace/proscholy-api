@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon|null                                                  $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $isMemberOf
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $members
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongTranslation[] $songTranslations
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Song[]            $songs
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[]           $videos
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereCreatedAt($value)
@@ -43,9 +43,9 @@ class Author extends Model
         return $this->belongsToMany(Song::class);
     }
 
-    public function songTranslations()
+    public function songLyrics()
     {
-        return $this->belongsToMany(SongTranslation::class);
+        return $this->belongsToMany(SongLyric::class);
     }
 
     public function members()

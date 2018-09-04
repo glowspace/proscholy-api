@@ -52,9 +52,9 @@
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <b>Písně s chybějícím textem</b>
-                    <span class="badge badge-warning badge-pill">{{$song_translations_w_lyrics->count()}}</span>
+                    <span class="badge badge-warning badge-pill">{{$song_lyrics_w_lyrics->count()}}</span>
                 </li>
-                @foreach($song_translations_w_lyrics as $translation)
+                @foreach($song_lyrics_w_lyrics as $translation)
                     <li class="list-group-item">
                         <a href="{{route('admin.dashboard',['id'=>$translation->id])}}">{{$translation->name}}</a>
                     </li>

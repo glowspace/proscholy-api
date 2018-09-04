@@ -16,7 +16,7 @@ class CreateVideosTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('author_id')->nullable();
-			$table->integer('song_translation_id')->nullable();
+			$table->integer('song_lyric_id')->nullable();
 			$table->integer('type')->nullable();
 			$table->integer('visits')->nullable();
 			$table->text('url', 65535)->nullable();

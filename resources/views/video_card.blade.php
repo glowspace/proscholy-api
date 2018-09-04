@@ -1,8 +1,8 @@
 <div class="card" style="margin-bottom: 1em;">
     <div class="card-header">
         <i style="color: #db0e0e;" class="fab fa-youtube"></i>
-        @if(isset($video->author_id) and isset($video->song_translation_id))
-            {!! $video->author->getLink() !!} - {!! $video->songTranslation->getLink() !!}
+        @if(isset($video->author_id) and isset($video->song_lyric_id))
+            {!! $video->author->getLink() !!} - {!! $video->songLyric->getLink() !!}
         @endif
     </div>
 

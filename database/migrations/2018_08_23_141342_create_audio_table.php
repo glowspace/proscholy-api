@@ -15,7 +15,7 @@ class CreateAudioTable extends Migration {
 		Schema::create('audio', function(Blueprint $table)
 		{
 			$table->integer('type')->nullable();
-			$table->integer('song_translation_id')->nullable();
+			$table->integer('song_lyric_id')->nullable();
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();
 			$table->timestamps();

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Song;
-use App\SongTranslation;
+use App\SongLyric;
 use Illuminate\Http\Request;
 
 class SongController extends Controller

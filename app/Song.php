@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon|null                                                  $created_at
  * @property \Carbon\Carbon|null                                                  $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $authors
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongTranslation[] $translations
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $translations
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereApproved($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereId($value)
@@ -43,7 +43,7 @@ class Song extends Model
      */
     public function translations()
     {
-        $collection = $this->hasMany(SongTranslation::class);
+        $collection = $this->hasMany(SongLyric::class);
         $collection->where('is_original', 0);
 
         return $collection;
@@ -52,10 +52,10 @@ class Song extends Model
 
     public function getOriginalTranslation()
     {
-        $count = $this->hasMany(SongTranslation::class)->where('is_original', 1)->count();
+        $count = $this->hasMany(SongLyric::class)->where('is_original', 1)->count();
         if ($count > 0)
         {
-            return $this->hasMany(SongTranslation::class)->where('is_original', 1)->first();
+            return $this->hasMany(SongLyric::class)->where('is_original', 1)->first();
         }
         else
         {

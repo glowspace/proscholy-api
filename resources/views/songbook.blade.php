@@ -12,8 +12,8 @@
                     <a>{{$record->number}}</a>
                 </td>
                 <td>
-                    @if(isset($record->songTranslation))
-                        {!! $record->songTranslation->getLink() !!}
+                    @if(isset($record->songLyric))
+                        {!! $record->songLyric->getLink() !!}
                     @elseif(isset($record->placeholder))
                        {{$record->placeholder}}
                     @else

@@ -50,10 +50,10 @@
     @endif
 
 
-    @if($author->songTranslations->count() > 0)
+    @if($author->songLyrics->count() > 0)
         Překlady<br>
 
-        @foreach($author->songTranslations as $translation)
+        @foreach($author->songLyrics as $translation)
             <a href="{{route('translation.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
             (<a href="{{route('song.single',['id'=>$translation->id])}}">{{$translation->song->name}}</a>)<br>
         @endforeach

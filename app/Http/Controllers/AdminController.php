@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Author;
 use App\Song;
 use App\SongbookRecord;
-use App\SongTranslation;
+use App\SongLyric;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -23,27 +23,27 @@ class AdminController extends Controller
     public function renderTodo()
     {
         return view('admin.todo', [
-            'videos'                        => Video::where('author_id', '')->orWhere('song_translation_id', '')->get()->shuffle(),
+            'videos'                        => Video::where('author_id', '')->orWhere('song_lyric_id', '')->get()->shuffle(),
             // DANGEROUS TYPE MIXING
-            'songs_w_author'                => Song::whereDoesntHave('authors')->get()->concat(SongTranslation::whereDoesntHave
+            'songs_w_author'                => Song::whereDoesntHave('authors')->get()->concat(SongLyric::whereDoesntHave
             ('authors')->get()->where('is_original', '0'))->shuffle(),
-            'songbook_record_w_translation' => SongbookRecord::where('song_translation_id', '')->get(),
-            'song_translations_w_lyrics'    => SongTranslation::where('lyrics', '')->get(),
+            'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
+            'song_lyrics_w_lyrics'    => SongLyric::where('lyrics', '')->get(),
         ]);
     }
 
     public function renderTodoRandom()
     {
-        $videos_w_author = Video::where('author_id', '')->orWhere('song_translation_id', '')->get();
-        $songs_w_author  = Song::whereDoesntHave('authors')->get()->concat(SongTranslation::whereDoesntHave
+        $videos_w_author = Video::where('author_id', '')->orWhere('song_lyric_id', '')->get();
+        $songs_w_author  = Song::whereDoesntHave('authors')->get()->concat(SongLyric::whereDoesntHave
         ('authors')->get()->where('is_original', '0'))->shuffle();
 
-        $songbook_record_w_translation = SongbookRecord::where('song_translation_id', '')->get();
-        $song_translations_w_lyrics    = SongTranslation::where('lyrics', '')->get()->shuffle();
+        $songbook_record_w_translation = SongbookRecord::where('song_lyric_id', '')->get();
+        $song_lyrics_w_lyrics    = SongLyric::where('lyrics', '')->get()->shuffle();
 
         if (
             $videos_w_author->count() == 0 && $songs_w_author->count() == 0 && $songbook_record_w_translation->count() == 0
-            && $song_translations_w_lyrics->count() == 0
+            && $song_lyrics_w_lyrics->count() == 0
         )
         {
             return redirect()->route('admin.todo');
@@ -74,18 +74,18 @@ class AdminController extends Controller
 
             return view('admin.todo_editors.songbook_record_w_translation', [
                 'record'       => $songbook_record_w_translation->first(),
-                'translations' => SongTranslation::all(),
+                'translations' => SongLyric::all(),
             ]);
         }
         elseif ($rand == 4)
         {
             // Pokud už žádný není - hurá, vyhledáme něco jinýho.
-            if ($song_translations_w_lyrics->count() == 0)
+            if ($song_lyrics_w_lyrics->count() == 0)
             {
                 return redirect()->route('admin.todo.random');
             }
 
-            return view('admin.todo_editors.translation_w_lyrics', ['translation' => $song_translations_w_lyrics->first()]);
+            return view('admin.todo_editors.translation_w_lyrics', ['translation' => $song_lyrics_w_lyrics->first()]);
         }
         else
         {
@@ -115,21 +115,21 @@ class AdminController extends Controller
         $song->approved = 0;
         $song->save();
 
-            $translation                = new SongTranslation();
-            $translation->name          = $request['name'];
-            $translation->song_id       = $song->id;
-            $translation->is_authorized = 1;
-            $translation->is_original   = 1;
-            $translation->save();
+            $lyric                = new SongLyric();
+            $lyric->name          = $request['name'];
+            $lyric->song_id       = $song->id;
+            $lyric->is_authorized = 1;
+            $lyric->is_original   = 1;
+            $lyric->save();
 
-            if ( ! empty($request['translation_name']))
+            if ( ! empty($request['lyric_name']))
             {
-                $translation                = new SongTranslation();
-                $translation->name          = $request['translation_name'];
-                $translation->song_id       = $song->id;
-                $translation->is_authorized = 0;
-                $translation->is_original   = 0;
-                $translation->save();
+                $lyric                = new SongLyric();
+                $lyric->name          = $request['lyric_name'];
+                $lyric->song_id       = $song->id;
+                $lyric->is_authorized = 0;
+                $lyric->is_original   = 0;
+                $lyric->save();
             }
 
         return redirect()->route('admin.song.new');
@@ -179,22 +179,22 @@ class AdminController extends Controller
             $author->type   = 0;
             $author->save();
 
-            $translation = SongTranslation::findOrFail($translation_id);
-            $translation->authors()->attach([$author->id]);
+            $lyric = SongLyric::findOrFail($lyric_id);
+            $lyric->authors()->attach([$author->id]);
         }
         else
         {
-            $translation = SongTranslation::findOrFail($translation_id);
-            $translation->authors()->attach([$author_id]);
+            $lyric = SongLyric::findOrFail($lyric_id);
+            $lyric->authors()->attach([$author_id]);
         }
 
         return redirect()->route('admin.todo.random');
     }
 
-    public function setSongbookRecordTranslation($record_id, $translation_id)
+    public function setSongbookRecordLyric($record_id, $lyric_id)
     {
         $record                      = SongbookRecord::findOrFail($record_id);
-        $record->song_translation_id = $translation_id;
+        $record->song_lyric_id = $translation_id;
         $record->save();
 
         return redirect()->route('admin.todo.random');
@@ -208,7 +208,7 @@ class AdminController extends Controller
     {
         return view('admin.videos', [
             'videos' => Video::all(),
-            'todo'   => Video::where('author_id', '')->orWhere('song_translation_id', '')->get(),
+            'todo'   => Video::where('author_id', '')->orWhere('song_lyric_id', '')->get(),
         ]);
     }
 
@@ -269,14 +269,14 @@ class AdminController extends Controller
     {
         return view('admin.video_translation', [
             'video'        => Video::findOrFail($id),
-            'translations' => SongTranslation::all(),
+            'translations' => SongLyric::all(),
         ]);
     }
 
     public function storeVideoEditTranslation($video_id, $translation_id)
     {
         $video                      = Video::findOrFail($video_id);
-        $video->song_translation_id = $translation_id;
+        $video->song_lyric_id = $translation_id;
         $video->save();
 
         return redirect()->route('admin.video.edit.translation', ['id' => $video_id]);
