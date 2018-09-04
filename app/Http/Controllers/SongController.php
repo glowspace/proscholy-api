@@ -12,8 +12,8 @@ class SongController extends Controller
     public function renderSong($id)
     {
         $song         = Song::findOrFail($id);
-        $song->visits = $song->visits + 1;
-        $song->save();
+        //// $song->visits = $song->visits + 1;
+        //// $song->save();
 
         if($song->authors()->count() > 0)
         {
@@ -27,6 +27,7 @@ class SongController extends Controller
 
         return view('song', [
             'song' => $song,
+            // TODO: refactor variable names
             'page_title'  => $song->name,
         ]);
     }
