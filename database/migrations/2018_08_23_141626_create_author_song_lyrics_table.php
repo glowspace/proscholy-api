@@ -14,7 +14,7 @@ class CreateAuthorSongLyricsTable extends Migration {
 	{
 		Schema::create('author_song_lyrics', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id', true);
 			$table->integer('author_id')->nullable();
 			$table->integer('song_lyrics_id')->nullable();
 

@@ -14,7 +14,7 @@ class CreateAuthorMembershipTable extends Migration {
 	{
 		Schema::create('author_membership', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('is_member_of')->nullable();
 			$table->integer('author_id')->nullable();
 			$table->timestamps();

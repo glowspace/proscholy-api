@@ -14,7 +14,7 @@ class CreateAuthorsTable extends Migration {
 	{
 		Schema::create('authors', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id', true);
 			$table->string('name', 191)->nullable();
 			$table->string('email', 191)->nullable();
 			// TODO: generate url from something later

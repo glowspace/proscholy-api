@@ -14,7 +14,7 @@ class CreateSongsTable extends Migration {
 	{
 		Schema::create('songs', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->string('name', 191)->nullable();
 
 			// fields below should be only at SongLyrics

@@ -14,6 +14,7 @@ class CreateFilesTable extends Migration {
 	{
 		Schema::create('files', function(Blueprint $table)
 		{
+			$table->increments('id');
 			$table->string('filename', 191)->nullable();
 			$table->integer('song_lyric_id')->nullable();
 			$table->integer('author_id')->nullable();
