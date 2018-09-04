@@ -17,13 +17,13 @@ class CreateAuthorsTable extends Migration {
 			$table->integer('id', true);
 			$table->string('name', 191)->nullable();
 			$table->string('email', 191)->nullable();
-			// TODO: generate url from nickname
+			// TODO: generate url from something later
 			$table->string('url', 191)->nullable();
 			// TODO: one to many author links
 			$table->string('ytchannel', 191)->nullable();
 			$table->text('description', 65535)->nullable();
 			$table->text('password', 65535)->nullable();
-			// TODO: rather string type..? another table for types?
+			// TODO: rather string type..? enum..?
 			$table->integer('type')->nullable()->default(0);
 			$table->integer('visits')->nullable()->default(0);
 			$table->timestamps();

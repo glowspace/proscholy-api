@@ -15,19 +15,28 @@ class CreateSongLyricssTable extends Migration {
 		Schema::create('song_lyrics', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('name', 191)->nullable();
-			$table->boolean('is_authorized')->nullable();
-			$table->boolean('is_original')->nullable();
-			$table->text('description', 65535)->nullable();
-			$table->text('lyrics', 65535)->nullable();
-			$table->boolean('is_opensong')->nullable();
-			// TODO: some lang code instead of id
-			$table->integer('lang_id')->nullable();
-			$table->integer('song_id')->nullable();
+			$table->string('name', 191);
+			$table->unsignedInteger('song_id');
+
+			$table->longtext('lyrics');
+			$table->longtext('description');
+
+			$table->boolean('is_authorized');
+			$table->boolean('is_original');
+			$table->boolean('is_opensong');
+
+			$table->string('lang', 191);
+
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();
 			$table->integer('visits')->nullable();
 			$table->timestamps();
+		});
+
+		Schema::table('song_lyrics', function(Blueprint $table)
+		{
+			$table->foreign('song_id')->references('id')->on('songs')
+                ->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 
