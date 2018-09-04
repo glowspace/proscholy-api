@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAuthorSongLyricsTable extends Migration {
+class CreateAuthorSongLyricTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateAuthorSongLyricsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('author_song_lyrics', function(Blueprint $table)
+		Schema::create('author_song_lyric', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->unsignedInteger('author_id');
@@ -23,7 +23,7 @@ class CreateAuthorSongLyricsTable extends Migration {
 		});
 
 
-		Schema::table('author_song_lyrics', function(Blueprint $table)
+		Schema::table('author_song_lyric', function(Blueprint $table)
 		{
 			$table->foreign('author_id')->references('id')->on('authors')
 				->onUpdate('cascade')->onDelete('cascade');
@@ -40,6 +40,6 @@ class CreateAuthorSongLyricsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('author_song_lyrics');
+		Schema::drop('author_song_lyric');
 	}
 }
