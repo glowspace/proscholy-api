@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model
 {
-    public function songLyrics()
+    public function song_lyrics()
     {
         return $this->belongsToMany(SongLyric::class);
     }
@@ -50,7 +50,7 @@ class Author extends Model
             'author_id');
     }
 
-    public function isMemberOf()
+    public function memberships()
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -63,6 +63,7 @@ class Author extends Model
         return $this->hasMany(Video::class);
     }
 
+    // TODO
     public function getLink()
     {
         return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';
