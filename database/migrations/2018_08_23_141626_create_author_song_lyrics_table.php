@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAuthorSongTranslationTable extends Migration {
+class CreateAuthorSongLyricsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateAuthorSongTranslationTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('author_song_translation', function(Blueprint $table)
+		Schema::create('author_song_lyrics', function(Blueprint $table)
 		{
 			$table->integer('id', true);
 			$table->integer('author_id')->nullable();
-			$table->integer('song_translation_id')->nullable();
+			$table->integer('song_lyrics_id')->nullable();
+			$table->string('type', 191)->nullable();
 		});
 	}
 
@@ -28,7 +29,7 @@ class CreateAuthorSongTranslationTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('author_song_translation');
+		Schema::drop('author_song_lyrics');
 	}
 
 }
