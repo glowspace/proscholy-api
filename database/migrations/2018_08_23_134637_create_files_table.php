@@ -15,12 +15,14 @@ class CreateFilesTable extends Migration {
 		Schema::create('files', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('filename', 191)->nullable();
-			$table->integer('song_lyric_id')->nullable();
-			$table->integer('author_id')->nullable();
+			$table->string('filename', 191);
+			$table->unsignedInteger('song_lyric_id');
+			$table->unsignedInteger('author_id');
+
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();
-			$table->string('decription', 191)->nullable();
+
+			$table->string('decription', 191);
 			$table->timestamps();
 		});
 	}

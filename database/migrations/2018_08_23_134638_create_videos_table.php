@@ -15,10 +15,10 @@ class CreateVideosTable extends Migration {
 		Schema::create('videos', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('author_id')->nullable();
-			$table->integer('song_lyric_id')->nullable();
-			$table->integer('type')->nullable();
-			$table->integer('visits')->nullable();
+			$table->unsignedInteger('author_id')->nullable();
+			$table->unsignedInteger('song_lyric_id')->nullable();
+			$table->integer('type');
+			$table->integer('visits');
 			$table->text('url', 65535)->nullable();
 			$table->timestamps();
 		});

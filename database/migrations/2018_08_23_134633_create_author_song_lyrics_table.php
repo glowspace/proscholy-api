@@ -15,11 +15,11 @@ class CreateAuthorSongLyricsTable extends Migration {
 		Schema::create('author_song_lyrics', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('author_id')->nullable();
-			$table->integer('song_lyrics_id')->nullable();
+			$table->unsignedInteger('author_id');
+			$table->unsignedInteger('song_lyrics_id');
 
 			// types: lyrics, music, lyrics_translation, ...
-			$table->string('type', 191)->nullable();
+			$table->string('type', 191);
 		});
 	}
 
