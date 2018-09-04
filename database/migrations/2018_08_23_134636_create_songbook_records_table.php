@@ -20,7 +20,6 @@ class CreateSongbookRecordsTable extends Migration {
 			$table->string('number', 20)->nullable();
 			$table->string('placeholder', 191);
 			$table->timestamps();
-			// // $table->timestamp('updated_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
 		});
 
 		Schema::table('songbook_records', function(Blueprint $table)

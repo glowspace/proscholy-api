@@ -21,9 +21,9 @@ class CreateSongLyricsTable extends Migration {
 			$table->longtext('lyrics');
 			$table->longtext('description');
 
-			$table->boolean('is_authorized');
-			$table->boolean('is_original');
-			$table->boolean('is_opensong');
+			$table->boolean('is_authorized')->default(0);
+			$table->boolean('is_original')->default(0);
+			$table->boolean('is_opensong')->default(0);
 
 			$table->string('lang', 191);
 
@@ -50,5 +50,4 @@ class CreateSongLyricsTable extends Migration {
 	{
 		Schema::drop('song_lyrics');
 	}
-
 }
