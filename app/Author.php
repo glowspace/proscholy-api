@@ -42,7 +42,7 @@ class Author extends Model
         return $this->belongsToMany(SongLyric::class);
     }
 
-    public function members()
+    public function members()   
     {
         return $this->belongsToMany(Author::class,
             'author_membership',

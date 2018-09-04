@@ -5,14 +5,16 @@
     <div class="row">
         <div class="col-sm-4">
             <h4>Nejnavštěvovanější písně</h4>
-            @foreach($top_songs as $song)
-                @if(isset($song->song_id))
+            @foreach($top_songs as $song_l)
+                {{-- @if(isset($song_l->song_id))
                     <a href="{{route('translation.single', ['id'=> $song->id])}}">{{$song->name}}</a>
                     ({{$song->visits}}x)<br>
                 @else
                     <a href="{{route('song.single', ['id'=> $song->id])}}">{{$song->name}}</a> ({{$song->visits}}x)<br>
-                @endif
-            @endforeach
+                @endif --}}
+                <a href="{{ route('song_lyrics.single', ['id'=> $song_l->id]) }}">{{ $song_l->name }}</a>
+                    ({{ $song_l->visits }}x)<br>
+            @endforeach 
         </div>
         <div class="col-sm-4">
             <script>
@@ -39,11 +41,11 @@
             <h4>Zpěvník v počtech</h4>
 
             <p>Písně: <b>{{$songs_count}} <i class="fas fa-music"></i></b></p>
-            <p>Překlady: <b>{{$translations_count}} <i class="fas fa-language"></i></b></p>
+            {{-- <p>Překlady: <b>{{$translations_count}} <i class="fas fa-language"></i></b></p> --}}
             <p>Autoři: <b>{{$authors_count}} <i class="fas fa-user"></i></b></p>
             <p>Videa: <b>{{$videos_count}} <i class="fas fa-video"></i></b></p>
 
-            <p>{{$lyrics_percentage}}% písní má přidaný text</p>
+            {{-- <p>{{$lyrics_percentage}}% písní má přidaný text</p> --}}
 
             {{--<a class="btn btn-primary" style="width: 100%; margin-bottom:10px;" href="{{route('author.list')}}">--}}
                 {{--Něco mi tu chybí!</a>--}}
