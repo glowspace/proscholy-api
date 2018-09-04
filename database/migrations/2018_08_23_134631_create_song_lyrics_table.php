@@ -14,7 +14,7 @@ class CreateSongLyricssTable extends Migration {
 	{
 		Schema::create('song_lyrics', function(Blueprint $table)
 		{
-			$table->increments('id', true);
+			$table->increments('id');
 			$table->string('name', 191);
 			$table->unsignedInteger('song_id');
 
