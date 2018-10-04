@@ -28,7 +28,7 @@ class AdminController extends Controller
             'songs_w_author'                => Song::whereDoesntHave('authors')->get()->concat(SongLyric::whereDoesntHave
             ('authors')->get()->where('is_original', '0'))->shuffle(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
-            'song_lyrics_w_lyrics'    => SongLyric::where('lyrics', '')->get(),
+            'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '')->get(),
         ]);
     }
 
@@ -39,7 +39,7 @@ class AdminController extends Controller
         ('authors')->get()->where('is_original', '0'))->shuffle();
 
         $songbook_record_w_translation = SongbookRecord::where('song_lyric_id', '')->get();
-        $song_lyrics_w_lyrics    = SongLyric::where('lyrics', '')->get()->shuffle();
+        $song_lyrics_w_lyrics          = SongLyric::where('lyrics', '')->get()->shuffle();
 
         if (
             $videos_w_author->count() == 0 && $songs_w_author->count() == 0 && $songbook_record_w_translation->count() == 0
@@ -115,22 +115,22 @@ class AdminController extends Controller
         $song->approved = 0;
         $song->save();
 
-            $lyric                = new SongLyric();
-            $lyric->name          = $request['name'];
-            $lyric->song_id       = $song->id;
-            $lyric->is_authorized = 1;
-            $lyric->is_original   = 1;
-            $lyric->save();
+        $lyric                = new SongLyric();
+        $lyric->name          = $request['name'];
+        $lyric->song_id       = $song->id;
+        $lyric->is_authorized = 1;
+        $lyric->is_original   = 1;
+        $lyric->save();
 
-            if ( ! empty($request['lyric_name']))
-            {
-                $lyric                = new SongLyric();
-                $lyric->name          = $request['lyric_name'];
-                $lyric->song_id       = $song->id;
-                $lyric->is_authorized = 0;
-                $lyric->is_original   = 0;
-                $lyric->save();
-            }
+        if ( ! empty($request['lyric_name']))
+        {
+            $lyric                = new SongLyric();
+            $lyric->name          = $request['lyric_name'];
+            $lyric->song_id       = $song->id;
+            $lyric->is_authorized = 0;
+            $lyric->is_original   = 0;
+            $lyric->save();
+        }
 
         return redirect()->route('admin.song.new');
     }
@@ -193,7 +193,7 @@ class AdminController extends Controller
 
     public function setSongbookRecordLyric($record_id, $lyric_id)
     {
-        $record                      = SongbookRecord::findOrFail($record_id);
+        $record                = SongbookRecord::findOrFail($record_id);
         $record->song_lyric_id = $translation_id;
         $record->save();
 
@@ -275,7 +275,7 @@ class AdminController extends Controller
 
     public function storeVideoEditTranslation($video_id, $translation_id)
     {
-        $video                      = Video::findOrFail($video_id);
+        $video                = Video::findOrFail($video_id);
         $video->song_lyric_id = $translation_id;
         $video->save();
 
