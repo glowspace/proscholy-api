@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\Song;
-use App\SongTranslation;
+use App\SongLyric;
 
 class ListController extends Controller
 {
     public function renderSongListAlphabetical()
     {
         $songs        = Song::all();
-        $translations = SongTranslation::where('is_original',0)->get();
+        $translations = SongLyric::where('is_original',0)->get();
 
         $list = $songs->concat($translations)->sortBy('name');
 

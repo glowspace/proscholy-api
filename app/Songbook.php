@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string|null $name
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongTranslation[] $songTranslations
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Songbook whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Songbook whereName($value)
  * @mixin \Eloquent
  */
 class Songbook extends Model
 {
-    public function songTranslations()
+    public function songLyrics()
     {
-        return $this->belongsToMany(SongTranslation::class, 'songbook_records');
+        return $this->belongsToMany(SongLyric::class, 'songbook_records');
     }
 }

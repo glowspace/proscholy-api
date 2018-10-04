@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\File
  *
  * @property string|null $filename
- * @property int|null $song_translation_id
+ * @property int|null $song_lyric_id
  * @property int|null $author_id
  * @property int|null $licence_type
  * @property string|null $licence_content
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereLicenceContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereLicenceType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereSongTranslationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereSongLyricId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereUpdatedAt($value)
  * @mixin \Eloquent
  */

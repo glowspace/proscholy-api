@@ -17,8 +17,7 @@
 Route::get('/home', 'PublicController@renderHome')->name('home');
 Route::get('/seznam-pisni', 'ListController@renderSongListAlphabetical')->name('song.list');
 Route::get('/seznam-autoru', 'ListController@renderAuthorListAlphabetical')->name('author.list');
-Route::get('/pisen/o{id}', 'SongController@renderSong')->name('song.single');
-Route::get('/pisen/p{id}', 'TranslationController@renderTranslation')->name('translation.single');
+Route::get('/pisen/{id}', 'SongLyricsController@render')->name('song_lyrics.single');
 Route::get('/autor/{id}', 'AuthorController@renderAuthor')->name('author.single');
 Route::get('/zpevnik/{id}', 'SongbookController@renderSongbook')->name('songbook');
 

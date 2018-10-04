@@ -19,8 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon|null                                                  $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $isMemberOf
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $members
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongTranslation[] $songTranslations
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Song[]            $songs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[]           $videos
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereDescription($value)
@@ -38,17 +37,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model
 {
-    public function songs()
+    public function song_lyrics()
     {
-        return $this->belongsToMany(Song::class);
+        return $this->belongsToMany(SongLyric::class);
     }
 
-    public function songTranslations()
-    {
-        return $this->belongsToMany(SongTranslation::class);
-    }
-
-    public function members()
+    public function members()   
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -56,7 +50,7 @@ class Author extends Model
             'author_id');
     }
 
-    public function isMemberOf()
+    public function memberships()
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -69,6 +63,7 @@ class Author extends Model
         return $this->hasMany(Video::class);
     }
 
+    // TODO
     public function getLink()
     {
         return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';
