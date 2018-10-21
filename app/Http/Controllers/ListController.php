@@ -10,13 +10,10 @@ class ListController extends Controller
 {
     public function renderSongListAlphabetical()
     {
-        $songs        = Song::all();
-        $translations = SongLyric::where('is_original',0)->get();
-
-        $list = $songs->concat($translations)->sortBy('name');
+        $song_lyrics = SongLyric::all()->sortBy('name');
 
         return view('song_list', [
-            'songs' => $list,
+            'songs' => $song_lyrics,
         ]);
     }
 

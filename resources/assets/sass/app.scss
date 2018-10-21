@@ -1,14 +1,86 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+html, body {
+  margin-bottom: 10px;
+}
+
+
+h1, h2, h3, h4 {
+  margin: 0.7em 0;
+}
+
+
+/**
+Zobrazení ChordPro.
+ */
+
+#lyrics {
+  display:     inline-block;
+
+  text-align:  left;
+  margin:      1em auto 0;
+
+  font-family: monospace;
+  white-space: nowrap;
+  font-size:   16px;
+
+  padding:     10px;
+
+}
+
+
+#lyrics .command_block {
+  padding-bottom: 10px;
+}
+
+
+#lyrics .command_block h1 {
+  font-size: 1.8rem;
+  margin:    0;
+  padding:   0;
+}
+
+
+#lyrics .command_block h4 {
+  font-size: 1.4rem;
+  margin:    0;
+  padding:   0;
+}
+
+
+#lyrics .command_block em.comment {
+  display: block;
+}
+
+
+#lyrics .lyric_block {
+  //column-count: 2;
+}
+
+
+#lyrics .lyric_block .line {
+  -webkit-column-break-inside: avoid; /* Chrome, Safari */
+  page-break-inside:           avoid; /* Theoretically FF 20+ */
+  break-inside:                avoid-column; /* IE 11 */
+  display:                     table; /* Actually FF 20+ */
+}
+
+
+#lyrics .lyric_block .chord {
+  color:       #4444ff;
+  font-weight: bold;
+}
+
+
+@media print {
+  #lyrics {
+    padding: 0;
+    border:  none;
+  }
 }
