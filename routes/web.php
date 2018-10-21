@@ -14,7 +14,7 @@
 /**
  * Veřejné zobrazení zpěvníku.
  */
-Route::get('/home', 'PublicController@renderHome')->name('home');
+Route::get('/', 'PublicController@renderHome')->name('home');
 Route::get('/seznam-pisni', 'ListController@renderSongListAlphabetical')->name('song.list');
 Route::get('/seznam-autoru', 'ListController@renderAuthorListAlphabetical')->name('author.list');
 Route::get('/pisen/{id}', 'SongLyricsController@render')->name('song_lyrics.single');

@@ -41,20 +41,6 @@ class Song extends Model
         return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }
 
-
-    // // public function getOriginalTranslation()
-    // // {
-    // //     $count = $this->hasMany(SongLyric::class)->where('is_original', 1)->count();
-    // //     if ($count > 0)
-    // //     {
-    // //         return $this->hasMany(SongLyric::class)->where('is_original', 1)->first();
-    // //     }
-    // //     else
-    // //     {
-    // //         return null;
-    // //     }
-    // // }
-
     // TODO: return only plain link, not an html element
     public function getLink()
     {

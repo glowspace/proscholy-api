@@ -17,16 +17,16 @@ class AdminController extends Controller
         return view('admin.dash');
     }
 
-    /*
-     * To-do.
+    /**
+     * Stránka pro doplňování obsahu.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function renderTodo()
     {
         return view('admin.todo', [
             'videos'                        => Video::where('author_id', '')->orWhere('song_lyric_id', '')->get()->shuffle(),
-            // DANGEROUS TYPE MIXING
-            'songs_w_author'                => Song::whereDoesntHave('authors')->get()->concat(SongLyric::whereDoesntHave
-            ('authors')->get()->where('is_original', '0'))->shuffle(),
+            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get()->where('is_original', '0')->shuffle(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '')->get(),
         ]);
@@ -109,10 +109,8 @@ class AdminController extends Controller
 
     public function storeNewSong(Request $request)
     {
-        $song           = new Song();
-        $song->name     = $request['name'];
-        $song->visible  = 0;
-        $song->approved = 0;
+        $song       = new Song();
+        $song->name = $request['name'];
         $song->save();
 
         $lyric                = new SongLyric();
@@ -120,6 +118,9 @@ class AdminController extends Controller
         $lyric->song_id       = $song->id;
         $lyric->is_authorized = 1;
         $lyric->is_original   = 1;
+        $lyric->lyrics        = '-';
+        $lyric->description   = '-';
+        $lyric->lang = 'cs';
         $lyric->save();
 
         if ( ! empty($request['lyric_name']))
