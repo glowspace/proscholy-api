@@ -25,8 +25,8 @@ class AdminController extends Controller
     public function renderTodo()
     {
         return view('admin.todo', [
-            'videos'                        => Video::where('author_id', '')->orWhere('song_lyric_id', '')->get()->shuffle(),
-            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get()->where('is_original', '0')->shuffle(),
+            'videos'                        => Video::where('author_id', null)->orWhere('song_lyric_id', null)->get()->shuffle(),
+            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get()->shuffle(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '')->get(),
         ]);
@@ -120,7 +120,7 @@ class AdminController extends Controller
         $lyric->is_original   = 1;
         $lyric->lyrics        = '-';
         $lyric->description   = '-';
-        $lyric->lang = 'cs';
+        $lyric->lang          = 'cs';
         $lyric->save();
 
         if ( ! empty($request['lyric_name']))
@@ -225,8 +225,10 @@ class AdminController extends Controller
             return redirect()->route('admin.video.new');
         }
 
-        $video      = new Video();
-        $video->url = $request['url'];
+        $video         = new Video();
+        $video->url    = $request['url'];
+        $video->type   = 0; // 0 = YT
+        $video->visits = 0;
         $video->save();
 
         return redirect()->route('admin.video.new');

@@ -16,10 +16,20 @@
     @endif
 
     <br>
-    <div id="lyrics">
-    </div>
+    <div id="lyrics">{{$song_l->lyrics}}</div>
 
-    @if($song_l->videos()->count() != 0)
+    @if($song_l->videos()->count() == 1)
+        <h4>Video</h4>
+
+        <div class="row">
+            @foreach($song_l->videos as $video)
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    {!! $video->getHtml() !!}
+                </div>
+            @endforeach
+        </div>
+    @elseif($song_l->videos()->count() > 1)
         <h4>Videa</h4>
 
         <div class="row">
@@ -43,7 +53,9 @@
     <script>
         $(document).ready(function () {
             let lyrics = document.getElementById('lyrics');
-            lyrics.innerHTML = parseChordPro('{{$song_l->lyrics}}', 0);
+            let lyrics_source = document.getElementById('lyrics').innerHTML;
+
+            lyrics.innerHTML = parseChordPro(lyrics_source, 0);
         });
     </script>
 
