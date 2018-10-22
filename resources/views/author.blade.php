@@ -19,16 +19,15 @@
         <p>{{$author->description}}</p>
     @endif
 
-    {{--Pokud je to skupina--}}
-    @if($author->type >= 1)
 
-        @if($author->members()->count() > 0)
-            Členové:<br>
-            @foreach($author->members as $member)
-                <a href="{{route('author.single', ['id'=> $member->id])}}">{{$member->name}}</a><br>
-            @endforeach
-        @endif
+
+    @if($author->members()->count() > 0)
+        Členové:<br>
+        @foreach($author->members as $member)
+            <a href="{{route('author.single', ['id'=> $member->id])}}">{{$member->name}}</a><br>
+        @endforeach
     @endif
+
 
 
     @if($author->memberships->count() > 0)
@@ -41,8 +40,16 @@
     @endif
 
 
-    @if($author->songLyrics()->count() > 0)
+    @if($author->songOriginalLyrics()->count() > 0)
         Písně:<br>
+
+        @foreach($author->songLyrics as $translation)
+            <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
+        @endforeach
+    @endif
+
+    @if($author->songNotOriginalLyrics()->count() > 0)
+        Překlady:<br>
 
         @foreach($author->songLyrics as $translation)
             @if($translation->is_original)

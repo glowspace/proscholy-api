@@ -34,6 +34,8 @@
                     @foreach($song->authors as $author)
                         {{$author->name}}<br>
                     @endforeach
+
+                    <a class="btn btn-primary" href="{{route('admin.song.author.add',['id'=>$song->id])}}">Přidat autora</a>
                     <br><br>
 
                     <label>Text</label>

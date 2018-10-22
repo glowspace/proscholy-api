@@ -25,8 +25,8 @@ class AdminController extends Controller
     public function renderTodo()
     {
         return view('admin.todo', [
-            'videos'                        => Video::where('author_id', null)->orWhere('song_lyric_id', null)->get()->shuffle(),
-            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get()->shuffle(),
+            'videos'                        => Video::where('author_id', null)->orWhere('song_lyric_id', null)->get(),
+            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '=', null)->get(),
         ]);
@@ -121,15 +121,15 @@ class AdminController extends Controller
         $lyric->lang          = 'cs';
         $lyric->saveOrFail();
 
-        if ( ! empty($request['tanslation_name']))
+        if ( ! empty($request['translation_name']))
         {
-            $lyric                = new SongLyric();
-            $lyric->name          = $request['lyric_name'];
-            $lyric->song_id       = $song->id;
-            $lyric->is_authorized = 0;
-            $lyric->is_original   = 0;
-            $lyric->lang          = 'cs';
-            $lyric->saveOrFail();
+            $translation_lyric                = new SongLyric();
+            $translation_lyric->name          = $request['translation_name'];
+            $translation_lyric->song_id       = $song->id;
+            $translation_lyric->is_authorized = 0;
+            $translation_lyric->is_original   = 0;
+            $translation_lyric->lang          = 'cs';
+            $translation_lyric->saveOrFail();
         }
 
         return redirect()->route('admin.song.new');
