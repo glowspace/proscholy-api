@@ -13,16 +13,30 @@
         <br>
     @endif
 
-    @if($song_l->authors()->count() == 0)
-        <i>Neznámý autor</i>
-    @elseif($song_l->authors()->count() == 1)
-        Autor písně: <a
-                href="{{route('author.single', ['id'=> $song_l->authors->first()->id])}}">{{$song_l->authors->first()->name}}</a>
+    @if($song_l->is_original)
+        @if($song_l->authors()->count() == 0)
+            <i>neznámý autor</i>
+        @elseif($song_l->authors()->count() == 1)
+            autor písně: <a
+                    href="{{route('author.single', ['id'=> $song_l->authors->first()->id])}}">{{$song_l->authors->first()->name}}</a>
+        @else
+            autoři písně:<br>
+            @foreach($song_l->authors as $author)
+                <a href="{{route('author.single', ['id'=> $author->id])}}">{{$author->name}}</a><br>
+            @endforeach
+        @endif
     @else
-        Autoři písně:<br>
-        @foreach($song_l->authors as $author)
-            <a href="{{route('author.single', ['id'=> $author->id])}}">{{$author->name}}</a><br>
-        @endforeach
+        @if($song_l->authors()->count() == 0)
+            <i>neznámý autor</i>
+        @elseif($song_l->authors()->count() == 1)
+            autor překladu: <a
+                    href="{{route('author.single', ['id'=> $song_l->authors->first()->id])}}">{{$song_l->authors->first()->name}}</a>
+        @else
+            autoři překladu:<br>
+            @foreach($song_l->authors as $author)
+                <a href="{{route('author.single', ['id'=> $author->id])}}">{{$author->name}}</a><br>
+            @endforeach
+        @endif
     @endif
 
     <br>

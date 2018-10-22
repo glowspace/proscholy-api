@@ -42,6 +42,16 @@ class Author extends Model
         return $this->belongsToMany(SongLyric::class);
     }
 
+    public function songOriginalLyrics()
+    {
+        return $this->songLyrics()->where('is_original',true);
+    }
+
+    public function songNotOriginalLyrics()
+    {
+        return $this->songLyrics()->where('is_original',false);
+    }
+
     public function members()   
     {
         return $this->belongsToMany(Author::class,

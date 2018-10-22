@@ -25,8 +25,8 @@ class AdminController extends Controller
     public function renderTodo()
     {
         return view('admin.todo', [
-            'videos'                        => Video::where('author_id', null)->orWhere('song_lyric_id', null)->get()->shuffle(),
-            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get()->shuffle(),
+            'videos'                        => Video::where('author_id', null)->orWhere('song_lyric_id', null)->get(),
+            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '=', null)->get(),
         ]);
