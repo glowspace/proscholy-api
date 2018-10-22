@@ -43,22 +43,18 @@
     @if($author->songOriginalLyrics()->count() > 0)
         Písně:<br>
 
-        @foreach($author->songLyrics as $translation)
-            <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
+        @foreach($author->songOriginalLyrics as $translation)
+            <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a><br>
         @endforeach
     @endif
 
     @if($author->songNotOriginalLyrics()->count() > 0)
         Překlady:<br>
 
-        @foreach($author->songLyrics as $translation)
-            @if($translation->is_original)
-                <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
-            @else
-                <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
-                (<a href="{{route('song_lyrics.single',['id'=>$translation->id])}}">{{$translation->song->name}}</a>)
-                <br>
-            @endif
+        @foreach($author->songNotOriginalLyrics as $translation)
+            <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
+            (<a href="{{route('song_lyrics.single',['id'=>$translation->id])}}">{{$translation->song->name}}</a>)
+            <br>
         @endforeach
     @endif
 
