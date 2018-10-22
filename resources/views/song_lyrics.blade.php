@@ -2,12 +2,22 @@
 
 @section('content')
     <h2 style="margin-bottom: 5px;">{{$song_l->name}}</h2>
+    @if(! $song_l->is_original)
+        @if($song_l->is_authorized)
+            autorizovaný překlad písně <a
+                    href="{{$song_l->song->getOriginalLyric()->getLink()}}">{{$song_l->song->getOriginalLyric()->name}}</a>
+        @else
+            překlad písně <a
+                    href="{{$song_l->song->getOriginalLyric()->getLink()}}">{{$song_l->song->getOriginalLyric()->name}}</a>
+        @endif
+        <br>
+    @endif
 
     @if($song_l->authors()->count() == 0)
         <i>Neznámý autor</i>
     @elseif($song_l->authors()->count() == 1)
         Autor písně: <a
-                href="{{route('author.single', ['id'=> $authors->first()->id])}}">{{$authors->first()->name}}</a>
+                href="{{route('author.single', ['id'=> $song_l->authors->first()->id])}}">{{$song_l->authors->first()->name}}</a>
     @else
         Autoři písně:<br>
         @foreach($song_l->authors as $author)

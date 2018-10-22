@@ -28,7 +28,7 @@ class AdminController extends Controller
             'videos'                        => Video::where('author_id', null)->orWhere('song_lyric_id', null)->get()->shuffle(),
             'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get()->shuffle(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
-            'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '')->get(),
+            'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '=', null)->get(),
         ]);
     }
 
@@ -118,57 +118,71 @@ class AdminController extends Controller
         $lyric->song_id       = $song->id;
         $lyric->is_authorized = 1;
         $lyric->is_original   = 1;
-        $lyric->lyrics        = '-';
-        $lyric->description   = '-';
         $lyric->lang          = 'cs';
-        $lyric->save();
+        $lyric->saveOrFail();
 
-        if ( ! empty($request['lyric_name']))
+        if ( ! empty($request['tanslation_name']))
         {
             $lyric                = new SongLyric();
             $lyric->name          = $request['lyric_name'];
             $lyric->song_id       = $song->id;
             $lyric->is_authorized = 0;
             $lyric->is_original   = 0;
-            $lyric->save();
+            $lyric->lang          = 'cs';
+            $lyric->saveOrFail();
         }
 
         return redirect()->route('admin.song.new');
     }
 
+    public function renderSongs()
+    {
+        return view('admin.songs', [
+            'songs' => SongLyric::all(),
+        ]);
+    }
+
+    public function renderSongEdit($id)
+    {
+        return view('admin.song', [
+            'song' => SongLyric::findOrFail($id),
+        ]);
+    }
+
     /**
-     * To-do přidání autora.
+     * @param Request $request
      *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
+     */
+    public function storeSongEdit(Request $request)
+    {
+        $song = SongLyric::findOrFail($request['id']);
+
+        $data = $request->except(['id', '_token']);
+
+        $song->fill($data);
+
+        $song->saveOrFail();
+
+        return redirect()->route('admin.todo');
+    }
+
+    public function renderAddSongAuthor($song_id)
+    {
+        return view('admin.todo_editors.song_w_author', [
+            'song'    => SongLyric::findOrFail($song_id),
+            'authors' => Author::all(),
+        ]);
+    }
+
+    /**
      * @param $author_id
-     * @param $song_id
+     * @param $lyric_id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function setSongAuthor($author_id, $song_id)
-    {
-        $author_name = Input::get('new_author');
-
-        if (isset($author_name))
-        {
-            $author         = new Author();
-            $author->name   = Input::get('new_author');
-            $author->visits = 0;
-            $author->type   = 0;
-            $author->save();
-
-            $song = Song::findOrFail($song_id);
-            $song->authors()->attach([$author->id]);
-        }
-        else
-        {
-            $song = Song::findOrFail($song_id);
-            $song->authors()->attach([$author_id]);
-        }
-
-        return redirect()->route('admin.todo.random');
-    }
-
-    public function setTranslationAuthor($author_id, $translation_id)
+    public function setSongAuthor($author_id, $lyric_id)
     {
         $author_name = Input::get('new_author');
 
@@ -189,16 +203,7 @@ class AdminController extends Controller
             $lyric->authors()->attach([$author_id]);
         }
 
-        return redirect()->route('admin.todo.random');
-    }
-
-    public function setSongbookRecordLyric($record_id, $lyric_id)
-    {
-        $record                = SongbookRecord::findOrFail($record_id);
-        $record->song_lyric_id = $translation_id;
-        $record->save();
-
-        return redirect()->route('admin.todo.random');
+        return redirect()->route('admin.todo');
     }
 
     /*
@@ -297,5 +302,21 @@ class AdminController extends Controller
         {
             return false;
         }
+    }
+
+    public function renderNewAuthor()
+    {
+        return view('admin.author');
+    }
+
+    public function storeNewAuthor(Request $request)
+    {
+        $author         = new Author();
+        $author->name   = $request['name'];
+        $author->type   = $request['type'];
+        $author->visits = 0;
+        $author->save();
+
+        return redirect()->route('admin.author.new');
     }
 }

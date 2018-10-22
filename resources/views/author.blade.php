@@ -13,13 +13,16 @@
     @elseif($author->type == 4)
         <span style="color: dimgrey">sbor</span>
     @endif
+    <br><br>
 
-    <p>{{$author->description}}</p>
+    @if(isset($author->description))
+        <p>{{$author->description}}</p>
+    @endif
 
     {{--Pokud je to skupina--}}
     @if($author->type >= 1)
 
-        @if($author->members->count() > 0)
+        @if($author->members()->count() > 0)
             Členové:<br>
             @foreach($author->members as $member)
                 <a href="{{route('author.single', ['id'=> $member->id])}}">{{$member->name}}</a><br>
@@ -27,35 +30,28 @@
         @endif
     @endif
 
-    {{--Jednotlivec--}}
-    @if($author->type == 0)
+
+    @if($author->memberships->count() > 0)
         Skupiny:<br>
-        @if($author->isMemberOf->count() == 0)
-            <i>Nepatří k žadné skupině.</i>
-        @else
-            @foreach($author->isMemberOf as $author)
-                <a href="{{route('author.single', ['id'=> $author->id])}}">{{$author->name}}</a><br>
-            @endforeach
-        @endif
-        <br>
-    @endif
 
-
-    @if($author->songs->count() > 0)
-        Písně:<br>
-        @foreach($author->songs as $song)
-            <a href="{{route('song.single', ['id'=> $song->id])}}">{{$song->name}}</a><br>
+        @foreach($author->isMemberOf as $author)
+            <a href="{{route('author.single', ['id'=> $author->id])}}">{{$author->name}}</a><br>
         @endforeach
         <br>
     @endif
 
 
-    @if($author->songLyrics->count() > 0)
-        Překlady<br>
+    @if($author->songLyrics()->count() > 0)
+        Písně:<br>
 
         @foreach($author->songLyrics as $translation)
-            <a href="{{route('translation.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
-            (<a href="{{route('song.single',['id'=>$translation->id])}}">{{$translation->song->name}}</a>)<br>
+            @if($translation->is_original)
+                <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
+            @else
+                <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
+                (<a href="{{route('song_lyrics.single',['id'=>$translation->id])}}">{{$translation->song->name}}</a>)
+                <br>
+            @endif
         @endforeach
     @endif
 

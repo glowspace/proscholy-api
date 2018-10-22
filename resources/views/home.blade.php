@@ -28,8 +28,9 @@
                     s.parentNode.insertBefore(gcse, s);
                 })();
             </script>
-            <gcse:search></gcse:search>
 
+            <h3>Vyhledávání</h3>
+            <gcse:search></gcse:search>
 
             <h3>Rejstřík</h3>
 
@@ -37,6 +38,8 @@
                 seznam písní</a><br>
             <a class="btn btn-primary" style="width: 100%; margin-bottom:10px;" href="{{route('author.list')}}">Seznam
                 autorů</a>
+
+
 
             <h4>Zpěvník v počtech</h4>
 

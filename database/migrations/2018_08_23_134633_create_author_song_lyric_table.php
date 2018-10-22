@@ -19,7 +19,7 @@ class CreateAuthorSongLyricTable extends Migration {
 			$table->unsignedInteger('song_lyric_id');
 
 			// types: lyrics, music, lyrics_translation, ...
-			$table->string('type', 191);
+			$table->string('type', 191)->default(0);
 		});
 
 

@@ -5,6 +5,7 @@
     <h2>Úprava videa</h2>
 
     <a href="{{route('admin.videos')}}">Zpět do administrace</a>
+    <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a>
 
     <div class="row">
         <div class="col-sm-4">
