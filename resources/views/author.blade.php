@@ -53,7 +53,7 @@
 
         @foreach($author->songNotOriginalLyrics as $translation)
             <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
-            (<a href="{{route('song_lyrics.single',['id'=>$translation->id])}}">{{$translation->song->name}}</a>)
+            (<a href="{{route('song_lyrics.single',['id'=>$translation->song->getOriginalLyric()->id])}}">{{$translation->song->name}}</a>)
             <br>
         @endforeach
     @endif
