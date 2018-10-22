@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model
 {
-    public function song_lyrics()
+    public function songLyrics()
     {
         return $this->belongsToMany(SongLyric::class);
     }

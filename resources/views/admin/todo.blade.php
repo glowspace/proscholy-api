@@ -4,7 +4,8 @@
 
     <a href="{{route('admin.dashboard')}}">Zpět do administrace</a>
 
-    <h2>Materiály k doplnění</h2> <a class="btn btn-info" href="{{route('admin.todo.random')}}">Zapnout režim doplňování</a>
+    <h2>Materiály k doplnění</h2>
+    {{--<a class="btn btn-info" href="{{route('admin.todo.random')}}">Zapnout režim doplňování</a>--}}
 
     <p>Toto je seznam částí zpěvníku, kde je potřeba doplnit dodátečné informace. Po doplnění daný záznam zmizí.</p>
 
@@ -30,7 +31,7 @@
                 </li>
                 @foreach($songs_w_author as $song)
                     <li class="list-group-item">
-                        <a href="{{route('admin.dashboard',['id'=>$song->id])}}">{{$song->name}}</a>
+                        <a href="{{route('admin.song.author.add',['id'=>$song->id])}}">{{$song->name}}</a>
                     </li>
                 @endforeach
 
@@ -56,7 +57,7 @@
                 </li>
                 @foreach($song_lyrics_w_lyrics as $translation)
                     <li class="list-group-item">
-                        <a href="{{route('admin.dashboard',['id'=>$translation->id])}}">{{$translation->name}}</a>
+                        <a href="{{route('admin.song.edit',['id'=>$translation->id])}}">{{$translation->name}}</a>
                     </li>
                 @endforeach
 

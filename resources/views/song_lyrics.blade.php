@@ -1,10 +1,23 @@
 @extends('layout')
 
 @section('content')
-    <h2>{{$song_l->name}}</h2>
+    <h2 style="margin-bottom: 5px;">{{$song_l->name}}</h2>
+    @if(! $song_l->is_original)
+        @if($song_l->is_authorized)
+            autorizovaný překlad písně <a
+                    href="{{$song_l->song->getOriginalLyric()->getLink()}}">{{$song_l->song->getOriginalLyric()->name}}</a>
+        @else
+            překlad písně <a
+                    href="{{$song_l->song->getOriginalLyric()->getLink()}}">{{$song_l->song->getOriginalLyric()->name}}</a>
+        @endif
+        <br>
+    @endif
 
     @if($song_l->authors()->count() == 0)
-        <i>Píseň nemá přiřazeného autora.</i>
+        <i>Neznámý autor</i>
+    @elseif($song_l->authors()->count() == 1)
+        Autor písně: <a
+                href="{{route('author.single', ['id'=> $song_l->authors->first()->id])}}">{{$song_l->authors->first()->name}}</a>
     @else
         Autoři písně:<br>
         @foreach($song_l->authors as $author)
@@ -12,35 +25,49 @@
         @endforeach
     @endif
 
-    {{-- <h4>Překlady:</h4>
-    @foreach($song_l->translations as $translation)
-        <a href="{{route('translation.single', ['id'=> $translation->id])}}">{{$translation->name}}</a><br>
-    @endforeach
+    <br>
+    <div id="lyrics">{{$song_l->lyrics}}</div>
 
-    @if($song_l->getOriginalTranslation() != null)
-        <br><div style="font-family: 'Courier New', Courier, monospace !important;">
-            {!! $song_l->getOriginalTranslation()->lyrics !!}
+    @if($song_l->videos()->count() == 1)
+        <h4>Video</h4>
+
+        <div class="row">
+            @foreach($song_l->videos as $video)
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    {!! $video->getHtml() !!}
+                </div>
+            @endforeach
         </div>
+    @elseif($song_l->videos()->count() > 1)
+        <h4>Videa</h4>
 
-    @endif --}}
-{{-- 
-    <p>Originál: <a href="{{route('song.single',['id'=>$translation->song->id])}}">{{$translation->song->name}}</a></p>
-
-    @if(empty($translation->lyrics))
-        <p><i>Nebyl přidán text.</i></p>
-    @else
-        <div style="color: black; font-size: 18px">
-            {!! $translation->lyrics !!}
+        <div class="row">
+            @foreach($song_l->videos as $video)
+                <div class="col-sm-4">
+                    {!! $video->getHtml() !!}
+                </div>
+            @endforeach
         </div>
-    @endif --}}
+    @endif
+@endsection
 
-    <h4>Videa</h4>
+@section('scripts')
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
 
-    <div class="row">
-        @foreach($song_l->videos as $video)
-            <div class="col-sm-4">
-                {!! $video->getHtml() !!}
-            </div>
-        @endforeach
-    </div>
+    @include('scripts.chordpro_parse')
+
+    <script>
+        $(document).ready(function () {
+            let lyrics = document.getElementById('lyrics');
+            let lyrics_source = document.getElementById('lyrics').innerHTML;
+
+            lyrics.innerHTML = parseChordPro(lyrics_source, 0);
+        });
+    </script>
+
+
 @endsection

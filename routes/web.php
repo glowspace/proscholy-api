@@ -14,7 +14,7 @@
 /**
  * Veřejné zobrazení zpěvníku.
  */
-Route::get('/home', 'PublicController@renderHome')->name('home');
+Route::get('/', 'PublicController@renderHome')->name('home');
 Route::get('/seznam-pisni', 'ListController@renderSongListAlphabetical')->name('song.list');
 Route::get('/seznam-autoru', 'ListController@renderAuthorListAlphabetical')->name('author.list');
 Route::get('/pisen/{id}', 'SongLyricsController@render')->name('song_lyrics.single');
@@ -32,12 +32,10 @@ Route::group(['prefix' => 'admin'], function ()
 {
     Route::get('/manage/', 'AdminController@renderDash')->name('admin.dashboard');
     Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
-    Route::get('/manage/todo/random', 'AdminController@renderTodoRandom')->name('admin.todo.random');
-    Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')->name('admin.todo.setSongAuthor');
-    Route::get('/manage/todo/translation/setAuthor/{author_id}/{song_id}/', 'AdminController@setTranslationAuthor')->name('admin.todo.setTranslationAuthor');
-    Route::get('/manage/todo/songbookReord/setTranslation/{record_id}/{translation_id}', 'AdminController@setSongbookRecordTranslation')
-        ->name
-    ('admin.todo.setRecordTranslation');
+    Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
+        ->name('admin.todo.setSongAuthor');
+//    Route::get('/manage/todo/songbookReord/setTranslation/{record_id}/{translation_id}',
+//        'AdminController@setSongbookRecordTranslation')->name('admin.todo.setRecordTranslation');
 
 
     // Video
@@ -55,10 +53,14 @@ Route::group(['prefix' => 'admin'], function ()
         ->name('admin.video.edit.author.save');
 
     // Song
+    Route::get('/manage/songs', 'AdminController@renderSongs')->name('admin.songs');
     Route::get('/manage/song/new', 'AdminController@renderNewSong')->name('admin.song.new');
     Route::post('/manage/insert', 'AdminController@storeNewSong')->name('admin.song.new.save');
-    #TODO: edit
-    #TODO: edit.save
+    Route::get('/manage/song/{id}', 'AdminController@renderSongEdit')->name('admin.song.edit');
+    Route::post('/manage/song/save', 'AdminController@storeSongEdit')->name('admin.song.edit.save');
+    Route::get('/manage/song/{id}/add_author', 'AdminController@renderAddSongAuthor')->name('admin.song.author.add');
+    Route::get('/manage/song/{id}/remove_author/{author_id}', 'AdminController@storeRemoveSongAuthor')
+        ->name('admin.song.author.remove');
 
     // Translation
     Route::get('/manage/translation/new', 'AdminController@renderNewSong')->name('admin.translation.new');
@@ -66,6 +68,8 @@ Route::group(['prefix' => 'admin'], function ()
     Route::get('/manage/translation/{id}', 'AdminController@renderNewSong')->name('admin.translation.edit');
 
     // Author
+    Route::get('/manage/author/new', 'AdminController@renderNewAuthor')->name('admin.author.new');
+    Route::post('/manage/author/new', 'AdminController@storeNewAuthor')->name('admin.author.new.save');
 
     // Voyager
     Voyager::routes();

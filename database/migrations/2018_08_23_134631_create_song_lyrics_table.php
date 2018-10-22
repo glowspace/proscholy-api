@@ -18,8 +18,8 @@ class CreateSongLyricsTable extends Migration {
 			$table->string('name', 191);
 			$table->unsignedInteger('song_id');
 
-			$table->longtext('lyrics');
-			$table->longtext('description');
+			$table->longtext('lyrics')->nullable();
+			$table->longtext('description')->nullable();
 
 			$table->boolean('is_authorized')->default(0);
 			$table->boolean('is_original')->default(0);
@@ -31,12 +31,6 @@ class CreateSongLyricsTable extends Migration {
 			$table->text('licence_content', 65535)->nullable();
 			$table->integer('visits')->nullable();
 			$table->timestamps();
-		});
-
-		Schema::table('song_lyrics', function(Blueprint $table)
-		{
-			$table->foreign('song_id')->references('id')->on('songs')
-                ->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

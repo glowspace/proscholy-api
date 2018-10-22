@@ -26,18 +26,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css"
           integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
 
-    <!-- Styles -->
-    <style>
-        html, body {
-            margin-bottom: 10px;
-        }
-
-
-        h1, h2, h3, h4 {
-            margin: 0.7em 0;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
 </head>
 <body>
     <div class="">
@@ -54,5 +43,8 @@
                 <br><a href="{{route('home')}}">ProScholy.cz</a>
             </p>
         </div>
+    </div>
+
+    @yield('scripts')
 </body>
 </html>
