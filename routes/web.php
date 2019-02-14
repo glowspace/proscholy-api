@@ -70,7 +70,4 @@ Route::group(['prefix' => 'admin'], function ()
     // Author
     Route::get('/manage/author/new', 'AdminController@renderNewAuthor')->name('admin.author.new');
     Route::post('/manage/author/new', 'AdminController@storeNewAuthor')->name('admin.author.new.save');
-
-    // Voyager
-    Voyager::routes();
 });
