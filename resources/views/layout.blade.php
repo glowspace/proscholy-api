@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {{-- Dynamic HTML title --}}
     <title>
         @if(isset($page_title))
             {{$page_title}} - křesťanský zpěvník - ProScholy.cz
@@ -12,11 +13,17 @@
             Křesťanský zpěvník - ProScholy.cz
         @endif
     </title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css"
           integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/regular.css"
@@ -46,5 +53,8 @@
     </div>
 
     @yield('scripts')
+
+    {{-- Main JS built with Laravel's mix --}}
+    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
 </body>
 </html>
