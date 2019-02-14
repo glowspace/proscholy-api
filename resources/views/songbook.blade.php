@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.layout_old')
 
 @section('content')
     <h2>Zpěvník {{$songbook->name}}</h2>

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.layout_old')
 
 @section('content')
     <table class="table table-bordered" style="width:600px; margin: 0 auto;">
