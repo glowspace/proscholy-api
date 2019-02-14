@@ -1,10 +1,9 @@
-// Fonts
+/**
+Imports
+ */
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-// Variables
 @import 'variables';
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
+@import '~bootstrap-material-design/scss/bootstrap-material-design'; // Materialize.css
 
 html, body {
   margin-bottom: 10px;
@@ -13,6 +12,27 @@ html, body {
 
 h1, h2, h3, h4 {
   margin: 0.7em 0;
+}
+
+/**
+Layout
+ */
+.navbar {
+  z-index:          200;
+  background-color: #292929;
+}
+
+.sidebar {
+  height: calc(100vh - 45px);
+}
+
+.background-home {
+  background-image:    url('/img/background_orange_v1.svg');
+  background-position: -2px -7px;
+  //background-color: orangered;
+  background-size:     cover;
+  background-repeat: no-repeat;
+  min-height:          calc(100vh - 60px);
 }
 
 
