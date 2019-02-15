@@ -57,7 +57,7 @@
                     <span class="caption"><img class="logo-image" src="{{asset('img/logo_v2_shadow.png')}}" height="150">Zpěvník</span>
                 </div>
                 <div class="search-wrapper">
-                    <input class="search-home" placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)">
+                    <input class="search-home  material-shadow" placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)">
                 </div>
             </div>
         </div>
