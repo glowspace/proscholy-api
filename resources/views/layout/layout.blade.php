@@ -5,11 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    {{-- Favicon --}}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('img/favicon/site.webmanifest')}}">
+    <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
     <title>
         @if(isset($page_title))
             {{$page_title}} - křesťanský zpěvník - ProScholy.cz
         @else
-            Křesťanský zpěvník - ProScholy.cz
+            ProScholy.cz - nejhustší křesťanský zpěvník v ČR
         @endif
     </title>
 
@@ -42,9 +51,14 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2 sidebar bg-dark"></div>
+            <div class="col-md-2 sidebar bg-dark material-shadow"></div>
             <div class="col-md-10 background-home">
-
+                <div class="logo-wrapper">
+                    <span class="caption"><img class="logo-image" src="{{asset('img/logo_v2_shadow.png')}}" height="150">Zpěvník</span>
+                </div>
+                <div class="search-wrapper">
+                    <input class="search-home" placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)">
+                </div>
             </div>
         </div>
     </div>

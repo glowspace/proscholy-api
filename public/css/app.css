@@ -2,6 +2,11 @@
 Imports
  */
 
+@font-face {
+  font-family: "Luckiest Guy";
+  src: url("/fonts/luckiest-guy.regular.ttf");
+}
+
 .card {
   font-size: .875rem;
   font-weight: normal;
@@ -20225,16 +20230,16 @@ h6 {
   }
 }
 
-html,
-body {
-  margin-bottom: 10px;
-}
-
 h1,
 h2,
 h3,
 h4 {
   margin: 0.7em 0;
+}
+
+.material-shadow {
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
 /**
@@ -20247,15 +20252,51 @@ Layout
 }
 
 .sidebar {
-  height: calc(100vh - 45px);
+  height: calc(100vh - 66px);
 }
+
+/**
+Home page specific elements
+ */
 
 .background-home {
   background-image: url("/img/background_orange_v1.svg");
-  background-position: -2px -7px;
+  background-position: 0 -4px;
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 66px);
+}
+
+.logo-wrapper {
+  text-align: center;
+  margin-top: 220px;
+}
+
+.logo-wrapper .caption {
+  font-size: 142px;
+  color: white;
+  text-transform: uppercase;
+  font-family: 'Luckiest Guy', cursive;
+  text-shadow: #1a1f21c2 2px 2px 6px;
+}
+
+.search-wrapper {
+  text-align: center;
+}
+
+.search-wrapper .search-home {
+  display: inline-block;
+  padding: 15px;
+  border: none;
+  background-color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 900px;
+}
+
+.search-wrapper .search-submit {
+  width: 100px;
+  height: 55px;
 }
 
 /**
