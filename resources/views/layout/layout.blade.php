@@ -18,7 +18,7 @@
         @if(isset($page_title))
             {{$page_title}} - křesťanský zpěvník - ProScholy.cz
         @else
-            ProScholy.cz - nejhustší křesťanský zpěvník v ČR
+            ProScholy.cz - nejhustější křesťanský zpěvník v ČR
         @endif
     </title>
 
@@ -46,7 +46,6 @@
 
         <img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0">
         <a class="navbar-brand mr-1" href="/"> Zpěvník pro scholy</a>
-
     </nav>
 
     <div class="container-fluid">
@@ -54,10 +53,12 @@
             <div class="col-md-2 sidebar bg-dark material-shadow"></div>
             <div class="col-md-10 background-home">
                 <div class="logo-wrapper">
-                    <span class="caption"><img class="logo-image" src="{{asset('img/logo_v2_shadow.png')}}" height="150">Zpěvník</span>
+                    <span class="caption">
+                        <img class="logo-image" src="{{asset('img/logo_bubble.svg')}}" height="150">Zpěvník</span>
                 </div>
                 <div class="search-wrapper">
-                    <input class="search-home  material-shadow" placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)">
+                    <input class="search-home  material-shadow"
+                           placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)">
                 </div>
             </div>
         </div>

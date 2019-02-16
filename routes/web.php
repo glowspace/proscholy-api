@@ -14,7 +14,7 @@
 /**
  * Public routes.
  */
-Route::get('/', 'Client\PublicController@renderHome')->name('client.home');
+Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
 
 Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')->name('client.song.list');
 Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
@@ -44,8 +44,6 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 /**
  * Administrace.
- *
- * TODO: převést administraci do resources
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {

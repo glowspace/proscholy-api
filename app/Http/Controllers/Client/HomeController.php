@@ -14,7 +14,7 @@ class HomeController extends Controller
         $top_songs   = SongLyric::orderBy('visits', 'desc')->where('lyrics', '!=', '')->take(15)->get();
         $top_authors = Author::orderBy('visits', 'desc')->take(15)->get();
 
-        return view('home', [
+        return view(' client.home', [
             'songs_count'   => SongLyric::where('lyrics', '!=', '')->count(),
             'authors_count' => Author::count(),
             'externals_count'  => External::count(),

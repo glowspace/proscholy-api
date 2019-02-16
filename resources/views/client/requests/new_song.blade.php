@@ -13,7 +13,7 @@
             <input type="submit">
         </form>
     @else
-        <h2>Úprava: píseň </h2>
+        <h2>Úprava: píseň</h2>
     @endif
 
 @endsection
