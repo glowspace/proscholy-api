@@ -6,7 +6,7 @@ use App\Author;
 use App\Song;
 use App\SongbookRecord;
 use App\SongLyric;
-use App\Video;
+use App\External;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 

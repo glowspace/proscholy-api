@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $isMemberOf
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $members
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[]           $videos
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[]        $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereEmail($value)
@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $visits
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereVisits($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[] $memberships
  */
 class Author extends Model
 {
@@ -68,9 +69,9 @@ class Author extends Model
             'is_member_of');
     }
 
-    public function videos()
+    public function externals()
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(External::class);
     }
 
     // TODO

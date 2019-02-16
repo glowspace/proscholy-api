@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\SongLyric;
-use App\Video;
+use App\External;
 
 class PublicController extends Controller
 {
