@@ -16,6 +16,11 @@
  */
 Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
 
+// Redirects to real search route.
+Route::post('/vyhledavani/send_search', 'Client\SearchController@searchSend')->name('client.search');
+// The real user search route
+Route::get('/vyhledavani/{phrase}', 'Client\SearchController@searchResults')->name('client.search_results');
+
 Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')->name('client.song.list');
 Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
 
@@ -40,7 +45,6 @@ Route::post('/report', 'Client\ReportController@storeReport')->name('client.repo
 
 Auth::routes(['register' => true]);
 Route::get('/logout', 'Auth\LoginController@logout');
-
 
 /**
  * Administrace.

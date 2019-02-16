@@ -20264,6 +20264,10 @@ Layout
   height: calc(100vh - 66px);
 }
 
+.content {
+  padding: 0;
+}
+
 /**
 Home page specific elements
  */
@@ -20278,7 +20282,7 @@ Home page specific elements
 
 .logo-wrapper {
   text-align: center;
-  margin-top: 160px;
+  padding-top: 160px;
 }
 
 .logo-wrapper .logo {
@@ -20321,7 +20325,7 @@ Home page specific elements
 
 .search-wrapper .search-submit {
   width: 70px;
-  height: 100%;
+  height: 47px;
   background-color: white;
   border-radius: 8px;
   border: none;

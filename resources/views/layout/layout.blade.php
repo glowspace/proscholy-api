@@ -54,7 +54,7 @@
             <div class="d-none d-md-block col-md-2 sidebar bg-dark material-shadow">
                 @yield('navbar')
             </div>
-            <div class="col-md-10 background-home">
+            <div class="col-md-10 content">
                 @yield('content')
             </div>
         </div>
