@@ -20,7 +20,7 @@
                         </div>
 
                         <hr>
-                        Zpěvník ProScholy <img src="{{asset('img/logo_v2.png')}}" width="20px">
+                        Zpěvník ProScholy <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
             </div>
@@ -34,9 +34,8 @@
                     </div>
                 @endif
 
-                @if(true)
-                    @component('client.components.video_card', ['external'=>\App\External::first()])
-                    @endcomponent
+                @if($song_l->youtubeVideos()->count() > 0)
+                    @component('client.components.external_embed', ['external' => $song_l->youtubeVideos()->first()])@endcomponent
                 @endif
             </div>
         </div>

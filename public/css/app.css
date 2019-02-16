@@ -20387,8 +20387,10 @@ ChordPro view
 
 #lyrics {
   display: inline-block;
+  width: 100%;
   text-align: left;
   margin: 0 auto 0;
+  overflow-x: scroll;
   font-family: monospace;
   white-space: nowrap;
   font-size: 16px;

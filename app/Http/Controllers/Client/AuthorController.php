@@ -13,7 +13,7 @@ class AuthorController extends Controller
         $author->visits = $author->visits + 1;
         $author->save();
 
-        return view('author', [
+        return view('client.author', [
             'author'     => $author,
             'page_title' => $author->name,
         ]);

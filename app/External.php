@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\External
  *
- * @property int                 $id
- * @property int|null            $author_id
- * @property int|null            $song_lyric_id
- * @property int|null            $type
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property string|null         $url
+ * @property int                      $id
+ * @property int|null                 $author_id
+ * @property int|null                 $song_lyric_id
+ * @property int|null                 $type
+ * @property \Carbon\Carbon|null      $created_at
+ * @property \Carbon\Carbon|null      $updated_at
+ * @property string|null              $url
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereAuthorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereId($value)
@@ -23,17 +23,43 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereUrl($value)
  * @mixin \Eloquent
- * @property int|null $visits
- * @property-read \App\Author|null $author
+ * @property int|null                 $visits
+ * @property-read \App\Author|null    $author
  * @property-read \App\SongLyric|null $songLyric
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereVisits($value)
  */
 class External extends Model
 {
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getTypeString()
+    {
+        switch ($this->type)
+        {
+            case 0:
+                return 'youtube';
+            case 1:
+                return 'spotify';
+            default:
+                throw new Exception("Unknown external type");
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getEmbedUrl()
     {
-        throw new Exception("unimplemented");
-        // return str_replace('watch?v=', 'embed/', $this->url);
+        if ($this->getTypeString() == 'youtube')
+        {
+            return str_replace('watch?v=', 'embed/', $this->url);
+        }
+        else
+        {
+            throw new Exception("unimplemented");
+        }
     }
 
     public function getHtml()
@@ -41,7 +67,7 @@ class External extends Model
         $this->visits = $this->visits + 1;
         $this->save();
 
-        return view('external_card', [
+        return view('client.components.external_embed', [
             'external' => $this,
         ]);
     }
@@ -60,7 +86,7 @@ class External extends Model
     {
         if (empty($this->author_id) || empty($this->song_lyric_id))
         {
-            return "External $this->id";
+            return "Video $this->id";
         }
         else
         {

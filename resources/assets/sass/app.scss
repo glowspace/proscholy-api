@@ -62,21 +62,21 @@ Layout
     }
 
     .badge {
-      float:    right;
+      float:            right;
 
-      position: relative;
-      top:      3px;
+      position:         relative;
+      top:              3px;
 
       background-color: #36c374;
-      color: black;
+      color:            black;
     }
   }
 
   .navbar-label {
-    padding:       3px 10px;
+    padding:          3px 10px;
 
     background-color: #292929;
-    color:         white;
+    color:            white;
   }
 }
 
@@ -187,8 +187,11 @@ ChordPro view
 #lyrics {
   display:     inline-block;
 
+  width: 100%;
+
   text-align:  left;
   margin:      0 auto 0;
+  overflow-x:  scroll;
 
   font-family: monospace;
   white-space: nowrap;
