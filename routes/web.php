@@ -24,7 +24,7 @@ Route::get('/zpevnik/{id}', 'SongbookController@renderSongbook')->name('songbook
 
 Route::get('/navrh/preklad/{id}', 'TranslationController@renderTranslation')->name('request.new.song');
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 
 /**
