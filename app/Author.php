@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereVisits($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[] $memberships
  */
-class Author extends Model
+class Author extends Model implements ISearchResult
 {
     public function songLyrics()
     {
@@ -77,6 +77,18 @@ class Author extends Model
     // TODO
     public function getLink()
     {
-        return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';
+        return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';  
+    }
+
+    // implementing INTERFACE ISearchResult
+
+    public function getSearchTitle()
+    {
+        return $this->name;
+    }
+
+    public function getSearchText()
+    {
+        return $this->description;
     }
 }

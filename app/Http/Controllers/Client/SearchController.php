@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\ISearchResult;
 use App\SongLyric;
 
 class SearchController extends Controller
@@ -40,7 +41,7 @@ class SearchController extends Controller
 
         return view('client.search_results', [
             'phrase' => $phrase,
-            'song_lyrics' => $search_results
+            'search_results' => $search_results
         ]);
     }
 }
