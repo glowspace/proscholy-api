@@ -25,6 +25,7 @@ Route::get('/zpevnik/{id}', 'SongbookController@renderSongbook')->name('songbook
 Route::get('/navrh/preklad/{id}', 'TranslationController@renderTranslation')->name('request.new.song');
 
 Auth::routes(['register' => true]);
+Route::get('/logout', 'Auth\LoginController@logout');
 
 
 /**
@@ -71,7 +72,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/manage/author/new', 'AdminController@renderNewAuthor')->name('admin.author.new');
     Route::post('/manage/author/new', 'AdminController@storeNewAuthor')->name('admin.author.new.save');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
