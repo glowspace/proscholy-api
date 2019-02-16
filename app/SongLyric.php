@@ -39,7 +39,6 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property int|null                                                    $visits
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[]  $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereVisits($value)
  * @property string $lang
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals

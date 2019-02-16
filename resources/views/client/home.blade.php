@@ -1,8 +1,11 @@
 @extends('layout.layout')
 
+@section('navbar')
+    @include('client.components.menu_main')
+@endsection
+
 @section('content')
     <div class="background-home">
-
         <div class="logo-wrapper">
             <div class="logo"></div>
             <span class="caption material-shadow-text">Zpěvník</span>

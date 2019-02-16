@@ -40,13 +40,33 @@ Layout
 }
 
 .sidebar {
-  height: calc(100vh - 66px);
+  height:  calc(100vh - 66px);
+  padding: 5px 0 0;
+
+  .btn-secondary {
+    width:      100%;
+
+    margin:     0;
+    padding:    0.66875rem 1rem;
+
+    color:      white;
+    text-align: left;
+
+    &:hover {
+      color: white;
+    }
+
+    // Fontawesome icon
+    i {
+      width: 20px;
+    }
+  }
 }
 
 .content {
-  height: calc(100vh - 66px);
+  height:     calc(100vh - 66px);
 
-  padding: 0;
+  padding:    0;
   overflow-y: auto;
   overflow-x: hidden;
 }
