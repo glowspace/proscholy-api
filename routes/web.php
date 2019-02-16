@@ -24,7 +24,7 @@ Route::get('/pisen/{SongLyric}/text', 'Client\SongLyricsController@songText')->n
 Route::get('/pisen/{SongLyric}/noty', 'Client\SongLyricsController@songScore')->name('client.song.score');
 Route::get('/pisen/{SongLyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
 Route::get('/pisen/{SongLyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
-Route::get('/pisen/{SongLyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
+Route::get('/pisen/{SongLyric}/videa', 'Client\SongLyricsController@songExternals')->name('client.song.externals');
 Route::get('/autor/{Author}', 'Client\AuthorController@renderAuthor')->name('client.author');
 // TODO: Songbook view
 Route::get('/zpevnik/{Songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');
@@ -52,19 +52,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
         ->name('admin.todo.setSongAuthor');
 
-    // Video
-    Route::get('/manage/videos', 'AdminController@renderVideos')->name('admin.videos');
-    Route::get('/manage/video/new', 'AdminController@renderVideoCreate')->name('admin.video.new');
-    Route::post('/manage/video/new/save', 'AdminController@storeVideoCreate')->name('admin.video.new.save');
-    Route::get('/manage/video/edit/{id}', 'AdminController@renderVideoEdit')->name('admin.video.edit');
-    Route::post('/manage/video/edit/save', 'AdminController@storeVideoEdit')->name('admin.video.edit.save');
-    Route::get('/manage/video/edit/{id}/translation', 'AdminController@renderVideoEditTranslation')
-        ->name('admin.video.edit.translation');
-    Route::get('/manage/video/edit/{id}/translation/{t_id}', 'AdminController@storeVideoEditTranslation')
-        ->name('admin.video.edit.translation.save');
-    Route::get('/manage/video/edit/{id}/author', 'AdminController@renderVideoEditAuthor')->name('admin.video.edit.author');
-    Route::get('/manage/video/edit/{id}/author/{a_id}', 'AdminController@storeVideoEditAuthor')
-        ->name('admin.video.edit.author.save');
+    // External
+    Route::get('/manage/externals', 'AdminController@renderExternals')->name('admin.externals');
+    Route::get('/manage/external/new', 'AdminController@renderExternalCreate')->name('admin.external.new');
+    Route::post('/manage/external/new/save', 'AdminController@storeExternalCreate')->name('admin.external.new.save');
+    Route::get('/manage/external/edit/{id}', 'AdminController@renderExternalEdit')->name('admin.external.edit');
+    Route::post('/manage/external/edit/save', 'AdminController@storeExternalEdit')->name('admin.external.edit.save');
+    Route::get('/manage/external/edit/{id}/translation', 'AdminController@renderExternalEditTranslation')
+        ->name('admin.external.edit.translation');
+    Route::get('/manage/external/edit/{id}/translation/{t_id}', 'AdminController@storeExternalEditTranslation')
+        ->name('admin.external.edit.translation.save');
+    Route::get('/manage/external/edit/{id}/author', 'AdminController@renderExternalEditAuthor')->name('admin.external.edit.author');
+    Route::get('/manage/external/edit/{id}/author/{a_id}', 'AdminController@storeExternalEditAuthor')
+        ->name('admin.external.edit.author.save');
 
     // Song
     Route::get('/manage/songs', 'AdminController@renderSongs')->name('admin.songs');

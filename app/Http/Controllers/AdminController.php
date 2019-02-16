@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Author;
-use App\Http\Controllers\Controller;
 use App\Song;
 use App\SongbookRecord;
 use App\SongLyric;

@@ -61,7 +61,7 @@
     <h4>Videa</h4>
 
     <div class="row">
-        @if($author->videos->count() == 0)
+        @if($author->externals->count() == 0)
             <div class="col-sm-4">
                 <div class="card embed-responsive embed-responsive-16by9"></div>
             </div>
@@ -71,10 +71,10 @@
             <div class="col-sm-4">
                 <div class="card embed-responsive embed-responsive-16by9"></div>
             </div>
-        @elseif($author->videos->count() == 1)
-            @foreach($author->videos as $video)
+        @elseif($author->externals->count() == 1)
+            @foreach($author->externals as $external)
                 <div class="col-sm-4">
-                    {!! $video->getHtml() !!}
+                    {!! $external->getHtml() !!}
                 </div>
             @endforeach
             <div class="col-sm-4">
@@ -83,19 +83,19 @@
             <div class="col-sm-4">
                 <div class="card embed-responsive embed-responsive-16by9"></div>
             </div>
-        @elseif($author->videos->count() == 2)
-            @foreach($author->videos as $video)
+        @elseif($author->externals->count() == 2)
+            @foreach($author->externals as $external)
                 <div class="col-sm-4">
-                    {!! $video->getHtml() !!}
+                    {!! $external->getHtml() !!}
                 </div>
             @endforeach
             <div class="col-sm-4">
                 <div class="card embed-responsive embed-responsive-16by9"></div>
             </div>
-        @elseif($author->videos->count() > 2)
-            @foreach($author->videos as $video)
+        @elseif($author->externals->count() > 2)
+            @foreach($author->externals as $external)
                 <div class="col-sm-4">
-                    {!! $video->getHtml() !!}
+                    {!! $external->getHtml() !!}
                 </div>
             @endforeach
         @endif

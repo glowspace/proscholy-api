@@ -37,8 +37,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property int|null                                                    $visits
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[]  $videos
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[]  $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereVisits($value)
+ * @property string $lang
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
  */
 class SongLyric extends Model
 {
@@ -59,8 +62,8 @@ class SongLyric extends Model
         return route('song_lyrics.single', ['id' => $this->id]);
     }
 
-    public function videos()
+    public function externals()
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(External::class);
     }
 }

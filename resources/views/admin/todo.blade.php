@@ -14,11 +14,11 @@
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <b>Videa bez štítku</b>
-                    <span class="badge badge-warning badge-pill">{{$videos->count()}}</span>
+                    <span class="badge badge-warning badge-pill">{{$externals->count()}}</span>
                 </li>
-                @foreach($videos as $video)
+                @foreach($externals as $external)
                     <li class="list-group-item">
-                        <a href="{{route('admin.video.edit',['id'=>$video->id])}}">{{$video->generateTitle()}}</a>
+                        <a href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->generateTitle()}}</a>
                     </li>
                 @endforeach
 

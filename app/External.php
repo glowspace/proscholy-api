@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Video
+ * App\External
  *
  * @property int                 $id
  * @property int|null            $author_id
@@ -14,24 +14,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property string|null         $url
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereSongLyricId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereSongLyricId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereUrl($value)
  * @mixin \Eloquent
  * @property int|null $visits
  * @property-read \App\Author|null $author
  * @property-read \App\SongLyric|null $songLyric
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Video whereVisits($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereVisits($value)
  */
-class Video extends Model
+class External extends Model
 {
     public function getEmbedUrl()
     {
-        return str_replace('watch?v=', 'embed/', $this->url);
+        throw new Exception("unimplemented");
+        // return str_replace('watch?v=', 'embed/', $this->url);
     }
 
     public function getHtml()
@@ -39,8 +40,8 @@ class Video extends Model
         $this->visits = $this->visits + 1;
         $this->save();
 
-        return view('video_card', [
-            'video' => $this,
+        return view('external_card', [
+            'external' => $this,
         ]);
     }
 
@@ -58,7 +59,7 @@ class Video extends Model
     {
         if (empty($this->author_id) || empty($this->song_lyric_id))
         {
-            return "Video $this->id";
+            return "External $this->id";
         }
         else
         {

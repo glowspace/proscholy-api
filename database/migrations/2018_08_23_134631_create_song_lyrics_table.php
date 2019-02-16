@@ -25,7 +25,7 @@ class CreateSongLyricsTable extends Migration {
 			$table->boolean('is_original')->default(0);
 			$table->boolean('is_opensong')->default(0);
 
-			$table->string('lang', 191);
+			$table->string('lang', 191)->default('cs');
 
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();

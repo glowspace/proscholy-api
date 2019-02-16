@@ -19,6 +19,8 @@ use Log;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property int|null                                                       $visits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereCreatedAt($value)
  */
 class Song extends Model
 {
