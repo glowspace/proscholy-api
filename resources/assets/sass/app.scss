@@ -43,13 +43,13 @@ Layout
   height:  calc(100vh - 66px);
   padding: 5px 0 0;
 
-  .btn-secondary {
+  a {
     width:      100%;
 
     margin:     0;
     padding:    0.66875rem 1rem;
 
-    color:      white;
+    color:      white !important;
     text-align: left;
 
     &:hover {
@@ -73,6 +73,10 @@ Layout
 
 .content-padding {
   padding: 0 30px;
+}
+
+.content-padding-top {
+  padding-top: 30px;
 }
 
 /**

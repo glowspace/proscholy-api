@@ -1,15 +1,15 @@
-<button type="button" class="btn btn-secondary">
-    <i class="fas fa-search"></i> Text + akordy
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fas fa-users"></i> Noty
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fab fa-facebook"></i> Další překlady
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fab fa-instagram"></i> Nahrávky
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fab fa-instagram"></i> Videa
-</button>
+<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
+    <i class="fas fa-align-left"></i> Text + akordy
+</a>
+<a class="btn btn-secondary">
+    <i class="fas fa-music"></i> Noty
+</a>
+<a class="btn btn-secondary">
+    <i class="fas fa-language"></i> Překlady
+</a>
+<a class="btn btn-secondary">
+    <i class="fas fa-microphone"></i> Nahrávky
+</a>
+<a class="btn btn-secondary">
+    <i class="fab fa-youtube"></i> Videa
+</a>

@@ -20266,19 +20266,19 @@ Layout
   padding: 5px 0 0;
 }
 
-.sidebar .btn-secondary {
+.sidebar a {
   width: 100%;
   margin: 0;
   padding: 0.66875rem 1rem;
-  color: white;
+  color: white !important;
   text-align: left;
 }
 
-.sidebar .btn-secondary:hover {
+.sidebar a:hover {
   color: white;
 }
 
-.sidebar .btn-secondary i {
+.sidebar a i {
   width: 20px;
 }
 
@@ -20291,6 +20291,10 @@ Layout
 
 .content-padding {
   padding: 0 30px;
+}
+
+.content-padding-top {
+  padding-top: 30px;
 }
 
 /**
