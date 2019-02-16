@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
+use Illuminate\Support\Arr;
 
 /**
  * App\SongLyric
@@ -45,6 +47,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SongLyric extends Model
 {
+    // Laravel Scout Trait used for full-text searching
+    use Searchable;
+
     protected $fillable = ['name', 'song_id', 'lyrics', 'id', 'is_original', 'is_authorized'];
 
     public function song()
@@ -65,5 +70,20 @@ class SongLyric extends Model
     public function externals()
     {
         return $this->hasMany(External::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Preserve only attributes that are meant to be searched in
+        $searchable = Arr::only($array, ['name', 'lyrics', 'description']);
+
+        return $searchable;
     }
 }
