@@ -8,6 +8,7 @@
     <div class="content-padding">
         <h1>Výsledky vyhledávání pro {{$phrase}}</h1>
 
+
         <h2>Písně</h2>
 
         <table class="table">
