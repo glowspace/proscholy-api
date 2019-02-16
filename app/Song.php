@@ -40,6 +40,6 @@ class Song extends Model
 
     public function getOriginalLyric()
     {
-        return $this->songLyrics()->where('is_original', 1)->get()->first();
+        return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }
 }
