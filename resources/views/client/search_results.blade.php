@@ -3,7 +3,7 @@
 @section('content')
     <h1>Výsledky vyhledávání {{$phrase}}</h1>
 
-    <table>
-
+    <table class="table">
+        
     </table>
 @endsection
