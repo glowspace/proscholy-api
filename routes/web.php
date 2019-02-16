@@ -53,8 +53,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 {
     Route::get('/manage/', 'AdminController@renderDash')->name('admin.dashboard');
     Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
-    Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
-        ->name('admin.todo.setSongAuthor');
+    // Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
+    //     ->name('admin.todo.setSongAuthor');
 
     // // External
     Route::get('/manage/externals', 'ExternalController@index')->name('admin.external.index');

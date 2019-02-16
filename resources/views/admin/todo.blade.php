@@ -31,7 +31,8 @@
                     </li>
                     @foreach($songs_w_author as $song)
                         <li class="list-group-item">
-                            <a href="{{route('admin.song.author.add',['id'=>$song->id])}}">{{$song->name}}</a>
+                            <a href="{{route('admin.song.edit',['song_lyric'=>$song->id])}}">{{$song->name}}</a>
+                            {{-- <a href="#">todo add author</a> --}}
                         </li>
                     @endforeach
 

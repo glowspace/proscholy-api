@@ -14,3 +14,6 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .browserSync('localhost:8000');
+
+mix.copy('resources/assets/vendor/magicsuggest/magicsuggest-min.css', 'public/css/magicsuggest-min.css');
+mix.copy('resources/assets/vendor/magicsuggest/magicsuggest-min.js', 'public/js/magicsuggest-min.js');

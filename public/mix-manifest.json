@@ -1,4 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/magicsuggest-min.css": "/css/magicsuggest-min.css",
+    "/js/magicsuggest-min.js": "/js/magicsuggest-min.js"
 }

@@ -26,12 +26,12 @@
                     <input type="submit" value="Uložit nový zdroj">
                 </form>
             </div>
-            {{-- <div class="col-sm-4">
+            <div class="col-sm-4">
                 <iframe height="500" src="{{route('admin.external.edit.author',['id'=>$external->id])}}"></iframe>
             </div>
             <div class="col-sm-4">
                 <iframe height="500" src="{{route('admin.external.edit.translation',['id'=>$external->id])}}"></iframe>
-            </div> --}}
+            </div>
         </div>
     </div>
 @endsection
