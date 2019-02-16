@@ -28,7 +28,7 @@ Route::get('/navrh/preklad/{id}', 'TranslationController@renderTranslation')->na
 /**
  * Administrace.
  */
-Route::group(['prefix' => 'admin'], function ()
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
     Route::get('/manage/', 'AdminController@renderDash')->name('admin.dashboard');
     Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
