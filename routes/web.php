@@ -43,7 +43,6 @@ Route::post('/report', 'Client\ReportController@storeReport')->name('client.repo
 Auth::routes(['register' => true]);
 Route::get('/logout', 'Auth\LoginController@logout');
 
-
 /**
  * Administrace.
  */
