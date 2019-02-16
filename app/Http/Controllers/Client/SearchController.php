@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\SongLyric;
 
 class SearchController extends Controller
 {
@@ -35,8 +36,11 @@ class SearchController extends Controller
      */
     public function searchResults($phrase)
     {
+        $search_results = SongLyric::search($phrase)->get();
+
         return view('client.search_results', [
             'phrase' => $phrase,
+            'song_lyrics' => $search_results
         ]);
     }
 }
