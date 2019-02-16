@@ -20268,7 +20268,8 @@ Layout
 .content {
   height: calc(100vh - 66px);
   padding: 0;
-  overflow-x: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .content-padding {
@@ -20317,7 +20318,7 @@ Home page specific elements
 
 .search-wrapper .search-home {
   display: inline-block;
-  padding: 10px;
+  padding: 10px 20px;
   margin-right: 7px;
   border: none;
   background-color: white;
