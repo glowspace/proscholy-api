@@ -59,7 +59,7 @@ class SongLyric extends Model
 
     public function getLink()
     {
-        return route('song_lyrics.single', ['id' => $this->id]);
+        return route('client.song.text', ['id' => $this->id]);
     }
 
     public function externals()
