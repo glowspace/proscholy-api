@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.layout_old')
 
 @section('content')
     <h2 style="margin-bottom: 5px;">{{$song_l->name}}</h2>

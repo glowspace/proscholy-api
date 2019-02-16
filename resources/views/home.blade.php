@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.layout')
 
 @section('content')
 
@@ -13,12 +13,12 @@
                     <a href="{{route('song.single', ['id'=> $song->id])}}">{{$song->name}}</a> ({{$song->visits}}x)<br>
                 @endif --}}
                 <a href="{{ route('song_lyrics.single', ['id'=> $song_l->id]) }}">{{ $song_l->name }}</a>
-                    ({{ $song_l->visits }}x)<br>
-            @endforeach 
+                ({{ $song_l->visits }}x)<br>
+            @endforeach
         </div>
         <div class="col-sm-4">
             <script>
-                (function() {
+                (function () {
                     var cx = '007397572785069727063:fb8ec8z7fcu';
                     var gcse = document.createElement('script');
                     gcse.type = 'text/javascript';
@@ -40,7 +40,6 @@
                 autorů</a>
 
 
-
             <h4>Zpěvník v počtech</h4>
 
             <p>Písně: <b>{{$songs_count}} <i class="fas fa-music"></i></b></p>
@@ -51,7 +50,7 @@
             {{-- <p>{{$lyrics_percentage}}% písní má přidaný text</p> --}}
 
             {{--<a class="btn btn-primary" style="width: 100%; margin-bottom:10px;" href="{{route('author.list')}}">--}}
-                {{--Něco mi tu chybí!</a>--}}
+            {{--Něco mi tu chybí!</a>--}}
         </div>
         <div class="col-sm-4">
             <h4>Nejnavštěvovanější autoři</h4>

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.layout_old')
 
 @section('content')
     <a class="btn btn-info" href="{{route('admin.todo.random')}}">Přeskočit a načíst něco jiného</a>

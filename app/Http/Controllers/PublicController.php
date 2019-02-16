@@ -15,10 +15,8 @@ class PublicController extends Controller
 
         return view('home', [
             'songs_count'   => SongLyric::where('lyrics', '!=', '')->count(),
-            // 'translations_count'      => SongLyric::where('is_original', 0)->count(),
             'authors_count' => Author::count(),
             'videos_count'  => Video::count(),
-            // 'lyrics_percentage' => $lyrics_percentage,
             'top_songs'     => $top_songs,
             'top_authors'   => $top_authors,
         ]);
