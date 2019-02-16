@@ -17,6 +17,11 @@ class SearchController extends Controller
      */
     public function searchSend(Request $request)
     {
+        if (empty($request['query']))
+        {
+            return redirect()->back();
+        }
+
         return redirect()->route('client.search_results', $request['query']);
     }
 
