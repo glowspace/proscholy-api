@@ -83,7 +83,7 @@ class Author extends Model implements ISearchResult
     // TODO
     public function getLink()
     {
-        return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';  
+        return '<a href="' . route('client.author', $this) . '">' . $this->name . '</a>';
     }
 
     /**

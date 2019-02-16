@@ -71,6 +71,11 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(External::class);
     }
 
+    public function youtubeVideos()
+    {
+        return $this->externals()->where('type', 0);
+    }
+
     /**
      * Get the indexable data array for the model.
      *

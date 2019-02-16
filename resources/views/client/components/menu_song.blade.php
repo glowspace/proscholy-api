@@ -1,15 +1,36 @@
-<button type="button" class="btn btn-secondary">
-    <i class="fas fa-search"></i> Text + akordy
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fas fa-users"></i> Noty
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fab fa-facebook"></i> Další překlady
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fab fa-instagram"></i> Nahrávky
-</button>
-<button type="button" class="btn btn-secondary">
-    <i class="fab fa-instagram"></i> Videa
-</button>
+<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
+    <i class="fas fa-arrow-left"></i> Návrat zpět
+</a>
+
+<div class="navbar-label material-shadow text-success">Materiály písně</div>
+
+<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
+    <i class="fas fa-align-left"></i> Text + akordy
+
+</a>
+<a class="btn btn-secondary">
+    <i class="fas fa-music"></i> Noty
+    <span class="badge badge-pill">2</span>
+</a>
+<a class="btn btn-secondary">
+    <i class="fas fa-language"></i> Překlady
+    <span class="badge badge-pill">3</span>
+</a>
+<a class="btn btn-secondary">
+    <i class="fas fa-microphone"></i> Nahrávky
+    <span class="badge badge-pill">4</span>
+</a>
+<a class="btn btn-secondary">
+    <i class="fab fa-youtube"></i> Videa
+    <span class="badge badge-pill">8</span>
+</a>
+
+<div class="navbar-label material-shadow text-warning">Možnosti písně</div>
+
+<a class="btn btn-secondary">
+    <i class="fas fa-upload"></i> Přidat materiál
+</a>
+
+<a class="btn btn-secondary">
+    <i class="fas fa-exclamation-circle"></i> Nahlásit
+</a>

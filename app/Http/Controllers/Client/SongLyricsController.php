@@ -20,6 +20,6 @@ class SongLyricsController extends Controller
             $author->save();
         }
 
-        return view('client.song_lyrics', compact('song_l'));
+        return view('client.song.song_text', compact('song_l'));
     }
 }

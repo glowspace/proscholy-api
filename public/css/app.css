@@ -20266,20 +20266,34 @@ Layout
   padding: 5px 0 0;
 }
 
-.sidebar .btn-secondary {
+.sidebar a {
   width: 100%;
   margin: 0;
   padding: 0.66875rem 1rem;
-  color: white;
+  color: white !important;
   text-align: left;
 }
 
-.sidebar .btn-secondary:hover {
+.sidebar a:hover {
   color: white;
 }
 
-.sidebar .btn-secondary i {
+.sidebar a i {
   width: 20px;
+}
+
+.sidebar a .badge {
+  float: right;
+  position: relative;
+  top: 3px;
+  background-color: #36c374;
+  color: black;
+}
+
+.sidebar .navbar-label {
+  padding: 3px 10px;
+  background-color: #292929;
+  color: white;
 }
 
 .content {
@@ -20290,7 +20304,11 @@ Layout
 }
 
 .content-padding {
-  padding: 0 30px;
+  padding: 0 30px 20px;
+}
+
+.content-padding-top {
+  padding-top: 30px;
 }
 
 /**
@@ -20369,8 +20387,10 @@ ChordPro view
 
 #lyrics {
   display: inline-block;
+  width: 100%;
   text-align: left;
-  margin: 1em auto 0;
+  margin: 0 auto 0;
+  overflow-x: scroll;
   font-family: monospace;
   white-space: nowrap;
   font-size: 16px;
