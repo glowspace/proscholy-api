@@ -9,6 +9,8 @@ class SearchController extends Controller
 {
     public function search($phrase)
     {
-        return view('client.search_results');
+        return view('client.search_results', [
+            'phrase' => $phrase,
+        ]);
     }
 }
