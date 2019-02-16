@@ -14,7 +14,7 @@
             @forelse($song_lyrics as $song_lyric)
                 <tr>
                     <td>
-                        <a href="{{$song_lyric->id}}">{{$song_lyric->getSearchTitle()}}</a>
+                        <a href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
                         - {{$song_lyric->getSearchText()}}
                     </td>
                 </tr>

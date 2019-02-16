@@ -90,7 +90,7 @@ section {
 
 body {
   margin: 0;
-  font-family: Nunito;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.6;
@@ -6549,7 +6549,7 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: Nunito;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -6674,7 +6674,7 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: Nunito;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -20282,6 +20282,20 @@ Layout
   width: 20px;
 }
 
+.sidebar a .badge {
+  float: right;
+  position: relative;
+  top: 3px;
+  background-color: #36c374;
+  color: black;
+}
+
+.sidebar .navbar-label {
+  padding: 3px 10px;
+  background-color: #292929;
+  color: white;
+}
+
 .content {
   height: calc(100vh - 66px);
   padding: 0;
@@ -20290,7 +20304,7 @@ Layout
 }
 
 .content-padding {
-  padding: 0 30px;
+  padding: 0 30px 20px;
 }
 
 .content-padding-top {
@@ -20374,7 +20388,7 @@ ChordPro view
 #lyrics {
   display: inline-block;
   text-align: left;
-  margin: 1em auto 0;
+  margin: 0 auto 0;
   font-family: monospace;
   white-space: nowrap;
   font-size: 16px;

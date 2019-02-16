@@ -12,17 +12,32 @@
 
                 <div class="card">
                     <div class="card-body">
+                        <p>Autor: </p>
+                        <hr>
 
+                        <div id="lyrics">
+                            {!! nl2br($song_l->lyrics) !!}
+                        </div>
+
+                        <hr>
+                        Zpěvník ProScholy <img src="{{asset('img/logo_v2.png')}}" width="20px">
                     </div>
                 </div>
             </div>
             <div class="col-sm-4 content-padding-top">
-                <div class="card">
-                    <div class="card-header">Informace o písni</div>
-                    <div class="card-body">
-
+                @if($song_l->description)
+                    <div class="card">
+                        <div class="card-header">Informace o písni</div>
+                        <div class="card-body">
+                            <b>Autor</b>
+                        </div>
                     </div>
-                </div>
+                @endif
+
+                @if(true)
+                    @component('client.components.video_card', ['external'=>\App\External::first()])
+                    @endcomponent
+                @endif
             </div>
         </div>
 
@@ -30,7 +45,7 @@
 @endsection
 
 @section('scripts')
-     <script
+    <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>

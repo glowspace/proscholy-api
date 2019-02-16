@@ -59,6 +59,8 @@
                 @yield('content')
             </div>
         </div>
+
+
     </div>
     {{-- Main JS built with Laravel's mix --}}
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
