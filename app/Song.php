@@ -33,7 +33,7 @@ class Song extends Model
     /**
      * Returns all SongLyrics instances
      */
-    public function songLyrics()
+    public function song_lyrics()
     {
         return $this->hasMany(SongLyric::class);
     }
