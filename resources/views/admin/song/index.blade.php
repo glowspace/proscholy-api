@@ -3,7 +3,7 @@
 @section('content')
     <div class="content-padding">
         <table class="table table-bordered" style="width:600px; margin: 0 auto;">
-            @foreach($songs as $song)
+            @foreach($song_lyrics as $song)
             <tr>
                 <td><a href="{{route('admin.song.edit',['id'=>$song->id])}}">{{$song->name}}</a></td>
                     <td>

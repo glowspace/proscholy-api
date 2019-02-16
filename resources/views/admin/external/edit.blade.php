@@ -11,7 +11,7 @@
             <div class="col-sm-4">
                 {!! $external->getHtml() !!}
 
-                <form action="{{route('admin.external.edit.save')}}" method="post">
+                <form action="{{route('admin.external.update')}}" method="post">
                     @csrf
                     <input autofocus name="url" placeholder="URL videa na YT" value="{{$external->url}}"><br>
                     <input type="hidden" name="id" value="{{$external->id}}">
