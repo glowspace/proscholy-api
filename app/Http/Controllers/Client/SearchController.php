@@ -37,7 +37,7 @@ class SearchController extends Controller
      */
     public function searchResults($phrase)
     {
-        $search_results = SongLyric::search($phrase)->get();
+        $search_results = SongLyric::search($phrase)->paginate(10);
 
         return view('client.search_results', [
             'phrase' => $phrase,
