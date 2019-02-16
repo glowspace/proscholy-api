@@ -17,4 +17,6 @@
             @endforeach
         </table>
     </div>
+
+    {{ $search_results->links() }}
 @endsection
