@@ -9,13 +9,10 @@
         </div>
 
         <div class="embed-responsive embed-responsive-16by9">
-
-            {{--<iframe src="{{$external->getEmbedUrl()}}?showinfo=0" frameborder="0"--}}
-            {{--allowfullscreen></iframe>--}}
             <iframe src="{{$external->getEmbedUrl()}}" frameborder="0"
                     allowfullscreen></iframe>
         </div>
     </div>
-    @else
+@else
     <div class="card" style="margin-bottom: 1em;">Wrong external media type.</div>
 @endif

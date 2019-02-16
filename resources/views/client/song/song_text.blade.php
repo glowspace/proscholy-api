@@ -12,7 +12,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <p>Autor: </p>
+                        <p>@component('client.components.song_lyric_author',['song_l' => $song_l])@endcomponent</p>
                         <hr>
 
                         <div id="lyrics">
@@ -20,7 +20,7 @@
                         </div>
 
                         <hr>
-                        Zpěvník ProScholy <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
+                        Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
             </div>
