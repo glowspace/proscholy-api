@@ -32,19 +32,19 @@ class SearchController extends Controller
      * The real search route.
      * Performs search query using Laravel Scaut and pass results into view.
      *
-     * @param $phrase
+     * @param $query
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function searchResults($phrase)
+    public function searchResults($query)
     {
         $limit = 5;
 
-        $song_lyrics = SongLyric::search($phrase)->paginate(5);
-        $authors = Author::search($phrase)->paginate(5);
+        $song_lyrics = SongLyric::search($query)->paginate($limit);
+        $authors = Author::search($query)->paginate($limit);
 
         return view('client.search_results', [
-            'phrase' => $phrase,
+            'phrase' => $query,
             'song_lyrics' => $song_lyrics,
             'authors' => $authors
         ]);

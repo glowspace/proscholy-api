@@ -11,25 +11,38 @@
         <h2>Písně</h2>
 
         <table class="table">
-            @foreach($song_lyrics as $song_lyric)
+            @forelse($song_lyrics as $song_lyric)
                 <tr>
                     <td>
-                        <a href="{{$song_lyric->id}}">{{$song_lyric->getSearchTitle()}}</a> - {{$song_lyric->getSearchText()}}
+                        <a href="{{$song_lyric->id}}">{{$song_lyric->getSearchTitle()}}</a>
+                        - {{$song_lyric->getSearchText()}}
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td>
+                        <i>Žádná píseň s tímto názvem nebyla nalezena.</i>
+                    </td>
+                </tr>
+            @endforelse
         </table>
 
         <h2>Autoři</h2>
 
         <table class="table">
-            @foreach($authors as $author)
+            @forelse($authors as $author)
                 <tr>
                     <td>
                         <a href="{{$author->id}}">{{$author->getSearchTitle()}}</a> - {{$author->getSearchText()}}
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td>
+                        <i>Žádný autor nebyl nalezen.</i>
+                    </td>
+                </tr>
+            @endforelse
         </table>
     </div>
 @endsection
