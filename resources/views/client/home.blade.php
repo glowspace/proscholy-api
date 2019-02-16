@@ -1,9 +1,7 @@
 @extends('layout.layout')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-2 sidebar bg-dark material-shadow"></div>
-        <div class="col-md-10 background-home">
+
             <div class="logo-wrapper">
                 <div class="logo"></div>
                 <span class="caption material-shadow-text">Zpěvník</span>
@@ -15,6 +13,5 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-        </div>
-    </div>
+
 @endsection

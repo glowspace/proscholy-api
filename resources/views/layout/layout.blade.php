@@ -12,7 +12,7 @@
     <link rel="manifest" href="{{asset('img/favicon/site.webmanifest')}}">
     <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#292929">
 
     <title>
         @if(isset($page_title))
@@ -45,17 +45,23 @@
 </head>
 <body>
     <nav class="navbar navbar-expand navbar-dark static-top">
-
         <img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0">
         <a class="navbar-brand mr-1" href="/"> Zpěvník pro scholy</a>
     </nav>
 
     <div class="container-fluid">
-        @yield('content')
+        <div class="row">
+            <div class="d-none d-md-block col-md-2 sidebar bg-dark material-shadow">
+                @yield('navbar')
+            </div>
+            <div class="col-md-10 background-home">
+                @yield('content')
+            </div>
+        </div>
     </div>
     {{-- Main JS built with Laravel's mix --}}
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-    
+
     @stack('scripts')
 </body>
 </html>
