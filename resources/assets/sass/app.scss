@@ -41,6 +41,10 @@ Layout
   height: calc(100vh - 66px);
 }
 
+.content {
+  padding: 0;
+}
+
 /**
 Home page specific elements
  */
@@ -55,7 +59,7 @@ Home page specific elements
 
 .logo-wrapper {
   text-align: center;
-  margin-top: 160px;
+  padding-top: 160px;
 
   .logo {
     height:              130px;
@@ -84,13 +88,13 @@ Home page specific elements
   position:   relative;
   margin-top: 30px;
 
-  height: 47px;
+  height:     47px;
 
   .search-home {
     display:          inline-block;
 
     padding:          10px;
-    margin-right: 7px;
+    margin-right:     7px;
 
     border:           none;
 

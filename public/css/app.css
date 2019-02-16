@@ -20264,6 +20264,10 @@ Layout
   height: calc(100vh - 66px);
 }
 
+.content {
+  padding: 0;
+}
+
 /**
 Home page specific elements
  */
@@ -20278,7 +20282,7 @@ Home page specific elements
 
 .logo-wrapper {
   text-align: center;
-  margin-top: 160px;
+  padding-top: 160px;
 }
 
 .logo-wrapper .logo {
