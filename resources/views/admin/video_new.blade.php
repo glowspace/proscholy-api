@@ -1,12 +1,12 @@
 @extends('layout.layout_old')
 
 @section('content')
-    <h2>Nové video</h2>
+    <h2>Nové external</h2>
 
-    <a href="{{route('admin.videos')}}">Zpět do administrace</a>
+    <a href="{{route('admin.externals')}}">Zpět do administrace</a>
     <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a>
 
-    <form action="{{route('admin.video.new.save')}}" method="post">
+    <form action="{{route('admin.external.new.save')}}" method="post">
         @csrf
         <input autofocus name="url" placeholder="URL videa na YT"><br>
 

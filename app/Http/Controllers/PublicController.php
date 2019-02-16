@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Author;
-use App\Http\Controllers\Controller;
 use App\SongLyric;
 use App\External;
 
-class HomeController extends Controller
+class PublicController extends Controller
 {
     public function renderHome()
     {

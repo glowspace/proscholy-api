@@ -42,24 +42,24 @@
     <br>
     <div id="lyrics">{{$song_l->lyrics}}</div>
 
-    @if($song_l->videos()->count() == 1)
-        <h4>Video</h4>
+    @if($song_l->externals()->count() == 1)
+        <h4>External</h4>
 
         <div class="row">
-            @foreach($song_l->videos as $video)
+            @foreach($song_l->externals as $external)
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    {!! $video->getHtml() !!}
+                    {!! $external->getHtml() !!}
                 </div>
             @endforeach
         </div>
-    @elseif($song_l->videos()->count() > 1)
+    @elseif($song_l->externals()->count() > 1)
         <h4>Videa</h4>
 
         <div class="row">
-            @foreach($song_l->videos as $video)
+            @foreach($song_l->externals as $external)
                 <div class="col-sm-4">
-                    {!! $video->getHtml() !!}
+                    {!! $external->getHtml() !!}
                 </div>
             @endforeach
         </div>

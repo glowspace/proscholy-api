@@ -14,7 +14,7 @@
     <a class="btn btn-outline-primary" href="{{route('admin.author.new')}}">+ Nový autor</a>
 
     <h2>Videa</h2>
-    <a class="btn btn-outline-primary" href="{{route('admin.video.new')}}">+ Nové video</a>
-    <a class="btn btn-outline-primary" href="{{route('admin.videos')}}">Spravovat videa</a>
+    <a class="btn btn-outline-primary" href="{{route('admin.external.new')}}">+ Nové external</a>
+    <a class="btn btn-outline-primary" href="{{route('admin.externals')}}">Spravovat videa</a>
 
 @endsection
