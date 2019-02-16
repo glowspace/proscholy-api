@@ -44,8 +44,6 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 /**
  * Administrace.
- *
- * TODO: převést administraci do resources
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
