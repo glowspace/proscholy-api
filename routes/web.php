@@ -16,6 +16,8 @@
  */
 Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
 
+Route::get('/vyhledavani/{phrase}', 'Client\HomeController@search')->name('client.results');
+
 Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')->name('client.song.list');
 Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
 
