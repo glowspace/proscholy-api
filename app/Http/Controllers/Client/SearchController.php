@@ -39,8 +39,8 @@ class SearchController extends Controller
     {
         $limit = 5;
 
-        $song_lyrics = SongLyric::search($phrase)->limit($limit)->get();
-        $authors = Author::search($phrase)->limit($limit)->get();
+        $song_lyrics = SongLyric::search($phrase)->get()->limit($limit);
+        $authors = Author::search($phrase)->get()->limit($limit);
 
         return view('client.search_results', [
             'phrase' => $phrase,
