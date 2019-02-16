@@ -33,13 +33,13 @@ class Song extends Model
     /**
      * Returns all SongLyrics instances
      */
-    public function songLyrics()
+    public function song_lyrics()
     {
         return $this->hasMany(SongLyric::class);
     }
 
     public function getOriginalLyric()
     {
-        return $this->songLyrics()->where('is_original', 1)->get()->first();
+        return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }
 }

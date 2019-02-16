@@ -40,6 +40,8 @@
 
     {{-- CSS --}}
     <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+
+    @stack('head_links')
 </head>
 <body>
     <nav class="navbar navbar-expand navbar-dark static-top">
@@ -51,10 +53,9 @@
     <div class="container-fluid">
         @yield('content')
     </div>
-
-    @yield('scripts')
-
     {{-- Main JS built with Laravel's mix --}}
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+    
+    @stack('scripts')
 </body>
 </html>
