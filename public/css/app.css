@@ -20263,6 +20263,19 @@ Layout
 
 .sidebar {
   height: calc(100vh - 66px);
+  padding: 5px 0 0;
+}
+
+.sidebar .btn-secondary {
+  width: 100%;
+  margin: 0;
+  padding: 0.66875rem 1rem;
+  color: white;
+  text-align: left;
+}
+
+.sidebar .btn-secondary:hover {
+  color: white;
 }
 
 .content {
