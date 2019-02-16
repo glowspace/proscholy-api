@@ -37,11 +37,25 @@ class SearchController extends Controller
      */
     public function searchResults($phrase)
     {
-        $search_results = SongLyric::search($phrase)->paginate(10);
+        $limit = 5;
+
+        $song_lyrics = SongLyric::search($phrase)->limit($limit)->get();
+        $authors = Author::search($phrase)->limit($limit)->get();
 
         return view('client.search_results', [
             'phrase' => $phrase,
-            'search_results' => $search_results
+            'song_lyrics' => $song_lyrics,
+            'authors' => $authors
         ]);
+    }
+
+    public function searchResultsOnlySongs($phrase)
+    {
+        // TODO 
+    }
+
+    public function searchResultsOnlyAuthors($phrase)
+    {
+        // TODO 
     }
 }
