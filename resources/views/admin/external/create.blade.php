@@ -2,16 +2,22 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Nové external</h2>
+        <h2>Nový externí zdroj</h2>
             
-        <a href="{{route('admin.externals')}}">Zpět do administrace</a>
+        <a href="{{route('admin.external.index')}}">Zpět do administrace</a>
         <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a>
 
-        <form action="{{route('admin.external.new.save')}}" method="post">
+        <form action="{{route('admin.external.create')}}" method="post">
             @csrf
-            <input autofocus name="url" placeholder="URL videa na YT"><br>
+            <input autofocus name="url" placeholder="url odkaz"><br>
 
-            <input type="submit" value="Uložit nové URL">
+            <label>Typ odkazu</label>
+            <select name="type" title="">
+                <option value="0">a</option>
+                <option value="1">b</option>
+            </select>
+
+            <input type="submit" value="Uložit nový zdroj">
         </form>
     </div>
 @endsection

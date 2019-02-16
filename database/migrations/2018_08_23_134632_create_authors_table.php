@@ -19,13 +19,14 @@ class CreateAuthorsTable extends Migration {
 			$table->string('email', 191)->nullable();
 			// remove url?
 			$table->string('url', 191)->nullable();
-			// TODO: one to many author links?
+			// deleted
 			$table->string('ytchannel', 191)->nullable();
 			$table->text('description', 65535)->nullable();
-			// ?? rather to bind with an existing user account
+			// deleted
 			$table->text('password', 65535)->nullable();
 			// TODO: rather string type..? enum..?
 			$table->integer('type')->nullable()->default(0);
+			// set default
 			$table->integer('visits');
 			$table->timestamps();
 		});

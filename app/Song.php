@@ -24,6 +24,8 @@ use Log;
  */
 class Song extends Model
 {
+    protected $fillable = ['name', 'lyrics'];
+
     public function authors()
     {
         // TODO: return all authors of the SongLyrics combined ... but rather not necessary

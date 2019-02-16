@@ -42,6 +42,7 @@ class Author extends Model implements ISearchResult
 {
     // Laravel Scout Trait used for full-text searching
     use Searchable;
+    protected $fillable = ['name', 'description', 'email', 'url', 'type'];
 
     public function songLyrics()
     {

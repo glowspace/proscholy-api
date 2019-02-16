@@ -34,9 +34,6 @@ class SongController extends Controller
         $song_l                = new SongLyric();
         $song_l->name          = $request['name'];
         $song_l->song_id       = $song->id;
-        $song_l->is_authorized = 0;
-        $song_l->is_original   = 0;
-        // $song_l->lang          = 'cs';
         $song_l->saveOrFail();
 
         if ($request["redirect"] == "edit") {
@@ -48,21 +45,19 @@ class SongController extends Controller
 
     public function edit(SongLyric $song_lyric)
     {
-        dd($song_lyric->name);
-        
-        return view('admin.song.edit', compact('song_l'));
+        return view('admin.song.edit', compact('song_lyric'));
     }
 
-    public function destroy(SongLyric $song_l){
+    public function destroy(SongLyric $song_lyric){
         // TODO: find if a Song model that had been linked to this SongLyric has no dependencies anymore
         // in the case delete this one as well
 
-        $song_l->delete();
+        $song_lyric->delete();
     }
 
-    public function update(Request $request, SongLyric $song_l)
+    public function update(Request $request, SongLyric $song_lyric)
     {
-        $song_l->update($request->all());
+        $song_lyric->update($request->all());
         return redirect()->route('admin.song.index');
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Úprava videa</h2>
+        <h2>Úprava externího zdroje</h2>
             
         <a href="{{route('admin.externals')}}">Zpět do administrace</a>
         <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a>
@@ -13,18 +13,25 @@
 
                 <form action="{{route('admin.external.update')}}" method="post">
                     @csrf
-                    <input autofocus name="url" placeholder="URL videa na YT" value="{{$external->url}}"><br>
-                    <input type="hidden" name="id" value="{{$external->id}}">
+                    @method('PUT')
 
-                    <input type="submit" value="Uložit nové URL">
+                    <input autofocus name="url" placeholder="url odkaz"><br>
+
+                    <label>Typ odkazu</label>
+                    <select name="type" title="">
+                        <option value="0">a</option>
+                        <option value="1">b</option>
+                    </select>
+
+                    <input type="submit" value="Uložit nový zdroj">
                 </form>
             </div>
-            <div class="col-sm-4">
+            {{-- <div class="col-sm-4">
                 <iframe height="500" src="{{route('admin.external.edit.author',['id'=>$external->id])}}"></iframe>
             </div>
             <div class="col-sm-4">
                 <iframe height="500" src="{{route('admin.external.edit.translation',['id'=>$external->id])}}"></iframe>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
