@@ -7,6 +7,11 @@ Imports
   src: url("/fonts/luckiest-guy.regular.ttf");
 }
 
+@font-face {
+  font-family: "Cocogoose";
+  src: url("/fonts/cocogoose-pro-regular.ttf");
+}
+
 .card {
   font-size: .875rem;
   font-weight: normal;
@@ -20275,9 +20280,8 @@ Home page specific elements
 .logo-wrapper .caption {
   font-size: 142px;
   color: white;
-  text-transform: uppercase;
   line-height: 160px;
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Cocogoose', cursive;
   text-shadow: #1a1f21c2 2px 2px 6px;
 }
 
