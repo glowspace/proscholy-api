@@ -74,10 +74,11 @@
         $(function() {
             Object.getPrototypeOf($('#authors_magicsuggest')).size = function () { return this.length; }
             $('#authors_magicsuggest').magicSuggest({
-                data: @json(\App\Author::select(['id', 'name'])->get()),
+                data: @json($all_authors),
                 valueField: 'id',
                 displayField: 'name',
-                allowFreeEntries: false,
+                allowFreeEntries: true,
+                value: @json($assigned_authors),
                 renderer: function(data){
                     return data.name;
                 },
