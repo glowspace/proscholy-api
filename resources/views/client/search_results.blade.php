@@ -11,9 +11,10 @@
         <h1>Výsledky vyhledávání {{$phrase}}</h1>
 
         <table class="table">
-            @foreach($song_lyrics as $song)
+            {{-- implements interface ISearchResult --}}
+            @foreach($search_results as $result)
                 <tr>
-                    <td>{{$song->name}}</td>
+                    <td>{{$result->getSearchTitle()}}</td>
                 </tr>
             @endforeach
         </table>

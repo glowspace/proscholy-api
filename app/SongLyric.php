@@ -45,7 +45,7 @@ use Illuminate\Support\Arr;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
  */
-class SongLyric extends Model
+class SongLyric extends Model implements ISearchResult
 {
     // Laravel Scout Trait used for full-text searching
     use Searchable;
@@ -85,5 +85,17 @@ class SongLyric extends Model
         $searchable = Arr::only($array, ['name', 'lyrics', 'description']);
 
         return $searchable;
+    }
+
+    // implementing INTERFACE ISearchResult
+
+    public function getSearchTitle()
+    {
+        return $this->name;
+    }
+
+    public function getSearchText()
+    {
+        return $this->lyrics;
     }
 }
