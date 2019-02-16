@@ -1,10 +1,7 @@
 @extends('layout.layout')
 
 @section('navbar')
-    <button type="button" class="btn btn-secondary">Vyhledávání</button>
-    <button type="button" class="btn btn-secondary">Kdo jsme</button>
-    <button type="button" class="btn btn-secondary">Facebook</button>
-    <button type="button" class="btn btn-secondary">Instagram</button>
+    @include('client.components.menu_main')
 @endsection
 
 @section('content')
