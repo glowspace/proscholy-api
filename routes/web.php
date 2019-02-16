@@ -34,8 +34,6 @@ Route::group(['prefix' => 'admin'], function ()
     Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
     Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
         ->name('admin.todo.setSongAuthor');
-//    Route::get('/manage/todo/songbookReord/setTranslation/{record_id}/{translation_id}',
-//        'AdminController@setSongbookRecordTranslation')->name('admin.todo.setRecordTranslation');
 
 
     // Video
