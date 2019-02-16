@@ -12,17 +12,31 @@
 */
 
 /**
- * Veřejné zobrazení zpěvníku.
+ * Public routes.
  */
-Route::get('/', 'PublicController@renderHome')->name('home');
-Route::get('/seznam-pisni', 'ListController@renderSongListAlphabetical')->name('song.list');
-Route::get('/seznam-autoru', 'ListController@renderAuthorListAlphabetical')->name('author.list');
-Route::get('/pisen/{id}', 'SongLyricsController@render')->name('song_lyrics.single');
-Route::get('/autor/{id}', 'AuthorController@renderAuthor')->name('author.single');
-Route::get('/zpevnik/{id}', 'SongbookController@renderSongbook')->name('songbook');
+Route::get('/', 'Client\PublicController@renderHome')->name('client.home');
 
+Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')->name('client.song.list');
+Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
 
-Route::get('/navrh/preklad/{id}', 'TranslationController@renderTranslation')->name('request.new.song');
+// Client single model views
+Route::get('/pisen/{SongLyric}/text', 'Client\SongLyricsController@songText')->name('client.song.text');
+Route::get('/pisen/{SongLyric}/noty', 'Client\SongLyricsController@songScore')->name('client.song.score');
+Route::get('/pisen/{SongLyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
+Route::get('/pisen/{SongLyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
+Route::get('/pisen/{SongLyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
+Route::get('/autor/{Author}', 'Client\AuthorController@renderAuthor')->name('client.author');
+// TODO: Songbook view
+Route::get('/zpevnik/{Songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');
+
+// Client forms
+// TODO: Public content request
+Route::get('/navrh/{id}', 'RequestController@request')->name('client.request');
+Route::post('/navrh/{id}', 'RequestController@storeRequest')->name('client.request');
+
+// TODO: Report song licence abuse
+Route::get('/report', 'Client\ReportController@report')->name('client.report');
+Route::post('/report', 'Client\ReportController@storeReport')->name('client.report');
 
 Auth::routes(['register' => true]);
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -30,6 +44,8 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 /**
  * Administrace.
+ *
+ * TODO: převést administraci do resources
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
@@ -37,7 +53,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
     Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
         ->name('admin.todo.setSongAuthor');
-
 
     // Video
     Route::get('/manage/videos', 'AdminController@renderVideos')->name('admin.videos');

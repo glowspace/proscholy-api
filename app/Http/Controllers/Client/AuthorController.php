@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Author;
+use App\Http\Controllers\Controller;
 
 class AuthorController extends Controller
 {
@@ -13,8 +14,8 @@ class AuthorController extends Controller
         $author->save();
 
         return view('author', [
-            'author' => $author,
-            'page_title'  => $author->name,
+            'author'     => $author,
+            'page_title' => $author->name,
         ]);
     }
 }
