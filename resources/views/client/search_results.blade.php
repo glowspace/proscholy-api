@@ -6,8 +6,6 @@
 
 @section('content')
     <div class="content-padding">
-
-
         <h1>Výsledky vyhledávání {{$phrase}}</h1>
 
         <table class="table">
