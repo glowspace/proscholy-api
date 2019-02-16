@@ -88,7 +88,8 @@ Home page specific elements
   position:   relative;
   margin-top: 30px;
 
-  height:     47px;
+  $search-wrapper-height: 47px;
+  height:     $search-wrapper-height;
 
   .search-home {
     display:          inline-block;
@@ -111,7 +112,7 @@ Home page specific elements
 
   .search-submit {
     width:            70px;
-    height:           100%;
+    height:           $search-wrapper-height;
 
     background-color: white;
     border-radius:    8px;
