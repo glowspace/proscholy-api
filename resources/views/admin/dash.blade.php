@@ -10,12 +10,12 @@
         <a class="btn btn-outline-primary" href="{{route('admin.song.create')}}">+ Nová píseň</a>
         <a class="btn btn-outline-primary" href="{{route('admin.song.index')}}">Spravovat písně</a>
     
-        {{-- <h2>Autoři</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.author.new')}}">+ Nový autor</a>
+        <h2>Autoři</h2>
+        <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
     
-        <h2>Videa</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.external.new')}}">+ Nové external</a>
-        <a class="btn btn-outline-primary" href="{{route('admin.externals')}}">Spravovat videa</a> --}}
+        <h2>Externí zdroje (odkazy)</h2>
+        <a class="btn btn-outline-primary" href="{{route('admin.external.create')}}">+ Nový externí zdroj</a>
+        <a class="btn btn-outline-primary" href="{{route('admin.external.index')}}">Spravovat zdroje</a>
     </div>
 
 @endsection

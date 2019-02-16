@@ -5,7 +5,7 @@
         <h2>Nový autor</h2>
 
         <div style="width: 400px; margin: 0 auto">
-            <form action="{{route('admin.author.new.save')}}" method="post">
+            <form action="{{route('admin.author.create')}}" method="post">
                 @csrf
                 <input class="form-control" autofocus name="name" placeholder="jméno autora"><br>
                 <br>
