@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ISearchResult;
 use App\SongLyric;
+use App\Author;
 
 class SearchController extends Controller
 {
@@ -39,8 +40,8 @@ class SearchController extends Controller
     {
         $limit = 5;
 
-        $song_lyrics = SongLyric::search($phrase)->get()->limit($limit);
-        $authors = Author::search($phrase)->get()->limit($limit);
+        $song_lyrics = SongLyric::search($phrase)->paginate(5);
+        $authors = Author::search($phrase)->paginate(5);
 
         return view('client.search_results', [
             'phrase' => $phrase,
