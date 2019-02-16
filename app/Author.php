@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
+use Illuminate\Support\Arr;
 
 /**
  * App\Author
@@ -38,6 +40,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model implements ISearchResult
 {
+    // Laravel Scout Trait used for full-text searching
+    use Searchable;
+
     public function songLyrics()
     {
         return $this->belongsToMany(SongLyric::class);
@@ -78,6 +83,21 @@ class Author extends Model implements ISearchResult
     public function getLink()
     {
         return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';  
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Preserve only attributes that are meant to be searched in
+        $searchable = Arr::only($array, ['name', 'description']);
+
+        return $searchable;
     }
 
     // implementing INTERFACE ISearchResult
