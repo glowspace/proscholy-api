@@ -1,6 +1,7 @@
 /**
 Imports
  */
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 @font-face {
   font-family: "Luckiest Guy";
@@ -34,6 +35,8 @@ Layout
 .navbar {
   z-index:          200;
   background-color: #292929;
+
+  font-family:      "Nunito", sans-serif;
 }
 
 .sidebar {
@@ -42,6 +45,10 @@ Layout
 
 .content {
   padding: 0;
+}
+
+.content-padding {
+  padding: 0 10px;
 }
 
 /**
