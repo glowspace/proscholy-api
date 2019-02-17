@@ -77,7 +77,7 @@ class External extends Model
         return $this->belongsTo(Author::class);
     }
 
-    public function songLyric()
+    public function song_lyric()
     {
         return $this->belongsTo(SongLyric::class);
     }
