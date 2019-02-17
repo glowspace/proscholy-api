@@ -25,7 +25,7 @@
                         </div>
                         <select class="custom-select" name="type" title="">
                             @foreach($external->type_string as $value)
-                                <option value="{{$loop->iteration}}" {{ $external->type == $loop->iteration ? 'selected' : "" }}>{{ $value }}</option>
+                                <option value="{{$loop->iteration - 1}}" {{ $external->type == $loop->iteration - 1 ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>
                     </div>

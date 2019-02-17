@@ -7,7 +7,6 @@
         <iframe src="{{$external->url}}" width="100%" height="80" frameborder="0"
                 allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
-
 @elseif($external->type == 2)
     <div class="card" style="margin-bottom: 1em;">
         <div class="card-header">
@@ -36,7 +35,7 @@
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
 
-        <div class="embed-responsive embed-responsive-16by9">
+        <div class="card-body">
             <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
         </div>
     </div>
