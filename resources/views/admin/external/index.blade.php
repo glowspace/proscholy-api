@@ -13,7 +13,7 @@
 
         <h3>Všechny zdroje</h3>
 
-        @foreach($externals as $external)
+        @foreach($rest as $external)
             <a href="{{route('admin.external.edit',['external'=>$external->id])}}">{{$external->generateTitle()}}</a><br>
         @endforeach
     </div>
