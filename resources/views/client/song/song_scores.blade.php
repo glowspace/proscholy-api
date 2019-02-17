@@ -8,7 +8,7 @@
     <div class="content-padding">
         <h1>Hudební podklady písně {{$song_l->name}}</h1>
 
-        @if($song_l->audioTracks()->count() > 0)
+        @if($song_l->scoreExternals()->count() > 0)
             <div class="card">
                 <div class="card-header">Odkazy na noty na internetu</div>
                 <div class="card-body">
