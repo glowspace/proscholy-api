@@ -2,33 +2,42 @@
 
 @section('content')
     <div class="content-padding">
-        <a href="{{route('admin.dashboard')}}">Zpět do administrace</a>
 
-        <h2>Zvolte externí zdroj, které chcete upravit:</h2>
+        <h2>Externí zdroje</h2>
 
-        <h3>TO-DO</h3>
+        <h3 style="margin-bottom: 5px;">Zdroje k přiřazení</h3>
+        <span class="text-warning" style="display: inline-block; margin-bottom: 20px">Externí zdroje, které nemají přiřazeného autora nebo píseň.</span>
+
         <table class="table table-bordered">
-            @foreach($todo as $external)
-            <tr>
-                <td><a href="{{route('admin.external.edit',['external'=>$external->id])}}">{{$external->generateTitle()}}</a></td>
-                <td>
-                    @include('admin.components.deletebutton', ['url' => route('admin.external.delete',['external' => $external->id] )])
-                </td>
-            </tr>
-            @endforeach
+            @forelse($todo as $external)
+                <tr>
+                    <td>
+                        <a href="{{route('admin.external.edit', ['external'=>$external->id])}}">{{$external->generateTitle()}}</a>
+                    </td>
+                    <td>
+                        @include('admin.components.deletebutton', ['url' => route('admin.external.delete', ['external' => $external->id] )])
+                    </td>
+                </tr>
+                @empty
+                <div class="text-success">Hurá, všechny externí zdroje jsou přiřazené.</div>
+            @endforelse
         </table>
-        
-        <h3>Ostatní zdroje</h3>
+
+        <h3 style="margin-bottom: 5px;">Přiřazené zdroje</h3>
+        <span style="display: inline-block;margin-bottom: 20px">Tyto média už mají přiřazeného autora i píseň.</span>
 
         <table class="table table-bordered">
 
             @foreach($rest as $external)
-            <tr>
-                <td><a href="{{route('admin.external.edit',['external'=>$external->id])}}">{{$external->generateTitle()}}</a></td>
-                <td>
-                    <a href="{{ route('admin.external.delete',['external'=>$external->id]) }}" class="btn btn-warning">Vymazat</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        <a href="{{route('admin.external.edit',['external'=>$external->id])}}">{{$external->generateTitle()}}</a>
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.external.delete',['external'=>$external->id]) }}"
+                           class="btn btn-warning">Vymazat</a>
+                    </td>
+                </tr>
             @endforeach
         </table>
     </div>

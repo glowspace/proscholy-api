@@ -22,4 +22,9 @@ class HomeController extends Controller
             'top_authors'   => $top_authors,
         ]);
     }
+
+    public function renderAboutTeam()
+    {
+        return view('client.about_team');
+    }
 }
