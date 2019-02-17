@@ -82,11 +82,6 @@ class SongLyric extends Model implements ISearchResult
     /*
      * Real type collections
      */
-    public function youtubeVideos()
-    {
-        return $this->externals()->where('type', 3);
-    }
-
     public function spotifyTracks()
     {
         return $this->externals()->where('type', 1);
@@ -95,6 +90,11 @@ class SongLyric extends Model implements ISearchResult
     public function soundcloudTracks()
     {
         return $this->externals()->where('type', 2);
+    }
+
+    public function youtubeVideos()
+    {
+        return $this->externals()->where('type', 3);
     }
 
     public function scoreExternals()
@@ -125,7 +125,7 @@ class SongLyric extends Model implements ISearchResult
 
     public function isDomesticOrphan()
     {
-        return $this->isDomestic() && !$this->hasSiblings();
+        return $this->isDomestic() && ! $this->hasSiblings();
     }
 
     public function hasSiblings()
@@ -136,16 +136,19 @@ class SongLyric extends Model implements ISearchResult
     // basically Cuckoo shouldn't be alone really
     public function isCuckoo()
     {
-        return !$this->isDomestic();
+        return ! $this->isDomestic();
     }
 
     public static function getByIdOrCreateWithName($identificator)
     {
-        if (is_numeric($identificator)) {
+        if (is_numeric($identificator))
+        {
             return SongLyric::find($identificator);
-        } else {
+        }
+        else
+        {
             $song_lyric = SongLyric::create(['name' => $identificator]);
-            $song = Song::create(['name' => $identificator]);
+            $song       = Song::create(['name' => $identificator]);
             $song_lyric->song()->associate($song);
             $song_lyric->save();
 

@@ -10,14 +10,36 @@
 
         @if($song_l->audioTracks()->count() > 0)
             <div class="card">
-                <div class="card-header">V online streamovacích službách</div>
+                <div class="card-header">Odkazy na noty na internetu</div>
                 <div class="card-body">
-                    <div class="row">
-                        @foreach($song_l->audioTracks() as $external)
-                            <div class="col-sm-4">
-                                @component('client.components.external_embed', ['external'=> $external])@endcomponent
-                            </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Odkaz</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Zobrazeno</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($song_l->scoreExternals as $external)
+                            <tr>
+                                <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
+                                <td>
+                                    <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
+                                </td>
+                                <td>
+                                    <a href="{{route('client.author', $external->author)}}">{{$external->author->name}}</a>
+                                </td>
+                                <td>{{$external->visits}} x</td>
+                            </tr>
                         @endforeach
+
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+
                     </div>
 
                     <hr>
