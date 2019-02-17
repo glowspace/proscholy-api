@@ -10,7 +10,7 @@
             <div class="col-sm-8">
                 <h1>{{$song_l->name}}</h1>
 
-                <div class="card">
+                <div class="card" id="cardLyrics">
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
 
@@ -65,6 +65,11 @@
 
         $(document).ready(function () {
             lyrics.innerHTML = parseChordPro(lyrics_source, 0);
+
+            // Lyrics fade in animation
+            $( "#cardLyrics" ).fadeIn( "slow", function () {
+                
+            });
         });
 
         $("#transposeUp").click(function () {

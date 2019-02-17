@@ -17,10 +17,10 @@
     <span class="badge badge-pill">{{$song_l->song->song_lyrics()->count()}}</span>
 </a>
 
-@if($song_l->spotifyTracks->count() > 0)
+@if($song_l->audioTracks()->count() > 0)
     <a class="btn btn-secondary" href="{{route('client.song.audio_records', $song_l)}}">
         <i class="fas fa-microphone"></i> Nahrávky
-        <span class="badge badge-pill">{{$song_l->spotifyTracks->count()}}</span>
+        <span class="badge badge-pill">{{$song_l->spotifyTracks()->count()}}</span>
     </a>
 @endif
 

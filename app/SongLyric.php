@@ -9,21 +9,21 @@ use Illuminate\Support\Arr;
 /**
  * App\SongLyric
  *
- * @property int                                                         $id
- * @property string|null                                                 $name
- * @property int|null                                                    $is_authorized
- * @property int|null                                                    $is_original
- * @property string|null                                                 $description
- * @property string|null                                                 $lyrics
- * @property int|null                                                    $is_opensong
- * @property int|null                                                    $lang_id
- * @property int|null                                                    $song_id
- * @property int|null                                                    $licence_type
- * @property string|null                                                 $licence_content
- * @property \Carbon\Carbon|null                                         $created_at
- * @property \Carbon\Carbon|null                                         $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[] $authors
- * @property-read \App\Song|null                                         $song
+ * @property int                                                           $id
+ * @property string|null                                                   $name
+ * @property int|null                                                      $is_authorized
+ * @property int|null                                                      $is_original
+ * @property string|null                                                   $description
+ * @property string|null                                                   $lyrics
+ * @property int|null                                                      $is_opensong
+ * @property int|null                                                      $lang_id
+ * @property int|null                                                      $song_id
+ * @property int|null                                                      $licence_type
+ * @property string|null                                                   $licence_content
+ * @property \Carbon\Carbon|null                                           $created_at
+ * @property \Carbon\Carbon|null                                           $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]   $authors
+ * @property-read \App\Song|null                                           $song
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereId($value)
@@ -38,9 +38,9 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereSongId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property int|null                                                    $visits
+ * @property int|null                                                      $visits
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereVisits($value)
- * @property string $lang
+ * @property string                                                        $lang
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
  */
@@ -79,6 +79,16 @@ class SongLyric extends Model implements ISearchResult
     public function spotifyTracks()
     {
         return $this->externals()->where('type', 1);
+    }
+
+    public function soundcloudTracks()
+    {
+        return $this->externals()->where('type', 2);
+    }
+
+    public function audioTracks()
+    {
+        return $this->spotifyTracks->concat($this->soundcloudTracks);
     }
 
     /**
