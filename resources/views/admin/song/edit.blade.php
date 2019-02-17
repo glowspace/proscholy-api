@@ -58,12 +58,12 @@
 
                     <br>
                     <label>Autorizovaný překlad</label>
-                    <select class="form-control" name="is_original" title="">
-                        <option value="1" @if($song_lyric->is_original)
+                    <select class="form-control" name="is_authorized" title="">
+                        <option value="1" @if($song_lyric->is_authorized)
                         selected
-                                @endif>Autorizovaný překlad nebo originál
+                                @endif>Ano
                         </option>
-                        <option value="0" @if(!$song_lyric->is_original)
+                        <option value="0" @if(!$song_lyric->is_authorized)
                         selected
                                 @endif>Ne
                         </option>
