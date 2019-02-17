@@ -3,20 +3,20 @@
 @section('content')
     <div class="content-padding">
         <h1>Administrace</h1>
-        <h2>Kompletování obsahu</h2>
-        <a class="btn btn-success" href="{{route('admin.todo')}}">>> Materiály k doplnění <<</a>
-    
-        <h2>Písně</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.song.create')}}">+ Nová píseň</a>
-        <a class="btn btn-outline-primary" href="{{route('admin.song.index')}}">Spravovat písně</a>
-    
-        <h2>Autoři</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
-        <a class="btn btn-outline-primary" href="{{route('admin.author.index')}}">Spravovat autory</a>
 
-        <h2>Externí zdroje (odkazy)</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.external.create')}}">+ Nový externí zdroj</a>
-        <a class="btn btn-outline-primary" href="{{route('admin.external.index')}}">Spravovat zdroje</a>
+        <div class="row">
+            <div class="col-sm-5">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Verze zpěvníku</td>
+                        <td><b>0.2 (17.2.2019)</b></td>
+                    </tr>
+                    <tr>
+                        <td>Autor:</td>
+                        <td>Miroslav Šerý, Michael Dojčár</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-
 @endsection
