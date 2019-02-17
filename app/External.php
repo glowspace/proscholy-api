@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class External extends Model
 {
+
+
     /**
      * @return string
      * @throws Exception

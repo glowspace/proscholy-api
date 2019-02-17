@@ -76,6 +76,11 @@ class SongLyric extends Model implements ISearchResult
         return $this->externals()->where('type', 0);
     }
 
+    public function spotifyTracks()
+    {
+        return $this->externals()->where('type', 1);
+    }
+
     /**
      * Get the indexable data array for the model.
      *

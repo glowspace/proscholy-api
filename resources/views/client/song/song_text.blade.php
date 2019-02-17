@@ -15,9 +15,7 @@
                         <p>@component('client.components.song_lyric_author',['song_l' => $song_l])@endcomponent</p>
                         <hr>
 
-                        <div id="lyrics">
-                            {!! nl2br($song_l->lyrics) !!}
-                        </div>
+                        <div id="lyrics">{!!$song_l->lyrics !!}</div>
 
                         <hr>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
@@ -37,13 +35,17 @@
                 @if($song_l->youtubeVideos()->count() > 0)
                     @component('client.components.external_embed', ['external' => $song_l->youtubeVideos()->first()])@endcomponent
                 @endif
+
+                @if($song_l->spotifyTracks()->count() > 0)
+                    @component('client.components.external_embed', ['external' => $song_l->spotifyTracks()->first()])@endcomponent
+                @endif
             </div>
         </div>
 
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -59,4 +61,4 @@
             lyrics.innerHTML = parseChordPro(lyrics_source, 0);
         });
     </script>
-@endsection
+@endpush
