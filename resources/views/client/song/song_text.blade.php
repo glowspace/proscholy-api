@@ -44,6 +44,10 @@
                 @if($song_l->spotifyTracks()->count() > 0)
                     @component('client.components.external_embed', ['external' => $song_l->spotifyTracks()->first()])@endcomponent
                 @endif
+
+                @if($song_l->soundcloudTracks()->count() > 0)
+                    @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
+                @endif
             </div>
         </div>
 
@@ -67,8 +71,8 @@
             lyrics.innerHTML = parseChordPro(lyrics_source, 0);
 
             // Lyrics fade in animation
-            $( "#cardLyrics" ).fadeIn( "slow", function () {
-                
+            $("#cardLyrics").fadeIn("slow", function () {
+
             });
         });
 
