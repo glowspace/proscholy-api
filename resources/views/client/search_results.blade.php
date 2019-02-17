@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.master')
 
 @section('navbar')
 
@@ -6,10 +6,8 @@
 
 @section('content')
     <div class="content-padding">
-
-
-
         <h1>Vyhledávání</h1>
+
         <form method="POST" action="{{route('client.search')}}">
             @csrf
             <input class="form-control" name="query"
@@ -25,7 +23,8 @@
             @forelse($song_lyrics as $song_lyric)
                 <tr>
                     <td>
-                        <i class="fas fa-music"></i> <a href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
+                        <i class="fas fa-music"></i> <a
+                                href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
                     </td>
                 </tr>
             @empty
