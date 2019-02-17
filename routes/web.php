@@ -44,18 +44,16 @@ Route::post('/navrh/{id}', 'RequestController@storeRequest')->name('client.reque
 Route::get('/report', 'Client\ReportController@report')->name('client.report');
 Route::post('/report', 'Client\ReportController@storeReport')->name('client.report');
 
-Auth::routes(['register' => true]);
-Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
-
 /**
  * Administrace.
  */
+Auth::routes(['register' => true]);
+Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function ()
 {
     Route::get('/', 'AdminController@renderDash')->name('admin.dashboard');
     Route::get('/todo', 'AdminController@renderTodo')->name('admin.todo');
-    // Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
-    //     ->name('admin.todo.setSongAuthor');
 
     // // External
     Route::get('/externals', 'ExternalController@index')->name('admin.external.index');
@@ -65,14 +63,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::put('/external/{external}', 'ExternalController@update')->name('admin.external.update');
     Route::delete('/external/{external}', 'ExternalController@destroy')->name('admin.external.delete');
 
-    // Route::get('/external/edit/{id}/translation', 'AdminController@renderExternalEditTranslation')
-    //     ->name('admin.external.edit.translation');
-    // Route::get('/external/edit/{id}/translation/{t_id}', 'AdminController@storeExternalEditTranslation')
-    //     ->name('admin.external.edit.translation.save');
-    // Route::get('/external/edit/{id}/author', 'AdminController@renderExternalEditAuthor')->name('admin.external.edit.author');
-    // Route::get('/external/edit/{id}/author/{a_id}', 'AdminController@storeExternalEditAuthor')
-    //     ->name('admin.external.edit.author.save');
-
     // Song
     Route::get('/songs', 'SongController@index')->name('admin.song.index');
     Route::get('/song/new', 'SongController@create')->name('admin.song.create');
@@ -80,10 +70,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/song/{song_lyric}', 'SongController@edit')->name('admin.song.edit');
     Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
     Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('admin.song.delete');
-    // TODO
-    // Route::get('/song/{id}/add_author', 'SongController@renderAddSongAuthor')->name('admin.song.author.add');
-    // Route::get('/song/{id}/remove_author/{author_id}', 'SongController@storeRemoveSongAuthor')
-    //     ->name('admin.song.author.remove');
 
     // Author
     Route::get('/authors', 'AuthorController@index')->name('admin.author.index');
