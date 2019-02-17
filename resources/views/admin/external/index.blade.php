@@ -17,7 +17,8 @@
             @endforeach
         </table>
         
-        <h3>Ostatní zdroje</h3>
+        <h3 style="margin-bottom: 5px;">Přiřazené zdroje</h3>
+        <span style="display: inline-block;margin-bottom: 20px">Tyto média už mají přiřazeného autora i píseň.</span>
 
         <table class="table table-bordered">
 
