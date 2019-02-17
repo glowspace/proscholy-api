@@ -60,7 +60,7 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
 
-    @include('scripts.chordpro_parse')
+    @include('client.components.chordpro_parse')
 
     <script>
         lyrics_source = document.getElementById('lyrics').innerHTML;
