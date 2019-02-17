@@ -50,6 +50,9 @@ class SongController extends Controller
         $assigned_authors = $song_lyric->authors()->select(['authors.id', 'authors.name'])->get();
         $all_authors = Author::select(['id', 'name'])->get();
 
+        $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
+        $all_song_lyrics = SongLyric::select(['id', 'name'])->get();
+
         return view('admin.song.edit', compact('song_lyric', 'assigned_authors', 'all_authors'));
     }
 

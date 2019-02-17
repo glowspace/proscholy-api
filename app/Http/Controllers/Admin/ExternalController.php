@@ -36,6 +36,10 @@ class ExternalController extends Controller
         $external->url = $request['url'];
         $external->save();
 
+        if ($request["redirect"] == "edit") {
+            return redirect()->route('admin.external.edit', ['id' => $external->id]);
+        }
+
         return redirect()->route('admin.external.create');
     }
 

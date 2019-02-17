@@ -16,7 +16,7 @@
                     @method('PUT')
 
                     <div class="input-group mb-3">
-                        <input class="form-control" required autofocus name="url" placeholder="Adresa URL zdroje">
+                        <input class="form-control" required autofocus name="url" placeholder="Adresa URL zdroje" value="{{ $external->url }}">
                     </div>
 
                     <div class="input-group mb-3">
@@ -24,8 +24,8 @@
                             <label class="input-group-text">Typ odkazu</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            <option value="0">a</option>
-                            <option value="1">b</option>
+                            <option value="0" {{ $external->type == 0 ? 'selected' : '' }}>youtube</option>
+                            <option value="1" {{ $external->type == 1 ? 'selected' : '' }}>spotify</option>
                         </select>
                     </div>
 

@@ -5,7 +5,7 @@
         <h2>Úprava písně</h2>
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <form action="{{ route('admin.song.update', ['song_lyric' => $song_lyric->id]) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -14,6 +14,16 @@
 
                     <label>Název</label>
                     <input class="form-control" autofocus name="name" placeholder="název písně" value="{{$song_lyric->name}}"><br>
+
+                    {{-- <label>Jedná se o variantu již existující písně:</label>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'songs',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $all_songs,
+                        'list_selected' => $assigned_songs,
+                        'is_single' => true
+                    ]) --}}
 
                     <label>Autoři</label><br>
 
