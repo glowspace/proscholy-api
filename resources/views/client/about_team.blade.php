@@ -8,7 +8,15 @@
     <div class="content-padding">
         <h1>Redakce ProScholy.cz</h1>
 
-        <p>Chcete se podílet na tvorbě zpěnvníku?
+        <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
+            kteří pracují s českou nebo slovenskou křesťanskou tvorbou.
+            V dnešní době, kdy je duchovní hudba roztroušena v množství různých míst
+            na internetu nebo v papírových sbornících s zpěvnících, chceme nabídnout lehkou a praktickou alternativu
+             Naším cílem je se
+        </p>
+
+        <p>
+            Chcete se podílet na tvorbě zpěnvníku?
             Máte tipy na nové funkce nebo nový repertoár?
             Můžete nám napsat na email redakce@proscholy.cz
             nebo na naší FB stránce.</p>
@@ -69,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
