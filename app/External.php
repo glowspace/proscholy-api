@@ -32,6 +32,14 @@ class External extends Model
 {
     protected $fillable = ['url', 'type'];
 
+    public $type_string
+        = [
+            0 => 'youtube',
+            1 => 'spotify',
+            2 => 'soundcloud',
+            3 => 'link',
+        ];
+
     /**
      * @return string
      * @throws Exception

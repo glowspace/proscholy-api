@@ -36,17 +36,26 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function searchResults($query)
+    public function searchResults($query = null)
     {
         $limit = 5;
 
-        $song_lyrics = SongLyric::search($query)->paginate($limit);
-        $authors = Author::search($query)->paginate($limit);
+        if (isset($query))
+        {
+            $song_lyrics = SongLyric::search($query)->paginate($limit);
+            $authors     = Author::search($query)->paginate($limit);
+        }
+        else
+        {
+            // Empty search
+            $song_lyrics = null;
+            $authors     = null;
+        }
 
         return view('client.search_results', [
-            'phrase' => $query,
+            'phrase'      => $query,
             'song_lyrics' => $song_lyrics,
-            'authors' => $authors
+            'authors'     => $authors,
         ]);
     }
 

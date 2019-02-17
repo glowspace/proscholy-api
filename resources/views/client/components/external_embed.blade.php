@@ -36,7 +36,7 @@
             @endif
         </div>
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/543650322&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+                src="https://w.soundcloud.com/player/?url={{$external->url}}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
 @else
     <div class="card" style="margin-bottom: 1em;">Wrong external media type.</div>

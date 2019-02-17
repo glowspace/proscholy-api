@@ -10,7 +10,7 @@
             <div class="col-sm-8">
                 <h1>{{$song_l->name}}</h1>
 
-                <div class="card" id="cardLyrics">
+                <div class="card" id="cardLyrics" style="display: none">
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
 
@@ -44,6 +44,10 @@
                 @if($song_l->spotifyTracks()->count() > 0)
                     @component('client.components.external_embed', ['external' => $song_l->spotifyTracks()->first()])@endcomponent
                 @endif
+
+                @if($song_l->soundcloudTracks()->count() > 0)
+                    @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
+                @endif
             </div>
         </div>
 
@@ -67,8 +71,8 @@
             lyrics.innerHTML = parseChordPro(lyrics_source, 0);
 
             // Lyrics fade in animation
-            $( "#cardLyrics" ).fadeIn( "slow", function () {
-                
+            $("#cardLyrics").fadeIn("slow", function () {
+
             });
         });
 
