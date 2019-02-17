@@ -67,16 +67,21 @@ class ExternalController extends Controller
     {
         $external->update($request->all());
 
-        // author has been created yet?
-        if ($request->assigned_authors !== NULL) {
+        // no author set, delete if there had been any association
+        if ($request->assigned_authors === NULL) {
+            $external->author()->dissociate();
+            $external->save();
+        }
+        else {
             $author_identification = $request->assigned_authors[0];
 
             $author;
             
             if (is_numeric($author_identification)) {
-                // ID was given, find
+                // ID was given, find an "old" author
                 $author = Author::find($author_identification);
             } else {
+                // create a new talented author
                 $author = Author::create(['name' => $author_identification]);
             }
 
@@ -84,17 +89,23 @@ class ExternalController extends Controller
             $external->save();
         }
 
-        // song has been created yet?
         // TODO: enable add new one???????????????????????????????????????????????????????//
-        if ($request->assigned_song_lyrics !== NULL) {
+
+        // no song lyric set, delete if there had been any association
+        if ($request->assigned_song_lyrics == NULL) {
+            $external->song_lyric()->dissociate();
+            $external->save();
+        }
+        else {
             $song_lyric_identification = $request->assigned_song_lyrics[0];
 
             $song_lyric;
             
             if (is_numeric($song_lyric_identification)) {
-                // ID was given, find
+                // ID was given, find an "old" song_lyric
                 $song_lyric = SongLyric::find($song_lyric_identification);
             } else {
+                // create a Song model and then an associated SongLyric
                 $song       = new Song();
                 $song->name = $song_lyric_identification;
                 $song->save();
