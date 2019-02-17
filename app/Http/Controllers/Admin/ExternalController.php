@@ -48,10 +48,10 @@ class ExternalController extends Controller
         // this field needs to be saved as a singleton array or empty array
         // if passed just as [$external->author] then the result is [{}] if there is nothing
         $assigned_authors = $external->author ? [$external->author] : [];
-        $all_authors = Author::select(['id', 'name'])->get();
+        $all_authors = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
-        $all_song_lyrics = SongLyric::select(['id', 'name'])->get();
+        $all_song_lyrics = SongLyric::select(['id', 'name'])->orderBy('name')->get();
 
         return view('admin.external.edit', compact(
             'external', 
