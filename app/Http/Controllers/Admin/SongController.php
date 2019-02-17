@@ -73,7 +73,6 @@ class SongController extends Controller
 
     public function update(Request $request, SongLyric $song_lyric)
     {
-        $song_lyric->update($request->all());
         // name has changed ???
         if ($request->name !== $song_lyric->name) {
             // preserve the invariant - if it had the same name before - it's domestic, then it must stay so!!
@@ -82,12 +81,34 @@ class SongController extends Controller
                 $song_lyric->song->save();
             }
         }
+        $song_lyric->update($request->all());
+
+        if ($request->authors !== NULL) {
+            // old authors that had been saved in db - an ID is passed
+            $saved_authors = Arr::where($request->authors, function ($value, $key) {
+                return is_numeric($value);
+            });
+            $song_lyric->authors()->sync($saved_authors);
+    
+            // new authors to create - a NAME is passed
+            $new_authors = Arr::where($request->authors, function ($value, $key) {
+                return !is_numeric($value);
+            });
+    
+            // create new authors and associate to current song_lyric model
+            foreach ($new_authors as $author) {
+                $song_lyric->authors()->create(['name' => $author]);
+            }
+        }
+
+        //////////////
+        // dd("ad");
 
         if ($request->assigned_song_lyrics === NULL && $song_lyric->isCuckoo()) {
             // this means I was a cuckoo so I need to find a new parent,
             // that is gonna have a same name as me, so I'm not gonna be a cockoo anymore :P
             $new_parent = Song::create(['name' => $song_lyric->name]);
-            $song_lyric->song()->associate($song_lyric);
+            $song_lyric->song()->associate($new_parent);
             $song_lyric->save();
         }
 
@@ -134,24 +155,6 @@ class SongController extends Controller
         //         $song_lyric->save();
         //     }
         // }
-
-        if ($request->authors !== NULL) {
-            // old authors that had been saved in db - an ID is passed
-            $saved_authors = Arr::where($request->authors, function ($value, $key) {
-                return is_numeric($value);
-            });
-            $song_lyric->authors()->sync($saved_authors);
-    
-            // new authors to create - a NAME is passed
-            $new_authors = Arr::where($request->authors, function ($value, $key) {
-                return !is_numeric($value);
-            });
-    
-            // create new authors and associate to current song_lyric model
-            foreach ($new_authors as $author) {
-                $song_lyric->authors()->create(['name' => $author]);
-            }
-        }
 
         return redirect()->route('admin.song.index');
     }
