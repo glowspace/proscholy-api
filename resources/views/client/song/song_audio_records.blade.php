@@ -8,12 +8,12 @@
     <div class="content-padding">
         <h1>Nahrávky písně {{$song_l->name}}</h1>
 
-        @if($song_l->spotifyTracks->count() > 0)
+        @if($song_l->audioTracks()->count() > 0)
             <div class="card">
                 <div class="card-header">V online streamovacích službách</div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach($song_l->spotifyTracks as $external)
+                        @foreach($song_l->audioTracks() as $external)
                             <div class="col-sm-4">
                                 @component('client.components.external_embed', ['external'=> $external])@endcomponent
                             </div>

@@ -20397,6 +20397,15 @@ Home page specific elements
 }
 
 /**
+View: Search results
+ */
+
+.search-basic {
+  width: 500px;
+  display: inline-block;
+}
+
+/**
 ChordPro view
  */
 
