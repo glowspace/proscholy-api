@@ -40,6 +40,15 @@ class Song extends Model
         return $this->hasMany(SongLyric::class);
     }
 
+    public function getDominantSongLyric($id_exclude)
+    {
+        // TODO comment why this is here :D
+        $candidates = $this->song_lyrics()->where('id', '!=', $id_exclude)->orderBy('is_original', 'desc');
+
+        return $candidates->first();
+    }
+
+
     public function getOriginalLyric()
     {
         return $this->song_lyrics()->where('is_original', 1)->get()->first();
