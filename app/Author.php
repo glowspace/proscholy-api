@@ -9,20 +9,20 @@ use Illuminate\Support\Arr;
 /**
  * App\Author
  *
- * @property int                                                                  $id
- * @property string|null                                                          $name
- * @property string|null                                                          $url
- * @property string|null                                                          $ytchannel
- * @property string|null                                                          $description
- * @property string|null                                                          $email
- * @property string|null                                                          $password
- * @property int|null                                                             $type
- * @property \Carbon\Carbon|null                                                  $created_at
- * @property \Carbon\Carbon|null                                                  $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $isMemberOf
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $members
+ * @property int                                                            $id
+ * @property string|null                                                    $name
+ * @property string|null                                                    $url
+ * @property string|null                                                    $ytchannel
+ * @property string|null                                                    $description
+ * @property string|null                                                    $email
+ * @property string|null                                                    $password
+ * @property int|null                                                       $type
+ * @property \Carbon\Carbon|null                                            $created_at
+ * @property \Carbon\Carbon|null                                            $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $isMemberOf
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $members
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[]        $externals
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[]  $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereEmail($value)
@@ -34,9 +34,9 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereYtchannel($value)
  * @mixin \Eloquent
- * @property int|null $visits
+ * @property int|null                                                       $visits
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereVisits($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[] $memberships
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $memberships
  */
 class Author extends Model implements ISearchResult
 {
@@ -44,7 +44,15 @@ class Author extends Model implements ISearchResult
     use Searchable;
     protected $fillable = ['name', 'description', 'email', 'url', 'type'];
 
-    
+    public $type_string
+        = [
+            0 => 'autor',
+            1 => 'hudební uskupení',
+            2 => 'schola',
+            3 => 'kapela',
+            4 => 'sbor',
+        ];
+
 
     public function songLyrics()
     {
@@ -53,15 +61,15 @@ class Author extends Model implements ISearchResult
 
     public function songOriginalLyrics()
     {
-        return $this->songLyrics()->where('is_original',true);
+        return $this->songLyrics()->where('is_original', true);
     }
 
     public function songNotOriginalLyrics()
     {
-        return $this->songLyrics()->where('is_original',false);
+        return $this->songLyrics()->where('is_original', false);
     }
 
-    public function members()   
+    public function members()
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -112,6 +120,6 @@ class Author extends Model implements ISearchResult
 
     public function getSearchText()
     {
-        return $this->description;
+        return $this->type_string[$this->type];
     }
 }
