@@ -10,7 +10,7 @@
             <div class="col-sm-8">
                 <h1>{{$song_l->name}}</h1>
 
-                <div class="card" id="cardLyrics">
+                <div class="card" id="cardLyrics" style="display: none">
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
 
