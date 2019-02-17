@@ -47,7 +47,7 @@
 <body>
     <nav class="navbar navbar-expand navbar-dark static-top">
         <img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0">
-        <a class="navbar-brand mr-1" href="/"> Zpěvník pro scholy</a>
+        <a class="navbar-brand mr-1" href="@yield('navbar-brand_href', '/')"> Zpěvník pro scholy</a>
     </nav>
 
     <div class="container-fluid">

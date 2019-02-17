@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('admin.layout')
 
 @section('content')
     <div class="content-padding">

@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.master')
 
 @section('navbar')
     @include('client.components.menu_song')
