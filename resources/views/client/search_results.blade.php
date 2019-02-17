@@ -10,7 +10,7 @@
 
         <form method="POST" action="{{route('client.search')}}">
             @csrf
-            <input class="form-control" name="query"
+            <input class="form-control search-basic" name="query"
                    placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)" value="{{$phrase}}" autofocus>
             <button type="submit" class="btn btn-primary">
                 <i class="fa fa-search"></i>

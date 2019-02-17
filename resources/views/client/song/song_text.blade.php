@@ -12,9 +12,9 @@
 
                 <div class="card">
                     <div class="card-header" style="padding: 8px;">
-                        <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author',['song_l' => $song_l])@endcomponent</span>
+                        <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
 
-                        <div class="transpose-control-wrapper" style="display: inline-block" >
+                        <div class="transpose-control-wrapper" style="display: inline-block">
                             <span>Transpozice: </span><a class="btn btn-secondary" id="transposeUp">+1</a>
                             <a class="btn btn-secondary" id="transposeDown">-1</a>
                         </div>
