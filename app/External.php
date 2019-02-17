@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class External extends Model
 {
+    protected $fillable = ['url', 'type'];
+
     /**
      * @return string
      * @throws Exception

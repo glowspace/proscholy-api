@@ -22,7 +22,8 @@
                         'value_field' => 'id',
                         'display_field' => 'name',
                         'list_all' => $all_authors,
-                        'list_selected' => $assigned_authors
+                        'list_selected' => $assigned_authors,
+                        'is_single' => false
                     ])
 
                     <br><br>

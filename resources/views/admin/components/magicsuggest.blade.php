@@ -8,6 +8,9 @@
                 data: @json($list_all),
                 valueField: "{{ $value_field }}",
                 displayField: '{{ $display_field}}',
+                @if($is_single)
+                    maxSelection: 1,
+                @endif
                 allowFreeEntries: true,
                 value: @json($list_selected)
             });
