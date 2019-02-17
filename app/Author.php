@@ -44,6 +44,8 @@ class Author extends Model implements ISearchResult
     use Searchable;
     protected $fillable = ['name', 'description', 'email', 'url', 'type'];
 
+    
+
     public function songLyrics()
     {
         return $this->belongsToMany(SongLyric::class);

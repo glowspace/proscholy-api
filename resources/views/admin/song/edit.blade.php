@@ -13,7 +13,7 @@
                     <input type="hidden" name="id" value="{{$song_lyric->id}}">
 
                     <label>Název</label>
-                    <input class="form-control" autofocus name="name" placeholder="název písně" value="{{$song_lyric->name}}"><br>
+                    <input class="form-control" required autofocus name="name" placeholder="Název písně" value="{{$song_lyric->name}}"><br>
 
                     {{-- <label>Jedná se o variantu již existující písně:</label>
                     @include('admin.components.magicsuggest', [

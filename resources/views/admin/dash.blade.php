@@ -12,7 +12,8 @@
     
         <h2>Autoři</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
-    
+        <a class="btn btn-outline-primary" href="{{route('admin.author.index')}}">Spravovat autory</a>
+
         <h2>Externí zdroje (odkazy)</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.external.create')}}">+ Nový externí zdroj</a>
         <a class="btn btn-outline-primary" href="{{route('admin.external.index')}}">Spravovat zdroje</a>

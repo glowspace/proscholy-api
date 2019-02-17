@@ -14,7 +14,7 @@ class AuthorController extends Controller
     }
 
     public function index(){
-        $authors = Author::all();
+        $authors = Author::paginate(100);
         return view('admin.author.index', compact('authors'));
     }
 
@@ -30,9 +30,9 @@ class AuthorController extends Controller
         $author->name = $request['name'];
         $author->save();
 
-        // if ($request["redirect"] == "edit") {
-        //     return redirect()->route('admin.author.edit', ['id' => $author_l->id]);
-        // }
+        if ($request["redirect"] == "edit") {
+            return redirect()->route('admin.author.edit', ['author' => $author->id]);
+        }
 
         return redirect()->route('admin.author.create');
     }

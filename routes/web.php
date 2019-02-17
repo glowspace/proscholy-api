@@ -85,4 +85,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     // Author
     Route::get('/manage/author/new', 'AuthorController@create')->name('admin.author.create');
     Route::post('/manage/author/new', 'AuthorController@store')->name('admin.author.store');
+    Route::get('/manage/authors', 'AuthorController@index')->name('admin.author.index');
+    Route::get('/manage/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
+    Route::put('/manage/author/{author}', 'AuthorController@update')->name('admin.author.update');
 });

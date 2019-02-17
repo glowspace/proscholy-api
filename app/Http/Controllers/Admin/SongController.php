@@ -17,7 +17,7 @@ class SongController extends Controller
     }
 
     public function index(){
-        $song_lyrics = SongLyric::all();
+        $song_lyrics = SongLyric::orderBy('created_at', 'desc')->paginate(100);
         return view('admin.song.index', compact('song_lyrics'));
     }
 

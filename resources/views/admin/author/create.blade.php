@@ -11,7 +11,7 @@
                         <input required class="form-control" autofocus name="name" placeholder="jméno autora"><br>
                     </div>
 
-                    <div class="input-group mb-3">
+                    {{-- <div class="input-group mb-3">
                         <div class="input-group-append mr-3">
                             <label class="input-group-text">Typ autora</label>
                         </div>
@@ -22,12 +22,12 @@
                             <option value="3">kapela</option>
                             <option value="4">sbor</option>
                         </select>
-                    </div>
+                    </div> --}}
 
-                    <div class="input-group">
-                        <button type="submit" class="btn btn-outline-primary">Uložit</button>
-                    </div>
-                    {{-- <input type="submit" value="Uložit"> --}}
+                    {{-- <div class="input-group"> --}}
+                        <button type="submit" class="btn btn-outline-primary" name="redirect" value="create">Uložit</button>
+                        <button type="submit" class="btn btn-outline-primary" name="redirect" value="edit">Uložit a upravit</button>
+                    {{-- </div> --}}
                 </form>
             </div>
         </div>
