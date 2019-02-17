@@ -16,13 +16,15 @@
                     <input class="form-control" autofocus name="name" placeholder="název písně" value="{{$song_lyric->name}}"><br>
 
                     <label>Autoři</label><br>
-                    {{-- @foreach($song_lyric->authors as $author)
-                        {{$author->name}}<br>
-                    @endforeach --}}
 
-                    <input id="authors_magicsuggest" class="form-control" name="authors[]"/>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'authors',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $all_authors,
+                        'list_selected' => $assigned_authors
+                    ])
 
-                    {{-- <a class="btn btn-primary" href="{{route('admin.song.author.add',['id'=>$song_lyric->id])}}">Přidat autora</a> --}}
                     <br><br>
 
                     <label>Text</label>
@@ -63,14 +65,9 @@
     </div>
 @endsection
 
-@push('head_links')
-    <link href="{{asset('css/magicsuggest-min.css')}}" rel="stylesheet">
-@endpush
+@include('admin.components.magicsuggest_includes')
 
-@push('scripts')
-    <script src="{{asset('js/magicsuggest-min.js')}}"></script>
-
-    <script>
+    {{-- <script>
         $(function() {
             Object.getPrototypeOf($('#authors_magicsuggest')).size = function () { return this.length; }
             $('#authors_magicsuggest').magicSuggest({
@@ -79,10 +76,9 @@
                 displayField: 'name',
                 allowFreeEntries: true,
                 value: @json($assigned_authors),
-                renderer: function(data){
-                    return data.name;
-                },
+                // renderer: function(data){
+                //     return data.name;
+                // },
             });
         });
-    </script>
-@endpush
+    </script> --}}
