@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('navbar')
-
+    @include('client.components.menu_main')
 @endsection
 
 @section('content')
@@ -43,7 +43,8 @@
                 @forelse($authors as $author)
                     <tr>
                         <td>
-                            <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a> - {{$author->getSearchText()}}
+                            <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a>
+                            - {{$author->getSearchText()}}
                         </td>
                     </tr>
                 @empty
@@ -54,6 +55,6 @@
                     </tr>
                 @endforelse
             </table>
-        </div>
+    </div>
     @endif
 @endsection

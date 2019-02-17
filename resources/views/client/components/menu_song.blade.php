@@ -1,5 +1,7 @@
 <a class="btn btn-secondary" href="{{route('client.home')}}">
-    <i class="fas fa-arrow-left"></i> Zpět na úvod
+    <i class="fas fa-home"></i> Úvod
+</a><a class="btn btn-secondary" href="{{route('client.search_results', '')}}">
+    <i class="fas fa-search"></i> Vyhledat
 </a>
 
 <div class="navbar-label material-shadow text-success">Materiály</div>
