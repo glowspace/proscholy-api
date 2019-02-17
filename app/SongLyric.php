@@ -49,7 +49,15 @@ class SongLyric extends Model implements ISearchResult
     // Laravel Scout Trait used for full-text searching
     use Searchable;
 
-    protected $fillable = ['name', 'song_id', 'lyrics', 'id', 'is_original', 'is_authorized'];
+    protected $fillable
+        = [
+            'name',
+            'song_id',
+            'lyrics',
+            'id',
+            'is_original',
+            'is_authorized',
+        ];
 
     public function song()
     {
@@ -71,9 +79,12 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(External::class);
     }
 
+    /*
+     * Real type collections
+     */
     public function youtubeVideos()
     {
-        return $this->externals()->where('type', 0);
+        return $this->externals()->where('type', 3);
     }
 
     public function spotifyTracks()
@@ -86,9 +97,25 @@ class SongLyric extends Model implements ISearchResult
         return $this->externals()->where('type', 2);
     }
 
+    public function scoreExternals()
+    {
+        return $this->externals()->where('type', 4);
+    }
+
+    /*
+     * Merged multi type category-filtered external collections
+     */
     public function audioTracks()
     {
-        return $this->spotifyTracks->concat($this->soundcloudTracks);
+        return $this->spotifyTracks->merge($this->soundcloudTracks);
+    }
+
+    /*
+     * Mixed type count (for blade menu badge)
+     */
+    public function scoresCount()
+    {
+        return $this->scoreExternals()->count();
     }
 
     /**
