@@ -22,7 +22,7 @@ class CreateFilesTable extends Migration {
 			$table->integer('licence_type')->nullable();
 			$table->text('licence_content', 65535)->nullable();
 
-			$table->string('decription', 191);
+			$table->string('description', 191);
 			$table->timestamps();
 		});
 

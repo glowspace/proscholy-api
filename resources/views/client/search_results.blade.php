@@ -18,43 +18,49 @@
         </form>
 
         @if(isset($phrase))
-            <h2>Písně</h2>
+            <div class="card">
+                <div class="card-header">Písně</div>
+                <div class="card-body">
+                    <table class="table">
+                        @forelse($song_lyrics as $song_lyric)
+                            <tr>
+                                <td>
+                                    <i class="fas fa-music"></i> <a
+                                            href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td>
+                                    <i>Žádná píseň s tímto názvem nebyla nalezena.</i>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </table>
+                </div>
+            </div>
 
-            <table class="table">
-                @forelse($song_lyrics as $song_lyric)
-                    <tr>
-                        <td>
-                            <i class="fas fa-music"></i> <a
-                                    href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td>
-                            <i>Žádná píseň s tímto názvem nebyla nalezena.</i>
-                        </td>
-                    </tr>
-                @endforelse
-            </table>
-
-            <h2>Autoři</h2>
-
-            <table class="table">
-                @forelse($authors as $author)
-                    <tr>
-                        <td>
-                            <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a>
-                            - {{$author->getSearchText()}}
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td>
-                            <i>Žádný autor nebyl nalezen.</i>
-                        </td>
-                    </tr>
-                @endforelse
-            </table>
+            <div class="card">
+                <div class="card-header">Autoři</div>
+                <div class="card-body">
+                    <table class="table">
+                        @forelse($authors as $author)
+                            <tr>
+                                <td>
+                                    <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a>
+                                    - {{$author->getSearchText()}}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td>
+                                    <i>Žádný autor nebyl nalezen.</i>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </table>
+                </div>
+            </div>
+        @endif
     </div>
-    @endif
 @endsection
