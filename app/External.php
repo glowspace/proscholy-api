@@ -86,13 +86,14 @@ class External extends Model
 
     public function generateTitle()
     {
+        // TODO better condition
         if (empty($this->author_id) || empty($this->song_lyric_id))
         {
             return "Video $this->id";
         }
         else
         {
-            return $this->author->name . ' - ' . $this->songLyric->name;
+            return $this->author->name . ' - ' . $this->song_lyric->name;
         }
 
     }
