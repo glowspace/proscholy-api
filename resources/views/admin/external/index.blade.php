@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="content-padding">
-        <a href="{{route('admin.dashboard')}}">Zpět do administrace</a>
 
-        <h2>Zvolte externí zdroj, které chcete upravit:</h2>
+        <h2>Externí zdroje</h2>
 
         <h3>TO-DO</h3>
         <table class="table table-bordered">
