@@ -24,9 +24,9 @@
                     <table class="table">
                         @forelse($song_lyrics as $song_lyric)
                             <tr>
+                                <td width="20"><i class="fas fa-music"></i></td>
                                 <td>
-                                    <i class="fas fa-music"></i> <a
-                                            href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
+                                    <a href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
                                 </td>
                             </tr>
                         @empty
