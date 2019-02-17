@@ -5,7 +5,7 @@
         <h2>Úprava písně</h2>
 
         <div class="row">
-            <div class="col-sm-4 offset-4">
+            <div class="col-sm-12">
                 <form action="{{ route('admin.song.update', ['song_lyric' => $song_lyric->id]) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -59,7 +59,7 @@
 
                     <br>
 
-                    <input class="btn btn-primary" type="submit" value="Uložit">
+                    <input class="btn btn-outline-primary" type="submit" value="Uložit">
                 </form>
             </div>
         </div>

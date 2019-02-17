@@ -1,5 +1,5 @@
 @push('head_links')
-    <link href="{{asset('css/magicsuggest-min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/magicsuggest.css')}}" rel="stylesheet">
 @endpush
 
 @push('scripts')

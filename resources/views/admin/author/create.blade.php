@@ -3,25 +3,33 @@
 @section('content')
     <div class="content-padding">
         <h2>Nový autor</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="{{route('admin.author.create')}}" method="post">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <input required class="form-control" autofocus name="name" placeholder="jméno autora"><br>
+                    </div>
 
-        <div style="width: 400px; margin: 0 auto">
-            <form action="{{route('admin.author.create')}}" method="post">
-                @csrf
-                <input class="form-control" autofocus name="name" placeholder="jméno autora"><br>
-                <br>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append mr-3">
+                            <label class="input-group-text">Typ autora</label>
+                        </div>
+                        <select class="custom-select" name="type" title="">
+                            <option value="0">autor</option>
+                            <option value="1">hudební uskupení</option>
+                            <option value="2">schola</option>
+                            <option value="3">kapela</option>
+                            <option value="4">sbor</option>
+                        </select>
+                    </div>
 
-                <label>Typ autora</label>
-                <select name="type" title="">
-                    <option value="0">autor</option>
-                    <option value="1">hudební uskupení</option>
-                    <option value="2">schola</option>
-                    <option value="3">kapela</option>
-                    <option value="4">sbor</option>
-                </select>
-
-                <br>
-                <input type="submit">
-            </form>
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-outline-primary">Uložit</button>
+                    </div>
+                    {{-- <input type="submit" value="Uložit"> --}}
+                </form>
+            </div>
         </div>
     </div>
 @endsection
