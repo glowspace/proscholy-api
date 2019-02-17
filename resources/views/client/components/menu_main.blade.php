@@ -1,4 +1,4 @@
-<a class="btn btn-secondary">
+<a class="btn btn-secondary" href="{{route('client.home')}}">
     <i class="fas fa-search"></i> Vyhledávání
 </a>
 <a class="btn btn-secondary">
