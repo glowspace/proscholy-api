@@ -52,41 +52,41 @@ Route::get('/logout', 'Auth\LoginController@logout');
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function ()
 {
-    Route::get('/manage/', 'AdminController@renderDash')->name('admin.dashboard');
+    Route::get('/manager/', 'AdminController@renderDash')->name('admin.dashboard');
     Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
     // Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
     //     ->name('admin.todo.setSongAuthor');
 
     // // External
-    Route::get('/manage/externals', 'ExternalController@index')->name('admin.external.index');
-    Route::get('/manage/external/new', 'ExternalController@create')->name('admin.external.create');
-    Route::post('/manage/external/new', 'ExternalController@store')->name('admin.external.store');
-    Route::get('/manage/external/{external}', 'ExternalController@edit')->name('admin.external.edit');
-    Route::put('/manage/external/{external}', 'ExternalController@update')->name('admin.external.update');
+    Route::get('/externals', 'ExternalController@index')->name('admin.external.index');
+    Route::get('/external/new', 'ExternalController@create')->name('admin.external.create');
+    Route::post('/external/new', 'ExternalController@store')->name('admin.external.store');
+    Route::get('/external/{external}', 'ExternalController@edit')->name('admin.external.edit');
+    Route::put('/external/{external}', 'ExternalController@update')->name('admin.external.update');
 
-    // Route::get('/manage/external/edit/{id}/translation', 'AdminController@renderExternalEditTranslation')
+    // Route::get('/external/edit/{id}/translation', 'AdminController@renderExternalEditTranslation')
     //     ->name('admin.external.edit.translation');
-    // Route::get('/manage/external/edit/{id}/translation/{t_id}', 'AdminController@storeExternalEditTranslation')
+    // Route::get('/external/edit/{id}/translation/{t_id}', 'AdminController@storeExternalEditTranslation')
     //     ->name('admin.external.edit.translation.save');
-    // Route::get('/manage/external/edit/{id}/author', 'AdminController@renderExternalEditAuthor')->name('admin.external.edit.author');
-    // Route::get('/manage/external/edit/{id}/author/{a_id}', 'AdminController@storeExternalEditAuthor')
+    // Route::get('/external/edit/{id}/author', 'AdminController@renderExternalEditAuthor')->name('admin.external.edit.author');
+    // Route::get('/external/edit/{id}/author/{a_id}', 'AdminController@storeExternalEditAuthor')
     //     ->name('admin.external.edit.author.save');
 
     // Song
-    Route::get('/manage/songs', 'SongController@index')->name('admin.song.index');
-    Route::get('/manage/song/new', 'SongController@create')->name('admin.song.create');
-    Route::post('/manage/song/new', 'SongController@store')->name('admin.song.store');
-    Route::get('/manage/song/{song_lyric}', 'SongController@edit')->name('admin.song.edit');
-    Route::put('/manage/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
+    Route::get('/songs', 'SongController@index')->name('admin.song.index');
+    Route::get('/song/new', 'SongController@create')->name('admin.song.create');
+    Route::post('/song/new', 'SongController@store')->name('admin.song.store');
+    Route::get('/song/{song_lyric}', 'SongController@edit')->name('admin.song.edit');
+    Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
     // TODO
-    // Route::get('/manage/song/{id}/add_author', 'SongController@renderAddSongAuthor')->name('admin.song.author.add');
-    // Route::get('/manage/song/{id}/remove_author/{author_id}', 'SongController@storeRemoveSongAuthor')
+    // Route::get('/song/{id}/add_author', 'SongController@renderAddSongAuthor')->name('admin.song.author.add');
+    // Route::get('/song/{id}/remove_author/{author_id}', 'SongController@storeRemoveSongAuthor')
     //     ->name('admin.song.author.remove');
 
     // Author
-    Route::get('/manage/author/new', 'AuthorController@create')->name('admin.author.create');
-    Route::post('/manage/author/new', 'AuthorController@store')->name('admin.author.store');
-    Route::get('/manage/authors', 'AuthorController@index')->name('admin.author.index');
-    Route::get('/manage/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
-    Route::put('/manage/author/{author}', 'AuthorController@update')->name('admin.author.update');
+    Route::get('/author/new', 'AuthorController@create')->name('admin.author.create');
+    Route::post('/author/new', 'AuthorController@store')->name('admin.author.store');
+    Route::get('/authors', 'AuthorController@index')->name('admin.author.index');
+    Route::get('/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
+    Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
 });
