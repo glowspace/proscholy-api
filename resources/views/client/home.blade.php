@@ -6,9 +6,9 @@
 
 @section('content')
     <div class="background-home">
-        <div class="logo-wrapper">
+        <div class="logo-wrapper ">
             <div class="logo"></div>
-            <span class="caption material-shadow-text">Zpěvník</span>
+            <span class="caption material-shadow-text noselect">Zpěvník</span>
         </div>
         <div class="search-wrapper">
             <form method="POST" action="{{route('client.search')}}">

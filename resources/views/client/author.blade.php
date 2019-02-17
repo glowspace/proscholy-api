@@ -1,10 +1,8 @@
 @extends('layout.layout')
 
 @section('navbar')
-    <a class="h" href="{">Back</a>
-
-    <a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
-        <i class="fas fa-arrow-left"></i> Návrat zpět
+    <a class="btn btn-secondary" href="{{route('client.home')}}">
+        <i class="fas fa-search"></i> Nové vyhledávání
     </a>
 @endsection
 
@@ -48,7 +46,7 @@
             Písně:<br>
 
             @foreach($author->songOriginalLyrics as $translation)
-                <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a><br>
+                <a href="{{route('client.song.text', ['id'=> $translation->id])}}">{{$translation->name}} </a><br>
             @endforeach
         @endif
 
@@ -56,11 +54,11 @@
             Překlady:<br>
 
             @foreach($author->songNotOriginalLyrics as $translation)
-                <a href="{{route('song_lyrics.single', ['id'=> $translation->id])}}">{{$translation->name}} </a>
-                (
-                <a href="{{route('song_lyrics.single',['id'=>$translation->song->getOriginalLyric()->id])}}">{{$translation->song->name}}</a>
-                )
-                <br>
+                {{--<a href="{{route('client.song.text', ['id'=> $translation->id])}}">{{$translation->name}} </a>--}}
+                {{--(--}}
+                {{--<a href="{{route('client.song.text',['id'=>$translation->song->getOriginalLyric()->id])}}">{{$translation->song->name}}</a>--}}
+                {{--)--}}
+                {{--<br>--}}
             @endforeach
         @endif
 

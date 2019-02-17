@@ -13,6 +13,9 @@
                     allowfullscreen></iframe>
         </div>
     </div>
+@elseif($external->type == 1)
+    <iframe src="{{$external->url}}" width="100%" height="80" frameborder="0"
+            allowtransparency="true" allow="encrypted-media"></iframe>
 @else
     <div class="card" style="margin-bottom: 1em;">Wrong external media type.</div>
 @endif

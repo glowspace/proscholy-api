@@ -1,8 +1,8 @@
-<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
+<a class="btn btn-secondary" href="{{route('client.home')}}">
     <i class="fas fa-arrow-left"></i> Návrat zpět
 </a>
 
-<div class="navbar-label material-shadow text-success">Materiály písně</div>
+<div class="navbar-label material-shadow text-success">Materiály</div>
 
 <a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
     <i class="fas fa-align-left"></i> Text + akordy
@@ -25,7 +25,7 @@
     <span class="badge badge-pill">8</span>
 </a>
 
-<div class="navbar-label material-shadow text-warning">Možnosti písně</div>
+<div class="navbar-label material-shadow text-warning">Možnosti</div>
 
 <a class="btn btn-secondary">
     <i class="fas fa-upload"></i> Přidat materiál
