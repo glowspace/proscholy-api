@@ -198,7 +198,7 @@
              *    parameter which is the number of selected elements.
              */
             maxSelectionRenderer: function(v) {
-                return 'You cannot choose more than ' + v + ' item' + (v > 1 ? 's':'');
+                return 'Nemůžete zvolit více než ' + v + ' položku(y)' + (v > 1 ? 's':'');
             },
 
             /**
@@ -233,12 +233,12 @@
             /**
              * The text displayed when there are no suggestions.
              */
-            noSuggestionText: 'No suggestions',
+            noSuggestionText: 'Žádné návrhy',
 
             /**
              * The default placeholder text when nothing has been entered
              */
-            placeholder: 'Type or click here',
+            placeholder: 'Klidněte a začněte psát',
 
             /**
              * A function used to define how the items will be presented in the combo
