@@ -9,7 +9,7 @@
         <span class="text-warning" style="display: inline-block; margin-bottom: 20px">Externí zdroje, které nemají přiřazeného autora nebo píseň.</span>
 
         <table class="table table-bordered">
-            @foreach($todo as $external)
+            @forelse($todo as $external)
                 <tr>
                     <td>
                         <a href="{{route('admin.external.edit', ['external'=>$external->id])}}">{{$external->generateTitle()}}</a>
@@ -18,7 +18,9 @@
                         @include('admin.components.deletebutton', ['url' => route('admin.external.delete', ['external' => $external->id] )])
                     </td>
                 </tr>
-            @endforeach
+                @empty
+                <div class="text-success">Hurá, všechny externí zdroje jsou přiřazené.</div>
+            @endforelse
         </table>
 
         <h3 style="margin-bottom: 5px;">Přiřazené zdroje</h3>
