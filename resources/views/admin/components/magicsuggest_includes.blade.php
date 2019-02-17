@@ -3,5 +3,5 @@
 @endpush
 
 @push('scripts')
-    <script src="{{asset('js/magicsuggest-min.js')}}"></script>
+    <script src="{{asset('js/magicsuggest.js')}}"></script>
 @endpush

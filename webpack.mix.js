@@ -16,4 +16,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .browserSync('localhost:8000');
 
 mix.copy('resources/assets/vendor/magicsuggest/magicsuggest-min.css', 'public/css/magicsuggest-min.css');
-mix.copy('resources/assets/vendor/magicsuggest/magicsuggest-min.js', 'public/js/magicsuggest-min.js');
+mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/js');
