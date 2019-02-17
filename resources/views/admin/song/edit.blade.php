@@ -15,15 +15,16 @@
                     <label>Název</label>
                     <input class="form-control" required autofocus name="name" placeholder="Název písně" value="{{$song_lyric->name}}"><br>
 
-                    {{-- <label>Jedná se o variantu již existující písně:</label>
+                    <label>Jedná se o překlad/variantu již existující písně:</label>
                     @include('admin.components.magicsuggest', [
-                        'field_name' => 'songs',
+                        'field_name' => 'assigned_song_lyrics',
                         'value_field' => 'id',
                         'display_field' => 'name',
-                        'list_all' => $all_songs,
-                        'list_selected' => $assigned_songs,
-                        'is_single' => true
-                    ]) --}}
+                        'list_all' => $all_song_lyrics,
+                        'list_selected' => $assigned_song_lyrics,
+                        'is_single' => true,
+                        'disabled' => $assigned_song_disabled
+                    ])
 
                     <label>Autoři</label><br>
 
@@ -33,7 +34,8 @@
                         'display_field' => 'name',
                         'list_all' => $all_authors,
                         'list_selected' => $assigned_authors,
-                        'is_single' => false
+                        'is_single' => false,
+                        'disabled' => false
                     ])
 
                     <br><br>
@@ -77,19 +79,3 @@
 @endsection
 
 @include('admin.components.magicsuggest_includes')
-
-    {{-- <script>
-        $(function() {
-            Object.getPrototypeOf($('#authors_magicsuggest')).size = function () { return this.length; }
-            $('#authors_magicsuggest').magicSuggest({
-                data: @json($all_authors),
-                valueField: 'id',
-                displayField: 'name',
-                allowFreeEntries: true,
-                value: @json($assigned_authors),
-                // renderer: function(data){
-                //     return data.name;
-                // },
-            });
-        });
-    </script> --}}

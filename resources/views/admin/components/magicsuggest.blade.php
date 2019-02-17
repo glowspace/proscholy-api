@@ -13,7 +13,8 @@
                 @endif
                 allowFreeEntries: true,
                 value: @json($list_selected),
-                useCommaKey: false
+                useCommaKey: false,
+                disabled: {{ $disabled ? "true" : "false" }}
             });
         });
     </script>

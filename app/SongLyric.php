@@ -91,6 +91,41 @@ class SongLyric extends Model implements ISearchResult
         return $this->spotifyTracks->concat($this->soundcloudTracks);
     }
 
+    public function isDomestic()
+    {
+        return $this->name === $this->song->name;
+    }
+
+    public function isDomesticOrphan()
+    {
+        return $this->isDomestic() && !$this->hasSiblings();
+    }
+
+    public function hasSiblings()
+    {
+        return $this->song->song_lyrics->count() > 1;
+    }
+
+    // basically Cuckoo shouldn't be alone really
+    public function isCuckoo()
+    {
+        return !$this->isDomestic();
+    }
+
+    public static function getByIdOrCreateWithName($identificator)
+    {
+        if (is_numeric($identificator)) {
+            return SongLyric::find($identificator);
+        } else {
+            $song_lyric = SongLyric::create(['name' => $identificator]);
+            $song = Song::create(['name' => $identificator]);
+            $song_lyric->song()->associate($song);
+            $song_lyric->save();
+
+            return $song_lyric;
+        }
+    }
+
     /**
      * Get the indexable data array for the model.
      *

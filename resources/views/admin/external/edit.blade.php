@@ -40,7 +40,8 @@
                             'display_field' => 'name',
                             'list_all' => $all_authors,
                             'list_selected' => $assigned_authors,
-                            'is_single' => true
+                            'is_single' => true,
+                            'disabled' => false
                         ])
                     </div>
 
@@ -56,7 +57,8 @@
                             'display_field' => 'name',
                             'list_all' => $all_song_lyrics,
                             'list_selected' => $assigned_song_lyrics,
-                            'is_single' => true
+                            'is_single' => true,
+                            'disabled' => false
                         ])
                     </div>
 

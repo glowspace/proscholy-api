@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Úprava autora</h2>
+    <h2>Úprava autora</h2>
         <div class="row">
             <div class="col-sm-12">
                 <form action="{{ route('admin.author.update', ['author' => $author->id]) }}" method="post">
