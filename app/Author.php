@@ -3,24 +3,26 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
+use Illuminate\Support\Arr;
 
 /**
  * App\Author
  *
- * @property int                                                                  $id
- * @property string|null                                                          $name
- * @property string|null                                                          $url
- * @property string|null                                                          $ytchannel
- * @property string|null                                                          $description
- * @property string|null                                                          $email
- * @property string|null                                                          $password
- * @property int|null                                                             $type
- * @property \Carbon\Carbon|null                                                  $created_at
- * @property \Carbon\Carbon|null                                                  $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $isMemberOf
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]          $members
+ * @property int                                                            $id
+ * @property string|null                                                    $name
+ * @property string|null                                                    $url
+ * @property string|null                                                    $ytchannel
+ * @property string|null                                                    $description
+ * @property string|null                                                    $email
+ * @property string|null                                                    $password
+ * @property int|null                                                       $type
+ * @property \Carbon\Carbon|null                                            $created_at
+ * @property \Carbon\Carbon|null                                            $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $isMemberOf
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $members
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Video[]           $videos
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[]  $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereEmail($value)
@@ -32,11 +34,26 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereYtchannel($value)
  * @mixin \Eloquent
- * @property int|null $visits
+ * @property int|null                                                       $visits
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereVisits($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $memberships
  */
-class Author extends Model
+class Author extends Model implements ISearchResult
 {
+    // Laravel Scout Trait used for full-text searching
+    use Searchable;
+    protected $fillable = ['name', 'description', 'email', 'url', 'type'];
+
+    public $type_string
+        = [
+            0 => 'autor',
+            1 => 'hudební uskupení',
+            2 => 'schola',
+            3 => 'kapela',
+            4 => 'sbor',
+        ];
+
+
     public function songLyrics()
     {
         return $this->belongsToMany(SongLyric::class);
@@ -44,15 +61,15 @@ class Author extends Model
 
     public function songOriginalLyrics()
     {
-        return $this->songLyrics()->where('is_original',true);
+        return $this->songLyrics()->where('is_original', true);
     }
 
     public function songNotOriginalLyrics()
     {
-        return $this->songLyrics()->where('is_original',false);
+        return $this->songLyrics()->where('is_original', false);
     }
 
-    public function members()   
+    public function members()
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -68,14 +85,41 @@ class Author extends Model
             'is_member_of');
     }
 
-    public function videos()
+    public function externals()
     {
-        return $this->hasMany(Video::class);
+        return $this->hasMany(External::class);
     }
 
     // TODO
     public function getLink()
     {
-        return '<a href="' . route('author.single', ['id' => $this->id]) . '">' . $this->name . '</a>';
+        return '<a href="' . route('client.author', $this) . '">' . $this->name . '</a>';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array;
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Preserve only attributes that are meant to be searched in
+        $searchable = Arr::only($array, ['name', 'description']);
+
+        return $searchable;
+    }
+
+    // implementing INTERFACE ISearchResult
+
+    public function getSearchTitle()
+    {
+        return $this->name;
+    }
+
+    public function getSearchText()
+    {
+        return $this->type_string[$this->type];
     }
 }

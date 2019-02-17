@@ -10,7 +10,7 @@
         var chords = [];
         var last_was_lyric = false;
         var transpose_chord = function (chord, trans) {
-            var notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+            var notes = ['A', 'B', 'H', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
             var regex = /([A-Z][b#]?)/g;
             var modulo = function (n, m) {
                 return ((n % m) + m) % m;

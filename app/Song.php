@@ -19,9 +19,13 @@ use Log;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property int|null                                                       $visits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\SongLyric[] $songLyrics
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Song whereCreatedAt($value)
  */
 class Song extends Model
 {
+    protected $fillable = ['name', 'lyrics'];
+
     public function authors()
     {
         // TODO: return all authors of the SongLyrics combined ... but rather not necessary
@@ -31,13 +35,19 @@ class Song extends Model
     /**
      * Returns all SongLyrics instances
      */
-    public function songLyrics()
+    public function song_lyrics()
     {
         return $this->hasMany(SongLyric::class);
     }
 
+    public function getNonCuckooSongLyric($id_exclude)
+    {
+        return $this->song_lyrics()->where('name', $this->name)->where('id', '!=', $id_exclude)->first();
+    }
+
+
     public function getOriginalLyric()
     {
-        return $this->songLyrics()->where('is_original', 1)->get()->first();
+        return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }
 }

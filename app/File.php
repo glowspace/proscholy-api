@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereSongLyricId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereId($value)
  */
 class File extends Model
 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\SongLyric;
-use App\Video;
+use App\External;
 
 class PublicController extends Controller
 {
@@ -15,10 +15,8 @@ class PublicController extends Controller
 
         return view('home', [
             'songs_count'   => SongLyric::where('lyrics', '!=', '')->count(),
-            // 'translations_count'      => SongLyric::where('is_original', 0)->count(),
             'authors_count' => Author::count(),
-            'videos_count'  => Video::count(),
-            // 'lyrics_percentage' => $lyrics_percentage,
+            'externals_count'  => External::count(),
             'top_songs'     => $top_songs,
             'top_authors'   => $top_authors,
         ]);
