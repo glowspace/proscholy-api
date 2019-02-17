@@ -45,15 +45,15 @@ Route::get('/report', 'Client\ReportController@report')->name('client.report');
 Route::post('/report', 'Client\ReportController@storeReport')->name('client.report');
 
 Auth::routes(['register' => true]);
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 
 /**
  * Administrace.
  */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function ()
 {
-    Route::get('/manager/', 'AdminController@renderDash')->name('admin.dashboard');
-    Route::get('/manage/todo', 'AdminController@renderTodo')->name('admin.todo');
+    Route::get('/', 'AdminController@renderDash')->name('admin.dashboard');
+    Route::get('/todo', 'AdminController@renderTodo')->name('admin.todo');
     // Route::get('/manage/todo/song/setAuthor/{author_id}/{song_id}/', 'AdminController@setSongAuthor')
     //     ->name('admin.todo.setSongAuthor');
 
