@@ -12,7 +12,8 @@
                     maxSelection: 1,
                 @endif
                 allowFreeEntries: true,
-                value: @json($list_selected)
+                value: @json($list_selected),
+                useCommaKey: false
             });
         });
     </script>
