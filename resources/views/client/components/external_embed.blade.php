@@ -2,9 +2,9 @@
     <div class="card" style="margin-bottom: 1em;">
         <div class="card-header">
             <i style="color: #db0e0e;" class="fab fa-youtube"></i>
-            @if(isset($external->author_id) and isset($external->song_lyric_id))
+            @if($external->author() !== NULL and $external->song_lyric() !== NULL)
                 {!! $external->author->getLink() !!} - <a
-                        href="{{$external->songLyric->getLink()}}">{{$external->songLyric->name}}</a>
+                        href="{{$external->song_lyric->getLink()}}">{{$external->song_lyric->name}}</a>
             @endif
         </div>
 
