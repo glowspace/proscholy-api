@@ -67,6 +67,8 @@ class SongController extends Controller
         // in the case delete this one as well
 
         $song_lyric->delete();
+
+        return redirect()->back();
     }
 
     public function update(Request $request, SongLyric $song_lyric)

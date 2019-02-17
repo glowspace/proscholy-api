@@ -89,12 +89,11 @@ class External extends Model
         // TODO better condition
         if (empty($this->author_id) || empty($this->song_lyric_id))
         {
-            return "Video $this->id";
+            return "Typ: ".$this->type_string[$this->type]." č. $this->id";
         }
         else
         {
-            return $this->author->name . ' - ' . $this->song_lyric->name;
+            return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")" ;
         }
-
     }
 }

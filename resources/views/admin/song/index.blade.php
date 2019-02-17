@@ -17,6 +17,10 @@
                                     překlad
                                 @endif
                             </td>
+                            <td>
+                            {{-- <a href="{{ route('admin.song.delete',['id'=>$song->id]) }}" class="btn btn-warning">Vymazat</a> --}}
+                            @include('admin.components.deletebutton', ['url' => route('admin.song.delete',['song' => $song->id] )])
+                            </td>
                         </tr>
                     @endforeach
                 </table>
@@ -26,3 +30,5 @@
         </div>
     </div>
 @endsection
+
+@include('admin.components.deletebutton_includes')

@@ -64,6 +64,8 @@ class ExternalController extends Controller
         // in the case delete this one as well
 
         $external->delete();
+
+        return redirect()->back();
     }
 
     public function update(Request $request, External $external)
