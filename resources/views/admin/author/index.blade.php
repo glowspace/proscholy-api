@@ -11,7 +11,8 @@
                     <tr>
                         <td><a href="{{route('admin.author.edit',['id'=>$author->id])}}">{{$author->name}}</a></td>
                         <td>
-                            <a href="{{ route('admin.author.delete',['id'=>$author->id]) }}" class="btn btn-warning">Vymazat</a>
+                            @include('admin.components.deletebutton', ['url' => route('admin.author.delete',['author' => $author->id] )])
+                            {{-- <a href="{{ route('admin.author.delete',['id'=>$author->id]) }}" class="btn btn-warning">Vymazat</a> --}}
                         </td>
                     </tr>
                     @endforeach
@@ -22,3 +23,5 @@
         </div>
     </div>
 @endsection
+
+@include('admin.components.deletebutton_includes')

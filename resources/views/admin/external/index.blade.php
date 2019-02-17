@@ -12,7 +12,7 @@
             <tr>
                 <td><a href="{{route('admin.external.edit',['external'=>$external->id])}}">{{$external->generateTitle()}}</a></td>
                 <td>
-                    <a href="{{ route('admin.external.delete',['external'=>$external->id]) }}" class="btn btn-warning">Vymazat</a>
+                    @include('admin.components.deletebutton', ['url' => route('admin.external.delete',['external' => $external->id] )])
                 </td>
             </tr>
             @endforeach
@@ -34,3 +34,5 @@
     </div>
 
 @endsection
+
+@include('admin.components.deletebutton_includes')
