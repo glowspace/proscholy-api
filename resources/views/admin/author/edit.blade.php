@@ -18,11 +18,9 @@
                             <label class="input-group-text">Typ autora</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            <option value="0" {{ $author->type == 0 ? 'selected' : "" }}>autor</option>
-                            <option value="1" {{ $author->type == 1 ? 'selected' : "" }}>hudební uskupení</option>
-                            <option value="2" {{ $author->type == 2 ? 'selected' : "" }}>schola</option>
-                            <option value="3" {{ $author->type == 3 ? 'selected' : "" }}>kapela</option>
-                            <option value="4" {{ $author->type == 4 ? 'selected' : "" }}>sbor</option>
+                            @foreach($author->type_string as $value)
+                                <option value="{{$loop->iteration}}" {{ $author->type == $loop->iteration ? 'selected' : "" }}>{{ $value }}</option>
+                            @endforeach
                         </select>
                     </div>
 

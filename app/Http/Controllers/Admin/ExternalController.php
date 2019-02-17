@@ -32,7 +32,6 @@ class ExternalController extends Controller
         // Externals::create($request->all());
 
         $external       = new External();
-        $external->type = $request["type"];
         $external->url = $request['url'];
         $external->save();
 

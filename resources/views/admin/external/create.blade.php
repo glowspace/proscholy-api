@@ -16,7 +16,7 @@
                         <input class="form-control" required autofocus name="url" placeholder="Adresa URL zdroje">
                     </div>
         
-                    <div class="input-group mb-3">
+                    {{-- <div class="input-group mb-3">
                         <div class="input-group-append mr-3">
                             <label class="input-group-text">Typ odkazu</label>
                         </div>
@@ -24,7 +24,7 @@
                             <option value="0">youtube</option>
                             <option value="1">spotify</option>
                         </select>
-                    </div>
+                    </div> --}}
         
                     <div class="input-group">
                         <button type="submit" name="redirect" value="create" class="btn btn-outline-primary mr-3">Uložit</button>

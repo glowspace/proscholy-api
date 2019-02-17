@@ -24,8 +24,9 @@
                             <label class="input-group-text">Typ odkazu</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            <option value="0" {{ $external->type == 0 ? 'selected' : '' }}>youtube</option>
-                            <option value="1" {{ $external->type == 1 ? 'selected' : '' }}>spotify</option>
+                            @foreach($external->type_string as $value)
+                                <option value="{{$loop->iteration}}" {{ $external->type == $loop->iteration ? 'selected' : "" }}>{{ $value }}</option>
+                            @endforeach
                         </select>
                     </div>
 
