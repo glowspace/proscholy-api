@@ -1,4 +1,6 @@
 <div class="navbar-label material-shadow text-warning">Administrace</div>
+<a class="btn btn-secondary" href="{{route('admin.dashboard')}}">
+    <i class="fas fa-home"></i> Nástěnka
 
 <a class="btn btn-secondary" href="{{route('client.home')}}">
     <i class="fas fa-arrow-left"></i> Návrat na web

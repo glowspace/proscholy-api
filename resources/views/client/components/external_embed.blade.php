@@ -32,15 +32,14 @@
 @elseif($external->type == 4)
     <div class="card" style="margin-bottom: 1em;">
         <div class="card-header">
-            <i style="color: #db0e0e;" class="fab fa-link"></i>
+            <i style="color: #db0e0e;" class="fas fa-file-pdf"></i>
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
 
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe src="{{$external->getEmbedUrl()}}" frameborder="0"
-                    allowfullscreen></iframe>
+            <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
         </div>
     </div>
 @else
-    <div class="card" style="margin-bottom: 1em;">Wrong external media type.</div>
+    <div class="card" style="margin-bottom: 1em; padding: 1em;">Wrong external media type.</div>
 @endif

@@ -12,7 +12,7 @@
 </a>
 
 @if($song_l->scoresCount())
-    <a class="btn btn-secondary">
+    <a class="btn btn-secondary" href="{{route('client.song.score', $song_l)}}">
         <i class="fas fa-music"></i> Noty
         <span class="badge badge-pill">{{$song_l->scoresCount()}}</span>
     </a>
@@ -39,12 +39,12 @@
     </a>
 @endif
 
-<div class="navbar-label material-shadow text-warning">Možnosti</div>
+{{--<div class="navbar-label material-shadow text-warning">Možnosti</div>--}}
 
-<a class="btn btn-secondary">
-    <i class="fas fa-upload"></i> Přidat materiál
-</a>
+{{--<a class="btn btn-secondary">--}}
+    {{--<i class="fas fa-upload"></i> Přidat materiál--}}
+{{--</a>--}}
 
-<a class="btn btn-secondary">
-    <i class="fas fa-exclamation-circle"></i> Nahlásit
-</a>
+{{--<a class="btn btn-secondary">--}}
+    {{--<i class="fas fa-exclamation-circle"></i> Nahlásit--}}
+{{--</a>--}}

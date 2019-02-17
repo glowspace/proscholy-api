@@ -60,7 +60,7 @@ class External extends Model
         }
         else
         {
-            throw new Exception("unimplemented");
+            return $this->url;
         }
     }
 

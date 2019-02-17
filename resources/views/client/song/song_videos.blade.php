@@ -50,9 +50,6 @@
                             </div>
                         @endforeach
                     @endif
-
-
-
                 </div>
 
                 <hr>

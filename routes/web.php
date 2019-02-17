@@ -31,9 +31,9 @@ Route::get('/pisen/{song_lyric}/noty', 'Client\SongLyricsController@songScore')-
 Route::get('/pisen/{song_lyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
 Route::get('/pisen/{song_lyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
 Route::get('/pisen/{song_lyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
-Route::get('/autor/{Author}', 'Client\AuthorController@renderAuthor')->name('client.author');
+Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
 // TODO: Songbook view
-Route::get('/zpevnik/{Songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');
+Route::get('/zpevnik/{songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');
 
 // Client forms
 // TODO: Public content request
