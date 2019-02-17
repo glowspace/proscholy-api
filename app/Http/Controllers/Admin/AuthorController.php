@@ -43,10 +43,10 @@ class AuthorController extends Controller
     }
 
     public function destroy(Author $author){
-        // TODO: find if a Author model that had been linked to this Author has no dependencies anymore
-        // in the case delete this one as well
-
+        
         $author->delete();
+
+        return redirect()->back();
     }
 
     public function update(Request $request, Author $author)

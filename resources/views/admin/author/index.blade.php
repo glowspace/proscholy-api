@@ -10,7 +10,10 @@
                     @foreach($authors as $author)
                     <tr>
                         <td><a href="{{route('admin.author.edit',['id'=>$author->id])}}">{{$author->name}}</a></td>
-                        </tr>
+                        <td>
+                            <a href="{{ route('admin.author.delete',['id'=>$author->id]) }}" class="btn btn-warning">Vymazat</a>
+                        </td>
+                    </tr>
                     @endforeach
                 </table>
 

@@ -17,6 +17,9 @@
                                     překlad
                                 @endif
                             </td>
+                            <td>
+                            <a href="{{ route('admin.song.delete',['id'=>$song->id]) }}" class="btn btn-warning">Vymazat</a>
+                            </td>
                         </tr>
                     @endforeach
                 </table>

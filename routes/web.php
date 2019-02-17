@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('/external/new', 'ExternalController@store')->name('admin.external.store');
     Route::get('/external/{external}', 'ExternalController@edit')->name('admin.external.edit');
     Route::put('/external/{external}', 'ExternalController@update')->name('admin.external.update');
+    Route::get('/external/{external}/delete', 'ExternalController@destroy')->name('admin.external.delete');
 
     // Route::get('/external/edit/{id}/translation', 'AdminController@renderExternalEditTranslation')
     //     ->name('admin.external.edit.translation');
@@ -78,15 +79,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('/song/new', 'SongController@store')->name('admin.song.store');
     Route::get('/song/{song_lyric}', 'SongController@edit')->name('admin.song.edit');
     Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
+    Route::get('/song/{song_lyric}/delete', 'SongController@destroy')->name('admin.song.delete');
     // TODO
     // Route::get('/song/{id}/add_author', 'SongController@renderAddSongAuthor')->name('admin.song.author.add');
     // Route::get('/song/{id}/remove_author/{author_id}', 'SongController@storeRemoveSongAuthor')
     //     ->name('admin.song.author.remove');
 
     // Author
+    Route::get('/authors', 'AuthorController@index')->name('admin.author.index');
     Route::get('/author/new', 'AuthorController@create')->name('admin.author.create');
     Route::post('/author/new', 'AuthorController@store')->name('admin.author.store');
-    Route::get('/authors', 'AuthorController@index')->name('admin.author.index');
     Route::get('/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
     Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
+    Route::get('/author/{author}/delete', 'AuthorController@destroy')->name('admin.author.delete');
 });
