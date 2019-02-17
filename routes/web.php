@@ -15,6 +15,8 @@
  * Public routes.
  */
 Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
+Route::get('/o-tymu', 'Client\HomeController@renderAboutTeam')->name('client.team');
+
 
 // Redirects to real search route.
 Route::post('/vyhledavani/send_search', 'Client\SearchController@searchSend')->name('client.search');
