@@ -34,27 +34,19 @@ class External extends Model
 
     public $type_string
         = [
-            0 => 'youtube',
+            0 => 'link',
             1 => 'spotify',
             2 => 'soundcloud',
-            3 => 'link',
+            3 => 'youtube',
+            4 => 'score_link',
         ];
 
     /**
      * @return string
-     * @throws Exception
      */
     public function getTypeString()
     {
-        switch ($this->type)
-        {
-            case 0:
-                return 'youtube';
-            case 1:
-                return 'spotify';
-            default:
-                throw new Exception("Unknown external type");
-        }
+        return $this->type_string[$this->type];
     }
 
     /**
