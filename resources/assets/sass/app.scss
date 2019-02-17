@@ -31,12 +31,13 @@ h1, h2, h3, h4 {
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  -webkit-user-select:   none; /* Safari */
+  -khtml-user-select:    none; /* Konqueror HTML */
+  -moz-user-select:      none; /* Firefox */
+  -ms-user-select:       none; /* Internet Explorer/Edge */
+  user-select:           none;
+  /* Non-prefixed version, currently
+                                   supported by Chrome and Opera */
 }
 
 /**
@@ -193,11 +194,19 @@ Home page specific elements
 /**
 ChordPro view
  */
+.transpose-control-wrapper {
+  float: right;
+
+  .btn {
+    margin-bottom: 0;
+  }
+}
+
 
 #lyrics {
   display:     inline-block;
 
-  width: 100%;
+  width:       100%;
 
   text-align:  left;
   margin:      0 auto 0;
@@ -249,7 +258,7 @@ ChordPro view
 
 
 #lyrics .lyric_block .chord {
-  color:       #4444ff;
+  color:       #098845;
   font-weight: bold;
 }
 

@@ -16,13 +16,13 @@
     <i class="fas fa-language"></i> Překlady
     <span class="badge badge-pill">3</span>
 </a>
-<a class="btn btn-secondary">
+<a class="btn btn-secondary" href="{{route('client.song.audio_records', $song_l)}}">
     <i class="fas fa-microphone"></i> Nahrávky
-    <span class="badge badge-pill">4</span>
+    <span class="badge badge-pill">{{$song_l->spotifyTracks->count()}}</span>
 </a>
-<a class="btn btn-secondary">
+<a class="btn btn-secondary" href="{{route('client.song.videos', $song_l)}}">
     <i class="fab fa-youtube"></i> Videa
-    <span class="badge badge-pill">8</span>
+    <span class="badge badge-pill">{{$song_l->youtubeVideos->count()}}</span>
 </a>
 
 <div class="navbar-label material-shadow text-warning">Možnosti</div>

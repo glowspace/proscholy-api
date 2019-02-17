@@ -64,45 +64,7 @@
 
         <h4>Videa</h4>
 
-        <div class="row">
-            @if($author->externals->count() == 0)
-                <div class="col-sm-4">
-                    <div class="card embed-responsive embed-responsive-16by9"></div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card embed-responsive embed-responsive-16by9"></div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card embed-responsive embed-responsive-16by9"></div>
-                </div>
-            @elseif($author->externals->count() == 1)
-                @foreach($author->externals as $external)
-                    <div class="col-sm-4">
-                        {!! $external->getHtml() !!}
-                    </div>
-                @endforeach
-                <div class="col-sm-4">
-                    <div class="card embed-responsive embed-responsive-16by9"></div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card embed-responsive embed-responsive-16by9"></div>
-                </div>
-            @elseif($author->externals->count() == 2)
-                @foreach($author->externals as $external)
-                    <div class="col-sm-4">
-                        {!! $external->getHtml() !!}
-                    </div>
-                @endforeach
-                <div class="col-sm-4">
-                    <div class="card embed-responsive embed-responsive-16by9"></div>
-                </div>
-            @elseif($author->externals->count() > 2)
-                @foreach($author->externals as $external)
-                    <div class="col-sm-4">
-                        {!! $external->getHtml() !!}
-                    </div>
-                @endforeach
-            @endif
+
         </div>
     </div>
 

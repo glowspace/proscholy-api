@@ -89,7 +89,7 @@ class Author extends Model implements ISearchResult
     /**
      * Get the indexable data array for the model.
      *
-     * @return array
+     * @return array;
      */
     public function toSearchableArray()
     {

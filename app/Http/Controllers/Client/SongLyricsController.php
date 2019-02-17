@@ -22,4 +22,22 @@ class SongLyricsController extends Controller
 
         return view('client.song.song_text', compact('song_l'));
     }
+
+    public function songAudioRecords($id)
+    {
+        $song_l = SongLyric::findOrFail($id);
+        $song_l->visits += 1;
+        $song_l->save();
+
+        return view('client.song.song_audio_records', compact('song_l'));
+    }
+
+    public function songVideos($id)
+    {
+        $song_l = SongLyric::findOrFail($id);
+        $song_l->visits += 1;
+        $song_l->save();
+
+        return view('client.song.song_videos', compact('song_l'));
+    }
 }

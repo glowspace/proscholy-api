@@ -11,10 +11,15 @@
                 <h1>{{$song_l->name}}</h1>
 
                 <div class="card">
-                    <div class="card-body">
-                        <p>@component('client.components.song_lyric_author',['song_l' => $song_l])@endcomponent</p>
-                        <hr>
+                    <div class="card-header" style="padding: 8px;">
+                        <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author',['song_l' => $song_l])@endcomponent</span>
 
+                        <div class="transpose-control-wrapper" style="display: inline-block" >
+                            <span>Transpozice: </span><a class="btn btn-secondary" id="transposeUp">+1</a>
+                            <a class="btn btn-secondary" id="transposeDown">-1</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
                         <div id="lyrics">{!!$song_l->lyrics !!}</div>
 
                         <hr>
@@ -54,11 +59,22 @@
     @include('scripts.chordpro_parse')
 
     <script>
-        $(document).ready(function () {
-            let lyrics = document.getElementById('lyrics');
-            let lyrics_source = document.getElementById('lyrics').innerHTML;
+        lyrics_source = document.getElementById('lyrics').innerHTML;
+        lyrics = document.getElementById('lyrics');
+        current = 0;
 
+        $(document).ready(function () {
             lyrics.innerHTML = parseChordPro(lyrics_source, 0);
         });
+
+        $("#transposeUp").click(function () {
+            current = current + 1;
+            lyrics.innerHTML = parseChordPro(lyrics_source, current);
+        })
+
+        $("#transposeDown").click(function () {
+            current = current - 1;
+            lyrics.innerHTML = parseChordPro(lyrics_source, current);
+        })
     </script>
 @endpush

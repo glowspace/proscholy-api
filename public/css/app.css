@@ -20263,7 +20263,7 @@ h4 {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+                                   supported by Chrome and Opera */
 }
 
 /**
@@ -20400,6 +20400,15 @@ Home page specific elements
 ChordPro view
  */
 
+.transpose-control-wrapper {
+  float: right;
+}
+
+.transpose-control-wrapper .btn,
+.transpose-control-wrapper .custom-file-control::before {
+  margin-bottom: 0;
+}
+
 #lyrics {
   display: inline-block;
   width: 100%;
@@ -20441,7 +20450,7 @@ ChordPro view
 }
 
 #lyrics .lyric_block .chord {
-  color: #4444ff;
+  color: #098845;
   font-weight: bold;
 }
 

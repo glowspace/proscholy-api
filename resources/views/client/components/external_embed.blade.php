@@ -14,8 +14,17 @@
         </div>
     </div>
 @elseif($external->type == 1)
-    <iframe src="{{$external->url}}" width="100%" height="80" frameborder="0"
-            allowtransparency="true" allow="encrypted-media"></iframe>
+    <div class="card" style="margin-bottom: 1em;">
+        <div class="card-header">
+            <i style="color: #277d11;" class="fab fa-spotify"></i>
+            @if(isset($external->author_id) and isset($external->song_lyric_id))
+                {!! $external->author->getLink() !!} - <a
+                        href="{{$external->song_lyric->getLink()}}">{{$external->song_lyric->name}}</a>
+            @endif
+        </div>
+        <iframe src="{{$external->url}}" width="100%" height="80" frameborder="0"
+                allowtransparency="true" allow="encrypted-media"></iframe>
+    </div>
 @else
     <div class="card" style="margin-bottom: 1em;">Wrong external media type.</div>
 @endif
