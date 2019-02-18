@@ -17,3 +17,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/js');
+
+// File hash suffix in production (to bust old caches)
+if (mix.inProduction()) {
+    mix.version();
+}
