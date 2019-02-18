@@ -16,11 +16,7 @@
     <meta name="theme-color" content="#292929">
 
     <title>
-        @if(isset($page_title))
-            {{$page_title}} - křesťanský zpěvník - ProScholy.cz
-        @else
-            ProScholy.cz - nejhustější křesťanský zpěvník v ČR
-        @endif
+        @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník v ČR')
     </title>
 
     <!-- Fonts -->
