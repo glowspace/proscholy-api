@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Zuzana Haikerová</h5>
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Václav Šablatura</h5>
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Petra Kalousková</h5>
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Emma Kasanová</h5>
