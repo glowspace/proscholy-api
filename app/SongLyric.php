@@ -128,9 +128,14 @@ class SongLyric extends Model implements ISearchResult
         return $this->isDomestic() && ! $this->hasSiblings();
     }
 
+    public function getSiblings()
+    {
+        return $this->song->song_lyrics()->where('id', '!=', $this->id);
+    }
+
     public function hasSiblings()
     {
-        return $this->song->song_lyrics->count() > 1;
+        return $this->getSiblings()->count() > 0;
     }
 
     // basically Cuckoo shouldn't be alone really

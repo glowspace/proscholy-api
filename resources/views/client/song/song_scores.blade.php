@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', $song_l->name . ' - noty')
+
 @section('navbar')
     @include('client.components.menu_song')
 @endsection

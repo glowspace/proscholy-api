@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', $song_l->name . ' - píseň ve zpěvníku ProScholy.cz')
+
 @section('navbar')
     @include('client.components.menu_song')
 @endsection
