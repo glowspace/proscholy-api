@@ -22,8 +22,11 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="lyrics">{!!$song_l->lyrics !!}</div>
-
+                        @if($song_l->lyrics)
+                            <div id="lyrics">{!!$song_l->lyrics !!}</div>
+                        @else
+                            <div id="lyrics">Text písně připravujeme.</div>
+                        @endif
                         <hr>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
