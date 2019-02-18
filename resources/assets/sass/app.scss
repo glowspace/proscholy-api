@@ -132,10 +132,14 @@ Home page specific elements
     width:               130px;
 
     display:             inline-block;
+    position:            relative;
+    top:                 27px;
 
     background-image:    url(/img/logo_bubble.svg);
     background-position: center;
     background-size:     149%;
+
+
   }
 
   .caption {
