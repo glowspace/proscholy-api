@@ -5,6 +5,10 @@
 
         <h2>Externí zdroje</h2>
 
+        <div style="float: right">
+            <a href="{{route('admin.external.create')}}" class="btn btn-outline-primary">Přidat zdroj</a>
+        </div>
+
         <h3 style="margin-bottom: 5px;">Zdroje k přiřazení</h3>
         <span class="text-warning" style="display: inline-block; margin-bottom: 20px">Externí zdroje, které nemají přiřazeného autora nebo píseň.</span>
 
