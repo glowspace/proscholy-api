@@ -10,16 +10,15 @@
 
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
             kteří pracují s českou nebo slovenskou křesťanskou tvorbou.
-            V dnešní době, kdy je duchovní hudba roztroušena v množství různých míst
-            na internetu nebo v papírových sbornících s zpěvnících, chceme nabídnout lehkou a praktickou alternativu
-             Naším cílem je se
+            V dnešní době, kdy je duchovní hudba roztroušena po mnoha různých místech
+            na internetu nebo v papírových sbornících s zpěvnících,
+            chceme nabídnout rychlou a praktickou alternativu.
         </p>
 
         <p>
-            Chcete se podílet na tvorbě zpěnvníku?
+            Chcete se podílet na tvorbě zpěvníku?
             Máte tipy na nové funkce nebo nový repertoár?
-            Můžete nám napsat na email redakce@proscholy.cz
-            nebo na naší FB stránce.</p>
+            Můžete nám napsat na email redakce@proscholy.cz.</p>
 
         <h3>Náš redakční tým</h3>
 
