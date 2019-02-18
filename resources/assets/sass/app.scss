@@ -156,7 +156,7 @@ Home page specific elements
   text-align: center;
 
   position:   relative;
-  margin-top: 30px;
+  margin-top: 1px;
 
   $search-wrapper-height: 47px;
   height:     $search-wrapper-height;
@@ -164,16 +164,17 @@ Home page specific elements
   .search-home {
     display:          inline-block;
 
+    width:            518px;
+
     padding:          10px 20px;
     margin-right:     7px;
+    margin-left:      18px;
 
     border:           none;
 
     background-color: white;
     border-radius:    8px;
     font-size:        16px;
-
-    width:            80%;
 
     &:focus {
       outline: none;
