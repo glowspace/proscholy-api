@@ -15,16 +15,24 @@
                     <label>Název</label>
                     <input class="form-control" required autofocus name="name" placeholder="Název písně" value="{{$song_lyric->name}}"><br>
 
-                    <label>Jedná se o překlad/variantu již existující písně:</label>
-                    @include('admin.components.magicsuggest', [
-                        'field_name' => 'assigned_song_lyrics',
-                        'value_field' => 'id',
-                        'display_field' => 'name',
-                        'list_all' => $all_song_lyrics,
-                        'list_selected' => $assigned_song_lyrics,
-                        'is_single' => true,
-                        'disabled' => $assigned_song_disabled
-                    ])
+                    @if ($assigned_song_disabled)
+                        <p>Píseň je označena jako originál následujících písní: </p>
+                        @foreach ($song_lyric->getSiblings()->get() as $item)
+                            {{ $item->name }}<br/>
+                        @endforeach
+                        <br/>
+                    @else
+                    <label>Jedná se o překlad následující písně:</label>
+                        @include('admin.components.magicsuggest', [
+                            'field_name' => 'assigned_song_lyrics',
+                            'value_field' => 'id',
+                            'display_field' => 'name',
+                            'list_all' => $all_song_lyrics,
+                            'list_selected' => $assigned_song_lyrics,
+                            'is_single' => true,
+                            'disabled' => $assigned_song_disabled
+                        ])
+                    @endif
 
                     <label>Autoři</label><br>
 
