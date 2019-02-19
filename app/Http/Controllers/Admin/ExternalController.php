@@ -31,6 +31,8 @@ class ExternalController extends Controller
     {
         $external = External::create(['url' => $request->url]);
 
+        // TODO: try to guess the type according to url
+
         $redirect_arr = [
             'edit' => route('admin.external.edit', ['id' => $external->id]),
             'create' => route('admin.external.create')
@@ -101,8 +103,6 @@ class ExternalController extends Controller
             $external->author()->associate($author);
             $external->save();
         }
-
-        // TODO: enable add new one???????????????????????????????????????????????????????//
 
         // no song lyric set, delete if there had been any association
         if ($request->assigned_song_lyrics == NULL) {
