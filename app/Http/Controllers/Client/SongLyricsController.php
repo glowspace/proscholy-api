@@ -38,7 +38,9 @@ class SongLyricsController extends Controller
         $song_l->visits += 1;
         $song_l->save();
 
-        return view('client.song.song_translations', compact('song_l'));
+        $song_l_original = $song_l->song->getOriginalLyric();
+
+        return view('client.song.song_translations', compact('song_l', 'song_l_original'));
     }
 
     public function songAudioRecords($id)

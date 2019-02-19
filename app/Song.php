@@ -42,7 +42,7 @@ class Song extends Model
 
     public function translations()
     {
-        return $this->song_lyrics()->where('id', '!=', $this->getOriginalLyric()->id)->get();
+        return $this->song_lyrics()->where('is_original', 0);
     }
 
     public function getNonCuckooSongLyric($id_exclude)

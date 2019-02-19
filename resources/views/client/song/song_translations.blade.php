@@ -10,7 +10,7 @@
     <div class="content-padding">
         <h1>Další varianty písně {{$song_l->name}}</h1>
 
-        @if($song_l->song->getOriginalLyric() !== null)
+        @if($song_l_original !== null)
             <div class="card">
                 <div class="card-header">Původní originál</div>
                 <div class="card-body">
@@ -18,12 +18,12 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l->song->getOriginalLyric())}}">{{$song_l->song->getOriginalLyric()->name}}</a>
+                                    <a href="{{route('client.song.text', $song_l_original)}}">{{$song_l_original->name}}</a>
                                 </td>
                                 <td>
-                                    @component('client.components.song_lyric_author', ['song_l' => $song_l->song->getOriginalLyric()])@endcomponent
+                                    @component('client.components.song_lyric_author', ['song_l' => $song_l_original])@endcomponent
                                 </td>
-                                <td>{{$song_l->song->getOriginalLyric()->visits}} x</td>
+                                <td>{{$song_l_original->visits}} x</td>
                             </tr>
                         </tbody>
                     </table>
@@ -44,7 +44,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($song_l->song->translations() as $song_l)
+                        @foreach($song_l->song->translations()->get() as $song_l)
                             <tr>
                                 <td>
                                     <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
