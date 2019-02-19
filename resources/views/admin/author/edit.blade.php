@@ -4,7 +4,7 @@
     <div class="content-padding">
     <h2>Úprava autora</h2>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <form action="{{ route('admin.author.update', ['author' => $author->id]) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -23,6 +23,10 @@
                             @endforeach
                         </select>
                     </div>
+                    
+                    <label>Informace k autorovi</label>
+                    <textarea rows="20" name="description" class="form-control" title="">{{$author->description}}</textarea>
+                    <br/>
 
                     <div class="input-group">
                         <button type="submit" class="btn btn-outline-primary">Uložit</button>
