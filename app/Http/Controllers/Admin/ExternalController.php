@@ -50,10 +50,6 @@ class ExternalController extends Controller
 
     public function edit(Request $request, External $external)
     {
-        if ($request->has('song_lyric_id')) {
-            dd($request->song_lyric_id);
-        }
-
         // this field needs to be saved as a singleton array or empty array
         // if passed just as [$external->author] then the result is [{}] if there is nothing
         $assigned_authors = $external->author ? [$external->author] : [];
