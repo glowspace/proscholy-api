@@ -23,7 +23,20 @@
         <br><br>
 
         @if(isset($author->description))
-            <p>{{$author->description}}</p>
+            <div class="card">
+                <div class="card-header">O @if($author->type == 0)
+                        autorovi
+                    @elseif($author->type == 1)
+                        uskupení
+                    @elseif($author->type == 2)
+                        schole
+                    @elseif($author->type == 3)
+                        kapele
+                    @elseif($author->type == 4)
+                        sboru
+                    @endif</div>
+                <div class="card-body">{{$author->description}}</div>
+            </div>
         @endif
 
         @if($author->members()->count() > 0)
@@ -43,29 +56,77 @@
         @endif
 
         @if($author->songOriginalLyrics()->count() > 0)
-            Písně:<br>
+            <div class="card">
+                <div class="card-header">Písně</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Píseň</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Zobrazeno</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($author->songOriginalLyrics as $song_l)
+                            <tr>
+                                <td>
+                                    <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
+                                </td>
+                                <td>
+                                    @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                                </td>
+                                <td>{{$song_l->visits}} x</td>
+                            </tr>
+                        @endforeach
 
-            @foreach($author->songOriginalLyrics as $translation)
-                <a href="{{route('client.song.text', ['id'=> $translation->id])}}">{{$translation->name}} </a><br>
-            @endforeach
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+
+                    </div>
+
+                    <hr>
+                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                </div>
+            </div>
         @endif
 
         @if($author->songNotOriginalLyrics()->count() > 0)
-            Překlady:<br>
+            <div class="card">
+                <div class="card-header">Překlady</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Píseň</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Zobrazeno</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($author->songNotOriginalLyrics as $song_l)
+                            <tr>
+                                <td>
+                                    <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
+                                </td>
+                                <td>
+                                    @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                                </td>
+                                <td>{{$song_l->visits}} x</td>
+                            </tr>
+                        @endforeach
 
-            @foreach($author->songNotOriginalLyrics as $translation)
-                {{--<a href="{{route('client.song.text', ['id'=> $translation->id])}}">{{$translation->name}} </a>--}}
-                {{--(--}}
-                {{--<a href="{{route('client.song.text',['id'=>$translation->song->getOriginalLyric()->id])}}">{{$translation->song->name}}</a>--}}
-                {{--)--}}
-                {{--<br>--}}
-            @endforeach
+                        </tbody>
+                    </table>
+
+                    <hr>
+                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                </div>
+            </div>
         @endif
-
-        <h4>Videa</h4>
-
-
-        </div>
     </div>
+
 
 @endsection
