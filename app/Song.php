@@ -26,6 +26,9 @@ class Song extends Model
 {
     protected $fillable = ['name', 'lyrics'];
 
+    public const ERR_NO_ORIGINAL = 1;
+    public const ERR_MORE_ORIGINALS = 2;
+
     public function authors()
     {
         // TODO: return all authors of the SongLyrics combined ... but rather not necessary

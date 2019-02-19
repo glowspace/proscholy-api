@@ -121,8 +121,34 @@ class SongController extends Controller
             'save_show' => route('client.song.text', ['song_id' => $song_lyric->id])
         ];
 
+        // check if there is any bad behaviour
+        
+        // 1. case: there is a group of SongLyrics under one Song that have no original
+        if ($song_lyric->hasSiblings() &&
+            $song_lyric->song->getOriginalLyric() === NULL)
+        {
+            return view('admin.song.error', [
+                'error' => Song::ERR_NO_ORIGINAL,
+                'song' => $song_lyric->song 
+            ]);
+        }
+
+        // 2. case: there is more originals in one group
+        if ($song_lyric->song->song_lyrics()->where('is_original', 1)->count() > 1)
+        {
+            return view('admin.song.error', [
+                'error' => Song::ERR_MORE_ORIGINALS,
+                'song' => $song_lyric->song 
+            ]);
+        }
+
         return redirect($redirect_arr[$request->redirect]);
 
         // return redirect()->route('admin.song.index');
+    }
+
+    public function resolve_error(Request $request)
+    {
+        
     }
 }
