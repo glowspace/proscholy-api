@@ -75,6 +75,11 @@ class SongLyric extends Model implements ISearchResult
         'mixed' => 'vícejazyčná píseň'
     ];
 
+    public function getLanguageName()
+    {
+        return $this->lang_string[$this->lang];
+    }
+
     public function song()
     {
         return $this->belongsTo(Song::class);

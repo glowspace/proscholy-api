@@ -7,19 +7,22 @@
         <div class="row">
             <div class="col-sm-6">
                 <table class="table table-bordered">
-                    @foreach($song_lyrics as $song)
+                    @foreach($song_lyrics as $song_l)
                     <tr>
-                        <td><a href="{{route('admin.song.edit',['id'=>$song->id])}}">{{$song->name}}</a></td>
+                        <td><a href="{{route('admin.song.edit',['id'=>$song_l->id])}}">{{$song_l->name}}</a></td>
                             <td>
-                                @if($song->is_original)
+                                @if($song_l->is_original)
                                     originál
                                 @else
                                     překlad
                                 @endif
+                                @if ($song_l->lang !== 'cs')
+                                    &nbsp;({{ $song_l->getLanguageName() }})
+                                @endif
                             </td>
                             <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.song.delete',[ 'song' => $song->id ]) ,
+                                'url' => route('admin.song.delete',[ 'song' => $song_l->id ]) ,
                                 'class' => 'btn btn-warning'
                             ])
                             </td>
