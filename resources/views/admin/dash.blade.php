@@ -16,6 +16,14 @@
                         <td>Miroslav Šerý, Michael Dojčár</td>
                     </tr>
                     <tr>
+                        <td>Redakce</td>
+                        <td>Matěj, Zuzka, Vašek, Michal, Mira</td>
+                    </tr>
+                    <tr>
+                        <td>Propagace</td>
+                        <td>Emma, Peťa</td>
+                    </tr>
+                    <tr>
                         <td>Krizový telefon <br>(urgent. dotazy, závady)</td>
                         <td class="text-danger">+420 734 791 909</td>
                     </tr>
