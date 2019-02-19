@@ -104,22 +104,7 @@ class ExternalController extends Controller
         else {
             $song_lyric_identification = $request->assigned_song_lyrics[0];
 
-            $song_lyric;
-            
-            if (is_numeric($song_lyric_identification)) {
-                // ID was given, find an "old" song_lyric
-                $song_lyric = SongLyric::find($song_lyric_identification);
-            } else {
-                // create a Song model and then an associated SongLyric
-                $song       = new Song();
-                $song->name = $song_lyric_identification;
-                $song->save();
-
-                $song_lyric = SongLyric::create([
-                    'name' => $song_lyric_identification,
-                    'song_id' => $song->id
-                ]);
-            }
+            $song_lyric = SongLyric::getByIdOrCreateWithName($song_lyric_identification);
 
             $external->song_lyric()->associate($song_lyric);
             $external->save();
