@@ -19,7 +19,7 @@
                         </div>
                         <select class="custom-select" name="type" title="">
                             @foreach($author->type_string as $value)
-                                <option value="{{$loop->iteration}}" {{ $author->type == $loop->iteration ? 'selected' : "" }}>{{ $value }}</option>
+                                <option value="{{$loop->iteration - 1}}" {{ $author->type == $loop->iteration - 1 ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>
                     </div>
