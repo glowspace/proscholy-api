@@ -13,7 +13,10 @@ class ExternalController extends Controller
 {
     public function __construct()
     {
+        // comment_chat_for_fun_initialize:
 
+        // Mira: zdar jak sviňa Michale, jak sa vede? :D
+        // Michal: Dá se, už zobrazujeme překlady u písně. :-) Měl bych se mrknout na trello. :D
     }
 
     public function index(){

@@ -40,6 +40,11 @@ class Song extends Model
         return $this->hasMany(SongLyric::class);
     }
 
+    public function translations()
+    {
+        return $this->song_lyrics()->where('id', '!=', $this->getOriginalLyric()->id)->get();
+    }
+
     public function getNonCuckooSongLyric($id_exclude)
     {
         return $this->song_lyrics()->where('name', $this->name)->where('id', '!=', $id_exclude)->first();

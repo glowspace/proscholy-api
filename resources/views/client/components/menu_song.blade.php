@@ -19,8 +19,8 @@
 @endif
 
 @if($song_l->song->song_lyrics()->count() > 1)
-    <a class="btn btn-secondary">
-        <i class="fas fa-language" href="{{route('client.song.translations', $song_l)}}"></i> Překlady
+    <a class="btn btn-secondary" href="{{route('client.song.translations', $song_l)}}">
+        <i class="fas fa-language"></i> Překlady
         <span class="badge badge-pill">{{$song_l->song->song_lyrics()->count()}}</span>
     </a>
 @endif
@@ -55,9 +55,9 @@
 {{--<div class="navbar-label material-shadow text-warning">Možnosti</div>--}}
 
 {{--<a class="btn btn-secondary">--}}
-    {{--<i class="fas fa-upload"></i> Přidat materiál--}}
+{{--<i class="fas fa-upload"></i> Přidat materiál--}}
 {{--</a>--}}
 
 {{--<a class="btn btn-secondary">--}}
-    {{--<i class="fas fa-exclamation-circle"></i> Nahlásit--}}
+{{--<i class="fas fa-exclamation-circle"></i> Nahlásit--}}
 {{--</a>--}}

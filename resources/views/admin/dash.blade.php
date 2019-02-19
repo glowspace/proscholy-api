@@ -9,11 +9,19 @@
                 <table class="table table-bordered">
                     <tr>
                         <td>Verze zpěvníku</td>
-                        <td><b>Generace #1 - v0.21 (17.2.2019)</b></td>
+                        <td><b>Generace #1 - v024 (19.2.2019)</b></td>
                     </tr>
                     <tr>
                         <td>Autor:</td>
                         <td>Miroslav Šerý, Michael Dojčár</td>
+                    </tr>
+                    <tr>
+                        <td>Redakce</td>
+                        <td>Matěj, Zuzka, Vašek, Michal, Mira</td>
+                    </tr>
+                    <tr>
+                        <td>Propagace</td>
+                        <td>Emma, Peťa</td>
                     </tr>
                     <tr>
                         <td>Krizový telefon <br>(urgent. dotazy, závady)</td>
