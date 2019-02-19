@@ -65,11 +65,13 @@ class ExternalController extends Controller
         ));
     }
 
-    public function destroy(External $external){
-        // TODO: find if a External model that had been linked to this External has no dependencies anymore
-        // in the case delete this one as well
-
+    public function destroy(Request $request, External $external)
+    {
         $external->delete();
+
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
         return redirect()->back();
     }

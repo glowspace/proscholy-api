@@ -67,6 +67,11 @@
                         <button type="submit" class="btn btn-outline-primary">Uložit</button>
                     </div>
                 </form>
+                @include('admin.components.deletebutton', [
+                    'url' => route('admin.external.delete', ['external' => $external->id]),
+                    'class' => 'btn btn-outline-warning',
+                    'redirect' => route('admin.external.index')
+                ])
             </div>
             {{-- <div class="col-sm-4">
                 <iframe height="500" src="{{route('admin.external.edit.author',['id'=>$external->id])}}"></iframe>
@@ -79,3 +84,4 @@
 @endsection
 
 @include('admin.components.magicsuggest_includes')
+@include('admin.components.deletebutton_includes')

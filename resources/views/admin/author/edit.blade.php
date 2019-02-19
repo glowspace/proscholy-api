@@ -31,9 +31,16 @@
                     <div class="input-group">
                         <button type="submit" class="btn btn-outline-primary">Uložit</button>
                     </div>
-                    {{-- <input type="submit" value="Uložit"> --}}
                 </form>
+
+                @include('admin.components.deletebutton', [
+                    'url' => route('admin.author.delete', ['author' => $author->id]),
+                    'class' => 'btn btn-outline-warning',
+                    'redirect' => route('admin.author.index')
+                ])
             </div>
         </div>
     </div>
 @endsection
+
+@include('admin.components.deletebutton_includes')
