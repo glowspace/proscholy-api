@@ -26,24 +26,37 @@ class ExternalController extends Controller
     public function create(){
         return view('admin.external.create');
     }
-
+    
     public function store(Request $request){
         // TODO: make this line working
         // Externals::create($request->all());
-
+        
         $external       = new External();
         $external->url = $request['url'];
         $external->save();
-
+        
         if ($request["redirect"] == "edit") {
             return redirect()->route('admin.external.edit', ['id' => $external->id]);
         }
-
+        
         return redirect()->route('admin.external.create');
     }
 
-    public function edit(External $external)
+    public function create_for_song(Request $request, SongLyric $song_lyric)
     {
+        // shortcut for directly editing with an empty url and an assigned song_lyric
+        $external = External::create();
+        $external->song_lyric()->associate($song_lyric);
+
+        return $this->edit($request, $external);
+    }
+
+    public function edit(Request $request, External $external)
+    {
+        if ($request->has('song_lyric_id')) {
+            dd($request->song_lyric_id);
+        }
+
         // this field needs to be saved as a singleton array or empty array
         // if passed just as [$external->author] then the result is [{}] if there is nothing
         $assigned_authors = $external->author ? [$external->author] : [];
