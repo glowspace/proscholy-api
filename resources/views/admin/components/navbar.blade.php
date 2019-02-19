@@ -12,7 +12,7 @@
 <div class="navbar-label material-shadow text-danger">Plnění obsahem</div>
 
 <a class="btn btn-secondary" href="{{route('admin.todo')}}">
-    <i class="fas fa-check"></i> Materiály k doplnění
+    <i class="fas fa-check"></i> <span>Materiály k doplnění</span>
 </a>
 
 <div class="navbar-label material-shadow text-primary">Úprava položek</div>

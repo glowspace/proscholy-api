@@ -17,8 +17,8 @@ class ExternalController extends Controller
     }
 
     public function index(){
-        $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->get();
-        $rest = External::whereHas('author')->whereHas('song_lyric')->get();
+        $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->orderBy('created_at', 'desc')->get();
+        $rest = External::whereHas('author')->whereHas('song_lyric')->orderBy('created_at', 'desc')->get();
 
         return view('admin.external.index', compact('todo', 'rest'));
     }
@@ -26,23 +26,31 @@ class ExternalController extends Controller
     public function create(){
         return view('admin.external.create');
     }
+    
+    public function store(Request $request)
+    {
+        $external = External::create(['url' => $request->url]);
 
-    public function store(Request $request){
-        // TODO: make this line working
-        // Externals::create($request->all());
+        // TODO: try to guess the type according to url
 
-        $external       = new External();
-        $external->url = $request['url'];
-        $external->save();
+        $redirect_arr = [
+            'edit' => route('admin.external.edit', ['id' => $external->id]),
+            'create' => route('admin.external.create')
+        ];
 
-        if ($request["redirect"] == "edit") {
-            return redirect()->route('admin.external.edit', ['id' => $external->id]);
-        }
-
-        return redirect()->route('admin.external.create');
+        return redirect($redirect_arr[$request->redirect]);
     }
 
-    public function edit(External $external)
+    public function create_for_song(Request $request, SongLyric $song_lyric)
+    {
+        // shortcut for directly editing with an empty url and an assigned song_lyric
+        $external = External::create();
+        $external->song_lyric()->associate($song_lyric);
+
+        return $this->edit($request, $external);
+    }
+
+    public function edit(Request $request, External $external)
     {
         // this field needs to be saved as a singleton array or empty array
         // if passed just as [$external->author] then the result is [{}] if there is nothing
@@ -59,11 +67,13 @@ class ExternalController extends Controller
         ));
     }
 
-    public function destroy(External $external){
-        // TODO: find if a External model that had been linked to this External has no dependencies anymore
-        // in the case delete this one as well
-
+    public function destroy(Request $request, External $external)
+    {
         $external->delete();
+
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
         return redirect()->back();
     }
@@ -94,8 +104,6 @@ class ExternalController extends Controller
             $external->save();
         }
 
-        // TODO: enable add new one???????????????????????????????????????????????????????//
-
         // no song lyric set, delete if there had been any association
         if ($request->assigned_song_lyrics == NULL) {
             $external->song_lyric()->dissociate();
@@ -104,22 +112,7 @@ class ExternalController extends Controller
         else {
             $song_lyric_identification = $request->assigned_song_lyrics[0];
 
-            $song_lyric;
-            
-            if (is_numeric($song_lyric_identification)) {
-                // ID was given, find an "old" song_lyric
-                $song_lyric = SongLyric::find($song_lyric_identification);
-            } else {
-                // create a Song model and then an associated SongLyric
-                $song       = new Song();
-                $song->name = $song_lyric_identification;
-                $song->save();
-
-                $song_lyric = SongLyric::create([
-                    'name' => $song_lyric_identification,
-                    'song_id' => $song->id
-                ]);
-            }
+            $song_lyric = SongLyric::getByIdOrCreateWithName($song_lyric_identification);
 
             $external->song_lyric()->associate($song_lyric);
             $external->save();

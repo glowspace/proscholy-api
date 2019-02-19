@@ -79,11 +79,22 @@
 
                     <br>
 
-                    <input class="btn btn-outline-primary" type="submit" value="Uložit">
+                    {{-- <input class="btn btn-outline-primary" type="submit" value="create"> --}}
+
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show">Uložit a zobrazit ve zpěvníku</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_external">Uložit a přidat externí odkaz</button>
                 </form>
+
+                @include('admin.components.deletebutton', [
+                    'url' => route('admin.song.delete', ['song_lyric' => $song_lyric->id]),
+                    'class' => 'btn btn-outline-warning',
+                    'redirect' => route('admin.song.index')
+                ])
             </div>
         </div>
     </div>
 @endsection
 
 @include('admin.components.magicsuggest_includes')
+@include('admin.components.deletebutton_includes')

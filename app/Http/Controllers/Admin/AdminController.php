@@ -15,7 +15,12 @@ class AdminController extends Controller
 {
     public function renderDash()
     {
-        return view('admin.dash');
+        return view('admin.dash', [
+            'songs_count'        => SongLyric::count(),
+            'songs_w_text_count' => SongLyric::where('lyrics', '!=', '')->count(),
+            'authors_count'      => Author::count(),
+            'externals_count'    => External::count(),
+        ]);
     }
 
     /**
@@ -26,7 +31,7 @@ class AdminController extends Controller
     public function renderTodo()
     {
         return view('admin.todo', [
-            'externals'                        => External::where('author_id', null)->orWhere('song_lyric_id', null)->get(),
+            'externals'                     => External::where('author_id', null)->orWhere('song_lyric_id', null)->get(),
             'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '=', null)->get(),
@@ -36,7 +41,7 @@ class AdminController extends Controller
     public function renderTodoRandom()
     {
         $externals_w_author = External::where('author_id', '')->orWhere('song_lyric_id', '')->get();
-        $songs_w_author  = Song::whereDoesntHave('authors')->get()->concat(SongLyric::whereDoesntHave
+        $songs_w_author     = Song::whereDoesntHave('authors')->get()->concat(SongLyric::whereDoesntHave
         ('authors')->get()->where('is_original', '0'))->shuffle();
 
         $songbook_record_w_translation = SongbookRecord::where('song_lyric_id', '')->get();

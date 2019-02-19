@@ -4,7 +4,7 @@
     <div class="content-padding">
     <h2>Úprava autora</h2>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <form action="{{ route('admin.author.update', ['author' => $author->id]) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -19,17 +19,28 @@
                         </div>
                         <select class="custom-select" name="type" title="">
                             @foreach($author->type_string as $value)
-                                <option value="{{$loop->iteration}}" {{ $author->type == $loop->iteration ? 'selected' : "" }}>{{ $value }}</option>
+                                <option value="{{$loop->iteration - 1}}" {{ $author->type == $loop->iteration - 1 ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>
                     </div>
+                    
+                    <label>Informace k autorovi</label>
+                    <textarea rows="20" name="description" class="form-control" title="">{{$author->description}}</textarea>
+                    <br/>
 
                     <div class="input-group">
                         <button type="submit" class="btn btn-outline-primary">Uložit</button>
                     </div>
-                    {{-- <input type="submit" value="Uložit"> --}}
                 </form>
+
+                @include('admin.components.deletebutton', [
+                    'url' => route('admin.author.delete', ['author' => $author->id]),
+                    'class' => 'btn btn-outline-warning',
+                    'redirect' => route('admin.author.index')
+                ])
             </div>
         </div>
     </div>
 @endsection
+
+@include('admin.components.deletebutton_includes')

@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     // // External
     Route::get('/externals', 'ExternalController@index')->name('admin.external.index');
     Route::get('/external/new', 'ExternalController@create')->name('admin.external.create');
+    Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('admin.external.create_for_song');
     Route::post('/external/new', 'ExternalController@store')->name('admin.external.store');
     Route::get('/external/{external}', 'ExternalController@edit')->name('admin.external.edit');
     Route::put('/external/{external}', 'ExternalController@update')->name('admin.external.update');

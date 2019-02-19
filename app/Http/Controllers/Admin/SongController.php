@@ -25,24 +25,16 @@ class SongController extends Controller
         return view('admin.song.create');
     }
 
-    public function store(Request $request){
-        // TODO: make this line working
-        // SongLyrics::create($request->all());
+    public function store(Request $request)
+    {
+        $song_l = SongLyric::getByIdOrCreateWithName($request->name);
 
-        $song       = new Song();
-        $song->name = $request['name'];
-        $song->save();
+        $redirect_arr = [
+            'edit' => route('admin.song.edit', ['id' => $song_l->id]),
+            'create' => route('admin.song.create')
+        ];
 
-        $song_l                = new SongLyric();
-        $song_l->name          = $request['name'];
-        $song_l->song_id       = $song->id;
-        $song_l->saveOrFail();
-
-        if ($request["redirect"] == "edit") {
-            return redirect()->route('admin.song.edit', ['id' => $song_l->id]);
-        }
-
-        return redirect()->route('admin.song.create');
+        return redirect($redirect_arr[$request->redirect]);
     }
 
     public function edit(SongLyric $song_lyric)
@@ -62,11 +54,15 @@ class SongController extends Controller
             'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled'));
     }
 
-    public function destroy(SongLyric $song_lyric){
+    public function destroy(Request $request, SongLyric $song_lyric){
         // TODO: find if a Song model that had been linked to this SongLyric has no dependencies anymore
         // in the case delete this one as well
 
         $song_lyric->delete();
+
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
         return redirect()->back();
     }
@@ -101,9 +97,6 @@ class SongController extends Controller
             }
         }
 
-        //////////////
-        // dd("ad");
-
         if ($request->assigned_song_lyrics === NULL && $song_lyric->isCuckoo()) {
             // this means I was a cuckoo so I need to find a new parent,
             // that is gonna have a same name as me, so I'm not gonna be a cockoo anymore :P
@@ -121,41 +114,14 @@ class SongController extends Controller
             $song_lyric->save();
         }
 
-        // if ($request->dominant_song_lyric !== NULL) {
-        //     $identification = $request->dominant_song_lyric[0];
-            
-        //     $song;
+        $redirect_arr = [
+            'save' => route('admin.song.index'),
+            'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
+            'save_show' => route('client.song.text', ['song_id' => $song_lyric->id])
+        ];
 
-        //     if (is_numeric($identification)) {
-        //     // get an ID of the abstract Song model
-        //         $song_id = SongLyric::find($request->dominant_song_lyric[0])->song->id;
-        //         $song = Song::find($song_id);
-        //     } else {
-        //         $song = Song::create(['name' => $song_lyric->name]);
-        //     }
+        return redirect($redirect_arr[$request->redirect]);
 
-        //     if ($song->id !== $song_lyric->song->id && $song->name !== $song_lyric->song->name) {
-        //         // here is the old Song base model that is to be unlinked
-        //         // if there is no more connection, then delete it from the db
-        //         $old_song = Song::find($song_lyric->song->id);
-        //         if ($old_song->song_lyrics()->count() === 1) {
-        //             Song::destroy($song_lyric->song->id);
-        //         }
-
-        //         // update the changed parent Song
-        //         $song_lyric->song()->associate($song);
-        //         $song_lyric->save();
-        //     }
-        // } else {
-        //     dd("fired");
-        //     // reassociate to new Song just for you! :)
-        //     if ($song_lyric->name !== $song_lyric->song->name) {
-        //         $new_song = Song::create(['name' => $song_lyric->name]);
-        //         $song_lyric->song()->associate($new_song);
-        //         $song_lyric->save();
-        //     }
-        // }
-
-        return redirect()->route('admin.song.index');
+        // return redirect()->route('admin.song.index');
     }
 }

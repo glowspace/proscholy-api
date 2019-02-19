@@ -3,10 +3,6 @@
 @section('content')
     <div class="content-padding">
         <h2>Úprava externího zdroje</h2>
-            
-        {{-- <a href="{{route('admin.externals')}}">Zpět do administrace</a>
-        <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a> --}}
-
         <div class="row">
             <div class="col-sm-6">
                 {!! $external->getHtml() !!}
@@ -32,7 +28,7 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-append mr-3">
-                            <label class="input-group-text">Autor odkazu</label>
+                            <label class="input-group-text">Autor/Interpret</label>
                         </div>
 
                         @include('admin.components.magicsuggest', [
@@ -67,15 +63,15 @@
                         <button type="submit" class="btn btn-outline-primary">Uložit</button>
                     </div>
                 </form>
+                @include('admin.components.deletebutton', [
+                    'url' => route('admin.external.delete', ['external' => $external->id]),
+                    'class' => 'btn btn-outline-warning',
+                    'redirect' => route('admin.external.index')
+                ])
             </div>
-            {{-- <div class="col-sm-4">
-                <iframe height="500" src="{{route('admin.external.edit.author',['id'=>$external->id])}}"></iframe>
-            </div>
-            <div class="col-sm-4">
-                <iframe height="500" src="{{route('admin.external.edit.translation',['id'=>$external->id])}}"></iframe>
-            </div> --}}
         </div>
     </div>
 @endsection
 
 @include('admin.components.magicsuggest_includes')
+@include('admin.components.deletebutton_includes')

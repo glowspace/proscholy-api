@@ -12,6 +12,11 @@ Imports
   src: url("/fonts/cocogoose-pro-regular.ttf");
 }
 
+textarea.form-control,
+textarea.custom-file-control {
+  line-height: 1.8;
+}
+
 .card {
   font-size: .875rem;
   font-weight: normal;
