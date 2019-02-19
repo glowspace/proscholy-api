@@ -79,7 +79,10 @@
 
                     <br>
 
-                    <input class="btn btn-outline-primary" type="submit" value="Uložit">
+                    {{-- <input class="btn btn-outline-primary" type="submit" value="create"> --}}
+
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_external">Uložit a přidat externí odkaz</button>
                 </form>
             </div>
         </div>

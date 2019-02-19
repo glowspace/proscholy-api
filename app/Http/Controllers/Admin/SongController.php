@@ -110,6 +110,13 @@ class SongController extends Controller
             $song_lyric->save();
         }
 
-        return redirect()->route('admin.song.index');
+        $redirect_arr = [
+            'save' => route('admin.song.index'),
+            'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id])
+        ];
+
+        return redirect($redirect_arr[$request->redirect]);
+
+        // return redirect()->route('admin.song.index');
     }
 }
