@@ -25,18 +25,9 @@ class SongController extends Controller
         return view('admin.song.create');
     }
 
-    public function store(Request $request){
-        // TODO: make this line working
-        // SongLyrics::create($request->all());
-
-        $song       = new Song();
-        $song->name = $request['name'];
-        $song->save();
-
-        $song_l                = new SongLyric();
-        $song_l->name          = $request['name'];
-        $song_l->song_id       = $song->id;
-        $song_l->saveOrFail();
+    public function store(Request $request)
+    {
+        $song_l = SongLyric::getByIdOrCreateWithName($request->name);
 
         if ($request["redirect"] == "edit") {
             return redirect()->route('admin.song.edit', ['id' => $song_l->id]);
