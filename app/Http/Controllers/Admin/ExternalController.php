@@ -17,6 +17,8 @@ class ExternalController extends Controller
 
         // Mira: zdar jak sviňa Michale, jak sa vede? :D
         // Michal: Dá se, už zobrazujeme překlady u písně. :-) Měl bych se mrknout na trello. :D
+        // Mira: jj, já jsem teďkom pořád tak trochu mimo net, takže v podstatě jen pulluju/pushuju git přes data,
+        //       abych viděl, co se děje :D
     }
 
     public function index(){
