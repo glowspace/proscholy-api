@@ -1,6 +1,10 @@
-<form action="{{ $url }}" method="post" onsubmit="return askForm(this)">
+<form action="{{ $url }}" method="post" onsubmit="return askForm(this)" class="mb-0">
     @csrf
     @method("delete")
 
-    <button type="submit" class="btn btn-warning">Vymazat</button>
+    @if (isset($redirect))
+        <input type="hidden" name="redirect" value="{{ $redirect }}">
+    @endif
+
+    <button type="submit" class="{{ $class }}">Vymazat</button>
 </form>

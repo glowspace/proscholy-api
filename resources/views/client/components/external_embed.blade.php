@@ -40,5 +40,7 @@
         </div>
     </div>
 @else
-    <div class="card" style="margin-bottom: 1em; padding: 1em;">Wrong external media type.</div>
+    @if (!empty($external->url))
+        <div class="card" style="margin-bottom: 1em; padding: 1em;">Wrong external media type.</div>
+    @endif
 @endif

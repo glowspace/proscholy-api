@@ -39,9 +39,13 @@ class AuthorController extends Controller
         return view('admin.author.edit', compact('author'));
     }
 
-    public function destroy(Author $author){
-        
+    public function destroy(Request $request, Author $author)
+    {
         $author->delete();
+
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
         return redirect()->back();
     }

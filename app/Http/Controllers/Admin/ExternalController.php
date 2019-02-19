@@ -31,6 +31,8 @@ class ExternalController extends Controller
     {
         $external = External::create(['url' => $request->url]);
 
+        // TODO: try to guess the type according to url
+
         $redirect_arr = [
             'edit' => route('admin.external.edit', ['id' => $external->id]),
             'create' => route('admin.external.create')
@@ -65,11 +67,13 @@ class ExternalController extends Controller
         ));
     }
 
-    public function destroy(External $external){
-        // TODO: find if a External model that had been linked to this External has no dependencies anymore
-        // in the case delete this one as well
-
+    public function destroy(Request $request, External $external)
+    {
         $external->delete();
+
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
         return redirect()->back();
     }
@@ -99,8 +103,6 @@ class ExternalController extends Controller
             $external->author()->associate($author);
             $external->save();
         }
-
-        // TODO: enable add new one???????????????????????????????????????????????????????//
 
         // no song lyric set, delete if there had been any association
         if ($request->assigned_song_lyrics == NULL) {

@@ -18,8 +18,10 @@
                                 @endif
                             </td>
                             <td>
-                            {{-- <a href="{{ route('admin.song.delete',['id'=>$song->id]) }}" class="btn btn-warning">Vymazat</a> --}}
-                            @include('admin.components.deletebutton', ['url' => route('admin.song.delete',['song' => $song->id] )])
+                            @include('admin.components.deletebutton', [
+                                'url' => route('admin.song.delete',[ 'song' => $song->id ]) ,
+                                'class' => 'btn btn-warning'
+                            ])
                             </td>
                         </tr>
                     @endforeach
