@@ -52,6 +52,14 @@
                     <textarea rows="20" name="lyrics" class="form-control" title="">{{$song_lyric->lyrics}}</textarea>
 
                     <br>
+                    <label>Jazyk</label>
+                    <select class="custom-select" name="lang" title="">
+                        @foreach($song_lyric->lang_string as $key => $value)
+                            <option value="{{ $key }}" {{ $song_lyric->lang === $key ? 'selected' : "" }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+
+                    <br><br>
                     <label>Typ</label>
                     <select class="form-control" name="is_original" title="">
                         <option value="1" @if($song_lyric->is_original)
