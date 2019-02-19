@@ -103,16 +103,16 @@
             <div class="col-sm-6">
                 <h2>Pár informací</h2>
 
-                <h5>Název</h5>
+                <h5>Název (povinná položka)</h5>
                 <p>Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název)
-                    bez uvedení autora.<br>
+                    <i>bez uvedení autora</i>.<br>
                     Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
                 </p>
 
                 <h5>Autoři</h5>
-                <p>Začněte zadávat název autora (textu, hudby, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                    tak jej označte kliknutím. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
-                    stačí správě napsat jméno, potvrdit Enterem a autor se po uložení písně automaticky vytvoří.<br>
+                <p>Začněte zadávat jméno autora (textu, hudby, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                    tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
+                    stačí správě napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
                 </p>
 
@@ -128,8 +128,8 @@
                     <p>Pokud se jedná o píseň, která byla přeložena, popř. zaranžována ze známého originálu (Oceány / Adorare),
                         uveďte prosím originál (Oceans) do druhého políčka, abychom věděli, co k čemu patří.
                         <br>
-                        Stejně jako u autora se vám během psaní začnou zobrazovat již uložené písničky. Pokud originál (Oceans) nenajdete, tak po zadání celého jména 
-                        stiskněte Enter a po uložení se zároveň vytvoří nová píseň (Oceans), která bude automaticky označena jako originál.
+                        Stejně jako u přidávání autorů se vám během psaní začnou zobrazovat již uložené písničky. Pokud originál (Oceans) nenajdete, tak po zadání celého jména 
+                        stiskněte Enter a po dokončení editace se zároveň vytvoří nová píseň (Oceans), která bude automaticky označena jako originál.
                         <br>
                         Ve zpěvníku také chceme rozlišovat překlady, které jsou (nějakým způsobem) schváleny jako oficiální, pokud tedy víte, o co jde, tak upravte hodnotu v políčku <i>Autorizovaný překlad</i>.
                     </p>
@@ -153,7 +153,8 @@
 {{-- @push('scripts')
 <script>
     function onKeyDown(){
-        // TODO implement a shortcut for inserting a chord in brackets []
+        // TODO implement a shortcut for inserting a chord in brackets [] or deleting a chord if the cursor is inside brackets
+        // TODO implement a shortcut for jumping between chords - i.e. ctrl + something
     }
 </script>
 @endpush --}}
