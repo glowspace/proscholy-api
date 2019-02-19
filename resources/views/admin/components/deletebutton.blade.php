@@ -2,5 +2,9 @@
     @csrf
     @method("delete")
 
-    <button type="submit" class="btn btn-warning">Vymazat</button>
+    @if (isset($redirect))
+        <input type="hidden" name="redirect" value="{{ $redirect }}">
+    @endif
+
+    <button type="submit" class="{{ $class }}">Vymazat</button>
 </form>

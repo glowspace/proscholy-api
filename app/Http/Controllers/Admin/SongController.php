@@ -54,11 +54,15 @@ class SongController extends Controller
             'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled'));
     }
 
-    public function destroy(SongLyric $song_lyric){
+    public function destroy(Request $request, SongLyric $song_lyric){
         // TODO: find if a Song model that had been linked to this SongLyric has no dependencies anymore
         // in the case delete this one as well
 
         $song_lyric->delete();
+
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
         return redirect()->back();
     }
@@ -112,7 +116,8 @@ class SongController extends Controller
 
         $redirect_arr = [
             'save' => route('admin.song.index'),
-            'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id])
+            'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
+            'save_show' => route('client.song.text', ['song_id' => $song_lyric->id])
         ];
 
         return redirect($redirect_arr[$request->redirect]);

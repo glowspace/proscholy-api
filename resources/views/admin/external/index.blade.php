@@ -19,7 +19,10 @@
                         <a href="{{route('admin.external.edit', ['external'=>$external->id])}}">{{$external->generateTitle()}}</a>
                     </td>
                     <td>
-                        @include('admin.components.deletebutton', ['url' => route('admin.external.delete', ['external' => $external->id] )])
+                        @include('admin.components.deletebutton', [
+                            'url' => route('admin.external.delete', ['external' => $external->id] ),
+                            'class' => 'btn btn-warning'
+                        ])
                     </td>
                 </tr>
                 @empty
@@ -38,8 +41,10 @@
                         <a href="{{route('admin.external.edit',['external'=>$external->id])}}">{{$external->generateTitle()}}</a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.external.delete',['external'=>$external->id]) }}"
-                           class="btn btn-warning">Vymazat</a>
+                        @include('admin.components.deletebutton', [
+                            'url' => route('admin.external.delete', ['external' => $external->id] ),
+                            'class' => 'btn btn-warning'
+                        ])
                     </td>
                 </tr>
             @endforeach
