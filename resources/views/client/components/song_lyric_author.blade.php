@@ -15,7 +15,8 @@
     @endif
 
     @if($song_l->song->getOriginalLyric() !== null)
-        , original: <a href="{{route('client.song.text', $song_l->song->getOriginalLyric())}}">{{$song_l->song->getOriginalLyric()->name}}</a>
+        , originál: <a
+                href="{{route('client.song.text', $song_l->song->getOriginalLyric())}}">{{$song_l->song->getOriginalLyric()->name}}</a>
     @endif
 
 
@@ -31,7 +32,7 @@
         @foreach($song_l->authors as $author)
             {!! $author->getLink() !!}{{ $loop->last ? '' : ', ' }}
         @endforeach
-                </span>
+    </span>
 @endif
 
 
