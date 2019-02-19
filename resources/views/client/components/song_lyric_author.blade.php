@@ -5,7 +5,7 @@
 @elseif($song_l->authors()->count() > 1)
     <span>Autoři:
         @foreach($song_l->authors as $author)
-            {{$song_l->authors->pluck('name')->implode(', ') }}}}
+            {!! $author->getLink() !!}{{ $loop->last ? '' : ', ' }}
         @endforeach
     </span>
 @endif
