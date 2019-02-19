@@ -27,19 +27,16 @@ class ExternalController extends Controller
         return view('admin.external.create');
     }
     
-    public function store(Request $request){
-        // TODO: make this line working
-        // Externals::create($request->all());
-        
-        $external       = new External();
-        $external->url = $request['url'];
-        $external->save();
-        
-        if ($request["redirect"] == "edit") {
-            return redirect()->route('admin.external.edit', ['id' => $external->id]);
-        }
-        
-        return redirect()->route('admin.external.create');
+    public function store(Request $request)
+    {
+        $external = External::create(['url' => $request->url]);
+
+        $redirect_arr = [
+            'edit' => route('admin.external.edit', ['id' => $external->id]),
+            'create' => route('admin.external.create')
+        ];
+
+        return redirect($redirect_arr[$request->redirect]);
     }
 
     public function create_for_song(Request $request, SongLyric $song_lyric)
