@@ -1,4 +1,4 @@
-<form action="{{ $url }}" method="post" onsubmit="return askForm(this)">
+<form action="{{ $url }}" method="post" onsubmit="return askForm(this)" class="mb-0">
     @csrf
     @method("delete")
 
