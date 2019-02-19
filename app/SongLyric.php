@@ -152,9 +152,11 @@ class SongLyric extends Model implements ISearchResult
         }
         else
         {
-            $song_lyric = SongLyric::create(['name' => $identificator]);
             $song       = Song::create(['name' => $identificator]);
-            $song_lyric->song()->associate($song);
+            $song_lyric = SongLyric::create([
+                'name' => $identificator,
+                'song_id' => $song->id
+            ]);
             $song_lyric->save();
 
             return $song_lyric;
