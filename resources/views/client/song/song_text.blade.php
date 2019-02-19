@@ -9,7 +9,7 @@
 @section('content')
     <div class="content-padding">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-lg-8">
                 <h1>{{$song_l->name}}</h1>
 
                 <div class="card" id="cardLyrics" style="display: none">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 content-padding-top">
+            <div class="col-lg-4 content-padding-top">
                 @if($song_l->description)
                     <div class="card">
                         <div class="card-header">Informace o písni</div>
