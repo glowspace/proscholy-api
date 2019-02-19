@@ -21,9 +21,9 @@
                             <a href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->generateTitle()}}</a>
                         </li>
                     @endforeach
-
                 </ul>
-            </div><div class="col-md-3">
+            </div>
+            <div class="col-md-3">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <b>Písně bez autora</b>
@@ -35,9 +35,9 @@
                             {{-- <a href="#">todo add author</a> --}}
                         </li>
                     @endforeach
-
                 </ul>
-            </div><div class="col-md-3">
+            </div>
+            <div class="col-md-3">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <b>Záznamy ve zpěvnících bez přiřazeného textu (překladu)</b>
@@ -50,7 +50,8 @@
                     @endforeach
 
                 </ul>
-            </div><div class="col-md-3">
+            </div>
+            <div class="col-md-3">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <b>Písně s chybějícím textem</b>
@@ -61,7 +62,6 @@
                             <a href="{{route('admin.song.edit',['id'=>$translation->id])}}">{{$translation->name}}</a>
                         </li>
                     @endforeach
-
                 </ul>
             </div>
         </div>
