@@ -29,11 +29,12 @@ class SongController extends Controller
     {
         $song_l = SongLyric::getByIdOrCreateWithName($request->name);
 
-        if ($request["redirect"] == "edit") {
-            return redirect()->route('admin.song.edit', ['id' => $song_l->id]);
-        }
+        $redirect_arr = [
+            'edit' => route('admin.song.edit', ['id' => $song_l->id]),
+            'create' => route('admin.song.create')
+        ];
 
-        return redirect()->route('admin.song.create');
+        return redirect($redirect_arr[$request->redirect]);
     }
 
     public function edit(SongLyric $song_lyric)

@@ -22,19 +22,16 @@ class AuthorController extends Controller
         return view('admin.author.create');
     }
 
-    public function store(Request $request){
-        // TODO: make this line working
-        // Authors::create($request->all());
+    public function store(Request $request)
+    {
+        $author = Author::create(['name' => $request->name]);
 
-        $author       = new Author();
-        $author->name = $request['name'];
-        $author->save();
+        $redirect_arr = [
+            'edit' => route('admin.author.edit', ['author' => $author->id]),
+            'create' => route('admin.author.create')
+        ];
 
-        if ($request["redirect"] == "edit") {
-            return redirect()->route('admin.author.edit', ['author' => $author->id]);
-        }
-
-        return redirect()->route('admin.author.create');
+        return redirect($redirect_arr[$request->redirect]);
     }
 
     public function edit(Author $author)
