@@ -31,7 +31,6 @@
                     <div class="input-group">
                         <button type="submit" class="btn btn-outline-primary">Uložit</button>
                     </div>
-                    {{-- <input type="submit" value="Uložit"> --}}
                 </form>
             </div>
         </div>
