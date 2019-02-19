@@ -39,6 +39,15 @@
     </a>
 @endif
 
+{{-- if a user is logged in --}}
+@if (Auth::check())
+    <div class="navbar-label material-shadow text-success">Administrace</div>
+
+    <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyrics' => $song_l->id])}}">
+        <i class="fas fa-microphone"></i> Upravit písničku
+    </a>
+@endif
+
 {{--<div class="navbar-label material-shadow text-warning">Možnosti</div>--}}
 
 {{--<a class="btn btn-secondary">--}}
