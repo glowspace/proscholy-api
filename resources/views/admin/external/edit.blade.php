@@ -28,7 +28,7 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-append mr-3">
-                            <label class="input-group-text">Autor odkazu</label>
+                            <label class="input-group-text">Autor/Interpret</label>
                         </div>
 
                         @include('admin.components.magicsuggest', [
