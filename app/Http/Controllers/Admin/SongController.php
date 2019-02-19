@@ -95,6 +95,7 @@ class SongController extends Controller
             foreach ($new_authors as $author) {
                 $song_lyric->authors()->create(['name' => $author]);
             }
+            $song_lyric->save();
         }
 
         if ($request->assigned_song_lyrics === NULL && $song_lyric->isCuckoo()) {
