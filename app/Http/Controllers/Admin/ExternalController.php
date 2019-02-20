@@ -19,19 +19,22 @@ class ExternalController extends Controller
         // Michal: Dá se, už zobrazujeme překlady u písně. :-) Měl bych se mrknout na trello. :D
         // Mira: jj, já jsem teďkom pořád tak trochu mimo net, takže v podstatě jen pulluju/pushuju git přes data,
         //       abych viděl, co se děje :D
+        // Michal: :D, já myslím, že slack zas tolik dat naukrojí, jsou to jen texty. :D
     }
 
-    public function index(){
+    public function index()
+    {
         $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->orderBy('created_at', 'desc')->get();
         $rest = External::whereHas('author')->whereHas('song_lyric')->orderBy('created_at', 'desc')->get();
 
         return view('admin.external.index', compact('todo', 'rest'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('admin.external.create');
     }
-    
+
     public function store(Request $request)
     {
         $external = External::create(['url' => $request->url]);
@@ -39,8 +42,8 @@ class ExternalController extends Controller
         // TODO: try to guess the type according to url
 
         $redirect_arr = [
-            'edit' => route('admin.external.edit', ['id' => $external->id]),
-            'create' => route('admin.external.create')
+            'edit'   => route('admin.external.edit', ['id' => $external->id]),
+            'create' => route('admin.external.create'),
         ];
 
         return redirect($redirect_arr[$request->redirect]);
@@ -60,13 +63,13 @@ class ExternalController extends Controller
         // this field needs to be saved as a singleton array or empty array
         // if passed just as [$external->author] then the result is [{}] if there is nothing
         $assigned_authors = $external->author ? [$external->author] : [];
-        $all_authors = Author::select(['id', 'name'])->orderBy('name')->get();
+        $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
-        $all_song_lyrics = SongLyric::select(['id', 'name'])->orderBy('name')->get();
+        $all_song_lyrics      = SongLyric::select(['id', 'name'])->orderBy('name')->get();
 
         return view('admin.external.edit', compact(
-            'external', 
+            'external',
             'assigned_authors', 'all_authors',
             'assigned_song_lyrics', 'all_song_lyrics'
         ));
@@ -76,7 +79,8 @@ class ExternalController extends Controller
     {
         $external->delete();
 
-        if ($request->has("redirect")) {
+        if ($request->has("redirect"))
+        {
             return redirect($request->redirect);
         }
 
@@ -88,19 +92,24 @@ class ExternalController extends Controller
         $external->update($request->all());
 
         // no author set, delete if there had been any association
-        if ($request->assigned_authors === NULL) {
+        if ($request->assigned_authors === null)
+        {
             $external->author()->dissociate();
             $external->save();
         }
-        else {
+        else
+        {
             $author_identification = $request->assigned_authors[0];
 
             $author;
-            
-            if (is_numeric($author_identification)) {
+
+            if (is_numeric($author_identification))
+            {
                 // ID was given, find an "old" author
                 $author = Author::find($author_identification);
-            } else {
+            }
+            else
+            {
                 // create a new talented author
                 $author = Author::create(['name' => $author_identification]);
             }
@@ -110,11 +119,13 @@ class ExternalController extends Controller
         }
 
         // no song lyric set, delete if there had been any association
-        if ($request->assigned_song_lyrics == NULL) {
+        if ($request->assigned_song_lyrics == null)
+        {
             $external->song_lyric()->dissociate();
             $external->save();
         }
-        else {
+        else
+        {
             $song_lyric_identification = $request->assigned_song_lyrics[0];
 
             $song_lyric = SongLyric::getByIdOrCreateWithName($song_lyric_identification);
