@@ -152,8 +152,36 @@ class SongController extends Controller
         // return redirect()->route('admin.song.index');
     }
 
-    public function resolve_error(Request $request)
+    public function resolve_error(Request $request, Song $song)
     {
-        
+        if ($request->solution === 'choose_original') {
+            // set this id as the original
+            $id_orig = $request->song_original;
+
+            foreach ($song->song_lyrics as $song_l) {
+                $song_l->is_original = $song_l->id == $id_orig;
+                $song_l->save();
+            }
+
+            return redirect()->route('admin.song.index');
+        }
+        else if ($request->solution === 'create_original') {
+            $song_lyric = SongLyric::create([
+                'name' => '',
+                'song_id' => $song->id,
+                'is_original' => 1
+            ]);
+            $song_lyric->save();
+            // change name of the parent Song model
+            $song->name = '';
+            $song->save();
+
+            return redirect()->route('admin.song.edit', $song_lyric);
+        }
+        else if ($request->solution === 'keep') {
+            // don't do anything
+            return redirect()->route('admin.song.index');
+        }
+
     }
 }
