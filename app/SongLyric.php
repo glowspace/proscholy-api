@@ -57,7 +57,28 @@ class SongLyric extends Model implements ISearchResult
             'id',
             'is_original',
             'is_authorized',
+            'lang'
         ];
+
+    public $lang_string = [
+        'cs' => 'čeština',
+        'sk' => 'slovenština',
+        'en' => 'angličtina',
+        'la' => 'latina',
+        'pl' => 'polština',
+        'de' => 'němčina',
+        'fr' => 'francouzština',
+        'es' => 'španělština',
+        'it' => 'italština',
+        'sv' => 'svahilština',
+        // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
+        'mixed' => 'vícejazyčná píseň'
+    ];
+
+    public function getLanguageName()
+    {
+        return $this->lang_string[$this->lang];
+    }
 
     public function song()
     {

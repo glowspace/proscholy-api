@@ -95,6 +95,7 @@ class SongController extends Controller
             foreach ($new_authors as $author) {
                 $song_lyric->authors()->create(['name' => $author]);
             }
+            $song_lyric->save();
         }
 
         if ($request->assigned_song_lyrics === NULL && $song_lyric->isCuckoo()) {
@@ -109,6 +110,9 @@ class SongController extends Controller
             $identificator = $request->assigned_song_lyrics[0];
 
             $friend = SongLyric::getByIdOrCreateWithName($identificator);
+            // this song is supposed to be an original
+            $friend->is_original = 1;
+            $friend->save();
             // associate to the friends Song and stay/become a Cuckoo :) :O
             $song_lyric->song()->associate($friend->song);
             $song_lyric->save();

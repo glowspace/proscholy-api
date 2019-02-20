@@ -48,10 +48,10 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="d-none d-md-block col-md-2 sidebar bg-dark material-shadow">
+            <div class="d-none d-sm-block col-sm-4 col-md-3 col-lg-2 sidebar bg-dark material-shadow">
                 @yield('navbar')
             </div>
-            <div class="col-md-10 content">
+            <div class="col-sm-8 col-md-9 col-lg-10 content">
                 @yield('content')
             </div>
         </div>

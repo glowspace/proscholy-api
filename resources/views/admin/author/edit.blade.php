@@ -18,8 +18,8 @@
                             <label class="input-group-text">Typ autora</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            @foreach($author->type_string as $value)
-                                <option value="{{$loop->iteration - 1}}" {{ $author->type == $loop->iteration - 1 ? 'selected' : "" }}>{{ $value }}</option>
+                            @foreach($author->type_string as $key => $value)
+                                <option value="{{ $key }}" {{ $author->type ===  $key  ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>
                     </div>
