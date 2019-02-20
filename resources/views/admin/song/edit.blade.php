@@ -104,13 +104,13 @@
                 <h2>Pár informací</h2>
 
                 <h5>Název (povinná položka)</h5>
-                <p>Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název)
-                    <i>bez uvedení autora</i>.<br>
+                <p>Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje
+                    více písní se stejným názvem.<br>
                     Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
                 </p>
 
                 <h5>Autoři</h5>
-                <p>Začněte zadávat jméno autora (textu, hudby, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                <p>Začněte zadávat jméno autora (textu, hudby, interpreta, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
                     tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
                     stačí správě napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
