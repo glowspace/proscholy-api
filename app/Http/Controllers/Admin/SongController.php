@@ -43,6 +43,7 @@ class SongController extends Controller
         $all_authors = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $domestic_song_lyric = $song_lyric->song->getNonCuckooSongLyric($song_lyric->id);
+        // prepare a singleton array for the magicsuggest component
         $assigned_song_lyrics = $domestic_song_lyric ? [$domestic_song_lyric] : [];
         $all_song_lyrics = SongLyric::select(['id', 'name'])->where('id', '!=', $song_lyric->id)->get();
         // do not allow to change the field in this situation.. trust me it's complicated
@@ -54,7 +55,8 @@ class SongController extends Controller
             'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled'));
     }
 
-    public function destroy(Request $request, SongLyric $song_lyric){
+    public function destroy(Request $request, SongLyric $song_lyric)
+    {
         // TODO: find if a Song model that had been linked to this SongLyric has no dependencies anymore
         // in the case delete this one as well
 
