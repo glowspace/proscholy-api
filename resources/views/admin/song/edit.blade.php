@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Úprava písně</h2>
-
+        
         <div class="row">
             <div class="col-sm-6">
+                <h2>Úprava písně</h2>
                 <form action="{{ route('admin.song.update', ['song_lyric' => $song_lyric->id]) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -33,7 +33,7 @@
                             'disabled' => $assigned_song_disabled
                         ])
                     @endif
-
+                    <br>
                     <label>Autoři</label><br>
 
                     @include('admin.components.magicsuggest', [
@@ -100,9 +100,61 @@
                     'redirect' => route('admin.song.index')
                 ])
             </div>
+            <div class="col-sm-6">
+                <h2>Pár informací</h2>
+
+                <h5>Název (povinná položka)</h5>
+                <p>Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název)
+                    <i>bez uvedení autora</i>.<br>
+                    Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
+                </p>
+
+                <h5>Autoři</h5>
+                <p>Začněte zadávat jméno autora (textu, hudby, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                    tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
+                    stačí správě napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
+                    V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
+                </p>
+
+                @if ($assigned_song_disabled)
+                    <h5>Překlad</h5>
+                    <p>Tato písnička již je označená jako originál několika dalších písniček (viz vlevo). Propojení můžete smazat v editaci těchto písniček.</p>
+                @else
+                    <h5>Překlad</h5>
+                    <p>Jako příklad nechť poslouží písnička Oceans od kapely Hillsong, která má hned několik českých překladů.</p>
+                    <p>
+                        Pokud právě přidáváte originál písničky (tedy Oceans / Hillsong), je třeba krom obvyklého navíc v políčku <i>Typ</i> změnit hodnotu na <i>Originál</i>.
+                    </p>
+                    <p>Pokud se jedná o píseň, která byla přeložena, popř. zaranžována ze známého originálu (Oceány / Adorare),
+                        uveďte prosím originál (Oceans) do druhého políčka, abychom věděli, co k čemu patří.
+                        <br>
+                        Stejně jako u přidávání autorů se vám během psaní začnou zobrazovat již uložené písničky. Pokud originál (Oceans) nenajdete, tak po zadání celého jména 
+                        stiskněte Enter a po dokončení editace se zároveň vytvoří nová píseň (Oceans), která bude automaticky označena jako originál.
+                        <br>
+                        Ve zpěvníku také chceme rozlišovat překlady, které jsou (nějakým způsobem) schváleny jako oficiální, pokud tedy víte, o co jde, tak upravte hodnotu v políčku <i>Autorizovaný překlad</i>.
+                    </p>
+                @endif
+
+                <h5>Text</h5>
+
+                <p>Text písně je možné zadávat i s akordy v tzv. formátu OpenChord. Tedy např. [cmi], [Emaj7] apod.
+                <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
+                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu
+                <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
+                </p>
+            </div>
         </div>
     </div>
 @endsection
 
 @include('admin.components.magicsuggest_includes')
 @include('admin.components.deletebutton_includes')
+
+{{-- @push('scripts')
+<script>
+    function onKeyDown(){
+        // TODO implement a shortcut for inserting a chord in brackets [] or deleting a chord if the cursor is inside brackets
+        // TODO implement a shortcut for jumping between chords - i.e. ctrl + something
+    }
+</script>
+@endpush --}}
