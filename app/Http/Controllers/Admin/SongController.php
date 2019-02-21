@@ -134,7 +134,7 @@ class SongController extends Controller
         
         // 1. case: there is a group of SongLyrics under one Song that have no original
         if ($song_lyric->hasSiblings() &&
-            $song_lyric->song->getOriginalLyric() === NULL)
+            $song_lyric->song->getOriginalSongLyric() === NULL)
         {
             return view('admin.song.error', [
                 'error' => 'no_original',

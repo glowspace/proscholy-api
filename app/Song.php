@@ -50,8 +50,7 @@ class Song extends Model
         return $this->song_lyrics()->where('name', $this->name)->where('id', '!=', $id_exclude)->first();
     }
 
-
-    public function getOriginalLyric()
+    public function getOriginalSongLyric()
     {
         return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }
