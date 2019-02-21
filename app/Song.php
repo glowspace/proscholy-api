@@ -45,7 +45,7 @@ class Song extends Model
         return $this->song_lyrics()->where('is_original', 0);
     }
 
-    public function getNonCuckooSongLyric($id_exclude)
+    public function getDomesticSongLyric($id_exclude)
     {
         return $this->song_lyrics()->where('name', $this->name)->where('id', '!=', $id_exclude)->first();
     }

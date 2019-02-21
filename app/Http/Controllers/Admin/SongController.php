@@ -39,14 +39,19 @@ class SongController extends Controller
 
     public function edit(SongLyric $song_lyric)
     {
+        // prepare fields for the (author) magicsuggest component
         $assigned_authors = $song_lyric->authors()->select(['authors.id', 'authors.name'])->get();
         $all_authors = Author::select(['id', 'name'])->orderBy('name')->get();
 
-        $domestic_song_lyric = $song_lyric->song->getNonCuckooSongLyric($song_lyric->id);
-        // prepare a singleton array for the magicsuggest component
+        $domestic_song_lyric = $song_lyric->song->getDomesticSongLyric($song_lyric->id);
+        // prepare a singleton array for the (original song) magicsuggest component
         $assigned_song_lyrics = $domestic_song_lyric ? [$domestic_song_lyric] : [];
         $all_song_lyrics = SongLyric::select(['id', 'name'])->where('id', '!=', $song_lyric->id)->get();
-        // do not allow to change the field in this situation.. trust me it's complicated
+
+        // do not allow to change the field in this situation
+        // (instead show a list of connected Songs)
+        // - this means this SongLyric is head of the group of song - aka domestic and 
+        //   had been set as original of some other songs
         $assigned_song_disabled = $song_lyric->hasSiblings() && $song_lyric->isDomestic();
 
         return view('admin.song.edit', compact(
@@ -145,8 +150,8 @@ class SongController extends Controller
                 'song' => $song_lyric->song 
             ]);
         }
-        
-        // redirect according to a selected action
+
+        // no error => contunue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.song.index'),
             'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
@@ -158,8 +163,8 @@ class SongController extends Controller
 
     public function resolve_error(Request $request, Song $song)
     {
+        // select chosen SongLyric as orignal and the rest as translations
         if ($request->solution === 'choose_original') {
-            // set this id as the original
             $id_orig = $request->song_original;
 
             foreach ($song->song_lyrics as $song_l) {
@@ -169,21 +174,22 @@ class SongController extends Controller
 
             return redirect()->route('admin.song.index');
         }
+        // create a new original song that'll be the new original in the group
         else if ($request->solution === 'create_original') {
             $song_lyric = SongLyric::create([
                 'name' => '',
                 'song_id' => $song->id,
                 'is_original' => 1
             ]);
-            $song_lyric->save();
-            // change name of the parent Song model
+            // change name of the parent Song model to be the same as the new SongLyric's name
+            // in order to make the new SongLyric domestic => "head" of the group
             $song->name = '';
             $song->save();
 
             return redirect()->route('admin.song.edit', $song_lyric);
         }
+        // don't do anything
         else if ($request->solution === 'keep') {
-            // don't do anything
             return redirect()->route('admin.song.index');
         }
 
