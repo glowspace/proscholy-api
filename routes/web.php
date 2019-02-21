@@ -83,4 +83,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
     Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
     Route::delete('/author/{author}', 'AuthorController@destroy')->name('admin.author.delete');
+
+    Route::group(['middleware' => ['permission:manage users']], function () {
+        Route::get('/users', 'UserController@index')->name('admin.user.index');
+    });
 });
