@@ -9,7 +9,7 @@
                 <p>Ok, přihodila se nám nemilá věc:</p>
                 <form action="{{ route('admin.song.resolve_error', $song) }}" method="post">
                     @csrf
-                    @if ($error === App\Song::ERR_NO_ORIGINAL)
+                    @if ($error === 'no_original')
                         <p>Vyskytlo se tu pár překladů jedné písničky a žádný z nich není označený jako originál:</p>
                         @foreach ($song->song_lyrics as $song_l)
                             {{ $song_l->name }}<br>
@@ -32,7 +32,7 @@
 
                         <button type="input" name="solution" value="create_original" class="btn btn-outline-info">Vytvořit novou píseň</button>
         
-                    @elseif ($error === App\Song::ERR_MORE_ORIGINALS)
+                    @elseif ($error === 'more_originals')
                         <p>Vyskytl se nám tu problém, že máme označených víc originálů jedné písničky,<br>
                             konkrétně se jedná o následující položky:
                         </p>

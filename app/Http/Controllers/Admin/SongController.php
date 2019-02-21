@@ -73,13 +73,16 @@ class SongController extends Controller
     {
         // name has changed ???
         if ($request->name !== $song_lyric->name) {
-            // preserve the invariant - if it had the same name before - it's domestic, then it must stay so!!
+            // to be domestic means to have a same name as the parent song
+            // this invariant needs to be preserved in order to stay domestic
             if ($song_lyric->isDomestic()) {
                 $song_lyric->song->name = $request->name;
                 $song_lyric->song->save();
             }
         }
         $song_lyric->update($request->all());
+
+        // SYNCING THE AUTHORS
 
         if ($request->authors !== NULL) {
             // old authors that had been saved in db - an ID is passed
@@ -88,7 +91,7 @@ class SongController extends Controller
             });
             $song_lyric->authors()->sync($saved_authors);
     
-            // new authors to create - a NAME is passed
+            // new authors to create - a string NAME is passed
             $new_authors = Arr::where($request->authors, function ($value, $key) {
                 return !is_numeric($value);
             });
@@ -99,6 +102,8 @@ class SongController extends Controller
             }
             $song_lyric->save();
         }
+
+        // SYNCING AND HANDLING THE ASSOCIATED SONGS
 
         if ($request->assigned_song_lyrics === NULL && $song_lyric->isCuckoo()) {
             // this means I was a cuckoo so I need to find a new parent,
@@ -120,34 +125,34 @@ class SongController extends Controller
             $song_lyric->save();
         }
 
-        
-        // check if there is any bad behaviour
+        // CHECKING FOR CONSISTENCY
         
         // 1. case: there is a group of SongLyrics under one Song that have no original
         if ($song_lyric->hasSiblings() &&
-        $song_lyric->song->getOriginalLyric() === NULL)
+            $song_lyric->song->getOriginalLyric() === NULL)
         {
             return view('admin.song.error', [
-                'error' => Song::ERR_NO_ORIGINAL,
+                'error' => 'no_original',
                 'song' => $song_lyric->song 
-                ]);
-            }
+            ]);
+        }
             
-            // 2. case: there is more originals in one group
-            if ($song_lyric->song->song_lyrics()->where('is_original', 1)->count() > 1)
-            {
-                return view('admin.song.error', [
-                'error' => Song::ERR_MORE_ORIGINALS,
+        // 2. case: there is more originals in one group
+        if ($song_lyric->song->song_lyrics()->where('is_original', 1)->count() > 1)
+        {
+            return view('admin.song.error', [
+                'error' => 'more_originals',
                 'song' => $song_lyric->song 
-                ]);
-            }
-            
+            ]);
+        }
+        
+        // redirect according to a selected action
         $redirect_arr = [
             'save' => route('admin.song.index'),
             'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
             'save_show' => route('client.song.text', ['song_id' => $song_lyric->id])
         ];
-        
+
         return redirect($redirect_arr[$request->redirect]);
     }
 
