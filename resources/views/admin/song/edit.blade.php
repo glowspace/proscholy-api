@@ -137,9 +137,9 @@
 
                 <h5>Text</h5>
 
-                <p>Text písně je možné zadávat i s akordy v tzv. formátu OpenChord. Tedy např. [Cmi], [Emaj7] apod.
+                <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [Cm], [Emaj7]</b> apod.
                 <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
-                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu
+                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
                 <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
                 </p>
             </div>
