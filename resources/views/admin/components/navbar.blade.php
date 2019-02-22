@@ -22,7 +22,7 @@
 </a>
 
 <a class="btn btn-secondary" href="{{route('admin.author.index')}}">
-    <i class="fas fa-user"></i> Autoři
+    <i class="fas fa-pen"></i> Autoři
 </a>
 
 <a class="btn btn-secondary" href="{{route('admin.external.index')}}">
