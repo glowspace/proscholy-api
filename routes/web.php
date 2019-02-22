@@ -84,6 +84,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
     Route::delete('/author/{author}', 'AuthorController@destroy')->name('admin.author.delete');
 
+    // File
+    Route::get('/files', 'FileController@index')->name('admin.file.index');
+    Route::get('/file/new', 'FileController@create')->name('admin.file.create');
+    Route::post('/file/new', 'FileController@store')->name('admin.file.store');
+    Route::get('/file/{file}', 'FileController@edit')->name('admin.file.edit');
+    Route::put('/file/{file}', 'FileController@update')->name('admin.file.update');
+    Route::delete('/file/{file}', 'FileController@destroy')->name('admin.file.delete');
+
     Route::group(['middleware' => ['permission:manage users']], function () {
         Route::get('/users', 'UserController@index')->name('admin.user.index');
         Route::get('/user/new', 'UserController@create')->name('admin.user.create');
