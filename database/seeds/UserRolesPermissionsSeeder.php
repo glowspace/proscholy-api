@@ -15,21 +15,16 @@ class UserRolesPermissionsSeeder extends Seeder
     {
         $tableNames = config('permission.table_names');
 
-        // first delete the old roles (when updating)
-        DB::table($tableNames['role_has_permissions'])->delete();
-        DB::table($tableNames['model_has_roles'])->delete();
-        DB::table($tableNames['model_has_permissions'])->delete();
-        DB::table($tableNames['roles'])->delete();
-        DB::table($tableNames['permissions'])->delete();
-
         // now the table is free to create the permissions..
-        // Permission::create(['name' => 'manage songs']);
-        // Permission::create(['name' => 'manage authors']);
-        // Permission::create(['name' => 'manage externals']);
-        Permission::create(['name' => 'manage users']);
+        // Permission::firstOrNew(['name' => 'manage songs']);
+        // Permission::firstOrNew(['name' => 'manage authors']);
+        // Permission::firstOrNew(['name' => 'manage externals']);
+
+        // if the permission already exists then do not create new one
+        Permission::firstOrNew(['name' => 'manage users']);
 
         // .. and roles
-        $admin = Role::create(['name' => 'admin']);
+        $admin = Role::firstOrNew(['name' => 'admin']);
         $admin->givePermissionTo('manage users');
     }
 }
