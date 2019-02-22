@@ -26,5 +26,11 @@ class UserRolesPermissionsSeeder extends Seeder
         // .. and roles
         $admin = Role::firstOrNew(['name' => 'admin']);
         $admin->givePermissionTo('manage users');
+        $admin->save();
+
+        $editor = Role::firstOrNew(['name' => 'editor']);
+        $editor->save();
+        $author = Role::firstOrNew(['name' => 'autor']);
+        $author->save();
     }
 }
