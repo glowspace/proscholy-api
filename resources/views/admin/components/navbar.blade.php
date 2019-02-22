@@ -28,3 +28,9 @@
 <a class="btn btn-secondary" href="{{route('admin.external.index')}}">
     <i class="fas fa-link"></i> Externí zdroje
 </a>
+
+@can('manage users')
+    <a class="btn btn-secondary" href="{{route('admin.user.index')}}">
+        <i class="fas fa-user"></i> Uživatelé
+    </a>
+@endcan

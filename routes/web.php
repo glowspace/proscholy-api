@@ -74,6 +74,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
     Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('admin.song.delete');
 
+    Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('admin.song.resolve_error');
+
     // Author
     Route::get('/authors', 'AuthorController@index')->name('admin.author.index');
     Route::get('/author/new', 'AuthorController@create')->name('admin.author.create');
@@ -81,4 +83,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
     Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
     Route::delete('/author/{author}', 'AuthorController@destroy')->name('admin.author.delete');
+
+    Route::group(['middleware' => ['permission:manage users']], function () {
+        Route::get('/users', 'UserController@index')->name('admin.user.index');
+    });
 });

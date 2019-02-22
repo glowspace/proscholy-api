@@ -15,6 +15,10 @@ Imports
 textarea.form-control,
 textarea.custom-file-control {
   line-height: 1.8;
+  padding: 10px;
+  background-image: none;
+  -webkit-box-shadow: 0 0 70px -25px inset;
+          box-shadow: 0 0 70px -25px inset;
 }
 
 .card {

@@ -96,6 +96,11 @@ class Author extends Model implements ISearchResult
         return '<a href="' . route('client.author', $this) . '">' . $this->name . '</a>';
     }
 
+    public function getTypeText()
+    {
+        return $this->type_string[$this->type];
+    }
+
     /**
      * Get the indexable data array for the model.
      *

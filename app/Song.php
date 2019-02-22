@@ -24,7 +24,7 @@ use Log;
  */
 class Song extends Model
 {
-    protected $fillable = ['name', 'lyrics'];
+    protected $fillable = ['name'];
 
     public function authors()
     {
@@ -45,13 +45,12 @@ class Song extends Model
         return $this->song_lyrics()->where('is_original', 0);
     }
 
-    public function getNonCuckooSongLyric($id_exclude)
+    public function getDomesticSongLyric($id_exclude)
     {
         return $this->song_lyrics()->where('name', $this->name)->where('id', '!=', $id_exclude)->first();
     }
 
-
-    public function getOriginalLyric()
+    public function getOriginalSongLyric()
     {
         return $this->song_lyrics()->where('is_original', 1)->get()->first();
     }

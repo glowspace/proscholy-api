@@ -139,6 +139,10 @@ class SongLyric extends Model implements ISearchResult
         return $this->scoreExternals()->count();
     }
 
+    // the reason for existence of the domestic characteristic
+    // is the case when there are multiple SongLyrics under one Song and no original one
+    // which is basically not recommended but permitted
+    // - consider merging domestic/orignal in the future for simplicity (depending on practical usage)
     public function isDomestic()
     {
         return $this->name === $this->song->name;
@@ -178,7 +182,6 @@ class SongLyric extends Model implements ISearchResult
                 'name' => $identificator,
                 'song_id' => $song->id
             ]);
-            $song_lyric->save();
 
             return $song_lyric;
         }
