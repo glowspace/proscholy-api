@@ -86,5 +86,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 
     Route::group(['middleware' => ['permission:manage users']], function () {
         Route::get('/users', 'UserController@index')->name('admin.user.index');
+        Route::get('/user/new', 'UserController@create')->name('admin.user.create');
+        Route::post('/user/new', 'UserController@store')->name('admin.user.store');
+        Route::get('/user/{user}', 'UserController@edit')->name('admin.user.edit');
+        Route::put('/user/{user}', 'UserController@update')->name('admin.user.update');
+        Route::delete('/user/{user}', 'UserController@destroy')->name('admin.user.delete');
     });
 });
