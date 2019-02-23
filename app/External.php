@@ -56,12 +56,21 @@ class External extends Model
      */
     public function getEmbedUrl()
     {
-        if ($this->getTypeString() == 'youtube')
+        if ($this->getTypeString() == 'spotify') {
+            // format: spotify:track:3X7QBr7rq6NIzLmEXbiXAS
+            $id = explode(":", $this->url)[2];
+            return "https://open.spotify.com/embed/track/$id";
+        } 
+        else if ($this->getTypeString() == 'youtube')
         {
             return str_replace('watch?v=', 'embed/', $this->url);
         }
-        else
+        else if ($this->getTypeString() == 'soundcloud')
         {
+            return "https://w.soundcloud.com/player/?url=$this->url&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
+        }
+        else {
+            
             return $this->url;
         }
     }

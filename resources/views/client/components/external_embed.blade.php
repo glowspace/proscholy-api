@@ -5,7 +5,7 @@
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
         @include('client.components.external_embed_edit_link')
-        <iframe src="{{$external->url}}" width="100%" height="80" frameborder="0"
+        <iframe src="{{ $external->getEmbedUrl() }}" width="100%" height="80" frameborder="0"
                 allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
 @elseif($external->type == 2)
@@ -16,7 +16,7 @@
         </div>
         @include('client.components.external_embed_edit_link')
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-                src="https://w.soundcloud.com/player/?url={{$external->url}}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+                src="{{ $external->getEmbedUrl() }}"></iframe>
     </div>
 @elseif($external->type == 3)
     <div class="card" style="margin-bottom: 1em;">
@@ -26,7 +26,7 @@
         </div>
         @include('client.components.external_embed_edit_link')
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe src="{{$external->getEmbedUrl()}}" frameborder="0"
+            <iframe src="{{ $external->getEmbedUrl() }}" frameborder="0"
                     allowfullscreen></iframe>
         </div>
     </div>
@@ -38,7 +38,7 @@
         </div>
         @include('client.components.external_embed_edit_link')
         <div class="card-body">
-            <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
+            <a href="{{ $external->getEmbedUrl() }}">{{ $external->getEmbedUrl() }}</a>
         </div>
     </div>
 @else
