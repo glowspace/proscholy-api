@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\File
@@ -30,6 +31,11 @@ use Illuminate\Database\Eloquent\Model;
 class File extends Model
 {
     protected $fillable = ['filename', 'type', 'description', 'path'];
+
+    // See App/Listeners/FileDeleting where the deleting actually happens
+    protected $dispatchesEvents = [
+        'deleting' => \App\Events\FileDeleting::class,
+    ];
 
     public $type_string
         = [

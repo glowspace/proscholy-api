@@ -29,6 +29,10 @@
     <i class="fas fa-link"></i> Externí zdroje
 </a>
 
+<a class="btn btn-secondary" href="{{route('admin.file.index')}}">
+    <i class="fas fa-file"></i> Soubory
+</a>
+
 @can('manage users')
     <a class="btn btn-secondary" href="{{route('admin.user.index')}}">
         <i class="fas fa-user"></i> Uživatelé

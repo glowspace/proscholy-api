@@ -122,7 +122,7 @@ class FileController extends Controller
      * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(File $file)
+    public function destroy(Request $request, File $file)
     {
         $file->delete();
 
