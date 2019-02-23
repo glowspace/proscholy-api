@@ -122,6 +122,12 @@ class ExternalController extends Controller
             $external->save();
         }
 
-        return redirect()->route('admin.external.index');
+        // no error => contunue with redirecting according to a selected action
+        $redirect_arr = [
+            'save' => route('admin.external.index'),
+            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
+        ];
+
+        return redirect($redirect_arr[$request->redirect]);
     }
 }
