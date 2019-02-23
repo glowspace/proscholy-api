@@ -15,6 +15,40 @@
                     <label>Název</label>
                     <input class="form-control" required autofocus name="name" placeholder="Název písně" value="{{$song_lyric->name}}"><br>
 
+                    <label>Autoři</label><br>
+
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'authors',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $all_authors,
+                        'list_selected' => $assigned_authors,
+                        'is_single' => false,
+                        'disabled' => false
+                    ])
+                    <br>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="has_anonymous_author" id="check_has_anonymous_author">
+                        <label class="form-check-label" for="check_has_anonymous_author">
+                            Autor neznámý
+                        </label>
+                    </div>
+                    <br>
+
+                    <label>Typ</label>
+                    <select class="form-control" name="is_original" title="">
+                        <option value="1" @if($song_lyric->is_original)
+                        selected
+                                @endif>Originál
+                        </option>
+                        <option value="0" @if(!$song_lyric->is_original)
+                        selected
+                                @endif>Překlad
+                        </option>
+                    </select>
+                    <br>
+
                     @if ($assigned_song_disabled)
                         <p>Píseň je označena jako originál následujících písní: </p>
                         @foreach ($song_lyric->getSiblings()->get() as $item)
@@ -34,45 +68,7 @@
                         ])
                     @endif
                     <br>
-                    <label>Autoři</label><br>
 
-                    @include('admin.components.magicsuggest', [
-                        'field_name' => 'authors',
-                        'value_field' => 'id',
-                        'display_field' => 'name',
-                        'list_all' => $all_authors,
-                        'list_selected' => $assigned_authors,
-                        'is_single' => false,
-                        'disabled' => false
-                    ])
-
-                    <br><br>
-
-                    <label>Text</label>
-                    <textarea rows="20" name="lyrics" class="form-control" title="">{{$song_lyric->lyrics}}</textarea>
-
-                    <br>
-                    <label>Jazyk</label>
-                    <select class="custom-select" name="lang" title="">
-                        @foreach($song_lyric->lang_string as $key => $value)
-                            <option value="{{ $key }}" {{ $song_lyric->lang === $key ? 'selected' : "" }}>{{ $value }}</option>
-                        @endforeach
-                    </select>
-
-                    <br><br>
-                    <label>Typ</label>
-                    <select class="form-control" name="is_original" title="">
-                        <option value="1" @if($song_lyric->is_original)
-                        selected
-                                @endif>Originál
-                        </option>
-                        <option value="0" @if(!$song_lyric->is_original)
-                        selected
-                                @endif>Překlad
-                        </option>
-                    </select>
-
-                    <br>
                     <label>Autorizovaný překlad</label>
                     <select class="form-control" name="is_authorized" title="">
                         <option value="1" @if($song_lyric->is_authorized)
@@ -84,6 +80,19 @@
                                 @endif>Ne
                         </option>
                     </select>
+                    <br>
+                    <label>Jazyk</label>
+                    <select class="custom-select" name="lang" title="">
+                        @foreach($song_lyric->lang_string as $key => $value)
+                            <option value="{{ $key }}" {{ $song_lyric->lang === $key ? 'selected' : "" }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                    <br>
+
+                    <br>
+
+                    <label>Text</label>
+                    <textarea rows="20" name="lyrics" class="form-control" title="">{{$song_lyric->lyrics}}</textarea>
 
                     <br>
 
@@ -100,7 +109,7 @@
                     'redirect' => route('admin.song.index')
                 ])
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 edit-description">
                 <h2>Pár informací</h2>
 
                 <h5>Název (povinná položka)</h5>

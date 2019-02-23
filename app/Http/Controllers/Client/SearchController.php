@@ -20,11 +20,6 @@ class SearchController extends Controller
      */
     public function searchSend(Request $request)
     {
-        if (empty($request['query']))
-        {
-            return redirect()->back();
-        }
-
         return redirect()->route('client.search_results', $request['query']);
     }
 
@@ -39,6 +34,7 @@ class SearchController extends Controller
     public function searchResults($query = null)
     {
         $limit = 5;
+        $limit_empty;
 
         if (isset($query))
         {
@@ -48,8 +44,10 @@ class SearchController extends Controller
         else
         {
             // Empty search
-            $song_lyrics = null;
-            $authors     = null;
+            // TODO: Let the user know in the frontend, what I'm doing
+            $song_lyrics = SongLyric::where('lyrics', '!=', '')->orderBy('name')->get();
+            $authors     = [];
+            $query = "";
         }
 
         return view('client.search_results', [

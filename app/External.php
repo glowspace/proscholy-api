@@ -39,6 +39,8 @@ class External extends Model
             2 => 'soundcloud',
             3 => 'youtube',
             4 => 'score_link',
+            5 => 'profile_webpage',
+            6 => 'youtube_channel'
         ];
 
     /**
