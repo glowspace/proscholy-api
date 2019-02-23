@@ -52,6 +52,10 @@ class UserController extends Controller
     {
         $user->update($request->all());
 
+        // assign role
+        $user->assignRole(Role::find($request->role));
+        $user->save();
+
         if ($request->new_pass != '') 
         {
             $user->password = Hash::make($request->new_pass);

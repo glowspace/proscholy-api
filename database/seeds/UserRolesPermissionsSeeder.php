@@ -43,6 +43,7 @@ class UserRolesPermissionsSeeder extends Seeder
         foreach ($admins_to_be as $admin_to_be) {
             if ($admin_to_be) {
                 $admin_to_be->assignRole($admin);
+                $admin_to_be->save();
             }
         }
     }
