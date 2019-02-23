@@ -50,6 +50,10 @@
     <a class="btn btn-secondary" href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
         <i class="fas fa-link"></i> Přidat odkaz
     </a>
+
+    <a class="btn btn-secondary" href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
+        <i class="fas fa-file"></i> Nahrát soubor
+    </a>
 @endif
 
 {{--<div class="navbar-label material-shadow text-warning">Možnosti</div>--}}
