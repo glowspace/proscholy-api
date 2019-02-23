@@ -39,6 +39,14 @@ class SongController extends Controller
 
     public function edit(SongLyric $song_lyric)
     {
+        if (!$song_lyric->lock()) {
+            // unsuccesful attempt to lock -> that means the model has been locked
+            return view('admin.song.error', [
+                'error' => 'locked',
+                'song_lyric' => $song_lyric 
+            ]);
+        }
+
         // prepare fields for the (author) magicsuggest component
         $assigned_authors = $song_lyric->authors()->select(['authors.id', 'authors.name'])->get();
         $all_authors = Author::select(['id', 'name'])->orderBy('name')->get();
@@ -130,6 +138,9 @@ class SongController extends Controller
             $song_lyric->save();
         }
 
+        // UNLOCKING FOR EDIT
+        $song_lyric->unlock();
+
         // CHECKING FOR CONSISTENCY
         
         // 1. case: there is a group of SongLyrics under one Song that have no original
@@ -159,6 +170,12 @@ class SongController extends Controller
         ];
 
         return redirect($redirect_arr[$request->redirect]);
+    }
+
+    public function refresh_updating(SongLyric $song_lyric)
+    {
+        $song_lyric->lock(true);
+        return response('OK', 200);
     }
 
     public function resolve_error(Request $request, Song $song)
@@ -192,6 +209,5 @@ class SongController extends Controller
         else if ($request->solution === 'keep') {
             return redirect()->route('admin.song.index');
         }
-
     }
 }

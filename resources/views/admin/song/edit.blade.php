@@ -150,6 +150,17 @@
 @include('admin.components.magicsuggest_includes')
 @include('admin.components.deletebutton_includes')
 
+@push('scripts')
+    {{-- each 25 seconds send a GET request in order to preserve the lock state --}}
+    <script>
+        $(document).ready(function() {
+            setInterval(function() {
+                $.get( "{{ route('admin.song.refresh_updating', $song_lyric) }}")
+            }, 25000);
+        });
+    </script>
+@endpush
+
 {{-- @push('scripts')
 <script>
     function onKeyDown(){
