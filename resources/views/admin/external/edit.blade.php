@@ -60,7 +60,8 @@
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="is_featured" id="check_is_featured">
+                        <input class="form-check-input" {{ $external->is_featured ? 'checked' : "" }}
+                         type="checkbox" name="is_featured" value="1" id="check_is_featured">
                         <label class="form-check-label" for="check_is_featured">
                             Zvýraznit v náhledu písně
                         </label>

@@ -95,6 +95,12 @@ class SongController extends Controller
         }
         $song_lyric->update($request->all());
 
+        // need to handle the checkbox
+        if (!$request->has("has_anonymous_author")) {
+            $song_lyric->has_anonymous_author = 0;
+            $song_lyric->save();
+        }
+
         // SYNCING THE AUTHORS
 
         if ($request->authors !== NULL) {
