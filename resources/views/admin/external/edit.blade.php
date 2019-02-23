@@ -59,6 +59,15 @@
                         ])
                     </div>
 
+                    <div class="form-check">
+                        <input class="form-check-input" {{ $external->is_featured ? 'checked' : "" }}
+                         type="checkbox" name="is_featured" value="1" id="check_is_featured">
+                        <label class="form-check-label" for="check_is_featured">
+                            Zvýraznit v náhledu písně
+                        </label>
+                    </div>
+                    <br>
+
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_edit_song">Uložit a upravit píseň</button>
                 </form>

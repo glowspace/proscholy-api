@@ -32,7 +32,7 @@ class AdminController extends Controller
     {
         return view('admin.todo', [
             'externals'                     => External::where('author_id', null)->orWhere('song_lyric_id', null)->get(),
-            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->get(),
+            'songs_w_author'                => SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->get(),
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '=', null)->get(),
         ]);

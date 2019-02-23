@@ -95,6 +95,12 @@ class SongController extends Controller
         }
         $song_lyric->update($request->all());
 
+        // need to handle the checkbox
+        if (!$request->has("has_anonymous_author")) {
+            $song_lyric->has_anonymous_author = 0;
+            $song_lyric->save();
+        }
+
         // SYNCING THE AUTHORS
 
         if ($request->authors !== NULL) {
@@ -166,6 +172,7 @@ class SongController extends Controller
         $redirect_arr = [
             'save' => route('admin.song.index'),
             'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
+            'add_file' => route('admin.file.create_for_song', ['song_lyric' => $song_lyric->id]),
             'save_show' => route('client.song.text', ['song_id' => $song_lyric->id])
         ];
 

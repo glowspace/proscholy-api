@@ -26,9 +26,14 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(SongLyric $song_lyric = null)
     {
-        return view('admin.file.create');
+        return view('admin.file.create', compact('song_lyric'));
+    }
+
+    public function create_for_song(Request $request, SongLyric $song_lyric)
+    {
+        return $this->create($song_lyric);
     }
 
     /**
@@ -51,6 +56,11 @@ class FileController extends Controller
             'filename' => $slugified,
             'path' => $path
         ]);
+
+        if ($request->has('song_lyric_id')) {
+            $file->song_lyric()->associate(Song::find($request->song_lyric_id));
+            $file->save();
+        }
 
         return redirect()->route('admin.file.edit', $file);
     }
@@ -118,7 +128,12 @@ class FileController extends Controller
             $file->save();
         }
 
-        return redirect()->route('admin.file.index');
+        $redirect_arr = [
+            'save' => route('admin.external.index'),
+            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
+        ];
+
+        return redirect($redirect_arr[$request->redirect]);
     }
 
     /**

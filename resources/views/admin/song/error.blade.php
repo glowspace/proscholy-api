@@ -11,6 +11,8 @@
                     <br>Abychom předešli možným problémům, tak je píseň dočasně uzamčená.
                     <br><br>
                     <a class="btn btn-outline-primary" href="{{ route('admin.song.edit', $song_lyric) }}">ZKUSIT ZNOVU UPRAVIT</a>
+                    <br><br>
+                    <img src="https://thumbs.gfycat.com/FoolishHonorableArgentinehornedfrog-size_restricted.gif" alt="You shall not pass">
                     </p>
                 @else
                     <h2>Musíme to opravit :(</h2>

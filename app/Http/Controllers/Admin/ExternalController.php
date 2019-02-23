@@ -90,6 +90,11 @@ class ExternalController extends Controller
     public function update(Request $request, External $external)
     {
         $external->update($request->all());
+        // need to handle the checkbox
+        if (!$request->has("is_featured")) {
+            $external->is_featured = 0;
+            $external->save();
+        }
 
         // no author set, delete if there had been any association
         if ($request->assigned_authors === null)
