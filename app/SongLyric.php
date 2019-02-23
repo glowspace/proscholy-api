@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
+use App\Traits\Lockable;
 
 /**
  * App\SongLyric
@@ -47,7 +48,8 @@ use Illuminate\Support\Arr;
 class SongLyric extends Model implements ISearchResult
 {
     // Laravel Scout Trait used for full-text searching
-    use Searchable;
+    // Lockable Trait for enabling to "lock" the model while editing
+    use Searchable, Lockable;
 
     protected $fillable
         = [
@@ -57,7 +59,8 @@ class SongLyric extends Model implements ISearchResult
             'id',
             'is_original',
             'is_authorized',
-            'lang'
+            'lang',
+            'creating_at'
         ];
 
     public $lang_string = [
@@ -74,6 +77,8 @@ class SongLyric extends Model implements ISearchResult
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
         'mixed' => 'vícejazyčná píseň'
     ];
+
+    protected $chord_substitute_char = '%';
 
     public function getLanguageName()
     {
@@ -185,6 +190,11 @@ class SongLyric extends Model implements ISearchResult
 
             return $song_lyric;
         }
+    }
+
+    public function getProcessedLyrics()
+    {
+        return str_replace($this->chord_substitute_char, "", $this->lyrics);
     }
 
     /**

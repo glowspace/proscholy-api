@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Seznam autorů (seřazeno od nejnověji přidaných)</h2>
+        <h2>Seznam autorů</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
         <div class="row">
             <div class="col-xs-12 col-md-8">

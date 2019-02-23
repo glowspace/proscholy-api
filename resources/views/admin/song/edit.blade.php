@@ -137,9 +137,9 @@
 
                 <h5>Text</h5>
 
-                <p>Text písně je možné zadávat i s akordy v tzv. formátu OpenChord. Tedy např. [Cmi], [Emaj7] apod.
+                <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [Cm], [Emaj7]</b> apod.
                 <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
-                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu
+                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
                 <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
                 </p>
             </div>
@@ -149,6 +149,17 @@
 
 @include('admin.components.magicsuggest_includes')
 @include('admin.components.deletebutton_includes')
+
+@push('scripts')
+    {{-- each 25 seconds send a GET request in order to preserve the lock state --}}
+    <script>
+        $(document).ready(function() {
+            setInterval(function() {
+                $.get( "{{ route('admin.song.refresh_updating', $song_lyric) }}")
+            }, 25000);
+        });
+    </script>
+@endpush
 
 {{-- @push('scripts')
 <script>

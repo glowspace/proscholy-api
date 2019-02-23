@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-body">
                         @if($song_l->lyrics)
-                            <div id="lyrics">{!!$song_l->lyrics !!}</div>
+                            <div id="lyrics">{!!$song_l->getProcessedLyrics() !!}</div>
                         @else
                             <div id="lyrics">Text písně připravujeme.</div>
                         @endif
