@@ -22,7 +22,8 @@ class UserRolesPermissionsSeeder extends Seeder
         // Permission::firstOrNew(['name' => 'manage externals']);
 
         // if the permission already exists then do not create new one
-        Permission::firstOrNew(['name' => 'manage users']);
+        $perm = Permission::firstOrNew(['name' => 'manage users']);
+        $perm->save();
 
         // .. and roles
         $admin = Role::firstOrNew(['name' => 'admin']);
