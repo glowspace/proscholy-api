@@ -67,9 +67,9 @@
                         ])
                     </div>
 
-                    <div class="input-group">
-                        <button type="submit" class="btn btn-outline-primary">Uložit</button>
-                    </div>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_edit_song">Uložit a upravit píseň</button>
+                    
                 </form>
                 @include('admin.components.deletebutton', [
                     'url' => route('admin.file.delete', ['file' => $file->id]),

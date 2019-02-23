@@ -91,6 +91,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     // File
     Route::get('/files', 'FileController@index')->name('admin.file.index');
     Route::get('/file/new', 'FileController@create')->name('admin.file.create');
+    Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('admin.file.create_for_song');
     Route::post('/file/new', 'FileController@store')->name('admin.file.store');
     Route::get('/file/{file}', 'FileController@edit')->name('admin.file.edit');
     Route::put('/file/{file}', 'FileController@update')->name('admin.file.update');

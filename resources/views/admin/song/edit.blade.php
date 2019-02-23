@@ -101,6 +101,7 @@
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show">Uložit a zobrazit ve zpěvníku</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_external">Uložit a přidat externí odkaz</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_file">Uložit a přidat soubor</button>
                 </form>
 
                 @include('admin.components.deletebutton', [
