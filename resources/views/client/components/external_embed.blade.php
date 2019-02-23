@@ -4,6 +4,7 @@
             <i style="color: #277d11;" class="fab fa-spotify"></i>
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
+        @include('client.components.external_embed_edit_link')
         <iframe src="{{$external->url}}" width="100%" height="80" frameborder="0"
                 allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
@@ -13,6 +14,7 @@
             <i style="color: #ff9500;" class="fab fa-soundcloud"></i>
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
+        @include('client.components.external_embed_edit_link')
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
                 src="https://w.soundcloud.com/player/?url={{$external->url}}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
@@ -22,7 +24,7 @@
             <i style="color: #db0e0e;" class="fab fa-youtube"></i>
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
-
+        @include('client.components.external_embed_edit_link')
         <div class="embed-responsive embed-responsive-16by9">
             <iframe src="{{$external->getEmbedUrl()}}" frameborder="0"
                     allowfullscreen></iframe>
@@ -34,13 +36,18 @@
             <i style="color: #db0e0e;" class="fas fa-file-pdf"></i>
             @component('client.components.external_widget_label', compact('external'))@endcomponent
         </div>
-
+        @include('client.components.external_embed_edit_link')
         <div class="card-body">
             <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
         </div>
     </div>
 @else
     @if (!empty($external->url))
-        <div class="card" style="margin-bottom: 1em; padding: 1em;">Wrong external media type.</div>
+        <div class="card" style="margin-bottom: 1em; padding: 1em;">
+            @include('client.components.external_embed_edit_link')
+            <div class="card-body">
+                Wrong external media type.
+            </div>
+        </div>
     @endif
 @endif
