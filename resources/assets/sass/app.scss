@@ -122,11 +122,19 @@ Home page specific elements
   background-size:     auto 120%;
   background-repeat:   no-repeat;
   min-height:          calc(100vh - 66px);
+
+  @include media-breakpoint-down(sm) {
+    background-position: -290.5px -11px;
+  }
 }
 
 .logo-wrapper {
   text-align:  center;
   padding-top: 160px;
+
+  @include media-breakpoint-down(sm) {
+    padding-top: 140px;
+  }
 
   .logo {
     height:              130px;
@@ -140,7 +148,13 @@ Home page specific elements
     background-position: center;
     background-size:     149%;
 
+    @include media-breakpoint-down(sm) {
+      top:          2px;
+      height:       50px;
+      width:        50px;
 
+      margin-right: 6px;
+    }
   }
 
   .caption {
@@ -150,6 +164,11 @@ Home page specific elements
     line-height: 160px;
 
     font-family: 'Cocogoose', cursive;
+
+    @include media-breakpoint-down(sm) {
+      font-size:   60px;
+      line-height: 60px;
+    }
   }
 }
 
@@ -180,6 +199,12 @@ Home page specific elements
     &:focus {
       outline: none;
     }
+
+    @include media-breakpoint-down(sm) {
+      width:  calc(100% - 30px);
+
+      margin: 15px;
+    }
   }
 
   .search-submit {
@@ -196,6 +221,10 @@ Home page specific elements
 
     &:hover {
       background-color: #d4d4d4;
+    }
+
+    @include media-breakpoint-down(sm) {
+      display: none;
     }
   }
 }
