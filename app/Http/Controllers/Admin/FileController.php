@@ -97,6 +97,12 @@ class FileController extends Controller
     {
         $file->update($request->all());
 
+        // need to handle the checkbox
+        if (!$request->has("has_anonymous_author")) {
+            $file->has_anonymous_author = 0;
+            $file->save();
+        }
+
         // no author set, delete if there had been any association
         if ($request->assigned_authors === null)
         {

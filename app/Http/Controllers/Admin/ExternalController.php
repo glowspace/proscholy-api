@@ -90,6 +90,13 @@ class ExternalController extends Controller
     public function update(Request $request, External $external)
     {
         $external->update($request->all());
+
+        // need to handle the checkbox
+        if (!$request->has("has_anonymous_author")) {
+            $external->has_anonymous_author = 0;
+            $external->save();
+        }
+
         // need to handle the checkbox
         if (!$request->has("is_featured")) {
             $external->is_featured = 0;
