@@ -60,7 +60,8 @@ class SongLyric extends Model implements ISearchResult
             'is_original',
             'is_authorized',
             'lang',
-            'creating_at'
+            'creating_at',
+            'has_anonymous_author'
         ];
 
     public $lang_string = [
