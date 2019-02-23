@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="content-padding">
-        
+
         <div class="row">
             <div class="col-sm-6">
                 <h2>Úprava písně</h2>
                 <form action="{{ route('admin.song.update', ['song_lyric' => $song_lyric->id]) }}" method="post">
                     @csrf
                     @method('PUT')
-                    
+
                     <input type="hidden" name="id" value="{{$song_lyric->id}}">
 
                     <label>Název</label>
@@ -139,7 +139,7 @@
                     <p>Pokud se jedná o píseň, která byla přeložena, popř. zaranžována ze známého originálu (Oceány / Adorare),
                         uveďte prosím originál (Oceans) do druhého políčka, abychom věděli, co k čemu patří.
                         <br>
-                        Stejně jako u přidávání autorů se vám během psaní začnou zobrazovat již uložené písničky. Pokud originál (Oceans) nenajdete, tak po zadání celého jména 
+                        Stejně jako u přidávání autorů se vám během psaní začnou zobrazovat již uložené písničky. Pokud originál (Oceans) nenajdete, tak po zadání celého jména
                         stiskněte Enter a po dokončení editace se zároveň vytvoří nová píseň (Oceans), která bude automaticky označena jako originál.
                         <br>
                         Ve zpěvníku také chceme rozlišovat překlady, které jsou (nějakým způsobem) schváleny jako oficiální, pokud tedy víte, o co jde, tak upravte hodnotu v políčku <i>Autorizovaný překlad</i>.
@@ -149,9 +149,10 @@
                 <h5>Text</h5>
 
                 <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [Cm], [Emaj7]</b> apod.
-                <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
-                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
-                <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
+                    <br>Akordy pojmenovávejte českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
+                    <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
+                    <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
+                    <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
                 </p>
             </div>
         </div>
