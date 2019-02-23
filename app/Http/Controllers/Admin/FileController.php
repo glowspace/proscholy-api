@@ -97,6 +97,12 @@ class FileController extends Controller
     {
         $file->update($request->all());
 
+        // need to handle the checkbox
+        if (!$request->has("has_anonymous_author")) {
+            $file->has_anonymous_author = 0;
+            $file->save();
+        }
+
         // no author set, delete if there had been any association
         if ($request->assigned_authors === null)
         {
@@ -129,7 +135,7 @@ class FileController extends Controller
         }
 
         $redirect_arr = [
-            'save' => route('admin.external.index'),
+            'save' => route('admin.file.index'),
             'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
         ];
 

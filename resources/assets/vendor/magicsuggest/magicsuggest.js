@@ -238,7 +238,7 @@
             /**
              * The default placeholder text when nothing has been entered
              */
-            placeholder: 'Klidněte a začněte psát',
+            placeholder: 'Klikněte a začněte psát',
 
             /**
              * A function used to define how the items will be presented in the combo

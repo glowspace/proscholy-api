@@ -41,23 +41,27 @@
                             'disabled' => false
                         ])
                     </div>
-
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-append mr-3">
-                            <label>Píseň</label>
-                        </div>
-
-                        @include('admin.components.magicsuggest', [
-                            'field_name' => 'assigned_song_lyrics',
-                            'value_field' => 'id',
-                            'display_field' => 'name',
-                            'list_all' => $all_song_lyrics,
-                            'list_selected' => $assigned_song_lyrics,
-                            'is_single' => true,
-                            'disabled' => false
-                        ])
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" {{ $external->has_anonymous_author ? 'checked' : "" }}
+                        name="has_anonymous_author" id="check_has_anonymous_author" value="1">
+                        <label class="form-check-label" for="check_has_anonymous_author">
+                            Autor neznámý (nezobrazovat v to-do listu)
+                        </label>
                     </div>
+                    <br>
+
+                    <label>Píseň</label><br>
+
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'assigned_song_lyrics',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $all_song_lyrics,
+                        'list_selected' => $assigned_song_lyrics,
+                        'is_single' => true,
+                        'disabled' => false
+                    ])
+                    <br>
 
                     <div class="form-check">
                         <input class="form-check-input" {{ $external->is_featured ? 'checked' : "" }}
@@ -69,7 +73,7 @@
                     <br>
 
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
-                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_edit_song">Uložit a upravit píseň</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show_song">Uložit a zobrazit píseň</button>
                 </form>
                 @include('admin.components.deletebutton', [
                     'url' => route('admin.external.delete', ['external' => $external->id]),

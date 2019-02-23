@@ -90,6 +90,13 @@ class ExternalController extends Controller
     public function update(Request $request, External $external)
     {
         $external->update($request->all());
+
+        // need to handle the checkbox
+        if (!$request->has("has_anonymous_author")) {
+            $external->has_anonymous_author = 0;
+            $external->save();
+        }
+
         // need to handle the checkbox
         if (!$request->has("is_featured")) {
             $external->is_featured = 0;
@@ -127,10 +134,10 @@ class ExternalController extends Controller
             $external->save();
         }
 
-        // no error => contunue with redirecting according to a selected action
+        // no error => continue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.external.index'),
-            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
+            'save_show_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('client.song.text', $song_lyric),
         ];
 
         return redirect($redirect_arr[$request->redirect]);
