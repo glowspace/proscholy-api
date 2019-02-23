@@ -9,7 +9,7 @@
                     <h2>Je třeba chvilku počkat..</h2>
                     <p>Vypadá to, že píseň {{ $song_lyric->name }} právě upravuje někdo jiný.
                     <br>Abychom předešli možným problémům, tak je píseň dočasně uzamčená.
-                    <br>
+                    <br><br>
                     <a class="btn btn-outline-primary" href="{{ route('admin.song.edit', $song_lyric) }}">ZKUSIT ZNOVU UPRAVIT</a>
                     </p>
                 @else
