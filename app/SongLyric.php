@@ -75,6 +75,8 @@ class SongLyric extends Model implements ISearchResult
         'es' => 'španělština',
         'it' => 'italština',
         'sv' => 'svahilština',
+        'he' => 'hebrejština',
+        'cu' => 'staroslověnština',
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
         'mixed' => 'vícejazyčná píseň'
     ];
