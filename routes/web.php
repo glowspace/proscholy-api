@@ -49,7 +49,7 @@ Route::post('/report', 'Client\ReportController@storeReport')->name('client.repo
 /**
  * Administrace.
  */
-Auth::routes(['register' => true]);
+Auth::routes(['register' => false]);
 Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 
 // Downloading
