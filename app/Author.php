@@ -101,6 +101,22 @@ class Author extends Model implements ISearchResult
         return $this->type_string[$this->type];
     }
 
+    public static function getByIdOrCreateWithName($identificator)
+    {
+        if (is_numeric($identificator))
+        {
+            return Author::find($identificator);
+        }
+        else
+        {
+            $author = Author::create([
+                'name' => $identificator,
+            ]);
+
+            return $author;
+        }
+    }
+
     /**
      * Get the indexable data array for the model.
      *

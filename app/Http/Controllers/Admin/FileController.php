@@ -80,7 +80,40 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        //
+        $file->update($request->all());
+
+        // no author set, delete if there had been any association
+        if ($request->assigned_authors === null)
+        {
+            $file->author()->dissociate();
+            $file->save();
+        }
+        else
+        {
+            $author_identification = $request->assigned_authors[0];
+            $author = Author::getByIdOrCreateWithName($author_identification);
+
+            $file->author()->associate($author);
+            $file->save();
+        }
+
+        // no song lyric set, delete if there had been any association
+        if ($request->assigned_song_lyrics == null)
+        {
+            $file->song_lyric()->dissociate();
+            $file->save();
+        }
+        else
+        {
+            $song_lyric_identification = $request->assigned_song_lyrics[0];
+
+            $song_lyric = SongLyric::getByIdOrCreateWithName($song_lyric_identification);
+
+            $file->song_lyric()->associate($song_lyric);
+            $file->save();
+        }
+
+        return redirect()->route('admin.file.index');
     }
 
     /**
@@ -91,6 +124,13 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        $file->delete();
+
+        if ($request->has("redirect"))
+        {
+            return redirect($request->redirect);
+        }
+
+        return redirect()->back();
     }
 }

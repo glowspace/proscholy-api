@@ -100,19 +100,7 @@ class ExternalController extends Controller
         else
         {
             $author_identification = $request->assigned_authors[0];
-
-            $author;
-
-            if (is_numeric($author_identification))
-            {
-                // ID was given, find an "old" author
-                $author = Author::find($author_identification);
-            }
-            else
-            {
-                // create a new talented author
-                $author = Author::create(['name' => $author_identification]);
-            }
+            $author = Author::getByIdOrCreateWithName($author_identification);
 
             $external->author()->associate($author);
             $external->save();
