@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class File extends Model
 {
-    protected $fillable = ['filename', 'type', 'description', 'path'];
+    protected $fillable = ['filename', 'type', 'description', 'path', 'name'];
 
     // See App/Listeners/FileDeleting where the deleting actually happens
     protected $dispatchesEvents = [
@@ -44,6 +44,15 @@ class File extends Model
             2 => 'text/akordy',
             3 => 'noty'
         ];
+
+    public function getPublicName()
+    {
+        if ($this->name == null) {
+            return $this->filename;
+        }
+
+        return "$this->name ($this->filename)";
+    }
 
     public function getTypeString()
     {

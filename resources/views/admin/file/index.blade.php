@@ -5,7 +5,7 @@
         <h2>Seznam souborů</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.file.create')}}">+ Nahrát nový soubor</a>
         <div class="row">
-            <div class="col-xs-12 col-md-8">
+            <div class="col-xs-12 col-md-9">
                 <table class="table table-bordered" id="index_table">
                     <thead>
                         <tr>
@@ -18,7 +18,7 @@
                     </thead>
                     @foreach($files as $file)
                     <tr>
-                        <td><a href="{{ route('admin.file.edit', $file) }}">{{$file->filename}}</a></td>
+                        <td><a href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></td>
                         <td>
                             @if ($file->song_lyric != null)
                                 <a href="{{ route('admin.song.edit', $file->song_lyric) }}">{{$file->song_lyric->name}}</a>

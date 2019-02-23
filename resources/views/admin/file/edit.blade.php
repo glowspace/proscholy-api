@@ -10,6 +10,16 @@
                     @method('PUT')
 
                     <div class="input-group mb-3">
+                        <div class="input-group-append mr-3">
+                            <label class="input-group-text">Zobrazovaný název</label>
+                        </div>
+                        <input class="form-control" autofocus name="name" placeholder="(stejný jako jméno souboru)" value="{{ $file->name }}">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-append mr-3">
+                            <label class="input-group-text">Jméno stahovaného souboru (vč. přípony)</label>
+                        </div>
                         <input class="form-control" required autofocus name="filename" placeholder="Jméno souboru" value="{{ $file->filename }}">
                     </div>
 

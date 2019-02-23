@@ -40,10 +40,15 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $path = $request->file('filename')->store('public_files');
-        $filename = $request->file('filename')->getClientOriginalName();
+        $fullname = $request->file('filename')->getClientOriginalName();
+
+        $filename = pathinfo($fullname, PATHINFO_FILENAME);
+        $extension = pathinfo($fullname, PATHINFO_EXTENSION);
+        
+        $slugified = str_slug($filename, '-').'.'.$extension;
 
         $file = File::create([
-            'filename' => $filename,
+            'filename' => $slugified,
             'path' => $path
         ]);
 
