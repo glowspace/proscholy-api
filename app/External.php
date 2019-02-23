@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class External extends Model
 {
-    protected $fillable = ['url', 'type'];
+    protected $fillable = ['url', 'type', 'is_featured'];
 
     public $type_string
         = [
