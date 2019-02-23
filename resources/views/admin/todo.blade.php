@@ -11,12 +11,24 @@
             <div class="col-md">
                 <div class="card">
                     <div class="card-header">
-                        <b>Videa bez štítku</b>
+                        <b>Externí odkazy bez písničky/autora</b>
                         <span class="badge badge-warning badge-pill">{{$externals->count()}}</span>
                     </div>
                     @foreach($externals as $external)
                         <a class="list-group-item"
                            href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->generateTitle()}}</a>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-header">
+                        <b>Soubory bez písničky/autora</b>
+                        <span class="badge badge-warning badge-pill">{{$files->count()}}</span>
+                    </div>
+                    @foreach($files as $file)
+                        <a class="list-group-item"
+                            href="{{route('admin.file.edit',['id'=>$file->id])}}">{{$file->getPublicName()}}</a>
                     @endforeach
                 </div>
             </div>
