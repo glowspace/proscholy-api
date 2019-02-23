@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\User;
 
 class UserRolesPermissionsSeeder extends Seeder
 {
@@ -26,5 +27,24 @@ class UserRolesPermissionsSeeder extends Seeder
         // .. and roles
         $admin = Role::firstOrNew(['name' => 'admin']);
         $admin->givePermissionTo('manage users');
+        $admin->save();
+
+        $editor = Role::firstOrNew(['name' => 'editor']);
+        $editor->save();
+        $author = Role::firstOrNew(['name' => 'autor']);
+        $author->save();
+
+        // set some roles
+        $admins_to_be = [
+            User::find(['email' => 'michaeldojcar@gmail.com'])->first(),
+            User::find(['email' => 'athes01@gmail.com'])->first()
+        ];
+
+        foreach ($admins_to_be as $admin_to_be) {
+            if ($admin_to_be) {
+                $admin_to_be->assignRole($admin);
+                $admin_to_be->save();
+            }
+        }
     }
 }

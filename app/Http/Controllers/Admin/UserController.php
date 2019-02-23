@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\User;
+
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -13,41 +16,52 @@ class UserController extends Controller
         return view('admin.user.index', compact('users'));
     }
 
-    // public function create(){
-    //     return view('admin.user.create');
-    // }
+    public function create(){
+        return view('admin.user.create');
+    }
 
-    // public function store(Request $request)
-    // {
-    //     $user = User::create(['name' => $request->name]);
+    public function store(Request $request)
+    {
+        $user = User::create([
+            'email' => $request->email
+        ]);
 
-    //     $redirect_arr = [
-    //         'edit' => route('admin.user.edit', ['user' => $user->id]),
-    //         'create' => route('admin.user.create')
-    //     ];
+        return redirect()->route('admin.user.edit', ['user' => $user->id]);
+    }
 
-    //     return redirect($redirect_arr[$request->redirect]);
-    // }
+    public function edit(User $user)
+    {
+        return view('admin.user.edit', [
+            'user' => $user,
+            'roles' => Role::orderBy('name', 'desc')->get()
+        ]);
+    }
 
-    // public function edit(user $user)
-    // {
-    //     return view('admin.user.edit', compact('user'));
-    // }
+    public function destroy(Request $request, User $user)
+    {
+        $user->delete();
 
-    // public function destroy(Request $request, user $user)
-    // {
-    //     $user->delete();
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
-    //     if ($request->has("redirect")) {
-    //         return redirect($request->redirect);
-    //     }
+        return redirect()->back();
+    }
 
-    //     return redirect()->back();
-    // }
+    public function update(Request $request, User $user)
+    {
+        $user->update($request->all());
 
-    // public function update(Request $request, user $user)
-    // {
-    //     $user->update($request->all());
-    //     return redirect()->route('admin.user.index');
-    // }
+        // assign role
+        $user->assignRole(Role::find($request->role));
+        $user->save();
+
+        if ($request->new_pass != '') 
+        {
+            $user->password = Hash::make($request->new_pass);
+            $user->save();
+        }
+
+        return redirect()->route('admin.user.index');
+    }
 }

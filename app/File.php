@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\File
@@ -29,5 +30,50 @@ use Illuminate\Database\Eloquent\Model;
  */
 class File extends Model
 {
-    //
+    protected $fillable = ['filename', 'type', 'description', 'path', 'name'];
+
+    // See App/Listeners/FileDeleting where the deleting actually happens
+    protected $dispatchesEvents = [
+        'deleting' => \App\Events\FileDeleting::class,
+    ];
+
+    public $type_string
+        = [
+            0 => 'soubor',
+            1 => 'text',
+            2 => 'text/akordy',
+            3 => 'noty'
+        ];
+
+    public function getPublicName()
+    {
+        if ($this->name == null) {
+            return $this->filename;
+        }
+
+        return "$this->name ($this->filename)";
+    }
+
+    public function getDownloadUrl()
+    {
+        return route('download.file', [
+            'file' => $this->id,
+            'filename' => $this->filename
+        ]);
+    }
+
+    public function getTypeString()
+    {
+        return $this->type_string[$this->type];
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
+    }
+
+    public function song_lyric()
+    {
+        return $this->belongsTo(SongLyric::class);
+    }
 }

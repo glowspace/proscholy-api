@@ -49,8 +49,11 @@ Route::post('/report', 'Client\ReportController@storeReport')->name('client.repo
 /**
  * Administrace.
  */
-Auth::routes(['register' => true]);
+Auth::routes(['register' => false]);
 Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
+
+// Downloading
+Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function ()
 {
@@ -74,6 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
     Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('admin.song.delete');
 
+    Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('admin.song.refresh_updating');
     Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('admin.song.resolve_error');
 
     // Author
@@ -84,7 +88,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
     Route::delete('/author/{author}', 'AuthorController@destroy')->name('admin.author.delete');
 
+    // File
+    Route::get('/files', 'FileController@index')->name('admin.file.index');
+    Route::get('/file/new', 'FileController@create')->name('admin.file.create');
+    Route::post('/file/new', 'FileController@store')->name('admin.file.store');
+    Route::get('/file/{file}', 'FileController@edit')->name('admin.file.edit');
+    Route::put('/file/{file}', 'FileController@update')->name('admin.file.update');
+    Route::delete('/file/{file}', 'FileController@destroy')->name('admin.file.delete');
+
     Route::group(['middleware' => ['permission:manage users']], function () {
         Route::get('/users', 'UserController@index')->name('admin.user.index');
+        Route::get('/user/new', 'UserController@create')->name('admin.user.create');
+        Route::post('/user/new', 'UserController@store')->name('admin.user.store');
+        Route::get('/user/{user}', 'UserController@edit')->name('admin.user.edit');
+        Route::put('/user/{user}', 'UserController@update')->name('admin.user.update');
+        Route::delete('/user/{user}', 'UserController@destroy')->name('admin.user.delete');
     });
 });
