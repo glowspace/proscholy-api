@@ -20357,9 +20357,21 @@ Home page specific elements
   min-height: calc(100vh - 66px);
 }
 
+@media (max-width: 767.98px) {
+  .background-home {
+    background-position: -290.5px -11px;
+  }
+}
+
 .logo-wrapper {
   text-align: center;
   padding-top: 160px;
+}
+
+@media (max-width: 767.98px) {
+  .logo-wrapper {
+    padding-top: 140px;
+  }
 }
 
 .logo-wrapper .logo {
@@ -20373,11 +20385,27 @@ Home page specific elements
   background-size: 149%;
 }
 
+@media (max-width: 767.98px) {
+  .logo-wrapper .logo {
+    top: 2px;
+    height: 50px;
+    width: 50px;
+    margin-right: 6px;
+  }
+}
+
 .logo-wrapper .caption {
   font-size: 118px;
   color: white;
   line-height: 160px;
   font-family: 'Cocogoose', cursive;
+}
+
+@media (max-width: 767.98px) {
+  .logo-wrapper .caption {
+    font-size: 60px;
+    line-height: 60px;
+  }
 }
 
 .search-wrapper {
@@ -20403,6 +20431,13 @@ Home page specific elements
   outline: none;
 }
 
+@media (max-width: 767.98px) {
+  .search-wrapper .search-home {
+    width: calc(100% - 30px);
+    margin: 15px;
+  }
+}
+
 .search-wrapper .search-submit {
   width: 70px;
   height: 47px;
@@ -20416,6 +20451,12 @@ Home page specific elements
 
 .search-wrapper .search-submit:hover {
   background-color: #d4d4d4;
+}
+
+@media (max-width: 767.98px) {
+  .search-wrapper .search-submit {
+    display: none;
+  }
 }
 
 /**
