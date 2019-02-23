@@ -31,7 +31,11 @@
                                     <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
                                 </td>
                                 <td>
-                                    <a href="{{route('client.author', $external->author)}}">{{$external->author->name}}</a>
+                                    @if (isset($external->author))
+                                        <a href="{{route('client.author', $external->author)}}">{{$external->author->name}}</a>
+                                    @else
+                                        (neznámý)
+                                    @endif
                                 </td>
                                 <td>{{$external->visits}} x</td>
                             </tr>
