@@ -54,6 +54,14 @@ class File extends Model
         return "$this->name ($this->filename)";
     }
 
+    public function getDownloadUrl()
+    {
+        return route('download.file', [
+            'file' => $this->id,
+            'filename' => $this->filename
+        ]);
+    }
+
     public function getTypeString()
     {
         return $this->type_string[$this->type];

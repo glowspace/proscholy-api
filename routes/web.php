@@ -53,7 +53,7 @@ Auth::routes(['register' => true]);
 Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 
 // Downloading
-Route::get('/download/{file}', 'DownloadController@downloadFile')->name('download.file');
+Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function ()
 {
