@@ -135,7 +135,7 @@ class FileController extends Controller
         }
 
         $redirect_arr = [
-            'save' => route('admin.external.index'),
+            'save' => route('admin.file.index'),
             'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
         ];
 
