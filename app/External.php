@@ -40,7 +40,7 @@ class External extends Model
             3 => 'youtube',
             4 => 'score_link',
             5 => 'profile_webpage',
-            6 => 'youtube_channel'
+            6 => 'youtube_channel',
         ];
 
     /**
@@ -56,22 +56,37 @@ class External extends Model
      */
     public function getEmbedUrl()
     {
-        if ($this->getTypeString() == 'spotify') {
+        if ($this->getTypeString() == 'spotify')
+        {
             // format: spotify:track:3X7QBr7rq6NIzLmEXbiXAS
-            $id = explode(":", $this->url)[2];
-            return "https://open.spotify.com/embed/track/$id";
-        } 
-        else if ($this->getTypeString() == 'youtube')
-        {
-            return str_replace('watch?v=', 'embed/', $this->url);
+            $parts = explode(":", $this->url);
+
+            // Get URI only
+            if (isset($parts[2]))
+            {
+                return "https://open.spotify.com/embed/track/$parts[2]";
+            }
+
+            return null;
         }
-        else if ($this->getTypeString() == 'soundcloud')
+        else
         {
-            return "https://w.soundcloud.com/player/?url=$this->url&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
-        }
-        else {
-            
-            return $this->url;
+            if ($this->getTypeString() == 'youtube')
+            {
+                return str_replace('watch?v=', 'embed/', $this->url);
+            }
+            else
+            {
+                if ($this->getTypeString() == 'soundcloud')
+                {
+                    return "https://w.soundcloud.com/player/?url=$this->url&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
+                }
+                else
+                {
+
+                    return $this->url;
+                }
+            }
         }
     }
 
@@ -100,11 +115,11 @@ class External extends Model
         // TODO better condition
         if (empty($this->author_id) || empty($this->song_lyric_id))
         {
-            return "Typ: ".$this->type_string[$this->type]." č. $this->id";
+            return "Typ: " . $this->type_string[$this->type] . " č. $this->id";
         }
         else
         {
-            return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")" ;
+            return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")";
         }
     }
 }
