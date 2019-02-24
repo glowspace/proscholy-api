@@ -15,6 +15,7 @@
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",
+        "orchestra/parser": "^3.7",
         "spatie/laravel-permission": "^2.33"
     },
     "require-dev": {

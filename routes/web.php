@@ -105,4 +105,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
         Route::put('/user/{user}', 'UserController@update')->name('admin.user.update');
         Route::delete('/user/{user}', 'UserController@destroy')->name('admin.user.delete');
     });
+
+    Route::get('/parse/opensong', 'AdminController@parseOpenSong')->name('admin.parse.opensong');
 });
