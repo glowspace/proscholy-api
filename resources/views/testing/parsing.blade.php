@@ -1,0 +1,1 @@
+<textarea name="" id="" cols="100" rows="100">{{ $text }}</textarea>

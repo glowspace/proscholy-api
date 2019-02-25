@@ -43,6 +43,10 @@
 @if (Auth::check())
     <div class="navbar-label material-shadow text-success">Administrace</div>
 
+    <a class="btn btn-secondary" href="{{route('admin.dashboard')}}">
+        <i class="fas fa-columns"></i>Nástěnka
+    </a>
+
     <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
         <i class="fas fa-edit"></i> Upravit písničku
     </a>
