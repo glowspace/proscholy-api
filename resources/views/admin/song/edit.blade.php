@@ -93,7 +93,10 @@
                     <br>
 
                     <label>Text</label>
-                    <input type="file" id="input_opensong" onchange="handleOpensongFile(this.files)">
+                    {{-- opensong uploading --}}
+                    <a id="file_select" class="btn btn-primary">Nahrát ze souboru OpenSong</a>
+                    <input type="file" class="d-none" id="input_opensong" onchange="handleOpensongFile(this.files)">
+
                     <textarea rows="20" name="lyrics" class="form-control" title="" id="input_lyrics">{{$song_lyric->lyrics}}</textarea>
 
                     <br>
@@ -175,13 +178,23 @@
 
     {{-- handle opensong file uploading --}}
     <script>
+        const file_select = document.getElementById('file_select'),
+            input_opensong = document.getElementById('input_opensong');
+
+        file_select.addEventListener('click', function (e) {
+            if (input_opensong) {
+                input_opensong.click();
+            }
+        }, false);
+
+
         function handleOpensongFile(files) {
             file = files[0];
 
             var reader = new FileReader();
             reader.onload = function(e) {
                 console.log("file loaded succesfully");
-                
+
                 $.post('{{ route("api.parse.opensong") }}', {
                     'file_contents': e.target.result,
                     "_token": "{{ csrf_token() }}"
