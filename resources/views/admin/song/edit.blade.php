@@ -174,6 +174,22 @@
                 $.get( "{{ route('admin.song.refresh_updating', $song_lyric) }}")
             }, 25000);
         });
+
+        const input_lyrics = document.getElementById('input_lyrics');
+        input_lyrics.onkeyup = function(e) {
+            if (e.altKey && e.which == 189) {
+                input_lyrics.value += "[%]";
+            }
+        }
+
+        // $('#input_lyrics').keypress(function(e) {
+        //     var c = String.fromCharCode(e.which);
+        //     if (c.toUpperCase() === c && c.toLowerCase() !== c && !e.shiftKey) {
+        //         $('#message').show();
+        //     } else {
+        //         $('#message').hide();
+        //     }
+        // });
     </script>
 
     {{-- handle opensong file uploading --}}
