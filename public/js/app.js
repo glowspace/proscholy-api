@@ -60271,7 +60271,7 @@ var render = function() {
       _vm._v(" "),
       _vm.bass.length !== 0
         ? _c("span", { staticClass: "chord-bass" }, [
-            _vm._v("/ " + _vm._s(_vm.bass))
+            _vm._v("/ " + _vm._s(_vm.bassChord))
           ])
         : _vm._e()
     ]),

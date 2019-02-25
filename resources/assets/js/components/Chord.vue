@@ -4,7 +4,7 @@
             <span class="chord-base">{{baseChord}}</span>
             <span class="chord-variant">{{variant}}</span>
             <span class="chord-extension">{{extension}}</span>
-            <span class="chord-bass" v-if="bass.length!==0">/ {{bass}}</span>
+            <span class="chord-bass" v-if="bass.length!==0">/ {{bassChord}}</span>
         </span>
         <span class="chord-text"><slot></slot></span><span class="chord-dash" v-if="isDivided == 1">-</span>
     </span>
