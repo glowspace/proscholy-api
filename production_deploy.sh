@@ -5,7 +5,8 @@ php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zku
 git pull
 composer install --no-dev
 composer dump-auto
-#npm run production
+npm install
+npm run production
 php artisan config:cache
 php artisan cache:clear
 php artisan view:clear
