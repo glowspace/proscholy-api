@@ -16,7 +16,8 @@ class Chord{
 
         $html = '<chord';
         $html.= ' base="'.$this->chordSign->getBase().'"';
-        $html.= ' variant="'.$this->chordSign->getExtension().'"';
+        $html.= ' variant="'.$this->chordSign->getVariant().'"';
+        $html.= ' extension="'.$this->chordSign->getExtension().'"';
         $html.= ' bass="'.$this->chordSign->getBassNote().'"';
         $html.= ' is-divided="'.$this->isDivided().'"';
         $html.= '>';

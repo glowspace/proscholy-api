@@ -59740,7 +59740,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.chord {\n  position: relative;\n  -webkit-transition: 100ms;\n  transition: 100ms;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.3rem;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4rem;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    font-weight: bold;\n    margin-right: 0.4rem;\n    margin-left: -0.2rem;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n}\n.chord-dash {\n    position: absolute;\n    bottom: 0;\n    display: none;\n}\n.chord:hover {\n    padding: 0rem 0.2rem 0rem 0.2rem;\n}\n.chord:hover .chord-bass {\n      color: black;\n}\n", ""]);
+exports.push([module.i, "\n.chord {\n  position: relative;\n  -webkit-transition: 100ms;\n  transition: 100ms;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.3rem;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4rem;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    color: #2180d3;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    margin-right: 0.4rem;\n    margin-left: -0.2rem;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n}\n.chord-dash {\n    position: absolute;\n    bottom: 0;\n    display: none;\n}\n.chord:hover {\n    padding: 0rem 0.2rem 0rem 0.2rem;\n}\n.chord:hover .chord-bass {\n      color: black;\n}\n", ""]);
 
 // exports
 
@@ -60196,11 +60196,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['base', 'variant', 'bass', 'text', 'isDivided'],
+    props: ['base', 'variant', 'extension', 'bass', 'text', 'isDivided'],
 
     data: function data() {
         return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
@@ -60209,7 +60218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         baseChord: function baseChord() {
-            if (this.base == "") {
+            if (this.bass == "") {
                 return "";
             }
 
@@ -60241,20 +60250,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var new_i = (chord_i + semitones) % 12;
 
             return scale[new_i];
-
-            // scale = FLAT_SCALE;
-
-            // for (let i = 0; i < N_KEYS; i++) {
-            //     map[FLAT_SCALE[i]] = scale[(i + semitones + N_KEYS) % N_KEYS];
-            //     map[SHARP_SCALE[i]] = scale[(i + semitones + N_KEYS) % N_KEYS];
-            // }
-
         }
     }
-
-    // created: function (){
-    //     console.log(this.computed);
-    // }
 });
 
 /***/ }),
@@ -60275,9 +60272,13 @@ var render = function() {
         _vm._v(_vm._s(_vm.variant))
       ]),
       _vm._v(" "),
+      _c("span", { staticClass: "chord-extension" }, [
+        _vm._v(_vm._s(_vm.extension))
+      ]),
+      _vm._v(" "),
       _vm.bass.length !== 0
         ? _c("span", { staticClass: "chord-bass" }, [
-            _vm._v("/" + _vm._s(_vm.bass))
+            _vm._v("/ " + _vm._s(_vm.bass))
           ])
         : _vm._e()
     ]),

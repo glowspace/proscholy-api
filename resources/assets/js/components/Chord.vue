@@ -3,7 +3,8 @@
         <span class="chord-sign">
             <span class="chord-base">{{baseChord}}</span>
             <span class="chord-variant">{{variant}}</span>
-            <span class="chord-bass" v-if="bass.length!==0">/{{bass}}</span>
+            <span class="chord-extension">{{extension}}</span>
+            <span class="chord-bass" v-if="bass.length!==0">/ {{bass}}</span>
         </span>
         <span class="chord-text"><slot></slot></span><span class="chord-dash" v-if="isDivided == 1">-</span>
     </span>
@@ -37,8 +38,16 @@
             // top: -0.2em;
         }
 
+        &-extension{
+            font-size: 0.8em;
+            color: rgb(33, 128, 211);
+            position: relative;
+            left: -0.4em;
+            // top: -0.2em;
+        }
+
         &-bass{
-            font-weight: bold;
+            // font-weight: bold;
             // color: #adc6db;
             margin-right: 0.4rem;
             margin-left: -0.2rem;
@@ -76,7 +85,7 @@
     import { store } from "./store.js";
     
     export default {
-        props: ['base', 'variant', 'bass', 'text', 'isDivided'],
+        props: ['base', 'variant', 'extension','bass', 'text', 'isDivided'],
 
         data() {
             return store;
@@ -84,17 +93,13 @@
 
         computed: {
             baseChord() {
-                if (this.base == "") {
-                    return "";
-                }
+                if (this.bass == "") { return ""; }
 
                 return this.transposeChordBy(this.base, this.transposition, this.useFlatScale);
             },
 
             bassChord() {
-                if (this.bass == "") {
-                    return "";
-                }
+                if (this.bass == "") { return ""; }
 
                 return this.transposeChordBy(this.bass, this.transposition, this.useFlatScale);
             }
@@ -117,21 +122,7 @@
                 let new_i = (chord_i + semitones) % 12;
 
                 return scale[new_i];
-
-
-                // scale = FLAT_SCALE;
-
-                // for (let i = 0; i < N_KEYS; i++) {
-                //     map[FLAT_SCALE[i]] = scale[(i + semitones + N_KEYS) % N_KEYS];
-                //     map[SHARP_SCALE[i]] = scale[(i + semitones + N_KEYS) % N_KEYS];
-                // }
-
-
             }
         }
-
-        // created: function (){
-        //     console.log(this.computed);
-        // }
     }
 </script>

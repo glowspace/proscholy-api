@@ -25,8 +25,12 @@ class ChordSign{
         return $this->baseNote.$this->baseNoteAccidental;
     }
 
+    public function getVariant(){
+        return $this->variant;
+    }
+
     public function getExtension(){
-        return $this->variant.$this->extension;
+        return $this->extension;
     }
 
     public function getBassNote(){
