@@ -93,7 +93,7 @@
 
         computed: {
             baseChord() {
-                if (this.bass == "") { return ""; }
+                if (this.base == "") { return ""; }
 
                 return this.transposeChordBy(this.base, this.transposition, this.useFlatScale);
             },
