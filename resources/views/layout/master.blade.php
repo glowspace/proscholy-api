@@ -7,11 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Favicon --}}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('img/favicon/site.webmanifest')}}">
-    <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{mix('img/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{mix('img/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{mix('img/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{mix('img/favicon/site.webmanifest')}}">
+    <link rel="mask-icon" href="{{mix('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#292929">
 
@@ -36,7 +36,7 @@
           integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
 
     {{-- CSS --}}
-    <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>
@@ -53,7 +53,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand navbar-dark static-top">
-        <img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0">
+        <img src="{{mix('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0">
         <a class="navbar-brand mr-1" href="@yield('navbar-brand_href', '/')"> Zpěvník pro scholy</a>
     </nav>
 
@@ -70,7 +70,7 @@
 
     </div>
     {{-- Main JS built with Laravel's mix --}}
-    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+    <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
     @stack('scripts')
 </body>
