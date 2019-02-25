@@ -20,6 +20,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('chord', require('./components/Chord.vue'));
+Vue.component('transposition', require('./components/Transposition.vue'));
 
 const app = new Vue({
     el: '#app'

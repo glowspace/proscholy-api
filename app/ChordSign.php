@@ -22,11 +22,11 @@ class ChordSign{
     }
 
     public function getBase(){
-        return $this->baseNote.$this->baseNoteAccidental.$this->variant;
+        return $this->baseNote.$this->baseNoteAccidental;
     }
 
     public function getExtension(){
-        return $this->extension;
+        return $this->variant.$this->extension;
     }
 
     public function getBassNote(){

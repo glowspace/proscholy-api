@@ -13909,6 +13909,7 @@ window.Vue = __webpack_require__(37);
  */
 
 Vue.component('chord', __webpack_require__(49));
+Vue.component('transposition', __webpack_require__(58));
 
 var app = new Vue({
   el: '#app'
@@ -59739,7 +59740,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.chord {\n  position: relative;\n  -webkit-transition: 100ms;\n  transition: 100ms;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.3rem;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4rem;\n}\n.chord-variant {\n    font-size: 0.8em;\n    color: #0275d8;\n    position: relative;\n    left: -0.4em;\n    top: -0.2em;\n}\n.chord-bass {\n    font-weight: bold;\n    margin-right: 0.4rem;\n    margin-left: -0.2rem;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n}\n.chord-dash {\n    position: absolute;\n    bottom: 0;\n    display: none;\n}\n.chord:hover {\n    padding: 0rem 0.2rem 0rem 0.2rem;\n}\n.chord:hover .chord-bass {\n      color: black;\n}\n", ""]);
+exports.push([module.i, "\n.chord {\n  position: relative;\n  -webkit-transition: 100ms;\n  transition: 100ms;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.3rem;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4rem;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    font-weight: bold;\n    margin-right: 0.4rem;\n    margin-left: -0.2rem;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n}\n.chord-dash {\n    position: absolute;\n    bottom: 0;\n    display: none;\n}\n.chord:hover {\n    padding: 0rem 0.2rem 0rem 0.2rem;\n}\n.chord:hover .chord-bass {\n      color: black;\n}\n", ""]);
 
 // exports
 
@@ -60120,6 +60121,7 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(57);
 //
 //
 //
@@ -60195,8 +60197,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['base', 'variant', 'transposition', 'bass', 'text', 'isDivided']
+    props: ['base', 'variant', 'bass', 'text', 'isDivided'],
+
+    data: function data() {
+        return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
+    },
+
+
+    computed: {
+        baseChord: function baseChord() {
+            if (this.base == "") {
+                return "";
+            }
+
+            return this.transposeChordBy(this.base, this.transposition, this.useFlatScale);
+        },
+        bassChord: function bassChord() {
+            if (this.bass == "") {
+                return "";
+            }
+
+            return this.transposeChordBy(this.bass, this.transposition, this.useFlatScale);
+        }
+    },
+
+    methods: {
+        transposeChordBy: function transposeChordBy(chord, semitones, useFlatScale) {
+            // Chromatic scale starting from C using flats only.
+            var FLAT_SCALE = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "Cb"];
+
+            // Chromatic scale starting from C using sharps only.
+            var SHARP_SCALE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
+
+            var scale = useFlatScale ? FLAT_SCALE : SHARP_SCALE;
+            var chord_i = FLAT_SCALE.indexOf(chord);
+            if (chord_i === -1) {
+                chord_i = SHARP_SCALE.indexOf(chord);
+            }
+
+            var new_i = (chord_i + semitones) % 12;
+
+            return scale[new_i];
+
+            // scale = FLAT_SCALE;
+
+            // for (let i = 0; i < N_KEYS; i++) {
+            //     map[FLAT_SCALE[i]] = scale[(i + semitones + N_KEYS) % N_KEYS];
+            //     map[SHARP_SCALE[i]] = scale[(i + semitones + N_KEYS) % N_KEYS];
+            // }
+
+        }
+    }
+
+    // created: function (){
+    //     console.log(this.computed);
+    // }
 });
 
 /***/ }),
@@ -60209,7 +60267,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("span", { staticClass: "chord" }, [
     _c("span", { staticClass: "chord-sign" }, [
-      _c("span", { staticClass: "chord-base" }, [_vm._v(_vm._s(_vm.base))]),
+      _c("span", { staticClass: "chord-base" }, [
+        _vm._v(_vm._s(_vm.baseChord))
+      ]),
       _vm._v(" "),
       _c("span", { staticClass: "chord-variant" }, [
         _vm._v(_vm._s(_vm.variant))
@@ -60235,6 +60295,182 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-ed49f296", module.exports)
+  }
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
+var store = {
+    transposition: 0,
+    useFlatScale: false
+};
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(54)
+/* script */
+var __vue_script__ = __webpack_require__(59)
+/* template */
+var __vue_template__ = __webpack_require__(60)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Transposition.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0acf6aac", Component.options)
+  } else {
+    hotAPI.reload("data-v-0acf6aac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(57);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
+    },
+
+
+    methods: {
+        transpose: function transpose(val) {
+            this.transposition = (this.transposition + val) % 12;
+            if (this.transposition < 0) {
+                this.transposition = 12 + this.transposition;
+            }
+            console.log(val);
+        }
+    }
+});
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "transpose-control-wrapper",
+      staticStyle: { display: "inline-block" }
+    },
+    [
+      _c("span", [_vm._v("Transpozice: ")]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.transposition = 0
+            }
+          }
+        },
+        [_vm._v("0")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.transpose(1)
+            }
+          }
+        },
+        [_vm._v("+1")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.transpose(-1)
+            }
+          }
+        },
+        [_vm._v("-1")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.useFlatScale = !_vm.useFlatScale
+            }
+          }
+        },
+        [_vm._v(_vm._s(_vm.useFlatScale ? "b" : "#"))]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0acf6aac", module.exports)
   }
 }
 
