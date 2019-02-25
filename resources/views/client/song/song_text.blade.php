@@ -61,38 +61,3 @@
 
     </div>
 @endsection
-
-{{-- 
-@push('scripts')
-    <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-
-    @include('client.components.chordpro_parse')
-
-    <script>
-        lyrics_source = document.getElementById('lyrics').innerHTML;
-        lyrics = document.getElementById('lyrics');
-        current = 0;
-
-        $(document).ready(function () {
-            lyrics.innerHTML = parseChordPro(lyrics_source, 0);
-
-            // Lyrics fade in animation
-            $("#cardLyrics").fadeIn("slow", function () {
-
-            });
-        });
-
-        $("#transposeUp").click(function () {
-            current = current + 1;
-            lyrics.innerHTML = parseChordPro(lyrics_source, current);
-        })
-
-        $("#transposeDown").click(function () {
-            current = current - 1;
-            lyrics.innerHTML = parseChordPro(lyrics_source, current);
-        })
-    </script>
-@endpush --}}
