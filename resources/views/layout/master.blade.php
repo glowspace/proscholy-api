@@ -36,7 +36,7 @@
           integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
 
     {{-- CSS --}}
-    <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>
@@ -70,7 +70,7 @@
 
     </div>
     {{-- Main JS built with Laravel's mix --}}
-    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+    <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
     @stack('scripts')
 </body>
