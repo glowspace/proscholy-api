@@ -12,7 +12,7 @@
             <div class="col-lg-8">
                 <h1>{{$song_l->name}}</h1>
 
-                <div class="card" id="cardLyrics" style="display: none">
+                <div class="card" id="cardLyrics">
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
 
@@ -23,7 +23,10 @@
                     </div>
                     <div class="card-body">
                         @if($song_l->lyrics)
-                            <div id="lyrics">{!!$song_l->getProcessedLyrics() !!}</div>
+                            {{-- <div id="lyrics">{!!$song_l->getProcessedLyrics() !!}</div> --}}
+                            <div class="song-component">
+                                {!! $song_l->getFormattedLyrics() !!}
+                            </div>
                         @else
                             <div id="lyrics">Text písně připravujeme.</div>
                         @endif
@@ -59,6 +62,9 @@
     </div>
 @endsection
 
+
+
+{{-- 
 @push('scripts')
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -91,4 +97,4 @@
             lyrics.innerHTML = parseChordPro(lyrics_source, current);
         })
     </script>
-@endpush
+@endpush --}}
