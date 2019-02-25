@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
-
+git reset --hard
 git pull
 composer install --no-dev
 composer dump-auto
