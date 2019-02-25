@@ -93,7 +93,8 @@
                     <br>
 
                     <label>Text</label>
-                    <textarea rows="20" name="lyrics" class="form-control" title="">{{$song_lyric->lyrics}}</textarea>
+                    <input type="file" id="input_opensong" onchange="handleOpensongFile(this.files)">
+                    <textarea rows="20" name="lyrics" class="form-control" title="" id="input_lyrics">{{$song_lyric->lyrics}}</textarea>
 
                     <br>
 
@@ -171,13 +172,33 @@
             }, 25000);
         });
     </script>
-@endpush
 
-{{-- @push('scripts')
-<script>
-    function onKeyDown(){
-        // TODO implement a shortcut for inserting a chord in brackets [] or deleting a chord if the cursor is inside brackets
-        // TODO implement a shortcut for jumping between chords - i.e. ctrl + something
-    }
-</script>
-@endpush --}}
+    {{-- handle opensong file uploading --}}
+    <script>
+        function handleOpensongFile(files) {
+            file = files[0];
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                console.log("file loaded succesfully");
+                
+                $.post('{{ route("api.parse.opensong") }}', {
+                    'file_contents': e.target.result,
+                    "_token": "{{ csrf_token() }}"
+                }, function onSuccess(data) {
+                    var input_lyrics = document.getElementById('input_lyrics');
+                    input_lyrics.value = data;
+                });
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+
+    {{-- <script>
+        function onKeyDown(){
+            // TODO implement a shortcut for inserting a chord in brackets [] or deleting a chord if the cursor is inside brackets
+            // TODO implement a shortcut for jumping between chords - i.e. ctrl + something
+        }
+    </script> --}}
+@endpush

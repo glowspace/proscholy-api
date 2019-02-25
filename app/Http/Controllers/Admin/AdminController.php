@@ -11,7 +11,6 @@ use App\External;
 use App\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use App\Helpers\OpenSongParser;
 
 class AdminController extends Controller
 {
@@ -38,15 +37,6 @@ class AdminController extends Controller
             'songbook_record_w_translation' => SongbookRecord::where('song_lyric_id', '')->get(),
             'song_lyrics_w_lyrics'          => SongLyric::where('lyrics', '=', null)->get(),
             'files'                         => File::where('author_id', null)->where('has_anonymous_author', 0)->get()
-        ]);
-    }
-
-    public function parseOpenSong(Request $request)
-    {
-        $helper = new OpenSongParser($request->file_name);
-
-        return view('testing.parsing', [
-            'text' => $helper->getLyrics()
         ]);
     }
 }

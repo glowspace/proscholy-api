@@ -2,30 +2,29 @@
 
 namespace App\Helpers;
 
-use Orchestra\Parser\Xml\Facade as XmlParser;
-
 class OpenSongParser 
 {
-    protected $xmlParser;
+    protected $xmlElement;
 
-    public function __construct($file_path)
+    public function __construct($file_contents)
     {
-        $this->xmlParser = XmlParser::load($file_path);
+        // $content = file_get_contents($file_path);
+        $this->xmlElement = simplexml_load_string($file_contents);
     }
 
-    public function getTitle()
+    public function getSongName()
     {
-        return (string)$this->xmlParser->getConent()->title;
+        return (string)$this->xmlElement->title;
     }
 
     public function getLyrics()
     {
-        $str = (string)$this->xmlParser->getContent()->lyrics;
+        $str = (string)$this->xmlElement->lyrics;
 
-        $match_verse = '/\[V([0-9])\]\n/';
-        $match_single_verse = '/\[V\]\n/';
-        $match_refr = '/\[C([0-9]?)\]\n/';
-        $match_bridge = '/\[B([0-9]?)\]\n/';
+        $match_verse = '/\[V([0-9])\]\n?/';
+        $match_single_verse = '/\[V\]\n?/';
+        $match_refr = '/\[C([0-9]?)\]\n?/';
+        $match_bridge = '/\[B([0-9]?)\]\n?/';
         $match_intro = '/\[P\]/';
         $match_verse_break = '/\|\|/';
 
