@@ -60210,14 +60210,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     computed: {
-        baseChord: function baseChord() {
+        baseNote: function baseNote() {
             if (this.base == "") {
                 return "";
             }
 
             return this.transposeChordBy(this.base, this.transposition, this.useFlatScale);
         },
-        bassChord: function bassChord() {
+        bassNote: function bassNote() {
             if (this.bass == "") {
                 return "";
             }
@@ -60257,9 +60257,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("span", { staticClass: "chord" }, [
     _c("span", { staticClass: "chord-sign" }, [
-      _c("span", { staticClass: "chord-base" }, [
-        _vm._v(_vm._s(_vm.baseChord))
-      ]),
+      _c("span", { staticClass: "chord-base" }, [_vm._v(_vm._s(_vm.baseNote))]),
       _vm._v(" "),
       _c("span", { staticClass: "chord-variant" }, [
         _vm._v(_vm._s(_vm.variant))
@@ -60271,7 +60269,7 @@ var render = function() {
       _vm._v(" "),
       _vm.bass.length !== 0
         ? _c("span", { staticClass: "chord-bass" }, [
-            _vm._v("/ " + _vm._s(_vm.bass))
+            _vm._v("/ " + _vm._s(_vm.bassNote))
           ])
         : _vm._e()
     ]),

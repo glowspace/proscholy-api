@@ -1,10 +1,10 @@
 <template>
     <span class="chord">
         <span class="chord-sign">
-            <span class="chord-base">{{baseChord}}</span>
+            <span class="chord-base">{{baseNote}}</span>
             <span class="chord-variant">{{variant}}</span>
             <span class="chord-extension">{{extension}}</span>
-            <span class="chord-bass" v-if="bass.length!==0">/ {{bass}}</span>
+            <span class="chord-bass" v-if="bass.length!==0">/ {{bassNote}}</span>
         </span>
         <span class="chord-text"><slot></slot></span><span class="chord-dash" v-if="isDivided == 1">-</span>
     </span>
@@ -92,13 +92,13 @@
         },
 
         computed: {
-            baseChord() {
+            baseNote() {
                 if (this.base == "") { return ""; }
 
                 return this.transposeChordBy(this.base, this.transposition, this.useFlatScale);
             },
 
-            bassChord() {
+            bassNote() {
                 if (this.bass == "") { return ""; }
 
                 return this.transposeChordBy(this.bass, this.transposition, this.useFlatScale);

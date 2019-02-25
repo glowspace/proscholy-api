@@ -45,6 +45,12 @@ class ChordSign{
 
         preg_match("/$p_baseNote$p_variant$p_ext$p_bass/", $text, $matches);
 
+        // case of [], [%] and other weird stuff
+        // TODO: IMPLEMENT [%] REPLACEMENT HANDLING
+        if (count($matches) == 0) {
+            return self::EMPTY();
+        }
+
         $_a = $matches[1];
         $_b = $matches[2];
         $_c = $matches[3];
