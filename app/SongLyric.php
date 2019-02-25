@@ -202,7 +202,7 @@ class SongLyric extends Model implements ISearchResult
 
     // FOR THE NEW FRONTEND VIEWER
     public function getFormattedLyrics(){
-        $lines = explode("\n", $this->lyrics);
+        $lines = explode("\n", $this->getProcessedLyrics());
 
         $output = "";
 
