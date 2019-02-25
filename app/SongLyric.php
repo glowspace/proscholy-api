@@ -113,22 +113,22 @@ class SongLyric extends Model implements ISearchResult
      */
     public function spotifyTracks()
     {
-        return $this->externals()->where('type', 1);
+        return $this->externals()->where('type', 1)->orderBy('is_featured', 'desc');
     }
 
     public function soundcloudTracks()
     {
-        return $this->externals()->where('type', 2);
+        return $this->externals()->where('type', 2)->orderBy('is_featured', 'desc');
     }
 
     public function youtubeVideos()
     {
-        return $this->externals()->where('type', 3);
+        return $this->externals()->where('type', 3)->orderBy('is_featured', 'desc');
     }
 
     public function scoreExternals()
     {
-        return $this->externals()->where('type', 4);
+        return $this->externals()->where('type', 4)->orderBy('is_featured', 'desc');
     }
 
     /*
@@ -198,6 +198,43 @@ class SongLyric extends Model implements ISearchResult
     public function getProcessedLyrics()
     {
         return str_replace($this->chord_substitute_char, "", $this->lyrics);
+    }
+
+    // FOR THE NEW FRONTEND VIEWER
+    public function getFormattedLyrics(){
+        $lines = explode("\n", $this->lyrics);
+
+        $output = "";
+
+        foreach ($lines as $line){
+            $output .= '<div class="song-line">'.$this->processLine($line).'</div>';
+        }
+
+        return $output;
+    }
+
+    private function processLine($line){
+        $chords = array();
+        $currentChordText = "";
+
+        for ($i = 0; $i < strlen($line); $i++){
+            if ($line[$i] == "["){
+                if ($currentChordText != "")
+                    $chords[] = Chord::parseFromText($currentChordText);
+                $currentChordText = "";
+            }
+
+            // if ($recording)
+            $currentChordText .= $line[$i];
+        }
+
+        $chords[] = Chord::parseFromText($currentChordText);
+
+        $string = "";
+        foreach ($chords as $chord) 
+            $string .= $chord->toHTML();
+
+        return $string;
     }
 
     /**

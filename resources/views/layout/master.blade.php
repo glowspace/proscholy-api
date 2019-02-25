@@ -57,7 +57,7 @@
         <a class="navbar-brand mr-1" href="@yield('navbar-brand_href', '/')"> Zpěvník pro scholy</a>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <div class="row">
             <div class="d-none d-sm-block col-sm-4 col-md-3 col-lg-2 sidebar bg-dark material-shadow">
                 @yield('navbar')

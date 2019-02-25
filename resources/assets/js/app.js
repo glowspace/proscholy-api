@@ -11,7 +11,7 @@ require('./bootstrap');
  */
 require('materialize-css');
 
-// window.Vue = require('vue');
+window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -19,8 +19,9 @@ require('materialize-css');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-//
-// const app = new Vue({
-//     el: '#app'
-// });
+Vue.component('chord', require('./components/Chord.vue'));
+Vue.component('transposition', require('./components/Transposition.vue'));
+
+const app = new Vue({
+    el: '#app'
+});
