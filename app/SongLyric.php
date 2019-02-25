@@ -113,22 +113,22 @@ class SongLyric extends Model implements ISearchResult
      */
     public function spotifyTracks()
     {
-        return $this->externals()->where('type', 1);
+        return $this->externals()->where('type', 1)->orderBy('is_featured', 'desc');
     }
 
     public function soundcloudTracks()
     {
-        return $this->externals()->where('type', 2);
+        return $this->externals()->where('type', 2)->orderBy('is_featured', 'desc');
     }
 
     public function youtubeVideos()
     {
-        return $this->externals()->where('type', 3);
+        return $this->externals()->where('type', 3)->orderBy('is_featured', 'desc');
     }
 
     public function scoreExternals()
     {
-        return $this->externals()->where('type', 4);
+        return $this->externals()->where('type', 4)->orderBy('is_featured', 'desc');
     }
 
     /*
