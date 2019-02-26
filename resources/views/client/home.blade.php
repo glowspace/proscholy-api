@@ -5,7 +5,7 @@
 
     <div class="alert alert-primary" role="alert" style="margin: 12px; border-radius: 5px">
         <p>Vítejte v digitálním zpěvníku <b>ProScholy.cz</b>, který přichází na pomoc všem scholám, křesťanským kapelám,
-            společenstvím, táborníkům a
+            společenstvím a
             všem, kdo se chtějí modlit hudbou!</p>
         <hr>
         <p class="mb-0">Naše redakce teď pro vás připravuje první písně. Aktuálně je přidáno <b>{{$song_count}}</b>
