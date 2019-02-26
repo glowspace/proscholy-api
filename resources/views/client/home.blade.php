@@ -9,7 +9,7 @@
             všem, kdo se chtějí modlit hudbou!</p>
         <hr>
         <p class="mb-0">Naše redakce teď pro vás připravuje první písně. Aktuálně je přidáno <b>{{$song_count}}</b>
-            písní od <b>{{$authors_count}}</b> autorů</p>
+            písní.</p>
     </div>
 
     {{--<div style="margin-top: 20px">--}}
