@@ -51,6 +51,12 @@ class ChordSign{
             return self::EMPTY();
         }
 
+        // handle maj "irregular" exception
+        if ($matches[3] == "m" && strlen($matches[4]) > 0 && substr_compare($matches[4], "aj", 0, 2) == 0) {
+            $matches[3] = "";
+            $matches[4] = "m".$matches[4];
+        }
+
         $_a = $matches[1];
         $_b = $matches[2];
         $_c = $matches[3];
