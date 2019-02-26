@@ -11,7 +11,7 @@
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
             kteří pracují s českou nebo slovenskou křesťanskou tvorbou.
             V dnešní době, kdy je duchovní hudba roztroušena po mnoha různých místech
-            na internetu nebo v papírových sbornících s zpěvnících,
+            na internetu nebo v papírových sbornících a zpěvnících,
             chceme nabídnout rychlou a praktickou alternativu.
         </p>
 
