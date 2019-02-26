@@ -11,6 +11,14 @@
         <p class="mb-0">Naše redakce teď pro vás připravuje první písně. Aktuálně je přidáno <b>{{$song_count}}</b>
             písní.</p>
     </div>
+
+    <div style="margin-top: 20px">
+        <div class="navbar-label material-shadow text-warning">Nejnavštěvovanější písně</div>
+            @foreach($top_songs as $song_l)
+                <a class="btn btn-secondary" href="{{route('client.song.score', $song_l)}}">
+                    <i class="fas fa-music"></i>{{$song_l->name}}</a>
+            @endforeach
+    </div>
 @endsection
 
 @section('content')
