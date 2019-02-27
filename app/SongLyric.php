@@ -7,6 +7,9 @@ use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
 use App\Traits\Lockable;
 
+use App\Helpers\Chord;
+use App\Helpers\ChordSign;
+
 /**
  * App\SongLyric
  *
@@ -108,6 +111,11 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(External::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
     /*
      * Real type collections
      */
@@ -130,6 +138,11 @@ class SongLyric extends Model implements ISearchResult
     {
         return $this->externals()->where('type', 4)->orderBy('is_featured', 'desc');
     }
+    
+    public function scoreFiles()
+    {
+        return $this->files()->where('type', 3);
+    }
 
     /*
      * Merged multi type category-filtered external collections
@@ -144,7 +157,7 @@ class SongLyric extends Model implements ISearchResult
      */
     public function scoresCount()
     {
-        return $this->scoreExternals()->count();
+        return $this->scoreExternals()->count() + $this->scoreFiles()->count();
     }
 
     // the reason for existence of the domestic characteristic

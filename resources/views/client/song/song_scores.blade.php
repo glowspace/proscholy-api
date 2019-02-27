@@ -10,7 +10,7 @@
     <div class="content-padding">
         <h1>Hudební podklady písně {{$song_l->name}}</h1>
 
-        @if($song_l->scoreExternals()->count() > 0)
+        @if($song_l->scoresCount() > 0)
             <div class="card">
                 <div class="card-header">Odkazy na noty na internetu</div>
                 <div class="card-body">
@@ -24,22 +24,39 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($song_l->scoreExternals as $external)
-                            <tr>
-                                <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
-                                <td>
-                                    <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
-                                </td>
-                                <td>
-                                    @if (isset($external->author))
-                                        <a href="{{route('client.author', $external->author)}}">{{$external->author->name}}</a>
-                                    @else
-                                        (neznámý)
-                                    @endif
-                                </td>
-                                <td>{{$external->visits}} x</td>
-                            </tr>
-                        @endforeach
+                            @foreach($song_l->scoreFiles as $file)
+                                <tr>
+                                    <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
+                                    <td>
+                                        <a href="{{$file->getDownloadUrl()}}">{{$file->getPublicName()}}</a>
+                                    </td>
+                                    <td>
+                                        @if (isset($file->author))
+                                            <a href="{{route('client.author', $file->author)}}">{{$file->author->name}}</a>
+                                        @else
+                                            (neznámý)
+                                        @endif
+                                    </td>
+                                    <td>{{$file->downloads}} x</td>
+                                </tr>
+                            @endforeach
+
+                            @foreach($song_l->scoreExternals as $external)
+                                <tr>
+                                    <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
+                                    <td>
+                                        <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
+                                    </td>
+                                    <td>
+                                        @if (isset($external->author))
+                                            <a href="{{route('client.author', $external->author)}}">{{$external->author->name}}</a>
+                                        @else
+                                            (neznámý)
+                                        @endif
+                                    </td>
+                                    <td>{{$external->visits}} x</td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

@@ -15,7 +15,7 @@
                     <label>Název</label>
                     <input class="form-control" required autofocus name="name" placeholder="Název písně" value="{{$song_lyric->name}}"><br>
 
-                    <label>Autoři</label><br>
+                    <label>Autoři (u překladu uvést autora překladu)</label><br>
 
                     @include('admin.components.magicsuggest', [
                         'field_name' => 'authors',
@@ -125,7 +125,7 @@
                 </p>
 
                 <h5>Autoři</h5>
-                <p>Začněte zadávat jméno autora (textu, hudby, interpreta, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
                     tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
                     stačí správě napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
@@ -177,19 +177,11 @@
 
         const input_lyrics = document.getElementById('input_lyrics');
         input_lyrics.onkeyup = function(e) {
-            if (e.altKey && e.which == 189) {
+            // Alt + = shortcut
+            if (e.altKey && e.which == 187) {
                 input_lyrics.value += "[%]";
             }
         }
-
-        // $('#input_lyrics').keypress(function(e) {
-        //     var c = String.fromCharCode(e.which);
-        //     if (c.toUpperCase() === c && c.toLowerCase() !== c && !e.shiftKey) {
-        //         $('#message').show();
-        //     } else {
-        //         $('#message').hide();
-        //     }
-        // });
     </script>
 
     {{-- handle opensong file uploading --}}

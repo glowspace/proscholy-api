@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Helpers;
 
 use Log;
 
@@ -49,6 +49,12 @@ class ChordSign{
         // TODO: IMPLEMENT [%] REPLACEMENT HANDLING
         if (count($matches) == 0) {
             return self::EMPTY();
+        }
+
+        // handle maj "irregular" exception
+        if ($matches[3] == "m" && strlen($matches[4]) > 0 && substr_compare($matches[4], "aj", 0, 2) == 0) {
+            $matches[3] = "";
+            $matches[4] = "m".$matches[4];
         }
 
         $_a = $matches[1];
