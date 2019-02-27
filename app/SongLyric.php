@@ -7,6 +7,9 @@ use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
 use App\Traits\Lockable;
 
+use App\Helpers\Chord;
+use App\Helpers\ChordSign;
+
 /**
  * App\SongLyric
  *
