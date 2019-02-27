@@ -15,7 +15,7 @@
                     <label>Název</label>
                     <input class="form-control" required autofocus name="name" placeholder="Název písně" value="{{$song_lyric->name}}"><br>
 
-                    <label>Autoři</label><br>
+                    <label>Autoři (u překladu uvést autora překladu)</label><br>
 
                     @include('admin.components.magicsuggest', [
                         'field_name' => 'authors',
@@ -125,7 +125,7 @@
                 </p>
 
                 <h5>Autoři</h5>
-                <p>Začněte zadávat jméno autora (textu, hudby, interpreta, ...) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
                     tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
                     stačí správě napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
