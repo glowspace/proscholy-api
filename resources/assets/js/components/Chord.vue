@@ -1,6 +1,7 @@
 <template>
     <span class="chord">
-        <span class="chord-sign">
+        <!-- the if condition syntax is weird but necessary here -->
+        <span class="chord-sign" v-if="displayChordSign">
             <span class="chord-base">{{baseNote}}</span>
             <span class="chord-variant">{{variant}}</span>
             <span class="chord-extension">{{extension}}</span>
@@ -85,10 +86,23 @@
     import { store } from "./store.js";
     
     export default {
-        props: ['base', 'variant', 'extension','bass', 'text', 'isDivided'],
+        props: ['base', 'variant', 'extension','bass', 'text', 'isDivided', 'isSubstitute'],
 
         data() {
             return store;
+        },
+
+        created() {
+            if (this.base != "" && this.nChordModes == 1) {
+                this.nChordModes = 2;
+                this.chordMode = 1;
+            }
+
+            if (this.isSubstitute  && this.nChordModes == 2) {
+                // tell the shared data store, that there is a substitute chord
+                // ==> allow switching to extended chord mode
+                this.nChordModes = 3;
+            }
         },
 
         computed: {
@@ -102,6 +116,12 @@
                 if (this.bass == "") { return ""; }
 
                 return this.transposeChordBy(this.bass, this.transposition, this.useFlatScale);
+            },
+
+            displayChordSign() {
+                if (this.chordMode === 0) return false;
+                if (this.chordMode === 1) return !(this.isSubstitute);
+                if (this.chordMode === 2) return true;
             }
         },
 

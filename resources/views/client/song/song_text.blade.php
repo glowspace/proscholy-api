@@ -23,7 +23,6 @@
                     </div>
                     <div class="card-body">
                         @if($song_l->lyrics)
-                            {{-- <div id="lyrics">{!!$song_l->getProcessedLyrics() !!}</div> --}}
                             <div class="song-component">
                                 {!! $song_l->getFormattedLyrics() !!}
                             </div>

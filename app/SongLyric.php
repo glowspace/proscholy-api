@@ -9,6 +9,7 @@ use App\Traits\Lockable;
 
 use App\Helpers\Chord;
 use App\Helpers\ChordSign;
+use App\Helpers\ChordQueue;
 
 /**
  * App\SongLyric
@@ -83,8 +84,6 @@ class SongLyric extends Model implements ISearchResult
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
         'mixed' => 'vícejazyčná píseň'
     ];
-
-    protected $chord_substitute_char = '%';
 
     public function getLanguageName()
     {
@@ -208,32 +207,34 @@ class SongLyric extends Model implements ISearchResult
         }
     }
 
-    public function getProcessedLyrics()
-    {
-        return str_replace($this->chord_substitute_char, "", $this->lyrics);
-    }
-
     // FOR THE NEW FRONTEND VIEWER
     public function getFormattedLyrics(){
         $lines = explode("\n", $this->lyrics);
 
         $output = "";
+        $chordQueue = new ChordQueue();
 
         foreach ($lines as $line){
-            $output .= '<div class="song-line">'.$this->processLine($line).'</div>';
+            $output .= '<div class="song-line">'.$this->processLine($line, $chordQueue).'</div>';
         }
 
         return $output;
     }
 
-    private function processLine($line){
+    private function processLine($line, $chordQueue) {
         $chords = array();
         $currentChordText = "";
+        $line = trim($line);
+        
+        // starting of a line, tell if we are in a verse / refrain
+        if (strlen($line) > 0 && is_numeric($line[0])) {
+            $chordQueue->notifyVerse($line[0]);
+        }
 
         for ($i = 0; $i < strlen($line); $i++){
             if ($line[$i] == "["){
                 if ($currentChordText != "")
-                    $chords[] = Chord::parseFromText($currentChordText);
+                    $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
                 $currentChordText = "";
             }
 
@@ -241,7 +242,7 @@ class SongLyric extends Model implements ISearchResult
             $currentChordText .= $line[$i];
         }
 
-        $chords[] = Chord::parseFromText($currentChordText);
+        $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
 
         $string = "";
         foreach ($chords as $chord) 
