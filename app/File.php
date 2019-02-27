@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class File extends Model
 {
-    protected $fillable = ['filename', 'type', 'description', 'path', 'name', 'has_anonymous_author'];
+    protected $fillable = ['filename', 'type', 'description', 'path', 'name', 'has_anonymous_author', 'downloads'];
 
     // See App/Listeners/FileDeleting where the deleting actually happens
     protected $dispatchesEvents = [
