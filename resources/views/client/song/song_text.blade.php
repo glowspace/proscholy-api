@@ -28,7 +28,7 @@
                                 {!! $song_l->getFormattedLyrics() !!}
                             </div>
                         @else
-                            <div id="lyrics">Text písně připravujeme.</div>
+                            <div class="song-component">Text písně připravujeme.</div>
                         @endif
                         <hr>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
