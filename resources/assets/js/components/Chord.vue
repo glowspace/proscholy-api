@@ -69,7 +69,7 @@
 
         &:hover{
             // background: #d0e6f9;
-            padding: 0rem 0.2rem 0rem 0.2rem;
+            // padding: 0rem 0.2rem 0rem 0.2rem;
 
             .chord-text{
                 // background: #d0e6f9;
