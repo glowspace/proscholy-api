@@ -84,8 +84,6 @@ class SongLyric extends Model implements ISearchResult
         'mixed' => 'vícejazyčná píseň'
     ];
 
-    protected $chord_substitute_char = '%';
-
     public function getLanguageName()
     {
         return $this->lang_string[$this->lang];
@@ -206,11 +204,6 @@ class SongLyric extends Model implements ISearchResult
 
             return $song_lyric;
         }
-    }
-
-    public function getProcessedLyrics()
-    {
-        return str_replace($this->chord_substitute_char, "", $this->lyrics);
     }
 
     // FOR THE NEW FRONTEND VIEWER
