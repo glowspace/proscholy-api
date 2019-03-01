@@ -24,6 +24,7 @@
             justify-content: flex-start;
             transition: 100ms;
             margin-bottom: -0.3rem;
+            color: #1d6dab;
         }
 
         &-base{
@@ -41,7 +42,7 @@
 
         &-extension{
             font-size: 0.8em;
-            color: rgb(33, 128, 211);
+            // color: rgb(33, 128, 211);
             position: relative;
             left: -0.4em;
             // top: -0.2em;
@@ -49,7 +50,7 @@
 
         &-bass{
             // font-weight: bold;
-            // color: #adc6db;
+            color: #6b78af;
             margin-right: 0.4rem;
             margin-left: -0.2rem;
             transition: 100ms;
@@ -76,7 +77,7 @@
             }
 
             .chord-bass{
-                color: black;
+                color: #1d6dab;
             }
         }
     }

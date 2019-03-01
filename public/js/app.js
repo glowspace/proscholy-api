@@ -59763,7 +59763,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.chord {\n  position: relative;\n  -webkit-transition: 100ms;\n  transition: 100ms;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.3rem;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4rem;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    color: #2180d3;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    margin-right: 0.4rem;\n    margin-left: -0.2rem;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n}\n.chord-dash {\n    position: absolute;\n    bottom: 0;\n    display: none;\n}\n.chord:hover .chord-bass {\n    color: black;\n}\n", ""]);
+exports.push([module.i, "\n.chord {\n  position: relative;\n  -webkit-transition: 100ms;\n  transition: 100ms;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.3rem;\n    color: #1d6dab;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4rem;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    color: #6b78af;\n    margin-right: 0.4rem;\n    margin-left: -0.2rem;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n}\n.chord-dash {\n    position: absolute;\n    bottom: 0;\n    display: none;\n}\n.chord:hover .chord-bass {\n    color: #1d6dab;\n}\n", ""]);
 
 // exports
 
@@ -60118,6 +60118,7 @@ module.exports = function listToStyles (parentId, list) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(12);
+//
 //
 //
 //
