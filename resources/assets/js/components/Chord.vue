@@ -7,7 +7,10 @@
             <span class="chord-extension">{{extension}}</span>
             <span class="chord-bass" v-if="bass.length!==0">/ {{bassNote}}</span>
         </span>
-        <span class="chord-text"><slot></slot></span><span class="chord-dash" v-if="isDivided == 1">-</span>
+        <span class="chord-text"><slot></slot></span>
+        <span class="chord-line" v-if="isDivided == 1">
+            <!-- <span class="chord-line__"></span> -->
+        </span>
     </span>
 </template>
 
@@ -48,7 +51,7 @@
             // top: -0.2em;
         }
 
-        &-bass{
+        &-bass {
             // font-weight: bold;
             color: #6b78af;
             margin-right: 0.4rem;
@@ -56,16 +59,22 @@
             transition: 100ms;
         }
 
-        &-text{
+        &-text {
             display: inline-block;
-            // background: white;
+            // this is so that the chord line is not displayed on the text
             position: relative;
+            background: white;
+            z-index: 2;
         }
 
-        &-dash{
-            position: absolute;
-            bottom: 0;
-            display: none;
+        &-line {
+            display: block;
+            position: relative;
+            width: calc(100% - 0.6em);
+            height: 0.1em;
+            background: #b9b9b9;
+            top: -0.5em;
+            right: -0.5em;
         }
 
         &:hover{
