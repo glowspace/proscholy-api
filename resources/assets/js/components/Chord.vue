@@ -17,46 +17,38 @@
 <style lang="scss">
     .chord{
         position: relative;
-        transition: 100ms;
+        // transition: 100ms;
         display: inline-block;
-
-        // padding-top: 1.2rem;
 
         &-sign{
             display: flex;
             justify-content: flex-start;
             transition: 100ms;
-            margin-bottom: -0.3rem;
+            margin-bottom: -0.4em;
             color: #1d6dab;
         }
 
         &-base{
             font-weight: bold;
-            margin-right: 0.4rem;
+            margin-right: 0.5em;
         }
 
         &-variant{
-            // font-size: 0.8em;
-            // color: rgb(3, 30, 54);
             position: relative;
             left: -0.4em;
-            // top: -0.2em;
         }
 
         &-extension{
             font-size: 0.8em;
-            // color: rgb(33, 128, 211);
             position: relative;
             left: -0.4em;
-            // top: -0.2em;
         }
 
         &-bass {
             // font-weight: bold;
             color: #6b78af;
-            margin-right: 0.4rem;
-            margin-left: -0.2rem;
-            transition: 100ms;
+            margin-right: 0.4em;
+            margin-left: -0.2em;
         }
 
         &-text {
@@ -78,9 +70,6 @@
         }
 
         &:hover{
-            // background: #d0e6f9;
-            // padding: 0rem 0.2rem 0rem 0.2rem;
-
             .chord-text{
                 // background: #d0e6f9;
             }
