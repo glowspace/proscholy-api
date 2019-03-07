@@ -71,18 +71,20 @@
                             'is_single' => true,
                             'disabled' => $assigned_song_disabled
                         ])
+                        <br>
+                        {{-- checkbox for linking --}}
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                name="set_linked_song_original" id="check_set_linked_song_original" value="1">
+                            <label class="form-check-label" for="check_set_linked_song_original">
+                                Zajistit, aby nalinkovaná písnička byla označena jako originál
+                            </label>
+                        </div>
+                        <br>
                     @endif
                     <br>
 
-                    {{-- checkbox for linking --}}
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                            name="set_linked_song_original" id="check_set_linked_song_original" value="1">
-                        <label class="form-check-label" for="check_set_linked_song_original">
-                            Zajistit, aby nalinkovaná písnička byla označena jako originál
-                        </label>
-                    </div>
 
                     <label>Autorizovaný překlad</label>
                     <select class="form-control" name="is_authorized" title="">

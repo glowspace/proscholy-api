@@ -85,7 +85,7 @@ class SongController extends Controller
     public function update(Request $request, SongLyric $song_lyric)
     {
         $firstTimeUpdating = $song_lyric->created_at->eq($song_lyric->updated_at);
-        $firstTimeUpdating = true;
+        // $firstTimeUpdating = true;
 
         // name has changed ???
         if ($request->name !== $song_lyric->name) {
