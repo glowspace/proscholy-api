@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h1>Další varianty písně {{$song_l->name}}</h1>
+        <h1>Všechny verze písně {{$song_l->name}}</h1>
 
         @if($song_l_original !== null)
             <div class="card">
@@ -35,7 +35,9 @@
 
         @if($song_l->song->song_lyrics()->count() > 0)
             <div class="card">
-                <div class="card-header">Překlady</div>
+                @if ($song_l_original !== null)
+                    <div class="card-header">Překlady</div>
+                @endif
                 <div class="card-body">
                     <table class="table">
                         <thead>

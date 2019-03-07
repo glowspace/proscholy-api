@@ -16,17 +16,17 @@
                     </p>
                 @else
                     <h2>Musíme to opravit :(</h2>
-                    <p>Ok, přihodila se nám nemilá věc:</p>
                     <form action="{{ route('admin.song.resolve_error', $song) }}" method="post">
                         @csrf
                         @if ($error === 'no_original')
+                            <p>Ok nemusíme, ale přihodila se nám věc, která vyžaduje jistou pozornost:</p>
                             <p>Vyskytlo se tu pár překladů jedné písničky a žádný z nich není označený jako originál:</p>
                             @foreach ($song->song_lyrics as $song_l)
                                 {{ $song_l->name }}<br>
                             @endforeach
                             <br>
-                            <p>Není to tak závačná chyba, aby se s tím něco muselo dělat. Ale bude fajn, když se rozhodnete,<br>
-                                která z verzí představuje originální verzi:</p>
+                            <p>Není to tak závačná věc a pokud to je úmysl, tak proti gustu žádný dišputát.<br>
+                                Každopádně bude fajn, když jedna z písniček bude označena jako originál.</p>
             
                             <select name="song_original" class="form-control">
                                 @foreach ($song->song_lyrics as $song_l)
@@ -38,12 +38,14 @@
             
                             <button type="input" name="solution" value="keep" class="btn btn-outline-info">Neprovádět nic</button>
                             <br><br>
+                            <img src="http://www.reactiongifs.com/r/umyb.gif" alt="">
+                            <br><br>
                             <p>Nebo přidejte novou píseň, která bude označena jako originál výše uvedených písní:</p>
 
                             <button type="input" name="solution" value="create_original" class="btn btn-outline-info">Vytvořit novou píseň</button>
             
                         @elseif ($error === 'more_originals')
-                            <p>Vyskytl se nám tu problém, že máme označených víc originálů jedné písničky,<br>
+                            <p>Vyskytl se nám tu problém, že bylo označených víc originálů jedné písničky,<br>
                                 konkrétně se jedná o následující položky:
                             </p>
                             @foreach ($song->song_lyrics()->where('is_original', 1)->get() as $song_l)

@@ -7,76 +7,75 @@
             <span class="chord-extension">{{extension}}</span>
             <span class="chord-bass" v-if="bass.length!==0">/ {{bassNote}}</span>
         </span>
-        <span class="chord-text"><slot></slot></span><span class="chord-dash" v-if="isDivided == 1">-</span>
+        <span class="chord-text"><slot></slot></span>
+        <span class="chord-line" v-if="isDivided == 1">
+            <!-- <span class="chord-line__"></span> -->
+        </span>
     </span>
 </template>
 
 <style lang="scss">
     .chord{
         position: relative;
-        transition: 100ms;
+        // transition: 100ms;
         display: inline-block;
-
-        // padding-top: 1.2rem;
 
         &-sign{
             display: flex;
             justify-content: flex-start;
             transition: 100ms;
-            margin-bottom: -0.3rem;
+            margin-bottom: -0.4em;
+            color: #1d6dab;
         }
 
         &-base{
             font-weight: bold;
-            margin-right: 0.4rem;
+            margin-right: 0.5em;
         }
 
         &-variant{
-            // font-size: 0.8em;
-            // color: rgb(3, 30, 54);
             position: relative;
             left: -0.4em;
-            // top: -0.2em;
         }
 
         &-extension{
             font-size: 0.8em;
-            color: rgb(33, 128, 211);
             position: relative;
             left: -0.4em;
-            // top: -0.2em;
         }
 
-        &-bass{
+        &-bass {
             // font-weight: bold;
-            // color: #adc6db;
-            margin-right: 0.4rem;
-            margin-left: -0.2rem;
-            transition: 100ms;
+            color: #6b78af;
+            margin-right: 0.4em;
+            margin-left: -0.2em;
         }
 
-        &-text{
+        &-text {
             display: inline-block;
-            // background: white;
+            // this is so that the chord line is not displayed on the text
             position: relative;
+            background: white;
+            z-index: 2;
         }
 
-        &-dash{
-            position: absolute;
-            bottom: 0;
-            display: none;
+        &-line {
+            display: block;
+            position: relative;
+            width: calc(100% - 0.6em);
+            height: 0.1em;
+            background: #b9b9b9;
+            top: -0.5em;
+            right: -0.5em;
         }
 
         &:hover{
-            // background: #d0e6f9;
-            // padding: 0rem 0.2rem 0rem 0.2rem;
-
             .chord-text{
                 // background: #d0e6f9;
             }
 
             .chord-bass{
-                color: black;
+                color: #1d6dab;
             }
         }
     }

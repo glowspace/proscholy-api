@@ -20,6 +20,7 @@ class ExternalController extends Controller
         // Mira: jj, já jsem teďkom pořád tak trochu mimo net, takže v podstatě jen pulluju/pushuju git přes data,
         //       abych viděl, co se děje :D
         // Michal: :D, já myslím, že slack zas tolik dat naukrojí, jsou to jen texty. :D
+        // Mira: zdravím z letadla :) (commit z letadla jen tak někdo nemá :D)
     }
 
     public function index()

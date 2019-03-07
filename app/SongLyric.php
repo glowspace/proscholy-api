@@ -226,7 +226,7 @@ class SongLyric extends Model implements ISearchResult
         $currentChordText = "";
         $line = trim($line);
         
-        // starting of a line, tell if we are in a verse / refrain
+        // starting of a line, notify Chord "repeater" if we are in a verse
         if (strlen($line) > 0 && is_numeric($line[0])) {
             $chordQueue->notifyVerse($line[0]);
         }
@@ -238,7 +238,6 @@ class SongLyric extends Model implements ISearchResult
                 $currentChordText = "";
             }
 
-            // if ($recording)
             $currentChordText .= $line[$i];
         }
 

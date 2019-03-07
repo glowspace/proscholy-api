@@ -16,7 +16,13 @@ class Chord{
     public function toHTML(){
         // TODO: format with https://laravelcollective.com/docs/5.4/html
 
-        $html = '<chord';
+        $html = "";
+
+        if (strlen($this->text) > 0 && $this->text[0] == " ") {
+            $html.=" ";
+        }
+
+        $html.= '<chord';
         $html.= ' base="'.$this->chordSign->getBase().'"';
         $html.= ' variant="'.$this->chordSign->getVariant().'"';
         $html.= ' extension="'.$this->chordSign->getExtension().'"';

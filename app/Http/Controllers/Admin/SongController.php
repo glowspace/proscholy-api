@@ -84,6 +84,9 @@ class SongController extends Controller
 
     public function update(Request $request, SongLyric $song_lyric)
     {
+        $firstTimeUpdating = $song_lyric->created_at->eq($song_lyric->updated_at);
+        // $firstTimeUpdating = true;
+
         // name has changed ???
         if ($request->name !== $song_lyric->name) {
             // to be domestic means to have a same name as the parent song
@@ -136,22 +139,37 @@ class SongController extends Controller
             $identificator = $request->assigned_song_lyrics[0];
 
             $friend = SongLyric::getByIdOrCreateWithName($identificator);
-            // this song is supposed to be an original
-            $friend->is_original = 1;
+
+            // this song is supposed to be an original if we want that explicitly
+            if ($request->set_linked_dong == "set_original") {
+                $friend->is_original = 1;
+            // this song is supposed to be a translation if we want that explicitly
+            } else if ($request->set_linked_dong == "set_translation") {
+                $friend->is_original = 0;
+            }
             $friend->save();
+
             // associate to the friends Song and stay/become a Cuckoo :) :O
             $song_lyric->song()->associate($friend->song);
             $song_lyric->save();
+
+            // hold some kind of structure
+            if ($request->is_original == 1) {
+                $song_lyric->song->name = $song_lyric->name;
+                $song_lyric->song->save();
+            }
         }
 
         // UNLOCKING FOR EDIT
         $song_lyric->unlock();
 
         // CHECKING FOR CONSISTENCY
-        
-        // 1. case: there is a group of SongLyrics under one Song that have no original
+
+        // 1. case: there is a group of SongLyrics under one Song that have no original 
+        // ONLY IF CREATING THE SONG - AKA UPDATING FOR THE FIRST TIME
         if ($song_lyric->hasSiblings() &&
-            $song_lyric->song->getOriginalSongLyric() === NULL)
+            $song_lyric->song->getOriginalSongLyric() === NULL &&
+            $firstTimeUpdating)
         {
             return view('admin.song.error', [
                 'error' => 'no_original',
@@ -192,7 +210,14 @@ class SongController extends Controller
             $id_orig = $request->song_original;
 
             foreach ($song->song_lyrics as $song_l) {
-                $song_l->is_original = $song_l->id == $id_orig;
+                // $shouldBeOriginal = $song_l->id == $id_orig;
+                if ($song_l->id == $id_orig) {
+                    $song_l->is_original = true;
+                    $song_l->song->name = $song_l->name;
+                    $song_l->song->save();
+                } else {
+                    $song_l->is_original = false;
+                }
                 $song_l->save();
             }
 

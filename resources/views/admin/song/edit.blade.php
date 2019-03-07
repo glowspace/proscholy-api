@@ -51,13 +51,17 @@
                     <br>
 
                     @if ($assigned_song_disabled)
-                        <p>Píseň je označena jako originál následujících písní: </p>
+                        @if ($song_lyric->is_original)
+                            <p>Píseň je označena jako originál následujících písní: </p>
+                        @else
+                            <p>Píseň je označena jako verze následujících písní: </p>
+                        @endif
                         @foreach ($song_lyric->getSiblings()->get() as $item)
                             {{ $item->name }}<br/>
                         @endforeach
                         <br/>
                     @else
-                    <label>Jedná se o překlad následující písně:</label>
+                    <label>Jedná se o verzi následující písně:</label>
                         @include('admin.components.magicsuggest', [
                             'field_name' => 'assigned_song_lyrics',
                             'value_field' => 'id',
@@ -67,8 +71,30 @@
                             'is_single' => true,
                             'disabled' => $assigned_song_disabled
                         ])
+                        <br>
+                        {{-- checkbox for linking --}}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="set_linked_dong" id="exampleRadios1" value="do_nothing" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Neprovádět nic
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="set_linked_dong" id="exampleRadios2" value="set_original">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Zajistit, aby nalinkovaná písnička byla označena jako originál
+                            </label>
+                          </div>
+                          <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="set_linked_dong" id="exampleRadios3" value="set_translation">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Zajistit, aby nalinkovaná písnička byla označena jako překlad
+                            </label>
+                          </div>
+                        <br>
                     @endif
                     <br>
+
 
                     <label>Autorizovaný překlad</label>
                     <select class="form-control" name="is_authorized" title="">
@@ -132,28 +158,30 @@
                 </p>
 
                 @if ($assigned_song_disabled)
-                    <h5>Překlad</h5>
-                    <p>Tato písnička již je označená jako originál několika dalších písniček (viz vlevo). Propojení můžete smazat v editaci těchto písniček.</p>
+                    @if ($song_lyric->is_original)
+                        <h5>Originál</h5>
+                        <p>Píseň je označena jako originál následujících písní: </p>
+                    @else
+                        <h5>Verze</h5>
+                        <p>Píseň je označena jako verze následujících písní (zřejmě není známo, která z nich je originál): </p>
+                    @endif
                 @else
-                    <h5>Překlad</h5>
-                    <p>Jako příklad nechť poslouží písnička Oceans od kapely Hillsong, která má hned několik českých překladů.</p>
-                    <p>
-                        Pokud právě přidáváte originál písničky (tedy Oceans / Hillsong), je třeba krom obvyklého navíc v políčku <i>Typ</i> změnit hodnotu na <i>Originál</i>.
-                    </p>
-                    <p>Pokud se jedná o píseň, která byla přeložena, popř. zaranžována ze známého originálu (Oceány / Adorare),
-                        uveďte prosím originál (Oceans) do druhého políčka, abychom věděli, co k čemu patří.
-                        <br>
-                        Stejně jako u přidávání autorů se vám během psaní začnou zobrazovat již uložené písničky. Pokud originál (Oceans) nenajdete, tak po zadání celého jména
-                        stiskněte Enter a po dokončení editace se zároveň vytvoří nová píseň (Oceans), která bude automaticky označena jako originál.
-                        <br>
-                        Ve zpěvníku také chceme rozlišovat překlady, které jsou (nějakým způsobem) schváleny jako oficiální, pokud tedy víte, o co jde, tak upravte hodnotu v políčku <i>Autorizovaný překlad</i>.
-                    </p>
+                    <h5>Verze</h5>
+                    <p>V políčku zvolte píseň, ke které se aktuálně upravovaná nějakým z následujících způsobů vztahuje:</p>
+                    <ul>
+                        <li>originál-překlad</li>
+                        <li>verze-verze</li>
+                    </ul>
+                    {{-- <p>(originál-překlad nebo verze-verze pokud není znám originál)</p> --}}
+                    Ve zpěvníku také chceme rozlišovat překlady, které jsou (nějakým způsobem) schváleny jako oficiální, pokud tedy víte, o co jde, tak upravte hodnotu v políčku <i>Autorizovaný překlad</i>.
+                    <br><br>
                 @endif
 
                 <h5>Text</h5>
 
                 <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [Cm], [Emaj7]</b> apod.
-                    <br>Akordy pojmenovávejte českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
+                    <br>Akordy pište českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
+                    <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
                     <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
                     <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
                     <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
