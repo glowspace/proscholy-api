@@ -51,13 +51,17 @@
                     <br>
 
                     @if ($assigned_song_disabled)
-                        <p>Píseň je označena jako originál následujících písní: </p>
+                        @if ($song_lyric->is_original)
+                            <p>Píseň je označena jako originál následujících písní: </p>
+                        @else
+                            <p>Píseň je označena jako verze následujících písní: </p>
+                        @endif
                         @foreach ($song_lyric->getSiblings()->get() as $item)
                             {{ $item->name }}<br/>
                         @endforeach
                         <br/>
                     @else
-                    <label>Jedná se o překlad následující písně:</label>
+                    <label>Jedná se o verzi následující písně:</label>
                         @include('admin.components.magicsuggest', [
                             'field_name' => 'assigned_song_lyrics',
                             'value_field' => 'id',
@@ -69,6 +73,16 @@
                         ])
                     @endif
                     <br>
+
+                    {{-- checkbox for linking --}}
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                            name="set_linked_song_original" id="check_set_linked_song_original" value="1">
+                        <label class="form-check-label" for="check_set_linked_song_original">
+                            Zajistit, aby nalinkovaná písnička byla označena jako originál
+                        </label>
+                    </div>
 
                     <label>Autorizovaný překlad</label>
                     <select class="form-control" name="is_authorized" title="">

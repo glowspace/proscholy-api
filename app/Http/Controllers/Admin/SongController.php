@@ -84,6 +84,9 @@ class SongController extends Controller
 
     public function update(Request $request, SongLyric $song_lyric)
     {
+        $firstTimeUpdating = $song_lyric->created_at->eq($song_lyric->updated_at);
+        $firstTimeUpdating = true;
+
         // name has changed ???
         if ($request->name !== $song_lyric->name) {
             // to be domestic means to have a same name as the parent song
@@ -136,9 +139,12 @@ class SongController extends Controller
             $identificator = $request->assigned_song_lyrics[0];
 
             $friend = SongLyric::getByIdOrCreateWithName($identificator);
-            // this song is supposed to be an original
-            $friend->is_original = 1;
-            $friend->save();
+
+            // this song is supposed to be an original if we want that explicitly
+            if ($request->has("set_linked_song_original")) {
+                $friend->is_original = 1;
+                $friend->save();
+            }
             // associate to the friends Song and stay/become a Cuckoo :) :O
             $song_lyric->song()->associate($friend->song);
             $song_lyric->save();
@@ -148,10 +154,12 @@ class SongController extends Controller
         $song_lyric->unlock();
 
         // CHECKING FOR CONSISTENCY
-        
-        // 1. case: there is a group of SongLyrics under one Song that have no original
+
+        // 1. case: there is a group of SongLyrics under one Song that have no original 
+        // ONLY IF CREATING THE SONG - AKA UPDATING FOR THE FIRST TIME
         if ($song_lyric->hasSiblings() &&
-            $song_lyric->song->getOriginalSongLyric() === NULL)
+            $song_lyric->song->getOriginalSongLyric() === NULL &&
+            $firstTimeUpdating)
         {
             return view('admin.song.error', [
                 'error' => 'no_original',
