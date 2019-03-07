@@ -74,14 +74,32 @@
                         <br>
                         {{-- checkbox for linking --}}
 
-                        <div class="form-check">
+                        {{-- <div class="form-check">
                             <input class="form-check-input" type="checkbox"
                                 name="set_linked_song_original" id="check_set_linked_song_original" value="1">
                             <label class="form-check-label" for="check_set_linked_song_original">
                                 Zajistit, aby nalinkovaná písnička byla označena jako originál
                                 <br><i>(pokud není zaškrtnuto, zůstane stav nalinkované písničky stejný)</i>
                             </label>
-                        </div>
+                        </div> --}}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="set_linked_dong" id="exampleRadios1" value="do_nothing" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Neprovádět nic
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="set_linked_dong" id="exampleRadios2" value="set_original">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Zajistit, aby nalinkovaná písnička byla označena jako originál
+                            </label>
+                          </div>
+                          <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="set_linked_dong" id="exampleRadios3" value="set_translation">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Zajistit, aby nalinkovaná písnička byla označena jako překlad
+                            </label>
+                          </div>
                         <br>
                     @endif
                     <br>

@@ -141,10 +141,14 @@ class SongController extends Controller
             $friend = SongLyric::getByIdOrCreateWithName($identificator);
 
             // this song is supposed to be an original if we want that explicitly
-            if ($request->has("set_linked_song_original")) {
+            if ($request->set_linked_dong == "set_original") {
                 $friend->is_original = 1;
-                $friend->save();
+            // this song is supposed to be a translation if we want that explicitly
+            } else if ($request->set_linked_dong == "set_translation") {
+                $friend->is_original = 0;
             }
+            $friend->save();
+
             // associate to the friends Song and stay/become a Cuckoo :) :O
             $song_lyric->song()->associate($friend->song);
             $song_lyric->save();
