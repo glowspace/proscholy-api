@@ -20,7 +20,7 @@
 
 @if($song_l->song->song_lyrics()->count() > 1)
     <a class="btn btn-secondary" href="{{route('client.song.translations', $song_l)}}">
-        <i class="fas fa-language"></i> Překlady
+        <i class="fas fa-language"></i> Verze/překlady
         <span class="badge badge-pill">{{$song_l->song->song_lyrics()->count()}}</span>
     </a>
 @endif
