@@ -210,7 +210,14 @@ class SongController extends Controller
             $id_orig = $request->song_original;
 
             foreach ($song->song_lyrics as $song_l) {
-                $song_l->is_original = $song_l->id == $id_orig;
+                // $shouldBeOriginal = $song_l->id == $id_orig;
+                if ($song_l->id == $id_orig) {
+                    $song_l->is_original = true;
+                    $song_l->song->name = $song_l->name;
+                    $song_l->song->save();
+                } else {
+                    $song_l->is_original = false;
+                }
                 $song_l->save();
             }
 
