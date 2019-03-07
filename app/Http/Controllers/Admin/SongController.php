@@ -148,6 +148,12 @@ class SongController extends Controller
             // associate to the friends Song and stay/become a Cuckoo :) :O
             $song_lyric->song()->associate($friend->song);
             $song_lyric->save();
+
+            // hold some kind of structure
+            if ($request->is_original == 1) {
+                $song_lyric->song->name = $song_lyric->name;
+                $song_lyric->song->save();
+            }
         }
 
         // UNLOCKING FOR EDIT

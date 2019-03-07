@@ -79,6 +79,7 @@
                                 name="set_linked_song_original" id="check_set_linked_song_original" value="1">
                             <label class="form-check-label" for="check_set_linked_song_original">
                                 Zajistit, aby nalinkovaná písnička byla označena jako originál
+                                <br><i>(pokud není zaškrtnuto, zůstane stav nalinkované písničky stejný)</i>
                             </label>
                         </div>
                         <br>
