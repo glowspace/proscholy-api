@@ -115,6 +115,18 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(File::class);
     }
 
+    public function scopeNotEmpty()
+    {
+        // return SongLyrycs that have at least one of:
+        // lyrics, sheet music
+
+        return $this->whereHas('scoreExternals')
+        //  TODO: replace 'files' with some scope to texts/notes/chords
+        //        and replace it also in song_text.blade.php
+                    ->orWhereHas('scoreFiles')
+                    ->orWhere('lyrics', '!=', '');
+    }
+
     /*
      * Real type collections
      */
@@ -208,7 +220,8 @@ class SongLyric extends Model implements ISearchResult
     }
 
     // FOR THE NEW FRONTEND VIEWER
-    public function getFormattedLyrics(){
+    public function getFormattedLyrics()
+    {
         $lines = explode("\n", $this->lyrics);
 
         $output = "";
@@ -221,7 +234,8 @@ class SongLyric extends Model implements ISearchResult
         return $output;
     }
 
-    private function processLine($line, $chordQueue) {
+    private function processLine($line, $chordQueue)
+    {
         $chords = array();
         $currentChordText = "";
         $line = trim($line);
@@ -231,7 +245,7 @@ class SongLyric extends Model implements ISearchResult
             $chordQueue->notifyVerse($line[0]);
         }
 
-        for ($i = 0; $i < strlen($line); $i++){
+        for ($i = 0; $i < strlen($line); $i++) {
             if ($line[$i] == "["){
                 if ($currentChordText != "")
                     $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
