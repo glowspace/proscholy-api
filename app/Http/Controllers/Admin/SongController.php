@@ -166,7 +166,7 @@ class SongController extends Controller
         // CHECKING FOR CONSISTENCY
 
         // 1. case: there is a group of SongLyrics under one Song that have no original 
-        // ONLY IF CREATING THE SONG - AKA UPDATING FOR THE FIRST TIME
+        // do this only when updating the model for the first time - after creating a new model
         if ($song_lyric->hasSiblings() &&
             $song_lyric->song->getOriginalSongLyric() === NULL &&
             $firstTimeUpdating)
