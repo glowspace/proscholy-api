@@ -25,10 +25,18 @@ class ExternalController extends Controller
 
     public function index()
     {
-        // $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->get();
         $externals = External::all();
 
         return view('admin.external.index', compact('externals'));
+    }
+
+    public function todoAuthors(){
+        $externals = External::where('author_id', null)->where('has_anonymous_author', 0)
+            ->orWhere('song_lyric_id', null)
+            ->get();
+
+        $title = "Seznam externích odkazů bez přiřazeného autora nebo písně";
+        return view('admin.external.index', compact('externals', 'title'));
     }
 
     public function create()

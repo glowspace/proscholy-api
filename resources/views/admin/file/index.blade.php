@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Seznam souborů</h2>
+        <h2>{{ $title ?? "Seznam souborů"}}</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.file.create')}}">+ Nahrát nový soubor</a>
         <div class="row">
             <div class="col-xs-12 col-md-9">

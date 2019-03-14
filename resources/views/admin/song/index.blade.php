@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Seznam písní</h2>
+            <h2>{{ $title ?? "Seznam písní"}}</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.song.create')}}">+ Nová píseň</a>
         <div class="row">
             <div class="col-xs-12 col-md-8">

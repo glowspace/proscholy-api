@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h2>Seznam externích zdrojů</h2>
+            <h2>{{ $title ?? "Seznam externích zdrojů"}}</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový externí zdroj</a>
         <div class="row">
             <div class="col-xs-12 col-md-8">

@@ -68,6 +68,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/external/{external}', 'ExternalController@edit')->name('admin.external.edit');
     Route::put('/external/{external}', 'ExternalController@update')->name('admin.external.update');
     Route::delete('/external/{external}', 'ExternalController@destroy')->name('admin.external.delete');
+    // todo
+    Route::get('/externals/no-author', 'ExternalController@todoAuthors')->name('admin.external.no-author');
 
     // Song
     Route::get('/songs', 'SongController@index')->name('admin.song.index');
@@ -76,6 +78,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/song/{song_lyric}', 'SongController@edit')->name('admin.song.edit');
     Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
     Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('admin.song.delete');
+    // todo
+    Route::get('/songs/no-author', 'SongController@todoAuthors')->name('admin.song.no-author');
+    Route::get('/songs/no-lyric', 'SongController@todoLyrics')->name('admin.song.no-lyric');
+    Route::get('/songs/no-chord', 'SongController@todoChords')->name('admin.song.no-chord');
 
     Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('admin.song.refresh_updating');
     Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('admin.song.resolve_error');
@@ -96,6 +102,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/file/{file}', 'FileController@edit')->name('admin.file.edit');
     Route::put('/file/{file}', 'FileController@update')->name('admin.file.update');
     Route::delete('/file/{file}', 'FileController@destroy')->name('admin.file.delete');
+    // todo
+    Route::get('/files/no-author', 'FileController@todoAuthors')->name('admin.file.no-author');
 
     Route::group(['middleware' => ['permission:manage users']], function () {
         Route::get('/users', 'UserController@index')->name('admin.user.index');

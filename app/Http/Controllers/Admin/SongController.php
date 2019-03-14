@@ -21,6 +21,23 @@ class SongController extends Controller
         return view('admin.song.index', compact('song_lyrics'));
     }
 
+    public function todoLyrics() {
+        $song_lyrics = SongLyric::where('lyrics', '=', null)->get();
+        $title = "Seznam písní bez textu";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    public function todoAuthors() {
+        $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->get();
+        $title = "Seznam písní bez přiřazeného autora";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    public function todoChords() {
+        // $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->get();
+        // return view('admin.song.index', compact('song_lyrics'));
+    }
+
     public function create(){
         return view('admin.song.create');
     }

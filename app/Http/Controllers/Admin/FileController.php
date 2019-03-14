@@ -21,6 +21,15 @@ class FileController extends Controller
         return view('admin.file.index', compact('files'));
     }
 
+    public function todoAuthors(){
+        $files = File::where('author_id', null)->where('has_anonymous_author', 0)
+                ->orWhere('song_lyric_id', null)
+                ->get();
+
+        $title = "Seznam souborů bez přiřazeného autora nebo písně";
+        return view('admin.file.index', compact('files', 'title'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
