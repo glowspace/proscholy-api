@@ -17,25 +17,26 @@ class SongController extends Controller
     }
 
     public function index(){
-        $song_lyrics = SongLyric::all();
+        $song_lyrics = SongLyric::orderBy('name')->get();
         return view('admin.song.index', compact('song_lyrics'));
     }
 
     public function todoLyrics() {
-        $song_lyrics = SongLyric::where('lyrics', '=', null)->get();
+        $song_lyrics = SongLyric::where('lyrics', '=', null)->orderBy('name')->get();
         $title = "Seznam písní bez textu";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
     public function todoAuthors() {
-        $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->get();
+        $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->orderBy('name')->get();
         $title = "Seznam písní bez přiřazeného autora";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
     public function todoChords() {
-        // $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->get();
-        // return view('admin.song.index', compact('song_lyrics'));
+        $song_lyrics = SongLyric::where('lyrics', '!=', null)->where('has_chords', 0)->orderBy('name')->get();
+        $title = "Seznam písní s textem bez akordů";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
     public function create(){
