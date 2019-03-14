@@ -84,6 +84,3 @@
         </div>
     </div>
 @endsection
-
-@include('admin.components.magicsuggest_includes')
-

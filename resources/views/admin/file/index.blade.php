@@ -37,7 +37,7 @@
                         </td>
                     </tr>
                     @endforeach
-                </table>
+            @endcomponent
             </div>
         </div>
     </div>

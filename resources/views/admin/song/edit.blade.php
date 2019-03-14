@@ -136,7 +136,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.song.delete', $song_lyric]),
+                    'url' => route('admin.song.delete', $song_lyric),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.song.index')
                 ])
@@ -190,8 +190,6 @@
         </div>
     </div>
 @endsection
-
-@include('admin.components.magicsuggest_includes')
 
 
 @push('scripts')
