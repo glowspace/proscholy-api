@@ -136,7 +136,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.song.delete', ['song_lyric' => $song_lyric->id]),
+                    'url' => route('admin.song.delete', $song_lyric]),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.song.index')
                 ])

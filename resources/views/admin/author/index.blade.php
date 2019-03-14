@@ -21,7 +21,6 @@
                         <td>
                             @include('admin.components.deletebutton', [
                                 'url' => route('admin.author.delete',['author' => $author->id ]),
-                                'class' => 'btn btn-warning'
                             ])
                         </td>
                     </tr>

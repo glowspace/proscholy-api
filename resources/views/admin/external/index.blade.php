@@ -29,8 +29,7 @@
                                     </td>
                                     <td>
                                         @include('admin.components.deletebutton', [
-                                            'url' => route('admin.external.delete', ['external' => $external->id] ),
-                                            'class' => 'btn btn-warning'
+                                            'url' => route('admin.external.delete', $external ),
                                         ])
                                     </td>
                                 </tr>
@@ -61,7 +60,6 @@
                                 <td>
                                     @include('admin.components.deletebutton', [
                                         'url' => route('admin.external.delete', ['external' => $external->id] ),
-                                        'class' => 'btn btn-warning'
                                     ])
                                 </td>
                             </tr>

@@ -6,5 +6,5 @@
         <input type="hidden" name="redirect" value="{{ $redirect }}">
     @endif
 
-    <button type="submit" class="{{ $class }}">Vymazat</button>
+    <button type="submit" class="{{ $class ?? "btn btn-warning" }}">Vymazat</button>
 </form>
