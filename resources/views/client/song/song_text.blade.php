@@ -28,6 +28,9 @@
                             </div>
                         @else
                             <div class="song-component">Text písně připravujeme.</div>
+                            @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
+                                <br><div><b>V nabídce vlevo jsou k nahlédnutí dostupné materiály ke stažení.</b></div>
+                            @endif
                         @endif
                         <hr>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
