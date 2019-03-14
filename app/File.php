@@ -54,7 +54,7 @@ class File extends Model
         return "$this->name ($this->filename)";
     }
 
-    public function getDownloadUrl()
+    public function getDownloadUrlAttribute()
     {
         return route('download.file', [
             'file' => $this->id,

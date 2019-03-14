@@ -40,7 +40,7 @@
                                 'class' => 'btn btn-warning'
                             ])
 
-                            <a class="btn btn-primary" href="{{ $file->getDownloadUrl() }}">STÁHNOUT</a>
+                            <a class="btn btn-primary" href="{{ $file->download_url }}">STÁHNOUT</a>
                         </td>
                     </tr>
                     @endforeach
