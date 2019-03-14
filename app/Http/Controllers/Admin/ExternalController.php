@@ -25,10 +25,10 @@ class ExternalController extends Controller
 
     public function index()
     {
-        $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->get();
-        $rest = External::whereHas('author')->whereHas('song_lyric')->get();
+        // $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->get();
+        $externals = External::all();
 
-        return view('admin.external.index', compact('todo', 'rest'));
+        return view('admin.external.index', compact('externals'));
     }
 
     public function create()

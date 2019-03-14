@@ -192,7 +192,7 @@
 @endsection
 
 @include('admin.components.magicsuggest_includes')
-@include('admin.components.deletebutton_includes')
+
 
 @push('scripts')
     {{-- each 25 seconds send a GET request in order to preserve the lock state --}}

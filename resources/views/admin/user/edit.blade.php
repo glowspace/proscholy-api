@@ -55,4 +55,3 @@
     </div>
 @endsection
 
-@include('admin.components.deletebutton_includes')

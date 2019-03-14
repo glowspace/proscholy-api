@@ -86,4 +86,4 @@
 @endsection
 
 @include('admin.components.magicsuggest_includes')
-@include('admin.components.deletebutton_includes')
+
