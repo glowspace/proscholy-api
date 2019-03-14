@@ -89,6 +89,14 @@ class SongLyric extends Model implements ISearchResult
         'mixed' => 'vícejazyčná píseň'
     ];
 
+    public function getPublicUrlAttribute()
+    {
+        return route('client.song.text', [
+            'song_lyric' => $this,
+            'name' => str_slug($this->name)
+        ]);
+    }
+
     public function getLanguageName()
     {
         return $this->lang_string[$this->lang];
@@ -104,6 +112,7 @@ class SongLyric extends Model implements ISearchResult
         return $this->belongsToMany(Author::class);
     }
 
+    // OBSOLETE
     public function getLink()
     {
         return route('client.song.text', ['id' => $this->id]);

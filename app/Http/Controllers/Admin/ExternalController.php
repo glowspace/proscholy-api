@@ -146,7 +146,7 @@ class ExternalController extends Controller
         // no error => continue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.external.index'),
-            'save_show_song' => isset($song_lyric) ? route('client.song.text', $song_lyric) : route('admin.song.index'),
+            'save_show_song' => isset($song_lyric) ? $song_lyric->public_url : route('admin.song.index'),
         ];
 
         return redirect($redirect_arr[$request->redirect]);

@@ -28,11 +28,11 @@ Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')-
 Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
 
 // Client single model views
-Route::get('/pisen/{song_lyric}/text', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/pisen/{song_lyric}/noty', 'Client\SongLyricsController@songScore')->name('client.song.score');
 Route::get('/pisen/{song_lyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
 Route::get('/pisen/{song_lyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
 Route::get('/pisen/{song_lyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
+Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
 // TODO: Songbook view
 Route::get('/zpevnik/{songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');

@@ -6,7 +6,7 @@
 
 <div class="navbar-label material-shadow text-success">Materiály</div>
 
-<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
+<a class="btn btn-secondary" href="{{ $song_l->public_url }}">
     <i class="fas fa-align-left"></i> Text + akordy
 
 </a>
