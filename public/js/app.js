@@ -13992,6 +13992,7 @@ module.exports = function normalizeComponent (
 var store = {
     transposition: 0,
     useFlatScale: false,
+    useFlatScale_notified: false,
     chordMode: 0,
     nChordModes: 1,
     chordMode_text: ['POUZE TEXT', 'TEXT S AKORDY', 'VŠECHNY AKORDY']
@@ -60211,15 +60212,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
     },
     created: function created() {
+        // each chords notifies its state to the global store.js file
+
+        // I'm a chord that has a chord sign -> allow to display chords
         if (this.base != "" && this.nChordModes == 1) {
             this.nChordModes = 2;
             this.chordMode = 1;
         }
 
+        // I'm a chord that is a substitute -> allow switching to extended chord mode
         if (this.isSubstitute && this.nChordModes == 2) {
-            // tell the shared data store, that there is a substitute chord
-            // ==> allow switching to extended chord mode
             this.nChordModes = 3;
+        }
+
+        // After being decided between #/b, do not use later chords
+        // (there can be some transposition later in the song)
+        if (this.useFlatScale_notified) {
+            return;
+        }
+
+        // I'm a B-flat chord -> set flats as default
+        if (this.base === "B" || this.base.length > 1 && this.base[1] === "b") {
+            this.useFlatScale = true;
+            this.useFlatScale_notified = true;
         }
     },
 
