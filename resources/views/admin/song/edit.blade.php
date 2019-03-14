@@ -179,7 +179,7 @@
 
                 <h5>Text</h5>
 
-                <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [Cm], [Emaj7]</b> apod.
+                <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
                     <br>Akordy pište českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
                     <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
                     <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
