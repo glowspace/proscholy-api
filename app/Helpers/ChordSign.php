@@ -38,7 +38,7 @@ class ChordSign{
     }
 
     public static function parseFromText($text){
-        $p_baseNote = "([A-H])(\#|b)?"; // base note with accidental
+        $p_baseNote = "([A-H])(\#|b|is)?"; // base note with accidental
         $p_variant = "(mi|m|dim|\+)?";
         $p_ext = "([^\/]*)"; // everything but /
         $p_bass = "(\/([A-H])(\#|b)?)?"; // bass note with accidental
@@ -55,6 +55,11 @@ class ChordSign{
         if ($matches[3] == "m" && strlen($matches[4]) > 0 && substr_compare($matches[4], "aj", 0, 2) == 0) {
             $matches[3] = "";
             $matches[4] = "m".$matches[4];
+        }
+
+        // rewrite Xis to X#
+        if ($matches[2] == "is") {
+            $matches[2] = "#";
         }
 
         $_a = $matches[1];
