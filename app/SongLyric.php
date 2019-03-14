@@ -121,8 +121,6 @@ class SongLyric extends Model implements ISearchResult
         // lyrics, sheet music
 
         return $this->whereHas('scoreExternals')
-        //  TODO: replace 'files' with some scope to texts/notes/chords
-        //        and replace it also in song_text.blade.php
                     ->orWhereHas('scoreFiles')
                     ->orWhere('lyrics', '!=', '');
     }
