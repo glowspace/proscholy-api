@@ -7,10 +7,6 @@ use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
 use App\Traits\Lockable;
 
-use App\Helpers\Chord;
-use App\Helpers\ChordSign;
-use App\Helpers\ChordQueue;
-
 /**
  * App\SongLyric
  *
@@ -55,6 +51,11 @@ class SongLyric extends Model implements ISearchResult
     // Lockable Trait for enabling to "lock" the model while editing
     use Searchable, Lockable;
 
+    protected $dispatchesEvents = [
+        'saved' => \App\Events\SongLyricSaved::class,
+        'updated' => \App\Events\SongLyricSaved::class,
+    ];
+
     protected $fillable
         = [
             'name',
@@ -65,7 +66,10 @@ class SongLyric extends Model implements ISearchResult
             'is_authorized',
             'lang',
             'creating_at',
-            'has_anonymous_author'
+            'has_anonymous_author',
+            // should not be edited from outside
+            'formatted_lyrics',
+            'has_chords'
         ];
 
     public $lang_string = [
@@ -199,6 +203,11 @@ class SongLyric extends Model implements ISearchResult
         return ! $this->isDomestic();
     }
 
+    public function recache()
+    {
+        $this->fireModelEvent('updated', false);
+    }
+
     public static function getByIdOrCreateWithName($identificator)
     {
         if (is_numeric($identificator))
@@ -215,51 +224,6 @@ class SongLyric extends Model implements ISearchResult
 
             return $song_lyric;
         }
-    }
-
-    // FOR THE NEW FRONTEND VIEWER
-    public function getFormattedLyrics()
-    {
-        $lines = explode("\n", $this->lyrics);
-
-        $output = "";
-        $chordQueue = new ChordQueue();
-
-        foreach ($lines as $line){
-            $output .= '<div class="song-line">'.$this->processLine($line, $chordQueue).'</div>';
-        }
-
-        return $output;
-    }
-
-    private function processLine($line, $chordQueue)
-    {
-        $chords = array();
-        $currentChordText = "";
-        $line = trim($line);
-        
-        // starting of a line, notify Chord "repeater" if we are in a verse
-        if (strlen($line) > 0 && is_numeric($line[0])) {
-            $chordQueue->notifyVerse($line[0]);
-        }
-
-        for ($i = 0; $i < strlen($line); $i++) {
-            if ($line[$i] == "["){
-                if ($currentChordText != "")
-                    $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-                $currentChordText = "";
-            }
-
-            $currentChordText .= $line[$i];
-        }
-
-        $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-
-        $string = "";
-        foreach ($chords as $chord) 
-            $string .= $chord->toHTML();
-
-        return $string;
     }
 
     /**

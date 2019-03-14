@@ -24,7 +24,7 @@
                     <div class="card-body">
                         @if($song_l->lyrics)
                             <div class="song-component">
-                                {!! $song_l->getFormattedLyrics() !!}
+                                {!! $song_l->formatted_lyrics !!}
                             </div>
                         @else
                             <div class="song-component">Text písně připravujeme.</div>
