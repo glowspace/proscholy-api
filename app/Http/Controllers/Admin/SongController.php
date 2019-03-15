@@ -207,8 +207,8 @@ class SongController extends Controller
         // no error => contunue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.song.index'),
-            'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
-            'add_file' => route('admin.file.create_for_song', ['song_lyric' => $song_lyric->id]),
+            'add_external' => route('admin.external.create_for_song', $song_lyric),
+            'add_file' => route('admin.file.create_for_song', $song_lyric),
             'save_show' => $song_lyric->public_url
         ];
 
