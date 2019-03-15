@@ -60408,7 +60408,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         chordModeString: function chordModeString() {
-            return this.chordMode_text[this.chordMode];
+            return this.chordMode_text[(this.chordMode + 1) % this.nChordModes];
         }
     },
 
