@@ -60201,12 +60201,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['base', 'variant', 'extension', 'bass', 'text', 'isDivided', 'isSubstitute'],
+    props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute'],
 
     data: function data() {
         return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];

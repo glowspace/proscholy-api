@@ -9,7 +9,6 @@
         </span>
         <span class="chord-text"><slot></slot></span>
         <span class="chord-line" v-if="isDivided == 1">
-            <!-- <span class="chord-line__"></span> -->
         </span>
     </span>
 </template>
@@ -85,7 +84,7 @@
     import { store } from "./store.js";
     
     export default {
-        props: ['base', 'variant', 'extension','bass', 'text', 'isDivided', 'isSubstitute'],
+        props: ['base', 'variant', 'extension','bass', 'isDivided', 'isSubstitute'],
 
         data() {
             return store;

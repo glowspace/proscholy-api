@@ -22,6 +22,12 @@ class Chord{
             $html.=" ";
         }
 
+        $text_value = rtrim($this->text);
+        // see song Amen - substitute "-" by " " for better readability
+        if ($text_value == "-" && $this->chordSign->getBase() != "") {
+            $text_value = "";
+        }
+
         $html.= '<chord';
         $html.= ' base="'.$this->chordSign->getBase().'"';
         $html.= ' variant="'.$this->chordSign->getVariant().'"';
@@ -30,7 +36,7 @@ class Chord{
         $html.= ' is-divided="'.$this->isDivided().'"';
         $html.= ' is-substitute="'.$this->isSubstitute.'"';
         $html.= '>';
-        $html.= rtrim($this->text);
+        $html.= $text_value;
         $html.= "</chord>";
 
         if (!$this->isDivided())
@@ -44,7 +50,7 @@ class Chord{
 
         $last = $this->text[strlen($this->text) - 1];
 
-        $endingValues = [" ", ".", ",", ";", "\r", ":", "!", "?", "-"];
+        $endingValues = [" ", ".", ",", ";", "\r", ":", "!", "?"];
 
         return !in_array($last, $endingValues);
     }
