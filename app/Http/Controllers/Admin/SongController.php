@@ -209,7 +209,7 @@ class SongController extends Controller
             'save' => route('admin.song.index'),
             'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
             'add_file' => route('admin.file.create_for_song', ['song_lyric' => $song_lyric->id]),
-            'save_show' => $song_lyric->public_name
+            'save_show' => $song_lyric->public_url
         ];
 
         return redirect($redirect_arr[$request->redirect]);
