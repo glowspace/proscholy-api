@@ -8,7 +8,7 @@
             <div class="col-xs-12 col-md-9">
                 @component('admin.components.table', [
                     'id' => 'index_table',
-                    'columns' => ['Jméno', 'Email', 'Role', 'Akce']
+                    'columns' => ['Jméno souboru', 'Písnička', 'Autor', 'Typ', 'Akce']
                 ])
                     @foreach($files as $file)
                     <tr>
