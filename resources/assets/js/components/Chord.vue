@@ -5,7 +5,7 @@
             <span class="chord-base">{{baseNote}}</span>
             <span class="chord-variant">{{variant}}</span>
             <span class="chord-extension">{{extension}}</span>
-            <span class="chord-bass" v-if="bass.length!==0">/ {{bassNote}}</span>
+            <span class="chord-bass" v-if="bass.length!==0">/&thinsp;{{bassNote}}</span>
         </span>
         <span class="chord-text"><slot></slot></span>
         <span class="chord-line" v-if="isDivided == 1">
@@ -29,7 +29,7 @@
 
         &-base{
             font-weight: bold;
-            margin-right: 0.5em;
+            margin-right: 0.4em;
         }
 
         &-variant{
@@ -47,7 +47,7 @@
             // font-weight: bold;
             color: #6b78af;
             margin-right: 0.4em;
-            margin-left: -0.2em;
+            margin-left: -0.35em;
         }
 
         &-text {
