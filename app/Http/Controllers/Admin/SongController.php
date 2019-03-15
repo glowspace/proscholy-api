@@ -17,8 +17,26 @@ class SongController extends Controller
     }
 
     public function index(){
-        $song_lyrics = SongLyric::all();
+        $song_lyrics = SongLyric::orderBy('name')->get();
         return view('admin.song.index', compact('song_lyrics'));
+    }
+
+    public function todoLyrics() {
+        $song_lyrics = SongLyric::where('lyrics', '=', null)->orderBy('name')->get();
+        $title = "Seznam písní bez textu";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    public function todoAuthors() {
+        $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->orderBy('name')->get();
+        $title = "Seznam písní bez přiřazeného autora";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    public function todoChords() {
+        $song_lyrics = SongLyric::where('lyrics', '!=', null)->where('has_chords', 0)->orderBy('name')->get();
+        $title = "Seznam písní s textem bez akordů";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
     public function create(){
@@ -166,7 +184,7 @@ class SongController extends Controller
         // CHECKING FOR CONSISTENCY
 
         // 1. case: there is a group of SongLyrics under one Song that have no original 
-        // ONLY IF CREATING THE SONG - AKA UPDATING FOR THE FIRST TIME
+        // do this only when updating the model for the first time - after creating a new model
         if ($song_lyric->hasSiblings() &&
             $song_lyric->song->getOriginalSongLyric() === NULL &&
             $firstTimeUpdating)
@@ -189,9 +207,9 @@ class SongController extends Controller
         // no error => contunue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.song.index'),
-            'add_external' => route('admin.external.create_for_song', ['song_lyric' => $song_lyric->id]),
-            'add_file' => route('admin.file.create_for_song', ['song_lyric' => $song_lyric->id]),
-            'save_show' => route('client.song.text', ['song_id' => $song_lyric->id])
+            'add_external' => route('admin.external.create_for_song', $song_lyric),
+            'add_file' => route('admin.file.create_for_song', $song_lyric),
+            'save_show' => $song_lyric->public_url
         ];
 
         return redirect($redirect_arr[$request->redirect]);

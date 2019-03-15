@@ -20,7 +20,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l_original)}}">{{$song_l_original->name}}</a>
+                                    <a href="{{ $song_l_original->public_url }}">{{$song_l_original->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l_original])@endcomponent
@@ -51,7 +51,7 @@
                         @foreach($song_l->song->translations()->get() as $song_l)
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent

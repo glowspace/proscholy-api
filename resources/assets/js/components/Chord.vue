@@ -5,11 +5,10 @@
             <span class="chord-base">{{baseNote}}</span>
             <span class="chord-variant">{{variant}}</span>
             <span class="chord-extension">{{extension}}</span>
-            <span class="chord-bass" v-if="bass.length!==0">/ {{bassNote}}</span>
+            <span class="chord-bass" v-if="bass.length!==0">/&thinsp;{{bassNote}}</span>
         </span>
         <span class="chord-text"><slot></slot></span>
         <span class="chord-line" v-if="isDivided == 1">
-            <!-- <span class="chord-line__"></span> -->
         </span>
     </span>
 </template>
@@ -30,7 +29,7 @@
 
         &-base{
             font-weight: bold;
-            margin-right: 0.5em;
+            margin-right: 0.4em;
         }
 
         &-variant{
@@ -48,7 +47,7 @@
             // font-weight: bold;
             color: #6b78af;
             margin-right: 0.4em;
-            margin-left: -0.2em;
+            margin-left: -0.35em;
         }
 
         &-text {
@@ -85,22 +84,37 @@
     import { store } from "./store.js";
     
     export default {
-        props: ['base', 'variant', 'extension','bass', 'text', 'isDivided', 'isSubstitute'],
+        props: ['base', 'variant', 'extension','bass', 'isDivided', 'isSubstitute'],
 
         data() {
             return store;
         },
 
         created() {
+            // each chords notifies its state to the global store.js file
+
+            // I'm a chord that has a chord sign -> allow to display chords
             if (this.base != "" && this.nChordModes == 1) {
                 this.nChordModes = 2;
                 this.chordMode = 1;
             }
 
+            // I'm a chord that is a substitute -> allow switching to extended chord mode
             if (this.isSubstitute  && this.nChordModes == 2) {
-                // tell the shared data store, that there is a substitute chord
-                // ==> allow switching to extended chord mode
                 this.nChordModes = 3;
+            }
+
+            // After being decided between #/b, do not use later chords
+            // (there can be some transposition later in the song)
+            if (this.useFlatScale_notified) {
+                return;
+            }
+
+            // I'm a B-flat chord -> set flats as default
+            if (this.base === "B" || 
+                (this.base.length > 1 && this.base[1] === "b")) {
+                this.useFlatScale = true;
+                this.useFlatScale_notified = true;
             }
         },
 

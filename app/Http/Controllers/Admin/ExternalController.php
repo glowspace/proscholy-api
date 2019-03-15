@@ -25,10 +25,18 @@ class ExternalController extends Controller
 
     public function index()
     {
-        $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->get();
-        $rest = External::whereHas('author')->whereHas('song_lyric')->get();
+        $externals = External::all();
 
-        return view('admin.external.index', compact('todo', 'rest'));
+        return view('admin.external.index', compact('externals'));
+    }
+
+    public function todoAuthors(){
+        $externals = External::where('author_id', null)->where('has_anonymous_author', 0)
+            ->orWhere('song_lyric_id', null)
+            ->get();
+
+        $title = "Seznam externích odkazů bez přiřazeného autora nebo písně";
+        return view('admin.external.index', compact('externals', 'title'));
     }
 
     public function create()
@@ -138,7 +146,7 @@ class ExternalController extends Controller
         // no error => continue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.external.index'),
-            'save_show_song' => isset($song_lyric) ? route('client.song.text', $song_lyric) : route('admin.song.index'),
+            'save_show_song' => isset($song_lyric) ? $song_lyric->public_url : route('admin.song.index'),
         ];
 
         return redirect($redirect_arr[$request->redirect]);

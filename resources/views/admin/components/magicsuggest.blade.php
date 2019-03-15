@@ -19,3 +19,11 @@
         });
     </script>
 @endpush
+
+@pushonce('head_links:magicsuggest')
+    <link href="{{asset('css/magicsuggest.css')}}" rel="stylesheet">
+@endpushonce
+
+@pushonce('scripts:magicsuggest')
+    <script src="{{asset('js/magicsuggest.js')}}"></script>
+@endpushonce

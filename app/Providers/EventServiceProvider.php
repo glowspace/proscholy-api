@@ -14,7 +14,10 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\FileDeleting' => [
-            'App\Listeners\FileDeleting',
+            'App\Listeners\FileDeleting'
+        ],
+        'App\Events\SongLyricSaved' => [
+            'App\Listeners\SongLyricSaved'
         ],
     ];
 

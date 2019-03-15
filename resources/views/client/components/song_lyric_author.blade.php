@@ -19,7 +19,7 @@
         @endforeach
     @endif
     @if($original_lyric !== NULL), originál: <a
-                href="{{route('client.song.text', $original_lyric)}}">{{$original_lyric->name}}</a>
+                href="{{ $original_lyric->public_url }}">{{ $original_lyric->name }}</a>
     @endif
 </span>
 

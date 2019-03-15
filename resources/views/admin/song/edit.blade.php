@@ -136,7 +136,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.song.delete', ['song_lyric' => $song_lyric->id]),
+                    'url' => route('admin.song.delete', $song_lyric),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.song.index')
                 ])
@@ -153,7 +153,7 @@
                 <h5>Autoři</h5>
                 <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
                     tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
-                    stačí správě napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
+                    stačí správně napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
                 </p>
 
@@ -179,7 +179,7 @@
 
                 <h5>Text</h5>
 
-                <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [Cm], [Emaj7]</b> apod.
+                <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
                     <br>Akordy pište českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
                     <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
                     <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
@@ -191,8 +191,6 @@
     </div>
 @endsection
 
-@include('admin.components.magicsuggest_includes')
-@include('admin.components.deletebutton_includes')
 
 @push('scripts')
     {{-- each 25 seconds send a GET request in order to preserve the lock state --}}

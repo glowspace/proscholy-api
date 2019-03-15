@@ -23,7 +23,7 @@
 
         computed: {
             chordModeString() {
-                return this.chordMode_text[this.chordMode];
+                return this.chordMode_text[(this.chordMode + 1) % this.nChordModes];
             }
         },
 

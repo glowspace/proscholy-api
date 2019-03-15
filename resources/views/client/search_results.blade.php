@@ -26,7 +26,7 @@
                             <tr>
                                 <td width="20"><i class="fas fa-music"></i></td>
                                 <td>
-                                    <a href="{{route('client.song.text',$song_lyric)}}">{{$song_lyric->getSearchTitle()}}</a>
+                                    <a href="{{ $song_lyric->public_url }}">{{$song_lyric->getSearchTitle()}}</a>
                                 </td>
                             </tr>
                         @empty

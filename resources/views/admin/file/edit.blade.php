@@ -80,7 +80,7 @@
 
                 </form>
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.file.delete', ['file' => $file->id]),
+                    'url' => route('admin.file.delete', $file),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.file.index')
                 ])
@@ -88,6 +88,3 @@
         </div>
     </div>
 @endsection
-
-@include('admin.components.magicsuggest_includes')
-@include('admin.components.deletebutton_includes')

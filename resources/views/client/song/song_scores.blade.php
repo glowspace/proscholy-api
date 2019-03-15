@@ -28,7 +28,7 @@
                                 <tr>
                                     <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
                                     <td>
-                                        <a href="{{$file->getDownloadUrl()}}">{{$file->getPublicName()}}</a>
+                                        <a href="{{$file->download_url}}">{{$file->getPublicName()}}</a>
                                     </td>
                                     <td>
                                         @if (isset($file->author))

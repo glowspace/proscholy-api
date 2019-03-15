@@ -76,7 +76,7 @@
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show_song">Uložit a zobrazit píseň</button>
                 </form>
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.external.delete', ['external' => $external->id]),
+                    'url' => route('admin.external.delete', $external),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.external.index')
                 ])
@@ -84,6 +84,3 @@
         </div>
     </div>
 @endsection
-
-@include('admin.components.magicsuggest_includes')
-@include('admin.components.deletebutton_includes')

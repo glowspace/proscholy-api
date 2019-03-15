@@ -54,7 +54,7 @@ class File extends Model
         return "$this->name ($this->filename)";
     }
 
-    public function getDownloadUrl()
+    public function getDownloadUrlAttribute()
     {
         return route('download.file', [
             'file' => $this->id,
@@ -76,4 +76,9 @@ class File extends Model
     {
         return $this->belongsTo(SongLyric::class);
     }
+
+    // public function scopeScores()
+    // {
+    //     return $this->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
+    // }
 }
