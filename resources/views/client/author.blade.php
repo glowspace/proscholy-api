@@ -71,7 +71,7 @@
                         @foreach($author->songOriginalLyrics as $song_l)
                             <tr>
                                 <td>
-                                    <a href="{{ $song_l->public_url )}}">{{$song_l->name}}</a>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -109,7 +109,7 @@
                         @foreach($author->songNotOriginalLyrics as $song_l)
                             <tr>
                                 <td>
-                                    <a href="{{ $song_l->public_name }}">{{$song_l->name}}</a>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
