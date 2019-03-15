@@ -28,6 +28,9 @@ class Chord{
             $text_value = "";
         }
 
+        // hide everything else than text from google
+        $html.= '<!--googleoff: all-->';
+
         $html.= '<chord';
         $html.= ' base="'.$this->chordSign->getBase().'"';
         $html.= ' variant="'.$this->chordSign->getVariant().'"';
@@ -36,6 +39,8 @@ class Chord{
         $html.= ' is-divided="'.$this->isDivided().'"';
         $html.= ' is-substitute="'.$this->isSubstitute.'"';
         $html.= '>';
+
+        $html.= '<!--googleon: all-->';
         $html.= $text_value;
         $html.= "</chord>";
 
