@@ -27,11 +27,6 @@ class ForceRecachingOfSongLyrics extends Migration
      */
     public function down()
     {
-        foreach (SongLyric::all() as $song_l) {
-            $song_l->update([
-                'formatted_lyrics' => NULL,
-                'has_chords' => false
-            ]);
-        }
+
     }
 }

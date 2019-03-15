@@ -214,7 +214,11 @@ class SongLyric extends Model implements ISearchResult
 
     public function recache()
     {
-        $this->fireModelEvent('updated', false);
+        // this causes to fire update event that recaches formattedlyrics
+        // and haschords
+        $this->update([
+            'formatted_lyrics' => NULL
+        ]);
     }
 
     public static function getByIdOrCreateWithName($identificator)

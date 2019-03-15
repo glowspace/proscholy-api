@@ -11,6 +11,7 @@ use App\Helpers\Chord;
 use App\Helpers\ChordSign;
 use App\Helpers\ChordQueue;
 use App\SongLyric;
+use Log;
 
 
 class SongLyricSaved
@@ -33,21 +34,26 @@ class SongLyricSaved
      */
     public function handle(SongLyricSavedEvent $event)
     {
-        \Log::info("songlyric saved");
+        // CAUSES FOR RECACHING
+        // 1. lyrics has changed -> recache
+        // 2. formatted_lyrics hasn't been set yet
+        if ($event->song_lyric->lyrics !== $event->song_lyric->getOriginal('lyrics')
+            || $event->song_lyric->formatted_lyrics == NULL) 
+        {
+            // temporarily disable eventing
+            $dispatcher = SongLyric::getEventDispatcher();
+            SongLyric::unsetEventDispatcher();
+    
+            $event->song_lyric->update([
+                'formatted_lyrics' => $this->getFormattedLyrics($event->song_lyric),
+                'has_chords' => $this->hasChords($event->song_lyric)
+            ]);
+                
+            // and back enabling the event dispatcher
+            SongLyric::setEventDispatcher($dispatcher);
 
-        $form_lyrics = $this->getFormattedLyrics($event->song_lyric);
-
-        // temporarily disable eventing
-        $dispatcher = SongLyric::getEventDispatcher();
-        SongLyric::unsetEventDispatcher();
-
-        // enabling the event dispatcher
-        $event->song_lyric->update([
-            'formatted_lyrics' => $this->getFormattedLyrics($event->song_lyric),
-            'has_chords' => $this->hasChords($event->song_lyric)
-        ]);
-            
-        SongLyric::setEventDispatcher($dispatcher);
+            Log::info("lyrics recached");
+        }
     }
 
     private function hasChords($song_lyric)
