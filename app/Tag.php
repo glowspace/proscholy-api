@@ -8,13 +8,13 @@ class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type', 'parent_tag_id'];
 
-    public $type_string = [
+    public static $type_string = [
         'neoficiální', 'oficiální (liturgie)'
     ];
 
     public function getTypeText()
     {
-        return $this->type_string[$this->type];
+        return self::$type_string[$this->type];
     }
 
     public function scopeOfficials()

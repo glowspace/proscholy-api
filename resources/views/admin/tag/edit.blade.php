@@ -13,18 +13,8 @@
                         <input required class="form-control" autofocus name="name" placeholder="název štítku (v množném čísle - např. dětské písně)" value="{{$tag->name}}">
                     </div>
 
-                    @can('manage official tags')
-                        <div class="input-group mb-3">
-                            <div class="input-group-append mr-3">
-                                <label class="input-group-text">Typ štítku</label>
-                            </div>
-                            <select class="custom-select" name="type" title="">
-                                @foreach($tag->type_string as $key => $value)
-                                    <option value="{{ $key }}" {{ $tag->type ===  $key  ? 'selected' : "" }}>{{ $value }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    @endcan
+                    <p>Tento štítek je nastaven jako: {{ $tag->getTypeText() }}</p>
+                    <br>
 
                     @if ($tag->child_tags()->count() > 0)
                         <p>Tento štítek je nadřazen následujícím štítkům:</p>
