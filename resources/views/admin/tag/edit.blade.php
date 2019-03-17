@@ -26,16 +26,26 @@
                         </div>
                     @endcan
 
-                    <label>Rodičovský štítek:</label>
-                    @include('admin.components.magicsuggest', [
-                        'field_name' => 'parent_tag',
-                        'value_field' => 'id',
-                        'display_field' => 'name',
-                        'list_all' => $available_tags,
-                        'list_selected' => $parent_tag,
-                        'is_single' => true,
-                        'disabled' => false
-                    ])
+                    @if ($tag->child_tags()->count() > 0)
+                        <p>Tento štítek je nadřazen následujícím štítkům:</p>
+                        <ul>
+                            @foreach ($tag->child_tags as $child)
+                                <li>{{ $child->name }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <label>Rodičovský štítek:</label>
+                        @include('admin.components.magicsuggest', [
+                            'field_name' => 'parent_tag',
+                            'value_field' => 'id',
+                            'display_field' => 'name',
+                            'list_all' => $available_tags,
+                            'list_selected' => $parent_tag,
+                            'is_single' => true,
+                            'disabled' => false
+                        ])
+                    @endif
+
                     <br>
                     
                     <label>Popis štítku</label>

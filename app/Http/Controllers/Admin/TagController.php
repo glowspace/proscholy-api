@@ -10,8 +10,9 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::all();
-        return view('admin.tag.index', compact('tags'));
+        $tags_officials = Tag::officials()->get();
+        $tags_unofficials = Tag::unofficials()->get();
+        return view('admin.tag.index', compact('tags_unofficials', 'tags_officials'));
     }
 
     public function create()
@@ -35,7 +36,13 @@ class TagController extends Controller
     {
         // fetch the data for parent tag suggest box
         // select just tags of same type and those that are child tags (to avoid recursion)
-        $available_tags = Tag::where('parent_tag_id', '!=', $tag->id)->where('type', $tag->type)->get();
+        // $available_tags = Tag::where('parent_tag_id', null)->orWhere('parent_tag_id', '!=', $tag->id);
+                           
+        $available_tags = Tag::where('type', $tag->type)
+                            ->where('id', '!=', $tag->id)
+                            ->where('parent_tag_id', null)
+                            ->get();
+                            
         $parent_tag = $tag->parent_tag == NULL ? [] : [$tag->parent_tag];
         
         return view('admin.tag.edit', compact('tag', 'available_tags', 'parent_tag'));
