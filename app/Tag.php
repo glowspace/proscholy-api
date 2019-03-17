@@ -17,14 +17,14 @@ class Tag extends Model
         return self::$type_string[$this->type];
     }
 
-    public function scopeOfficials()
+    public function scopeOfficials($query)
     {
-        return $this->where('type', 1);
+        return $query->where('type', 1);
     }
 
-    public function scopeUnofficials()
+    public function scopeUnofficials($query)
     {
-        return $this->where('type', 0);
+        return $query->where('type', 0);
     }
 
     public function song_lyrics()

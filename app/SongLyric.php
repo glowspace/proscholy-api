@@ -133,12 +133,12 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(File::class);
     }
 
-    public function scopeNotEmpty()
+    public function scopeNotEmpty($query)
     {
         // return SongLyrycs that have at least one of:
         // lyrics, sheet music
 
-        return $this->whereHas('scoreExternals')
+        return $query->whereHas('scoreExternals')
                     ->orWhereHas('scoreFiles')
                     ->orWhere('lyrics', '!=', '');
     }
