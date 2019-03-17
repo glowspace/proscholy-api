@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTagSongLyricTable extends Migration
+class CreateSongLyricTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateTagSongLyricTable extends Migration
      */
     public function up()
     {
-        Schema::create('tag_song_lyric', function (Blueprint $table) {
+        Schema::create('song_lyric_tag', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tag_id');
             $table->unsignedInteger('song_lyric_id');
             $table->timestamps();
         });
 
-		Schema::table('tag_song_lyric', function(Blueprint $table)
+		Schema::table('song_lyric_tag', function(Blueprint $table)
 		{
 			$table->foreign('tag_id')->references('id')->on('tags')
 				->onUpdate('cascade')->onDelete('cascade');
@@ -36,6 +36,6 @@ class CreateTagSongLyricTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tag_song_lyric');
+        Schema::dropIfExists('song_lyric_tag');
     }
 }
