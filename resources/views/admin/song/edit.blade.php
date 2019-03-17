@@ -93,8 +93,6 @@
                           </div>
                         <br>
                     @endif
-                    <br>
-
 
                     <label>Autorizovaný překlad</label>
                     <select class="form-control" name="is_authorized" title="">
@@ -108,6 +106,34 @@
                         </option>
                     </select>
                     <br>
+
+                    <label>Píseň je vhodná pro následující části mše sv.:</label>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'official_tags',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $official_tags,
+                        'list_selected' => $assigned_official_tags,
+                        'is_single' => false,
+                        'disabled' => false,
+                        'allow_free_entries' => false
+                    ])
+                    <br>
+
+                    <label>Uživatelské štítky:</label>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'unofficial_tags',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $unofficial_tags,
+                        'list_selected' => $assigned_unofficial_tags,
+                        'is_single' => false,
+                        'disabled' => false,
+                        'allow_free_entries' => true
+                    ])
+                    <br>
+
+
                     <label>Jazyk</label>
                     <select class="custom-select" name="lang" title="">
                         @foreach($song_lyric->lang_string as $key => $value)

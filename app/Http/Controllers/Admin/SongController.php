@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Song;
 use App\SongLyric;
 use App\Author;
+use App\Tag;
 
 class SongController extends Controller
 {
@@ -80,10 +81,21 @@ class SongController extends Controller
         //   had been set as original of some other songs
         $assigned_song_disabled = $song_lyric->hasSiblings() && $song_lyric->isDomestic();
 
+        // HANDLING OF TAGS
+        $official_tags = Tag::officials()->get();
+        $assigned_official_tags = $song_lyric->tags()->officials()->get();
+
+        $unofficial_tags = Tag::unofficials()->get();
+        $assigned_unofficial_tags = $song_lyric->tags()->unofficials()->get();
+
+        // dd($assigned_official_tags);
+
         return view('admin.song.edit', compact(
             'song_lyric', 
             'assigned_authors', 'all_authors',
-            'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled'));
+            'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled',
+            'official_tags', 'assigned_official_tags',
+            'unofficial_tags', 'assigned_unofficial_tags'));
     }
 
     public function destroy(Request $request, SongLyric $song_lyric)
@@ -177,6 +189,18 @@ class SongController extends Controller
                 $song_lyric->song->save();
             }
         }
+
+        // SYNCING THE TAGS
+        $all_tags = [];
+
+        foreach (array_merge(
+            $request->unofficial_tags ?? [], 
+            $request->official_tags ?? []) as $identificator)
+        {
+            $all_tags[] = Tag::getByIdOrCreateWithName($identificator)->id;
+        }
+
+        $song_lyric->tags()->sync($all_tags);
 
         // UNLOCKING FOR EDIT
         $song_lyric->unlock();

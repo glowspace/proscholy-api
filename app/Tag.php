@@ -40,6 +40,11 @@ class Tag extends Model
         }
         else
         {
+            $samename = Tag::where('name', $identificator)->first();
+            if ($samename !== NULL) {
+                return $samename;
+            }
+
             $tag = Tag::create([
                 'name' => $identificator,
             ]);
