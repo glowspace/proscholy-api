@@ -22,7 +22,7 @@ class TagController extends Controller
 
     public function store(Request $request)
     {
-        $tag = Tag::create(['name' => $request->name]);
+        $tag = Tag::create($request->all());
 
         $redirect_arr = [
             'edit' => route('admin.tag.edit', ['tag' => $tag->id]),

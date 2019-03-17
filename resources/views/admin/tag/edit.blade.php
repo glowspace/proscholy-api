@@ -24,16 +24,18 @@
                             @endforeach
                         </ul>
                     @else
-                        <label>Rodičovský štítek:</label>
-                        @include('admin.components.magicsuggest', [
-                            'field_name' => 'parent_tag',
-                            'value_field' => 'id',
-                            'display_field' => 'name',
-                            'list_all' => $available_tags,
-                            'list_selected' => $parent_tag,
-                            'is_single' => true,
-                            'disabled' => false
-                        ])
+                        @if ($tag->type == 0)
+                            <label>Rodičovský štítek:</label>
+                            @include('admin.components.magicsuggest', [
+                                'field_name' => 'parent_tag',
+                                'value_field' => 'id',
+                                'display_field' => 'name',
+                                'list_all' => $available_tags,
+                                'list_selected' => $parent_tag,
+                                'is_single' => true,
+                                'disabled' => false
+                            ])
+                        @endif
                     @endif
 
                     <br>
