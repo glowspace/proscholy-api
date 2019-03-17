@@ -61,7 +61,7 @@
                         @endforeach
                         <br/>
                     @else
-                    <label>Jedná se o verzi následující písně:</label>
+                        <label>Jedná se o verzi následující písně:</label>
                         @include('admin.components.magicsuggest', [
                             'field_name' => 'assigned_song_lyrics',
                             'value_field' => 'id',

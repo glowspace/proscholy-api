@@ -16,9 +16,10 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->longtext('description')->nullable();
             // type: 0 normal, 1 official
             $table->unsignedInteger('type')->default(0);
-            $table->unsignedInteger('mother_tag_id')->nullable();
+            $table->unsignedInteger('parent_tag_id')->nullable();
             $table->timestamps();
         });
     }

@@ -113,4 +113,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
         Route::put('/user/{user}', 'UserController@update')->name('admin.user.update');
         Route::delete('/user/{user}', 'UserController@destroy')->name('admin.user.delete');
     });
+
+    // Tag
+    Route::get('/tags', 'TagController@index')->name('admin.tag.index');
+    Route::get('/tag/new', 'TagController@create')->name('admin.tag.create');
+    Route::post('/tag/new', 'TagController@store')->name('admin.tag.store');
+    Route::get('/tag/{tag}', 'TagController@edit')->name('admin.tag.edit');
+    Route::put('/tag/{tag}', 'TagController@update')->name('admin.tag.update');
+    Route::delete('/tag/{tag}', 'TagController@destroy')->name('admin.tag.delete');
 });

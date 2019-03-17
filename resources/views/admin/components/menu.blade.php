@@ -76,6 +76,12 @@
     'text' => 'Nahrané soubory'
 ])
 
+@include('admin.components.menu-item', [
+    'route' => 'admin.tag.index',
+    'icon' => 'tag',
+    'text' => 'Štítky/Kategorie písniček'
+])
+
 @can('manage users')
     @include('admin.components.menu-item', [
         'route' => 'admin.user.index',

@@ -112,6 +112,11 @@ class SongLyric extends Model implements ISearchResult
         return $this->belongsToMany(Author::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     // OBSOLETE
     public function getLink()
     {
