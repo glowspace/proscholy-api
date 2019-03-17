@@ -82,7 +82,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('/songs/no-author', 'SongController@todoAuthors')->name('admin.song.no-author');
     Route::get('/songs/no-lyric', 'SongController@todoLyrics')->name('admin.song.no-lyric');
     Route::get('/songs/no-chord', 'SongController@todoChords')->name('admin.song.no-chord');
-
+    Route::get('/songs/no-tag', 'SongController@todoTags')->name('admin.song.no-tag');
+    
     Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('admin.song.refresh_updating');
     Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('admin.song.resolve_error');
 

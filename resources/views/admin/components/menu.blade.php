@@ -39,6 +39,12 @@
 ])
 
 @include('admin.components.menu-item', [
+    'route' => 'admin.song.no-tag',
+    'icon' => 'music',
+    'text' => 'Písně bez štítků'
+])
+
+@include('admin.components.menu-item', [
     'route' => 'admin.external.no-author',
     'icon' => 'link',
     'text' => 'Odkazy bez autora/písničky'

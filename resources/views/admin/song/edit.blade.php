@@ -120,7 +120,7 @@
                     ])
                     <br>
 
-                    <label>Uživatelské štítky:</label>
+                    <label>Uživatelské štítky: (lze přidávat nové)</label>
                     @include('admin.components.magicsuggest', [
                         'field_name' => 'unofficial_tags',
                         'value_field' => 'id',

@@ -40,6 +40,12 @@ class SongController extends Controller
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
+    public function todoTags() {
+        $song_lyrics = SongLyric::whereDoesntHave('tags')->orderBy('name')->get();
+        $title = "Seznam písní bez štítků";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
     public function create(){
         return view('admin.song.create');
     }
