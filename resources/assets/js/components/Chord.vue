@@ -2,12 +2,16 @@
     <span class="chord">
         <!-- the if condition syntax is weird but necessary here -->
         <span class="chord-sign" v-if="displayChordSign">
+            <span v-if="isOptional">(</span>
             <span class="chord-base">{{baseNote}}</span>
             <span class="chord-variant">{{variant}}</span>
             <span class="chord-extension">{{extension}}</span>
-            <span class="chord-bass" v-if="bass.length!==0">/&thinsp;{{bassNote}}</span>
+            <span class="chord-bass" v-if="bass.length!==0">/{{bassNote}}</span>
+            <span class="chord-right-bracket" v-if="isOptional">)</span>
         </span>
-        <span class="chord-text"><slot></slot></span>
+        <span class="chord-text">
+            <slot></slot>
+        </span>
         <span class="chord-line" v-if="isDivided == 1">
         </span>
     </span>
@@ -50,6 +54,11 @@
             margin-left: -0.35em;
         }
 
+        &-right-bracket {
+            margin-left: -0.4em;
+            margin-right: 0.4em;
+        }
+
         &-text {
             display: inline-block;
             // this is so that the chord line is not displayed on the text
@@ -84,7 +93,7 @@
     import { store } from "./store.js";
     
     export default {
-        props: ['base', 'variant', 'extension','bass', 'isDivided', 'isSubstitute'],
+        props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
 
         data() {
             return store;

@@ -59764,7 +59764,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n.chord {\n  position: relative;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.4em;\n    color: #1d6dab;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4em;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    color: #6b78af;\n    margin-right: 0.4em;\n    margin-left: -0.35em;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n    background: white;\n    z-index: 2;\n}\n.chord-line {\n    display: block;\n    position: relative;\n    width: calc(100% - 0.6em);\n    height: 0.1em;\n    background: #b9b9b9;\n    top: -0.5em;\n    right: -0.5em;\n}\n.chord:hover .chord-bass {\n    color: #1d6dab;\n}\n", ""]);
+exports.push([module.i, "\n.chord {\n  position: relative;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.4em;\n    color: #1d6dab;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4em;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    color: #6b78af;\n    margin-right: 0.4em;\n    margin-left: -0.35em;\n}\n.chord-right-bracket {\n    margin-left: -0.4em;\n    margin-right: 0.4em;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n    background: white;\n    z-index: 2;\n}\n.chord-line {\n    display: block;\n    position: relative;\n    width: calc(100% - 0.6em);\n    height: 0.1em;\n    background: #b9b9b9;\n    top: -0.5em;\n    right: -0.5em;\n}\n.chord:hover .chord-bass {\n    color: #1d6dab;\n}\n", ""]);
 
 // exports
 
@@ -60201,11 +60201,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute'],
+    props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
 
     data: function data() {
         return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
@@ -60292,6 +60301,8 @@ var render = function() {
   return _c("span", { staticClass: "chord" }, [
     _vm.displayChordSign
       ? _c("span", { staticClass: "chord-sign" }, [
+          _vm.isOptional ? _c("span", [_vm._v("(")]) : _vm._e(),
+          _vm._v(" "),
           _c("span", { staticClass: "chord-base" }, [
             _vm._v(_vm._s(_vm.baseNote))
           ]),
@@ -60306,8 +60317,12 @@ var render = function() {
           _vm._v(" "),
           _vm.bass.length !== 0
             ? _c("span", { staticClass: "chord-bass" }, [
-                _vm._v("/ " + _vm._s(_vm.bassNote))
+                _vm._v("/" + _vm._s(_vm.bassNote))
               ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isOptional
+            ? _c("span", { staticClass: "chord-right-bracket" }, [_vm._v(")")])
             : _vm._e()
         ])
       : _vm._e(),
