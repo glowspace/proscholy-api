@@ -159,6 +159,9 @@ class SongController extends Controller
                 $song_lyric->authors()->create(['name' => $author]);
             }
             $song_lyric->save();
+        } else {
+            $song_lyric->authors()->sync([]);
+            $song_lyric->save();
         }
 
         // SYNCING AND HANDLING THE ASSOCIATED SONGS
