@@ -16,22 +16,34 @@
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
                         <transposition></transposition>
-                        {{-- <div class="transpose-control-wrapper" style="display: inline-block">
-                            <span>Transpozice: </span><a class="btn btn-secondary" id="transposeUp">+1</a>
-                            <a class="btn btn-secondary" id="transposeDown">-1</a>
-                        </div> --}}
                     </div>
                     <div class="card-body">
-                        @if($song_l->lyrics)
-                            <div class="song-component">
-                                {!! $song_l->formatted_lyrics !!}
+                        <div class="d-flex flex-column flex-sm-row-reverse">
+                            <div class="song-tags">
+                                {{-- <a href="#" class="tag">štítek 1</a>
+                                <a href="#" class="tag">štítek 2</a>
+                                <a href="#" class="tag">štítek 3</a> --}}
+                                @foreach ($song_l->tags as $tag)
+                                    <a href="#" class="tag">{{ $tag->name }}</a>
+                                @endforeach
                             </div>
-                        @else
-                            <div class="song-component">Text písně připravujeme.</div>
-                            @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
-                                <br><div><b>V nabídce vlevo jsou k nahlédnutí dostupné materiály ke stažení.</b></div>
-                            @endif
-                        @endif
+                            <div class="flex-grow-1">
+                                @if($song_l->lyrics)
+                                    {!! $song_l->formatted_lyrics !!}
+                                @else
+                                    <p>Text písně připravujeme.</p>
+                                    @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
+                                        <p><b>V nabídce vlevo jsou k nahlédnutí dostupné materiály ke stažení.</b></p>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        {{-- <div class="song-component">
+                            
+                            <div class="song-component-tags">
+                                <div class="tag tag--official">štítek</div>
+                            </div>
+                        </div> --}}
                         <hr>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>

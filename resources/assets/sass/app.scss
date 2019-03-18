@@ -252,70 +252,19 @@ ChordPro view
   }
 }
 
+.song-tags a.tag {
+    border: #ffd69a 0.15em solid;
+    padding: 0.1em 0.7em;
+    margin-bottom: 0.3em;
+    border-radius: 1em;
+    color: #907753;
+    text-align: center;
+    display: block;
 
-#lyrics {
-  display:     inline-block;
-
-  width:       100%;
-
-  text-align:  left;
-  margin:      0 auto 0;
-  overflow-x:  scroll;
-
-  font-family: monospace;
-  white-space: nowrap;
-  font-size:   16px;
-
-  padding:     10px;
-}
-
-
-#lyrics .command_block {
-  padding-bottom: 10px;
-}
-
-
-#lyrics .command_block h1 {
-  font-size: 1.8rem;
-  margin:    0;
-  padding:   0;
-}
-
-
-#lyrics .command_block h4 {
-  font-size: 1.4rem;
-  margin:    0;
-  padding:   0;
-}
-
-
-#lyrics .command_block em.comment {
-  display: block;
-}
-
-
-#lyrics .lyric_block {
-  //column-count: 2;
-}
-
-
-#lyrics .lyric_block .line {
-  -webkit-column-break-inside: avoid; /* Chrome, Safari */
-  page-break-inside:           avoid; /* Theoretically FF 20+ */
-  break-inside:                avoid-column; /* IE 11 */
-  //display:                     table; /* Actually FF 20+ */
-}
-
-
-#lyrics .lyric_block .chord {
-  color:       #098845;
-  font-weight: bold;
-}
-
-
-@media print {
-  #lyrics {
-    padding: 0;
-    border:  none;
-  }
+    &:hover {
+      text-decoration: none;
+      border-color: #c2a171;
+      // background: #ffd69a;
+      // color: white;
+    }
 }
