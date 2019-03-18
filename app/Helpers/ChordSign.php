@@ -41,7 +41,7 @@ class ChordSign{
         $p_baseNote = "([A-H])(\#|b|is)?"; // base note with accidental
         $p_variant = "(mi|m|dim|\+)?";
         $p_ext = "([^\/]*)"; // everything but /
-        $p_bass = "(\/([A-H])(\#|b)?)?"; // bass note with accidental
+        $p_bass = "(\/([A-H])(\#|b|is)?)?"; // bass note with accidental
 
         preg_match("/$p_baseNote$p_variant$p_ext$p_bass/", $text, $matches);
 
@@ -60,6 +60,9 @@ class ChordSign{
         // rewrite Xis to X#
         if ($matches[2] == "is") {
             $matches[2] = "#";
+        }
+        if (count($matches) > 7 && $matches[7] == "is") {
+            $matches[7] = "#";
         }
 
         $_a = $matches[1];
