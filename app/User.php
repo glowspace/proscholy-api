@@ -55,4 +55,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function assigned_authors()
+    {
+        return $this->belongsToMany(Author::class);
+    }
 }
