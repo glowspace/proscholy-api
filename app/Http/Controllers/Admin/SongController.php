@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Song;
 use App\SongLyric;
 use App\Author;
@@ -65,6 +66,12 @@ class SongController extends Controller
 
     public function edit(SongLyric $song_lyric)
     {
+        // check if user has permissions to edit current song
+        if (Auth::user()->hasRole('autor') && 
+            SongLyric::restricted()->where('id', $song_lyric->id)->count() == 0) {
+            return abort(403, "Nepovolený přístup k písni $song_lyric->name");
+        }
+
         if (!$song_lyric->lock()) {
             // unsuccesful attempt to lock -> that means the model has been locked
             return view('admin.song.error', [
