@@ -23,7 +23,7 @@
                         </td>
                         <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.tag.delete',['tag' => $tag->id ]),
+                                'url' => route('admin.tag.destroy',['tag' => $tag->id ]),
                             ])
                         </td>
                     </tr>
@@ -44,7 +44,7 @@
                         <td>
                             @can('manage official tags')
                                 @include('admin.components.deletebutton', [
-                                    'url' => route('admin.tag.delete',['tag' => $tag->id ]),
+                                    'url' => route('admin.tag.destroy',['tag' => $tag->id ]),
                                 ])
                             @endcan
                         </td>

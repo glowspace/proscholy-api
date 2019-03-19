@@ -50,7 +50,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.tag.delete', $tag),
+                    'url' => route('admin.tag.destroy', $tag),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.tag.index')
                 ])

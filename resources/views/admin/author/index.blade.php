@@ -16,7 +16,7 @@
                         <td>{{ $author->getTypeText() }}</td>
                         <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.author.delete',['author' => $author->id ]),
+                                'url' => route('admin.author.destroy',['author' => $author->id ]),
                             ])
                         </td>
                     </tr>

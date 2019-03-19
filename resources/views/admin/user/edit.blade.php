@@ -60,7 +60,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.user.delete', $user),
+                    'url' => route('admin.user.destroy', $user),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.user.index')
                 ])

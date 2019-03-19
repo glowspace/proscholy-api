@@ -30,7 +30,7 @@
                         <td>{{ $file->getTypeString() }}</td>
                         <td class="d-inline-flex">
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.file.delete', $file),
+                                'url' => route('admin.file.destroy', $file),
                             ])
 
                             <a class="btn btn-primary" href="{{ $file->download_url }}">STÁHNOUT</a>

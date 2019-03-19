@@ -28,7 +28,7 @@
                             </td>
                             <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.song.delete',[ 'song' => $song_l->id ]) ,
+                                'url' => route('admin.song.destroy',[ 'song' => $song_l->id ]) ,
                             ])
                         </td>
                     </tr>

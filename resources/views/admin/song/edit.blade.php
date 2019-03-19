@@ -162,7 +162,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.song.delete', $song_lyric),
+                    'url' => route('admin.song.destroy', $song_lyric),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.song.index')
                 ])

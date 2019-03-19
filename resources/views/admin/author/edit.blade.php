@@ -34,7 +34,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.author.delete', $author),
+                    'url' => route('admin.author.destroy', $author),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.author.index')
                 ])

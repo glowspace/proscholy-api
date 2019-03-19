@@ -32,7 +32,7 @@
                         <td>{{ $external->getTypeString() }}</td>
                         <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.external.delete', $external ),
+                                'url' => route('admin.external.destroy', $external ),
                             ])
                         </td>
                     </tr>

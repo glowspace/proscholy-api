@@ -5,7 +5,7 @@
         <h2>Nový uživatel</h2>
         <div class="row">
             <div class="col-sm-12">
-                <form action="{{route('admin.user.create')}}" method="post">
+                <form action="{{route('admin.user.store')}}" method="post">
                     @csrf
                     <div class="input-group mb-3">
                         <input required class="form-control" autofocus name="email" type="email" placeholder="email"><br>
