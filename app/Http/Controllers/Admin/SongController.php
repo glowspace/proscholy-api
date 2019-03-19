@@ -46,7 +46,8 @@ class SongController extends Controller
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('admin.song.create');
     }
 

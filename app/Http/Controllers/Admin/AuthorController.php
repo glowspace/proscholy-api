@@ -8,17 +8,14 @@ use App\Author;
 
 class AuthorController extends Controller
 {
-    public function __construct()
+    public function index()
     {
-
-    }
-
-    public function index(){
         $authors = Author::all();
         return view('admin.author.index', compact('authors'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('admin.author.create');
     }
 
