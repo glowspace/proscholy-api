@@ -10,7 +10,7 @@ class AuthorController extends Controller
 {
     public function index()
     {
-        $authors = Author::all();
+        $authors = Author::restricted()->get();
         return view('admin.author.index', compact('authors'));
     }
 

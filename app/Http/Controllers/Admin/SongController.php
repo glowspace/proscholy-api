@@ -18,7 +18,7 @@ class SongController extends Controller
     }
 
     public function index(){
-        $song_lyrics = SongLyric::orderBy('name')->get();
+        $song_lyrics = SongLyric::orderBy('name')->restricted()->get();
         return view('admin.song.index', compact('song_lyrics'));
     }
 

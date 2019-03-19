@@ -3,7 +3,9 @@
 @section('content')
     <div class="content-padding">
         <h2>{{ $title ?? "Seznam autorů"}}</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
+        @can('add authors')
+            <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
+        @endcan
         <div class="row">
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [

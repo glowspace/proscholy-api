@@ -55,8 +55,8 @@ Auth::routes(['register' => false]);
 // Downloading
 Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-    Route::group(['middleware' => 'role:admin|editor', 'namespace' => 'Admin'], function () 
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () 
     {
         Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
@@ -82,12 +82,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('song.resolve_error');
 
         Route::resource('author', 'AuthorController')->except(['show']);
-        // Route::get('/authors', 'AuthorController@index')->name('author.index');
-        // Route::get('/author/new', 'AuthorController@create')->name('author.create');
-        // Route::post('/author/new', 'AuthorController@store')->name('author.store');
-        // Route::get('/author/{author}', 'AuthorController@edit')->name('author.edit');
-        // Route::put('/author/{author}', 'AuthorController@update')->name('author.update');
-        // Route::delete('/author/{author}', 'AuthorController@destroy')->name('author.destroy');
 
         Route::resource('file', 'FileController')->except(['show']);
         Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('file.create_for_song');
@@ -99,10 +93,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::group(['middleware' => ['permission:manage users']], function () {
             Route::resource('user', 'UserController')->except(['show']);
         });
-    });
-
-    Route::group(['middleware' => 'role:autor', 'namespace' => 'AuthorRestricted'], function () {
-
     });
 });
 

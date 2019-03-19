@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model; 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\File
@@ -65,6 +66,19 @@ class File extends Model
     public function getTypeString()
     {
         return $this->type_string[$this->type];
+    }
+
+    public function scopeRestricted($query)
+    {
+        if (Auth::user()->hasRole('autor')) {
+            return $query->whereHas('author', function($q) {
+                $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
+            })->orWhereHas('song_lyric', function($q) {
+                $q->restricted();
+            });
+        } else {
+            return $query;
+        }
     }
 
     public function author()

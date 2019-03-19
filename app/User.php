@@ -60,4 +60,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Author::class);
     }
+
+    public function getAssignedAuthorIds()
+    {
+        return $this->assigned_authors()->get()->map(function ($a) {
+            return $a->id;
+        });
+    }
 }

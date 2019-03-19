@@ -22,19 +22,26 @@ class UserRolesPermissionsSeeder extends Seeder
         // DB::table($tableNames['roles'])->delete();
         // DB::table($tableNames['permissions'])->delete();
 
+        $permissions = ['manage users', 'manage official tags', 'access todo', 'add authors', 'manage tags'];
+
         // if the permission already exists then do not create new one
-        $mu = Permission::firstOrNew(['name' => 'manage users']);
-        $mu->save();
-        $mot = Permission::firstOrNew(['name' => 'manage official tags']);
-        $mot->save();
+        foreach ($permissions as $new_name)
+        {
+            $new_perm = Permission::firstOrNew(['name' => $new_name]);
+            $new_perm->save();
+        }
 
         // .. and roles
         $admin = Role::firstOrNew(['name' => 'admin']);
-        $admin->givePermissionTo('manage users');
-        $admin->givePermissionTo('manage official tags');
+        foreach ($permissions as $perm) {
+            $admin->givePermissionTo($perm);
+        }
         $admin->save();
 
         $editor = Role::firstOrNew(['name' => 'editor']);
+        $editor->givePermissionTo('access todo');
+        $admin->givePermissionTo('add authors');
+        $admin->givePermissionTo('manage tags');
         $editor->save();
         $author = Role::firstOrNew(['name' => 'autor']);
         $author->save();

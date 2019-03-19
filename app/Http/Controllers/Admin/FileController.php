@@ -17,7 +17,7 @@ class FileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $files = File::all();
+        $files = File::restricted()->get();
         return view('admin.file.index', compact('files'));
     }
 
@@ -86,7 +86,7 @@ class FileController extends Controller
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $file->song_lyric ? [$file->song_lyric] : [];
-        $all_song_lyrics      = SongLyric::select(['id', 'name'])->orderBy('name')->get();
+        $all_song_lyrics      = SongLyric::restricted()->select(['id', 'name'])->orderBy('name')->get();
 
         return view('admin.file.edit', compact(
             'file',

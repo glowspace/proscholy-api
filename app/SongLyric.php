@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
 
 /**
@@ -131,6 +132,17 @@ class SongLyric extends Model implements ISearchResult
     public function files()
     {
         return $this->hasMany(File::class);
+    }
+
+    public function scopeRestricted($query)
+    {
+        if (Auth::user()->hasRole('autor')) {
+            return $query->whereHas('authors', function($q) {
+                $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
+            });
+        } else {
+            return $query;
+        }
     }
 
     public function scopeNotEmpty($query)
