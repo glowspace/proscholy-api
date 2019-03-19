@@ -24,7 +24,8 @@
                         'list_all' => $all_authors,
                         'list_selected' => $assigned_authors,
                         'is_single' => false,
-                        'disabled' => false
+                        'disabled' => false,
+                        'allow_free_entries' => Auth::user()->can('add authors')
                     ])
                     <br>
 
@@ -123,7 +124,7 @@
                     ])
                     <br>
 
-                    <label>Uživatelské štítky: (lze přidávat nové)</label>
+                    <label>Uživatelské štítky:@can('manage tags') (lze přidávat nové)@endcan</label>
                     @include('admin.components.magicsuggest', [
                         'field_name' => 'unofficial_tags',
                         'value_field' => 'id',
@@ -132,7 +133,7 @@
                         'list_selected' => $assigned_unofficial_tags,
                         'is_single' => false,
                         'disabled' => false,
-                        'allow_free_entries' => true
+                        'allow_free_entries' => Auth::user()->can('manage tags')
                     ])
                     <br>
 
@@ -181,8 +182,11 @@
 
                 <h5>Autoři</h5>
                 <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                    tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
-                    stačí správně napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
+                    tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
+                    @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
+                    a autor (autoři) se po uložení písně automaticky vytvoří.
+                    @else Je potřeba požádat administrátory o vytvoření nového autora @endcan
+                    <br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
                 </p>
 
