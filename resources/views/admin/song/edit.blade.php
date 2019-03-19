@@ -32,7 +32,10 @@
                         <input class="form-check-input" type="checkbox" {{ $song_lyric->has_anonymous_author ? 'checked' : "" }}
                             name="has_anonymous_author" id="check_has_anonymous_author" value="1">
                         <label class="form-check-label" for="check_has_anonymous_author">
-                            Autor neznámý (nezobrazovat v to-do listu)
+                            Autor neznámý
+                            @can('access todo')
+                             (nezobrazovat v to-do listu)
+                            @endcan
                         </label>
                     </div>
                     <br>
