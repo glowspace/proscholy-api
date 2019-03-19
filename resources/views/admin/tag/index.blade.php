@@ -42,8 +42,10 @@
             </div>
 
             <div class="col-xs-12 col-lg-6 col-xl-5">
-                <h2>Seznam oficiálních štítků</h2>
-                <h4>(tyto je možné spravovat pouze z administrátorského účtu)</h4>
+                <h2>Seznam liturgických štítků</h2>
+                @can('manage tags')
+                    <h4>(tyto je možné spravovat pouze z administrátorského účtu)</h4>
+                @endcan
                 @component('admin.components.table', [
                     'id' => 'official_table',
                     'columns' => ['Jméno', 'Akce']
