@@ -10,7 +10,7 @@
 
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
             kteří pracují s českou nebo slovenskou křesťanskou tvorbou.
-            V dnešní době, kdy je duchovní hudba roztroušena po mnoha různých místech
+            V dnešní době, kdy jsou materiály i duchovní hudba roztroušena po mnoha různých místech
             na internetu nebo v papírových sbornících a zpěvnících,
             chceme nabídnout rychlou a praktickou alternativu.
         </p>
@@ -18,16 +18,16 @@
         <p>
             Chcete se podílet na tvorbě zpěvníku?
             Máte tipy na nové funkce nebo nový repertoár?
-            Můžete nám napsat na email redakce@proscholy.cz.</p>
+            Můžete nám napsat na email <a href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a> nebo se na nás obrátit telefonicky na <b>734 791 909</b>.</p>
 
-        <h3>Náš redakční tým</h3>
+        <h3>Náš tým</h3>
 
         <div class="row">
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Michael Dojčár</h5>
-                        <p class="card-text">koordinace projektu, IT</p>
+                        <p class="card-text">celková koordinace projektu, IT</p>
                     </div>
                 </div>
             </div>
@@ -44,6 +44,34 @@
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">Jana Stuchlíková</h5>
+                        <p class="card-text">redakční tým</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Mgr. Ondřej Talaš</h5>
+                        <p class="card-text">koordinace, duchovní podpora</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Mag. art. Ondřej Múčka</h5>
+                        <p class="card-text">redakční tým</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
                         <h5 class="card-title">Benjamín Tichý</h5>
                         <p class="card-text">grafika</p>
                     </div>
@@ -54,6 +82,24 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Matěj Kulišťák</h5>
+                        <p class="card-text">redakční tým</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Barbora Kuchaříková</h5>
+                        <p class="card-text">redakční tým</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Terezie Kološová</h5>
                         <p class="card-text">redakční tým</p>
                     </div>
                 </div>
@@ -91,6 +137,15 @@
                     <div class="card-body">
                         <h5 class="card-title">Emma Kasanová</h5>
                         <p class="card-text">PR tým</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Josef Řídký</h5>
+                        <p class="card-text">mobilní aplikace</p>
                     </div>
                 </div>
             </div>

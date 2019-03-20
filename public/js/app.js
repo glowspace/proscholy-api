@@ -59708,7 +59708,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Chord.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Chord.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -59717,9 +59717,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ed49f296", Component.options)
+    hotAPI.createRecord("data-v-ab4f3d16", Component.options)
   } else {
-    hotAPI.reload("data-v-ed49f296", Component.options)
+    hotAPI.reload("data-v-ab4f3d16", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -59740,13 +59740,13 @@ var content = __webpack_require__(44);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(46)("1f07d65d", content, false, {});
+var update = __webpack_require__(46)("495a5dfe", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ed49f296\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ed49f296\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ab4f3d16\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ab4f3d16\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -60323,7 +60323,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-ed49f296", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-ab4f3d16", module.exports)
   }
 }
 
@@ -60353,7 +60353,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Transposition.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Transposition.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -60362,9 +60362,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0acf6aac", Component.options)
+    hotAPI.createRecord("data-v-10eee56a", Component.options)
   } else {
-    hotAPI.reload("data-v-0acf6aac", Component.options)
+    hotAPI.reload("data-v-10eee56a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -60524,7 +60524,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0acf6aac", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-10eee56a", module.exports)
   }
 }
 

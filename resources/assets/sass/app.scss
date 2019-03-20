@@ -121,8 +121,8 @@ Home page specific elements
  */
 
 .background-home {
-  background-image:    url('/img/background_orange_v1.svg');
-  background-position: 0 -4px;
+  background-image:    url('/img/bg_center.svg');
+  background-position-x: center;
   background-size:     auto 120%;
   background-repeat:   no-repeat;
   min-height:          calc(100vh - 66px);
