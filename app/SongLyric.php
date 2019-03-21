@@ -70,7 +70,9 @@ class SongLyric extends Model implements ISearchResult
             'has_anonymous_author',
             // should not be edited from outside
             'formatted_lyrics',
-            'has_chords'
+            'has_chords',
+            'published',
+            'is_approved_by_author'
         ];
 
     public $lang_string = [
