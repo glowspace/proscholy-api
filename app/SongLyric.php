@@ -71,7 +71,7 @@ class SongLyric extends Model implements ISearchResult
             // should not be edited from outside
             'formatted_lyrics',
             'has_chords',
-            'published',
+            'is_published',
             'is_approved_by_author'
         ];
 

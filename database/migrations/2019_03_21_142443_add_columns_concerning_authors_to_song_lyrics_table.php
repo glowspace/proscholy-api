@@ -15,7 +15,7 @@ class AddColumnsConcerningAuthorsToSongLyricsTable extends Migration
     {
         Schema::table('song_lyrics', function (Blueprint $table)
         {
-            $table->boolean('published')->default(1);
+            $table->boolean('is_published')->default(1);
             $table->boolean('is_approved_by_author')->default(0);
         });
     }
@@ -28,7 +28,7 @@ class AddColumnsConcerningAuthorsToSongLyricsTable extends Migration
     public function down()
     {
         Schema::table('song_lyrics', function (Blueprint $table) {
-            $table->dropColumn('published');
+            $table->dropColumn('is_published');
             $table->dropColumn('is_approved_by_author');
         });
     }
