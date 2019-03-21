@@ -146,7 +146,7 @@ class SongLyric extends Model implements ISearchResult
         if ($user->hasRole('autor')) {
             // show songs, where there is at least one common author 
             // of song authors and to-user-assigned authors
-            return $query->whereHas('authors', function($q) {
+            return $query->whereHas('authors', function($q) use ($user) {
                 $q->whereIn('authors.id', $user->getAssignedAuthorIds());
             // and show those songs, that were created by this user account
             })->orWhere('user_creator_id', $user->id);
