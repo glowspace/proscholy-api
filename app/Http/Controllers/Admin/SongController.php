@@ -279,7 +279,7 @@ class SongController extends Controller
             'add_file' => route('admin.file.create_for_song', $song_lyric),
             'save_show' => $song_lyric->public_url,
             'save_publish' => route('admin.song.to-publish'),
-            'save_publish' => route('admin.song.to-approve')
+            'save_approve' => route('admin.song.to-approve')
         ];
 
         return redirect($redirect_arr[$request->redirect]);

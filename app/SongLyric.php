@@ -73,7 +73,7 @@ class SongLyric extends Model implements ISearchResult
             'formatted_lyrics',
             'has_chords',
             'is_published',
-            'is_approved_by_author_by_author',
+            'is_approved_by_author',
             'user_creator_id'
         ];
 

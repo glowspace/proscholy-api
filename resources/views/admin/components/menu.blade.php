@@ -46,12 +46,6 @@
     ])
 
     @include('admin.components.menu-item', [
-        'route' => 'admin.song.to-publish',
-        'icon' => 'music',
-        'text' => 'Písně ke schválení'
-    ])
-
-    @include('admin.components.menu-item', [
         'route' => 'admin.external.no-author',
         'icon' => 'link',
         'text' => 'Odkazy bez autora/písničky'
@@ -64,9 +58,17 @@
     ])
 @endcan
 
-@can('approve songs')
-    <div class="navbar-label material-shadow text-danger">Kontrola obsahu</div>
+<div class="navbar-label material-shadow text-danger">Kontrola obsahu</div>
 
+@can('publish songs')
+    @include('admin.components.menu-item', [
+        'route' => 'admin.song.to-publish',
+        'icon' => 'music',
+        'text' => 'Písně ke schválení'
+    ])
+@endcan
+
+@can('approve songs')
     @include('admin.components.menu-item', [
         'route' => 'admin.song.to-approve',
         'icon' => 'music',
