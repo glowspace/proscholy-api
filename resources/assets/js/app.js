@@ -6,10 +6,10 @@
  */
 require('./bootstrap');
 
-/**
- * Materialise.css
- */
-require('materialize-css');
+// /**
+//  * Materialise.css
+//  */
+// require('materialize-css');
 
 window.Vue = require('vue');
 

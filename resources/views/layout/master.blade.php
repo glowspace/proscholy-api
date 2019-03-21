@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Favicon --}}
@@ -16,7 +16,7 @@
     <meta name="theme-color" content="#292929">
 
     <title>
-        @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník v ČR')
+        @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník')
     </title>
 
     <!-- Fonts -->
@@ -52,25 +52,45 @@
     @stack('head_links')
 </head>
 <body>
-    <nav class="navbar navbar-expand navbar-dark static-top">
+    <nav class="navbar navbar-expand-lg navbar-dark static-top">
+        <div>
         <img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0">
         <a class="navbar-brand mr-1" href="@yield('navbar-brand_href', '/')"> Zpěvník pro scholy</a>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
     </nav>
 
     <div class="container-fluid" id="app">
         <div class="row">
-            <div class="d-none d-sm-block col-sm-4 col-md-3 col-lg-2 sidebar bg-dark material-shadow">
+            {{-- Side navbar --}}
+            <div class="d-sm-block sidebar bg-dark material-shadow" id="navbarNav">
                 @yield('navbar')
             </div>
-            <div class="col-sm-8 col-md-9 col-lg-10 content">
+
+            {{-- Content --}}
+            <div class="content">
                 @yield('content')
             </div>
         </div>
-
-
     </div>
+
     {{-- Main JS built with Laravel's mix --}}
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
+
+    <script>
+        // Mobile viewport soft keyboard fix
+        setTimeout(function () {
+            var viewheight = $(window).height();
+            var viewwidth = $(window).width();
+            var viewport = $("meta[name=viewport]");
+            viewport.attr("content", "height=" + viewheight + "px, width=" +
+                viewwidth + "px, initial-scale=1.0");
+        }, 300);
+    </script>
 
     @stack('scripts')
 </body>

@@ -10,7 +10,7 @@
 
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
             kteří pracují s českou nebo slovenskou křesťanskou tvorbou.
-            V dnešní době, kdy jsou materiály i duchovní hudba roztroušena po mnoha různých místech
+            V dnešní době, kdy jsou materiály i potřebné know-how roztroušeny po mnoha různých místech
             na internetu nebo v papírových sbornících a zpěvnících,
             chceme nabídnout rychlou a praktickou alternativu.
         </p>
@@ -68,16 +68,6 @@
                 </div>
             </div>
 
-
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Benjamín Tichý</h5>
-                        <p class="card-text">grafika</p>
-                    </div>
-                </div>
-            </div>
-
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body">
@@ -119,6 +109,15 @@
                     <div class="card-body">
                         <h5 class="card-title">Václav Šablatura</h5>
                         <p class="card-text">redakční tým, odborný konzultant</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Benjamín Tichý</h5>
+                        <p class="card-text">grafika</p>
                     </div>
                 </div>
             </div>
