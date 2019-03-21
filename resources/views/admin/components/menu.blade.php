@@ -64,7 +64,7 @@
     @include('admin.components.menu-item', [
         'route' => 'admin.song.to-publish',
         'icon' => 'music',
-        'text' => 'Písně ke schválení'
+        'text' => 'Písně k publikování'
     ])
 @endcan
 
