@@ -140,19 +140,22 @@ class SongLyric extends Model implements ISearchResult
 
     public function scopeRestricted($query)
     {
-        $user = Auth::user();
-
         // restrict results if current user is Author
-        if ($user->hasRole('autor')) {
-            // show songs, where there is at least one common author 
-            // of song authors and to-user-assigned authors
-            return $query->whereHas('authors', function($q) use ($user) {
-                $q->whereIn('authors.id', $user->getAssignedAuthorIds());
-            // and show those songs, that were created by this user account
-            })->orWhere('user_creator_id', $user->id);
+        if (Auth::user()->hasRole('autor')) {
+            return $query->forceRestricted();
         } else {
             return $query;
         }
+    }
+
+    public function scopeForceRestricted($query)
+    {
+        // show songs, where there is at least one common author 
+        // of song authors and to-user-assigned authors
+        return $query->whereHas('authors', function($q) {
+            $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
+        // and show those songs, that were created by this user account
+        })->orWhere('user_creator_id', Auth::user()->id);
     }
 
     public function scopeNotEmpty($query)

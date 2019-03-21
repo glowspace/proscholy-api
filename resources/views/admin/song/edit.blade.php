@@ -165,7 +165,10 @@
                             <button type="submit" class="btn btn-outline-secondary" name="redirect" value="save_publish">Uložit a schválit k publikaci</button>
                         @endcan
                     @endif
-                    @if (!$song_lyric->is_approved_by_author)
+                    @if (!$song_lyric->is_approved_by_author &&
+                            Auth::user()->can('approve songs'))
+                          {{--    (Auth::user()->can('approve songs') || SongLyric::forceRestricted()->where('id', $song_lyric->id)->count() > 0)) --}}
+                            {{-- todo: enable editors with associated authors approve songs as well--}}
                         @can('approve songs')
                             <button type="submit" class="btn btn-outline-secondary" name="redirect" value="save_approve">Uložit a autorsky schválit</button>
                         @endcan
