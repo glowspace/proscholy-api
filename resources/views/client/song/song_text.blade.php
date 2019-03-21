@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-column flex-sm-row-reverse">
-                            <div class="song-tags">
+                            <div class="song-tags d-flex flex-sm-column align-items-sm-end mb-2">
                                 {{-- <a href="#" class="tag">štítek 1</a>
                                 <a href="#" class="tag">štítek 2</a>
                                 <a href="#" class="tag">štítek 3</a> --}}
