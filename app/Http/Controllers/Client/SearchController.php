@@ -33,7 +33,7 @@ class SearchController extends Controller
      */
     public function searchResults($query = null)
     {
-        $limit = 5;
+        $limit = 10;
         $limit_empty;
 
         if (isset($query))

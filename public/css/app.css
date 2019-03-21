@@ -20277,8 +20277,7 @@ h4 {
   -ms-user-select: none;
   /* Internet Explorer/Edge */
   user-select: none;
-  /* Non-prefixed version, currently
-                                   supported by Chrome and Opera */
+  /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 .card {
@@ -20289,6 +20288,12 @@ h4 {
 Layout
  */
 
+html,
+body {
+  height: 100%;
+  overflow-x: visible;
+}
+
 .navbar {
   z-index: 200;
   background-color: #292929;
@@ -20297,7 +20302,18 @@ Layout
 
 .sidebar {
   height: calc(100vh - 66px);
+  width: 300px;
   padding: 5px 0 0;
+  z-index: 10;
+  display: inline-block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    display: none;
+  }
 }
 
 .sidebar a {
@@ -20331,14 +20347,15 @@ Layout
 }
 
 .content {
-  height: calc(100vh - 66px);
+  height: calc(100% - 66px);
+  width: calc(100% - 300px);
   padding: 0;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .content {
+    width: 100%;
     background-position: -290.5px -11px;
   }
 }
@@ -20356,16 +20373,16 @@ Home page specific elements
  */
 
 .background-home {
-  background-image: url("/img/background_orange_v1.svg");
-  background-position: 0 -4px;
-  background-size: auto 120%;
+  background-image: url("/img/bg_center.svg");
+  background-position-x: center;
+  background-size: cover;
   background-repeat: no-repeat;
   min-height: calc(100vh - 66px);
 }
 
 @media (max-width: 767.98px) {
   .background-home {
-    background-position: -290.5px -11px;
+    background-position: -170.5px 0;
   }
 }
 
@@ -20376,7 +20393,7 @@ Home page specific elements
 
 @media (max-width: 767.98px) {
   .logo-wrapper {
-    padding-top: 140px;
+    padding-top: 110px;
   }
 }
 
@@ -20437,7 +20454,7 @@ Home page specific elements
   outline: none;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .search-wrapper .search-home {
     width: calc(100% - 30px);
     margin: 15px;
@@ -20459,7 +20476,7 @@ Home page specific elements
   background-color: #d4d4d4;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .search-wrapper .search-submit {
     display: none;
   }
