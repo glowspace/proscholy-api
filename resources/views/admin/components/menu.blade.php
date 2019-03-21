@@ -23,7 +23,7 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.song.no-lyric',
     'icon' => 'music',
-    'text' => 'Písně bez textu'
+    'text' => 'Písně bez textu',
 ])
 
 @include('admin.components.menu-item', [
