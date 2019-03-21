@@ -62,6 +62,10 @@ html, body {
   font-family:      "Nunito", sans-serif;
 }
 
+.navbar-brand {
+  padding: 0 !important;
+}
+
 $sidebar-width: 300px;
 
 .sidebar {

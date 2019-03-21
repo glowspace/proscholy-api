@@ -20300,6 +20300,10 @@ body {
   font-family: "Nunito", sans-serif;
 }
 
+.navbar-brand {
+  padding: 0 !important;
+}
+
 .sidebar {
   height: calc(100vh - 66px);
   width: 300px;

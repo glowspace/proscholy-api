@@ -59,8 +59,8 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark static-top">
         <div>
-            <img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0;">
-            <a class="navbar-brand mr-1" href="@yield('navbar-brand_href', '/')"> Zpěvník pro scholy</a>
+            <a class="navbar-brand" href="@yield('navbar-brand_href', '/')"><img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0;">
+             Zpěvník pro scholy</a>
         </div>
 
         <button class="navbar-toggler" type="button"
