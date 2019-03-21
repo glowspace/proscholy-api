@@ -22,6 +22,9 @@
                                 @if ($song_l->lang !== 'cs')
                                     &nbsp;({{ $song_l->getLanguageName() }})
                                 @endif
+                                @if ($song_l->is_published == false)
+                                    - čeká na schválení editorem
+                                @endif
                             </td>
                             <td>
                                 {{ $song_l->updated_at }}

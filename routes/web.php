@@ -76,6 +76,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/songs/no-lyric', 'SongController@todoLyrics')->name('song.no-lyric');
         Route::get('/songs/no-chord', 'SongController@todoChords')->name('song.no-chord');
         Route::get('/songs/no-tag', 'SongController@todoTags')->name('song.no-tag');
+        Route::get('/songs/to-publish', 'SongController@todoPublish')->name('song.to-publish');
+        Route::get('/songs/to-approve', 'SongController@todoApprove')->name('song.to-approve');
         // refreshing
         Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('song.refresh_updating');
         // error

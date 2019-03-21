@@ -163,6 +163,16 @@
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show">Uložit a zobrazit ve zpěvníku</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_external">Uložit a přidat externí odkaz</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_file">Uložit a přidat soubor</button>
+                    @if (!$song_lyric->is_published)
+                        @can('publish songs')
+                            <button type="submit" class="btn btn-outline-secondary" name="redirect" value="save_publish">Uložit a schválit k publikaci</button>
+                        @endcan
+                    @endif
+                    @if (!$song_lyric->is_approved_by_author)
+                        @can('approve songs')
+                            <button type="submit" class="btn btn-outline-secondary" name="redirect" value="save_approve">Uložit a autorsky schválit</button>
+                        @endcan
+                    @endif
                 </form>
 
                 @include('admin.components.deletebutton', [

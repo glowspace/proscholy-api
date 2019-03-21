@@ -47,6 +47,19 @@ class SongController extends Controller
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
+    public function todoPublish() {
+        $song_lyrics = SongLyric::where('is_published', 0)->orderBy('name')->get();
+        $title = "Seznam písní ke schválení editorem";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    // author account todo
+    public function todoApprove() {
+        $song_lyrics = SongLyric::restricted()->where('is_approved_by_author', 0)->orderBy('name')->get();
+        $title = "Seznam písní ke schválení autorem";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
     public function create()
     {
         return view('admin.song.create');
@@ -245,12 +258,28 @@ class SongController extends Controller
             ]);
         }
 
+        // if required then make the song published
+        if ($request->redirect == "save_publish") {
+            $song_lyric->update([
+                'is_published' => 1
+            ]);
+        }
+
+        // if required then make the song approved
+        if ($request->redirect == "save_approve") {
+            $song_lyric->update([
+                'is_approved_by_author' => 1
+            ]);
+        }
+
         // no error => contunue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.song.index'),
             'add_external' => route('admin.external.create_for_song', $song_lyric),
             'add_file' => route('admin.file.create_for_song', $song_lyric),
-            'save_show' => $song_lyric->public_url
+            'save_show' => $song_lyric->public_url,
+            'save_publish' => route('admin.song.to-publish'),
+            'save_publish' => route('admin.song.to-approve')
         ];
 
         return redirect($redirect_arr[$request->redirect]);
