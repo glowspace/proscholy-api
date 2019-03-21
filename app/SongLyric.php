@@ -55,6 +55,7 @@ class SongLyric extends Model implements ISearchResult
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,
         'updated' => \App\Events\SongLyricSaved::class,
+        'created' => \App\Events\SongLyricCreated::class,
     ];
 
     protected $fillable
@@ -72,7 +73,8 @@ class SongLyric extends Model implements ISearchResult
             'formatted_lyrics',
             'has_chords',
             'is_published',
-            'is_approved_by_author'
+            'is_approved_by_author',
+            'user_creator_id'
         ];
 
     public $lang_string = [
@@ -229,6 +231,11 @@ class SongLyric extends Model implements ISearchResult
     public function isCuckoo()
     {
         return ! $this->isDomestic();
+    }
+
+    public function isNew()
+    {
+        return $this->created_at->eq($this->updated_at);
     }
 
     public function recache()
