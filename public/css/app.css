@@ -20277,8 +20277,7 @@ h4 {
   -ms-user-select: none;
   /* Internet Explorer/Edge */
   user-select: none;
-  /* Non-prefixed version, currently
-                                   supported by Chrome and Opera */
+  /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 .card {
@@ -20289,6 +20288,11 @@ h4 {
 Layout
  */
 
+html,
+body {
+  height: 100%;
+}
+
 .navbar {
   z-index: 200;
   background-color: #292929;
@@ -20297,6 +20301,7 @@ Layout
 
 .sidebar {
   height: calc(100vh - 66px);
+  width: 300px;
   padding: 5px 0 0;
 }
 
@@ -20331,7 +20336,8 @@ Layout
 }
 
 .content {
-  height: calc(100vh - 66px);
+  height: calc(100% - 66px);
+  width: calc(100% - 300px);
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -20358,14 +20364,14 @@ Home page specific elements
 .background-home {
   background-image: url("/img/bg_center.svg");
   background-position-x: center;
-  background-size: auto 120%;
+  background-size: cover;
   background-repeat: no-repeat;
   min-height: calc(100vh - 66px);
 }
 
 @media (max-width: 767.98px) {
   .background-home {
-    background-position: -290.5px -11px;
+    background-position: -170.5px 0;
   }
 }
 
@@ -20376,7 +20382,7 @@ Home page specific elements
 
 @media (max-width: 767.98px) {
   .logo-wrapper {
-    padding-top: 140px;
+    padding-top: 110px;
   }
 }
 
@@ -20391,7 +20397,7 @@ Home page specific elements
   background-size: 149%;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .logo-wrapper .logo {
     top: 2px;
     height: 50px;
@@ -20407,7 +20413,7 @@ Home page specific elements
   font-family: 'Cocogoose', cursive;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .logo-wrapper .caption {
     font-size: 60px;
     line-height: 60px;
@@ -20437,7 +20443,7 @@ Home page specific elements
   outline: none;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .search-wrapper .search-home {
     width: calc(100% - 30px);
     margin: 15px;
@@ -20459,7 +20465,7 @@ Home page specific elements
   background-color: #d4d4d4;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .search-wrapper .search-submit {
     display: none;
   }
