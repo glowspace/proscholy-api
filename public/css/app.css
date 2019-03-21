@@ -20291,6 +20291,7 @@ Layout
 html,
 body {
   height: 100%;
+  overflow-x: visible;
 }
 
 .navbar {
@@ -20303,6 +20304,16 @@ body {
   height: calc(100vh - 66px);
   width: 300px;
   padding: 5px 0 0;
+  z-index: 10;
+  display: inline-block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    display: none;
+  }
 }
 
 .sidebar a {
@@ -20339,12 +20350,12 @@ body {
   height: calc(100% - 66px);
   width: calc(100% - 300px);
   padding: 0;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
   .content {
+    width: 100%;
     background-position: -290.5px -11px;
   }
 }
@@ -20397,7 +20408,7 @@ Home page specific elements
   background-size: 149%;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 767.98px) {
   .logo-wrapper .logo {
     top: 2px;
     height: 50px;
@@ -20413,7 +20424,7 @@ Home page specific elements
   font-family: 'Cocogoose', cursive;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 767.98px) {
   .logo-wrapper .caption {
     font-size: 60px;
     line-height: 60px;

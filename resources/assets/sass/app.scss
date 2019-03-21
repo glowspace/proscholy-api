@@ -49,7 +49,8 @@ Layout
  */
 
 html, body {
-  height: 100%;
+  height:     100%;
+  overflow-x: visible;
 }
 
 .navbar {
@@ -65,9 +66,19 @@ $sidebar-width: 300px;
 
 .sidebar {
 
-  height:  calc(100vh - 66px);
-  width:   $sidebar-width;
-  padding: 5px 0 0;
+  height:     calc(100vh - 66px);
+  width:      $sidebar-width;
+  padding:    5px 0 0;
+
+  z-index:    10;
+
+  display:    inline-block;
+
+  transition: 0.2s;
+
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
 
   a {
     width:      100%;
@@ -108,15 +119,17 @@ $sidebar-width: 300px;
 
 .content {
   height:     calc(100% - 66px);
-
   width:      calc(100% - #{$sidebar-width});
 
-  @include media-breakpoint-down(sm) {
+  // On md and above navbar is hidden
+  @include media-breakpoint-down(md) {
+    width:               100%;
+
     background-position: -290.5px -11px;
   }
 
   padding:    0;
-  overflow-y: auto;
+
   overflow-x: hidden;
 }
 
@@ -164,7 +177,7 @@ Home page specific elements
     background-position: center;
     background-size:     149%;
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(sm) {
       top:          2px;
       height:       50px;
       width:        50px;
@@ -181,7 +194,7 @@ Home page specific elements
 
     font-family: 'Cocogoose', cursive;
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(sm) {
       font-size:   60px;
       line-height: 60px;
     }
