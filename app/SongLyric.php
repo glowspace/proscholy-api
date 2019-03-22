@@ -113,6 +113,19 @@ class SongLyric extends Model implements ISearchResult
         return $str;
     }
 
+    public function original_song_lyric()
+    {
+        // dd($this->song);
+        // $domestic = $this->song->getDomesticSongLyric($this->id);
+        // if ($domestic == NULL)
+        //     return NULL;
+        // if ($domestic->is_original == 0)
+        //     return NULL;
+        
+        // return $domestic;
+        return null;
+    }
+
     public function getLanguageName()
     {
         return $this->lang_string[$this->lang];

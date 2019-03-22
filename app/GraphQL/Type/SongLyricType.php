@@ -63,21 +63,27 @@ class SongLyricType extends GraphQLType {
 				],
 				'type' => Type::listOf(GraphQL::type('tag')),
 				'description' => 'Song tags'
-            ]
+            ],
+            // 'original_song_lyric' => [
+            //     'type' => GraphQL::type('song_lyric'),
+            //     'description' => "Null or other SongLyric associated as an original"
+            // ]
 		];
 	}
 
-    public function resolveAuthorsField($root, $args){
+    public function resolveAuthorsField($root, $args)
+    {
 		if (isset($args['id']))
 			return $root->authors->where('id', $args['id']);
 
 		return $root->authors;
     }
     
-    public function resolveTagsField($root, $args){
+    public function resolveTagsField($root, $args)
+    {
 		if (isset($args['type']))
 			return $root->tags->where('type', $args['type']);
 
 		return $root->tags;
-	}
+    }
 }
