@@ -79,7 +79,7 @@
                     </div>
                     <br>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
-                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_edit_song">Uložit a upravit píseň</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show_song">Uložit a zobrazit píseň</button>
 
                 </form>
                 @include('admin.components.deletebutton', [
