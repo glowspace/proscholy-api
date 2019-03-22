@@ -38,6 +38,7 @@ class Chord{
         $html.= ' bass="'.$this->chordSign->getBassNote().'"';
         $html.= ' is-divided="'.$this->isDivided().'"';
         $html.= ' is-substitute="'.$this->isSubstitute.'"';
+        $html.= ' is-optional="'.$this->chordSign->isOptional().'"';
         $html.= '>';
 
         $html.= '<!--googleon: all-->';

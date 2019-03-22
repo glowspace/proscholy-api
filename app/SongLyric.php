@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
 
 /**
@@ -54,6 +55,7 @@ class SongLyric extends Model implements ISearchResult
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,
         'updated' => \App\Events\SongLyricSaved::class,
+        'created' => \App\Events\SongLyricCreated::class,
     ];
 
     protected $fillable
@@ -69,7 +71,10 @@ class SongLyric extends Model implements ISearchResult
             'has_anonymous_author',
             // should not be edited from outside
             'formatted_lyrics',
-            'has_chords'
+            'has_chords',
+            'is_published',
+            'is_approved_by_author',
+            'user_creator_id'
         ];
 
     public $lang_string = [
@@ -112,6 +117,11 @@ class SongLyric extends Model implements ISearchResult
         return $this->belongsToMany(Author::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     // OBSOLETE
     public function getLink()
     {
@@ -128,12 +138,32 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(File::class);
     }
 
-    public function scopeNotEmpty()
+    public function scopeRestricted($query)
+    {
+        // restrict results if current user is Author
+        if (Auth::user()->hasRole('autor')) {
+            return $query->forceRestricted();
+        } else {
+            return $query;
+        }
+    }
+
+    public function scopeForceRestricted($query)
+    {
+        // show songs, where there is at least one common author 
+        // of song authors and to-user-assigned authors
+        return $query->whereHas('authors', function($q) {
+            $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
+        // and show those songs, that were created by this user account
+        })->orWhere('user_creator_id', Auth::user()->id);
+    }
+
+    public function scopeNotEmpty($query)
     {
         // return SongLyrycs that have at least one of:
         // lyrics, sheet music
 
-        return $this->whereHas('scoreExternals')
+        return $query->whereHas('scoreExternals')
                     ->orWhereHas('scoreFiles')
                     ->orWhere('lyrics', '!=', '');
     }
@@ -210,6 +240,11 @@ class SongLyric extends Model implements ISearchResult
     public function isCuckoo()
     {
         return ! $this->isDomestic();
+    }
+
+    public function isNew()
+    {
+        return $this->created_at->eq($this->updated_at);
     }
 
     public function recache()

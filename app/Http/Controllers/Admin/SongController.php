@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Song;
 use App\SongLyric;
 use App\Author;
+use App\Tag;
 
 class SongController extends Controller
 {
@@ -17,7 +19,7 @@ class SongController extends Controller
     }
 
     public function index(){
-        $song_lyrics = SongLyric::orderBy('name')->get();
+        $song_lyrics = SongLyric::orderBy('name')->restricted()->get();
         return view('admin.song.index', compact('song_lyrics'));
     }
 
@@ -39,7 +41,27 @@ class SongController extends Controller
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
-    public function create(){
+    public function todoTags() {
+        $song_lyrics = SongLyric::whereDoesntHave('tags')->orderBy('name')->get();
+        $title = "Seznam písní bez štítků";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    public function todoPublish() {
+        $song_lyrics = SongLyric::where('is_published', 0)->orderBy('name')->get();
+        $title = "Seznam písní k publikování";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    // author account todo
+    public function todoApprove() {
+        $song_lyrics = SongLyric::restricted()->where('is_approved_by_author', 0)->orderBy('name')->get();
+        $title = "Seznam písní ke schválení autorem";
+        return view('admin.song.index', compact('song_lyrics', 'title'));
+    }
+
+    public function create()
+    {
         return view('admin.song.create');
     }
 
@@ -57,6 +79,12 @@ class SongController extends Controller
 
     public function edit(SongLyric $song_lyric)
     {
+        // check if user has permissions to edit current song
+        if (Auth::user()->hasRole('autor') && 
+            SongLyric::restricted()->where('id', $song_lyric->id)->count() == 0) {
+            return abort(403, "Nepovolený přístup k písni $song_lyric->name");
+        }
+
         if (!$song_lyric->lock()) {
             // unsuccesful attempt to lock -> that means the model has been locked
             return view('admin.song.error', [
@@ -80,10 +108,21 @@ class SongController extends Controller
         //   had been set as original of some other songs
         $assigned_song_disabled = $song_lyric->hasSiblings() && $song_lyric->isDomestic();
 
+        // HANDLING OF TAGS
+        $official_tags = Tag::officials()->get();
+        $assigned_official_tags = $song_lyric->tags()->officials()->get();
+
+        $unofficial_tags = Tag::unofficials()->get();
+        $assigned_unofficial_tags = $song_lyric->tags()->unofficials()->get();
+
+        // dd($assigned_official_tags);
+
         return view('admin.song.edit', compact(
             'song_lyric', 
             'assigned_authors', 'all_authors',
-            'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled'));
+            'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled',
+            'official_tags', 'assigned_official_tags',
+            'unofficial_tags', 'assigned_unofficial_tags'));
     }
 
     public function destroy(Request $request, SongLyric $song_lyric)
@@ -141,6 +180,9 @@ class SongController extends Controller
                 $song_lyric->authors()->create(['name' => $author]);
             }
             $song_lyric->save();
+        } else {
+            $song_lyric->authors()->sync([]);
+            $song_lyric->save();
         }
 
         // SYNCING AND HANDLING THE ASSOCIATED SONGS
@@ -178,6 +220,18 @@ class SongController extends Controller
             }
         }
 
+        // SYNCING THE TAGS
+        $all_tags = [];
+
+        foreach (array_merge(
+            $request->unofficial_tags ?? [], 
+            $request->official_tags ?? []) as $identificator)
+        {
+            $all_tags[] = Tag::getByIdOrCreateWithName($identificator)->id;
+        }
+
+        $song_lyric->tags()->sync($all_tags);
+
         // UNLOCKING FOR EDIT
         $song_lyric->unlock();
 
@@ -204,12 +258,28 @@ class SongController extends Controller
             ]);
         }
 
+        // if required then make the song published
+        if ($request->redirect == "save_publish") {
+            $song_lyric->update([
+                'is_published' => 1
+            ]);
+        }
+
+        // if required then make the song approved
+        if ($request->redirect == "save_approve") {
+            $song_lyric->update([
+                'is_approved_by_author' => 1
+            ]);
+        }
+
         // no error => contunue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.song.index'),
             'add_external' => route('admin.external.create_for_song', $song_lyric),
             'add_file' => route('admin.file.create_for_song', $song_lyric),
-            'save_show' => $song_lyric->public_url
+            'save_show' => $song_lyric->public_url,
+            'save_publish' => route('admin.song.to-publish'),
+            'save_approve' => route('admin.song.to-approve')
         ];
 
         return redirect($redirect_arr[$request->redirect]);

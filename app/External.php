@@ -4,6 +4,7 @@ namespace App;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\External
@@ -108,6 +109,19 @@ class External extends Model
     public function song_lyric()
     {
         return $this->belongsTo(SongLyric::class);
+    }
+
+    public function scopeRestricted($query)
+    {
+        if (Auth::user()->hasRole('autor')) {
+            return $query->whereHas('author', function($q) {
+                $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
+            })->orWhereHas('song_lyric', function($q) {
+                $q->restricted();
+            });
+        } else {
+            return $query;
+        }
     }
 
     public function generateTitle()

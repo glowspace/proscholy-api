@@ -80,7 +80,7 @@
 
                 </form>
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.file.delete', $file),
+                    'url' => route('admin.file.destroy', $file),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.file.index')
                 ])

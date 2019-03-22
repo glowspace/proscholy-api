@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Author
@@ -67,6 +68,16 @@ class Author extends Model implements ISearchResult
     public function songNotOriginalLyrics()
     {
         return $this->songLyrics()->where('is_original', false);
+    }
+
+    // 
+    public function scopeRestricted($query)
+    {
+        if (Auth::user()->hasRole('autor')) {
+            return $query->whereIn('id', Auth::user()->getAssignedAuthorIds());
+        } else {
+            return $query;
+        }
     }
 
     public function members()

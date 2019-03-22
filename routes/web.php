@@ -49,68 +49,125 @@ Route::post('/report', 'Client\ReportController@storeReport')->name('client.repo
 /**
  * Administrace.
  */
-Auth::routes(['register' => false]);
 Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
+Auth::routes(['register' => false]);
 
 // Downloading
 Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function ()
-{
-    Route::get('/', 'AdminController@renderDash')->name('admin.dashboard');
-    Route::get('/todo', 'AdminController@renderTodo')->name('admin.todo');
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () 
+    {
+        Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
-    // // External
-    Route::get('/externals', 'ExternalController@index')->name('admin.external.index');
-    Route::get('/external/new', 'ExternalController@create')->name('admin.external.create');
-    Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('admin.external.create_for_song');
-    Route::post('/external/new', 'ExternalController@store')->name('admin.external.store');
-    Route::get('/external/{external}', 'ExternalController@edit')->name('admin.external.edit');
-    Route::put('/external/{external}', 'ExternalController@update')->name('admin.external.update');
-    Route::delete('/external/{external}', 'ExternalController@destroy')->name('admin.external.delete');
-    // todo
-    Route::get('/externals/no-author', 'ExternalController@todoAuthors')->name('admin.external.no-author');
+        Route::resource('external', 'ExternalController')->except(['show']);
+        Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
+        // todo
+        Route::get('/externals/no-author', 'ExternalController@todoAuthors')->name('external.no-author');
 
-    // Song
-    Route::get('/songs', 'SongController@index')->name('admin.song.index');
-    Route::get('/song/new', 'SongController@create')->name('admin.song.create');
-    Route::post('/song/new', 'SongController@store')->name('admin.song.store');
-    Route::get('/song/{song_lyric}', 'SongController@edit')->name('admin.song.edit');
-    Route::put('/song/{song_lyric}', 'SongController@update')->name('admin.song.update');
-    Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('admin.song.delete');
-    // todo
-    Route::get('/songs/no-author', 'SongController@todoAuthors')->name('admin.song.no-author');
-    Route::get('/songs/no-lyric', 'SongController@todoLyrics')->name('admin.song.no-lyric');
-    Route::get('/songs/no-chord', 'SongController@todoChords')->name('admin.song.no-chord');
+        Route::get('/songs', 'SongController@index')->name('song.index');
+        Route::get('/song/new', 'SongController@create')->name('song.create');
+        Route::post('/song/new', 'SongController@store')->name('song.store');
+        Route::get('/song/{song_lyric}', 'SongController@edit')->name('song.edit');
+        Route::put('/song/{song_lyric}', 'SongController@update')->name('song.update');
+        Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('song.destroy');
+        // todo
+        Route::get('/songs/no-author', 'SongController@todoAuthors')->name('song.no-author');
+        Route::get('/songs/no-lyric', 'SongController@todoLyrics')->name('song.no-lyric');
+        Route::get('/songs/no-chord', 'SongController@todoChords')->name('song.no-chord');
+        Route::get('/songs/no-tag', 'SongController@todoTags')->name('song.no-tag');
+        Route::get('/songs/to-publish', 'SongController@todoPublish')->name('song.to-publish');
+        Route::get('/songs/to-approve', 'SongController@todoApprove')->name('song.to-approve');
+        // refreshing
+        Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('song.refresh_updating');
+        // error
+        Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('song.resolve_error');
 
-    Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('admin.song.refresh_updating');
-    Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('admin.song.resolve_error');
+        Route::resource('author', 'AuthorController')->except(['show']);
 
-    // Author
-    Route::get('/authors', 'AuthorController@index')->name('admin.author.index');
-    Route::get('/author/new', 'AuthorController@create')->name('admin.author.create');
-    Route::post('/author/new', 'AuthorController@store')->name('admin.author.store');
-    Route::get('/author/{author}', 'AuthorController@edit')->name('admin.author.edit');
-    Route::put('/author/{author}', 'AuthorController@update')->name('admin.author.update');
-    Route::delete('/author/{author}', 'AuthorController@destroy')->name('admin.author.delete');
+        Route::resource('file', 'FileController')->except(['show']);
+        Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('file.create_for_song');
+        // todo
+        Route::get('/files/no-author', 'FileController@todoAuthors')->name('file.no-author');
 
-    // File
-    Route::get('/files', 'FileController@index')->name('admin.file.index');
-    Route::get('/file/new', 'FileController@create')->name('admin.file.create');
-    Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('admin.file.create_for_song');
-    Route::post('/file/new', 'FileController@store')->name('admin.file.store');
-    Route::get('/file/{file}', 'FileController@edit')->name('admin.file.edit');
-    Route::put('/file/{file}', 'FileController@update')->name('admin.file.update');
-    Route::delete('/file/{file}', 'FileController@destroy')->name('admin.file.delete');
-    // todo
-    Route::get('/files/no-author', 'FileController@todoAuthors')->name('admin.file.no-author');
+        Route::resource('tag', 'TagController')->except(['show']);
 
-    Route::group(['middleware' => ['permission:manage users']], function () {
-        Route::get('/users', 'UserController@index')->name('admin.user.index');
-        Route::get('/user/new', 'UserController@create')->name('admin.user.create');
-        Route::post('/user/new', 'UserController@store')->name('admin.user.store');
-        Route::get('/user/{user}', 'UserController@edit')->name('admin.user.edit');
-        Route::put('/user/{user}', 'UserController@update')->name('admin.user.update');
-        Route::delete('/user/{user}', 'UserController@destroy')->name('admin.user.delete');
+        Route::group(['middleware' => ['permission:manage users']], function () {
+            Route::resource('user', 'UserController')->except(['show']);
+        });
     });
 });
+
+// // admin routing for admins and editors
+// Route::name('admin.')->group(['prefix' => 'admin', 'middleware' => 'role:admin|editor', 'namespace' => 'Admin'], function () {
+//     Route::get('/', 'AdminController@renderDash')->name('admin.dashboard');
+    
+//     // // External
+//     Route::get('/externals', 'ExternalController@index')->name('external.index');
+//     Route::get('/external/new', 'ExternalController@create')->name('external.create');
+//     Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
+//     Route::post('/external/new', 'ExternalController@store')->name('external.store');
+//     Route::get('/external/{external}', 'ExternalController@edit')->name('external.edit');
+//     Route::put('/external/{external}', 'ExternalController@update')->name('external.update');
+//     Route::delete('/external/{external}', 'ExternalController@destroy')->name('external.destroy');
+//     // todo
+//     Route::get('/externals/no-author', 'ExternalController@todoAuthors')->name('external.no-author');
+    
+//     // Song
+//     Route::get('/songs', 'SongController@index')->name('song.index');
+//     Route::get('/song/new', 'SongController@create')->name('song.create');
+//     Route::post('/song/new', 'SongController@store')->name('song.store');
+//     Route::get('/song/{song_lyric}', 'SongController@edit')->name('song.edit');
+//     Route::put('/song/{song_lyric}', 'SongController@update')->name('song.update');
+//     Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('song.destroy');
+//     // todo
+//     Route::get('/songs/no-author', 'SongController@todoAuthors')->name('song.no-author');
+//     Route::get('/songs/no-lyric', 'SongController@todoLyrics')->name('song.no-lyric');
+//     Route::get('/songs/no-chord', 'SongController@todoChords')->name('song.no-chord');
+//     Route::get('/songs/no-tag', 'SongController@todoTags')->name('song.no-tag');
+    
+//     Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('song.refresh_updating');
+//     Route::post('/song/resolve-error/{song}', 'SongController@resolve_error')->name('song.resolve_error');
+    
+//     // Author
+//     Route::get('/authors', 'AuthorController@index')->name('author.index');
+//     Route::get('/author/new', 'AuthorController@create')->name('author.create');
+//     Route::post('/author/new', 'AuthorController@store')->name('author.store');
+//     Route::get('/author/{author}', 'AuthorController@edit')->name('author.edit');
+//     Route::put('/author/{author}', 'AuthorController@update')->name('author.update');
+//     Route::delete('/author/{author}', 'AuthorController@destroy')->name('author.destroy');
+    
+//     // File
+//     Route::get('/files', 'FileController@index')->name('file.index');
+//     Route::get('/file/new', 'FileController@create')->name('file.create');
+//     Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('file.create_for_song');
+//     Route::post('/file/new', 'FileController@store')->name('file.store');
+//     Route::get('/file/{file}', 'FileController@edit')->name('file.edit');
+//     Route::put('/file/{file}', 'FileController@update')->name('file.update');
+//     Route::delete('/file/{file}', 'FileController@destroy')->name('file.destroy');
+//     // todo
+//     Route::get('/files/no-author', 'FileController@todoAuthors')->name('file.no-author');
+    
+//     Route::group(['middleware' => ['permission:manage users']], function () {
+//         Route::get('/users', 'UserController@index')->name('user.index');
+//         Route::get('/user/new', 'UserController@create')->name('user.create');
+//         Route::post('/user/new', 'UserController@store')->name('user.store');
+//         Route::get('/user/{user}', 'UserController@edit')->name('user.edit');
+//         Route::put('/user/{user}', 'UserController@update')->name('user.update');
+//         Route::delete('/user/{user}', 'UserController@destroy')->name('user.destroy');
+//     });
+    
+//     // Tag
+//     Route::get('/tags', 'TagController@index')->name('tag.index');
+//     Route::get('/tag/new', 'TagController@create')->name('tag.create');
+//     Route::post('/tag/new', 'TagController@store')->name('tag.store');
+//     Route::get('/tag/{tag}', 'TagController@edit')->name('tag.edit');
+//     Route::put('/tag/{tag}', 'TagController@update')->name('tag.update');
+//     Route::delete('/tag/{tag}', 'TagController@destroy')->name('tag.destroy');
+
+// });
+
+// // admin routing for authors (using different Controllers with content restriction)
+// Route::group(['prefix' => 'admin', 'middleware' => 'role:autor', 'namespace' => 'AuthorRestricted'], function () {
+    
+// });

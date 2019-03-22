@@ -76,7 +76,7 @@
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show_song">Uložit a zobrazit píseň</button>
                 </form>
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.external.delete', $external),
+                    'url' => route('admin.external.destroy', $external),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.external.index')
                 ])

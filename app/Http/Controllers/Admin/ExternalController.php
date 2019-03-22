@@ -25,7 +25,7 @@ class ExternalController extends Controller
 
     public function index()
     {
-        $externals = External::all();
+        $externals = External::restricted()->get();
 
         return view('admin.external.index', compact('externals'));
     }
@@ -75,7 +75,7 @@ class ExternalController extends Controller
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
-        $all_song_lyrics      = SongLyric::select(['id', 'name'])->orderBy('name')->get();
+        $all_song_lyrics      = SongLyric::restricted()->select(['id', 'name'])->orderBy('name')->get();
 
         return view('admin.external.edit', compact(
             'external',

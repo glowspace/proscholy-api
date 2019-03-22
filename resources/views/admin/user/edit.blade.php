@@ -37,6 +37,20 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="input-group">
+                        <label class="input-group-text">Povolit správu těchto autorů: (pouze pro autorský účet)</label>
+                    </div>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'assigned_authors',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $all_authors,
+                        'list_selected' => $assigned_authors,
+                        'is_single' => false,
+                        'allow_free_entries' => false,
+                        'disabled' => false
+                    ])
                     
                     <br/>
 
@@ -46,7 +60,7 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.user.delete', $user),
+                    'url' => route('admin.user.destroy', $user),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.user.index')
                 ])

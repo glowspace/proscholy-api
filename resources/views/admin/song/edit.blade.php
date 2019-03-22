@@ -24,7 +24,8 @@
                         'list_all' => $all_authors,
                         'list_selected' => $assigned_authors,
                         'is_single' => false,
-                        'disabled' => false
+                        'disabled' => false,
+                        'allow_free_entries' => Auth::user()->can('add authors')
                     ])
                     <br>
 
@@ -32,7 +33,10 @@
                         <input class="form-check-input" type="checkbox" {{ $song_lyric->has_anonymous_author ? 'checked' : "" }}
                             name="has_anonymous_author" id="check_has_anonymous_author" value="1">
                         <label class="form-check-label" for="check_has_anonymous_author">
-                            Autor neznámý (nezobrazovat v to-do listu)
+                            Autor neznámý
+                            @can('access todo')
+                             (nezobrazovat v to-do listu)
+                            @endcan
                         </label>
                     </div>
                     <br>
@@ -61,7 +65,7 @@
                         @endforeach
                         <br/>
                     @else
-                    <label>Jedná se o verzi následující písně:</label>
+                        <label>Jedná se o verzi následující písně:</label>
                         @include('admin.components.magicsuggest', [
                             'field_name' => 'assigned_song_lyrics',
                             'value_field' => 'id',
@@ -93,8 +97,6 @@
                           </div>
                         <br>
                     @endif
-                    <br>
-
 
                     <label>Autorizovaný překlad</label>
                     <select class="form-control" name="is_authorized" title="">
@@ -108,6 +110,34 @@
                         </option>
                     </select>
                     <br>
+
+                    <label>Píseň je vhodná pro následující části mše sv.:</label>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'official_tags',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $official_tags,
+                        'list_selected' => $assigned_official_tags,
+                        'is_single' => false,
+                        'disabled' => false,
+                        'allow_free_entries' => false
+                    ])
+                    <br>
+
+                    <label>Uživatelské štítky:@can('manage tags') (lze přidávat nové)@endcan</label>
+                    @include('admin.components.magicsuggest', [
+                        'field_name' => 'unofficial_tags',
+                        'value_field' => 'id',
+                        'display_field' => 'name',
+                        'list_all' => $unofficial_tags,
+                        'list_selected' => $assigned_unofficial_tags,
+                        'is_single' => false,
+                        'disabled' => false,
+                        'allow_free_entries' => Auth::user()->can('manage tags')
+                    ])
+                    <br>
+
+
                     <label>Jazyk</label>
                     <select class="custom-select" name="lang" title="">
                         @foreach($song_lyric->lang_string as $key => $value)
@@ -130,13 +160,27 @@
                     {{-- <input class="btn btn-outline-primary" type="submit" value="create"> --}}
 
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
+                    @if (!$song_lyric->is_published)
+                        @can('publish songs')
+                            <button type="submit" class="btn btn-outline-secondary" name="redirect" value="save_publish">Uložit a schválit k publikaci</button>
+                        @endcan
+                    @endif
+                    @if (!$song_lyric->is_approved_by_author &&
+                            Auth::user()->can('approve songs'))
+                          {{--    (Auth::user()->can('approve songs') || SongLyric::forceRestricted()->where('id', $song_lyric->id)->count() > 0)) --}}
+                            {{-- todo: enable editors with associated authors approve songs as well--}}
+                        @can('approve songs')
+                            <button type="submit" class="btn btn-outline-secondary" name="redirect" value="save_approve">Uložit a autorsky schválit</button>
+                        @endcan
+                    @endif
+                    <br>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show">Uložit a zobrazit ve zpěvníku</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_external">Uložit a přidat externí odkaz</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="add_file">Uložit a přidat soubor</button>
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.song.delete', $song_lyric),
+                    'url' => route('admin.song.destroy', $song_lyric),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.song.index')
                 ])
@@ -152,8 +196,11 @@
 
                 <h5>Autoři</h5>
                 <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                    tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze. To ale ničemu nevadí,
-                    stačí správně napsat jméno (resp. více jmen), potvrdit Enterem a autor (autoři) se po uložení písně automaticky vytvoří.<br>
+                    tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
+                    @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
+                    a autor (autoři) se po uložení písně automaticky vytvoří.
+                    @else Je potřeba požádat administrátory o vytvoření nového autora @endcan
+                    <br>
                     V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
                 </p>
 

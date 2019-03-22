@@ -17,7 +17,7 @@
                         <td>{{ $user->roles->count() > 0 ? $user->roles->first()->name : "-" }}</td>
                         <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.user.delete', $user),
+                                'url' => route('admin.user.destroy', $user),
                             ])
                         </td>
                     </tr>

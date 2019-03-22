@@ -3,7 +3,7 @@
 @section('content')
     <div class="content-padding">
             <h2>{{ $title ?? "Seznam externích zdrojů"}}</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový externí zdroj</a>
+        <a class="btn btn-outline-primary" href="{{route('admin.external.create')}}">+ Nový externí zdroj</a>
         <div class="row">
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
@@ -32,7 +32,7 @@
                         <td>{{ $external->getTypeString() }}</td>
                         <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.external.delete', $external ),
+                                'url' => route('admin.external.destroy', $external ),
                             ])
                         </td>
                     </tr>

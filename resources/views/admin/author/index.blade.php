@@ -3,7 +3,9 @@
 @section('content')
     <div class="content-padding">
         <h2>{{ $title ?? "Seznam autorů"}}</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
+        @can('add authors')
+            <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
+        @endcan
         <div class="row">
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
@@ -16,7 +18,7 @@
                         <td>{{ $author->getTypeText() }}</td>
                         <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.author.delete',['author' => $author->id ]),
+                                'url' => route('admin.author.destroy',['author' => $author->id ]),
                             ])
                         </td>
                     </tr>

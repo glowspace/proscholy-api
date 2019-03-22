@@ -47,17 +47,19 @@
         <i class="fas fa-columns"></i>Nástěnka
     </a>
 
-    <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
-        <i class="fas fa-edit"></i> Upravit písničku
-    </a>
+    @if (App\SongLyric::restricted()->where('id', $song_l->id)->count() > 0)
+        <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
+            <i class="fas fa-edit"></i> Upravit písničku
+        </a>
 
-    <a class="btn btn-secondary" href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
-        <i class="fas fa-link"></i> Přidat odkaz
-    </a>
+        <a class="btn btn-secondary" href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
+            <i class="fas fa-link"></i> Přidat odkaz
+        </a>
 
-    <a class="btn btn-secondary" href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
-        <i class="fas fa-file"></i> Nahrát soubor
-    </a>
+        <a class="btn btn-secondary" href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
+            <i class="fas fa-file"></i> Nahrát soubor
+        </a>
+    @endif
 @endif
 
 {{--<div class="navbar-label material-shadow text-warning">Možnosti</div>--}}

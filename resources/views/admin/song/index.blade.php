@@ -8,7 +8,7 @@
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
                     'id' => 'index_table',
-                    'columns' => ['Název', 'Typ', 'Naposledy upraveno', 'Akce']
+                    'columns' => ['Název', 'Typ', 'Naposledy upraveno', 'Publikováno', 'Schváleno autorem', 'Akce']
                 ])
                     @foreach($song_lyrics as $song_l)
                     <tr>
@@ -27,8 +27,14 @@
                                 {{ $song_l->updated_at }}
                             </td>
                             <td>
+                                @if ($song_l->is_published)Ano @else Ne @endif
+                            </td>
+                            <td>
+                                @if ($song_l->is_approved_by_author)Ano @else Ne @endif
+                            </td>
+                            <td>
                             @include('admin.components.deletebutton', [
-                                'url' => route('admin.song.delete',[ 'song' => $song_l->id ]) ,
+                                'url' => route('admin.song.destroy',[ 'song' => $song_l->id ]) ,
                             ])
                         </td>
                     </tr>

@@ -10,7 +10,7 @@
                 <a href="{{route('admin.external.index')}}">Zpět do administrace</a>
                 {{-- <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a> --}}
         
-                <form action="{{route('admin.external.create')}}" method="post">
+                <form action="{{route('admin.external.store')}}" method="post">
                     @csrf
                     <div class="input-group mb-3">
                         <input class="form-control" required autofocus name="url" placeholder="Adresa URL zdroje">

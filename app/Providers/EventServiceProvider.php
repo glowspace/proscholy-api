@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SongLyricSaved' => [
             'App\Listeners\SongLyricSaved'
         ],
+        'App\Events\SongLyricCreated' => [
+            'App\Listeners\SongLyricCreated'
+        ],
     ];
 
     /**

@@ -14003,8 +14003,8 @@ var store = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-__webpack_require__(53);
-module.exports = __webpack_require__(54);
+__webpack_require__(52);
+module.exports = __webpack_require__(53);
 
 
 /***/ }),
@@ -14024,7 +14024,7 @@ __webpack_require__(15);
 //  */
 // require('materialize-css');
 
-window.Vue = __webpack_require__(39);
+window.Vue = __webpack_require__(38);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -14032,8 +14032,8 @@ window.Vue = __webpack_require__(39);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('chord', __webpack_require__(42));
-Vue.component('transposition', __webpack_require__(50));
+Vue.component('chord', __webpack_require__(41));
+Vue.component('transposition', __webpack_require__(49));
 
 var app = new Vue({
   el: '#app'
@@ -38675,8 +38675,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 38 */,
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49639,10 +49638,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(40).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(39).setImmediate))
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -49698,7 +49697,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(41);
+__webpack_require__(40);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -49712,7 +49711,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -49905,19 +49904,19 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(43)
+  __webpack_require__(42)
 }
 var normalizeComponent = __webpack_require__(11)
 /* script */
-var __vue_script__ = __webpack_require__(48)
+var __vue_script__ = __webpack_require__(47)
 /* template */
-var __vue_template__ = __webpack_require__(49)
+var __vue_template__ = __webpack_require__(48)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49934,7 +49933,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Chord.vue"
+Component.options.__file = "resources/assets/js/components/Chord.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -49943,9 +49942,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ab4f3d16", Component.options)
+    hotAPI.createRecord("data-v-ed49f296", Component.options)
   } else {
-    hotAPI.reload("data-v-ab4f3d16", Component.options)
+    hotAPI.reload("data-v-ed49f296", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -49956,23 +49955,23 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(44);
+var content = __webpack_require__(43);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(46)("495a5dfe", content, false, {});
+var update = __webpack_require__(45)("1f07d65d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ab4f3d16\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ab4f3d16\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ed49f296\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ed49f296\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Chord.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -49982,21 +49981,21 @@ if(false) {
 }
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(45)(false);
+exports = module.exports = __webpack_require__(44)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.chord {\n  position: relative;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.4em;\n    color: #1d6dab;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4em;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    color: #6b78af;\n    margin-right: 0.4em;\n    margin-left: -0.35em;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n    background: white;\n    z-index: 2;\n}\n.chord-line {\n    display: block;\n    position: relative;\n    width: calc(100% - 0.6em);\n    height: 0.1em;\n    background: #b9b9b9;\n    top: -0.5em;\n    right: -0.5em;\n}\n.chord:hover .chord-bass {\n    color: #1d6dab;\n}\n", ""]);
+exports.push([module.i, "\n.chord {\n  position: relative;\n  display: inline-block;\n}\n.chord-sign {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-transition: 100ms;\n    transition: 100ms;\n    margin-bottom: -0.4em;\n    color: #1d6dab;\n}\n.chord-base {\n    font-weight: bold;\n    margin-right: 0.4em;\n}\n.chord-variant {\n    position: relative;\n    left: -0.4em;\n}\n.chord-extension {\n    font-size: 0.8em;\n    position: relative;\n    left: -0.4em;\n}\n.chord-bass {\n    color: #6b78af;\n    margin-right: 0.4em;\n    margin-left: -0.35em;\n}\n.chord-right-bracket {\n    margin-left: -0.4em;\n    margin-right: 0.4em;\n}\n.chord-text {\n    display: inline-block;\n    position: relative;\n    background: white;\n    z-index: 2;\n}\n.chord-line {\n    display: block;\n    position: relative;\n    width: calc(100% - 0.6em);\n    height: 0.1em;\n    background: #b9b9b9;\n    top: -0.5em;\n    right: -0.5em;\n}\n.chord:hover .chord-bass {\n    color: #1d6dab;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports) {
 
 /*
@@ -50078,7 +50077,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -50097,7 +50096,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(47)
+var listToStyles = __webpack_require__(46)
 
 /*
 type StyleObject = {
@@ -50306,7 +50305,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports) {
 
 /**
@@ -50339,7 +50338,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50427,11 +50426,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute'],
+    props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
 
     data: function data() {
         return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
@@ -50508,7 +50516,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50518,6 +50526,8 @@ var render = function() {
   return _c("span", { staticClass: "chord" }, [
     _vm.displayChordSign
       ? _c("span", { staticClass: "chord-sign" }, [
+          _vm.isOptional ? _c("span", [_vm._v("(")]) : _vm._e(),
+          _vm._v(" "),
           _c("span", { staticClass: "chord-base" }, [
             _vm._v(_vm._s(_vm.baseNote))
           ]),
@@ -50532,8 +50542,12 @@ var render = function() {
           _vm._v(" "),
           _vm.bass.length !== 0
             ? _c("span", { staticClass: "chord-bass" }, [
-                _vm._v("/ " + _vm._s(_vm.bassNote))
+                _vm._v("/" + _vm._s(_vm.bassNote))
               ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isOptional
+            ? _c("span", { staticClass: "chord-right-bracket" }, [_vm._v(")")])
             : _vm._e()
         ])
       : _vm._e(),
@@ -50549,20 +50563,20 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-ab4f3d16", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-ed49f296", module.exports)
   }
 }
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(11)
 /* script */
-var __vue_script__ = __webpack_require__(51)
+var __vue_script__ = __webpack_require__(50)
 /* template */
-var __vue_template__ = __webpack_require__(52)
+var __vue_template__ = __webpack_require__(51)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50579,7 +50593,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Transposition.vue"
+Component.options.__file = "resources/assets/js/components/Transposition.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -50588,9 +50602,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-10eee56a", Component.options)
+    hotAPI.createRecord("data-v-0acf6aac", Component.options)
   } else {
-    hotAPI.reload("data-v-10eee56a", Component.options)
+    hotAPI.reload("data-v-0acf6aac", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50601,7 +50615,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50653,7 +50667,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50750,18 +50764,18 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-10eee56a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0acf6aac", module.exports)
   }
 }
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
