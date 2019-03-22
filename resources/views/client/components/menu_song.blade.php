@@ -6,10 +6,11 @@
 
 <div class="navbar-label material-shadow text-success">Materiály</div>
 
-<a class="btn btn-secondary" href="{{ $song_l->public_url }}">
-    <i class="fas fa-align-left"></i> Text + akordy
-
-</a>
+@if ($song_l->lyrics != "")
+    <a class="btn btn-secondary" href="{{ $song_l->public_url }}">
+        <i class="fas fa-align-left"></i> Text + akordy
+    </a>
+@endif
 
 @if($song_l->scoresCount())
     <a class="btn btn-secondary" href="{{route('client.song.score', $song_l)}}">
