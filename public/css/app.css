@@ -20305,11 +20305,10 @@ body {
 }
 
 .sidebar {
-  height: calc(100vh - 66px);
+  min-height: calc(100vh - 66px);
   width: 300px;
   padding: 5px 0 0;
   z-index: 10;
-  display: inline-block;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
@@ -20317,6 +20316,13 @@ body {
 @media (max-width: 991.98px) {
   .sidebar {
     display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .sidebar {
+    position: relative !important;
+    display: inline-block !important;
   }
 }
 

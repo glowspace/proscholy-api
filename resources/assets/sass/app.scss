@@ -53,9 +53,8 @@ html, body {
   overflow-x: visible;
 }
 
-.navbar {
-
-
+.navbar 
+{
   z-index:          200;
   background-color: #292929;
 
@@ -68,20 +67,23 @@ html, body {
 
 $sidebar-width: 300px;
 
-.sidebar {
-
-  height:     calc(100vh - 66px);
+.sidebar
+{
+  min-height:     calc(100vh - 66px);
   width:      $sidebar-width;
   padding:    5px 0 0;
-
   z-index:    10;
-
-  display:    inline-block;
-
+  // display:    inline-block;
   transition: 0.2s;
 
   @include media-breakpoint-down(md) {
     display: none;
+  }
+
+  @include media-breakpoint-up(lg) {
+    // display: none;
+    position: relative !important;
+    display: inline-block !important;
   }
 
   a {
