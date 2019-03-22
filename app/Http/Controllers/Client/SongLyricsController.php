@@ -21,6 +21,10 @@ class SongLyricsController extends Controller
             $author->save();
         }
 
+        if ($song_l->lyrics == "" && $song_l->scoresCount() > 0) {
+            return view('client.song.song_scores', compact('song_l'));
+        }
+
         return view('client.song.song_text', compact('song_l'));
     }
 
