@@ -102,6 +102,17 @@ class SongLyric extends Model implements ISearchResult
         ]);
     }
 
+    public function getLyricsNoChordsAttribute()
+    {
+        $str = preg_replace(
+            array('/-/', '/\[[^\]]+\]/'),
+            array("", ""),
+            $this->lyrics
+        );
+
+        return $str;
+    }
+
     public function getLanguageName()
     {
         return $this->lang_string[$this->lang];

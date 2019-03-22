@@ -28,9 +28,11 @@ class SongLyricsQuery extends Query {
 
 	public function resolve($root, $args)
 	{
+        $public_songs = SongLyric::where('is_published', 1)->where('is_approved_by_author', 1);
+
 		if(isset($args['id']))
-			return SongLyric::where('id' , $args['id'])->get();
+			return $public_songs->where('id' , $args['id'])->get();
 		else
-			return SongLyric::all();
+			return $public_songs->get();
 	}
 }

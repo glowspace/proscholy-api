@@ -32,7 +32,24 @@ class SongLyricType extends GraphQLType {
 			'name' => [
 				'type' => Type::string(),
 				'description' => 'The name of the song'
-			],
+            ],
+            'lyrics_no_chords' => [
+                'type' => Type::string(),
+                'description' => 'The lyrics without chords'
+            ],
+            'is_original' => [
+                'type' => Type::boolean(),
+                'description' => "0 means this version is translated from an original. 1 means this version is original."
+            ],
+            'lang' => [
+                'type' => Type::string(),
+                'description' => "A two-letter language code"
+            ]
 		];
 	}
+
+    // public function resolveLyricsNoChordsField($root, $args)
+    // {
+	// 	// return $root->;
+	// }
 }
