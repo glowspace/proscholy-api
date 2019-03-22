@@ -9,7 +9,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <td>Verze zpěvníku</td>
-                        <td><b>Generace #1 - v0.49 (20.3.2019)</b></td>
+                        <td><b>Generace #1 - v0.56 (22.3.2019)</b></td>
                     </tr>
                     <tr>
                         <td>Autor</td>
