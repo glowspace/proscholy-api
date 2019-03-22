@@ -53,7 +53,10 @@
                         <input class="form-check-input" type="checkbox" {{ $file->has_anonymous_author ? 'checked' : "" }}
                         name="has_anonymous_author" id="check_has_anonymous_author" value="1">
                         <label class="form-check-label" for="check_has_anonymous_author">
-                            Autor neznámý (nezobrazovat v to-do listu)
+                            Autor neznámý
+                            @can('access todo')
+                             (nezobrazovat v to-do listu)
+                            @endcan
                         </label>
                     </div>
                     <br>
@@ -76,7 +79,7 @@
                     </div>
                     <br>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
-                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_edit_song">Uložit a upravit píseň</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show_song">Uložit a zobrazit píseň</button>
 
                 </form>
                 @include('admin.components.deletebutton', [
