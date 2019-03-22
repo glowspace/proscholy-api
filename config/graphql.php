@@ -101,7 +101,8 @@ return [
         'default' => [
             'query' => [
                 // 'example_query' => ExampleQuery::class,
-                'song_lyrics' => 'App\GraphQL\Query\SongLyricsQuery'
+                'song_lyrics' => 'App\GraphQL\Query\SongLyricsQuery',
+                'authors' => 'App\GraphQL\Query\AuthorsQuery'
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -123,7 +124,8 @@ return [
     'types' => [
         // 'example'           => ExampleType::class,
         // 'relation_example'  => ExampleRelationType::class,
-        'song_lyric' =>  'App\GraphQL\Type\SongLyricType'
+        'song_lyric' =>  'App\GraphQL\Type\SongLyricType',
+        'author' =>  'App\GraphQL\Type\AuthorType',
     ],
 
     // This callable will be passed the Error object for each errors GraphQL catch.

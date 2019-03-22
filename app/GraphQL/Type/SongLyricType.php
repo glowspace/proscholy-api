@@ -2,8 +2,7 @@
 
 namespace App\GraphQL\Type;
 
-// use GraphQL;
-
+use GraphQL;
 use App\SongLyric;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
@@ -44,12 +43,24 @@ class SongLyricType extends GraphQLType {
             'lang' => [
                 'type' => Type::string(),
                 'description' => "A two-letter language code"
-            ]
+            ],
+            'authors' => [
+				'args' => [
+					'id' => [
+						'type' => Type::int(),
+						'description' => 'Id of the author'
+					]
+				],
+				'type' => Type::listOf(GraphQL::type('author')),
+				'description' => 'Authors of the song'
+			]
 		];
 	}
 
-    // public function resolveLyricsNoChordsField($root, $args)
-    // {
-	// 	// return $root->;
-	// }
+    public function resolveAuthorsField($root, $args){
+		if (isset($args['id']))
+			return $root->authors->where('id', $args['id']);
+
+		return $root->authors;
+	}
 }
