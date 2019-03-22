@@ -101,6 +101,7 @@ return [
         'default' => [
             'query' => [
                 // 'example_query' => ExampleQuery::class,
+                'song_lyrics' => 'App\GraphQL\Query\SongLyricsQuery'
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
