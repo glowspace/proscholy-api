@@ -49,7 +49,7 @@ class SongController extends Controller
 
     public function todoPublish() {
         $song_lyrics = SongLyric::where('is_published', 0)->orderBy('name')->get();
-        $title = "Seznam písní ke schválení editorem";
+        $title = "Seznam písní k publikování";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
