@@ -15,6 +15,7 @@
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",
+        "rebing/graphql-laravel": "^1.20",
         "spatie/laravel-permission": "^2.33"
     },
     "require-dev": {
