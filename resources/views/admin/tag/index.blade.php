@@ -3,7 +3,7 @@
 @section('content')
     <div class="content-padding">
         <h2></h2>
-        @can('add tags')
+        @can('manage tags')
             <a class="btn btn-outline-primary" href="{{route('admin.tag.create')}}">+ Nový štítek</a>
         @endcan
         <div class="row justify-content-between">
