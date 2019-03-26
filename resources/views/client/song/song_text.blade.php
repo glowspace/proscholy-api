@@ -8,10 +8,9 @@
 
 @section('content')
     <div class="content-padding">
+        <h1>{{$song_l->name}}</h1>
         <div class="row">
             <div class="col-lg-8">
-                <h1>{{$song_l->name}}</h1>
-
                 <div class="card" id="cardLyrics">
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
@@ -49,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 content-padding-top">
+            <div class="col-lg-4">
                 @if($song_l->description)
                     <div class="card">
                         <div class="card-header">Informace o písni</div>
