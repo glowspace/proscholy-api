@@ -109,10 +109,10 @@ class SongController extends Controller
         $assigned_song_disabled = $song_lyric->hasSiblings() && $song_lyric->isDomestic();
 
         // HANDLING OF TAGS
-        $official_tags = Tag::officials()->get();
+        $official_tags = Tag::officials()->orderBy('name')->get();
         $assigned_official_tags = $song_lyric->tags()->officials()->get();
 
-        $unofficial_tags = Tag::unofficials()->get();
+        $unofficial_tags = Tag::unofficials()->orderBy('name')->get();
         $assigned_unofficial_tags = $song_lyric->tags()->unofficials()->get();
 
         // dd($assigned_official_tags);

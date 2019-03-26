@@ -50734,7 +50734,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v(_vm._s(_vm.useFlatScale ? "♭" : "#"))]
+              [_vm._v(_vm._s(_vm.useFlatScale ? "#" : "♭"))]
             )
           ])
         : _vm._e(),

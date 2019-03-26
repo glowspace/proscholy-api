@@ -162,6 +162,11 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(File::class);
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', 1);
+    }
+
     public function scopeRestricted($query)
     {
         // restrict results if current user is Author

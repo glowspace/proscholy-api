@@ -29,6 +29,9 @@
                                     <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
                                     <td>
                                         <a href="{{$file->download_url}}">{{$file->getPublicName()}}</a>
+                                        @if (Auth::check())
+                                            <br/><a href="{{ route('admin.file.edit', $file) }}">Upravit soubor</a>
+                                        @endif
                                     </td>
                                     <td>
                                         @if (isset($file->author))
@@ -46,6 +49,9 @@
                                     <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
                                     <td>
                                         <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
+                                        @if (Auth::check())
+                                            <br/><a href="{{ route('admin.external.edit', $external) }}">Upravit externí odkaz</a>
+                                        @endif
                                     </td>
                                     <td>
                                         @if (isset($external->author))
