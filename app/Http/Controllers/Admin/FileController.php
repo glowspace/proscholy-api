@@ -63,7 +63,8 @@ class FileController extends Controller
 
         $file = File::create([
             'filename' => $slugified,
-            'path' => $path
+            'path' => $path,
+            'type' => 3 // set default to sheet music
         ]);
 
         if ($request->has('song_lyric_id')) {
