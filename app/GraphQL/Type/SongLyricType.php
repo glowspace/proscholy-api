@@ -43,7 +43,7 @@ class SongLyricType extends GraphQLType
 			],
 			'lang' => [
 				'type' => Type::string(),
-				'description' => "A two-letter language code"
+				'description' => "A language code, possible values: ".json_encode(collect(SongLyric::$lang_string)->keys())
 			],
 			'authors' => [
 				'args' => [
