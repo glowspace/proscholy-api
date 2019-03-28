@@ -11,7 +11,9 @@ use App\SongLyric;
 class SongLyricsQuery extends Query {
 
 	protected $attributes = [
-		'name' => 'song_lyrics'
+		'name' => 'song_lyrics',
+		'description' => 'A Query for the SongLyric model, without args returns all available SongLyrics. 
+		Use args is_published:true, is_approved_by_author:true and has_lyrics:true for use in apk'
 	];
 
 	public function type()
@@ -22,17 +24,46 @@ class SongLyricsQuery extends Query {
 	public function args()
 	{
 		return [
-            'id' => ['name' => 'id', 'type' => Type::int()],
+			'id' => [
+				'name' => 'id',
+				'type' => Type::int()
+			],
+			'is_published' => [
+				'name' => 'is_published',
+				'type' => Type::boolean(),
+				'description' => 'Whether SongLyric has been reviewed by editors'
+			],
+			'is_approved_by_author' => [
+				'name' => 'is_approved_by_author',
+				'type' => Type::boolean(),
+				'description' => 'Whether SongLyric has been approved by its author for public use'
+			],
+			'has_lyrics' => [
+				'name' => 'has_lyrics',
+				'type' => Type::boolean(),
+				'description' => 'Whether SongLyric has some lyrics'
+			]
 		];
 	}
 
 	public function resolve($root, $args)
 	{
-        $public_songs = SongLyric::where('is_published', 1)->where('is_approved_by_author', 1);
+		$query = SongLyric::query();
+		
+		if (isset($args['is_published']))
+			$query = $query->where('is_published', $args['is_published']);
 
-		if(isset($args['id']))
-			return $public_songs->where('id' , $args['id'])->get();
-		else
-			return $public_songs->get();
+		if (isset($args['is_approved_by_author']))
+			$query = $query->where('is_approved_by_author', $args['is_approved_by_author']);
+
+		if (isset($args['has_lyrics']) && $args['has_lyrics'] === true)
+			$query = $query->where('lyrics', '!=', '');
+		if (isset($args['has_lyrics']) && $args['has_lyrics'] === false)
+			$query = $query->where('lyrics', null);
+
+		// if(isset($args['id']))
+		// 	return $query->where('id' , $args['id'])->get();
+		// else
+		return $query->get();
 	}
 }
