@@ -2,8 +2,17 @@
 
 @section('content')
     <div class="content-padding">
-            <h2>{{ $title ?? "Seznam písní"}}</h2>
+        <h2>{{ $title ?? "Seznam písní"}}</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.song.create')}}">+ Nová píseň</a>
+        {{-- todo add filter by author button for admins --}}
+        {{-- @hasrole('admin')
+            <my-checkbox inline-template>
+                <div class="checkbox-wrapper" @click="check">
+                <div :class="{ checkbox: true, checked: checked }"></div>
+                <div class="title"></div>
+                </div>  
+            </my-checkbox>
+        @endhasrole --}}
         <div class="row">
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
