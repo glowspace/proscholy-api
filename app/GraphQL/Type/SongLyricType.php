@@ -65,9 +65,13 @@ class SongLyricType extends GraphQLType
 				'type' => Type::listOf(GraphQL::type('tag')),
 				'description' => 'Song tags'
 			],
-			// 'original_song_lyric' => [
-			//     'type' => GraphQL::type('song_lyric'),
-			//     'description' => "Null or other SongLyric associated as an original"
+			'song' => [
+			    'type' => GraphQL::type('song'),
+			    'description' => "An abstract Song model that has one or more child SongLyric models"
+			],
+			// 'translation_song_lyric_ids' => [
+			// 	'type' => Type::listOf(Type::int()),
+			// 	'description' => "List of all SongLyric model ids that are associated as translations"
 			// ]
 		];
 	}
