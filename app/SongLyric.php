@@ -77,7 +77,7 @@ class SongLyric extends Model implements ISearchResult
             'user_creator_id'
         ];
 
-    public $lang_string = [
+    public static $lang_string = [
         'cs' => 'čeština',
         'sk' => 'slovenština',
         'en' => 'angličtina',
@@ -115,7 +115,7 @@ class SongLyric extends Model implements ISearchResult
 
     public function getLanguageName()
     {
-        return $this->lang_string[$this->lang];
+        return self::$lang_string[$this->lang];
     }
 
     public function song()

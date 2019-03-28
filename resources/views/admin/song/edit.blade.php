@@ -140,7 +140,7 @@
 
                     <label>Jazyk</label>
                     <select class="custom-select" name="lang" title="">
-                        @foreach($song_lyric->lang_string as $key => $value)
+                        @foreach(\App\SongLyric::$lang_string as $key => $value)
                             <option value="{{ $key }}" {{ $song_lyric->lang === $key ? 'selected' : "" }}>{{ $value }}</option>
                         @endforeach
                     </select>
