@@ -69,27 +69,27 @@ class SongLyricType extends GraphQLType
 			    'type' => GraphQL::type('song'),
 			    'description' => "An abstract Song model that has one or more child SongLyric models"
 			],
-			// 'translation_song_lyric_ids' => [
-			// 	'type' => Type::listOf(Type::int()),
-			// 	'description' => "List of all SongLyric model ids that are associated as translations"
-			// ]
 		];
 	}
 
 	public function resolveAuthorsField($root, $args)
 	{
-		if (isset($args['id']))
-			return $root->authors->where('id', $args['id']);
+		$query = $root->authors();
 
-		return $root->authors;
+		if (isset($args['id']))
+			$query = $query->where('id', $args['id']);
+
+		return $query->get();
 	}
 
 	public function resolveTagsField($root, $args)
 	{
-		if (isset($args['type']))
-			return $root->tags->where('type', $args['type']);
+		$query = $root->tags();
 
-		return $root->tags;
+		if (isset($args['type']))
+			$query = $query->where('type', $args['type']);
+
+		return $query->get();
 	}
 }
 
