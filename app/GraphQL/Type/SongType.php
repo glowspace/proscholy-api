@@ -38,9 +38,9 @@ class SongType extends GraphQLType
 						'type' => Type::int(),
 						'description' => 'Id of the author'
 					],
-					'is_translation' => [
+					'is_original' => [
 						'type' => Type::boolean(),
-						'description' => 'Whether this SongLyric model is a translation'
+						'description' => 'Filtering by the is_original attribute'
 					]
 				],
 				'type' => Type::listOf(GraphQL::type('song_lyric')),
