@@ -42,6 +42,11 @@ class SongLyricsQuery extends Query {
 				'name' => 'has_lyrics',
 				'type' => Type::boolean(),
 				'description' => 'Whether SongLyric has some lyrics'
+			],
+			'is_apk' => [
+				'name' => 'is_apk',
+				'type' => Type::boolean(),
+				'description' => 'Shortcut - wheter SongLyric is to be used in apk. Only for use with is_apk:true'
 			]
 		];
 	}
@@ -61,9 +66,9 @@ class SongLyricsQuery extends Query {
 		if (isset($args['has_lyrics']) && $args['has_lyrics'] === false)
 			$query = $query->where('lyrics', null);
 
-		// if(isset($args['id']))
-		// 	return $query->where('id' , $args['id'])->get();
-		// else
+		if (isset($args['is_apk']) && $args['is_apk'] === true)
+			$query = $query->where('is_approved_by_author', 1)->where('is_published', 1)->where('lyrics', '!=', '');
+
 		return $query->get();
 	}
 }
