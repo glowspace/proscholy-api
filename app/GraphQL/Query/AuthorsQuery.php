@@ -11,7 +11,8 @@ use App\Author;
 class AuthorsQuery extends Query {
 
 	protected $attributes = [
-		'name' => 'authors'
+		'name' => 'authors',
+		'description' => 'A Query for the Author model'
 	];
 
 	public function type()
@@ -28,9 +29,11 @@ class AuthorsQuery extends Query {
 
 	public function resolve($root, $args)
 	{
-		if(isset($args['id']))
-			return Author::where('id' , $args['id'])->get();
-		else
-			return Author::all();
+		$query = Author::query();
+
+		if (isset($args['id']))
+			$query = $query->where('id' , $args['id']);
+
+		return $query->get();
 	}
 }

@@ -11,7 +11,8 @@ use App\Tag;
 class TagsQuery extends Query {
 
 	protected $attributes = [
-		'name' => 'tags'
+		'name' => 'tags',
+		'description' => 'A Query for Tag model'
 	];
 
 	public function type()
@@ -29,11 +30,14 @@ class TagsQuery extends Query {
 
 	public function resolve($root, $args)
 	{
-		if(isset($args['id']))
-			return Tag::where('id' , $args['id'])->get();
-		else if (isset($args['type']))
-			return Tag::where('type', $args['type'])->get();
-		else
-			return Tag::all();
+		$query = Tag::query();
+
+		if (isset($args['id']))
+			$query = $query->where('id' , $args['id']);
+
+		if (isset($args['type']))
+			$query = $query->where('type', $args['type']);
+
+		return $query->get();
 	}
 }
