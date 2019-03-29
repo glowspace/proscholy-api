@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
+use Spatie\PdfToImage\Pdf;
+
 /**
  * App\File
  *
@@ -68,6 +70,47 @@ class File extends Model
         return $this->type_string[$this->type];
     }
 
+    protected static function getThubmnailsFolder()
+    {
+        $relative = '/public_files/thumbnails';
+
+        // first create if doesn't exist
+        if (!file_exists(Storage::path($relative)))
+            mkdir(Storage::path($relative));
+
+        return $relative;
+    }
+
+    public function canHaveThumbnail()
+    {
+        return pathinfo($this->path, PATHINFO_EXTENSION) == "pdf";
+    }
+
+    public function getThumbnailPath()
+    {
+        if (!$this->canHaveThumbnail())
+            return;
+
+        // get the path of a thumbnail file
+        $relative = self::getThubmnailsFolder().
+            '/'.
+            pathinfo($this->path, PATHINFO_FILENAME).
+            '.jpg';
+
+        // if already exists, do not create new one
+        if (file_exists(Storage::path($relative))) {
+            return $relative;
+        }
+        
+        // create a new thumbnail file
+        $pdf = new Pdf(Storage::path($this->path));
+        $pdf->saveImage(Storage::path($relative));
+
+        \Log::info("thumbnail $relative created");
+
+        return $relative;
+    }
+
     public function scopeRestricted($query)
     {
         if (Auth::user()->hasRole('autor')) {
@@ -90,9 +133,4 @@ class File extends Model
     {
         return $this->belongsTo(SongLyric::class);
     }
-
-    // public function scopeScores()
-    // {
-    //     return $this->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
-    // }
 }
