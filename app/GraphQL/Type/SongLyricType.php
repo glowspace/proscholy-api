@@ -7,15 +7,16 @@ use App\SongLyric;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
-class SongLyricType extends GraphQLType {
+class SongLyricType extends GraphQLType
+{
 
 	protected $attributes = [
 		'name' => 'SongLyric',
-        'description' => 'A song lyric model',
-        'model' => SongLyric::class
+		'description' => 'A song lyric model',
+		'model' => SongLyric::class
 	];
-  
-  /*
+
+	/*
 	 * Uncomment following line to make the type input object.
 	 * http://graphql.org/learn/schema/#input-types
 	 */
@@ -31,20 +32,20 @@ class SongLyricType extends GraphQLType {
 			'name' => [
 				'type' => Type::string(),
 				'description' => 'The name of the song'
-            ],
-            'lyrics_no_chords' => [
-                'type' => Type::string(),
-                'description' => 'The lyrics without chords'
-            ],
-            'is_original' => [
-                'type' => Type::boolean(),
-                'description' => "0 means this version is translated from an original. 1 means this version is original."
-            ],
-            'lang' => [
-                'type' => Type::string(),
-                'description' => "A two-letter language code"
-            ],
-            'authors' => [
+			],
+			'lyrics_no_chords' => [
+				'type' => Type::string(),
+				'description' => 'The lyrics without chords'
+			],
+			'is_original' => [
+				'type' => Type::boolean(),
+				'description' => "0 means this version is translated from an original. 1 means this version is original."
+			],
+			'lang' => [
+				'type' => Type::string(),
+				'description' => "A language code, possible values: ".json_encode(collect(SongLyric::$lang_string)->keys())
+			],
+			'authors' => [
 				'args' => [
 					'id' => [
 						'type' => Type::int(),
@@ -53,8 +54,8 @@ class SongLyricType extends GraphQLType {
 				],
 				'type' => Type::listOf(GraphQL::type('author')),
 				'description' => 'Authors of the song'
-            ],
-            'tags' => [
+			],
+			'tags' => [
 				'args' => [
 					'type' => [
 						'type' => Type::int(),
@@ -63,27 +64,32 @@ class SongLyricType extends GraphQLType {
 				],
 				'type' => Type::listOf(GraphQL::type('tag')),
 				'description' => 'Song tags'
-            ],
-            // 'original_song_lyric' => [
-            //     'type' => GraphQL::type('song_lyric'),
-            //     'description' => "Null or other SongLyric associated as an original"
-            // ]
+			],
+			'song' => [
+			    'type' => GraphQL::type('song'),
+			    'description' => "An abstract Song model that has one or more child SongLyric models"
+			],
 		];
 	}
 
-    public function resolveAuthorsField($root, $args)
-    {
+	public function resolveAuthorsField($root, $args)
+	{
+		$query = $root->authors();
+
 		if (isset($args['id']))
-			return $root->authors->where('id', $args['id']);
+			$query = $query->where('id', $args['id']);
 
-		return $root->authors;
-    }
-    
-    public function resolveTagsField($root, $args)
-    {
+		return $query->get();
+	}
+
+	public function resolveTagsField($root, $args)
+	{
+		$query = $root->tags();
+
 		if (isset($args['type']))
-			return $root->tags->where('type', $args['type']);
+			$query = $query->where('type', $args['type']);
 
-		return $root->tags;
-    }
+		return $query->get();
+	}
 }
+

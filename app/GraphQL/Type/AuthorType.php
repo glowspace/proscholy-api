@@ -39,9 +39,4 @@ class AuthorType extends GraphQLType {
             ]
 		];
 	}
-
-    // public function resolveLyricsNoChordsField($root, $args)
-    // {
-	// 	// return $root->;
-	// }
 }

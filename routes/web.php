@@ -54,6 +54,8 @@ Auth::routes(['register' => false]);
 
 // Downloading
 Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
+// Thumbnails for pdf files
+Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
     Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () 

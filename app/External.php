@@ -52,6 +52,11 @@ class External extends Model
         return $this->type_string[$this->type];
     }
 
+    public function scopeScores($query)
+    {
+        return $query->where('type', 4);
+    }
+
     /**
      * @throws Exception
      */

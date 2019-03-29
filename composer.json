@@ -16,7 +16,8 @@
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",
         "rebing/graphql-laravel": "^1.20",
-        "spatie/laravel-permission": "^2.33"
+        "spatie/laravel-permission": "^2.33",
+        "spatie/pdf-to-image": "^1.8"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.4",

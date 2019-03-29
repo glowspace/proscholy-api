@@ -127,7 +127,8 @@ return [
         // 'relation_example'  => ExampleRelationType::class,
         'song_lyric' =>  'App\GraphQL\Type\SongLyricType',
         'author' =>  'App\GraphQL\Type\AuthorType',
-        'tag' => 'App\GraphQL\Type\TagType'
+        'tag' => 'App\GraphQL\Type\TagType',
+        'song' => 'App\GraphQL\Type\SongType',
     ],
 
     // This callable will be passed the Error object for each errors GraphQL catch.

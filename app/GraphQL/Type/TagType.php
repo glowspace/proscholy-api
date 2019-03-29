@@ -38,7 +38,7 @@ class TagType extends GraphQLType {
 			],
 			'type' => [
                 'type' => Type::int(),
-                'description' => "0 means unofficial, 1 means official - liturgy."
+                'description' => "0 -> unofficial, 1 -> official aka liturgy."
 			],
 			'parent_tag' => [
 				'type' => GraphQL::type('tag'),
@@ -46,9 +46,4 @@ class TagType extends GraphQLType {
 			]
 		];
 	}
-
-    // public function resolveLyricsNoChordsField($root, $args)
-    // {
-	// 	// return $root->;
-	// }
 }

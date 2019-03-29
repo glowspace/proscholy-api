@@ -13,49 +13,75 @@ use App\Tag;
 
 class SongController extends Controller
 {
-    public function __construct()
+    private function apply_request_filters($query, Request $request)
     {
+        $res_query = $query;
+        if ($request->has('filter_author_id')) {
+            $res_query = $res_query->whereHas('authors', function($q) use ($request) {
+                $q->where('authors.id', $request['filter_author_id']);
+            });
+        }
 
+        return $res_query;
     }
 
-    public function index(){
-        $song_lyrics = SongLyric::orderBy('name')->restricted()->get();
+    public function index(Request $request)
+    {
+        $query = SongLyric::orderBy('name')->restricted();
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         return view('admin.song.index', compact('song_lyrics'));
     }
 
-    public function todoLyrics() {
-        $song_lyrics = SongLyric::where('lyrics', '=', null)->orderBy('name')->get();
+    public function todoLyrics(Request $request)
+    {
+        $query = SongLyric::where('lyrics', '=', null)->orderBy('name');
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         $title = "Seznam písní bez textu";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
-    public function todoAuthors() {
-        $song_lyrics = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->orderBy('name')->get();
+    public function todoAuthors(Request $request) 
+    {
+        $query = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->orderBy('name');
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         $title = "Seznam písní bez přiřazeného autora";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
-    public function todoChords() {
-        $song_lyrics = SongLyric::where('lyrics', '!=', null)->where('has_chords', 0)->orderBy('name')->get();
+    public function todoChords(Request $request)
+    {
+        $query = SongLyric::where('lyrics', '!=', null)->where('has_chords', 0)->orderBy('name');
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         $title = "Seznam písní s textem bez akordů";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
-    public function todoTags() {
-        $song_lyrics = SongLyric::whereDoesntHave('tags')->orderBy('name')->get();
+    public function todoTags(Request $request) {
+        $query = SongLyric::whereDoesntHave('tags')->orderBy('name');
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         $title = "Seznam písní bez štítků";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
-    public function todoPublish() {
-        $song_lyrics = SongLyric::where('is_published', 0)->orderBy('name')->get();
+    public function todoPublish(Request $request) {
+        $query = SongLyric::where('is_published', 0)->orderBy('name');
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         $title = "Seznam písní k publikování";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
 
     // author account todo
-    public function todoApprove() {
-        $song_lyrics = SongLyric::restricted()->where('is_approved_by_author', 0)->orderBy('name')->get();
+    public function todoApprove(Request $request)
+    {
+        $query = SongLyric::restricted()->where('is_approved_by_author', 0)->orderBy('name');
+        $song_lyrics = $this->apply_request_filters($query, $request)->get();
+
         $title = "Seznam písní ke schválení autorem";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
@@ -117,12 +143,16 @@ class SongController extends Controller
 
         // dd($assigned_official_tags);
 
+        // loading file preview
+        $score_file = $song_lyric->scoreFiles()->first();
+
         return view('admin.song.edit', compact(
             'song_lyric', 
             'assigned_authors', 'all_authors',
             'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled',
             'official_tags', 'assigned_official_tags',
-            'unofficial_tags', 'assigned_unofficial_tags'));
+            'unofficial_tags', 'assigned_unofficial_tags',
+            'score_file'));
     }
 
     public function destroy(Request $request, SongLyric $song_lyric)
