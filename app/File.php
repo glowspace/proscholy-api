@@ -65,6 +65,13 @@ class File extends Model
         ]);
     }
 
+    public function getThumbnailUrlAttribute()
+    {
+        return route('file.thumbnail', [
+            'file' => $this->id,
+        ]);
+    }
+
     public function getTypeString()
     {
         return $this->type_string[$this->type];

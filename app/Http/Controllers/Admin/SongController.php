@@ -143,12 +143,16 @@ class SongController extends Controller
 
         // dd($assigned_official_tags);
 
+        // loading file preview
+        $score_file = $song_lyric->scoreFiles()->first();
+
         return view('admin.song.edit', compact(
             'song_lyric', 
             'assigned_authors', 'all_authors',
             'assigned_song_lyrics', 'all_song_lyrics', 'assigned_song_disabled',
             'official_tags', 'assigned_official_tags',
-            'unofficial_tags', 'assigned_unofficial_tags'));
+            'unofficial_tags', 'assigned_unofficial_tags',
+            'score_file'));
     }
 
     public function destroy(Request $request, SongLyric $song_lyric)
