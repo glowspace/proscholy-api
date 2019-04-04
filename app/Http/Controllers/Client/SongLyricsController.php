@@ -25,7 +25,9 @@ class SongLyricsController extends Controller
             return view('client.song.song_scores', compact('song_l'));
         }
 
-        return view('client.song.song_text', compact('song_l'));
+        $tags = $song_l->tags()->orderBy('type', 'desc')->orderBy('name')->get();
+
+        return view('client.song.song_text', compact('song_l', 'tags'));
     }
 
     public function songScore(SongLyric $song_lyric)

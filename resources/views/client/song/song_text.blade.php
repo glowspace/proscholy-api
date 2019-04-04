@@ -22,7 +22,7 @@
                                 {{-- <a href="#" class="tag">štítek 1</a>
                                 <a href="#" class="tag">štítek 2</a>
                                 <a href="#" class="tag">štítek 3</a> --}}
-                                @foreach ($song_l->tags as $tag)
+                                @foreach ($tags as $tag)
                                     <a href="#" class="tag">{{ $tag->name }}</a>
                                 @endforeach
                             </div>
