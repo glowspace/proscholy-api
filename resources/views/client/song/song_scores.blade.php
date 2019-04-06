@@ -12,7 +12,7 @@
 
         @if($song_l->scoresCount() > 0)
             <div class="card">
-                <div class="card-header">Odkazy na noty na internetu</div>
+                <div class="card-header">Odkazy na noty ke stažení</div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
