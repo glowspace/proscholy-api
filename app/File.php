@@ -45,7 +45,8 @@ class File extends Model
             0 => 'soubor',
             1 => 'text',
             2 => 'text/akordy',
-            3 => 'noty'
+            3 => 'noty',
+            4 => 'audio nahrávka'
         ];
 
     public function getPublicName()
@@ -130,6 +131,16 @@ class File extends Model
             return $query;
         }
     }
+
+    public function scopeAudio($query)
+    {
+        return $query->where('type', 4);
+    }
+
+    // public function scopeScores($query)
+    // {
+
+    // }
 
     public function author()
     {

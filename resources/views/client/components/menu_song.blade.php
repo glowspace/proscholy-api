@@ -26,10 +26,10 @@
     </a>
 @endif
 
-@if($song_l->audioTracks()->count())
+@if($song_l->externals()->audio()->count() + $song_l->files()->audio()->count())
     <a class="btn btn-secondary" href="{{route('client.song.audio_records', $song_l)}}">
         <i class="fas fa-microphone"></i> Nahrávky
-        <span class="badge badge-pill">{{$song_l->audioTracks()->count()}}</span>
+        <span class="badge badge-pill">{{$song_l->externals()->audio()->count() + $song_l->files()->audio()->count()}}</span>
     </a>
 @endif
 
