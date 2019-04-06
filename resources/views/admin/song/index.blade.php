@@ -13,15 +13,13 @@
                 </div>  
             </my-checkbox>
         @endhasrole --}}
-        <div class="row">
-            <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
                     'id' => 'index_table',
-                    'columns' => ['Název', 'Typ', 'Naposledy upraveno', 'Publikováno', 'Schváleno autorem', 'Akce']
+                    'columns' => ['Název písničky', 'Typ', 'Naposledy upraveno', 'Publikováno', 'Schváleno autorem', 'Akce']
                 ])
                     @foreach($song_lyrics as $song_l)
                     <tr>
-                        <td><a href="{{route('admin.song.edit',['id'=>$song_l->id])}}">{{$song_l->name}}</a></td>
+                        <td style="min-width:15em"><a href="{{route('admin.song.edit',['id'=>$song_l->id])}}">{{$song_l->name}}</a></td>
                             <td>
                                 @if($song_l->is_original)
                                     originál
@@ -49,8 +47,6 @@
                     </tr>
                     @endforeach
                 @endcomponent
-            </div>
-        </div>
     </div>
 @endsection
 
