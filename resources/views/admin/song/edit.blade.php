@@ -239,15 +239,14 @@
                     <a href="{{ $score_file->download_url }}"><img src="{{ $score_file->thumbnail_url }}" alt="noty_náhled" class="img-fluid mb-4"></a>
                 @endif
 
-                @if ($song_lyric->scoresCount() > 0)
-                    <h5>Přehled všech dostupných materiálů (noty)</h5>
+                @if ($song_lyric->externals()->count() + $song_lyric->files()->count())
+                    <h5>Přehled všech materiálů</h5>
                     <ul>
-                        @foreach ($song_lyric->scoreExternals()->get() as $external)
-                            <li>Externí odkaz: <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{$external->getEmbedUrl()}}</a></li>                    
+                        @foreach ($song_lyric->externals as $external)
+                            <li>Externí odkaz ({{ $external->getTypeString() }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{$external->getEmbedUrl()}}</a></li>                    
                         @endforeach
-
-                        @foreach ($song_lyric->scoreFiles()->get() as $file)
-                            <li>Soubor: <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
+                        @foreach ($song_lyric->files as $file)
+                            <li>Soubor ({{ $file->getTypeString() }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
                         @endforeach
                     </ul>
                 @endif
