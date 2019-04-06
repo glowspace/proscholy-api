@@ -40,6 +40,13 @@
     </a>
 @endif
 
+@if($song_l->files()->others()->count())
+    <a class="btn btn-secondary" href="{{route('client.song.files', $song_l)}}">
+        <i class="fas fa-file"></i> Ostatní soubory
+        <span class="badge badge-pill">{{$song_l->files()->others()->count()}}</span>
+    </a>
+@endif
+
 {{-- if a user is logged in --}}
 @if (Auth::check())
     <div class="navbar-label material-shadow text-success">Administrace</div>

@@ -137,10 +137,10 @@ class File extends Model
         return $query->where('type', 4);
     }
 
-    // public function scopeScores($query)
-    // {
-
-    // }
+    public function scopeOthers($query)
+    {
+        return $query->where('type', 0)->orWhere('type', 1)->orWhere('type', 2);
+    }
 
     public function author()
     {

@@ -66,4 +66,13 @@ class SongLyricsController extends Controller
 
         return view('client.song.song_videos', compact('song_l'));
     }
+
+    public function songFiles($id)
+    {
+        $song_l         = SongLyric::findOrFail($id);
+        $song_l->visits += 1;
+        $song_l->save();
+
+        return view('client.song.song_files', compact('song_l'));
+    }
 }
