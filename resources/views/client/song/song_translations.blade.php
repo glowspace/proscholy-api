@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', $song_l->name . ' - noty')
+@section('title', $song_l->name . ' - překlady / verze')
 
 @section('navbar')
     @include('client.components.menu_song')
