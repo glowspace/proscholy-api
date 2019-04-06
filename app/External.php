@@ -35,13 +35,13 @@ class External extends Model
 
     public $type_string
         = [
-            0 => 'link',
-            1 => 'spotify',
+            0 => 'odkaz',
+            1 => 'spotify URI',
             2 => 'soundcloud',
             3 => 'youtube',
-            4 => 'score_link',
-            5 => 'profile_webpage',
-            6 => 'youtube_channel',
+            4 => 'noty',
+            5 => 'webová stránka autora',
+            6 => 'youtube kanál'
         ];
 
     /**
@@ -57,12 +57,17 @@ class External extends Model
         return $query->where('type', 4);
     }
 
+    public function scopeAudio($query)
+    {
+        return $query->where('type', 1)->orWhere('type', 2);
+    }
+
     /**
      * @throws Exception
      */
     public function getEmbedUrl()
     {
-        if ($this->getTypeString() == 'spotify')
+        if ($this->type == 1) // spotify
         {
             // format: spotify:track:3X7QBr7rq6NIzLmEXbiXAS
             $parts = explode(":", $this->url);
@@ -77,13 +82,13 @@ class External extends Model
         }
         else
         {
-            if ($this->getTypeString() == 'youtube')
+            if ($this->type == 3) // youtube
             {
                 return str_replace('watch?v=', 'embed/', $this->url);
             }
             else
             {
-                if ($this->getTypeString() == 'soundcloud')
+                if ($this->type == 2) // soundcloud
                 {
                     return "https://w.soundcloud.com/player/?url=$this->url&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
                 }
