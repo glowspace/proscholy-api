@@ -62,6 +62,11 @@ class External extends Model
         return $query->where('type', 1)->orWhere('type', 2);
     }
 
+    public function scopeMedia($query)
+    {
+        return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
+    }
+
     /**
      * @throws Exception
      */
