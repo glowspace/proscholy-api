@@ -89,7 +89,9 @@ class External extends Model
         {
             if ($this->type == 3) // youtube
             {
-                return str_replace('watch?v=', 'embed/', $this->url);
+                $result = str_replace('https://youtu.be/', 'https://www.youtube.com/watch?v=', $this->url);
+                $result = str_replace('watch?v=', 'embed/', $result);
+                return $result;
             }
             else
             {
