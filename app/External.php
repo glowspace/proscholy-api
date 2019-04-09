@@ -5,6 +5,8 @@ namespace App;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Spatie\PdfToImage\Pdf;
 
 /**
  * App\External
@@ -107,11 +109,11 @@ class External extends Model
 
         return $url;
 
-        return "https://w.soundcloud.com/player/?url=$this->url
-            &color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
+        // return "https://w.soundcloud.com/player/?url=$this->url
+        //     &color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
     }
 
-    // helper function
+    // helper getter
     public function getMediaIdAttribute()
     {
         if ($this->type == 1) return self::urlAsSpotify($this->url);
@@ -130,13 +132,50 @@ class External extends Model
         return 0;
     }
 
-    public function getHtml()
+    protected static function getThubmnailsFolder()
     {
-        $this->visits = $this->visits + 1;
-        $this->save();
+        $relative = '/public_files/thumbnails_externals';
 
-        return view('client.components.external_embed', [
-            'external' => $this,
+        // first create if doesn't exist
+        if (!file_exists(Storage::path($relative)))
+            mkdir(Storage::path($relative));
+
+        return $relative;
+    }
+
+    public function canHaveThumbnail()
+    {
+        return pathinfo($this->url, PATHINFO_EXTENSION) == "pdf";
+    }
+
+    public function getThumbnailPath()
+    {
+        if (!$this->canHaveThumbnail())
+            return;
+
+        // get the path of a thumbnail file
+        $relative = self::getThubmnailsFolder()."/$this->id.jpg";
+
+        // if already exists, do not create new one
+        if (file_exists(Storage::path($relative))) {
+            return $relative;
+        }
+        
+        // create a new thumbnail file
+        $pdf = new Pdf($this->url);
+        $pdf->setPage(1)
+            ->setCompressionQuality(60)
+            ->saveImage(Storage::path($relative));
+
+        \Log::info("thumbnail $relative created");
+
+        return $relative;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return route('external.thumbnail', [
+            'external' => $this->id,
         ]);
     }
 

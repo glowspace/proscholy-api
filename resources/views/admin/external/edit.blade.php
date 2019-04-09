@@ -5,7 +5,7 @@
         <h2>Úprava externího zdroje</h2>
         <div class="row">
             <div class="col-sm-6">
-                {!! $external->getHtml() !!}
+                @component('client.components.external_embed', ['external' => $external])@endcomponent
 
                 <form action="{{route('admin.external.update', ['external' => $external->id])}}" method="post">
                     @csrf
