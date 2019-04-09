@@ -272,7 +272,7 @@ class SongLyric extends Model implements ISearchResult
         ]);
     }
 
-    public static function getByIdOrCreateWithName($identificator)
+    public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))
         {
@@ -280,6 +280,11 @@ class SongLyric extends Model implements ISearchResult
         }
         else
         {
+            $double = SongLyric::where('name', $identificator)->first();
+            if ($uniqueName && $double != null) {
+                return $double;
+            }
+            
             $song       = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,

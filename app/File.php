@@ -112,7 +112,8 @@ class File extends Model
         
         // create a new thumbnail file
         $pdf = new Pdf(Storage::path($this->path));
-        $pdf->saveImage(Storage::path($relative));
+        $pdf->setCompressionQuality(20)
+            ->saveImage(Storage::path($relative));
 
         \Log::info("thumbnail $relative created");
 

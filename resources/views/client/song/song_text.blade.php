@@ -9,8 +9,8 @@
 @section('content')
     <div class="content-padding">
         <h1>{{$song_l->name}}</h1>
-        <div class="row">
-            <div class="col-lg-8">
+        <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
+            <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
                 <div class="card" id="cardLyrics">
                     <div class="card-header" style="padding: 8px;">
                         <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
@@ -32,7 +32,7 @@
                                 @else
                                     <p>Text písně připravujeme.</p>
                                     @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
-                                        <p><b>V nabídce vlevo jsou k nahlédnutí dostupné materiály ke stažení.</b></p>
+                                        <p><b>V nabídce vlevo jsou k nahlédnutí všechny materiály ke stažení.</b></p>
                                     @endif
                                 @endif
                             </div>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-4" }}">
                 @if($song_l->description)
                     <div class="card">
                         <div class="card-header">Informace o písni</div>
@@ -56,6 +56,12 @@
                             <b>Autor</b>
                         </div>
                     </div>
+                @endif
+
+                @if($song_l->scoreFiles()->count() > 0)
+                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent
+                @elseif ($song_l->scoreExternals()->count() > 0)
+                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreExternals()->first()])@endcomponent
                 @endif
 
                 @if($song_l->youtubeVideos()->count() > 0)

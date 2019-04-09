@@ -124,7 +124,7 @@ class ExternalController extends Controller
         else
         {
             $author_identification = $request->assigned_authors[0];
-            $author = Author::getByIdOrCreateWithName($author_identification);
+            $author = Author::getByIdOrCreateWithName($author_identification, true);
 
             $external->author()->associate($author);
             $external->save();

@@ -21,13 +21,16 @@ class SongLyricsController extends Controller
             $author->save();
         }
 
-        if ($song_l->lyrics == "" && $song_l->scoresCount() > 0) {
-            return view('client.song.song_scores', compact('song_l'));
-        }
+        $reversed_columns = $song_l->lyrics == "" && 
+                            $song_l->scoreFiles()->count() + $song_l->scoreExternals()->count() > 0;
+
+        // if ($song_l->lyrics == "" && $song_l->scoreFiles()->count() > 0) {
+        //     return view('client.song.song_scores', compact('song_l'));
+        // }
 
         $tags = $song_l->tags()->orderBy('type', 'desc')->orderBy('name')->get();
 
-        return view('client.song.song_text', compact('song_l', 'tags'));
+        return view('client.song.song_text', compact('song_l', 'tags', 'reversed_columns'));
     }
 
     public function songScore(SongLyric $song_lyric)

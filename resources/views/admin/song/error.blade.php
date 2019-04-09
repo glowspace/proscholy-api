@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="content-padding">
-
         <div class="row">
             <div class="col-md-6">
                 @if ($error === 'locked')

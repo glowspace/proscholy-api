@@ -122,7 +122,7 @@ class Author extends Model implements ISearchResult
         return $this->type_string[$this->type];
     }
 
-    public static function getByIdOrCreateWithName($identificator)
+    public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))
         {
@@ -130,6 +130,11 @@ class Author extends Model implements ISearchResult
         }
         else
         {
+            $double = Author::where('name', $identificator)->first();
+            if ($uniqueName && $double != null) {
+                return $double;
+            }
+
             $author = Author::create([
                 'name' => $identificator,
             ]);

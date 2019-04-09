@@ -157,8 +157,6 @@
 
                     <br>
 
-                    {{-- <input class="btn btn-outline-primary" type="submit" value="create"> --}}
-
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
                     @if (!$song_lyric->is_published)
                         @can('publish songs')
@@ -237,6 +235,9 @@
                 @if (isset($score_file))
                     <h5>Nahrané noty - náhled ({{ $score_file->getPublicName() }})</h5>
                     <a href="{{ $score_file->download_url }}"><img src="{{ $score_file->thumbnail_url }}" alt="noty_náhled" class="img-fluid mb-4"></a>
+                @elseif (isset($score_external))
+                    <h5>Externí noty - náhled ({{ $score_external->getPublicName() }})</h5>
+                    <a href="{{ $score_external->download_url }}"><img src="{{ $score_external->thumbnail_url }}" alt="noty_náhled" class="img-fluid mb-4"></a>
                 @endif
 
                 @if ($song_lyric->externals()->count() + $song_lyric->files()->count())
