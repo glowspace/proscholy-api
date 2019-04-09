@@ -32,7 +32,7 @@
                                 @else
                                     <p>Text písně připravujeme.</p>
                                     @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
-                                        <p><b>V nabídce vlevo jsou k nahlédnutí dostupné materiály ke stažení.</b></p>
+                                        <p><b>V nabídce vlevo jsou k nahlédnutí všechny materiály ke stažení.</b></p>
                                     @endif
                                 @endif
                             </div>

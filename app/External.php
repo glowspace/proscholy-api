@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf;
+use Hash;
 
 /**
  * App\External
@@ -153,8 +154,11 @@ class External extends Model
         if (!$this->canHaveThumbnail())
             return;
 
+        // generate unique filename from the url
+        $hash_name = md5($this->url);
+
         // get the path of a thumbnail file
-        $relative = self::getThubmnailsFolder()."/$this->id.jpg";
+        $relative = self::getThubmnailsFolder()."/$hash_name.jpg";
 
         // if already exists, do not create new one
         if (file_exists(Storage::path($relative))) {
@@ -163,8 +167,7 @@ class External extends Model
         
         // create a new thumbnail file
         $pdf = new Pdf($this->url);
-        $pdf->setPage(1)
-            ->setCompressionQuality(60)
+        $pdf->setCompressionQuality(20)
             ->saveImage(Storage::path($relative));
 
         \Log::info("thumbnail $relative created");
