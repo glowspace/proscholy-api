@@ -243,7 +243,7 @@
                     <h5>Přehled všech materiálů</h5>
                     <ul>
                         @foreach ($song_lyric->externals as $external)
-                            <li>Externí odkaz ({{ $external->getTypeString() }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{$external->getEmbedUrl()}}</a></li>                    
+                            <li>Externí odkaz ({{ $external->getTypeString() }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{ $external->url }}</a></li>                    
                         @endforeach
                         @foreach ($song_lyric->files as $file)
                             <li>Soubor ({{ $file->getTypeString() }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    

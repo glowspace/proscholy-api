@@ -48,7 +48,7 @@
                                 <tr>
                                     <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
                                     <td>
-                                        <a href="{{$external->getEmbedUrl()}}">{{$external->getEmbedUrl()}}</a>
+                                        <a href="{{$external->url}}">{{$external->url}}</a>
                                         @if (Auth::check())
                                             <br/><a href="{{ route('admin.external.edit', $external) }}">Upravit externí odkaz</a>
                                         @endif
