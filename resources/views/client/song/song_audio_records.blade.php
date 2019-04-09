@@ -28,37 +28,36 @@
             </div>
         @endif
 
-            {{-- @if ($song_l->files()->audio()->count() > 0)
-                
-            @endif --}}
-        <div class="card">
-            <div class="card-header">Nahrávky ke stažení</div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Název souboru</th>
-                            <th scope="col">Autor</th>
-                            <th scope="col">Staženo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($song_l->files()->audio()->get() as $file)
+        @if ($song_l->files()->audio()->count() > 0)
+            <div class="card">
+                <div class="card-header">Nahrávky ke stažení</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <a href="{{ $file->download_url }}">{{ $file->getPublicName() }}</a>
-                                    @if (Auth::check())
-                                        <br/><a href="{{ route('admin.file.edit', $file) }}">Upravit soubor</a>
-                                    @endif
-                                </td>
-                                <td>{{ $file->author == null ? "-" : $file->author->name }}</td>
-                                <td>{{ $file->downloads }}x</td>
+                                <th scope="col">Název souboru</th>
+                                <th scope="col">Autor</th>
+                                <th scope="col">Staženo</th>
                             </tr>
-                        @endforeach
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            @foreach ($song_l->files()->audio()->get() as $file)
+                                <tr>
+                                    <td>
+                                        <a href="{{ $file->download_url }}">{{ $file->getPublicName() }}</a>
+                                        @if (Auth::check())
+                                            <br/><a href="{{ route('admin.file.edit', $file) }}">Upravit soubor</a>
+                                        @endif
+                                    </td>
+                                    <td>{{ $file->author == null ? "-" : $file->author->name }}</td>
+                                    <td>{{ $file->downloads }}x</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection
 
