@@ -22,7 +22,7 @@ class AuthorController extends Controller
 
     public function store(Request $request)
     {
-        $author = Author::create(['name' => $request->name]);
+        $author = Author::firstOrNew(['name' => $request->name]);
 
         $redirect_arr = [
             'edit' => route('admin.author.edit', ['author' => $author->id]),
