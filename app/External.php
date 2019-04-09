@@ -202,7 +202,7 @@ class External extends Model
         }
     }
 
-    public function generateTitle()
+    public function getPublicName()
     {
         // TODO better condition
         if (empty($this->author_id) || empty($this->song_lyric_id))

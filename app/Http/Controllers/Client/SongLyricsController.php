@@ -21,7 +21,8 @@ class SongLyricsController extends Controller
             $author->save();
         }
 
-        $reversed_columns = $song_l->lyrics == "" && $song_l->scoreFiles()->count() > 0;
+        $reversed_columns = $song_l->lyrics == "" && 
+                            $song_l->scoreFiles()->count() + $song_l->scoreExternals()->count() > 0;
 
         // if ($song_l->lyrics == "" && $song_l->scoreFiles()->count() > 0) {
         //     return view('client.song.song_scores', compact('song_l'));

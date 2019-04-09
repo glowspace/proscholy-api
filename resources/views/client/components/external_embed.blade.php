@@ -39,7 +39,7 @@
         @if ($external->canHaveThumbnail())
             <div class="card-body">
                 <a href="{{ $external->download_url }}">
-                    <img src="{{ $external->thumbnail_url }}" alt="{{ $external->generateTitle() }}" class="img-fluid">
+                    <img src="{{ $external->thumbnail_url }}" alt="{{ $external->getPublicName() }}" class="img-fluid">
                 </a>
             </div>
         @else

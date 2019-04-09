@@ -59,7 +59,9 @@
                 @endif
 
                 @if($song_l->scoreFiles()->count() > 0)
-                    @component('client.components.file_preview', ['file' => $song_l->scoreFiles()->first()])@endcomponent
+                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent
+                @elseif ($song_l->scoreExternals()->count() > 0)
+                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreExternals()->first()])@endcomponent
                 @endif
 
                 @if($song_l->youtubeVideos()->count() > 0)

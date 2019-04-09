@@ -16,7 +16,7 @@
                     </div>
                     @foreach($externals as $external)
                         <a class="list-group-item"
-                           href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->generateTitle()}}</a>
+                           href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->getPublicName()}}</a>
                     @endforeach
                 </div>
             </div>

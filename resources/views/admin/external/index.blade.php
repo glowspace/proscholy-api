@@ -13,7 +13,7 @@
                     @foreach($externals as $external)
                     <tr>
                         <td>
-                            <a href="{{route('admin.external.edit', ['external'=>$external->id])}}">{{$external->generateTitle()}}</a>
+                            <a href="{{route('admin.external.edit', ['external'=>$external->id])}}">{{$external->getPublicName()}}</a>
                         </td>
                         <td>
                             @if ($external->song_lyric != null)
