@@ -21,6 +21,7 @@ class ExternalController extends Controller
         //       abych viděl, co se děje :D
         // Michal: :D, já myslím, že slack zas tolik dat naukrojí, jsou to jen texty. :D
         // Mira: zdravím z letadla :) (commit z letadla jen tak někdo nemá :D)
+        // Mira: btw pro spusteni unit testu: vendor/bin/phpunit
     }
 
     public function index()
