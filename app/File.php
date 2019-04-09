@@ -94,6 +94,11 @@ class File extends Model
         return pathinfo($this->path, PATHINFO_EXTENSION) == "pdf";
     }
 
+    // public function getCanHaveThumbnailAttribute()
+    // {
+    //     return $this->canHaveThumbnail();
+    // }
+
     public function getThumbnailPath()
     {
         if (!$this->canHaveThumbnail())
