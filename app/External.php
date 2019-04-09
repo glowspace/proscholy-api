@@ -35,13 +35,13 @@ class External extends Model
 
     public $type_string
         = [
-            0 => 'link',
-            1 => 'spotify',
+            0 => 'odkaz',
+            1 => 'spotify URI',
             2 => 'soundcloud',
             3 => 'youtube',
-            4 => 'score_link',
-            5 => 'profile_webpage',
-            6 => 'youtube_channel',
+            4 => 'noty',
+            5 => 'webová stránka autora',
+            6 => 'youtube kanál'
         ];
 
     /**
@@ -57,43 +57,77 @@ class External extends Model
         return $query->where('type', 4);
     }
 
-    /**
-     * @throws Exception
-     */
-    public function getEmbedUrl()
+    public function scopeAudio($query)
     {
-        if ($this->getTypeString() == 'spotify')
-        {
-            // format: spotify:track:3X7QBr7rq6NIzLmEXbiXAS
-            $parts = explode(":", $this->url);
+        return $query->where('type', 1)->orWhere('type', 2);
+    }
 
-            // Get URI only
-            if (isset($parts[2]))
-            {
-                return "https://open.spotify.com/embed/track/$parts[2]";
-            }
+    public function scopeMedia($query)
+    {
+        return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
+    }
 
-            return null;
+    public static function urlAsSpotify($url)
+    {
+        // spotify:track:3X7QBr7rq6NIzLmEXbiXAS
+        $uri_prefix = "spotify:track:";
+        // https://open.spotify.com/track/2nwCO1PqpvyoFIvq3Vrj8N?si=kpz8FS1zSYG7dKv12kU1kA
+        $link_prefix = preg_quote("https://open.spotify.com/track/", "/");
+
+        // check if it's a valid Spotify URI or link
+        if (!preg_match("/($uri_prefix|$link_prefix)([^\?]+)/", $url, $groups)) {
+            return false;
         }
-        else
-        {
-            if ($this->getTypeString() == 'youtube')
-            {
-                return str_replace('watch?v=', 'embed/', $this->url);
-            }
-            else
-            {
-                if ($this->getTypeString() == 'soundcloud')
-                {
-                    return "https://w.soundcloud.com/player/?url=$this->url&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
-                }
-                else
-                {
 
-                    return $this->url;
-                }
-            }
+        return $groups[2];
+
+        // return "https://open.spotify.com/embed/track/$groups[2]";
+    }
+
+    public static function urlAsYoutube($url)
+    {
+        $short = preg_quote("https://youtu.be/", '/');
+        $long = preg_quote("https://www.youtube.com/watch?v=", '/');
+        
+        if (!preg_match("/($short|$long)(.+)/", $url, $groups)) {
+            return false;
         }
+
+        return $groups[2];
+
+        // return "https://www.youtube.com/embed/$groups[2]";
+    }
+
+    public static function urlAsSoundcloud($url)
+    {
+        $prefix = preg_quote("https://soundcloud.com/", "/");
+        if (!preg_match("/$prefix(.+)/", $url)) {
+            return false;
+        }
+
+        return $url;
+
+        return "https://w.soundcloud.com/player/?url=$this->url
+            &color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
+    }
+
+    // helper function
+    public function getMediaIdAttribute()
+    {
+        if ($this->type == 1) return self::urlAsSpotify($this->url);
+        if ($this->type == 2) return self::urlAsSoundcloud($this->url);
+        if ($this->type == 3) return self::urlAsYoutube($this->url);
+
+        return false;
+    }
+
+    public function guessType()
+    {
+        if ($this->urlAsSpotify($this->url)) return 1;
+        if ($this->urlAsSoundcloud($this->url)) return 2;
+        if ($this->urlAsYoutube($this->url)) return 3;
+
+        return 0;
     }
 
     public function getHtml()

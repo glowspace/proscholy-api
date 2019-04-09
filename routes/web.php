@@ -32,6 +32,7 @@ Route::get('/pisen/{song_lyric}/noty', 'Client\SongLyricsController@songScore')-
 Route::get('/pisen/{song_lyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
 Route::get('/pisen/{song_lyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
 Route::get('/pisen/{song_lyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
+Route::get('/pisen/{song_lyric}/soubory', 'Client\SongLyricsController@songFiles')->name('client.song.files');
 Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
 // TODO: Songbook view

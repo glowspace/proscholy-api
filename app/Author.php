@@ -60,6 +60,16 @@ class Author extends Model implements ISearchResult
         return $this->belongsToMany(SongLyric::class);
     }
 
+    public function getSongLyricsInterpreted()
+    {
+        return SongLyric::whereHas('externals', function($q) {
+            // $q->whereIn('externals.id', );
+            $q->media()->where('author_id', $this->id);
+        })->orWhereHas('files', function($q) {
+            $q->audio()->where('author_id', $this->id);
+        });
+    }
+
     public function songOriginalLyrics()
     {
         return $this->songLyrics()->where('is_original', true);

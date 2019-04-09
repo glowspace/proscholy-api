@@ -215,10 +215,10 @@ class SongLyric extends Model implements ISearchResult
     /*
      * Merged multi type category-filtered external collections
      */
-    public function audioTracks()
-    {
-        return $this->spotifyTracks->merge($this->soundcloudTracks);
-    }
+    // public function audioTracks()
+    // {
+    //     return $this->spotifyTracks->merge($this->soundcloudTracks);
+    // }
 
     /*
      * Mixed type count (for blade menu badge)

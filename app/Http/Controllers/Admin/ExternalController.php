@@ -21,6 +21,7 @@ class ExternalController extends Controller
         //       abych viděl, co se děje :D
         // Michal: :D, já myslím, že slack zas tolik dat naukrojí, jsou to jen texty. :D
         // Mira: zdravím z letadla :) (commit z letadla jen tak někdo nemá :D)
+        // Mira: btw pro spusteni unit testu: vendor/bin/phpunit
     }
 
     public function index()
@@ -47,8 +48,10 @@ class ExternalController extends Controller
     public function store(Request $request)
     {
         $external = External::create(['url' => $request->url]);
-
-        // TODO: try to guess the type according to url
+        // todo move to event
+        $external->update([
+            'type' => $external->guessType()
+        ]);
 
         $redirect_arr = [
             'edit'   => route('admin.external.edit', ['id' => $external->id]),
