@@ -13995,7 +13995,8 @@ var store = {
     useFlatScale_notified: false,
     chordMode: 0,
     nChordModes: 1,
-    chordMode_text: ['POUZE TEXT', 'TEXT S AKORDY', 'VŠECHNY AKORDY']
+    chordMode_text: ['POUZE TEXT', 'TEXT S AKORDY', 'VŠECHNY AKORDY'],
+    fontSizePercent: 100
 };
 
 /***/ }),
@@ -14034,6 +14035,7 @@ window.Vue = __webpack_require__(38);
 
 Vue.component('chord', __webpack_require__(41));
 Vue.component('transposition', __webpack_require__(49));
+Vue.component('font-sizer', __webpack_require__(60));
 
 var app = new Vue({
   el: '#app'
@@ -50523,39 +50525,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", { staticClass: "chord" }, [
-    _vm.displayChordSign
-      ? _c("span", { staticClass: "chord-sign" }, [
-          _vm.isOptional ? _c("span", [_vm._v("(")]) : _vm._e(),
-          _vm._v(" "),
-          _c("span", { staticClass: "chord-base" }, [
-            _vm._v(_vm._s(_vm.baseNote))
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "chord-variant" }, [
-            _vm._v(_vm._s(_vm.variant))
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "chord-extension" }, [
-            _vm._v(_vm._s(_vm.extension))
-          ]),
-          _vm._v(" "),
-          _vm.bass.length !== 0
-            ? _c("span", { staticClass: "chord-bass" }, [
-                _vm._v("/" + _vm._s(_vm.bassNote))
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.isOptional
-            ? _c("span", { staticClass: "chord-right-bracket" }, [_vm._v(")")])
-            : _vm._e()
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("span", { staticClass: "chord-text" }, [_vm._t("default")], 2),
-    _vm._v(" "),
-    _vm.isDivided == 1 ? _c("span", { staticClass: "chord-line" }) : _vm._e()
-  ])
+  return _c(
+    "span",
+    { staticClass: "chord", style: { fontSize: _vm.fontSizePercent + "%" } },
+    [
+      _vm.displayChordSign
+        ? _c("span", { staticClass: "chord-sign" }, [
+            _vm.isOptional ? _c("span", [_vm._v("(")]) : _vm._e(),
+            _vm._v(" "),
+            _c("span", { staticClass: "chord-base" }, [
+              _vm._v(_vm._s(_vm.baseNote))
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "chord-variant" }, [
+              _vm._v(_vm._s(_vm.variant))
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "chord-extension" }, [
+              _vm._v(_vm._s(_vm.extension))
+            ]),
+            _vm._v(" "),
+            _vm.bass.length !== 0
+              ? _c("span", { staticClass: "chord-bass" }, [
+                  _vm._v("/" + _vm._s(_vm.bassNote))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isOptional
+              ? _c("span", { staticClass: "chord-right-bracket" }, [
+                  _vm._v(")")
+                ])
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("span", { staticClass: "chord-text" }, [_vm._t("default")], 2),
+      _vm._v(" "),
+      _vm.isDivided == 1 ? _c("span", { staticClass: "chord-line" }) : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50674,89 +50682,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "transpose-control-wrapper",
-      staticStyle: { display: "inline-block" }
-    },
-    [
-      _vm.chordMode !== 0
-        ? _c("span", [
-            _c("span", [_vm._v("Transpozice: ")]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-secondary",
-                on: {
-                  click: function($event) {
-                    _vm.transposition = 0
-                  }
+  return _c("div", { staticClass: "transpose-control-wrapper" }, [
+    _vm.chordMode !== 0
+      ? _c("span", [
+          _c("span", [_vm._v("Transpozice: ")]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.transposition = 0
                 }
-              },
-              [_vm._v("0")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-secondary",
-                on: {
-                  click: function($event) {
-                    _vm.transpose(1)
-                  }
+              }
+            },
+            [_vm._v("0")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.transpose(1)
                 }
-              },
-              [_vm._v("+1")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-secondary",
-                on: {
-                  click: function($event) {
-                    _vm.transpose(-1)
-                  }
+              }
+            },
+            [_vm._v("+1")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.transpose(-1)
                 }
-              },
-              [_vm._v("-1")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-secondary",
-                on: {
-                  click: function($event) {
-                    _vm.useFlatScale = !_vm.useFlatScale
-                  }
+              }
+            },
+            [_vm._v("-1")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.useFlatScale = !_vm.useFlatScale
                 }
-              },
-              [_vm._v(_vm._s(_vm.useFlatScale ? "#" : "♭"))]
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.nChordModes > 1
-        ? _c("span", [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-secondary",
-                on: {
-                  click: function($event) {
-                    _vm.switchChordMode()
-                  }
+              }
+            },
+            [_vm._v(_vm._s(_vm.useFlatScale ? "#" : "♭"))]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.nChordModes > 1
+      ? _c("span", [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  _vm.switchChordMode()
                 }
-              },
-              [_vm._v(_vm._s(_vm.chordModeString))]
-            )
-          ])
-        : _vm._e()
-    ]
-  )
+              }
+            },
+            [_vm._v(_vm._s(_vm.chordModeString))]
+          )
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50779,6 +50780,156 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(11)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(62)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/FontSizer.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2e36a74a", Component.options)
+  } else {
+    hotAPI.reload("data-v-2e36a74a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(12);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */];
+    },
+
+
+    methods: {
+        resize: function resize(val) {
+            if (this.fontSizePercent + val > 0) this.fontSizePercent += val;
+        }
+    }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "transpose-control-wrapper" }, [
+    _c("span", [
+      _c("span", [_vm._v("Velikost fontu: ")]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.fontSizePercent = 100
+            }
+          }
+        },
+        [_vm._v("100 %")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.resize(10)
+            }
+          }
+        },
+        [_vm._v("zvětšit")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-secondary",
+          on: {
+            click: function($event) {
+              _vm.resize(-10)
+            }
+          }
+        },
+        [_vm._v("zmenšit")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2e36a74a", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

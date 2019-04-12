@@ -1,5 +1,5 @@
 <template>
-    <div class="transpose-control-wrapper" style="display: inline-block">
+    <div class="transpose-control-wrapper">
         <span v-if="chordMode !== 0">
             <span>Transpozice: </span>
             <a class="btn btn-secondary" v-on:click="transposition = 0">0</a>
