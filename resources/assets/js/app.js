@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('chord', require('./components/Chord.vue'));
 Vue.component('transposition', require('./components/Transposition.vue'));
+Vue.component('font-sizer', require('./components/FontSizer.vue'));
 
 const app = new Vue({
     el: '#app'

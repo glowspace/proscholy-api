@@ -6,5 +6,6 @@ export const store = {
     nChordModes: 1,
     chordMode_text: [
         'POUZE TEXT', 'TEXT S AKORDY', 'VŠECHNY AKORDY'
-    ]
+    ],
+    fontSizePercent: 100
 };

@@ -111,6 +111,11 @@ class Author extends Model implements ISearchResult
         return $this->hasMany(External::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
     // TODO
     public function getLink()
     {

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 use Spatie\PdfToImage\Pdf;
 
+use Spatie\PdfToText\Pdf as PdfToText;
+
 /**
  * App\File
  *
@@ -151,5 +153,16 @@ class File extends Model
     public function song_lyric()
     {
         return $this->belongsTo(SongLyric::class);
+    }
+
+    public function getPdfText()
+    {
+        if (pathinfo($this->path, PATHINFO_EXTENSION) !== "pdf")
+            return "";
+
+        $text = PdfToText::getText(Storage::path($this->path));
+        $text = str_replace('-', ' ', str_slug($text));
+
+        return $text;
     }
 }

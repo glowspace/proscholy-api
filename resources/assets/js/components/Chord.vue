@@ -1,5 +1,5 @@
 <template>
-    <span class="chord">
+    <span class="chord" v-bind:style="{ fontSize: fontSizePercent + '%' }">
         <!-- the if condition syntax is weird but necessary here -->
         <span class="chord-sign" v-if="displayChordSign">
             <span v-if="isOptional">(</span>

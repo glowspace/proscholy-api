@@ -89,6 +89,9 @@
                     'redirect' => route('admin.file.index')
                 ])
             </div>
+            <div class="col-sm-6">
+                @component('client.components.thumbnail_preview', ['instance' => $file])@endcomponent
+            </div>
         </div>
     </div>
 @endsection

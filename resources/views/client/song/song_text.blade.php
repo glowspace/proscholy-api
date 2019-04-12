@@ -12,9 +12,16 @@
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
                 <div class="card" id="cardLyrics">
-                    <div class="card-header" style="padding: 8px;">
-                        <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
-                        <transposition></transposition>
+                    <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
+                        <div class="p-2">
+                            @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                        </div>
+                        <div class="d-flex flex-column p-2">
+                            @if ($song_l->lyrics)
+                                <transposition></transposition>
+                                <font-sizer></font-sizer>
+                            @endif
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-column flex-sm-row-reverse">
@@ -37,13 +44,6 @@
                                 @endif
                             </div>
                         </div>
-                        {{-- <div class="song-component">
-                            
-                            <div class="song-component-tags">
-                                <div class="tag tag--official">štítek</div>
-                            </div>
-                        </div> --}}
-                        <hr>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
