@@ -161,7 +161,7 @@ class File extends Model
             return "";
 
         $text = PdfToText::getText(Storage::path($this->path));
-        $text = preg_replace('/[\s\W]+/', '', $text);
+        $text = str_replace('-', ' ', str_slug($text));
 
         return $text;
     }
