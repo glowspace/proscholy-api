@@ -17,8 +17,10 @@
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
                         </div>
                         <div class="d-flex flex-column p-2">
-                            <transposition></transposition>
-                            <font-sizer></font-sizer>
+                            @if ($song_l->lyrics)
+                                <transposition></transposition>
+                                <font-sizer></font-sizer>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
