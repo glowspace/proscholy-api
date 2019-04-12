@@ -149,6 +149,16 @@ class SongLyric extends Model implements ISearchResult
         return $this->hasMany(File::class);
     }
 
+    public function scopeTranslations($query)
+    {
+        return $query->where('is_original', false);
+    }
+
+    public function scopeOriginals($query)
+    {
+        return $query->where('is_original', true);
+    }
+
     public function scopePublished($query)
     {
         return $query->where('is_published', 1);
