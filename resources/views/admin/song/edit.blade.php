@@ -230,6 +230,7 @@
                     <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
                     <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
                     <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
+                    <br>Coda velkým C, dvojtečkou a mezerou: C: Text cody
                 </p>
 
                 @if (isset($score_file))
