@@ -96,7 +96,9 @@ class External extends Model
             return false;
         }
 
-        return $groups[2];
+        $code = str_replace("t=", "start=", $groups[2]);
+
+        return $code;
 
         // return "https://www.youtube.com/embed/$groups[2]";
     }
