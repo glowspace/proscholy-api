@@ -94,7 +94,9 @@
     </div>
 
     {{-- Main JS built with Laravel's mix --}}
-    <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
+    {{-- @yield('app-js', 'ProScholy.cz - chytrý křesťanský zpěvník') --}}
+
+    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 
     <script>
         // Mobile viewport soft keyboard fix

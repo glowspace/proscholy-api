@@ -12,11 +12,12 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/admin/app.js', 'public/admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .browserSync('localhost:8000');
 
-mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/css');
-mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/js');
+mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/admin/css');
+mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/admin/js');
 
 // File hash suffix in production (to bust old caches)
 if (mix.inProduction()) {

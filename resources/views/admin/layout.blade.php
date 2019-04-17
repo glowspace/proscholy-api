@@ -5,3 +5,7 @@
 @section('navbar')
     @include('admin.components.menu')
 @endsection
+
+@section('app-js')
+    <script type="text/javascript" src="{{ mix('admin/js/app.js') }}"></script>
+@endsection

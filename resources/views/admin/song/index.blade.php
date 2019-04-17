@@ -4,6 +4,8 @@
     <div class="content-padding">
         <h2>{{ $title ?? "Seznam písní"}}</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.song.create')}}">+ Nová píseň</a>
+
+        <songs-list></songs-list>
         {{-- todo add filter by author button for admins --}}
         {{-- @hasrole('admin')
             <my-checkbox inline-template>
@@ -13,7 +15,7 @@
                 </div>  
             </my-checkbox>
         @endhasrole --}}
-                @component('admin.components.table', [
+                {{-- @component('admin.components.table', [
                     'id' => 'index_table',
                     'columns' => ['Název písničky', 'Typ', 'Naposledy upraveno', 'Publikováno', 'Schváleno autorem', 'Akce']
                 ])
@@ -46,7 +48,7 @@
                         </td>
                     </tr>
                     @endforeach
-                @endcomponent
+                @endcomponent --}}
     </div>
 @endsection
 
