@@ -25,9 +25,9 @@
 @endpush
 
 @pushonce('head_links:magicsuggest')
-    <link href="{{asset('admin/css/magicsuggest.css')}}" rel="stylesheet">
+    <link href="{{asset('_admin/css/magicsuggest.css')}}" rel="stylesheet">
 @endpushonce
 
 @pushonce('scripts:magicsuggest')
-    <script src="{{asset('admin/js/magicsuggest.js')}}"></script>
+    <script src="{{asset('_admin/js/magicsuggest.js')}}"></script>
 @endpushonce

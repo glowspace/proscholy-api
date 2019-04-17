@@ -1,7 +1,7 @@
 {
-    "/admin/js/app.js": "/admin/js/app.js",
+    "/_admin/js/app.js": "/_admin/js/app.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/admin/css/magicsuggest.css": "/admin/css/magicsuggest.css",
-    "/admin/js/magicsuggest.js": "/admin/js/magicsuggest.js"
+    "/_admin/css/magicsuggest.css": "/_admin/css/magicsuggest.css",
+    "/_admin/js/magicsuggest.js": "/_admin/js/magicsuggest.js"
 }

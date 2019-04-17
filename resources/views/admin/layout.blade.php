@@ -7,5 +7,5 @@
 @endsection
 
 @section('app-js')
-    <script type="text/javascript" src="{{ mix('admin/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('_admin/js/app.js') }}"></script>
 @endsection
