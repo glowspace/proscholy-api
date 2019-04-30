@@ -74,7 +74,7 @@
     @stack('head_links')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top">
         <div>
             <a class="navbar-brand"
                href="@yield('navbar-brand_href', '/')"><img src="{{asset('img/logo_v2.png')}}"
@@ -154,7 +154,7 @@
 
             $('.sidebar')
                 .show()
-                .css({position: 'absolute'});
+                .css({position: 'fixed'});
         }
 
         function hideNavbar() {

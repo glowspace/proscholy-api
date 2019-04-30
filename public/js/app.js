@@ -50730,6 +50730,7 @@ var render = function() {
             "a",
             {
               staticClass: "btn btn-secondary",
+              staticStyle: { "font-size": "16px" },
               on: {
                 click: function($event) {
                   _vm.useFlatScale = !_vm.useFlatScale
@@ -50753,7 +50754,10 @@ var render = function() {
                 }
               }
             },
-            [_vm._v(_vm._s(_vm.chordModeString))]
+            [
+              _c("i", { staticClass: "fas fa-arrow-right" }),
+              _vm._v(" " + _vm._s(_vm.chordModeString))
+            ]
           )
         ])
       : _vm._e()
@@ -50845,7 +50849,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         resize: function resize(val) {
-            if (this.fontSizePercent + val > 0) this.fontSizePercent += val;
+            if (this.fontSizePercent + val > 70) this.fontSizePercent += val;
         }
     }
 });
@@ -50860,46 +50864,48 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "transpose-control-wrapper" }, [
     _c("span", [
-      _c("span", [_vm._v("Velikost fontu: ")]),
+      _c("span", [_vm._v("Velikost textu: ")]),
       _vm._v(" "),
       _c(
         "a",
         {
-          staticClass: "btn btn-secondary",
-          on: {
-            click: function($event) {
-              _vm.fontSizePercent = 100
-            }
-          }
-        },
-        [_vm._v("100 %")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-secondary",
+          staticClass: "btn btn-secondary font-weight-bold",
           on: {
             click: function($event) {
               _vm.resize(10)
             }
           }
         },
-        [_vm._v("zvětšit")]
+        [_vm._v("+")]
       ),
       _vm._v(" "),
       _c(
         "a",
         {
-          staticClass: "btn btn-secondary",
+          staticClass: "btn btn-secondary font-weight-bold",
           on: {
             click: function($event) {
               _vm.resize(-10)
             }
           }
         },
-        [_vm._v("zmenšit")]
-      )
+        [_vm._v("-")]
+      ),
+      _vm._v(" "),
+      _vm.fontSizePercent !== 100
+        ? _c(
+            "a",
+            {
+              staticClass: "btn btn-warning",
+              on: {
+                click: function($event) {
+                  _vm.fontSizePercent = 100
+                }
+              }
+            },
+            [_vm._v("resetovat")]
+          )
+        : _vm._e()
     ])
   ])
 }

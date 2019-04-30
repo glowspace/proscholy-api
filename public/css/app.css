@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/**
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+
+/**
 Imports
  */
 
@@ -20311,6 +20313,7 @@ body {
   z-index: 10;
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  margin-top: 66px;
 }
 
 @media (max-width: 991.98px) {
@@ -20321,7 +20324,7 @@ body {
 
 @media (min-width: 992px) {
   .sidebar {
-    position: relative !important;
+    position: fixed !important;
     display: inline-block !important;
   }
 }
@@ -20359,8 +20362,15 @@ body {
 .content {
   height: calc(100% - 66px);
   width: calc(100% - 300px);
+  margin-top: 66px;
   padding: 0;
   overflow-x: hidden;
+}
+
+@media (min-width: 992px) {
+  .content {
+    margin-left: 300px;
+  }
 }
 
 @media (max-width: 991.98px) {
@@ -20511,6 +20521,11 @@ View: Search results
   border-radius: 3px 3px 0 0;
 }
 
+.card-blue .card-header a {
+  color: white;
+  font-weight: bold;
+}
+
 .card-blue a {
   color: #3961ad;
 }
@@ -20521,6 +20536,10 @@ View: Search results
   border-radius: 3px 3px 0 0;
 }
 
+.card-green .card-header a {
+  color: white;
+}
+
 .card-green a {
   color: #098845;
 }
@@ -20529,6 +20548,10 @@ View: Search results
   color: white;
   background-color: #d83027 !important;
   border-radius: 3px 3px 0 0;
+}
+
+.card-red .card-header § a {
+  color: white;
 }
 
 .card-red a {
@@ -20548,6 +20571,7 @@ ChordPro view
  */
 
 .transpose-control-wrapper {
+  text-align: right;
   float: right;
 }
 

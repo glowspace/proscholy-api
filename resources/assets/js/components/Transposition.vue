@@ -5,10 +5,10 @@
             <a class="btn btn-secondary" v-on:click="transposition = 0">0</a>
             <a class="btn btn-secondary" v-on:click="transpose(1)">+1</a>
             <a class="btn btn-secondary" v-on:click="transpose(-1)">-1</a>
-            <a class="btn btn-secondary" v-on:click="useFlatScale = !useFlatScale">{{ useFlatScale ? '#' : '♭' }}</a>
+            <a class="btn btn-secondary" style="font-size: 16px" v-on:click="useFlatScale = !useFlatScale">{{ useFlatScale ? '#' : '♭' }}</a>
         </span>
         <span v-if="nChordModes > 1">
-            <a class="btn btn-secondary" v-on:click="switchChordMode()">{{ chordModeString }}</a>
+            <a class="btn btn-secondary" v-on:click="switchChordMode()"><i class="fas fa-arrow-right"></i> {{ chordModeString }}</a>
         </span>
     </div>
 </template>

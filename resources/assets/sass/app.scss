@@ -79,13 +79,17 @@ $sidebar-width: 300px;
   // display:    inline-block;
   transition: 0.2s;
 
+  margin-top: 66px;
+
+
   @include media-breakpoint-down(md) {
     display: none;
   }
 
   @include media-breakpoint-up(lg) {
     // display: none;
-    position: relative !important;
+    position: fixed !important;
+
     display:  inline-block !important;
   }
 
@@ -129,6 +133,14 @@ $sidebar-width: 300px;
 .content {
   height:     calc(100% - 66px);
   width:      calc(100% - #{$sidebar-width});
+
+  margin-top: 66px;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 300px;
+  }
+
+
 
   // On md and above navbar is hidden
   @include media-breakpoint-down(md) {
@@ -285,6 +297,11 @@ View: Search results
     background-color: $main-blue !important;
 
     border-radius:    3px 3px 0 0;
+
+    a {
+      color:       white;
+      font-weight: bold;
+    }
   }
 
   a {
@@ -298,6 +315,10 @@ View: Search results
     background-color: $main-green !important;
 
     border-radius:    3px 3px 0 0;
+
+    a {
+      color: white;
+    }
   }
 
   a {
@@ -311,6 +332,11 @@ View: Search results
     background-color: $main-red !important;
 
     border-radius:    3px 3px 0 0;
+
+    §
+    a {
+      color: white;
+    }
   }
 
   a {
@@ -332,6 +358,8 @@ View: Search results
 ChordPro view
  */
 .transpose-control-wrapper {
+  text-align: right;
+
   float: right;
 
   .btn {

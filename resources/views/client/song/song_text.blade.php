@@ -11,7 +11,7 @@
         <h1>{{$song_l->name}}</h1>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
-                <div class="card card-" id="cardLyrics">
+                <div class="card card-blue" id="cardLyrics">
                     <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
                         <div class="p-2">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -23,9 +23,12 @@
                             @endif
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="d-flex flex-column flex-sm-row-reverse">
+                    <div class="card-body"  style="border-bottom: #7f97ab">
+                        <div class="d-flex flex-column flex-sm-row-reverse mb-2">
                             <div class="song-tags d-flex flex-sm-column align-items-sm-end mb-2">
+                                {{-- <a href="#" class="tag">štítek 1</a>
+                                <a href="#" class="tag">štítek 2</a>
+                                <a href="#" class="tag">štítek 3</a> --}}
                                 @foreach ($tags as $tag)
                                     <a href="#" class="tag">{{ $tag->name }}</a>
                                 @endforeach
@@ -41,6 +44,11 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
+
+{{--                    <div class="card-text" style="border-bottom: 1px #d6d6d6 solid"></div>--}}
+
+                    <div class="card-footer" style="background-color: #3961ad12">
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
