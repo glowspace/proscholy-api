@@ -11,7 +11,7 @@
         <h1>{{$song_l->name}}</h1>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
-                <div class="card" id="cardLyrics">
+                <div class="card card-" id="cardLyrics">
                     <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
                         <div class="p-2">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -26,9 +26,6 @@
                     <div class="card-body">
                         <div class="d-flex flex-column flex-sm-row-reverse">
                             <div class="song-tags d-flex flex-sm-column align-items-sm-end mb-2">
-                                {{-- <a href="#" class="tag">štítek 1</a>
-                                <a href="#" class="tag">štítek 2</a>
-                                <a href="#" class="tag">štítek 3</a> --}}
                                 @foreach ($tags as $tag)
                                     <a href="#" class="tag">{{ $tag->name }}</a>
                                 @endforeach
