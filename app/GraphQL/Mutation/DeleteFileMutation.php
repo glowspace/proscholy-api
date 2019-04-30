@@ -6,16 +6,16 @@ use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
 
-use App\SongLyric;
+use App\File;
 
-class DeleteSongLyricMutation extends Mutation {
+class DeleteFileMutation extends Mutation {
     protected $attributes = [
-        'name' => 'delete_song_lyric'
+        'name' => 'delete_file'
     ];
 
     public function type()
     {
-        return GraphQL::type('song_lyric');
+        return GraphQL::type('file');
     }
 
     public function args()
@@ -33,10 +33,10 @@ class DeleteSongLyricMutation extends Mutation {
         // todo check auth
         // todo error when not found
 
-        $song_lyric = SongLyric::find($args['id']);
-        if (!$song_lyric)
+        $file = File::find($args['id']);
+        if (!$file)
             return;
 
-        $song_lyric->delete();
+        $file->delete();
     }
 }
