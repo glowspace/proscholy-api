@@ -15,6 +15,7 @@
     <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#292929">
+    <meta id="baseUrl" name="baseUrl" value="{{url('')}}">
 
     <title>
         @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník')

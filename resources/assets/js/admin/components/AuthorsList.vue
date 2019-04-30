@@ -11,14 +11,14 @@
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="files"
+            :items="authors"
             :search="search_string"
             :filter="formFilter"
             >
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/file/' + props.item.id + '/edit'">{{ props.item.public_name }}</a>
+                <a :href="'/admin/author/' + props.item.id + '/edit'">{{ props.item.name }}</a>
               </td>
               <td>{{ props.item.type_string }}</td>
               <td>
@@ -45,17 +45,17 @@ import gql from 'graphql-tag';
 import removeDiacritics from '../helpers/removeDiacritics';
 
 const fetch_items = gql`
-        query FetchFiles {
-            files {
+        query FetchAuthors {
+            authors {
                 id,
-                public_name,
+                name,
                 type_string
             }
         }`;
 
 const delete_item = gql`
-  mutation DeleteFile ($id: Int!) {
-    delete_file(id: $id) {
+  mutation DeleteAuthor ($id: Int!) {
+    delete_author(id: $id) {
       id
     }
   }`;
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'Název', value: 'public_name' },
+        { text: 'Jméno', value: 'name' },
         { text: 'Typ', value: 'type_string' },
         { text: 'Akce', value: 'action' }
       ],
@@ -75,7 +75,7 @@ export default {
   },
 
   apollo: {
-    files: { 
+    authors: { 
       query: fetch_items,
       variables() {
         return { 
@@ -88,11 +88,11 @@ export default {
   methods: {
     askForm(id) {
       if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteFile(id);
+        this.deleteAuthor(id);
       }
     },
 
-    deleteFile(id) {
+    deleteAuthor(id) {
       this.$apollo.mutate({
         mutation: delete_item,
         variables: {id: id},

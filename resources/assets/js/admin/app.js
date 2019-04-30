@@ -23,6 +23,7 @@ window.Vue = require('vue');
 Vue.component('songs-list', require('./components/SongsList.vue'));
 Vue.component('externals-list', require('./components/ExternalsList.vue'));
 Vue.component('files-list', require('./components/FilesList.vue'));
+Vue.component('authors-list', require('./components/AuthorsList.vue'));
 
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
@@ -36,10 +37,12 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 //   web_url = 'http://localhost:8000/graphql';
 // }
 
+var base_url = document.querySelector('#baseUrl').getAttribute('value');
+
 // HTTP connexion to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: 'http://localhost:3000/graphql',
+  uri: base_url + '/graphql',
 })
 
 const cache = new InMemoryCache()

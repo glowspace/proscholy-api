@@ -18,7 +18,7 @@
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/external/' + props.item.id">{{ props.item.public_name }}</a>
+                <a :href="'/admin/external/' + props.item.id + '/edit'">{{ props.item.public_name }}</a>
               </td>
               <td>{{ props.item.type_string }}</td>
               <td>
