@@ -17,6 +17,11 @@ Imports
 @import 'admin';
 @import '~bootstrap-material-design/scss/bootstrap-material-design'; // Materialize.css
 
+$main-red: #d83027;
+$main-blue: #3961ad;
+$main-green: #098845;
+$main-yellow: #FAA61B;
+
 h1, h2, h3, h4 {
   margin: 0.7em 0;
 }
@@ -53,8 +58,7 @@ html, body {
   overflow-x: visible;
 }
 
-.navbar 
-{
+.navbar {
   z-index:          200;
   background-color: #292929;
 
@@ -67,9 +71,8 @@ html, body {
 
 $sidebar-width: 300px;
 
-.sidebar
-{
-  min-height:     calc(100vh - 66px);
+.sidebar {
+  min-height: calc(100vh - 66px);
   width:      $sidebar-width;
   padding:    5px 0 0;
   z-index:    10;
@@ -83,7 +86,7 @@ $sidebar-width: 300px;
   @include media-breakpoint-up(lg) {
     // display: none;
     position: relative !important;
-    display: inline-block !important;
+    display:  inline-block !important;
   }
 
   a {
@@ -272,6 +275,59 @@ View: Search results
   display: inline-block;
 }
 
+.result-table {
+  width: auto;
+}
+
+.card-blue {
+  .card-header {
+    color:            white;
+    background-color: $main-blue !important;
+
+    border-radius:    3px 3px 0 0;
+  }
+
+  a {
+    color: $main-blue;
+  }
+}
+
+.card-green {
+  .card-header {
+    color:            white;
+    background-color: $main-green !important;
+
+    border-radius:    3px 3px 0 0;
+  }
+
+  a {
+    color: $main-green;
+  }
+}
+
+.card-red {
+  .card-header {
+    color:            white;
+    background-color: $main-red !important;
+
+    border-radius:    3px 3px 0 0;
+  }
+
+  a {
+    color: $main-red;
+  }
+}
+
+.text-very-muted {
+  color: #efefef;
+}
+
+
+.no-left-padding {
+  padding-left: 2px !important;
+}
+
+
 /**
 ChordPro view
  */
@@ -283,19 +339,49 @@ ChordPro view
   }
 }
 
-.song-tags a.tag {
-    border: #ffd69a 0.15em solid;
-    padding: 0.1em 0.7em;
+.song-tags {
+
+  .tag {
+    padding:       0.1em 0.7em;
     margin-bottom: 0.3em;
     border-radius: 1em;
-    color: #907753;
-    text-align: center;
-    display: block;
+    color:         #907753;
+    text-align:    center;
+    display:       inline-block;
+    transition:    0.2s;
 
     &:hover {
       text-decoration: none;
-      border-color: #c2a171;
-      // background: #ffd69a;
-      // color: white;
     }
+  }
+
+  .tag-blue {
+    border:           $main-blue 0.15em solid;
+    background-color: lighten($main-blue, 40%);
+
+    &:hover {
+      border-color:     darken($main-blue, 20%);
+      background-color: lighten($main-blue, 30%);
+    }
+  }
+
+  .tag-green {
+    border:           $main-green 0.15em solid;
+    background-color: lighten($main-green, 70%);
+
+    &:hover {
+      border-color:     darken($main-green, 20%);
+      background-color: lighten($main-green, 60%);
+    }
+  }
+
+  .tag-yellow {
+    border:           $main-yellow 0.15em solid;
+    background-color: lighten($main-yellow, 40%);
+
+    &:hover {
+      border-color:     darken($main-yellow, 20%);
+      background-color: lighten($main-yellow, 30%);
+    }
+  }
 }

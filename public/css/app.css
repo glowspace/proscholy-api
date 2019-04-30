@@ -20501,6 +20501,48 @@ View: Search results
   display: inline-block;
 }
 
+.result-table {
+  width: auto;
+}
+
+.card-blue .card-header {
+  color: white;
+  background-color: #3961ad !important;
+  border-radius: 3px 3px 0 0;
+}
+
+.card-blue a {
+  color: #3961ad;
+}
+
+.card-green .card-header {
+  color: white;
+  background-color: #098845 !important;
+  border-radius: 3px 3px 0 0;
+}
+
+.card-green a {
+  color: #098845;
+}
+
+.card-red .card-header {
+  color: white;
+  background-color: #d83027 !important;
+  border-radius: 3px 3px 0 0;
+}
+
+.card-red a {
+  color: #d83027;
+}
+
+.text-very-muted {
+  color: #efefef;
+}
+
+.no-left-padding {
+  padding-left: 2px !important;
+}
+
 /**
 ChordPro view
  */
@@ -20514,18 +20556,48 @@ ChordPro view
   margin-bottom: 0;
 }
 
-.song-tags a.tag {
-  border: #ffd69a 0.15em solid;
+.song-tags .tag {
   padding: 0.1em 0.7em;
   margin-bottom: 0.3em;
   border-radius: 1em;
   color: #907753;
   text-align: center;
-  display: block;
+  display: inline-block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
-.song-tags a.tag:hover {
+.song-tags .tag:hover {
   text-decoration: none;
-  border-color: #c2a171;
+}
+
+.song-tags .tag-blue {
+  border: #3961ad 0.15em solid;
+  background-color: #c6d3ec;
+}
+
+.song-tags .tag-blue:hover {
+  border-color: #203660;
+  background-color: #9fb6e0;
+}
+
+.song-tags .tag-green {
+  border: #098845 0.15em solid;
+  background-color: #f7fffb;
+}
+
+.song-tags .tag-green:hover {
+  border-color: #032814;
+  background-color: #c8fbe0;
+}
+
+.song-tags .tag-yellow {
+  border: #FAA61B 0.15em solid;
+  background-color: #fef4e3;
+}
+
+.song-tags .tag-yellow:hover {
+  border-color: #ab6c04;
+  background-color: #fde0b1;
 }
 

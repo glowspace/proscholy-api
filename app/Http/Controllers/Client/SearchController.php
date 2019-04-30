@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ISearchResult;
@@ -34,7 +35,8 @@ class SearchController extends Controller
     public function searchResults($query = null)
     {
         $limit = 10;
-        $limit_empty;
+//        $limit_empty;
+
 
         if (isset($query))
         {
@@ -47,13 +49,14 @@ class SearchController extends Controller
             // TODO: Let the user know in the frontend, what I'm doing
             $song_lyrics = SongLyric::notEmpty()->orderBy('name')->get();
             $authors     = [];
-            $query = "";
+            $query       = "";
         }
 
         return view('client.search_results', [
             'phrase'      => $query,
             'song_lyrics' => $song_lyrics,
             'authors'     => $authors,
+            'tags'        => Tag::all()->sortByDesc('type')->sortBy('name'),
         ]);
     }
 

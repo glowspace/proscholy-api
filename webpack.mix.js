@@ -13,7 +13,8 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .browserSync('localhost:8000');
+    // .browserSync('localhost:8000');
+;
 
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/js');
