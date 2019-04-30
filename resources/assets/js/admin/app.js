@@ -26,7 +26,7 @@ import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
-let web_url = 'http://localhost:8000/graphql';
+// let web_url = 'http://localhost:8000/graphql';
 
 // if (mix.inProduction()) {
 //   web_url = 'https://zpevnik.proscholy.cz/graphql';
@@ -37,7 +37,7 @@ let web_url = 'http://localhost:8000/graphql';
 // HTTP connexion to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: web_url,
+  uri: 'http://localhost:3000/graphql',
 })
 
 const cache = new InMemoryCache()
@@ -73,5 +73,6 @@ Vue.use(Vuetify, {
 
 const app = new Vue({
     el: '#app',
-    // apolloProvider
+    apolloProvider,
+    // render: h => h(App)
 });
