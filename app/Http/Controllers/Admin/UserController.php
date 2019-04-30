@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Author;
 
 use Spatie\Permission\Models\Role;
 
@@ -33,7 +34,9 @@ class UserController extends Controller
     {
         return view('admin.user.edit', [
             'user' => $user,
-            'roles' => Role::orderBy('name', 'desc')->get()
+            'roles' => Role::orderBy('name', 'desc')->get(),
+            'all_authors' => Author::all(),
+            'assigned_authors' => $user->assigned_authors
         ]);
     }
 
@@ -56,6 +59,16 @@ class UserController extends Controller
         $user->assignRole(Role::find($request->role));
         $user->save();
 
+        // assign authors
+        if ($request->assigned_authors !== NULL) {
+            $user->assigned_authors()->sync($request->assigned_authors);
+            $user->save();
+        } else {
+            $user->assigned_authors()->sync([]);
+            $user->save();
+        }
+
+        // pass
         if ($request->new_pass != '') 
         {
             $user->password = Hash::make($request->new_pass);

@@ -33,7 +33,7 @@ class SearchController extends Controller
      */
     public function searchResults($query = null)
     {
-        $limit = 5;
+        $limit = 10;
         $limit_empty;
 
         if (isset($query))
@@ -45,7 +45,7 @@ class SearchController extends Controller
         {
             // Empty search
             // TODO: Let the user know in the frontend, what I'm doing
-            $song_lyrics = SongLyric::where('lyrics', '!=', '')->orderBy('name')->get();
+            $song_lyrics = SongLyric::notEmpty()->orderBy('name')->get();
             $authors     = [];
             $query = "";
         }

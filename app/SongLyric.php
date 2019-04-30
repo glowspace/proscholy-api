@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
 
 /**
@@ -51,6 +52,12 @@ class SongLyric extends Model implements ISearchResult
     // Lockable Trait for enabling to "lock" the model while editing
     use Searchable, Lockable;
 
+    protected $dispatchesEvents = [
+        'saved' => \App\Events\SongLyricSaved::class,
+        'updated' => \App\Events\SongLyricSaved::class,
+        'created' => \App\Events\SongLyricCreated::class,
+    ];
+
     protected $fillable
         = [
             'name',
@@ -61,10 +68,16 @@ class SongLyric extends Model implements ISearchResult
             'is_authorized',
             'lang',
             'creating_at',
-            'has_anonymous_author'
+            'has_anonymous_author',
+            // should not be edited from outside
+            'formatted_lyrics',
+            'has_chords',
+            'is_published',
+            'is_approved_by_author',
+            'user_creator_id'
         ];
 
-    public $lang_string = [
+    public static $lang_string = [
         'cs' => 'čeština',
         'sk' => 'slovenština',
         'en' => 'angličtina',
@@ -81,11 +94,28 @@ class SongLyric extends Model implements ISearchResult
         'mixed' => 'vícejazyčná píseň'
     ];
 
-    protected $chord_substitute_char = '%';
+    public function getPublicUrlAttribute()
+    {
+        return route('client.song.text', [
+            'song_lyric' => $this,
+            'name' => str_slug($this->name)
+        ]);
+    }
+
+    public function getLyricsNoChordsAttribute()
+    {
+        $str = preg_replace(
+            array('/-/', '/\[[^\]]+\]/'),
+            array("", ""),
+            $this->lyrics
+        );
+
+        return $str;
+    }
 
     public function getLanguageName()
     {
-        return $this->lang_string[$this->lang];
+        return self::$lang_string[$this->lang];
     }
 
     public function song()
@@ -98,6 +128,12 @@ class SongLyric extends Model implements ISearchResult
         return $this->belongsToMany(Author::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    // OBSOLETE
     public function getLink()
     {
         return route('client.song.text', ['id' => $this->id]);
@@ -106,6 +142,56 @@ class SongLyric extends Model implements ISearchResult
     public function externals()
     {
         return $this->hasMany(External::class);
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+    public function scopeTranslations($query)
+    {
+        return $query->where('is_original', false);
+    }
+
+    public function scopeOriginals($query)
+    {
+        return $query->where('is_original', true);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', 1);
+    }
+
+    public function scopeRestricted($query)
+    {
+        // restrict results if current user is Author
+        if (Auth::user()->hasRole('autor')) {
+            return $query->forceRestricted();
+        } else {
+            return $query;
+        }
+    }
+
+    public function scopeForceRestricted($query)
+    {
+        // show songs, where there is at least one common author 
+        // of song authors and to-user-assigned authors
+        return $query->whereHas('authors', function($q) {
+            $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
+        // and show those songs, that were created by this user account
+        })->orWhere('user_creator_id', Auth::user()->id);
+    }
+
+    public function scopeNotEmpty($query)
+    {
+        // return SongLyrycs that have at least one of:
+        // lyrics, sheet music
+
+        return $query->whereHas('scoreExternals')
+                    ->orWhereHas('scoreFiles')
+                    ->orWhere('lyrics', '!=', '');
     }
 
     /*
@@ -130,21 +216,26 @@ class SongLyric extends Model implements ISearchResult
     {
         return $this->externals()->where('type', 4)->orderBy('is_featured', 'desc');
     }
+    
+    public function scoreFiles()
+    {
+        return $this->files()->where('type', 3);
+    }
 
     /*
      * Merged multi type category-filtered external collections
      */
-    public function audioTracks()
-    {
-        return $this->spotifyTracks->merge($this->soundcloudTracks);
-    }
+    // public function audioTracks()
+    // {
+    //     return $this->spotifyTracks->merge($this->soundcloudTracks);
+    // }
 
     /*
      * Mixed type count (for blade menu badge)
      */
     public function scoresCount()
     {
-        return $this->scoreExternals()->count();
+        return $this->scoreExternals()->count() + $this->scoreFiles()->count();
     }
 
     // the reason for existence of the domestic characteristic
@@ -177,7 +268,21 @@ class SongLyric extends Model implements ISearchResult
         return ! $this->isDomestic();
     }
 
-    public static function getByIdOrCreateWithName($identificator)
+    public function isNew()
+    {
+        return $this->created_at->eq($this->updated_at);
+    }
+
+    public function recache()
+    {
+        // this causes to fire update event that recaches formattedlyrics
+        // and haschords
+        $this->update([
+            'formatted_lyrics' => NULL
+        ]);
+    }
+
+    public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))
         {
@@ -185,6 +290,11 @@ class SongLyric extends Model implements ISearchResult
         }
         else
         {
+            $double = SongLyric::where('name', $identificator)->first();
+            if ($uniqueName && $double != null) {
+                return $double;
+            }
+            
             $song       = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,
@@ -193,48 +303,6 @@ class SongLyric extends Model implements ISearchResult
 
             return $song_lyric;
         }
-    }
-
-    public function getProcessedLyrics()
-    {
-        return str_replace($this->chord_substitute_char, "", $this->lyrics);
-    }
-
-    // FOR THE NEW FRONTEND VIEWER
-    public function getFormattedLyrics(){
-        $lines = explode("\n", $this->lyrics);
-
-        $output = "";
-
-        foreach ($lines as $line){
-            $output .= '<div class="song-line">'.$this->processLine($line).'</div>';
-        }
-
-        return $output;
-    }
-
-    private function processLine($line){
-        $chords = array();
-        $currentChordText = "";
-
-        for ($i = 0; $i < strlen($line); $i++){
-            if ($line[$i] == "["){
-                if ($currentChordText != "")
-                    $chords[] = Chord::parseFromText($currentChordText);
-                $currentChordText = "";
-            }
-
-            // if ($recording)
-            $currentChordText .= $line[$i];
-        }
-
-        $chords[] = Chord::parseFromText($currentChordText);
-
-        $string = "";
-        foreach ($chords as $chord) 
-            $string .= $chord->toHTML();
-
-        return $string;
     }
 
     /**

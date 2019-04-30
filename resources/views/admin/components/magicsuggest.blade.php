@@ -11,7 +11,11 @@
                 @if($is_single)
                     maxSelection: 1,
                 @endif
-                allowFreeEntries: true,
+                @if(isset($allow_free_entries) && $allow_free_entries == false)
+                    allowFreeEntries: false,
+                @else
+                    allowFreeEntries: true,
+                @endif
                 value: @json($list_selected),
                 useCommaKey: false,
                 disabled: {{ $disabled ? "true" : "false" }}
@@ -19,3 +23,11 @@
         });
     </script>
 @endpush
+
+@pushonce('head_links:magicsuggest')
+    <link href="{{asset('css/magicsuggest.css')}}" rel="stylesheet">
+@endpushonce
+
+@pushonce('scripts:magicsuggest')
+    <script src="{{asset('js/magicsuggest.js')}}"></script>
+@endpushonce

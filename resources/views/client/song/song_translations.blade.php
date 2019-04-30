@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', $song_l->name . ' - noty')
+@section('title', $song_l->name . ' - překlady / verze')
 
 @section('navbar')
     @include('client.components.menu_song')
@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content-padding">
-        <h1>Další varianty písně {{$song_l->name}}</h1>
+        <h1>Všechny verze písně {{$song_l->name}}</h1>
 
         @if($song_l_original !== null)
             <div class="card">
@@ -20,7 +20,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l_original)}}">{{$song_l_original->name}}</a>
+                                    <a href="{{ $song_l_original->public_url }}">{{$song_l_original->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l_original])@endcomponent
@@ -35,7 +35,9 @@
 
         @if($song_l->song->song_lyrics()->count() > 0)
             <div class="card">
-                <div class="card-header">Překlady</div>
+                @if ($song_l_original !== null)
+                    <div class="card-header">Překlady</div>
+                @endif
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -49,7 +51,7 @@
                         @foreach($song_l->song->translations()->get() as $song_l)
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent

@@ -20,14 +20,24 @@ class ExternalController extends Controller
         // Mira: jj, já jsem teďkom pořád tak trochu mimo net, takže v podstatě jen pulluju/pushuju git přes data,
         //       abych viděl, co se děje :D
         // Michal: :D, já myslím, že slack zas tolik dat naukrojí, jsou to jen texty. :D
+        // Mira: zdravím z letadla :) (commit z letadla jen tak někdo nemá :D)
+        // Mira: btw pro spusteni unit testu: vendor/bin/phpunit
     }
 
     public function index()
     {
-        $todo = External::whereDoesntHave('author')->orWhereDoesntHave('song_lyric')->get();
-        $rest = External::whereHas('author')->whereHas('song_lyric')->get();
+        $externals = External::restricted()->get();
 
-        return view('admin.external.index', compact('todo', 'rest'));
+        return view('admin.external.index', compact('externals'));
+    }
+
+    public function todoAuthors(){
+        $externals = External::where('author_id', null)->where('has_anonymous_author', 0)
+            ->orWhere('song_lyric_id', null)
+            ->get();
+
+        $title = "Seznam externích odkazů bez přiřazeného autora nebo písně";
+        return view('admin.external.index', compact('externals', 'title'));
     }
 
     public function create()
@@ -38,8 +48,10 @@ class ExternalController extends Controller
     public function store(Request $request)
     {
         $external = External::create(['url' => $request->url]);
-
-        // TODO: try to guess the type according to url
+        // todo move to event
+        $external->update([
+            'type' => $external->guessType()
+        ]);
 
         $redirect_arr = [
             'edit'   => route('admin.external.edit', ['id' => $external->id]),
@@ -66,7 +78,7 @@ class ExternalController extends Controller
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
-        $all_song_lyrics      = SongLyric::select(['id', 'name'])->orderBy('name')->get();
+        $all_song_lyrics      = SongLyric::restricted()->select(['id', 'name'])->orderBy('name')->get();
 
         return view('admin.external.edit', compact(
             'external',
@@ -112,7 +124,7 @@ class ExternalController extends Controller
         else
         {
             $author_identification = $request->assigned_authors[0];
-            $author = Author::getByIdOrCreateWithName($author_identification);
+            $author = Author::getByIdOrCreateWithName($author_identification, true);
 
             $external->author()->associate($author);
             $external->save();
@@ -137,7 +149,8 @@ class ExternalController extends Controller
         // no error => continue with redirecting according to a selected action
         $redirect_arr = [
             'save' => route('admin.external.index'),
-            'save_show_song' => isset($song_lyric) ? route('client.song.text', $song_lyric) : route('admin.song.index'),
+            'save_show_song' => isset($song_lyric) ? $song_lyric->public_url : route('admin.song.index'),
+            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
         ];
 
         return redirect($redirect_arr[$request->redirect]);

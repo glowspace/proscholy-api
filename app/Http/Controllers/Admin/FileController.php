@@ -17,8 +17,17 @@ class FileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $files = File::all();
+        $files = File::restricted()->get();
         return view('admin.file.index', compact('files'));
+    }
+
+    public function todoAuthors(){
+        $files = File::where('author_id', null)->where('has_anonymous_author', 0)
+                ->orWhere('song_lyric_id', null)
+                ->get();
+
+        $title = "Seznam souborů bez přiřazeného autora nebo písně";
+        return view('admin.file.index', compact('files', 'title'));
     }
 
     /**
@@ -54,7 +63,8 @@ class FileController extends Controller
 
         $file = File::create([
             'filename' => $slugified,
-            'path' => $path
+            'path' => $path,
+            'type' => 3 // set default to sheet music
         ]);
 
         if ($request->has('song_lyric_id')) {
@@ -77,7 +87,7 @@ class FileController extends Controller
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $file->song_lyric ? [$file->song_lyric] : [];
-        $all_song_lyrics      = SongLyric::select(['id', 'name'])->orderBy('name')->get();
+        $all_song_lyrics      = SongLyric::restricted()->select(['id', 'name'])->orderBy('name')->get();
 
         return view('admin.file.edit', compact(
             'file',
@@ -112,7 +122,7 @@ class FileController extends Controller
         else
         {
             $author_identification = $request->assigned_authors[0];
-            $author = Author::getByIdOrCreateWithName($author_identification);
+            $author = Author::getByIdOrCreateWithName($author_identification, true);
 
             $file->author()->associate($author);
             $file->save();
@@ -136,7 +146,8 @@ class FileController extends Controller
 
         $redirect_arr = [
             'save' => route('admin.file.index'),
-            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index'),
+            'save_show_song' => isset($song_lyric) ? $song_lyric->public_url : route('admin.song.index'),
+            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index')
         ];
 
         return redirect($redirect_arr[$request->redirect]);

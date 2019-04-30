@@ -8,34 +8,47 @@
 
 @section('content')
     <div class="content-padding">
-        <div class="row">
-            <div class="col-lg-8">
-                <h1>{{$song_l->name}}</h1>
-
+        <h1>{{$song_l->name}}</h1>
+        <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
+            <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
                 <div class="card" id="cardLyrics">
-                    <div class="card-header" style="padding: 8px;">
-                        <span style="display: inline-block; padding: 10px;">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</span>
-                        <transposition></transposition>
-                        {{-- <div class="transpose-control-wrapper" style="display: inline-block">
-                            <span>Transpozice: </span><a class="btn btn-secondary" id="transposeUp">+1</a>
-                            <a class="btn btn-secondary" id="transposeDown">-1</a>
-                        </div> --}}
+                    <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
+                        <div class="p-2">
+                            @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                        </div>
+                        <div class="d-flex flex-column p-2">
+                            @if ($song_l->lyrics)
+                                <transposition></transposition>
+                                <font-sizer></font-sizer>
+                            @endif
+                        </div>
                     </div>
                     <div class="card-body">
-                        @if($song_l->lyrics)
-                            {{-- <div id="lyrics">{!!$song_l->getProcessedLyrics() !!}</div> --}}
-                            <div class="song-component">
-                                {!! $song_l->getFormattedLyrics() !!}
+                        <div class="d-flex flex-column flex-sm-row-reverse">
+                            <div class="song-tags d-flex flex-sm-column align-items-sm-end mb-2">
+                                {{-- <a href="#" class="tag">štítek 1</a>
+                                <a href="#" class="tag">štítek 2</a>
+                                <a href="#" class="tag">štítek 3</a> --}}
+                                @foreach ($tags as $tag)
+                                    <a href="#" class="tag">{{ $tag->name }}</a>
+                                @endforeach
                             </div>
-                        @else
-                            <div id="lyrics">Text písně připravujeme.</div>
-                        @endif
-                        <hr>
+                            <div class="flex-grow-1">
+                                @if($song_l->lyrics)
+                                    {!! $song_l->formatted_lyrics !!}
+                                @else
+                                    <p>Text písně připravujeme.</p>
+                                    @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
+                                        <p><b>V nabídce vlevo jsou k nahlédnutí všechny materiály ke stažení.</b></p>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 content-padding-top">
+            <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-4" }}">
                 @if($song_l->description)
                     <div class="card">
                         <div class="card-header">Informace o písni</div>
@@ -43,6 +56,12 @@
                             <b>Autor</b>
                         </div>
                     </div>
+                @endif
+
+                @if($song_l->scoreFiles()->count() > 0)
+                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent
+                @elseif ($song_l->scoreExternals()->count() > 0)
+                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreExternals()->first()])@endcomponent
                 @endif
 
                 @if($song_l->youtubeVideos()->count() > 0)

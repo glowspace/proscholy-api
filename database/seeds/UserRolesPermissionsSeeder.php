@@ -22,18 +22,31 @@ class UserRolesPermissionsSeeder extends Seeder
         // DB::table($tableNames['roles'])->delete();
         // DB::table($tableNames['permissions'])->delete();
 
+        $permissions = ['manage users', 'manage official tags', 'access todo', 'add authors', 'manage tags', 'publish songs', 'approve songs'];
+
         // if the permission already exists then do not create new one
-        $perm = Permission::firstOrNew(['name' => 'manage users']);
-        $perm->save();
+        foreach ($permissions as $new_name)
+        {
+            $new_perm = Permission::firstOrNew(['name' => $new_name]);
+            $new_perm->save();
+        }
 
         // .. and roles
         $admin = Role::firstOrNew(['name' => 'admin']);
-        $admin->givePermissionTo('manage users');
+        foreach ($permissions as $perm) {
+            $admin->givePermissionTo($perm);
+        }
         $admin->save();
 
         $editor = Role::firstOrNew(['name' => 'editor']);
+        $editor->givePermissionTo('access todo');
+        $editor->givePermissionTo('add authors');
+        $editor->givePermissionTo('manage tags');
+        $editor->givePermissionTo('publish songs');
         $editor->save();
+
         $author = Role::firstOrNew(['name' => 'autor']);
+        $author->givePermissionTo('approve songs');
         $author->save();
 
         // set some roles

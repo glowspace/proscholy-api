@@ -6,9 +6,8 @@
 
 <div class="navbar-label material-shadow text-success">Materiály</div>
 
-<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">
+<a class="btn btn-secondary" href="{{ $song_l->public_url }}">
     <i class="fas fa-align-left"></i> Text + akordy
-
 </a>
 
 @if($song_l->scoresCount())
@@ -20,15 +19,15 @@
 
 @if($song_l->song->song_lyrics()->count() > 1)
     <a class="btn btn-secondary" href="{{route('client.song.translations', $song_l)}}">
-        <i class="fas fa-language"></i> Překlady
+        <i class="fas fa-language"></i> Verze/překlady
         <span class="badge badge-pill">{{$song_l->song->song_lyrics()->count()}}</span>
     </a>
 @endif
 
-@if($song_l->audioTracks()->count())
+@if($song_l->externals()->audio()->count() + $song_l->files()->audio()->count())
     <a class="btn btn-secondary" href="{{route('client.song.audio_records', $song_l)}}">
         <i class="fas fa-microphone"></i> Nahrávky
-        <span class="badge badge-pill">{{$song_l->audioTracks()->count()}}</span>
+        <span class="badge badge-pill">{{$song_l->externals()->audio()->count() + $song_l->files()->audio()->count()}}</span>
     </a>
 @endif
 
@@ -36,6 +35,13 @@
     <a class="btn btn-secondary" href="{{route('client.song.videos', $song_l)}}">
         <i class="fab fa-youtube"></i> Videa
         <span class="badge badge-pill">{{$song_l->youtubeVideos->count()}}</span>
+    </a>
+@endif
+
+@if($song_l->files()->others()->count())
+    <a class="btn btn-secondary" href="{{route('client.song.files', $song_l)}}">
+        <i class="fas fa-file"></i> Ostatní soubory
+        <span class="badge badge-pill">{{$song_l->files()->others()->count()}}</span>
     </a>
 @endif
 
@@ -47,17 +53,19 @@
         <i class="fas fa-columns"></i>Nástěnka
     </a>
 
-    <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
-        <i class="fas fa-edit"></i> Upravit písničku
-    </a>
+    @if (App\SongLyric::restricted()->where('id', $song_l->id)->count() > 0)
+        <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
+            <i class="fas fa-edit"></i> Upravit písničku
+        </a>
 
-    <a class="btn btn-secondary" href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
-        <i class="fas fa-link"></i> Přidat odkaz
-    </a>
+        <a class="btn btn-secondary" href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
+            <i class="fas fa-link"></i> Přidat odkaz
+        </a>
 
-    <a class="btn btn-secondary" href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
-        <i class="fas fa-file"></i> Nahrát soubor
-    </a>
+        <a class="btn btn-secondary" href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
+            <i class="fas fa-file"></i> Nahrát soubor
+        </a>
+    @endif
 @endif
 
 {{--<div class="navbar-label material-shadow text-warning">Možnosti</div>--}}

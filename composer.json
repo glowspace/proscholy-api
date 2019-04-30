@@ -15,7 +15,10 @@
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",
-        "spatie/laravel-permission": "^2.33"
+        "rebing/graphql-laravel": "^1.20",
+        "spatie/laravel-permission": "^2.33",
+        "spatie/pdf-to-image": "^1.8",
+        "spatie/pdf-to-text": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.4",

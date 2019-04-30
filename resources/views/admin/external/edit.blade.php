@@ -5,7 +5,7 @@
         <h2>Úprava externího zdroje</h2>
         <div class="row">
             <div class="col-sm-6">
-                {!! $external->getHtml() !!}
+                @component('client.components.external_embed', ['external' => $external])@endcomponent
 
                 <form action="{{route('admin.external.update', ['external' => $external->id])}}" method="post">
                     @csrf
@@ -45,7 +45,10 @@
                         <input class="form-check-input" type="checkbox" {{ $external->has_anonymous_author ? 'checked' : "" }}
                         name="has_anonymous_author" id="check_has_anonymous_author" value="1">
                         <label class="form-check-label" for="check_has_anonymous_author">
-                            Autor neznámý (nezobrazovat v to-do listu)
+                            Autor neznámý
+                            @can('access todo')
+                             (nezobrazovat v to-do listu)
+                            @endcan
                         </label>
                     </div>
                     <br>
@@ -74,9 +77,10 @@
 
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save">Uložit</button>
                     <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_show_song">Uložit a zobrazit píseň</button>
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="save_edit_song">Uložit a upravit píseň</button>
                 </form>
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.external.delete', ['external' => $external->id]),
+                    'url' => route('admin.external.destroy', $external),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.external.index')
                 ])
@@ -84,6 +88,3 @@
         </div>
     </div>
 @endsection
-
-@include('admin.components.magicsuggest_includes')
-@include('admin.components.deletebutton_includes')

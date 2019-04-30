@@ -37,8 +37,7 @@ h1, h2, h3, h4 {
   -moz-user-select:      none; /* Firefox */
   -ms-user-select:       none; /* Internet Explorer/Edge */
   user-select:           none;
-  /* Non-prefixed version, currently
-                                   supported by Chrome and Opera */
+  /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 .card {
@@ -48,16 +47,44 @@ h1, h2, h3, h4 {
 /**
 Layout
  */
-.navbar {
+
+html, body {
+  height:     100%;
+  overflow-x: visible;
+}
+
+.navbar 
+{
   z-index:          200;
   background-color: #292929;
 
   font-family:      "Nunito", sans-serif;
 }
 
-.sidebar {
-  height:  calc(100vh - 66px);
-  padding: 5px 0 0;
+.navbar-brand {
+  padding: 0 !important;
+}
+
+$sidebar-width: 300px;
+
+.sidebar
+{
+  min-height:     calc(100vh - 66px);
+  width:      $sidebar-width;
+  padding:    5px 0 0;
+  z-index:    10;
+  // display:    inline-block;
+  transition: 0.2s;
+
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+
+  @include media-breakpoint-up(lg) {
+    // display: none;
+    position: relative !important;
+    display: inline-block !important;
+  }
 
   a {
     width:      100%;
@@ -97,14 +124,18 @@ Layout
 }
 
 .content {
-  height:     calc(100vh - 66px);
+  height:     calc(100% - 66px);
+  width:      calc(100% - #{$sidebar-width});
 
-  @include media-breakpoint-down(sm) {
+  // On md and above navbar is hidden
+  @include media-breakpoint-down(md) {
+    width:               100%;
+
     background-position: -290.5px -11px;
   }
 
   padding:    0;
-  overflow-y: auto;
+
   overflow-x: hidden;
 }
 
@@ -121,14 +152,14 @@ Home page specific elements
  */
 
 .background-home {
-  background-image:    url('/img/background_orange_v1.svg');
-  background-position: 0 -4px;
-  background-size:     auto 120%;
-  background-repeat:   no-repeat;
-  min-height:          calc(100vh - 66px);
+  background-image:      url('/img/bg_center.svg');
+  background-position-x: center;
+  background-size:       cover;
+  background-repeat:     no-repeat;
+  min-height:            calc(100vh - 66px);
 
   @include media-breakpoint-down(sm) {
-    background-position: -290.5px -11px;
+    background-position: -170.5px 0;
   }
 }
 
@@ -137,7 +168,7 @@ Home page specific elements
   padding-top: 160px;
 
   @include media-breakpoint-down(sm) {
-    padding-top: 140px;
+    padding-top: 110px;
   }
 
   .logo {
@@ -204,7 +235,7 @@ Home page specific elements
       outline: none;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       width:  calc(100% - 30px);
 
       margin: 15px;
@@ -227,7 +258,7 @@ Home page specific elements
       background-color: #d4d4d4;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       display: none;
     }
   }
@@ -252,70 +283,19 @@ ChordPro view
   }
 }
 
+.song-tags a.tag {
+    border: #ffd69a 0.15em solid;
+    padding: 0.1em 0.7em;
+    margin-bottom: 0.3em;
+    border-radius: 1em;
+    color: #907753;
+    text-align: center;
+    display: block;
 
-#lyrics {
-  display:     inline-block;
-
-  width:       100%;
-
-  text-align:  left;
-  margin:      0 auto 0;
-  overflow-x:  scroll;
-
-  font-family: monospace;
-  white-space: nowrap;
-  font-size:   16px;
-
-  padding:     10px;
-}
-
-
-#lyrics .command_block {
-  padding-bottom: 10px;
-}
-
-
-#lyrics .command_block h1 {
-  font-size: 1.8rem;
-  margin:    0;
-  padding:   0;
-}
-
-
-#lyrics .command_block h4 {
-  font-size: 1.4rem;
-  margin:    0;
-  padding:   0;
-}
-
-
-#lyrics .command_block em.comment {
-  display: block;
-}
-
-
-#lyrics .lyric_block {
-  //column-count: 2;
-}
-
-
-#lyrics .lyric_block .line {
-  -webkit-column-break-inside: avoid; /* Chrome, Safari */
-  page-break-inside:           avoid; /* Theoretically FF 20+ */
-  break-inside:                avoid-column; /* IE 11 */
-  //display:                     table; /* Actually FF 20+ */
-}
-
-
-#lyrics .lyric_block .chord {
-  color:       #098845;
-  font-weight: bold;
-}
-
-
-@media print {
-  #lyrics {
-    padding: 0;
-    border:  none;
-  }
+    &:hover {
+      text-decoration: none;
+      border-color: #c2a171;
+      // background: #ffd69a;
+      // color: white;
+    }
 }

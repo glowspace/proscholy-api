@@ -21,7 +21,16 @@ class SongLyricsController extends Controller
             $author->save();
         }
 
-        return view('client.song.song_text', compact('song_l'));
+        $reversed_columns = $song_l->lyrics == "" && 
+                            $song_l->scoreFiles()->count() + $song_l->scoreExternals()->count() > 0;
+
+        // if ($song_l->lyrics == "" && $song_l->scoreFiles()->count() > 0) {
+        //     return view('client.song.song_scores', compact('song_l'));
+        // }
+
+        $tags = $song_l->tags()->orderBy('type', 'desc')->orderBy('name')->get();
+
+        return view('client.song.song_text', compact('song_l', 'tags', 'reversed_columns'));
     }
 
     public function songScore(SongLyric $song_lyric)
@@ -59,5 +68,14 @@ class SongLyricsController extends Controller
         $song_l->save();
 
         return view('client.song.song_videos', compact('song_l'));
+    }
+
+    public function songFiles($id)
+    {
+        $song_l         = SongLyric::findOrFail($id);
+        $song_l->visits += 1;
+        $song_l->save();
+
+        return view('client.song.song_files', compact('song_l'));
     }
 }

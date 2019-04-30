@@ -34,13 +34,39 @@
                 </form>
 
                 @include('admin.components.deletebutton', [
-                    'url' => route('admin.author.delete', ['author' => $author->id]),
+                    'url' => route('admin.author.destroy', $author),
                     'class' => 'btn btn-outline-warning',
                     'redirect' => route('admin.author.index')
                 ])
+            </div>
+            <div class="col-sm-6">
+                @if ($author->songOriginalLyrics()->count())
+                    <h5>Přehled autorových písní - originály</h5>
+                    <ul>
+                        @foreach ($author->songOriginalLyrics()->get() as $song_lyric)
+                            <li><a href="{{ route('admin.song.edit', ['song_lyric' => $song_lyric->id]) }}" target="_blank">{{ $song_lyric->name }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
+                @if ($author->songNotOriginalLyrics()->count())
+                    <h5>Přehled autorových písní - překlady</h5>
+                    @foreach ($author->songNotOriginalLyrics()->get() as $song_lyric)
+                        <li><a href="{{ route('admin.song.edit', ['song_lyric' => $song_lyric->id]) }}" target="_blank">{{ $song_lyric->name }}</a></li>
+                    @endforeach
+                @endif
+                @if ($author->externals->count() + $author->files->count())
+                    <h5>Přehled všech autorských materiálů</h5>
+                    <ul>
+                        @foreach ($author->externals as $external)
+                            <li>Externí odkaz ({{ $external->getTypeString() }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{ $external->url }}</a></li>                    
+                        @endforeach
+                        @foreach ($author->files as $file)
+                            <li>Soubor ({{ $file->getTypeString() }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         </div>
     </div>
 @endsection
 
-@include('admin.components.deletebutton_includes')

@@ -71,7 +71,7 @@
                         @foreach($author->songOriginalLyrics as $song_l)
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -109,7 +109,41 @@
                         @foreach($author->songNotOriginalLyrics as $song_l)
                             <tr>
                                 <td>
-                                    <a href="{{route('client.song.text', $song_l)}}">{{$song_l->name}}</a>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
+                                </td>
+                                <td>
+                                    @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                                </td>
+                                <td>{{$song_l->visits}} x</td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+
+                    <hr>
+                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                </div>
+            </div>
+        @endif
+
+        @if($author->getSongLyricsInterpreted()->count() > 0)
+            <div class="card">
+                <div class="card-header">Interpretace písní</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Píseň</th>
+                            <th scope="col">Autor</th>
+                            <th scope="col">Zobrazeno</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($author->getSongLyricsInterpreted()->get() as $song_l)
+                            <tr>
+                                <td>
+                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
                                 </td>
                                 <td>
                                     @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent

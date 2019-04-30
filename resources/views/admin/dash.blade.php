@@ -9,19 +9,19 @@
                 <table class="table table-bordered">
                     <tr>
                         <td>Verze zpěvníku</td>
-                        <td><b>Generace #1 - v0.31 (23.2.2019)</b></td>
+                        <td><b>Generace #1 - v0.56 (22.3.2019)</b></td>
                     </tr>
                     <tr>
-                        <td>Autor:</td>
+                        <td>Autor</td>
                         <td>Miroslav Šerý, Michael Dojčár</td>
                     </tr>
                     <tr>
                         <td>Redakce</td>
-                        <td>Matěj, Zuzka, Vašek, Michal, Mira</td>
+                        <td>Matěj, Zuzka, Michal, Mira, Terka, Janey, Barča, Ondra</td>
                     </tr>
                     <tr>
                         <td>Propagace</td>
-                        <td>Emma, Peťa</td>
+                        <td>Emma, Peťa, Ben</td>
                     </tr>
                     <tr>
                         <td>Krizový telefon <br>(urgent. dotazy, závady)</td>
