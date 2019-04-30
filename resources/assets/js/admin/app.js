@@ -58,14 +58,26 @@ const apolloProvider = new VueApollo({
 import Vuetify, {
   VApp, // required
   VNavigationDrawer,
-  VDataTable
+  VDataTable,
+  VContainer,
+  VLayout,
+  VFlex,
+  VCard,
+  VCardText,
+  VTextField
 } from 'vuetify/lib'
 
 Vue.use(Vuetify, {
   components: {
     VApp,
     VNavigationDrawer,
-    VDataTable
+    VDataTable,
+    VContainer,
+    VLayout,
+    VFlex,
+    VCard,
+    VCardText,
+    VTextField
   }
 })
 

@@ -106,7 +106,7 @@ return [
                 'tags' => 'App\GraphQL\Query\TagsQuery'
             ],
             'mutation' => [
-                // 'example_mutation'  => ExampleMutation::class,
+                'delete_song_lyric'  => 'App\GraphQL\Mutation\DeleteSongLyricMutation',
             ],
             'middleware' => [],
             'method' => ['get', 'post'],
