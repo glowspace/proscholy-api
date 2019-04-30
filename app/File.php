@@ -60,6 +60,11 @@ class File extends Model
         return "$this->name ($this->filename)";
     }
 
+    public function getPublicNameAttribute()
+    {
+        return $this->getPublicName();
+    }
+
     public function getDownloadUrlAttribute()
     {
         return route('download.file', [
@@ -78,6 +83,10 @@ class File extends Model
     public function getTypeString()
     {
         return $this->type_string[$this->type];
+    }
+
+    public function getTypeStringAttribute() {
+        return $this->getTypeString();
     }
 
     protected static function getThubmnailsFolder()

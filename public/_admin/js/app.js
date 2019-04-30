@@ -64684,6 +64684,8 @@ window.Vue = __webpack_require__(5);
  */
 
 Vue.component('songs-list', __webpack_require__(184));
+Vue.component('externals-list', __webpack_require__(530));
+Vue.component('files-list', __webpack_require__(535));
 
 
 
@@ -64905,9 +64907,9 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 
 
-var fetch_song_lyrics = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
-var delete_song_lyric = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
@@ -64922,7 +64924,7 @@ var delete_song_lyric = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
 
   apollo: {
     song_lyrics: {
-      query: fetch_song_lyrics,
+      query: fetch_items,
       variables: function variables() {
         return {
           has_lyrics: this.hasLyrics,
@@ -64942,10 +64944,10 @@ var delete_song_lyric = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
     },
     deleteSong: function deleteSong(id) {
       this.$apollo.mutate({
-        mutation: delete_song_lyric,
+        mutation: delete_item,
         variables: { id: id },
         refetchQueries: [{
-          query: fetch_song_lyrics
+          query: fetch_items
         }]
       }).then(function (result) {
         console.log('uspesne vymazano');
@@ -92516,6 +92518,675 @@ function removeDiacritics(str) {
     }
 
     return str;
+}
+
+/***/ }),
+/* 530 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(531)
+}
+var normalizeComponent = __webpack_require__(33)
+/* script */
+var __vue_script__ = __webpack_require__(533)
+/* template */
+var __vue_template__ = __webpack_require__(534)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/ExternalsList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-51aa865f", Component.options)
+  } else {
+    hotAPI.reload("data-v-51aa865f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 531 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(532);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(75)("293f8a05", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51aa865f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExternalsList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-51aa865f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExternalsList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 532 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 533 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(529);
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals {\n            externals {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals {\n            externals {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteExternal ($id: Int!) {\n    delete_external(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteExternal ($id: Int!) {\n    delete_external(id: $id) {\n      id\n    }\n  }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Název', value: 'public_name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+  apollo: {
+    externals: {
+      query: fetch_items,
+      variables: function variables() {
+        return {
+          // has_lyrics: this.hasLyrics,
+          // has_authors: this.hasAuthors,
+          // has_chords: this.hasChords,
+          // has_tags: this.hasTags
+        };
+      }
+    }
+  },
+
+  methods: {
+    askForm: function askForm(id) {
+      if (confirm('Opravdu chcete smazat daný záznam?')) {
+        this.deleteExternal(id);
+      }
+    },
+    deleteExternal: function deleteExternal(id) {
+      this.$apollo.mutate({
+        mutation: delete_item,
+        variables: { id: id },
+        refetchQueries: [{
+          query: fetch_items
+        }]
+      }).then(function (result) {
+        console.log('uspesne vymazano');
+      }).catch(function (error) {
+        console.log('error');
+      });
+    },
+    formFilter: function formFilter(val, search) {
+      if (typeof val == 'string') {
+        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
+        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
+
+        return hay.indexOf(needle) >= 0;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+/* 534 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-container",
+        { attrs: { "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  attrs: {
+                    xs5: "",
+                    "offset-xs7": "",
+                    md3: "",
+                    "offset-md9": ""
+                  }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Vyhledávání" },
+                    model: {
+                      value: _vm.search_string,
+                      callback: function($$v) {
+                        _vm.search_string = $$v
+                      },
+                      expression: "search_string"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-data-table", {
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.externals,
+                      search: _vm.search_string,
+                      filter: _vm.formFilter
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "items",
+                        fn: function(props) {
+                          return [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "/admin/external/" + props.item.id
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.item.public_name))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.askForm(props.item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Vymazat")]
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-51aa865f", module.exports)
+  }
+}
+
+/***/ }),
+/* 535 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(536)
+}
+var normalizeComponent = __webpack_require__(33)
+/* script */
+var __vue_script__ = __webpack_require__(538)
+/* template */
+var __vue_template__ = __webpack_require__(539)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/FilesList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1d20744e", Component.options)
+  } else {
+    hotAPI.reload("data-v-1d20744e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 536 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(537);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(75)("539a9151", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d20744e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilesList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d20744e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilesList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 537 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 538 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(529);
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles {\n            files {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchFiles {\n            files {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteFile ($id: Int!) {\n    delete_file(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteFile ($id: Int!) {\n    delete_file(id: $id) {\n      id\n    }\n  }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['is-todo'],
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Název', value: 'public_name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+  apollo: {
+    files: {
+      query: fetch_items,
+      variables: function variables() {
+        return {
+          is_todo: this.isTodo
+        };
+      }
+    }
+  },
+
+  methods: {
+    askForm: function askForm(id) {
+      if (confirm('Opravdu chcete smazat daný záznam?')) {
+        this.deleteFile(id);
+      }
+    },
+    deleteFile: function deleteFile(id) {
+      this.$apollo.mutate({
+        mutation: delete_item,
+        variables: { id: id },
+        refetchQueries: [{
+          query: fetch_items
+        }]
+      }).then(function (result) {
+        console.log('uspesne vymazano');
+      }).catch(function (error) {
+        console.log('error');
+      });
+    },
+    formFilter: function formFilter(val, search) {
+      if (typeof val == 'string') {
+        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
+        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
+
+        return hay.indexOf(needle) >= 0;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+/* 539 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-container",
+        { attrs: { "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  attrs: {
+                    xs5: "",
+                    "offset-xs7": "",
+                    md3: "",
+                    "offset-md9": ""
+                  }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Vyhledávání" },
+                    model: {
+                      value: _vm.search_string,
+                      callback: function($$v) {
+                        _vm.search_string = $$v
+                      },
+                      expression: "search_string"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-data-table", {
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.files,
+                      search: _vm.search_string,
+                      filter: _vm.formFilter
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "items",
+                        fn: function(props) {
+                          return [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "/admin/file/" + props.item.id
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.item.public_name))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.askForm(props.item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Vymazat")]
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1d20744e", module.exports)
+  }
 }
 
 /***/ })

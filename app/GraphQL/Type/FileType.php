@@ -28,12 +28,20 @@ class FileType extends GraphQLType {
 				'type' => Type::nonNull(Type::int()),
 				'description' => 'The id of the file'
 			],
-			'name' => [
+			'public_name' => [
 				'type' => Type::string(),
-				'description' => 'The name of the file'
+				'description' => 'The public name of the file'
+			],
+			'download_url' => [
+				'type' => Type::string(),
+				'description' => 'The download url of the file'
 			],
 			'type' => [
                 'type' => Type::int(),
+                'description' => "multiple files"
+			],
+			'type_string' => [
+                'type' => Type::string(),
                 'description' => "multiple files"
 			],
 		];

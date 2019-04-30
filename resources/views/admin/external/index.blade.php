@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="content-padding">
-            <h2>{{ $title ?? "Seznam externích zdrojů"}}</h2>
+        <h2>{{ $title ?? "Seznam externích zdrojů"}}</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.external.create')}}">+ Nový externí zdroj</a>
-        <div class="row">
+
+        <externals-list></externals-list>
+        {{-- <div class="row">
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
                     'id' => 'index_table',
@@ -39,7 +41,7 @@
                 @endforeach
                 @endcomponent
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 

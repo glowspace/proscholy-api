@@ -11,7 +11,7 @@ class ExternalType extends GraphQLType {
 
 	protected $attributes = [
 		'name' => 'External',
-		'description' => 'A tag model',
+		'description' => 'An external model',
 		'model' => External::class
 	];
   
@@ -28,13 +28,17 @@ class ExternalType extends GraphQLType {
 				'type' => Type::nonNull(Type::int()),
 				'description' => 'The id of the external'
 			],
-			'name' => [
+			'public_name' => [
 				'type' => Type::string(),
-				'description' => 'The name of the external'
+				'description' => 'The parsed public name of the external'
 			],
 			'type' => [
                 'type' => Type::int(),
-                'description' => "multiple tags"
+                'description' => "multiple types"
+			],
+			'type_string' => [
+                'type' => Type::string(),
+                'description' => "multiple types"
 			],
 		];
 	}

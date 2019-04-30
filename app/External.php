@@ -55,6 +55,11 @@ class External extends Model
         return $this->type_string[$this->type];
     }
 
+    public function getTypeStringAttribute()
+    {
+        return $this->getTypeString();
+    }
+
     public function scopeScores($query)
     {
         return $query->where('type', 4);
@@ -218,5 +223,10 @@ class External extends Model
         {
             return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")";
         }
+    }
+
+    public function getPublicNameAttribute()
+    {
+        return $this->getPublicName();
     }
 }

@@ -11,28 +11,16 @@
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="song_lyrics"
+            :items="files"
             :search="search_string"
             :filter="formFilter"
-            class="users-list">
+            >
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/song/' + props.item.id">{{ props.item.name }}</a>
+                <a :href="'/admin/file/' + props.item.id">{{ props.item.public_name }}</a>
               </td>
-              <td>
-                <span v-if="props.item.is_original">Originál</span>
-                <span v-if="!props.item.is_original">Překlad</span>
-              </td>
-              <td>{{ props.item.updated_at }}</td>
-              <td>
-                <span v-if="props.item.is_published">Ano</span>
-                <span v-if="!props.item.is_published">Ne</span>
-              </td>
-              <td>
-                <span v-if="props.item.is_approved_by_author">Ano</span>
-                <span v-if="!props.item.is_approved_by_author">Ne</span>
-              </td>
+              <td>{{ props.item.type_string }}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
               </td>
@@ -48,7 +36,7 @@
   input {
     border: none;
   }
-</style>
+</style>fetch_items
 
 <script>
 
@@ -57,55 +45,41 @@ import gql from 'graphql-tag';
 import removeDiacritics from '../helpers/removeDiacritics';
 
 const fetch_items = gql`
-        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {
-            song_lyrics(
-              has_lyrics: $has_lyrics, 
-              has_authors: $has_authors, 
-              has_chords: $has_chords,
-              has_tags: $has_tags
-          ) {
+        query FetchFiles {
+            files {
                 id,
-                name,
-                updated_at,
-                is_original,
-                is_published,
-                is_approved_by_author
+                public_name,
+                type_string
             }
         }`;
 
 const delete_item = gql`
-  mutation DeleteSongLyric ($id: Int!) {
-    delete_song_lyric(id: $id) {
+  mutation DeleteFile ($id: Int!) {
+    delete_file(id: $id) {
       id
     }
   }`;
 
 export default {
-  props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+  props: ['is-todo'],
 
   data() {
     return {
       headers: [
-        { text: 'Název písničky', value: 'name' },
-        { text: 'Typ', value: 'is_original' },
-        { text: 'Naposledy upraveno', value: 'updated_at' },
-        { text: 'Publikováno', value: 'is_published' },
-        { text: 'Schváleno autorem', value: 'is_approved_by_author' },
-        { text: 'Akce', value: 'action' },
+        { text: 'Název', value: 'public_name' },
+        { text: 'Typ', value: 'type_string' },
+        { text: 'Akce', value: 'action' }
       ],
       search_string: ""
     }
   },
 
   apollo: {
-    song_lyrics: { 
+    files: { 
       query: fetch_items,
       variables() {
         return { 
-          has_lyrics: this.hasLyrics,
-          has_authors: this.hasAuthors,
-          has_chords: this.hasChords,
-          has_tags: this.hasTags
+          is_todo: this.isTodo,
         }
       }
     }
@@ -114,11 +88,11 @@ export default {
   methods: {
     askForm(id) {
       if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteSong(id);
+        this.deleteFile(id);
       }
     },
 
-    deleteSong(id) {
+    deleteFile(id) {
       this.$apollo.mutate({
         mutation: delete_item,
         variables: {id: id},

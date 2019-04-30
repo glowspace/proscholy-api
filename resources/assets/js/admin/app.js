@@ -21,6 +21,8 @@ window.Vue = require('vue');
 
 
 Vue.component('songs-list', require('./components/SongsList.vue'));
+Vue.component('externals-list', require('./components/ExternalsList.vue'));
+Vue.component('files-list', require('./components/FilesList.vue'));
 
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'

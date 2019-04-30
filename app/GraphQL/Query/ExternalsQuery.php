@@ -17,7 +17,7 @@ class ExternalsQuery extends Query {
 
 	public function type()
 	{
-		return Type::listOf(GraphQL::type('tag'));
+		return Type::listOf(GraphQL::type('external'));
 	}
 
 	public function args()
