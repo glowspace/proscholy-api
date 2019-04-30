@@ -154,6 +154,12 @@ class File extends Model
         return $query->where('type', 0)->orWhere('type', 1)->orWhere('type', 2);
     }
 
+    public function scopeTodo($query)
+    {
+        return $query->where('author_id', null)->where('has_anonymous_author', 0)
+            ->orWhere('song_lyric_id', null);
+    }
+
     public function author()
     {
         return $this->belongsTo(Author::class);

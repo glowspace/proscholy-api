@@ -45,8 +45,8 @@ import gql from 'graphql-tag';
 import removeDiacritics from '../helpers/removeDiacritics';
 
 const fetch_items = gql`
-        query FetchExternals {
-            externals {
+        query FetchExternals ($is_todo: Boolean) {
+            externals (is_todo: $is_todo) {
                 id,
                 public_name,
                 type_string
@@ -61,7 +61,7 @@ const delete_item = gql`
   }`;
 
 export default {
-  // props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+  props: ['is-todo'],
 
   data() {
     return {
@@ -79,10 +79,7 @@ export default {
       query: fetch_items,
       variables() {
         return { 
-          // has_lyrics: this.hasLyrics,
-          // has_authors: this.hasAuthors,
-          // has_chords: this.hasChords,
-          // has_tags: this.hasTags
+          is_todo: this.isTodo,
         }
       }
     }

@@ -45,8 +45,8 @@ import gql from 'graphql-tag';
 import removeDiacritics from '../helpers/removeDiacritics';
 
 const fetch_items = gql`
-        query FetchFiles {
-            files {
+        query FetchFiles ($is_todo: Boolean) {
+            files(is_todo: $is_todo) {
                 id,
                 public_name,
                 type_string

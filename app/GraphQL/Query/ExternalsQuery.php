@@ -24,7 +24,12 @@ class ExternalsQuery extends Query {
 	{
 		return [
 			'id' => ['name' => 'id', 'type' => Type::int()],
-			'type' => ['name' => 'type', 'type' => Type::int()]
+			'type' => ['name' => 'type', 'type' => Type::int()],
+			'is_todo' => [
+				'name' => 'is_todo',
+				'type' => Type::boolean(),
+				'description' => 'Whether External doesn\'t have any author or song associated'
+			],
 		];
 	}
 
@@ -37,6 +42,9 @@ class ExternalsQuery extends Query {
 
 		if (isset($args['type']))
 			$query = $query->where('type', $args['type']);
+
+		if (isset($args['is_todo']) && $args['is_todo'])
+			$query = $query->todo();
 
 		return $query->get();
 	}

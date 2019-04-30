@@ -75,6 +75,12 @@ class External extends Model
         return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
     }
 
+    public function scopeTodo($query)
+    {
+        return $query->where('author_id', null)->where('has_anonymous_author', 0)
+            ->orWhere('song_lyric_id', null);
+    }
+
     public static function urlAsSpotify($url)
     {
         // spotify:track:3X7QBr7rq6NIzLmEXbiXAS

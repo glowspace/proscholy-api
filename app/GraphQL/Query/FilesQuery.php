@@ -44,7 +44,7 @@ class FilesQuery extends Query {
 			$query = $query->where('type', $args['type']);
 
 		if (isset($args['is_todo']) && $args['is_todo'])
-			$query = $query->where('author', null)->orWhere('song', null);
+			$query = $query->todo();
 
 		return $query->get();
 	}

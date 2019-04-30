@@ -92623,7 +92623,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(529);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals {\n            externals {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals {\n            externals {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteExternal ($id: Int!) {\n    delete_external(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteExternal ($id: Int!) {\n    delete_external(id: $id) {\n      id\n    }\n  }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -92679,7 +92679,7 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+  props: ['is-todo'],
 
   data: function data() {
     return {
@@ -92694,10 +92694,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
       query: fetch_items,
       variables: function variables() {
         return {
-          // has_lyrics: this.hasLyrics,
-          // has_authors: this.hasAuthors,
-          // has_chords: this.hasChords,
-          // has_tags: this.hasTags
+          is_todo: this.isTodo
         };
       }
     }
@@ -92962,7 +92959,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(529);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles {\n            files {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchFiles {\n            files {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteFile ($id: Int!) {\n    delete_file(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteFile ($id: Int!) {\n    delete_file(id: $id) {\n      id\n    }\n  }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
