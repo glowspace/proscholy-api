@@ -2352,8 +2352,8 @@ pre code {
   opacity: 1;
 }
 
-.form-control:-ms-input-placeholder,
-.custom-file-control:-ms-input-placeholder {
+.form-control::-moz-placeholder,
+.custom-file-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -5784,8 +5784,10 @@ input[type="button"].btn-block {
 @media (min-width: 576px) {
   .card-columns {
     -webkit-column-count: 3;
+       -moz-column-count: 3;
             column-count: 3;
     -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
             column-gap: 1.25rem;
     orphans: 1;
     widows: 1;
@@ -19502,7 +19504,7 @@ fieldset[disabled][disabled] .has-danger .custom-file-control,
 .bmd-form-group .form-control,
 .bmd-form-group .custom-file-control,
 .bmd-form-group label,
-.bmd-form-group input:-ms-input-placeholder {
+.bmd-form-group input::-moz-placeholder {
   line-height: 1;
 }
 
@@ -19532,7 +19534,7 @@ fieldset[disabled][disabled] .has-danger .custom-file-control,
   font-size: 0.9rem;
 }
 
-.bmd-form-group input:-ms-input-placeholder {
+.bmd-form-group input::-moz-placeholder {
   font-size: 0.9rem;
 }
 
@@ -19636,7 +19638,7 @@ fieldset[disabled][disabled] .has-danger .custom-file-control,
 .bmd-form-group.bmd-form-group-sm .form-control,
 .bmd-form-group.bmd-form-group-sm .custom-file-control,
 .bmd-form-group.bmd-form-group-sm label,
-.bmd-form-group.bmd-form-group-sm input:-ms-input-placeholder {
+.bmd-form-group.bmd-form-group-sm input::-moz-placeholder {
   line-height: 1;
 }
 
@@ -19666,7 +19668,7 @@ fieldset[disabled][disabled] .has-danger .custom-file-control,
   font-size: 0.7875rem;
 }
 
-.bmd-form-group.bmd-form-group-sm input:-ms-input-placeholder {
+.bmd-form-group.bmd-form-group-sm input::-moz-placeholder {
   font-size: 0.7875rem;
 }
 
@@ -19770,7 +19772,7 @@ fieldset[disabled][disabled] .has-danger .custom-file-control,
 .bmd-form-group.bmd-form-group-lg .form-control,
 .bmd-form-group.bmd-form-group-lg .custom-file-control,
 .bmd-form-group.bmd-form-group-lg label,
-.bmd-form-group.bmd-form-group-lg input:-ms-input-placeholder {
+.bmd-form-group.bmd-form-group-lg input::-moz-placeholder {
   line-height: 1;
 }
 
@@ -19800,7 +19802,7 @@ fieldset[disabled][disabled] .has-danger .custom-file-control,
   font-size: 1.125rem;
 }
 
-.bmd-form-group.bmd-form-group-lg input:-ms-input-placeholder {
+.bmd-form-group.bmd-form-group-lg input::-moz-placeholder {
   font-size: 1.125rem;
 }
 
@@ -19900,7 +19902,7 @@ input::-webkit-input-placeholder {
 .form-control,
 .custom-file-control,
 label,
-input:-ms-input-placeholder {
+input::-moz-placeholder {
   line-height: 1;
 }
 
@@ -19930,7 +19932,7 @@ input::-webkit-input-placeholder {
   font-size: 0.9rem;
 }
 
-input:-ms-input-placeholder {
+input::-moz-placeholder {
   font-size: 0.9rem;
 }
 
@@ -20303,8 +20305,8 @@ thead.thead-inverse th,
   color: rgba(255, 255, 255, 0.5);
 }
 
-.navbar-dark .form-control:-ms-input-placeholder,
-.navbar-dark .custom-file-control:-ms-input-placeholder {
+.navbar-dark .form-control::-moz-placeholder,
+.navbar-dark .custom-file-control::-moz-placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 

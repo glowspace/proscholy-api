@@ -48,10 +48,19 @@ const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
 })
 
-import Vuetify from 'vuetify'
-Vue.use(Vuetify)
+import Vuetify, {
+  VApp, // required
+  VNavigationDrawer
+} from 'vuetify/lib'
 
-import 'vuetify/dist/vuetify.min.css'
+Vue.use(Vuetify, {
+  components: {
+    VApp,
+    VNavigationDrawer
+  }
+})
+
+// import 'vuetify/dist/vuetify.min.css'
 
 const app = new Vue({
     el: '#app',

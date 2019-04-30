@@ -19,8 +19,9 @@
     "laravel-mix": "^2.0",
     "lodash": "^4.17.11",
     "popper.js": "^1.12",
-    "vue": "^2.5.7",
-    "vue-template-compiler": "^2.6.10"
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue": "^2.5.7"
   },
   "dependencies": {
     "apollo-boost": "^0.3.1",

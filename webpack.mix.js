@@ -11,6 +11,17 @@ let mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.styl$/,
+                loader: ['style-loader', 'css-loader', 'stylus-loader']
+            }
+        ]
+    }
+})
+
 mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
