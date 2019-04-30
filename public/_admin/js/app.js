@@ -64842,12 +64842,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(529);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics {\n            song_lyrics {\n                id,\n                name,\n                updated_at,\n                is_original,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics {\n            song_lyrics {\n                id,\n                name,\n                updated_at,\n                is_original,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                is_original,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                is_original,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: Int!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: Int!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-//
 //
 //
 //
@@ -64911,6 +64910,8 @@ var fetch_song_lyrics = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
 var delete_song_lyric = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+
   data: function data() {
     return {
       headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'is_original' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
@@ -64920,7 +64921,17 @@ var delete_song_lyric = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
 
 
   apollo: {
-    song_lyrics: fetch_song_lyrics
+    song_lyrics: {
+      query: fetch_song_lyrics,
+      variables: function variables() {
+        return {
+          has_lyrics: this.hasLyrics,
+          has_authors: this.hasAuthors,
+          has_chords: this.hasChords,
+          has_tags: this.hasTags
+        };
+      }
+    }
   },
 
   methods: {
@@ -64943,16 +64954,11 @@ var delete_song_lyric = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
       });
     },
     formFilter: function formFilter(val, search) {
-      // console.log(this.removeDiacritics(search));
       if (typeof val == 'string') {
         var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
         var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
 
-        console.log(hay);
-
         return hay.indexOf(needle) >= 0;
-
-        // return this.removeDiacritics(val).indexOf(this.removeDiacritics(search)) >= 0;
       }
 
       return false;
@@ -67813,6 +67819,7 @@ var render = function() {
                               _c(
                                 "a",
                                 {
+                                  staticStyle: { color: "red" },
                                   attrs: { href: "#" },
                                   on: {
                                     click: function($event) {
@@ -67820,7 +67827,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Smazat")]
+                                [_vm._v("Vymazat")]
                               )
                             ])
                           ]

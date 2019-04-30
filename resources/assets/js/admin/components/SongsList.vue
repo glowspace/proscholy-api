@@ -4,7 +4,6 @@
     <v-container grid-list-xs>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>
-          <!-- <input type="text" v-model="search_string" style="width: 100%"> -->
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>
         </v-flex>
       </v-layout>
@@ -35,7 +34,7 @@
                 <span v-if="!props.item.is_approved_by_author">Ne</span>
               </td>
               <td>
-                <a href="#" v-on:click="askForm(props.item.id)">Smazat</a>
+                <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
               </td>
             </template>
           </v-data-table>
@@ -58,8 +57,13 @@ import gql from 'graphql-tag';
 import removeDiacritics from '../helpers/removeDiacritics';
 
 const fetch_song_lyrics = gql`
-        query FetchSongLyrics {
-            song_lyrics {
+        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {
+            song_lyrics(
+              has_lyrics: $has_lyrics, 
+              has_authors: $has_authors, 
+              has_chords: $has_chords,
+              has_tags: $has_tags
+          ) {
                 id,
                 name,
                 updated_at,
@@ -77,6 +81,8 @@ const delete_song_lyric = gql`
   }`;
 
 export default {
+  props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+
   data() {
     return {
       headers: [
@@ -92,7 +98,17 @@ export default {
   },
 
   apollo: {
-    song_lyrics: fetch_song_lyrics
+    song_lyrics: { 
+      query: fetch_song_lyrics,
+      variables() {
+        return { 
+          has_lyrics: this.hasLyrics,
+          has_authors: this.hasAuthors,
+          has_chords: this.hasChords,
+          has_tags: this.hasTags
+        }
+      }
+    }
   },
 
   methods: {
@@ -116,17 +132,13 @@ export default {
       });
     },
 
-    formFilter(val, search) {
-      // console.log(this.removeDiacritics(search));
+    formFilter(val, search)
+    {
       if (typeof(val) == 'string') {
         let hay = removeDiacritics(val).toLowerCase();
         let needle = removeDiacritics(search).toLowerCase();
 
-        console.log(hay);
-
         return hay.indexOf(needle) >= 0;
-
-        // return this.removeDiacritics(val).indexOf(this.removeDiacritics(search)) >= 0;
       }
 
       return false;
