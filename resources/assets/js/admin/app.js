@@ -20,25 +20,32 @@ window.Vue = require('vue');
  */
 
 
-// Vue.component('songs-list', require('./components/admin/SongsList.vue'));
+Vue.component('songs-list', require('./components/SongsList.vue'));
 
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
+let web_url = 'http://localhost:8000/graphql';
+
+// if (mix.inProduction()) {
+//   web_url = 'https://zpevnik.proscholy.cz/graphql';
+// } else {
+//   web_url = 'http://localhost:8000/graphql';
+// }
+
 // HTTP connexion to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: 'http://localhost:8000/graphql',
+  uri: web_url,
 })
 
-// // Cache implementation
-// const cache = new InMemoryCache()
+const cache = new InMemoryCache()
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
   link: httpLink,
-//   cache,
+  cache,
 })
 
 import VueApollo from 'vue-apollo'
@@ -50,13 +57,15 @@ const apolloProvider = new VueApollo({
 
 import Vuetify, {
   VApp, // required
-  VNavigationDrawer
+  VNavigationDrawer,
+  VDataTable
 } from 'vuetify/lib'
 
 Vue.use(Vuetify, {
   components: {
     VApp,
-    VNavigationDrawer
+    VNavigationDrawer,
+    VDataTable
   }
 })
 
@@ -64,5 +73,5 @@ Vue.use(Vuetify, {
 
 const app = new Vue({
     el: '#app',
-    apolloProvider
+    // apolloProvider
 });

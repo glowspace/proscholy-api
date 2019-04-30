@@ -1,39 +1,37 @@
 <template>
-  <div class="users-list">
-    <!-- Apollo Query -->
-    <ApolloQuery :query="gql`
-      query FetchSongLyrics {
-        song_lyrics {
-          id
-          name  
-        }
-      }`">
-      <!-- The result will automatically updated -->
-      <template slot-scope="{ result: { data, loading } }">
-        <!-- Some content --> 
-        <div v-if="loading">Loading...</div>
-        <ul v-else>
-          <li v-for="song_lyric of data.song_lyrics" class="song_lyric" :key="song_lyric.id">
-            {{ song_lyric.name }}
-          </li>
-        </ul>
+<!-- v-app must wrap all the components -->
+  <v-app>
+    <v-data-table
+      :headers="headers"
+      :items="song_lyrics"
+      class="users-list">
+      
+      <template v-slot:items="props">
+        <td>{{ props.item.name }}</td>
       </template>
-    </ApolloQuery>
-  </div>
+    </v-data-table>
+  </v-app>
 </template>
 
-<!-- No need for script -->
-
-<style scoped>
-  .song_lyric {
-    list-style: none;
-    padding: 12px;
-    color: blue;
-  }
+<style>
 </style>
 
 <script>
 export default {
-  
+  data() {
+    return {
+      headers: [
+        { text: 'Radek 1', value: 'name' }
+      ],
+      song_lyrics: [
+        {
+          name: 'Ahoj'
+        },
+        {
+          name: 'zdar'
+        }
+      ]
+    }
+  }
 }
 </script>
