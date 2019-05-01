@@ -23,6 +23,8 @@
               <td>{{ props.item.type_string }}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
+                &nbsp;
+                <a :href="props.item.download_url">Stáhnout</a>
               </td>
             </template>
           </v-data-table>
@@ -49,7 +51,8 @@ const fetch_items = gql`
             files(is_todo: $is_todo) {
                 id,
                 public_name,
-                type_string
+                type_string,
+                download_url
             }
         }`;
 

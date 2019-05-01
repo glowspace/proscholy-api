@@ -92959,11 +92959,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(529);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string,\n                download_url\n            }\n        }'], ['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string,\n                download_url\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteFile ($id: Int!) {\n    delete_file(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteFile ($id: Int!) {\n    delete_file(id: $id) {\n      id\n    }\n  }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
 //
 //
 //
@@ -93163,6 +93165,12 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("Vymazat")]
+                              ),
+                              _vm._v("\n                 \n                "),
+                              _c(
+                                "a",
+                                { attrs: { href: props.item.download_url } },
+                                [_vm._v("Stáhnout")]
                               )
                             ])
                           ]
