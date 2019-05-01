@@ -6,7 +6,7 @@
             <td style="width: 15px"><i class="fas fa-music"></i></td>
 
             <td>
-                <a :href="song_lyric.public_url">{{ song_lyric.name }}</a> -
+                <a :href="song_lyric.public_url">{{ song_lyric.name }}</a> <span v-if="song_lyric.authors.length > 0">-</span>
                 <span v-for="(author, index) in song_lyric.authors">
                     {{ author.name }}<span v-if="index !== song_lyric.authors.length - 1">, </span>
                 </span>
@@ -72,6 +72,7 @@
                 spotifyTracks{id},
                 soundcloudTracks{id},
                 authors{id, name}
+                tags{id}
             }
         }`;
 

@@ -92030,8 +92030,7 @@ var shades = Object.freeze({
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
 var store = {
     search_string: "",
-    tagsData: [],
-    selectedTags: []
+    tagsData: []
 };
 
 /***/ }),
@@ -93000,7 +92999,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(504);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n        }\n    }"], ["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n        }\n    }"]);
+var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n            tags{id}\n        }\n    }"], ["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n            tags{id}\n        }\n    }"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -93119,7 +93118,11 @@ var render = function() {
               _c("a", { attrs: { href: song_lyric.public_url } }, [
                 _vm._v(_vm._s(song_lyric.name))
               ]),
-              _vm._v(" -\n            "),
+              _vm._v(" "),
+              song_lyric.authors.length > 0
+                ? _c("span", [_vm._v("-")])
+                : _vm._e(),
+              _vm._v(" "),
               _vm._l(song_lyric.authors, function(author, index) {
                 return _c("span", [
                   _vm._v("\n                " + _vm._s(author.name)),
