@@ -10,7 +10,7 @@
     import { store } from "./store.js";
 
     export default {
-        props: ['str'],
+        props: ['str-prefill'],
 
         data() {
             return {
@@ -25,7 +25,7 @@
         },
 
         mounted() {
-            this.store.search_string = this.str;
+            this.store.search_string = this.strPrefill;
         }
     }
 </script>
