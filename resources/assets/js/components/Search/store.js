@@ -1,4 +1,5 @@
 export const store = {
     search_string: "",
-    tags: []
+    tagsData: [],
+    selectedTags: []
 };

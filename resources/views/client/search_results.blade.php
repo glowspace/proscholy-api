@@ -60,7 +60,7 @@
                 <div class="card card-red">
                     <div class="card-header">Možnosti vyhledávání</div>
                     <div class="card-body">
-                        <div class="song-tags">
+                        {{-- <div class="song-tags">
                             @foreach ($tags->where('type', 1) as $tag)
                                 <a class="tag tag-blue">{{$tag->name}}</a>
                             @endforeach
@@ -76,7 +76,8 @@
                                     <a class="tag tag-yellow">{{$child_tag->name}}</a>
                                 @endforeach
                             @endforeach
-                        </div>
+                        </div> --}}
+                        <tags></tags>
                     </div>
                 </div>
             </div>
