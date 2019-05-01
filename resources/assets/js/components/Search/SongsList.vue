@@ -62,7 +62,13 @@
         query FetchSongLyrics {
             song_lyrics {
                 id,
-                name
+                name,
+                public_url,
+                scoreExternals{id},
+                scoreFiles{id},
+                youtubeVideos{id},
+                spotifyTracks{id},
+                soundcloudTracks{id}
             }
         }`;
 
