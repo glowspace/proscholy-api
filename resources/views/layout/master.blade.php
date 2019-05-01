@@ -45,7 +45,7 @@
     @stack('head_links')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top">
         <div>
             <a class="navbar-brand" href="@yield('navbar-brand_href', '/')"><img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0;">
              Zpěvník pro scholy</a>
