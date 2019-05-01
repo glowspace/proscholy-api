@@ -7,7 +7,7 @@
 
             <td>
                 <a :href="song_lyric.public_url">{{ song_lyric.name }}</a> <span v-if="song_lyric.authors.length > 0">-</span>
-                <span v-for="(author, index) in song_lyric.authors">
+                <span v-for="(author, index) in song_lyric.authors" v-bind:key="author.id">
                     {{ author.name }}<span v-if="index !== song_lyric.authors.length - 1">, </span>
                 </span>
             </td>
@@ -61,8 +61,8 @@
     import gql from 'graphql-tag';
 
     const fetch_items = gql`
-        query FetchSongLyrics {
-            song_lyrics {
+        query FetchSongLyrics($search_string: String) {
+            song_lyrics(search_string: $search_string) {
                 id,
                 name,
                 public_url,
@@ -92,7 +92,7 @@
                 query: fetch_items,
                 variables() {
                     return {
-                        // has_lyrics: this.hasLyrics,
+                        search_string: this.store.search_string,
                         // has_authors: this.hasAuthors,
                         // has_chords: this.hasChords,
                         // has_tags: this.hasTags

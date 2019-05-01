@@ -22,7 +22,7 @@
                     <i class="fa fa-search"></i>
                 </button>
             </form> --}}
-            <search-input str-prefill="ahoj"></search-input>
+            <search-input str-prefill="svorni"></search-input>
 
             <div class="row">
                 <div class="col-sm-8">

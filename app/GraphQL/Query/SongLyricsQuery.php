@@ -62,6 +62,11 @@ class SongLyricsQuery extends Query {
 				'name' => 'only_apk',
 				'type' => Type::boolean(),
 				'description' => 'Shortcut - wheter SongLyric is to be used in apk. Only for use with only_apk:true'
+			],
+			'search_string' => [
+				'name' => 'search_string',
+				'type' => Type::string(),
+				'description' => 'Use algolia for searching, warning - use this as an only parameter'
 			]
 		];
 	}
@@ -69,6 +74,9 @@ class SongLyricsQuery extends Query {
 	public function resolve($root, $args)
 	{
 		$query = SongLyric::query();
+
+		if (isset($args['search_string']))
+			return SongLyric::search($args['search_string']);
 		
 		if (isset($args['is_published']))
 			$query = $query->where('is_published', $args['is_published']);
