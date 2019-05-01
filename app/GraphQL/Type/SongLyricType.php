@@ -41,9 +41,21 @@ class SongLyricType extends GraphQLType
 				'type' => Type::boolean(),
 				'description' => "0 means this version is translated from an original. 1 means this version is original."
 			],
+			'is_approved_by_author' => [
+				'type' => Type::boolean(),
+				'description' => "Approval by author of the song"
+			],
+			'is_published' => [
+				'type' => Type::boolean(),
+				'description' => "Published and reviewed by editors"
+			],
 			'lang' => [
 				'type' => Type::string(),
 				'description' => "A language code, possible values: ".json_encode(collect(SongLyric::$lang_string)->keys())
+			],
+			'updated_at' => [
+				'type' => Type::string(),
+				'description' => "Datetime of last updating"
 			],
 			'authors' => [
 				'args' => [

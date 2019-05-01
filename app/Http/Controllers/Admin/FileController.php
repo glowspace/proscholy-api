@@ -17,17 +17,14 @@ class FileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $files = File::restricted()->get();
-        return view('admin.file.index', compact('files'));
+        return view('admin.file.index', ['type' => 'show-all']);
     }
 
     public function todoAuthors(){
-        $files = File::where('author_id', null)->where('has_anonymous_author', 0)
-                ->orWhere('song_lyric_id', null)
-                ->get();
+        $type = "show-todo";
 
         $title = "Seznam souborů bez přiřazeného autora nebo písně";
-        return view('admin.file.index', compact('files', 'title'));
+        return view('admin.file.index', compact('type', 'title'));
     }
 
     /**

@@ -36,6 +36,14 @@ class AuthorType extends GraphQLType {
             'description' => [
                 'type' => Type::string(),
                 'description' => "Author's description"
+			],
+			'type' => [
+                'type' => Type::int(),
+                'description' => "Author's type"
+            ],
+			'type_string' => [
+                'type' => Type::string(),
+                'description' => "Author's type"
             ]
 		];
 	}

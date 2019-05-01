@@ -15,6 +15,7 @@
     <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#292929">
+    <meta id="baseUrl" name="baseUrl" value="{{url('')}}">
 
     <title>
         @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník')
@@ -37,22 +38,9 @@
           integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
 
     {{-- CSS --}}
-    <link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
+    @yield('app-css')
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94042414-8');
-    </script>
-
+    @yield('google-analytics')
 
     @stack('head_links')
 </head>
@@ -94,8 +82,8 @@
     </div>
 
     {{-- Main JS built with Laravel's mix --}}
-    <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
-
+    @yield('app-js')
+    
     <script>
         // Mobile viewport soft keyboard fix
         setTimeout(function () {

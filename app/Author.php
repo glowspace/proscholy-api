@@ -127,6 +127,11 @@ class Author extends Model implements ISearchResult
         return $this->type_string[$this->type];
     }
 
+    public function getTypeStringAttribute()
+    {
+        return $this->getTypeText();
+    }
+
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))

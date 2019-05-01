@@ -26,18 +26,14 @@ class ExternalController extends Controller
 
     public function index()
     {
-        $externals = External::restricted()->get();
-
-        return view('admin.external.index', compact('externals'));
+        return view('admin.external.index', ['type' => 'show-all']);
     }
 
     public function todoAuthors(){
-        $externals = External::where('author_id', null)->where('has_anonymous_author', 0)
-            ->orWhere('song_lyric_id', null)
-            ->get();
+        $type = 'show-todo';
 
         $title = "Seznam externích odkazů bez přiřazeného autora nebo písně";
-        return view('admin.external.index', compact('externals', 'title'));
+        return view('admin.external.index', compact('type', 'title'));
     }
 
     public function create()

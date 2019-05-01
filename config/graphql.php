@@ -103,10 +103,16 @@ return [
                 // 'example_query' => ExampleQuery::class,
                 'song_lyrics' => 'App\GraphQL\Query\SongLyricsQuery',
                 'authors' => 'App\GraphQL\Query\AuthorsQuery',
-                'tags' => 'App\GraphQL\Query\TagsQuery'
+                'tags' => 'App\GraphQL\Query\TagsQuery',
+                'externals' => 'App\GraphQL\Query\ExternalsQuery',
+                'files' => 'App\GraphQL\Query\FilesQuery',
             ],
             'mutation' => [
-                // 'example_mutation'  => ExampleMutation::class,
+                'delete_song_lyric'  => 'App\GraphQL\Mutation\DeleteSongLyricMutation',
+                'delete_author'  => 'App\GraphQL\Mutation\DeleteAuthorMutation',
+                'delete_external'  => 'App\GraphQL\Mutation\DeleteExternalMutation',
+                'delete_file'  => 'App\GraphQL\Mutation\DeleteFileMutation',
+                'delete_tag'  => 'App\GraphQL\Mutation\DeleteTagMutation',
             ],
             'middleware' => [],
             'method' => ['get', 'post'],
@@ -129,6 +135,8 @@ return [
         'author' =>  'App\GraphQL\Type\AuthorType',
         'tag' => 'App\GraphQL\Type\TagType',
         'song' => 'App\GraphQL\Type\SongType',
+        'external' => 'App\GraphQL\Type\ExternalType',
+        'file' => 'App\GraphQL\Type\FileType',
     ],
 
     // This callable will be passed the Error object for each errors GraphQL catch.
