@@ -23,6 +23,14 @@ Vue.component('chord', require('./components/Chord.vue'));
 Vue.component('transposition', require('./components/Transposition.vue'));
 Vue.component('font-sizer', require('./components/FontSizer.vue'));
 
+Vue.component('authors-list', require('./components/Search/AuthorsList.vue'));
+Vue.component('search-input', require('./components/Search/SearchInput.vue'));
+Vue.component('songs-list', require('./components/Search/SongsList.vue'));
+Vue.component('tags', require('./components/Search/Tags.vue'));
+
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
 
@@ -51,11 +59,11 @@ import Vuetify, {
   VApp, // required
 //   VNavigationDrawer,
 //   VDataTable,
-//   VContainer,
-//   VLayout,
-//   VFlex,
-//   VCard,
-//   VCardText,
+  VContainer,
+  VLayout,
+  VFlex,
+  VCard,
+  VCardText,
 //   VTextField
 } from 'vuetify/lib'
 

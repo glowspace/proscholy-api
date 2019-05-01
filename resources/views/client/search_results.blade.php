@@ -5,10 +5,11 @@
 @endsection
 
 @section('content')
+<v-app>
     <div class="content-padding">
         <h1>Vyhledávání</h1>
 
-        <form method="POST"
+        {{-- <form method="POST"
               action="{{route('client.search')}}">
             @csrf
             <input class="form-control search-basic"
@@ -20,7 +21,8 @@
                     class="btn btn-primary">
                 <i class="fa fa-search"></i>
             </button>
-        </form>
+        </form> --}}
+        <search-input v-bind:str="abc"></search-input>
 
         @if(isset($phrase))
             <div class="row">
@@ -133,4 +135,5 @@
             </div>
         @endif
     </div>
+</v-app>
 @endsection
