@@ -43,6 +43,21 @@ class SongLyricsQuery extends Query {
 				'type' => Type::boolean(),
 				'description' => 'Whether SongLyric has some lyrics'
 			],
+			'has_authors' => [
+				'name' => 'has_authors',
+				'type' => Type::boolean(),
+				'description' => 'Whether SongLyric has some authors associated'
+			],
+			'has_chords' => [
+				'name' => 'has_chords',
+				'type' => Type::boolean(),
+				'description' => 'Whether SongLyric has chors filled in the text'
+			],
+			'has_tags' => [
+				'name' => 'has_tags',
+				'type' => Type::boolean(),
+				'description' => 'Whether SongLyric has tags associated'
+			],
 			'only_apk' => [
 				'name' => 'only_apk',
 				'type' => Type::boolean(),
@@ -65,6 +80,19 @@ class SongLyricsQuery extends Query {
 			$query = $query->where('lyrics', '!=', '');
 		if (isset($args['has_lyrics']) && $args['has_lyrics'] === false)
 			$query = $query->where('lyrics', null);
+
+		if (isset($args['has_authors']) && $args['has_authors'] === true)
+			$query = $query->whereHas('authors');
+		if (isset($args['has_authors']) && $args['has_authors'] === false)
+			$query = $query->whereDoesntHave('authors');
+
+		if (isset($args['has_tags']) && $args['has_tags'] === true)
+			$query = $query->whereHas('tags');
+		if (isset($args['has_tags']) && $args['has_tags'] === false)
+			$query = $query->whereDoesntHave('tags');
+
+		if (isset($args['has_chords']))
+			$query = $query->where('has_chords', $args['has_chords']);
 
 		if (isset($args['only_apk']) && $args['only_apk'] === true)
 			$query = $query->where('is_approved_by_author', 1)->where('is_published', 1)->where('lyrics', '!=', '');

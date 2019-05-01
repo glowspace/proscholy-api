@@ -1,4 +1,6 @@
 /node_modules
+/node_modules__old
+/node_modules__old2
 /public/hot
 /public/storage
 /public/js

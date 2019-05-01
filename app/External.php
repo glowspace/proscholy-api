@@ -55,6 +55,11 @@ class External extends Model
         return $this->type_string[$this->type];
     }
 
+    public function getTypeStringAttribute()
+    {
+        return $this->getTypeString();
+    }
+
     public function scopeScores($query)
     {
         return $query->where('type', 4);
@@ -68,6 +73,12 @@ class External extends Model
     public function scopeMedia($query)
     {
         return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
+    }
+
+    public function scopeTodo($query)
+    {
+        return $query->where('author_id', null)->where('has_anonymous_author', 0)
+            ->orWhere('song_lyric_id', null);
     }
 
     public static function urlAsSpotify($url)
@@ -218,5 +229,10 @@ class External extends Model
         {
             return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")";
         }
+    }
+
+    public function getPublicNameAttribute()
+    {
+        return $this->getPublicName();
     }
 }
