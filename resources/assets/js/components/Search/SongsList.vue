@@ -6,7 +6,8 @@
             <td style="width: 15px"><i class="fas fa-music"></i></td>
 
             <td>
-                <a :href="song_lyric.public_url">{{ song_lyric.name }}</a> <span v-if="song_lyric.authors.length > 0">-</span>
+                <a :href="song_lyric.public_url">{{ song_lyric.name }}</a>
+                <span v-if="song_lyric.authors.length > 0">-</span>
                 <span v-for="(author, index) in song_lyric.authors" v-bind:key="author.id">
                     {{ author.name }}<span v-if="index !== song_lyric.authors.length - 1">, </span>
                 </span>
@@ -25,7 +26,7 @@
                 <i v-if="song_lyric.soundcloudTracks.length > 0"
                    class="fab fa-soundcloud"
                    style="color: orangered;"
-                   title="Tato píseň má nahrávku na Soundcloud.com"></i>
+                   title="Tato píseň má nahrávku na Soundcloud."></i>
                 <i v-else
                    class="fab fa-soundcloud text-very-muted"></i>
             </td>
@@ -48,7 +49,7 @@
             </td>
         </tr>
 
-        <tr :v-if="song_lyrics">
+        <tr :v-if="song_lyrics && song_lyrics.length === 0">
             <td>
                 <i>Žádná píseň s tímto názvem nebyla nalezena.</i>
             </td>
@@ -61,8 +62,8 @@
     import gql from 'graphql-tag';
 
     const fetch_items = gql`
-        query FetchSongLyrics($search_string: String) {
-            song_lyrics(search_string: $search_string) {
+        query FetchSongLyrics {
+            song_lyrics {
                 id,
                 name,
                 public_url,
@@ -87,12 +88,30 @@
             }
         },
 
+        computed: {
+            /**
+             * Filtered lyrics.
+             *
+             * @returns {default.apollo.song_lyrics|{variables, query}|default.apollo.song_lyrics|__webpack_exports__.default.apollo.song_lyrics}
+             */
+            song_lyrics_results: function () {
+
+                if (store.tagsData.length === 0) {
+                    return this.song_lyrics;
+                }
+                else {
+
+                }
+
+            }
+        },
+
         apollo: {
             song_lyrics: {
                 query: fetch_items,
                 variables() {
                     return {
-                        search_string: this.store.search_string,
+                        // has_lyrics: this.hasLyrics,
                         // has_authors: this.hasAuthors,
                         // has_chords: this.hasChords,
                         // has_tags: this.hasTags
