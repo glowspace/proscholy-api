@@ -1,28 +1,30 @@
 <template>
     <div>
         <div class="song-tags">
-            <a
-                 v-bind:class="['tag', 'tag-blue', tag.selected ? 'tag-selected' : '']"
-                 v-for="tag in tags_official" v-bind:key="tag.id"
-                 v-on:click="selectTag(tag)"
-            >
+            <a v-bind:class="['tag', 'tag-blue', tag.selected ? 'tag-selected' : '']"
+               v-for="tag in tags_official"
+               v-bind:key="tag.id"
+               v-on:click="selectTag(tag)">
                 {{ tag.name }}
             </a>
+
         </div>
 
         <div class="song-tags">
-            <span v-for="tag in tags_unofficial" v-bind:key="tag.id">
-                <a v-bind:class="['tag', 'tag-green', tag.selected ? 'tag-selected' : '']" v-on:click="selectTag(tag)">
+            <span v-for="tag in tags_unofficial"
+                  v-bind:key="tag.id">
+                <a v-bind:class="['tag', 'tag-green', tag.selected ? 'tag-selected' : '']"
+                   v-on:click="selectTag(tag)">
                     {{ tag.name }}
                 </a>
 
-                <a 
-                    v-bind:class="['tag', 'tag-yellow', child_tag.selected ? 'tag-selected' : '']"
-                    v-for="child_tag in tag.child_tags" v-bind:key="child_tag.id" 
-                    v-on:click="selectTag(child_tag)"
-                >
+                <a v-bind:class="['tag', 'tag-yellow', child_tag.selected ? 'tag-selected' : '']"
+                   v-for="child_tag in tag.child_tags"
+                   v-bind:key="child_tag.id"
+                   v-on:click="selectTag(child_tag)">
                     {{ child_tag.name }}
                 </a>
+
             </span>
         </div>
     </div>
@@ -36,10 +38,10 @@
 
 
 <script>
-import { store } from "./store.js";
-import gql from 'graphql-tag';
+    import {store} from "./store.js";
+    import gql from 'graphql-tag';
 
-const fetch_items = gql`
+    const fetch_items = gql`
         query FetchSongLyrics {
             tags {
                 id,
@@ -54,53 +56,55 @@ const fetch_items = gql`
         }`;
 
 
-export default {
-    props: [],
+    export default {
+        props: [],
 
-    data() {
-        return {
-            store: store,
-            // custom data here
-            // abc: ""
-        }
-    },
-
-    apollo: {
-        tags: { 
-            query: fetch_items,
-            result(obj){
-                // the obj property is immutable, so create a deep copy to enable manipulation and v-model
-                console.log(obj);
-                this.store.tagsData = _.cloneDeep(obj.data.tags);
+        data() {
+            return {
+                store: store,
+                // custom data here
+                // abc: ""
             }
-        }
-    },
-
-    computed: {
-        tags_official() {
-            if (this.store.tagsData)
-                return this.store.tagsData.filter(tag => tag.type == 1);
         },
 
-        tags_unofficial() {
-            if (this.store.tagsData)
-                return this.store.tagsData.filter(tag => 
+        apollo: {
+            tags: {
+                query: fetch_items,
+                result(obj) {
+                    // the obj property is immutable, so create a deep copy to enable manipulation and v-model
+                    console.log(obj);
+                    this.store.tagsData = _.cloneDeep(obj.data.tags);
+                }
+            }
+        },
 
-                tag.parent_tag == null &&
-                tag.type == 0
-            );
-        }
-    },
+        computed: {
+            tags_official() {
+                if (this.store.tagsData) {
+                    return this.store.tagsData.filter(tag => tag.type == 1);
+                }
+            },
 
-    methods: {
-        selectTag(tag) {
-            console.log("tag clicked")
-            // tag.selected = !tag.selected;
-            Vue.set(tag, 'selected', !tag.selected);
-            // vm.$forceUpdate();
-            console.log(tag.selected);
+            tags_unofficial() {
+                if (this.store.tagsData) {
+                    return this.store.tagsData.filter(tag =>
+
+                        tag.parent_tag == null &&
+                        tag.type == 0
+                    );
+                }
+            }
+        },
+
+        methods: {
+            selectTag(tag) {
+                console.log("tag clicked")
+                // tag.selected = !tag.selected;
+                Vue.set(tag, 'selected', !tag.selected);
+                // vm.$forceUpdate();
+                console.log(tag.selected);
+            }
         }
     }
-}
 </script>
 

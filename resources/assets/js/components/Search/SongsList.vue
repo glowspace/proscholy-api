@@ -1,14 +1,14 @@
 <template>
-
     <table class="table">
-        <tr v-for="song_lyric in song_lyrics"
+        <tr v-for="song_lyric in song_lyrics_results"
             v-bind:key="song_lyric.id">
             <td style="width: 15px"><i class="fas fa-music"></i></td>
 
             <td>
                 <a :href="song_lyric.public_url">{{ song_lyric.name }}</a>
                 <span v-if="song_lyric.authors.length > 0">-</span>
-                <span v-for="(author, index) in song_lyric.authors" v-bind:key="author.id">
+                <span v-for="(author, index) in song_lyric.authors"
+                      v-bind:key="author.id">
                     {{ author.name }}<span v-if="index !== song_lyric.authors.length - 1">, </span>
                 </span>
             </td>
@@ -61,6 +61,7 @@
     import {store} from "./store.js";
     import gql from 'graphql-tag';
 
+    // Query
     const fetch_items = gql`
         query FetchSongLyrics {
             song_lyrics {
@@ -84,28 +85,35 @@
             return {
                 store: store,
                 // custom data here
-                // abc: ""
+
+                song_lyrics: [],
             }
         },
 
         computed: {
+            selected_tags: () => {
+                return store.tagsData.filter(tag => {
+                    return tag.selected === true
+                })
+            },
+
             /**
              * Filtered lyrics.
-             *
-             * @returns {default.apollo.song_lyrics|{variables, query}|default.apollo.song_lyrics|__webpack_exports__.default.apollo.song_lyrics}
              */
-            song_lyrics_results: function () {
-
+            song_lyrics_results: () => {
                 if (store.tagsData.length === 0) {
                     return this.song_lyrics;
                 }
                 else {
-
+                    return this.song_lyrics.filter(song_lyric => {
+                        return song_lyric.tags.includes(this.selected_tags)
+                    })
                 }
-
             }
+
         },
 
+        // GraphQL client
         apollo: {
             song_lyrics: {
                 query: fetch_items,
