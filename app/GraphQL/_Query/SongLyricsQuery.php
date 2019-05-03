@@ -15,7 +15,7 @@ class SongLyricsQuery extends Query {
 		'description' => 'A Query for the SongLyric model, without args returns all available SongLyrics. 
 		Use args is_published:true, is_approved_by_author:true and has_lyrics:true for use in apk'
 	];
-
+	
 	public function type()
 	{
 		return Type::listOf(GraphQL::type('song_lyric'));

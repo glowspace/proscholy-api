@@ -5,14 +5,68 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 type Query {
-    users: [User!]! @paginate(type: "paginator" model: "App\\User")
-    user(id: ID @eq): User @find(model: "App\\User")
+    users: [User!]! @all
+    user(id: ID @eq): User @find
+    authors: [Author!]! @all
+    song_lyrics: [SongLyric!]! @all
 }
 
 type User {
     id: ID!
+    name: String
+}
+
+type Author {
+    id: ID!
     name: String!
-    email: String!
-    created_at: DateTime!
-    updated_at: DateTime!
+    description: String
+    type: Int
+    type_string: String
+    email: String
+    url: String
+    visits: Int
+}
+
+type Song {
+    id: ID!
+    name: String
+}
+
+type SongLyric {
+    id: ID!
+    name: String
+    public_url: String
+    lyrics_no_chords: String
+    is_original: Boolean!
+    is_approved_by_author: Boolean!
+    is_published: Boolean!
+    lang: String
+    updated_at: String
+    authors(id: Int): [Author] @belongsToMany
+    externals(id: Int): [External] @hasMany
+    files(id: Int): [File] @hasMany
+    tags(type: Int): [Tag] @belongsToMany
+}
+
+type External {
+    id: ID!
+    public_name: String
+    type: Int
+    type_string: String
+}
+
+type File {
+    id: ID!
+    public_name: String
+    download_url: String
+    type: Int
+    type_string: String
+}
+
+type Tag {
+    id: ID!
+    name: String
+    type: Int
+    parent_tag: Tag @belongsTo
+    child_tags: [Tag] @hasMany
 }

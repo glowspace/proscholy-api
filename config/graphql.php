@@ -9,7 +9,7 @@ use example\Type\ExampleType;
 return [
 
     // The prefix for routes
-    'prefix' => 'graphql',
+    'prefix' => 'graphql_old',
 
     // The routes to make GraphQL request. Either a string that will apply
     // to both query and mutation or an array containing the key 'query' and/or
