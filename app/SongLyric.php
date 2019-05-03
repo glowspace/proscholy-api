@@ -315,7 +315,7 @@ class SongLyric extends Model implements ISearchResult
         $array = $this->toArray();
 
         // Preserve only attributes that are meant to be searched in
-        $searchable = Arr::only($array, ['name', 'lyrics', 'description']);
+        $searchable = Arr::only($array, ['name', 'lyrics']);
 
         return $searchable;
     }

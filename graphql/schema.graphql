@@ -8,7 +8,18 @@ type Query {
     users: [User!]! @all
     user(id: ID @eq): User @find
     authors: [Author!]! @all
-    song_lyrics: [SongLyric!]! @all
+    song_lyrics(
+        only_apk: Boolean
+        search_string: String
+        is_published: Boolean
+        is_approved_by_author: Boolean
+        has_lyrics: Boolean
+        has_authors: Boolean
+        has_tags: Boolean
+        has_chords: Boolean
+    ): [SongLyric!]!
+    externals: [External!]! @all
+    files: [File!]! @all
 }
 
 type User {
@@ -30,6 +41,7 @@ type Author {
 type Song {
     id: ID!
     name: String
+    song_lyrics: [SongLyric] @hasMany
 }
 
 type SongLyric {
@@ -37,6 +49,7 @@ type SongLyric {
     name: String
     public_url: String
     lyrics_no_chords: String
+    lyrics: String
     is_original: Boolean!
     is_approved_by_author: Boolean!
     is_published: Boolean!
@@ -46,6 +59,7 @@ type SongLyric {
     externals(id: Int): [External] @hasMany
     files(id: Int): [File] @hasMany
     tags(type: Int): [Tag] @belongsToMany
+    song: Song! @belongsTo
 }
 
 type External {
@@ -53,6 +67,8 @@ type External {
     public_name: String
     type: Int
     type_string: String
+    author: Author @belongsTo
+    song_lyric: SongLyric @belongsTo
 }
 
 type File {
@@ -61,6 +77,8 @@ type File {
     download_url: String
     type: Int
     type_string: String
+    author: Author @belongsTo
+    song_lyric: SongLyric @belongsTo
 }
 
 type Tag {
