@@ -15,6 +15,8 @@
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",
+        "mll-lab/laravel-graphql-playground": "^1.0",
+        "nuwave/lighthouse": "^3.5",
         "rebing/graphql-laravel": "^1.20",
         "spatie/laravel-permission": "^2.33",
         "spatie/pdf-to-image": "^1.8",

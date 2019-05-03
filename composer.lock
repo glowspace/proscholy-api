@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "82a1b5ca135352aa046e4f8743ad22f8",
+    "content-hash": "7ae8dd0109fa31ebf6f3094c5884734b",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -1467,6 +1467,58 @@
             "time": "2019-02-01T08:50:36+00:00"
         },
         {
+            "name": "mll-lab/laravel-graphql-playground",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mll-lab/laravel-graphql-playground.git",
+                "reference": "e5a3c527171c30bd18a61505f671c409f7fbd4dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mll-lab/laravel-graphql-playground/zipball/e5a3c527171c30bd18a61505f671c409f7fbd4dc",
+                "reference": "e5a3c527171c30bd18a61505f671c409f7fbd4dc",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=5.1.0",
+                "php": ">=7"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.12"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MLL\\GraphQLPlayground\\GraphQLPlaygroundServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MLL\\GraphQLPlayground\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benedikt Franke",
+                    "email": "benedikt@franke.tech"
+                }
+            ],
+            "description": "Easily integrate GraphQL Playground into your Laravel project",
+            "keywords": [
+                "graphql",
+                "graphql-playground",
+                "laravel"
+            ],
+            "time": "2019-04-17T16:39:16+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.24.0",
             "source": {
@@ -1700,6 +1752,79 @@
                 "php"
             ],
             "time": "2019-02-16T20:54:15+00:00"
+        },
+        {
+            "name": "nuwave/lighthouse",
+            "version": "v3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nuwave/lighthouse.git",
+                "reference": "21de1aced5ea5746eb6c784f631fd1c62210d5f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/21de1aced5ea5746eb6c784f631fd1c62210d5f5",
+                "reference": "21de1aced5ea5746eb6c784f631fd1c62210d5f5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/contracts": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "illuminate/http": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "illuminate/pagination": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "illuminate/routing": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "illuminate/validation": "5.5.*|5.6.*|5.7.*|5.8.*",
+                "opis/closure": "^3.0",
+                "php": ">= 7.1",
+                "webonyx/graphql-php": "^0.13"
+            },
+            "require-dev": {
+                "laravel/scout": "^4.0",
+                "mockery/mockery": "^1.0",
+                "orchestra/database": "3.5.*|3.6.*|3.7.*|3.8.x-dev",
+                "orchestra/testbench": "3.5.*|3.6.*|3.7.*|3.8.*",
+                "pusher/pusher-php-server": "^3.2"
+            },
+            "suggest": {
+                "mll-lab/laravel-graphql-playground": "GraphQL IDE for better development workflow - integrated with Laravel"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nuwave\\Lighthouse\\LighthouseServiceProvider"
+                    ],
+                    "aliases": {
+                        "graphql": "Nuwave\\Lighthouse\\GraphQL"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nuwave\\Lighthouse\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Moore",
+                    "email": "chris@nuwavecommerce.com",
+                    "homepage": "https://www.nuwavecommerce.com"
+                }
+            ],
+            "description": "Lighthouse is a schema first GraphQL package for Laravel applications.",
+            "homepage": "https://lighthouse-php.com",
+            "keywords": [
+                "api",
+                "graphql",
+                "laravel",
+                "laravel-graphql"
+            ],
+            "time": "2019-05-02T16:18:19+00:00"
         },
         {
             "name": "opis/closure",
