@@ -20,6 +20,7 @@ type Query {
     ): [SongLyric!]!
     externals: [External!]! @all
     files: [File!]! @all
+    tags: (type: Int @eq) @all
 }
 
 type User {
@@ -56,7 +57,7 @@ type SongLyric {
     lang: String
     updated_at: String
     authors(id: Int): [Author] @belongsToMany
-    externals(id: Int): [External] @hasMany
+    externals(id: Int @eq, type: Int @eq): [External] @hasMany
     files(id: Int): [File] @hasMany
     tags(type: Int): [Tag] @belongsToMany
     song: Song! @belongsTo
