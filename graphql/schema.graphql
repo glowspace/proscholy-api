@@ -18,9 +18,23 @@ type Query {
         has_tags: Boolean
         has_chords: Boolean
     ): [SongLyric!]!
-    externals: [External!]! @all
-    files: [File!]! @all
-    tags: (type: Int @eq) @all
+    externals (
+        type: Int
+        is_todo: Boolean
+    ): [External!]! @all
+    files (
+        type: Int
+        is_todo: Boolean
+    ): [File!]! @all
+    tags(type: Int @eq): [Tag] @all
+}
+
+type Mutation {
+  deleteAuthor(id: ID!): Author @delete
+  deleteExternal(id: ID!): External @delete
+  deleteFile(id: ID!): File @delete
+  deleteSongLyric(id: ID!): SongLyric @delete
+  deleteTag(id: ID!): Tag @delete
 }
 
 type User {
@@ -42,7 +56,7 @@ type Author {
 type Song {
     id: ID!
     name: String
-    song_lyrics: [SongLyric] @hasMany
+    song_lyrics(is_original: Boolean @eq): [SongLyric] @hasMany
 }
 
 type SongLyric {
@@ -56,10 +70,10 @@ type SongLyric {
     is_published: Boolean!
     lang: String
     updated_at: String
-    authors(id: Int): [Author] @belongsToMany
+    authors: [Author] @belongsToMany
     externals(id: Int @eq, type: Int @eq): [External] @hasMany
-    files(id: Int): [File] @hasMany
-    tags(type: Int): [Tag] @belongsToMany
+    files: [File] @hasMany
+    tags(type: Int @eq): [Tag] @belongsToMany
     song: Song! @belongsTo
 }
 
