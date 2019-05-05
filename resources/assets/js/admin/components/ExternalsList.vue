@@ -54,7 +54,7 @@ const fetch_items = gql`
         }`;
 
 const delete_item = gql`
-  mutation DeleteExternal ($id: Int!) {
+  mutation DeleteExternal ($id: ID!) {
     delete_external(id: $id) {
       id
     }

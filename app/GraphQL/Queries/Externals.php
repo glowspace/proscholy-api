@@ -20,17 +20,17 @@ class Externals
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-		$query = External::query();
+        $query = External::query();
 
-		if (isset($args['id']))
-			$query = $query->where('id' , $args['id']);
+        if (isset($args['id']))
+          $query = $query->where('id' , $args['id']);
 
-		if (isset($args['type']))
-			$query = $query->where('type', $args['type']);
+        if (isset($args['type']))
+          $query = $query->where('type', $args['type']);
 
-		if (isset($args['is_todo']) && $args['is_todo'])
-			$query = $query->todo();
+        if (isset($args['is_todo']) && $args['is_todo'])
+          $query = $query->todo();
 
-		return $query->get();
+        return $query->get();
     }
 }

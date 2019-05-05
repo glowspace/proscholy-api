@@ -57,7 +57,7 @@ const fetch_items = gql`
         }`;
 
 const delete_item = gql`
-  mutation DeleteFile ($id: Int!) {
+  mutation DeleteFile ($id: ID!) {
     delete_file(id: $id) {
       id
     }

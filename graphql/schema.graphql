@@ -30,11 +30,11 @@ type Query {
 }
 
 type Mutation {
-  deleteAuthor(id: ID!): Author @delete
-  deleteExternal(id: ID!): External @delete
-  deleteFile(id: ID!): File @delete
-  deleteSongLyric(id: ID!): SongLyric @delete
-  deleteTag(id: ID!): Tag @delete
+  delete_author(id: ID!): Author @delete
+  delete_external(id: ID!): External @delete
+  delete_file(id: ID!): File @delete
+  delete_song_lyric(id: ID!): SongLyric @delete
+  delete_tag(id: ID!): Tag @delete
 }
 
 type User {

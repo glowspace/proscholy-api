@@ -54,7 +54,7 @@ const fetch_items = gql`
         }`;
 
 const delete_item = gql`
-  mutation DeleteAuthor ($id: Int!) {
+  mutation DeleteAuthor ($id: ID!) {
     delete_author(id: $id) {
       id
     }

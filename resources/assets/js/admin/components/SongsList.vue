@@ -74,7 +74,7 @@ const fetch_items = gql`
         }`;
 
 const delete_item = gql`
-  mutation DeleteSongLyric ($id: Int!) {
+  mutation DeleteSongLyric ($id: ID!) {
     delete_song_lyric(id: $id) {
       id
     }
