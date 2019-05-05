@@ -64744,7 +64744,7 @@ var store = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
 var store = {
     search_string: "",
-    tagsData: []
+    tagsData: {}
 };
 
 /***/ }),
@@ -93084,27 +93084,39 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
 
 
     computed: {
-        selected_tags: function selected_tags() {
-            if (this.store.tagsData === undefined) {
-                return [];
-            }
-
-            return this.store.tagsData.filter(function (tag) {
-                return tag.selected === true;
-            });
-        },
-
-
         /**
          * Filtered lyrics.
          */
         song_lyrics_results: function song_lyrics_results() {
             var _this = this;
 
-            if (this.store.tagsData.length === 0) return this.song_lyrics;
+            if (Object.keys(this.store.tagsData).length === 0) return this.song_lyrics;
 
             return this.song_lyrics.filter(function (song_lyric) {
-                return song_lyric.tags.includes(_this.selected_tags);
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = song_lyric.tags[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var tag = _step.value;
+
+                        if (_this.store.tagsData[tag.id]) return true;
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
             });
         }
     },
@@ -93115,9 +93127,6 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
             query: fetch_items,
             variables: function variables() {
                 return {
-                    // has_lyrics: this.hasLyrics,
-                    // has_authors: this.hasAuthors,
-                    // has_chords: this.hasChords,
                     search_str: this.store.search_string
                 };
             }
@@ -93139,8 +93148,10 @@ var render = function() {
     "table",
     { staticClass: "table" },
     [
-      _vm.song_lyrics && _vm.song_lyrics.length && !_vm.$apollo.loading
-        ? _vm._l(_vm.song_lyrics, function(song_lyric) {
+      _vm.song_lyrics_results &&
+      _vm.song_lyrics_results.length &&
+      !_vm.$apollo.loading
+        ? _vm._l(_vm.song_lyrics_results, function(song_lyric) {
             return _c("tr", { key: song_lyric.id }, [
               _vm._m(0, true),
               _vm._v(" "),
@@ -93356,7 +93367,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.tag.tag-selected {\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\n.song-tags .tag.tag-selected {\n    font-weight: bold;\n    opacity: 1 !important;\n}\n.song-tags.filtered .tag {\n    opacity: 0.5;\n}\n", ""]);
 
 // exports
 
@@ -93374,6 +93385,11 @@ var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n  
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -93437,35 +93453,40 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
             result: function result(obj) {
                 // the obj property is immutable, so create a deep copy to enable manipulation and v-model
                 console.log(obj);
-                this.store.tagsData = _.cloneDeep(obj.data.tags);
             }
         }
     },
 
     computed: {
         tags_official: function tags_official() {
-            if (this.store.tagsData) {
-                return this.store.tagsData.filter(function (tag) {
+            if (this.tags) {
+                return this.tags.filter(function (tag) {
                     return tag.type == 1;
                 });
             }
         },
         tags_unofficial: function tags_unofficial() {
-            if (this.store.tagsData) {
-                return this.store.tagsData.filter(function (tag) {
+            if (this.tags) {
+                return this.tags.filter(function (tag) {
                     return tag.parent_tag == null && tag.type == 0;
                 });
             }
+        },
+        is_filtered: function is_filtered() {
+            return Object.keys(this.store.tagsData).length > 0;
         }
     },
 
     methods: {
         selectTag: function selectTag(tag) {
-            console.log("tag clicked");
-            // tag.selected = !tag.selected;
-            Vue.set(tag, 'selected', !tag.selected);
-            // vm.$forceUpdate();
-            console.log(tag.selected);
+            if (!this.store.tagsData[tag.id]) {
+                Vue.set(this.store.tagsData, tag.id, true);
+            } else {
+                Vue.delete(this.store.tagsData, tag.id);
+            }
+        },
+        isSelected: function isSelected(tag) {
+            return this.store.tagsData[tag.id];
         }
     }
 });
@@ -93481,13 +93502,17 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "song-tags" },
+      { class: ["song-tags", _vm.is_filtered ? "filtered" : ""] },
       _vm._l(_vm.tags_official, function(tag) {
         return _c(
           "a",
           {
             key: tag.id,
-            class: ["tag", "tag-blue", tag.selected ? "tag-selected" : ""],
+            class: [
+              "tag",
+              "tag-blue",
+              _vm.isSelected(tag) ? "tag-selected" : ""
+            ],
             on: {
               click: function($event) {
                 return _vm.selectTag(tag)
@@ -93502,7 +93527,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "song-tags" },
+      { class: ["song-tags", _vm.is_filtered ? "filtered" : ""] },
       _vm._l(_vm.tags_unofficial, function(tag) {
         return _c(
           "span",
@@ -93511,7 +93536,11 @@ var render = function() {
             _c(
               "a",
               {
-                class: ["tag", "tag-green", tag.selected ? "tag-selected" : ""],
+                class: [
+                  "tag",
+                  "tag-green",
+                  _vm.isSelected(tag) ? "tag-selected" : ""
+                ],
                 on: {
                   click: function($event) {
                     return _vm.selectTag(tag)
@@ -93533,7 +93562,7 @@ var render = function() {
                   class: [
                     "tag",
                     "tag-yellow",
-                    child_tag.selected ? "tag-selected" : ""
+                    _vm.isSelected(child_tag) ? "tag-selected" : ""
                   ],
                   on: {
                     click: function($event) {

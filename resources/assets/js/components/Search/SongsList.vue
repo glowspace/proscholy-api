@@ -1,7 +1,7 @@
 <template>
     <table class="table">
-        <template v-if="song_lyrics && song_lyrics.length && !$apollo.loading">
-            <tr v-for="song_lyric in song_lyrics"
+        <template v-if="song_lyrics_results && song_lyrics_results.length && !$apollo.loading">
+            <tr v-for="song_lyric in song_lyrics_results"
                 v-bind:key="song_lyric.id">
                 <td style="width: 15px"><i class="fas fa-music"></i></td>
 
@@ -93,25 +93,18 @@
         },
 
         computed: {
-            selected_tags() {
-                if (this.store.tagsData === undefined) {
-                    return [];
-                }
-
-                return this.store.tagsData.filter(tag => {
-                    return tag.selected === true
-                })
-            },
-
             /**
              * Filtered lyrics.
              */
             song_lyrics_results() {
-                if (this.store.tagsData.length === 0)
+                if (Object.keys(this.store.tagsData).length === 0)
                     return this.song_lyrics;
 
                 return this.song_lyrics.filter(song_lyric => {
-                    return song_lyric.tags.includes(this.selected_tags)
+                    for (var tag of song_lyric.tags) {
+                        if (this.store.tagsData[tag.id])
+                            return true;
+                    }
                 })
             }
 
@@ -123,9 +116,6 @@
                 query: fetch_items,
                 variables() {
                     return {
-                        // has_lyrics: this.hasLyrics,
-                        // has_authors: this.hasAuthors,
-                        // has_chords: this.hasChords,
                         search_str: this.store.search_string
                     }
                 }

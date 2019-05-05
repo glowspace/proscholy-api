@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="song-tags">
-            <a v-bind:class="['tag', 'tag-blue', tag.selected ? 'tag-selected' : '']"
+        <div v-bind:class="['song-tags', is_filtered ? 'filtered' : '']">
+            <a v-bind:class="['tag', 'tag-blue', isSelected(tag) ? 'tag-selected' : '']"
                v-for="tag in tags_official"
                v-bind:key="tag.id"
                v-on:click="selectTag(tag)">
@@ -10,15 +10,15 @@
 
         </div>
 
-        <div class="song-tags">
+        <div v-bind:class="['song-tags', is_filtered ? 'filtered' : '']">
             <span v-for="tag in tags_unofficial"
                   v-bind:key="tag.id">
-                <a v-bind:class="['tag', 'tag-green', tag.selected ? 'tag-selected' : '']"
+                <a v-bind:class="['tag', 'tag-green', isSelected(tag) ? 'tag-selected' : '']"
                    v-on:click="selectTag(tag)">
                     {{ tag.name }}
                 </a>
 
-                <a v-bind:class="['tag', 'tag-yellow', child_tag.selected ? 'tag-selected' : '']"
+                <a v-bind:class="['tag', 'tag-yellow', isSelected(child_tag) ? 'tag-selected' : '']"
                    v-for="child_tag in tag.child_tags"
                    v-bind:key="child_tag.id"
                    v-on:click="selectTag(child_tag)">
@@ -31,8 +31,13 @@
 </template>
 
 <style>
-    .tag.tag-selected {
+    .song-tags .tag.tag-selected {
         font-weight: bold;
+        opacity: 1 !important;
+    }
+
+    .song-tags.filtered .tag {
+        opacity: 0.5;
     }
 </style>
 
@@ -73,36 +78,46 @@
                 result(obj) {
                     // the obj property is immutable, so create a deep copy to enable manipulation and v-model
                     console.log(obj);
-                    this.store.tagsData = _.cloneDeep(obj.data.tags);
                 }
             }
         },
 
         computed: {
             tags_official() {
-                if (this.store.tagsData) {
-                    return this.store.tagsData.filter(tag => tag.type == 1);
+                if (this.tags) {
+                    return this.tags.filter(tag => tag.type == 1);
                 }
             },
 
             tags_unofficial() {
-                if (this.store.tagsData) {
-                    return this.store.tagsData.filter(tag =>
+                if (this.tags) {
+                    return this.tags.filter(tag =>
 
                         tag.parent_tag == null &&
                         tag.type == 0
                     );
                 }
+            },
+
+            is_filtered() {
+                return Object.keys(this.store.tagsData).length > 0;
             }
         },
 
         methods: {
             selectTag(tag) {
-                console.log("tag clicked")
-                // tag.selected = !tag.selected;
-                Vue.set(tag, 'selected', !tag.selected);
-                // vm.$forceUpdate();
-                console.log(tag.selected);
+                if (!this.store.tagsData[tag.id])
+                {
+                    Vue.set(this.store.tagsData, tag.id, true);
+                }
+                else 
+                {
+                    Vue.delete(this.store.tagsData, tag.id);
+                }
+            },
+
+            isSelected(tag) {
+                return this.store.tagsData[tag.id];
             }
         }
     }
