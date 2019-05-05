@@ -9,7 +9,7 @@ class SongLyrics
 {
     public function resolve($rootValue, array $args)
     {
-        $query = SongLyric::query();
+        $query = SongLyric::query()->orderBy('name', 'asc');
 
 		if (isset($args['search_string']))
 			return SongLyric::search($args['search_string'])->get();

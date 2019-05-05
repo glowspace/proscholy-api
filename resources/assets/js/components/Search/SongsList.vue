@@ -88,7 +88,7 @@
             return {
                 store: store,
                 // custom data here
-                song_lyrics: [],
+                // song_lyrics: [],
             }
         },
 

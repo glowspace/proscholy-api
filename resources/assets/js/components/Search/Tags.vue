@@ -74,11 +74,7 @@
 
         apollo: {
             tags: {
-                query: fetch_items,
-                result(obj) {
-                    // the obj property is immutable, so create a deep copy to enable manipulation and v-model
-                    console.log(obj);
-                }
+                query: fetch_items
             }
         },
 

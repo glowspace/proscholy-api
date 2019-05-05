@@ -93076,9 +93076,9 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */],
+            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */]
             // custom data here
-            song_lyrics: []
+            // song_lyrics: [],
         };
     },
 
@@ -93449,11 +93449,7 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
 
     apollo: {
         tags: {
-            query: fetch_items,
-            result: function result(obj) {
-                // the obj property is immutable, so create a deep copy to enable manipulation and v-model
-                console.log(obj);
-            }
+            query: fetch_items
         }
     },
 
