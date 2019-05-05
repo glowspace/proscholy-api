@@ -5,7 +5,6 @@ namespace App\GraphQL\Type;
 use GraphQL;
 use App\SongLyric;
 use GraphQL\Type\Definition\Type;
-use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class SongLyricType extends GraphQLType
 {
