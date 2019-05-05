@@ -21716,6 +21716,7 @@ ChordPro view
 .song-tags .tag {
   padding: 0.1em 0.7em;
   margin-bottom: 0.3em;
+  margin-right: 7px;
   border-radius: 1em;
   color: #907753;
   text-align: center;

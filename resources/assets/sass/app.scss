@@ -141,7 +141,6 @@ $sidebar-width: 300px;
   }
 
 
-
   // On md and above navbar is hidden
   @include media-breakpoint-down(md) {
     width:               100%;
@@ -360,7 +359,7 @@ ChordPro view
 .transpose-control-wrapper {
   text-align: right;
 
-  float: right;
+  float:      right;
 
   .btn {
     margin-bottom: 0;
@@ -372,6 +371,7 @@ ChordPro view
   .tag {
     padding:       0.1em 0.7em;
     margin-bottom: 0.3em;
+    margin-right:  7px;
     border-radius: 1em;
     color:         #907753;
     text-align:    center;

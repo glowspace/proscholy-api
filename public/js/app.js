@@ -92999,6 +92999,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(504);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
+var _this = this;
+
 var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n            tags{id}\n        }\n    }"], ["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n            tags{id}\n        }\n    }"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -93066,6 +93068,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 
 
+// Query
 var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -93073,27 +93076,37 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
 
     data: function data() {
         return {
-            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */]
+            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */],
             // custom data here
-            // abc: ""
+
+            song_lyrics: []
         };
     },
 
 
     computed: {
+        selected_tags: function selected_tags() {
+            return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */].tagsData.filter(function (tag) {
+                return tag.selected === true;
+            });
+        },
+
         /**
          * Filtered lyrics.
-         *
-         * @returns {default.apollo.song_lyrics|{variables, query}|default.apollo.song_lyrics|__webpack_exports__.default.apollo.song_lyrics}
          */
         song_lyrics_results: function song_lyrics_results() {
-
             if (__WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */].tagsData.length === 0) {
-                return this.song_lyrics;
-            } else {}
+                return _this.song_lyrics;
+            } else {
+                return _this.song_lyrics.filter(function (song_lyric) {
+                    return song_lyric.tags.includes(_this.selected_tags);
+                });
+            }
         }
+
     },
 
+    // GraphQL client
     apollo: {
         song_lyrics: {
             query: fetch_items,
@@ -93123,7 +93136,7 @@ var render = function() {
     "table",
     { staticClass: "table" },
     [
-      _vm._l(_vm.song_lyrics, function(song_lyric) {
+      _vm._l(_vm.song_lyrics_results, function(song_lyric) {
         return _c("tr", { key: song_lyric.id }, [
           _vm._m(0, true),
           _vm._v(" "),
@@ -93380,10 +93393,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(504);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(["\n        query FetchSongLyrics {\n            tags {\n                id,\n                name,\n                type,\n                child_tags {\n                    id,\n                    name\n                },\n                parent_tag {id}\n            }\n        }"], ["\n        query FetchSongLyrics {\n            tags {\n                id,\n                name,\n                type,\n                child_tags {\n                    id,\n                    name\n                },\n                parent_tag {id}\n            }\n        }"]);
+var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n        tags {\n            id,\n            name,\n            type,\n            child_tags {\n                id,\n                name\n            },\n            parent_tag {id}\n        }\n    }"], ["\n    query FetchSongLyrics {\n        tags {\n            id,\n            name,\n            type,\n            child_tags {\n                id,\n                name\n            },\n            parent_tag {id}\n        }\n    }"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
 //
 //
 //
@@ -93452,14 +93467,18 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
 
     computed: {
         tags_official: function tags_official() {
-            if (this.store.tagsData) return this.store.tagsData.filter(function (tag) {
-                return tag.type == 1;
-            });
+            if (this.store.tagsData) {
+                return this.store.tagsData.filter(function (tag) {
+                    return tag.type == 1;
+                });
+            }
         },
         tags_unofficial: function tags_unofficial() {
-            if (this.store.tagsData) return this.store.tagsData.filter(function (tag) {
-                return tag.parent_tag == null && tag.type == 0;
-            });
+            if (this.store.tagsData) {
+                return this.store.tagsData.filter(function (tag) {
+                    return tag.parent_tag == null && tag.type == 0;
+                });
+            }
         }
     },
 
