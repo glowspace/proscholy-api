@@ -34,29 +34,29 @@ class SearchController extends Controller
      */
     public function searchResults($query = null)
     {
-        $limit = 10;
+        // $limit = 10;
 //        $limit_empty;
 
 
-        if (isset($query))
-        {
-            $song_lyrics = SongLyric::search($query)->paginate($limit);
-            $authors     = Author::search($query)->paginate($limit);
-        }
-        else
-        {
-            // Empty search
-            // TODO: Let the user know in the frontend, what I'm doing
-            $song_lyrics = SongLyric::notEmpty()->orderBy('name')->get();
-            $authors     = [];
-            $query       = "";
-        }
+        // if (isset($query))
+        // {
+        //     // $song_lyrics = SongLyric::search($query)->paginate($limit);
+        $authors = Author::search($query)->get();
+        // }
+        // else
+        // {
+        //     // Empty search
+        //     // TODO: Let the user know in the frontend, what I'm doing
+        //     $song_lyrics = SongLyric::notEmpty()->orderBy('name')->get();
+        //     $authors     = [];
+        //     $query       = "";
+        // }
 
         return view('client.search_results', [
-            'phrase'      => $query,
-            'song_lyrics' => $song_lyrics,
-            'authors'     => $authors,
-            'tags'        => Tag::all()->sortByDesc('type')->sortBy('name'),
+            'search_string'      => $query,
+            // 'song_lyrics' => $song_lyrics,
+            'authors'     => $authors
+            // 'tags'        => Tag::all()->sortByDesc('type')->sortBy('name'),
         ]);
     }
 

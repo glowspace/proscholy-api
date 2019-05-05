@@ -72,7 +72,7 @@ type SongLyric {
     updated_at: String
     authors: [Author] @belongsToMany
     externals(id: Int @eq, type: Int @eq): [External] @hasMany
-    files: [File] @hasMany
+    files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @belongsToMany
     song: Song! @belongsTo
 }

@@ -92999,12 +92999,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-var _this = this;
-
-var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n            tags{id}\n        }\n    }"], ["\n    query FetchSongLyrics {\n        song_lyrics {\n            id,\n            name,\n            public_url,\n            scoreExternals{id},\n            scoreFiles{id},\n            youtubeVideos{id},\n            spotifyTracks{id},\n            soundcloudTracks{id},\n            authors{id, name}\n            tags{id}\n        }\n    }"]);
+var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }"], ["\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
+//
+//
 //
 //
 //
@@ -93072,13 +93074,10 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: [],
-
     data: function data() {
         return {
             store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */],
             // custom data here
-
             song_lyrics: []
         };
     },
@@ -93086,24 +93085,28 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
 
     computed: {
         selected_tags: function selected_tags() {
-            return __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */].tagsData.filter(function (tag) {
+            if (this.store.tagsData === undefined) {
+                return [];
+            }
+
+            return this.store.tagsData.filter(function (tag) {
                 return tag.selected === true;
             });
         },
+
 
         /**
          * Filtered lyrics.
          */
         song_lyrics_results: function song_lyrics_results() {
-            if (__WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */].tagsData.length === 0) {
-                return _this.song_lyrics;
-            } else {
-                return _this.song_lyrics.filter(function (song_lyric) {
-                    return song_lyric.tags.includes(_this.selected_tags);
-                });
-            }
-        }
+            var _this = this;
 
+            if (this.store.tagsData.length === 0) return this.song_lyrics;
+
+            return this.song_lyrics.filter(function (song_lyric) {
+                return song_lyric.tags.includes(_this.selected_tags);
+            });
+        }
     },
 
     // GraphQL client
@@ -93115,7 +93118,7 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
                     // has_lyrics: this.hasLyrics,
                     // has_authors: this.hasAuthors,
                     // has_chords: this.hasChords,
-                    // has_tags: this.hasTags
+                    search_str: this.store.search_string
                 };
             }
         }
@@ -93136,94 +93139,114 @@ var render = function() {
     "table",
     { staticClass: "table" },
     [
-      _vm._l(_vm.song_lyrics_results, function(song_lyric) {
-        return _c("tr", { key: song_lyric.id }, [
-          _vm._m(0, true),
-          _vm._v(" "),
-          _c(
-            "td",
-            [
-              _c("a", { attrs: { href: song_lyric.public_url } }, [
-                _vm._v(_vm._s(song_lyric.name))
-              ]),
+      _vm.song_lyrics && _vm.song_lyrics.length && !_vm.$apollo.loading
+        ? _vm._l(_vm.song_lyrics, function(song_lyric) {
+            return _c("tr", { key: song_lyric.id }, [
+              _vm._m(0, true),
               _vm._v(" "),
-              song_lyric.authors.length > 0
-                ? _c("span", [_vm._v("-")])
-                : _vm._e(),
+              _c(
+                "td",
+                [
+                  _c("a", { attrs: { href: song_lyric.public_url } }, [
+                    _vm._v(_vm._s(song_lyric.name))
+                  ]),
+                  _vm._v(" "),
+                  song_lyric.authors.length > 0
+                    ? _c("span", [_vm._v("-")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(song_lyric.authors, function(author, index) {
+                    return _c("span", { key: author.id }, [
+                      _vm._v("\n                    " + _vm._s(author.name)),
+                      index !== song_lyric.authors.length - 1
+                        ? _c("span", [_vm._v(", ")])
+                        : _vm._e()
+                    ])
+                  })
+                ],
+                2
+              ),
               _vm._v(" "),
-              _vm._l(song_lyric.authors, function(author, index) {
-                return _c("span", { key: author.id }, [
-                  _vm._v("\n                " + _vm._s(author.name)),
-                  index !== song_lyric.authors.length - 1
-                    ? _c("span", [_vm._v(", ")])
-                    : _vm._e()
+              _c(
+                "td",
+                {
+                  staticClass: "no-left-padding",
+                  staticStyle: { width: "10px" }
+                },
+                [
+                  song_lyric.spotifyTracks.length > 0
+                    ? _c("i", {
+                        staticClass: "fab fa-spotify text-success",
+                        attrs: { title: "Tato píseň má nahrávku na Spotify." }
+                      })
+                    : _c("i", { staticClass: "fab fa-spotify text-very-muted" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "no-left-padding",
+                  staticStyle: { width: "10px" }
+                },
+                [
+                  song_lyric.soundcloudTracks.length > 0
+                    ? _c("i", {
+                        staticClass: "fab fa-soundcloud",
+                        staticStyle: { color: "orangered" },
+                        attrs: {
+                          title: "Tato píseň má nahrávku na Soundcloud."
+                        }
+                      })
+                    : _c("i", {
+                        staticClass: "fab fa-soundcloud text-very-muted"
+                      })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "no-left-padding",
+                  staticStyle: { width: "10px" }
+                },
+                [
+                  song_lyric.scoreFiles.length > 0
+                    ? _c("i", {
+                        staticClass: "fa fa-file-pdf",
+                        staticStyle: { color: "#3961ad" },
+                        attrs: { title: "K této písni jsou k dispozici noty." }
+                      })
+                    : _c("i", { staticClass: "fa fa-file-pdf text-very-muted" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "no-left-padding",
+                  staticStyle: { width: "10px" }
+                },
+                [
+                  song_lyric.youtubeVideos.length > 0
+                    ? _c("i", {
+                        staticClass: "fab fa-youtube text-danger",
+                        attrs: { title: "Tato píseň má video na YouTube." }
+                      })
+                    : _c("i", { staticClass: "fab fa-youtube text-very-muted" })
+                ]
+              )
+            ])
+          })
+        : _c("tr", [
+            _vm.$apollo.loading
+              ? _c("td", [_c("i", [_vm._v("Načítání")])])
+              : _c("td", [
+                  _c("i", [
+                    _vm._v("Žádná píseň s tímto názvem nebyla nalezena.")
+                  ])
                 ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            { staticClass: "no-left-padding", staticStyle: { width: "10px" } },
-            [
-              song_lyric.spotifyTracks.length > 0
-                ? _c("i", {
-                    staticClass: "fab fa-spotify text-success",
-                    attrs: { title: "Tato píseň má nahrávku na Spotify." }
-                  })
-                : _c("i", { staticClass: "fab fa-spotify text-very-muted" })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            { staticClass: "no-left-padding", staticStyle: { width: "10px" } },
-            [
-              song_lyric.soundcloudTracks.length > 0
-                ? _c("i", {
-                    staticClass: "fab fa-soundcloud",
-                    staticStyle: { color: "orangered" },
-                    attrs: { title: "Tato píseň má nahrávku na Soundcloud." }
-                  })
-                : _c("i", { staticClass: "fab fa-soundcloud text-very-muted" })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            { staticClass: "no-left-padding", staticStyle: { width: "10px" } },
-            [
-              song_lyric.scoreFiles.length > 0
-                ? _c("i", {
-                    staticClass: "fa fa-file-pdf",
-                    staticStyle: { color: "#3961ad" },
-                    attrs: { title: "K této písni jsou k dispozici noty." }
-                  })
-                : _c("i", { staticClass: "fa fa-file-pdf text-very-muted" })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "td",
-            { staticClass: "no-left-padding", staticStyle: { width: "10px" } },
-            [
-              song_lyric.youtubeVideos.length > 0
-                ? _c("i", {
-                    staticClass: "fab fa-youtube text-danger",
-                    attrs: { title: "Tato píseň má video na YouTube." }
-                  })
-                : _c("i", { staticClass: "fab fa-youtube text-very-muted" })
-            ]
-          )
-        ])
-      }),
-      _vm._v(" "),
-      _c(
-        "tr",
-        { attrs: { "v-if": _vm.song_lyrics && _vm.song_lyrics.length === 0 } },
-        [_vm._m(1)]
-      )
+          ])
     ],
     2
   )
@@ -93235,14 +93258,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", { staticStyle: { width: "15px" } }, [
       _c("i", { staticClass: "fas fa-music" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("i", [_vm._v("Žádná píseň s tímto názvem nebyla nalezena.")])
     ])
   }
 ]
