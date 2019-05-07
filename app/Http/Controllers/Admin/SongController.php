@@ -25,47 +25,28 @@ class SongController extends Controller
         return $res_query;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $query = SongLyric::orderBy('name')->restricted();
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        return view('admin.song.index', compact('song_lyrics'));
+        return view('admin.song.index', ['type' => 'list-all']);
     }
 
-    public function todoLyrics(Request $request)
+    public function todoLyrics()
     {
-        $query = SongLyric::where('lyrics', '=', null)->orderBy('name');
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        $title = "Seznam písní bez textu";
-        return view('admin.song.index', compact('song_lyrics', 'title'));
+        return view('admin.song.index', ['type' => 'todo-lyrics']);
     }
 
-    public function todoAuthors(Request $request) 
+    public function todoAuthors() 
     {
-        $query = SongLyric::whereDoesntHave('authors')->where('has_anonymous_author', 0)->orderBy('name');
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        $title = "Seznam písní bez přiřazeného autora";
-        return view('admin.song.index', compact('song_lyrics', 'title'));
+        return view('admin.song.index', ['type' => 'todo-authors']);
     }
 
-    public function todoChords(Request $request)
+    public function todoChords()
     {
-        $query = SongLyric::where('lyrics', '!=', null)->where('has_chords', 0)->orderBy('name');
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        $title = "Seznam písní s textem bez akordů";
-        return view('admin.song.index', compact('song_lyrics', 'title'));
+        return view('admin.song.index', ['type' => 'todo-chords']);
     }
 
-    public function todoTags(Request $request) {
-        $query = SongLyric::whereDoesntHave('tags')->orderBy('name');
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        $title = "Seznam písní bez štítků";
-        return view('admin.song.index', compact('song_lyrics', 'title'));
+    public function todoTags() {
+        return view('admin.song.index', ['type' => 'todo-tags']);
     }
 
     public function todoPublish(Request $request) {

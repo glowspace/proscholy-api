@@ -15,6 +15,11 @@
     <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#292929">
+    <meta id="baseUrl" name="baseUrl" value="{{url('')}}">
+    @if (Auth::check())
+    {{-- warning - potentially dangerous, only provisional solution --}}
+        <meta id="userToken" name="userToken" value="{{ Auth::user()->api_token }}">
+    @endif
 
     <title>
         @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník')
@@ -27,37 +32,17 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Fonts awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css"
-          integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/regular.css"
-          integrity="sha384-zkhEzh7td0PG30vxQk1D9liRKeizzot4eqkJ8gB3/I+mZ1rjgQk+BSt2F6rT2c+I" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css"
-          integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/brands.css"
-          integrity="sha384-nT8r1Kzllf71iZl81CdFzObMsaLOhqBU1JD2+XoAALbdtWaXDOlWOZTR4v1ktjPE" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     {{-- CSS --}}
-    <link rel="stylesheet" type="text/css" href="{{mix('css/app.css')}}">
+    @yield('app-css')
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94042414-8');
-    </script>
-
+    @yield('google-analytics')
 
     @stack('head_links')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top">
         <div>
             <a class="navbar-brand" href="@yield('navbar-brand_href', '/')"><img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0;">
              Zpěvník pro scholy</a>
@@ -94,8 +79,8 @@
     </div>
 
     {{-- Main JS built with Laravel's mix --}}
-    <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
-
+    @yield('app-js')
+    
     <script>
         // Mobile viewport soft keyboard fix
         setTimeout(function () {

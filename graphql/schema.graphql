@@ -1,0 +1,112 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-01-01 13:00:00`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+type Query {
+    users: [User!]! @all
+    user(id: ID @eq): User @find
+    authors(
+        search_string: String
+        order_abc: Boolean
+    ): [Author!]!
+    song_lyrics(
+        only_apk: Boolean
+        search_string: String
+        is_published: Boolean
+        is_approved_by_author: Boolean
+        has_lyrics: Boolean
+        has_authors: Boolean
+        has_tags: Boolean
+        has_chords: Boolean
+        order_abc: Boolean
+    ): [SongLyric!]!
+    externals (
+        type: Int
+        is_todo: Boolean
+    ): [External!]! @all
+    files (
+        type: Int
+        is_todo: Boolean
+    ): [File!]! @all
+    tags(type: Int @eq): [Tag] @all
+    me: User @auth
+}
+
+type Mutation @group(middleware: ["auth:api"]) {
+    delete_author(id: ID!): Author @delete
+    delete_external(id: ID!): External @delete
+    delete_file(id: ID!): File @delete
+    delete_song_lyric(id: ID!): SongLyric @delete
+    delete_tag(id: ID!): Tag @delete
+}
+
+type User {
+    id: ID!
+    name: String
+}
+
+type Author {
+    id: ID!
+    name: String!
+    description: String
+    type: Int
+    type_string: String
+    email: String
+    url: String
+    visits: Int
+    public_url: String
+}
+
+type Song {
+    id: ID!
+    name: String
+    song_lyrics(is_original: Boolean @eq): [SongLyric] @hasMany
+}
+
+type SongLyric {
+    id: ID!
+    name: String
+    public_url: String
+    lyrics_no_chords: String
+    lyrics: String
+    is_original: Boolean!
+    is_approved_by_author: Boolean!
+    is_published: Boolean!
+    lang: String
+    updated_at: String
+    authors: [Author] @belongsToMany
+    externals(id: Int @eq, type: Int @eq): [External] @hasMany
+    files(id: Int @eq, type: Int @eq): [File] @hasMany
+    tags(type: Int @eq): [Tag] @belongsToMany
+    song: Song! @belongsTo
+    has_chords: Boolean!
+}
+
+type External {
+    id: ID!
+    public_name: String
+    type: Int
+    type_string: String
+    author: Author @belongsTo
+    song_lyric: SongLyric @belongsTo
+}
+
+type File {
+    id: ID!
+    public_name: String
+    download_url: String
+    type: Int
+    type_string: String
+    author: Author @belongsTo
+    song_lyric: SongLyric @belongsTo
+}
+
+type Tag {
+    id: ID!
+    name: String
+    type: Int
+    parent_tag: Tag @belongsTo
+    child_tags: [Tag] @hasMany
+}

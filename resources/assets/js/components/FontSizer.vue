@@ -1,10 +1,10 @@
 <template>
     <div class="transpose-control-wrapper">
         <span>
-            <span>Velikost fontu: </span>
-            <a class="btn btn-secondary" v-on:click="fontSizePercent = 100">100 %</a>
-            <a class="btn btn-secondary" v-on:click="resize(10)">zvětšit</a>
-            <a class="btn btn-secondary" v-on:click="resize(-10)">zmenšit</a>
+            <span>Velikost textu: </span>
+            <a class="btn btn-secondary font-weight-bold" v-on:click="resize(10)">+</a>
+            <a class="btn btn-secondary font-weight-bold" v-on:click="resize(-10)">-</a>
+            <a class="btn btn-warning" v-if="fontSizePercent !== 100" v-on:click="fontSizePercent = 100">resetovat</a>
         </span>
     </div>
 </template>
@@ -19,7 +19,7 @@
 
         methods:{
             resize: function(val) {
-                if (this.fontSizePercent + val > 0)
+                if (this.fontSizePercent + val > 70)
                     this.fontSizePercent += val;
             }
         }

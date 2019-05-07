@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.client')
 
 @section('title', $song_l->name . ' - píseň ve zpěvníku ProScholy.cz')
 
@@ -23,14 +23,18 @@
                             @endif
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="d-flex flex-column flex-sm-row-reverse">
+                    <div class="card-body"  style="border-bottom: #7f97ab">
+                        <div class="d-flex flex-column flex-sm-row-reverse mb-2">
                             <div class="song-tags d-flex flex-sm-column align-items-sm-end mb-2">
-                                {{-- <a href="#" class="tag">štítek 1</a>
-                                <a href="#" class="tag">štítek 2</a>
-                                <a href="#" class="tag">štítek 3</a> --}}
-                                @foreach ($tags as $tag)
-                                    <a href="#" class="tag">{{ $tag->name }}</a>
+                                @foreach ($tags_officials as $tag)
+                                    <a class="tag tag-blue">{{ $tag->name }}</a>
+                                @endforeach
+                                @foreach ($tags_unofficials as $tag)
+                                    @if ($tag->parent_tag == null)
+                                        <a class="tag tag-green">{{ $tag->name }}</a>
+                                    @else
+                                        <a class="tag tag-yellow">{{ $tag->name }}</a>
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="flex-grow-1">
@@ -44,6 +48,11 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
+
+{{--                    <div class="card-text" style="border-bottom: 1px #d6d6d6 solid"></div>--}}
+
+                    <div class="card-footer" style="background-color: #3961ad12">
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
@@ -75,6 +84,7 @@
                 @if($song_l->soundcloudTracks()->count() > 0)
                     @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
                 @endif
+
             </div>
         </div>
 

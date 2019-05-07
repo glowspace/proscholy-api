@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.client')
 
 @section('content')
 <div class="content-padding"></div>

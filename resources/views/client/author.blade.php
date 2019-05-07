@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.client')
 
 @section('navbar')
     <a class="btn btn-secondary" href="{{route('client.home')}}">

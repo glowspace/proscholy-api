@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('layout.admin')
 
 @section('content')
     <div class="content-padding">
@@ -6,7 +6,9 @@
         @can('add authors')
             <a class="btn btn-outline-primary" href="{{route('admin.author.create')}}">+ Nový autor</a>
         @endcan
-        <div class="row">
+
+        <authors-list></authors-list>
+        {{-- <div class="row">
             <div class="col-xs-12 col-md-8">
                 @component('admin.components.table', [
                     'id' => 'index_table',
@@ -25,7 +27,7 @@
                     @endforeach
                 @endcomponent
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 
