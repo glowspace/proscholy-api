@@ -62,7 +62,6 @@
 </template>
 
 <script>
-    import {store} from "./store.js";
     import gql from 'graphql-tag';
 
     // Query
@@ -83,12 +82,10 @@
         }`;
 
     export default {
+        props: ['search-string', 'selected-tags'],
 
         data() {
             return {
-                store: store,
-                // custom data here
-                // song_lyrics: [],
             }
         },
 
@@ -97,12 +94,12 @@
              * Filtered lyrics.
              */
             song_lyrics_results() {
-                if (Object.keys(this.store.tagsData).length === 0)
+                if (Object.keys(this.selectedTags).length === 0)
                     return this.song_lyrics;
 
                 return this.song_lyrics.filter(song_lyric => {
                     for (var tag of song_lyric.tags) {
-                        if (this.store.tagsData[tag.id])
+                        if (this.selectedTags[tag.id])
                             return true;
                     }
                 })
@@ -116,9 +113,11 @@
                 query: fetch_items,
                 variables() {
                     return {
-                        search_str: this.store.search_string
+                        search_str: this.searchString
                     }
-                }
+                },
+                // debounce waits 200ms for query refetching
+                debounce: 200
             }
         },
 

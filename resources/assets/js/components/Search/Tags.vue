@@ -43,11 +43,10 @@
 
 
 <script>
-    import {store} from "./store.js";
     import gql from 'graphql-tag';
 
     const fetch_items = gql`
-        query FetchSongLyrics {
+        query FetchTags {
             tags {
                 id,
                 name,
@@ -62,13 +61,12 @@
 
 
     export default {
-        props: [],
+        // type: {"tag_id": true, "tag_id2": true}
+        props: ["value"],
 
         data() {
             return {
-                store: store,
-                // custom data here
-                // abc: ""
+                selectedTags: { }
             }
         },
 
@@ -76,6 +74,11 @@
             tags: {
                 query: fetch_items
             }
+        },
+
+        mounted(){
+            // bind selected tags to the preselected value, originally from GET request
+            this.selectedTags = this.value;
         },
 
         computed: {
@@ -96,24 +99,28 @@
             },
 
             is_filtered() {
-                return Object.keys(this.store.tagsData).length > 0;
+                return Object.keys(this.selectedTags).length > 0;
             }
         },
 
         methods: {
             selectTag(tag) {
-                if (!this.store.tagsData[tag.id])
+                if (!this.selectedTags[tag.id])
                 {
-                    Vue.set(this.store.tagsData, tag.id, true);
+                    Vue.set(this.selectedTags, tag.id, true);
                 }
                 else 
                 {
-                    Vue.delete(this.store.tagsData, tag.id);
+                    Vue.delete(this.selectedTags, tag.id);
                 }
+
+                // notify the parent that sth has changed
+                // works with v-model
+                this.$emit('input', this.selectedTags);
             },
 
             isSelected(tag) {
-                return this.store.tagsData[tag.id];
+                return this.selectedTags[tag.id];
             }
         }
     }

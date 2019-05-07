@@ -64737,17 +64737,7 @@ var store = {
 };
 
 /***/ }),
-/* 168 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-var store = {
-    search_string: "",
-    tagsData: {}
-};
-
-/***/ }),
+/* 168 */,
 /* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -92078,10 +92068,7 @@ Vue.component('chord', __webpack_require__(507));
 Vue.component('transposition', __webpack_require__(512));
 Vue.component('font-sizer', __webpack_require__(515));
 
-Vue.component('authors-list', __webpack_require__(518));
-Vue.component('search-input', __webpack_require__(519));
-Vue.component('songs-list', __webpack_require__(522));
-Vue.component('tags', __webpack_require__(525));
+Vue.component('search', __webpack_require__(558));
 
 
 
@@ -92833,117 +92820,9 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 519 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(24)
-/* script */
-var __vue_script__ = __webpack_require__(520)
-/* template */
-var __vue_template__ = __webpack_require__(521)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Search/SearchInput.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8382fc1c", Component.options)
-  } else {
-    hotAPI.reload("data-v-8382fc1c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 520 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(168);
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['str-prefill'],
-
-    data: function data() {
-        return {
-            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */]
-            // custom data here
-            // abc: ""
-        };
-    },
-
-
-    methods: {},
-
-    mounted: function mounted() {
-        this.store.search_string = this.strPrefill;
-    }
-});
-
-/***/ }),
-/* 521 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("input", {
-    staticClass: "form-control search-basic",
-    attrs: {
-      placeholder: "Zadejte název písně, část textu nebo jméno autora",
-      autofocus: ""
-    },
-    domProps: { value: _vm.store.search_string }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-8382fc1c", module.exports)
-  }
-}
-
-/***/ }),
+/* 519 */,
+/* 520 */,
+/* 521 */,
 /* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -92996,10 +92875,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }"], ["\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }"]);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+var _templateObject = _taggedTemplateLiteral(['\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }'], ['\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -93069,17 +92947,14 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 
 
-
 // Query
-var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject);
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['search-string', 'selected-tags'],
+
     data: function data() {
-        return {
-            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */]
-            // custom data here
-            // song_lyrics: [],
-        };
+        return {};
     },
 
 
@@ -93090,7 +92965,7 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
         song_lyrics_results: function song_lyrics_results() {
             var _this = this;
 
-            if (Object.keys(this.store.tagsData).length === 0) return this.song_lyrics;
+            if (Object.keys(this.selectedTags).length === 0) return this.song_lyrics;
 
             return this.song_lyrics.filter(function (song_lyric) {
                 var _iteratorNormalCompletion = true;
@@ -93101,7 +92976,7 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
                     for (var _iterator = song_lyric.tags[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                         var tag = _step.value;
 
-                        if (_this.store.tagsData[tag.id]) return true;
+                        if (_this.selectedTags[tag.id]) return true;
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -93127,9 +93002,12 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
             query: fetch_items,
             variables: function variables() {
                 return {
-                    search_str: this.store.search_string
+                    search_str: this.searchString
                 };
-            }
+            },
+
+            // debounce waits 200ms for query refetching
+            debounce: 200
         }
     },
 
@@ -93378,10 +93256,9 @@ exports.push([module.i, "\n.song-tags .tag.tag-selected {\n    font-weight: bold
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(["\n    query FetchSongLyrics {\n        tags {\n            id,\n            name,\n            type,\n            child_tags {\n                id,\n                name\n            },\n            parent_tag {id}\n        }\n    }"], ["\n    query FetchSongLyrics {\n        tags {\n            id,\n            name,\n            type,\n            child_tags {\n                id,\n                name\n            },\n            parent_tag {id}\n        }\n    }"]);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+var _templateObject = _taggedTemplateLiteral(['\n    query FetchTags {\n        tags {\n            id,\n            name,\n            type,\n            child_tags {\n                id,\n                name\n            },\n            parent_tag {id}\n        }\n    }'], ['\n    query FetchTags {\n        tags {\n            id,\n            name,\n            type,\n            child_tags {\n                id,\n                name\n            },\n            parent_tag {id}\n        }\n    }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -93432,17 +93309,15 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 
 
-
-var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject);
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: [],
+    // type: {"tag_id": true, "tag_id2": true}
+    props: ["value"],
 
     data: function data() {
         return {
-            store: __WEBPACK_IMPORTED_MODULE_0__store_js__["a" /* store */]
-            // custom data here
-            // abc: ""
+            selectedTags: {}
         };
     },
 
@@ -93452,6 +93327,12 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
             query: fetch_items
         }
     },
+
+    mounted: function mounted() {
+        // bind selected tags to the preselected value, originally from GET request
+        this.selectedTags = this.value;
+    },
+
 
     computed: {
         tags_official: function tags_official() {
@@ -93469,20 +93350,24 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateO
             }
         },
         is_filtered: function is_filtered() {
-            return Object.keys(this.store.tagsData).length > 0;
+            return Object.keys(this.selectedTags).length > 0;
         }
     },
 
     methods: {
         selectTag: function selectTag(tag) {
-            if (!this.store.tagsData[tag.id]) {
-                Vue.set(this.store.tagsData, tag.id, true);
+            if (!this.selectedTags[tag.id]) {
+                Vue.set(this.selectedTags, tag.id, true);
             } else {
-                Vue.delete(this.store.tagsData, tag.id);
+                Vue.delete(this.selectedTags, tag.id);
             }
+
+            // notify the parent that sth has changed
+            // works with v-model
+            this.$emit('input', this.selectedTags);
         },
         isSelected: function isSelected(tag) {
-            return this.store.tagsData[tag.id];
+            return this.selectedTags[tag.id];
         }
     }
 });
@@ -93604,6 +93489,284 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */,
+/* 558 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(24)
+/* script */
+var __vue_script__ = __webpack_require__(559)
+/* template */
+var __vue_template__ = __webpack_require__(560)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/pages/Search.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-57b4ae25", Component.options)
+  } else {
+    hotAPI.reload("data-v-57b4ae25", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 559 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Search_AuthorsList__ = __webpack_require__(518);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Search_AuthorsList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Search_AuthorsList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Search_SongsList__ = __webpack_require__(522);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Search_SongsList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Search_SongsList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Search_Tags__ = __webpack_require__(525);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Search_Tags___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Search_Tags__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        "str-prefill": String
+    },
+
+    data: function data() {
+        return {
+            search_string: "",
+            selected_tags: {}
+        };
+    },
+
+
+    methods: {},
+
+    mounted: function mounted() {
+        this.store.search_string = this.strPrefill;
+    },
+
+
+    components: {
+        AuthorsList: __WEBPACK_IMPORTED_MODULE_0__components_Search_AuthorsList___default.a,
+        SongsList: __WEBPACK_IMPORTED_MODULE_1__components_Search_SongsList___default.a,
+        Tags: __WEBPACK_IMPORTED_MODULE_2__components_Search_Tags___default.a
+    }
+});
+
+/***/ }),
+/* 560 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("v-app", [
+    _c("div", { staticClass: "content-padding" }, [
+      _c("h1", [_vm._v("Vyhledávání")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search_string,
+            expression: "search_string"
+          }
+        ],
+        staticClass: "form-control search-basic",
+        attrs: {
+          placeholder: "Zadejte název písně, část textu nebo jméno autora",
+          autofocus: ""
+        },
+        domProps: { value: _vm.search_string },
+        on: {
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search_string = $event.target.value
+            },
+            function($event) {
+              return _vm.updateQuery()
+            }
+          ]
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-8" }, [
+          _c("div", { staticClass: "card card-blue" }, [
+            _c("div", { staticClass: "card-header" }, [_vm._v("Písně")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("SongsList", {
+                  attrs: {
+                    "search-string": _vm.search_string,
+                    "selected-tags": _vm.selected_tags
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", { staticClass: "card card-red" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("Možnosti vyhledávání")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("Tags", {
+                  model: {
+                    value: _vm.selected_tags,
+                    callback: function($$v) {
+                      _vm.selected_tags = $$v
+                    },
+                    expression: "selected_tags"
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-57b4ae25", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
