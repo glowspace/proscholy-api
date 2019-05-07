@@ -4,8 +4,6 @@
             <tr v-for="author in authors"
                 v-bind:key="author.id">
                 <td>
-                    <!-- <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a>
-                    - {{$author->getSearchText()}} -->
                     <a :href="author.public_url">{{ author.name }} - {{ author.type_string }}</a>
                 </td>
             </tr>
@@ -18,20 +16,6 @@
                 <i>Žádný autor s tímto jménem nebyl nalezen.</i>
             </td>
         </tr>
-        <!-- @forelse($authors as $author)
-            <tr>
-                <td>
-                    <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a>
-                    - {{$author->getSearchText()}}
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td>
-                    <i>Žádný autor nebyl nalezen.</i>
-                </td>
-            </tr>
-        @endforelse -->
     </table>
 </template>
 
