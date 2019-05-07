@@ -93225,7 +93225,9 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
         song_lyrics_results: function song_lyrics_results() {
             var _this = this;
 
-            if (Object.keys(this.selectedTags).length === 0) return this.song_lyrics;
+            if (Object.keys(this.selectedTags).length === 0) {
+                return this.song_lyrics;
+            }
 
             return this.song_lyrics.filter(function (song_lyric) {
                 var _iteratorNormalCompletion = true;
@@ -93236,7 +93238,9 @@ var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
                     for (var _iterator = song_lyric.tags[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                         var tag = _step.value;
 
-                        if (_this.selectedTags[tag.id]) return true;
+                        if (_this.selectedTags[tag.id]) {
+                            return true;
+                        }
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -93393,7 +93397,7 @@ var render = function() {
                   staticStyle: { width: "10px" }
                 },
                 [
-                  song_lyric.youtubeVideos.length > 0
+                  song_lyric.has_chords
                     ? _c("i", {
                         staticClass: "fas fa-guitar text-primary",
                         attrs: { title: "Tato píseň má přidané akordy." }
@@ -93405,7 +93409,7 @@ var render = function() {
           })
         : _c("tr", [
             _vm.$apollo.loading
-              ? _c("td", [_c("i", [_vm._v("Načítání")])])
+              ? _c("td", [_c("i", [_vm._v("Načítám...")])])
               : _c("td", [
                   _c("i", [
                     _vm._v("Žádná píseň s tímto názvem nebyla nalezena.")
