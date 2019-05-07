@@ -21691,6 +21691,10 @@ View: Search results
   color: #d83027;
 }
 
+#cardLyrics .card-header {
+  background-color: #f1f4f9;
+}
+
 .text-very-muted {
   color: #efefef;
 }

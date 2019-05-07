@@ -48,6 +48,15 @@
                     <i v-else
                     class="fab fa-youtube text-very-muted"></i>
                 </td>
+                <td style="width: 10px;"
+                    class="no-left-padding">
+                    <i v-if="song_lyric.youtubeVideos.length > 0"
+                    class="fas fa-guitar text-primary"
+                    title="Tato píseň má přidané akordy."></i>
+                    <i v-else
+                    class="fas fa-guitar text-very-muted"></i>
+                </td>
+
             </tr>
         </template>
         <tr v-else>

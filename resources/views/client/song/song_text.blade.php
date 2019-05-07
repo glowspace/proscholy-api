@@ -11,7 +11,7 @@
         <h1>{{$song_l->name}}</h1>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
-                <div class="card card-blue" id="cardLyrics">
+                <div class="card" id="cardLyrics">
                     <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
                         <div class="p-2">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -80,6 +80,7 @@
                 @if($song_l->soundcloudTracks()->count() > 0)
                     @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
                 @endif
+
             </div>
         </div>
 
