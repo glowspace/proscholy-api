@@ -28,9 +28,10 @@ class SongLyricsController extends Controller
         //     return view('client.song.song_scores', compact('song_l'));
         // }
 
-        $tags = $song_l->tags()->orderBy('type', 'desc')->orderBy('name')->get();
+        $tags_officials = $song_l->tags()->officials()->orderBy('name')->get();
+        $tags_unofficials = $song_l->tags()->unofficials()->orderBy('name')->get();
 
-        return view('client.song.song_text', compact('song_l', 'tags', 'reversed_columns'));
+        return view('client.song.song_text', compact('song_l', 'tags_officials', 'tags_unofficials', 'reversed_columns'));
     }
 
     public function songScore(SongLyric $song_lyric)

@@ -52,31 +52,31 @@ const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
 })
 
-import Vuetify, {
-  VApp, // required
-//   VNavigationDrawer,
-//   VDataTable,
-  VContainer,
-  VLayout,
-  VFlex,
-  VCard,
-  VCardText,
-//   VTextField
-} from 'vuetify/lib'
+// import Vuetify, {
+//   VApp, // required
+// //   VNavigationDrawer,
+// //   VDataTable,
+//   VContainer,
+//   VLayout,
+//   VFlex,
+//   VCard,
+//   VCardText,
+// //   VTextField
+// } from 'vuetify/lib'
 
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    // VNavigationDrawer,
-    // VDataTable,
-    VContainer,
-    VLayout,
-    VFlex,
-    VCard,
-    VCardText,
-    // VTextField
-  }
-})
+// Vue.use(Vuetify, {
+//   components: {
+//     VApp,
+//     // VNavigationDrawer,
+//     // VDataTable,
+//     VContainer,
+//     VLayout,
+//     VFlex,
+//     VCard,
+//     VCardText,
+//     // VTextField
+//   }
+// })
 
 const app = new Vue({
     el: '#app',

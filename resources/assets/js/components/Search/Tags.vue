@@ -39,6 +39,10 @@
     .song-tags.filtered .tag {
         opacity: 0.5;
     }
+
+    a.tag{
+        cursor:pointer;
+    }
 </style>
 
 
