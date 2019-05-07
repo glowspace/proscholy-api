@@ -6,7 +6,6 @@
             <input class="form-control search-basic mb-2"
                    placeholder="Zadejte název písně, část textu nebo jméno autora"
                    v-model="search_string"
-                   v-on:input="updateQuery()"
                    autofocus>
 
             <div class="row">

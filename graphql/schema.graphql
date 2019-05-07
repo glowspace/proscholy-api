@@ -81,6 +81,7 @@ type SongLyric {
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @belongsToMany
     song: Song! @belongsTo
+    has_chords: Boolean!
 }
 
 type External {

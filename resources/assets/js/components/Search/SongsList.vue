@@ -86,7 +86,8 @@
                 spotifyTracks: externals(type: 1){id},
                 soundcloudTracks: externals(type: 2){id},
                 authors{id, name}
-                tags{id}
+                tags{id},
+                has_chords
             }
         }`;
 
