@@ -92793,11 +92793,12 @@ if (false) {
 /* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
 var normalizeComponent = __webpack_require__(24)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(561)
 /* template */
-var __vue_template__ = null
+var __vue_template__ = __webpack_require__(562)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -92815,6 +92816,22 @@ var Component = normalizeComponent(
   __vue_module_identifier__
 )
 Component.options.__file = "resources/assets/js/components/Search/AuthorsList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-eeab3414", Component.options)
+  } else {
+    hotAPI.reload("data-v-eeab3414", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 module.exports = Component.exports
 
@@ -92877,7 +92894,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(['\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }'], ['\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }']);
+var _templateObject = _taggedTemplateLiteral(['\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str, order_abc: true) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }'], ['\n    query FetchSongLyrics($search_str: String) {\n        song_lyrics(search_string: $search_str, order_abc: true) {\n            id,\n            name,\n            public_url,\n            scoreExternals: externals(type: 4){id},\n            scoreFiles: files(type: 3){id},\n            youtubeVideos: externals(type: 3){id},\n            spotifyTracks: externals(type: 1){id},\n            soundcloudTracks: externals(type: 2){id},\n            authors{id, name}\n            tags{id}\n        }\n    }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -93619,21 +93636,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -93656,7 +93658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {},
 
     mounted: function mounted() {
-        this.store.search_string = this.strPrefill;
+        this.search_string = this.strPrefill;
     },
 
 
@@ -93688,7 +93690,7 @@ var render = function() {
             expression: "search_string"
           }
         ],
-        staticClass: "form-control search-basic",
+        staticClass: "form-control search-basic mb-2",
         attrs: {
           placeholder: "Zadejte název písně, část textu nebo jméno autora",
           autofocus: ""
@@ -93723,6 +93725,21 @@ var render = function() {
                     "search-string": _vm.search_string,
                     "selected-tags": _vm.selected_tags
                   }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card card-green" }, [
+            _c("div", { staticClass: "card-header" }, [_vm._v("Autoři")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("AuthorsList", {
+                  attrs: { "search-string": _vm.search_string }
                 })
               ],
               1
@@ -93765,6 +93782,124 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-57b4ae25", module.exports)
+  }
+}
+
+/***/ }),
+/* 561 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+var _templateObject = _taggedTemplateLiteral(['\n    query ($search_str: String) {\n        authors(search_string: $search_str, order_abc: true) {\n            id,\n            name,\n            public_url,\n            type_string\n        }\n    }'], ['\n    query ($search_str: String) {\n        authors(search_string: $search_str, order_abc: true) {\n            id,\n            name,\n            public_url,\n            type_string\n        }\n    }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+// Query
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['search-string'],
+
+    // GraphQL client
+    apollo: {
+        authors: {
+            query: fetch_items,
+            variables: function variables() {
+                return {
+                    search_str: this.searchString
+                };
+            },
+
+            // debounce waits 200ms for query refetching
+            debounce: 200
+        }
+    }
+});
+
+/***/ }),
+/* 562 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "table",
+    { staticClass: "table" },
+    [
+      _vm.authors && _vm.authors.length && !_vm.$apollo.loading
+        ? _vm._l(_vm.authors, function(author) {
+            return _c("tr", { key: author.id }, [
+              _c("td", [
+                _c("a", { attrs: { href: author.public_url } }, [
+                  _vm._v(
+                    _vm._s(author.name) + " - " + _vm._s(author.type_string)
+                  )
+                ])
+              ])
+            ])
+          })
+        : _c("tr", [
+            _vm.$apollo.loading
+              ? _c("td", [_c("i", [_vm._v("Načítání")])])
+              : _c("td", [
+                  _c("i", [_vm._v("Žádný autor s tímto jménem nebyl nalezen.")])
+                ])
+          ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-eeab3414", module.exports)
   }
 }
 

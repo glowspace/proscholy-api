@@ -7,7 +7,10 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 type Query {
     users: [User!]! @all
     user(id: ID @eq): User @find
-    authors: [Author!]! @all
+    authors(
+        search_string: String
+        order_abc: Boolean
+    ): [Author!]!
     song_lyrics(
         only_apk: Boolean
         search_string: String
@@ -17,6 +20,7 @@ type Query {
         has_authors: Boolean
         has_tags: Boolean
         has_chords: Boolean
+        order_abc: Boolean
     ): [SongLyric!]!
     externals (
         type: Int
@@ -51,6 +55,7 @@ type Author {
     email: String
     url: String
     visits: Int
+    public_url: String
 }
 
 type Song {

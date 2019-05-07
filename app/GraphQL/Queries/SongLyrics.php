@@ -41,6 +41,9 @@ class SongLyrics
 		if (isset($args['only_apk']) && $args['only_apk'] === true)
 			$query = $query->where('is_approved_by_author', 1)->where('is_published', 1)->where('lyrics', '!=', '');
 
+		if (isset($args['order_abc']))
+            $query = $query->orderBy('name', 'asc');
+
         Log::info($query->toSql());
 
 		return $query->get();

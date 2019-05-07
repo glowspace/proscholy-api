@@ -179,4 +179,9 @@ class Author extends Model implements ISearchResult
     {
         return $this->type_string[$this->type];
     }
+
+    public function getPublicUrlAttribute()
+    {
+        return route('client.author', $this);
+    }
 }

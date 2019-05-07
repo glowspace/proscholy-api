@@ -67,7 +67,7 @@
     // Query
     const fetch_items = gql`
         query FetchSongLyrics($search_str: String) {
-            song_lyrics(search_string: $search_str) {
+            song_lyrics(search_string: $search_str, order_abc: true) {
                 id,
                 name,
                 public_url,

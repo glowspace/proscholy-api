@@ -2,8 +2,8 @@
     <v-app>
         <div class="content-padding">
             <h1>Vyhledávání</h1>
-
-            <input class="form-control search-basic"
+    
+            <input class="form-control search-basic mb-2"
                    placeholder="Zadejte název písně, část textu nebo jméno autora"
                    v-model="search_string"
                    v-on:input="updateQuery()"
@@ -21,27 +21,12 @@
                         </div>
                     </div>
 
-                    <!-- <div class="card card-green">
+                    <div class="card card-green">
                         <div class="card-header">Autoři</div>
                         <div class="card-body">
-                            <table class="table">
-                                @forelse($authors as $author)
-                                    <tr>
-                                        <td>
-                                            <a href="{{route('client.author',$author)}}">{{$author->getSearchTitle()}}</a>
-                                            - {{$author->getSearchText()}}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td>
-                                            <i>Žádný autor nebyl nalezen.</i>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </table>
+                            <AuthorsList v-bind:search-string="search_string"></AuthorsList>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="col-sm-4">
@@ -80,7 +65,7 @@ export default {
     },
 
     mounted() {
-        this.store.search_string = this.strPrefill;
+        this.search_string = this.strPrefill;
     },
 
     components: {
