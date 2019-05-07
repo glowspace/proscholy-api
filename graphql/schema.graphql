@@ -31,14 +31,15 @@ type Query {
         is_todo: Boolean
     ): [File!]! @all
     tags(type: Int @eq): [Tag] @all
+    me: User @auth
 }
 
-type Mutation {
-  delete_author(id: ID!): Author @delete
-  delete_external(id: ID!): External @delete
-  delete_file(id: ID!): File @delete
-  delete_song_lyric(id: ID!): SongLyric @delete
-  delete_tag(id: ID!): Tag @delete
+type Mutation @group(middleware: ["auth:api"]) {
+    delete_author(id: ID!): Author @delete
+    delete_external(id: ID!): External @delete
+    delete_file(id: ID!): File @delete
+    delete_song_lyric(id: ID!): SongLyric @delete
+    delete_tag(id: ID!): Tag @delete
 }
 
 type User {

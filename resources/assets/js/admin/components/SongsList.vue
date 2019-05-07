@@ -79,7 +79,7 @@ const delete_item = gql`
       id
     }
   }`;
-
+  
 export default {
   props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
 

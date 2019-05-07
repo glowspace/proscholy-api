@@ -16,6 +16,10 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#292929">
     <meta id="baseUrl" name="baseUrl" value="{{url('')}}">
+    @if (Auth::check())
+    {{-- warning - potentially dangerous, only provisional solution --}}
+        <meta id="userToken" name="userToken" value="{{ Auth::user()->api_token }}">
+    @endif
 
     <title>
         @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník')

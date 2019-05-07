@@ -92066,8 +92066,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_apollo_client__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link_http__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_cache_inmemory__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_apollo__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_apollo_link__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_apollo__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__ = __webpack_require__(197);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -92098,6 +92099,7 @@ Vue.component('authors-list', __webpack_require__(549));
 
 
 
+
 // let web_url = 'http://localhost:8000/graphql';
 
 // if (mix.inProduction()) {
@@ -92107,6 +92109,18 @@ Vue.component('authors-list', __webpack_require__(549));
 // }
 
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
+var user_token = document.querySelector('#userToken').getAttribute('value');
+
+var authMiddleware = new __WEBPACK_IMPORTED_MODULE_3_apollo_link__["a" /* ApolloLink */](function (operation, forward) {
+  // add the authorization to the headers
+  operation.setContext({
+    headers: {
+      authorization: 'Bearer ' + user_token
+    }
+  });
+
+  return forward(operation);
+});
 
 // HTTP connexion to the API
 var httpLink = Object(__WEBPACK_IMPORTED_MODULE_1_apollo_link_http__["a" /* createHttpLink */])({
@@ -92118,30 +92132,30 @@ var cache = new __WEBPACK_IMPORTED_MODULE_2_apollo_cache_inmemory__["a" /* InMem
 
 // Create the apollo client
 var apolloClient = new __WEBPACK_IMPORTED_MODULE_0_apollo_client__["a" /* ApolloClient */]({
-  link: httpLink,
+  link: authMiddleware.concat(httpLink),
   cache: cache
 });
 
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue_apollo__["a" /* default */]);
+Vue.use(__WEBPACK_IMPORTED_MODULE_4_vue_apollo__["a" /* default */]);
 
-var apolloProvider = new __WEBPACK_IMPORTED_MODULE_3_vue_apollo__["a" /* default */]({
+var apolloProvider = new __WEBPACK_IMPORTED_MODULE_4_vue_apollo__["a" /* default */]({
   defaultClient: apolloClient
 });
 
 
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["j" /* default */], {
+Vue.use(__WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["j" /* default */], {
   components: {
-    VApp: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["a" /* VApp */],
-    VNavigationDrawer: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["h" /* VNavigationDrawer */],
-    VDataTable: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["e" /* VDataTable */],
-    VContainer: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["d" /* VContainer */],
-    VLayout: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["g" /* VLayout */],
-    VFlex: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["f" /* VFlex */],
-    VCard: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["b" /* VCard */],
-    VCardText: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["c" /* VCardText */],
-    VTextField: __WEBPACK_IMPORTED_MODULE_4_vuetify_lib__["i" /* VTextField */]
+    VApp: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["a" /* VApp */],
+    VNavigationDrawer: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["h" /* VNavigationDrawer */],
+    VDataTable: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["e" /* VDataTable */],
+    VContainer: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["d" /* VContainer */],
+    VLayout: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["g" /* VLayout */],
+    VFlex: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["f" /* VFlex */],
+    VCard: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["b" /* VCard */],
+    VCardText: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["c" /* VCardText */],
+    VTextField: __WEBPACK_IMPORTED_MODULE_5_vuetify_lib__["i" /* VTextField */]
   }
 });
 

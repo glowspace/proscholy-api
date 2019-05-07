@@ -28,6 +28,7 @@ Vue.component('authors-list', require('./components/AuthorsList.vue'));
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloLink } from 'apollo-link'
 
 // let web_url = 'http://localhost:8000/graphql';
 
@@ -38,6 +39,18 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 // }
 
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
+var user_token = document.querySelector('#userToken').getAttribute('value');
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext({
+    headers: {
+      authorization: `Bearer ${user_token}`
+    }
+  }) 
+
+  return forward(operation)
+});
 
 // HTTP connexion to the API
 const httpLink = createHttpLink({
@@ -49,7 +62,7 @@ const cache = new InMemoryCache()
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
-  link: httpLink,
+  link: authMiddleware.concat(httpLink),
   cache,
 })
 
