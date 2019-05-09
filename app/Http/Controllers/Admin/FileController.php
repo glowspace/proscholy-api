@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Author;
 use App\Song;
 use App\SongLyric;
+use Illuminate\Support\Arr;
 
 class FileController extends Controller
 {
@@ -80,7 +81,7 @@ class FileController extends Controller
      */
     public function edit(File $file)
     {
-        $assigned_authors = $file->author ? [$file->author] : [];
+        $assigned_authors = $file->authors;
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
 
         $assigned_song_lyrics = $file->song_lyric ? [$file->song_lyric] : [];
@@ -110,18 +111,26 @@ class FileController extends Controller
             $file->save();
         }
 
-        // no author set, delete if there had been any association
-        if ($request->assigned_authors === null)
-        {
-            $file->author()->dissociate();
+        // handle the AUTHORS
+        if ($request->assigned_authors !== NULL) {
+            // old authors that had been saved in db - an ID is passed
+            $saved_authors = Arr::where($request->assigned_authors, function ($value, $key) {
+                return is_numeric($value);
+            });
+            $file->authors()->sync($saved_authors);
+    
+            // new authors to create - a string NAME is passed
+            $new_authors = Arr::where($request->assigned_authors, function ($value, $key) {
+                return !is_numeric($value);
+            });
+    
+            // create new authors and associate to current file model
+            foreach ($new_authors as $author) {
+                $file->authors()->create(['name' => $author]);
+            }
             $file->save();
-        }
-        else
-        {
-            $author_identification = $request->assigned_authors[0];
-            $author = Author::getByIdOrCreateWithName($author_identification, true);
-
-            $file->author()->associate($author);
+        } else {
+            $file->authors()->sync([]);
             $file->save();
         }
 

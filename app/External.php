@@ -195,9 +195,9 @@ class External extends Model
         ]);
     }
 
-    public function author()
+    public function authors()
     {
-        return $this->belongsTo(Author::class);
+        return $this->belongsToMany(Author::class);
     }
 
     public function song_lyric()
@@ -220,15 +220,17 @@ class External extends Model
 
     public function getPublicName()
     {
-        // TODO better condition
-        if (empty($this->author_id) || empty($this->song_lyric_id))
-        {
-            return "Typ: " . $this->type_string[$this->type] . " č. $this->id";
-        }
-        else
-        {
-            return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")";
-        }
+        return "Typ: " . $this->type_string[$this->type] . " č. $this->id";
+
+        // // TODO better condition
+        // if (empty($this->author_id) || empty($this->song_lyric_id))
+        // {
+        //     return "Typ: " . $this->type_string[$this->type] . " č. $this->id";
+        // }
+        // else
+        // {
+        //     return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")";
+        // }
     }
 
     public function getPublicNameAttribute()

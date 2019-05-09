@@ -85,7 +85,8 @@ class File extends Model
         return $this->type_string[$this->type];
     }
 
-    public function getTypeStringAttribute() {
+    public function getTypeStringAttribute() 
+    {
         return $this->getTypeString();
     }
 
@@ -160,9 +161,9 @@ class File extends Model
             ->orWhere('song_lyric_id', null);
     }
 
-    public function author()
+    public function authors()
     {
-        return $this->belongsTo(Author::class);
+        return $this->belongsToMany(Author::class);
     }
 
     public function song_lyric()

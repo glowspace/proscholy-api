@@ -109,12 +109,12 @@ class Author extends Model implements ISearchResult
 
     public function externals()
     {
-        return $this->hasMany(External::class);
+        return $this->belongsToMany(External::class);
     }
 
     public function files()
     {
-        return $this->hasMany(File::class);
+        return $this->belongsToMany(File::class);
     }
 
     // TODO
@@ -195,13 +195,13 @@ class Author extends Model implements ISearchResult
             $model->author()->associate($this);
             $model->save();
 
-            Log::info("associated external: $model->id, to author $model->author_id");
+            Log::info("associated external: $model->id");
         }
         foreach ($a_merge->files as $model) {
             $model->author()->associate($this);
             $model->save();
 
-            Log::info("associated file: $model->id, to author $model->author_id");
+            Log::info("associated file: $model->id");
         }
         foreach ($a_merge->songLyrics as $model) {
             $model->authors()->detach($a_merge);

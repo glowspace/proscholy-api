@@ -19,7 +19,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Odkaz</th>
-                            <th scope="col">Autor</th>
+                            <th scope="col">Autoři</th>
                             <th scope="col">Zobrazeno</th>
                         </tr>
                         </thead>
@@ -34,11 +34,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (isset($file->author))
-                                            <a href="{{route('client.author', $file->author)}}">{{$file->author->name}}</a>
-                                        @else
-                                            (neznámý)
-                                        @endif
+                                        @forelse ($file->authors as $author)
+                                            <a href="{{route('client.author', $author)}}">{{$author->name}}</a>@if (!$loop->last), @endif
+                                        @empty
+                                            -
+                                        @endforelse
                                     </td>
                                     <td>{{$file->downloads}} x</td>
                                 </tr>
@@ -54,11 +54,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (isset($external->author))
-                                            <a href="{{route('client.author', $external->author)}}">{{$external->author->name}}</a>
-                                        @else
-                                            (neznámý)
-                                        @endif
+                                        @forelse ($external->authors as $author)
+                                            <a href="{{route('client.author', $author)}}">{{$author->name}}</a>@if (!$loop->last), @endif
+                                        @empty
+                                            -
+                                        @endforelse
                                     </td>
                                     <td>{{$external->visits}} x</td>
                                 </tr>
