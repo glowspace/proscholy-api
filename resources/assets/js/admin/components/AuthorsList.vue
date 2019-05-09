@@ -14,6 +14,7 @@
             :items="authors"
             :search="search_string"
             :filter="formFilter"
+            :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
             >
             
             <template v-slot:items="props">

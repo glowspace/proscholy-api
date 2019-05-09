@@ -28,7 +28,7 @@
                             <label class="input-group-text">Typ souboru</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            @foreach($file->type_string as $key => $value)
+                            @foreach($file->type_string_values as $key => $value)
                                 <option value="{{ $key }}" {{ $file->type ===  $key  ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>

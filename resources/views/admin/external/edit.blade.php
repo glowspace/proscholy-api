@@ -20,7 +20,7 @@
                             <label class="input-group-text">Typ odkazu</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            @foreach($external->type_string as $key => $value)
+                            @foreach($external->type_string_values as $key => $value)
                                 <option value="{{ $key }}" {{ $external->type ===  $key  ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>

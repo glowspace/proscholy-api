@@ -44,7 +44,7 @@
                             @foreach ($song_l->files()->audio()->get() as $file)
                                 <tr>
                                     <td>
-                                        <a href="{{ $file->download_url }}">{{ $file->getPublicName() }}</a>
+                                        <a href="{{ $file->download_url }}">{{ $file->public_name }}</a>
                                         @if (Auth::check())
                                             <br/><a href="{{ route('admin.file.edit', $file) }}">Upravit soubor</a>
                                         @endif

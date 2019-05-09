@@ -42,7 +42,7 @@ class File extends Model
         'deleting' => \App\Events\FileDeleting::class,
     ];
 
-    public $type_string
+    private $type_string_values
         = [
             0 => 'soubor',
             1 => 'text',
@@ -51,18 +51,13 @@ class File extends Model
             4 => 'audio nahrávka'
         ];
 
-    public function getPublicName()
+    public function getPublicNameAttribute()
     {
         if ($this->name == null) {
             return $this->filename;
         }
 
         return "$this->name ($this->filename)";
-    }
-
-    public function getPublicNameAttribute()
-    {
-        return $this->getPublicName();
     }
 
     public function getDownloadUrlAttribute()
@@ -80,14 +75,14 @@ class File extends Model
         ]);
     }
 
-    public function getTypeString()
-    {
-        return $this->type_string[$this->type];
-    }
-
     public function getTypeStringAttribute() 
     {
-        return $this->getTypeString();
+        return $this->type_string_values[$this->type];
+    }
+
+    public function getTypeStringValuesAttribute()
+    {
+        return $this->type_string_values;
     }
 
     protected static function getThubmnailsFolder()

@@ -46,7 +46,7 @@ use App\Traits\Lockable;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
  */
-class SongLyric extends Model implements ISearchResult
+class SongLyric extends Model
 {
     // Laravel Scout Trait used for full-text searching
     // Lockable Trait for enabling to "lock" the model while editing
@@ -224,9 +224,6 @@ class SongLyric extends Model implements ISearchResult
     //     return $this->spotifyTracks->merge($this->soundcloudTracks);
     // }
 
-    /*
-     * Mixed type count (for blade menu badge)
-     */
     public function scoresCount()
     {
         return $this->scoreExternals()->count() + $this->scoreFiles()->count();
@@ -234,8 +231,8 @@ class SongLyric extends Model implements ISearchResult
 
     // the reason for existence of the domestic characteristic
     // is the case when there are multiple SongLyrics under one Song and no original one
-    // which is basically not recommended but permitted
-    // - consider merging domestic/orignal in the future for simplicity (depending on practical usage)
+    // which is permitted when the original is unknown
+    // TODO: consider merging domestic/orignal in the future for simplicity (depending on practical usage)
     public function isDomestic()
     {
         return $this->name === $this->song->name;
@@ -312,17 +309,5 @@ class SongLyric extends Model implements ISearchResult
         $searchable = Arr::only($array, ['name', 'lyrics']);
 
         return $searchable;
-    }
-
-    // implementing INTERFACE ISearchResult
-
-    public function getSearchTitle()
-    {
-        return $this->name;
-    }
-
-    public function getSearchText()
-    {
-        return $this->lyrics;
     }
 }

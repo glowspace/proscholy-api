@@ -29,13 +29,13 @@
                                 <tr>
                                     <td><i class="fa fa-file-pdf" style="color: #d83027"></i></td>
                                     <td>
-                                        <a href="{{$file->download_url}}">{{$file->getPublicName()}}</a>
+                                        <a href="{{$file->download_url}}">{{$file->public_name}}</a>
                                         @if (Auth::check())
                                             <br/><a href="{{ route('admin.file.edit', $file) }}">Upravit soubor</a>
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $file->getTypeString() }}
+                                        {{ $file->type_string }}
                                     </td>
                                     <td>
                                         @forelse ($file->authors as $author)

@@ -53,7 +53,7 @@
             <div class="card-body">
                 <a href="{{ $external->download_url }}">
                     <img src="{{ $external->thumbnail_url }}"
-                         alt="{{ $external->getPublicName() }}"
+                         alt="{{ $external->public_name }}"
                          class="img-fluid">
                 </a>
             </div>

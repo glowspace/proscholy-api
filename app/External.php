@@ -36,7 +36,7 @@ class External extends Model
 {
     protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author'];
 
-    public $type_string
+    private $type_string_values
         = [
             0 => 'odkaz',
             1 => 'spotify URI',
@@ -47,17 +47,14 @@ class External extends Model
             6 => 'youtube kanál'
         ];
 
-    /**
-     * @return string
-     */
-    public function getTypeString()
-    {
-        return $this->type_string[$this->type];
-    }
-
     public function getTypeStringAttribute()
     {
-        return $this->getTypeString();
+        return $this->type_string_values[$this->type];
+    }
+
+    public function getTypeStringValuesAttribute()
+    {
+        return $this->type_string_values;
     }
 
     public function scopeScores($query)
@@ -218,23 +215,32 @@ class External extends Model
         }
     }
 
-    public function getPublicName()
-    {
-        return "Typ: " . $this->type_string[$this->type] . " č. $this->id";
-
-        // // TODO better condition
-        // if (empty($this->author_id) || empty($this->song_lyric_id))
-        // {
-        //     return "Typ: " . $this->type_string[$this->type] . " č. $this->id";
-        // }
-        // else
-        // {
-        //     return $this->author->name . ' - ' . $this->song_lyric->name . " (" . $this->type_string[$this->type] . ")";
-        // }
-    }
-
     public function getPublicNameAttribute()
     {
-        return $this->getPublicName();
+        $type = $this->type_string_values[$this->type];
+
+        $info = "";
+
+        if ($this->song_lyric) {
+            $info .= $this->song_lyric->name;
+        }
+
+        if ($this->song_lyric && $this->authors()->count() > 0) {
+            $info .= " | ";
+        }
+
+        foreach ($this->authors as $author) {
+            $info .= $author->name;
+            if (next($this->authors) !== false)
+                $info .= ", ";
+        }
+
+        if ($info !== "") {
+            $info = "($info)";
+        } else {
+            $info = "#$this->id";
+        }
+
+        return "$type $info";
     }
 }

@@ -8,26 +8,6 @@
         @endcan
 
         <authors-list></authors-list>
-        {{-- <div class="row">
-            <div class="col-xs-12 col-md-8">
-                @component('admin.components.table', [
-                    'id' => 'index_table',
-                    'columns' => ['Jméno', 'Typ', 'Akce']
-                ])
-                    @foreach($authors as $author)
-                    <tr>
-                        <td><a href="{{route('admin.author.edit',['id'=>$author->id])}}">{{$author->name}}</a></td>
-                        <td>{{ $author->getTypeText() }}</td>
-                        <td>
-                            @include('admin.components.deletebutton', [
-                                'url' => route('admin.author.destroy',['author' => $author->id ]),
-                            ])
-                        </td>
-                    </tr>
-                    @endforeach
-                @endcomponent
-            </div>
-        </div> --}}
     </div>
 @endsection
 
