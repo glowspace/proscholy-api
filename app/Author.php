@@ -179,41 +179,4 @@ class Author extends Model implements ISearchResult
     {
         return route('client.author', $this);
     }
-
-    // only one time helper function
-    public function mergeOtherAuthor(Author $a_merge)
-    {
-        Log::info("Merging author $a_merge->id to $this->id");
-
-        foreach ($a_merge->externals as $model) {
-            $model->author()->associate($this);
-            $model->save();
-
-            Log::info("associated external: $model->id");
-        }
-        foreach ($a_merge->files as $model) {
-            $model->author()->associate($this);
-            $model->save();
-
-            Log::info("associated file: $model->id");
-        }
-        foreach ($a_merge->songLyrics as $model) {
-            $model->authors()->detach($a_merge);
-            $model->authors()->attach($this);
-            $model->save();
-
-            Log::info("associated song_lyric: $model->id");
-        }
-
-        // double check 
-        $count = $a_merge->externals()->count() + $a_merge->files()->count() + $a_merge->songLyrics()->count();
-
-        if ($count > 0) {
-            Log::error($a_merge);
-            return false;
-        }
-
-        $a_merge->delete();
-        return true;
-    }
 }
