@@ -8,12 +8,11 @@
     <span>
         @if($authors_count == 0)
             Autor překladu: neznámý
-        @elseif($authors_count == 1)
-            Autor překladu: {!! $song_l->authors()->first()->getLink()!!}
-        @elseif($authors_count > 1)
-            Autoři překladu:
+        @else
+            @if($authors_count == 1) Autor @else Autoři @endif překladu:
+            
             @foreach($song_l->authors as $author)
-                {!! $author->getLink() !!}{{ $loop->last ? '' : ', ' }}
+                <a href="{{route('client.author', $author)}}">{{$author->name}}</a>@if (!$loop->last), @endif
             @endforeach
         @endif
         @if($original_lyric !== NULL), originál: <a
@@ -26,15 +25,11 @@
 
     @if($authors_count == 0)
         <span>Autor: neznámý</span>
-    @elseif($authors_count == 1)
-        <span>Autor: {!! $song_l->authors()->first()->getLink() !!}</span>
-    @elseif($authors_count > 1)
-        <span>Autoři:
-            @foreach($song_l->authors as $author)
-                {!! $author->getLink() !!}{{ $loop->last ? '' : ', ' }}
-            @endforeach
-        </span>
+    @else
+        @if($authors_count == 1) Autor: @else Autoři: @endif
+                
+        @foreach($song_l->authors as $author)
+            <a href="{{route('client.author', $author)}}">{{$author->name}}</a>@if (!$loop->last), @endif
+        @endforeach
     @endif
-
-
 @endif

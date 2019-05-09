@@ -116,13 +116,7 @@ class Author extends Model implements ISearchResult
     {
         return $this->belongsToMany(File::class);
     }
-
-    // TODO
-    public function getLink()
-    {
-        return '<a href="' . route('client.author', $this) . '">' . $this->name . '</a>';
-    }
-
+    
     public function getTypeText()
     {
         return $this->type_string[$this->type];
