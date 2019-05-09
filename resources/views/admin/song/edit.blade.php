@@ -234,10 +234,10 @@
                 </p>
 
                 @if (isset($score_file))
-                    <h5>Nahrané noty - náhled ({{ $score_file->getPublicName() }})</h5>
+                    <h5>Nahrané noty - náhled ({{ $score_file->public_name }})</h5>
                     <a href="{{ $score_file->download_url }}"><img src="{{ $score_file->thumbnail_url }}" alt="noty_náhled" class="img-fluid mb-4"></a>
                 @elseif (isset($score_external))
-                    <h5>Externí noty - náhled ({{ $score_external->getPublicName() }})</h5>
+                    <h5>Externí noty - náhled ({{ $score_external->public_name }})</h5>
                     <a href="{{ $score_external->download_url }}"><img src="{{ $score_external->thumbnail_url }}" alt="noty_náhled" class="img-fluid mb-4"></a>
                 @endif
 
@@ -248,7 +248,7 @@
                             <li>Externí odkaz ({{ $external->type_string }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{ $external->url }}</a></li>                    
                         @endforeach
                         @foreach ($song_lyric->files as $file)
-                            <li>Soubor ({{ $file->type_string }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
+                            <li>Soubor ({{ $file->type_string }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->public_name}}</a></li>                    
                         @endforeach
                     </ul>
                 @endif

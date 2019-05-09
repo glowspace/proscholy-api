@@ -17,7 +17,7 @@
                                 <label class="input-group-text">Typ štítku</label>
                             </div>
                             <select class="custom-select" name="type" title="">
-                                @foreach(App\Tag::$type_string as $key => $value)
+                                @foreach(App\Tag::$type_string_values as $key => $value)
                                     <option value="{{ $key }}" {{ $key === 0  ? 'selected' : "" }}>{{ $value }}</option>
                                 @endforeach
                             </select>

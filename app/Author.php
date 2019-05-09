@@ -46,7 +46,7 @@ class Author extends Model
     use Searchable;
     protected $fillable = ['name', 'description', 'email', 'url', 'type'];
 
-    private $type_string
+    private $type_string_values
         = [
             0 => 'autor',
             1 => 'hudební uskupení',
@@ -119,7 +119,12 @@ class Author extends Model
 
     public function getTypeStringAttribute()
     {
-        return $this->type_string[$this->type];
+        return $this->type_string_values[$this->type];
+    }
+
+    public function getTypeStringValuesAttribute()
+    {
+        return $this->type_string_values;
     }
 
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)

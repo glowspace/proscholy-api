@@ -16,7 +16,7 @@
                     </div>
                     @foreach($externals as $external)
                         <a class="list-group-item"
-                           href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->getPublicName()}}</a>
+                           href="{{route('admin.external.edit',['id'=>$external->id])}}">{{$external->public_name}}</a>
                     @endforeach
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     </div>
                     @foreach($files as $file)
                         <a class="list-group-item"
-                            href="{{route('admin.file.edit',['id'=>$file->id])}}">{{$file->getPublicName()}}</a>
+                            href="{{route('admin.file.edit',['id'=>$file->id])}}">{{$file->public_name}}</a>
                     @endforeach
                 </div>
             </div>

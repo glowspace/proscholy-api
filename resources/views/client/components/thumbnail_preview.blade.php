@@ -3,7 +3,7 @@
         <p>Náhled souboru (klikněte na obrázek pro stažení)</p>
         <i style="color: #db0e0e;" class="fas fa-file-pdf"></i>
 
-        <span>{{$instance->getPublicName()}}</span>
+        <span>{{$instance->public_name}}</span>
     </div>
 
     {{-- edit link if user authorized --}}
@@ -19,7 +19,7 @@
 
     <div class="card-body">
         <a href="{{ $instance instanceof \App\File ? $instance->download_url : $instance->url }}" target="_blank">
-            <img src="{{ $instance->thumbnail_url }}" alt="{{ $instance->getPublicName() }}" class="img-fluid">
+            <img src="{{ $instance->thumbnail_url }}" alt="{{ $instance->public_name }}" class="img-fluid">
         </a>
     </div>
 </div>

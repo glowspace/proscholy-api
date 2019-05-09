@@ -18,7 +18,7 @@
                             <label class="input-group-text">Typ autora</label>
                         </div>
                         <select class="custom-select" name="type" title="">
-                            @foreach($author->type_string as $key => $value)
+                            @foreach($author->type_string_values as $key => $value)
                                 <option value="{{ $key }}" {{ $author->type ===  $key  ? 'selected' : "" }}>{{ $value }}</option>
                             @endforeach
                         </select>
@@ -61,7 +61,7 @@
                             <li>Externí odkaz ({{ $external->type_string }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{ $external->url }}</a></li>                    
                         @endforeach
                         @foreach ($author->files as $file)
-                            <li>Soubor ({{ $file->type_string }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
+                            <li>Soubor ({{ $file->type_string }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->public_name}}</a></li>                    
                         @endforeach
                     </ul>
                 @endif
