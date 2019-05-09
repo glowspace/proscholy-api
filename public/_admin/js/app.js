@@ -75420,6 +75420,10 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+>>>>>>> development
 
 
 
@@ -75432,6 +75436,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+<<<<<<< HEAD
 
   data: function data() {
     return {
@@ -75441,6 +75446,17 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
   },
 
 
+=======
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'is_original' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+>>>>>>> development
   apollo: {
     song_lyrics: {
       query: fetch_items,
@@ -75548,7 +75564,16 @@ var render = function() {
                       headers: _vm.headers,
                       items: _vm.song_lyrics,
                       search: _vm.search_string,
+<<<<<<< HEAD
                       filter: _vm.formFilter
+=======
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+>>>>>>> development
                     },
                     scopedSlots: _vm._u([
                       {
@@ -75787,6 +75812,10 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+>>>>>>> development
 
 
 
@@ -75911,7 +75940,16 @@ var render = function() {
                       headers: _vm.headers,
                       items: _vm.externals,
                       search: _vm.search_string,
+<<<<<<< HEAD
                       filter: _vm.formFilter
+=======
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+>>>>>>> development
                     },
                     scopedSlots: _vm._u([
                       {
@@ -76125,6 +76163,10 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+>>>>>>> development
 
 
 
@@ -76249,7 +76291,16 @@ var render = function() {
                       headers: _vm.headers,
                       items: _vm.files,
                       search: _vm.search_string,
+<<<<<<< HEAD
                       filter: _vm.formFilter
+=======
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+>>>>>>> development
                     },
                     scopedSlots: _vm._u([
                       {
@@ -76465,6 +76516,10 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+>>>>>>> development
 
 
 
@@ -76589,7 +76644,16 @@ var render = function() {
                       headers: _vm.headers,
                       items: _vm.authors,
                       search: _vm.search_string,
+<<<<<<< HEAD
                       filter: _vm.formFilter
+=======
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+>>>>>>> development
                     },
                     scopedSlots: _vm._u([
                       {
@@ -90248,6 +90312,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         altLabels: Boolean,
         vertical: Boolean,
         value: [Number, String]
+<<<<<<< HEAD
     },
     data: function data() {
         return {
@@ -90258,6 +90323,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             isReverse: false
         };
     },
+=======
+    },
+    data: function data() {
+        return {
+            inputValue: null,
+            isBooted: false,
+            steps: [],
+            content: [],
+            isReverse: false
+        };
+    },
+>>>>>>> development
 
     computed: {
         classes: function classes() {
@@ -90739,6 +90816,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     indeterminate: true
                 }
             })]);
+<<<<<<< HEAD
         },
         onSwipeLeft: function onSwipeLeft() {
             if (this.isActive) this.onChange();
@@ -90746,6 +90824,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         onSwipeRight: function onSwipeRight() {
             if (!this.isActive) this.onChange();
         },
+=======
+        },
+        onSwipeLeft: function onSwipeLeft() {
+            if (this.isActive) this.onChange();
+        },
+        onSwipeRight: function onSwipeRight() {
+            if (!this.isActive) this.onChange();
+        },
+>>>>>>> development
         onKeydown: function onKeydown(e) {
             if (e.keyCode === __WEBPACK_IMPORTED_MODULE_6__util_helpers__["s" /* keyCodes */].left && this.isActive || e.keyCode === __WEBPACK_IMPORTED_MODULE_6__util_helpers__["s" /* keyCodes */].right && !this.isActive) this.onChange();
         }
@@ -91278,6 +91365,18 @@ exports.push([module.i, "/* Theme */\n.theme--light.v-tabs__bar {\n  background-
     }
 });
 //# sourceMappingURL=tabs-computed.js.map
+<<<<<<< HEAD
+=======
+
+/***/ }),
+/* 518 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VTabsItems__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VTabsSlider__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VIcon__ = __webpack_require__(10);
+>>>>>>> development
 
 /***/ }),
 /* 518 */
@@ -91289,7 +91388,10 @@ exports.push([module.i, "/* Theme */\n.theme--light.v-tabs__bar {\n  background-
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VIcon__ = __webpack_require__(10);
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
 /**
  * Tabs generators
  *
@@ -91574,6 +91676,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         ripple: {
             type: [Boolean, Object],
             default: true
+<<<<<<< HEAD
         }
     },
     computed: {
@@ -91679,6 +91782,113 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //# sourceMappingURL=index.js.map
 
 /***/ }),
+=======
+        }
+    },
+    computed: {
+        classes: function classes() {
+            return _extends({
+                'v-tabs__item': true,
+                'v-tabs__item--disabled': this.disabled
+            }, this.groupClasses);
+        },
+        value: function value() {
+            var to = this.to || this.href || '';
+            if (this.$router && this.to === Object(this.to)) {
+                var resolve = this.$router.resolve(this.to, this.$route, this.append);
+                to = resolve.href;
+            }
+            return to.replace('#', '');
+        }
+    },
+    watch: {
+        $route: 'onRouteChange'
+    },
+    mounted: function mounted() {
+        this.onRouteChange();
+    },
+
+    methods: {
+        click: function click(e) {
+            // If user provides an
+            // actual link, do not
+            // prevent default
+            if (this.href && this.href.indexOf('#') > -1) e.preventDefault();
+            this.$emit('click', e);
+            this.to || this.toggle();
+        },
+        onRouteChange: function onRouteChange() {
+            var _this = this;
+
+            if (!this.to || !this.$refs.link) return;
+            var path = '_vnode.data.class.' + this.activeClass;
+            this.$nextTick(function () {
+                if (Object(__WEBPACK_IMPORTED_MODULE_3__util_helpers__["m" /* getObjectValueByPath */])(_this.$refs.link, path)) {
+                    _this.toggle();
+                }
+            });
+        }
+    },
+    render: function render(h) {
+        var link = this.generateRouteLink(this.classes);
+        var data = link.data;
+        // If disabled, use div as anchor tags do not support
+        // being disabled
+
+        var tag = this.disabled ? 'div' : link.tag;
+        data.ref = 'link';
+        return h('div', {
+            staticClass: 'v-tabs__div'
+        }, [h(tag, data, this.$slots.default)]);
+    }
+});
+//# sourceMappingURL=VTab.js.map
+
+/***/ }),
+/* 523 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VWindow_VWindowItem__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_console__ = __webpack_require__(7);
+// Extensions
+
+// Mixins
+
+/* @vue/component */
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__VWindow_VWindowItem__["a" /* default */].extend({
+    name: 'v-tab-item',
+    props: {
+        id: String
+    },
+    render: function render(h) {
+        var render = __WEBPACK_IMPORTED_MODULE_0__VWindow_VWindowItem__["a" /* default */].options.render.call(this, h);
+        // For backwards compatibility with v1.2
+        /* istanbul ignore next */
+        if (this.id) {
+            Object(__WEBPACK_IMPORTED_MODULE_1__util_console__["d" /* deprecate */])('id', 'value', this);
+            render.data.domProps = render.data.domProps || {};
+            render.data.domProps.id = this.id;
+        }
+        return render;
+    }
+}));
+//# sourceMappingURL=VTabItem.js.map
+
+/***/ }),
+/* 524 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VTextarea__ = __webpack_require__(191);
+/* unused harmony reexport VTextarea */
+
+
+/* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0__VTextarea__["a" /* default */]);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+>>>>>>> development
 /* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -92102,6 +92312,7 @@ exports.push([module.i, "/** Themes */\n.theme--light.v-time-picker-clock {\n  b
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VToolbarSideIcon__ = __webpack_require__(542);
 /* unused harmony reexport VToolbar */
 /* unused harmony reexport VToolbarSideIcon */
+<<<<<<< HEAD
 
 
 
@@ -92300,6 +92511,206 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
 
+=======
+
+
+
+var VToolbarTitle = Object(__WEBPACK_IMPORTED_MODULE_0__util_helpers__["h" /* createSimpleFunctional */])('v-toolbar__title');
+var VToolbarItems = Object(__WEBPACK_IMPORTED_MODULE_0__util_helpers__["h" /* createSimpleFunctional */])('v-toolbar__items');
+
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+    $_vuetify_subcomponents: {
+        VToolbar: __WEBPACK_IMPORTED_MODULE_1__VToolbar__["a" /* default */],
+        VToolbarItems: VToolbarItems,
+        VToolbarTitle: VToolbarTitle,
+        VToolbarSideIcon: __WEBPACK_IMPORTED_MODULE_2__VToolbarSideIcon__["a" /* default */]
+    }
+});
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 539 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_stylus_components_toolbar_styl__ = __webpack_require__(540);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_stylus_components_toolbar_styl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__src_stylus_components_toolbar_styl__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_applicationable__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_colorable__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_themeable__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_ssr_bootable__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__directives_scroll__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_console__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__util_mixins__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+// Styles
+
+// Mixins
+
+
+
+
+// Directives
+
+
+// Types
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_7__util_mixins__["a" /* default */])(Object(__WEBPACK_IMPORTED_MODULE_1__mixins_applicationable__["a" /* default */])('top', ['clippedLeft', 'clippedRight', 'computedHeight', 'invertedScroll', 'manualScroll']), __WEBPACK_IMPORTED_MODULE_2__mixins_colorable__["a" /* default */], __WEBPACK_IMPORTED_MODULE_4__mixins_ssr_bootable__["a" /* default */], __WEBPACK_IMPORTED_MODULE_3__mixins_themeable__["a" /* default */]
+/* @vue/component */
+).extend({
+    name: 'v-toolbar',
+    directives: { Scroll: __WEBPACK_IMPORTED_MODULE_5__directives_scroll__["a" /* default */] },
+    props: {
+        card: Boolean,
+        clippedLeft: Boolean,
+        clippedRight: Boolean,
+        dense: Boolean,
+        extended: Boolean,
+        extensionHeight: {
+            type: [Number, String],
+            validator: function validator(v) {
+                return !isNaN(parseInt(v));
+            }
+        },
+        flat: Boolean,
+        floating: Boolean,
+        height: {
+            type: [Number, String],
+            validator: function validator(v) {
+                return !isNaN(parseInt(v));
+            }
+        },
+        invertedScroll: Boolean,
+        manualScroll: Boolean,
+        prominent: Boolean,
+        scrollOffScreen: Boolean,
+        /* @deprecated */
+        scrollToolbarOffScreen: Boolean,
+        scrollTarget: String,
+        scrollThreshold: {
+            type: Number,
+            default: 300
+        },
+        tabs: Boolean
+    },
+    data: function data() {
+        return {
+            activeTimeout: null,
+            currentScroll: 0,
+            heights: {
+                mobileLandscape: 48,
+                mobile: 56,
+                desktop: 64,
+                dense: 48
+            },
+            isActive: true,
+            isExtended: false,
+            isScrollingUp: false,
+            previousScroll: 0,
+            savedScroll: 0,
+            target: null
+        };
+    },
+    computed: {
+        canScroll: function canScroll() {
+            // TODO: remove
+            if (this.scrollToolbarOffScreen) {
+                Object(__WEBPACK_IMPORTED_MODULE_6__util_console__["d" /* deprecate */])('scrollToolbarOffScreen', 'scrollOffScreen', this);
+                return true;
+            }
+            return this.scrollOffScreen || this.invertedScroll;
+        },
+        computedContentHeight: function computedContentHeight() {
+            if (this.height) return parseInt(this.height);
+            if (this.dense) return this.heights.dense;
+            if (this.prominent || this.$vuetify.breakpoint.mdAndUp) return this.heights.desktop;
+            if (this.$vuetify.breakpoint.smAndDown && this.$vuetify.breakpoint.width > this.$vuetify.breakpoint.height) return this.heights.mobileLandscape;
+            return this.heights.mobile;
+        },
+        computedExtensionHeight: function computedExtensionHeight() {
+            if (this.tabs) return 48;
+            if (this.extensionHeight) return parseInt(this.extensionHeight);
+            return this.computedContentHeight;
+        },
+        computedHeight: function computedHeight() {
+            if (!this.isExtended) return this.computedContentHeight;
+            return this.computedContentHeight + this.computedExtensionHeight;
+        },
+        computedMarginTop: function computedMarginTop() {
+            if (!this.app) return 0;
+            return this.$vuetify.application.bar;
+        },
+        classes: function classes() {
+            return _extends({
+                'v-toolbar': true,
+                'elevation-0': this.flat || !this.isActive && !this.tabs && this.canScroll,
+                'v-toolbar--absolute': this.absolute,
+                'v-toolbar--card': this.card,
+                'v-toolbar--clipped': this.clippedLeft || this.clippedRight,
+                'v-toolbar--dense': this.dense,
+                'v-toolbar--extended': this.isExtended,
+                'v-toolbar--fixed': !this.absolute && (this.app || this.fixed),
+                'v-toolbar--floating': this.floating,
+                'v-toolbar--prominent': this.prominent
+            }, this.themeClasses);
+        },
+        computedPaddingLeft: function computedPaddingLeft() {
+            if (!this.app || this.clippedLeft) return 0;
+            return this.$vuetify.application.left;
+        },
+        computedPaddingRight: function computedPaddingRight() {
+            if (!this.app || this.clippedRight) return 0;
+            return this.$vuetify.application.right;
+        },
+        computedTransform: function computedTransform() {
+            return !this.isActive ? this.canScroll ? -this.computedContentHeight : -this.computedHeight : 0;
+        },
+        currentThreshold: function currentThreshold() {
+            return Math.abs(this.currentScroll - this.savedScroll);
+        },
+        styles: function styles() {
+            return {
+                marginTop: this.computedMarginTop + 'px',
+                paddingRight: this.computedPaddingRight + 'px',
+                paddingLeft: this.computedPaddingLeft + 'px',
+                transform: 'translateY(' + this.computedTransform + 'px)'
+            };
+        }
+    },
+    watch: {
+        currentThreshold: function currentThreshold(val) {
+            if (this.invertedScroll) {
+                this.isActive = this.currentScroll > this.scrollThreshold;
+                return;
+            }
+            if (val < this.scrollThreshold || !this.isBooted) return;
+            this.isActive = this.isScrollingUp;
+            this.savedScroll = this.currentScroll;
+        },
+        isActive: function isActive() {
+            this.savedScroll = 0;
+        },
+        invertedScroll: function invertedScroll(val) {
+            this.isActive = !val;
+        },
+        manualScroll: function manualScroll(val) {
+            this.isActive = !val;
+        },
+        isScrollingUp: function isScrollingUp() {
+            this.savedScroll = this.savedScroll || this.currentScroll;
+        }
+    },
+    created: function created() {
+        if (this.invertedScroll || this.manualScroll) this.isActive = false;
+    },
+    mounted: function mounted() {
+        if (this.scrollTarget) {
+            this.target = document.querySelector(this.scrollTarget);
+        }
+    },
+
+>>>>>>> development
     methods: {
         onScroll: function onScroll() {
             if (!this.canScroll || this.manualScroll || typeof window === 'undefined') return;
