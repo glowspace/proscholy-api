@@ -14,6 +14,7 @@
             :items="song_lyrics"
             :search="search_string"
             :filter="formFilter"
+            :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
             class="users-list">
             
             <template v-slot:items="props">
