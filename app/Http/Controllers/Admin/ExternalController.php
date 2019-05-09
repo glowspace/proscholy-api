@@ -8,6 +8,7 @@ use App\External;
 use App\Author;
 use App\Song;
 use App\SongLyric;
+use Illuminate\Support\Arr;
 
 class ExternalController extends Controller
 {
@@ -68,11 +69,11 @@ class ExternalController extends Controller
 
     public function edit(Request $request, External $external)
     {
-        // this field needs to be saved as a singleton array or empty array
-        // if passed just as [$external->author] then the result is [{}] if there is nothing
-        $assigned_authors = $external->author ? [$external->author] : [];
+        $assigned_authors = $external->authors;
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
-
+        
+        // this field needs to be saved as a singleton array or empty array
+        // if passed just as [$external->song_lyric] then the result is [{}] if there is nothing
         $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
         $all_song_lyrics      = SongLyric::restricted()->select(['id', 'name'])->orderBy('name')->get();
 
@@ -111,18 +112,26 @@ class ExternalController extends Controller
             $external->save();
         }
 
-        // no author set, delete if there had been any association
-        if ($request->assigned_authors === null)
-        {
-            $external->author()->dissociate();
+        // handle the AUTHORS
+        if ($request->assigned_authors !== NULL) {
+            // old authors that had been saved in db - an ID is passed
+            $saved_authors = Arr::where($request->assigned_authors, function ($value, $key) {
+                return is_numeric($value);
+            });
+            $external->authors()->sync($saved_authors);
+    
+            // new authors to create - a string NAME is passed
+            $new_authors = Arr::where($request->assigned_authors, function ($value, $key) {
+                return !is_numeric($value);
+            });
+    
+            // create new authors and associate to current external model
+            foreach ($new_authors as $author) {
+                $external->authors()->create(['name' => $author]);
+            }
             $external->save();
-        }
-        else
-        {
-            $author_identification = $request->assigned_authors[0];
-            $author = Author::getByIdOrCreateWithName($author_identification, true);
-
-            $external->author()->associate($author);
+        } else {
+            $external->authors()->sync([]);
             $external->save();
         }
 

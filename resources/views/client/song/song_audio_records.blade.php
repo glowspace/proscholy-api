@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Název souboru</th>
-                                <th scope="col">Autor</th>
+                                <th scope="col">Autoři</th>
                                 <th scope="col">Staženo</th>
                             </tr>
                         </thead>
@@ -49,7 +49,13 @@
                                             <br/><a href="{{ route('admin.file.edit', $file) }}">Upravit soubor</a>
                                         @endif
                                     </td>
-                                    <td>{{ $file->author == null ? "-" : $file->author->name }}</td>
+                                    <td>
+                                        @forelse ($file->authors as $author)
+                                            <a href="{{route('client.author', $author)}}">{{$author->name}}</a>@if (!$loop->last), @endif
+                                        @empty
+                                            -
+                                        @endforelse
+                                    </td>
                                     <td>{{ $file->downloads }}x</td>
                                 </tr>
                             @endforeach

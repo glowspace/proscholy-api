@@ -13,7 +13,6 @@
                 </td>
                 <td>
                     @if(isset($record->songLyric))
-                        {!! $record->songLyric->getLink() !!}
                     @elseif(isset($record->placeholder))
                        {{$record->placeholder}}
                     @else
