@@ -28,7 +28,7 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-append mr-3">
-                            <label class="input-group-text">Autor/Interpret</label>
+                            <label class="input-group-text">Autoři</label>
                         </div>
 
                         @include('admin.components.magicsuggest', [
@@ -37,7 +37,7 @@
                             'display_field' => 'name',
                             'list_all' => $all_authors,
                             'list_selected' => $assigned_authors,
-                            'is_single' => true,
+                            'is_single' => false,
                             'disabled' => false
                         ])
                     </div>

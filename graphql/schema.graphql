@@ -57,6 +57,8 @@ type Author {
     url: String
     visits: Int
     public_url: String
+    externals: [External] @belongsToMany
+    files: [File] @belongsToMany
 }
 
 type Song {
@@ -89,7 +91,7 @@ type External {
     public_name: String
     type: Int
     type_string: String
-    author: Author @belongsTo
+    authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
 }
 
@@ -99,7 +101,7 @@ type File {
     download_url: String
     type: Int
     type_string: String
-    author: Author @belongsTo
+    authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
 }
 

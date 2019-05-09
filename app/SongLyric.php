@@ -133,12 +133,6 @@ class SongLyric extends Model implements ISearchResult
         return $this->belongsToMany(Tag::class);
     }
 
-    // OBSOLETE
-    public function getLink()
-    {
-        return route('client.song.text', ['id' => $this->id]);
-    }
-
     public function externals()
     {
         return $this->hasMany(External::class);
