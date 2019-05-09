@@ -36,7 +36,7 @@ class External extends Model
 {
     protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author'];
 
-    public $type_string
+    private $type_string
         = [
             0 => 'odkaz',
             1 => 'spotify URI',
@@ -47,17 +47,9 @@ class External extends Model
             6 => 'youtube kanál'
         ];
 
-    /**
-     * @return string
-     */
-    public function getTypeString()
-    {
-        return $this->type_string[$this->type];
-    }
-
     public function getTypeStringAttribute()
     {
-        return $this->getTypeString();
+        return $this->type_string[$this->type];
     }
 
     public function scopeScores($query)

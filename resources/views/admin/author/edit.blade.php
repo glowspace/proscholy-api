@@ -58,10 +58,10 @@
                     <h5>Přehled všech autorských materiálů</h5>
                     <ul>
                         @foreach ($author->externals as $external)
-                            <li>Externí odkaz ({{ $external->getTypeString() }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{ $external->url }}</a></li>                    
+                            <li>Externí odkaz ({{ $external->type_string }}): <a target="_blank" href="{{ route('admin.external.edit', $external) }}">{{ $external->url }}</a></li>                    
                         @endforeach
                         @foreach ($author->files as $file)
-                            <li>Soubor ({{ $file->getTypeString() }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
+                            <li>Soubor ({{ $file->type_string }}): <a target="_blank" href="{{ route('admin.file.edit', $file) }}">{{$file->getPublicName()}}</a></li>                    
                         @endforeach
                     </ul>
                 @endif

@@ -35,7 +35,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $file->getTypeString() }}
+                                        {{ $file->type_string }}
                                     </td>
                                     <td>
                                         @forelse ($file->authors as $author)

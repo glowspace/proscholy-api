@@ -8,11 +8,11 @@ class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type', 'parent_tag_id'];
 
-    public static $type_string = [
+    private static $type_string = [
         'neoficiální', 'oficiální (liturgie)'
     ];
 
-    public function getTypeText()
+    public function getTypeStringAttribute()
     {
         return self::$type_string[$this->type];
     }
@@ -53,11 +53,6 @@ class Tag extends Model
         }
     }
 
-    // public function isAncestorOf()
-    // {
-
-    // }
-
     public function child_tags()
     {
         return $this->hasMany(Tag::class, 'parent_tag_id');
@@ -67,13 +62,4 @@ class Tag extends Model
     {
         return $this->belongsTo(Tag::class, 'parent_tag_id');
     }
-
-    // public function getParentTag()
-    // {
-    //     if ($this->parent_tag_id !== NULL) {
-    //         return Tag::find($this->parent_tag_id);
-    //     }
-
-    //     return NULL;
-    // }
 }

@@ -40,13 +40,13 @@ use Log;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Author whereVisits($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]    $memberships
  */
-class Author extends Model implements ISearchResult
+class Author extends Model
 {
     // Laravel Scout Trait used for full-text searching
     use Searchable;
     protected $fillable = ['name', 'description', 'email', 'url', 'type'];
 
-    public $type_string
+    private $type_string
         = [
             0 => 'autor',
             1 => 'hudební uskupení',
@@ -116,15 +116,10 @@ class Author extends Model implements ISearchResult
     {
         return $this->belongsToMany(File::class);
     }
-    
-    public function getTypeText()
-    {
-        return $this->type_string[$this->type];
-    }
 
     public function getTypeStringAttribute()
     {
-        return $this->getTypeText();
+        return $this->type_string[$this->type];
     }
 
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
@@ -161,18 +156,6 @@ class Author extends Model implements ISearchResult
         $searchable = Arr::only($array, ['name', 'description']);
 
         return $searchable;
-    }
-
-    // implementing INTERFACE ISearchResult
-
-    public function getSearchTitle()
-    {
-        return $this->name;
-    }
-
-    public function getSearchText()
-    {
-        return $this->type_string[$this->type];
     }
 
     public function getPublicUrlAttribute()

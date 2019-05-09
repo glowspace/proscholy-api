@@ -42,7 +42,7 @@ class File extends Model
         'deleting' => \App\Events\FileDeleting::class,
     ];
 
-    public $type_string
+    private $type_string
         = [
             0 => 'soubor',
             1 => 'text',
@@ -80,14 +80,9 @@ class File extends Model
         ]);
     }
 
-    public function getTypeString()
-    {
-        return $this->type_string[$this->type];
-    }
-
     public function getTypeStringAttribute() 
     {
-        return $this->getTypeString();
+        return $this->type_string[$this->type];
     }
 
     protected static function getThubmnailsFolder()

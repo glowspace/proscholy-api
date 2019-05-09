@@ -13,7 +13,7 @@
                         <input required class="form-control" autofocus name="name" placeholder="název štítku (v množném čísle - např. dětské písně)" value="{{$tag->name}}">
                     </div>
 
-                    <p>Tento štítek je nastaven jako: {{ $tag->getTypeText() }}</p>
+                    <p>Tento štítek je nastaven jako: {{ $tag->type_string }}</p>
                     <br>
 
                     @if ($tag->child_tags()->count() > 0)
