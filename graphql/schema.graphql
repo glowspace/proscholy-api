@@ -32,6 +32,8 @@ type Query {
     ): [File!]! @all
     tags(type: Int @eq): [Tag] @all
     me: User @auth
+
+    author(id: ID!): Author! @find
 }
 
 type Mutation @group(middleware: ["auth:api"]) {
