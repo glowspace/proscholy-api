@@ -65542,8 +65542,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_notification__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65628,9 +65626,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_5_vuetify___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_7_vue_notification___default.a);
 
 
-
 Vue.use(__WEBPACK_IMPORTED_MODULE_8_vee_validate__["a" /* default */]);
-Vue.use(__WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel___default.a);
 
 var app = new Vue({
   el: '#app',
@@ -67239,10 +67235,19 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
           type: "success"
         });
       }).catch(function (error) {
-        //   this.$setLaravelValidationErrorsFromResponse(error.data);
-        //   console.log(error);
-        // this.err = error;
         _this.$validator.errors.clear();
+
+        if (error.graphQLErrors.count() == 0) {
+          // unknown error happened
+          _this.$notify({
+            group: "admin",
+            title: "Chyba při ukládání",
+            text: "Uživatel nebyl uložen",
+            type: "error"
+          });
+          return;
+        }
+
         var errorFields = error.graphQLErrors[0].extensions.validation;
 
         var _iteratorNormalCompletion = true;
@@ -67274,8 +67279,6 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
             }
           }
         }
-
-        console.log(errorFields);
       });
     },
     move: function move(diff) {
@@ -105604,64 +105607,6 @@ VeeValidate$1.withValidation = withValidation;
 
 /* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
 
-
-
-/***/ }),
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
-* vee-validate-laravel v1.0.1
-*/
-(function (global, factory) {
-	 true ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.VeeValidateLaravel = factory());
-}(this, (function () { 'use strict';
-
-var veeValidateLaravel = {
-    install: function install(Vue, options) {
-        Vue.prototype.$setLaravelValidationErrorsFromResponse = function(errorResponse) {
-            var this$1 = this;
-
-            // only allow this function to be run if the validator exists
-            if (!this.hasOwnProperty('$validator')) {
-                return;
-            }
-
-            // clear errors
-            this.$validator.errors.clear();
-
-            // check if errors exist
-            if (!errorResponse.hasOwnProperty('errors')) {
-                return;
-            }
-
-            var errorFields = Object.keys(errorResponse.errors);
-
-            // insert laravel errors
-            for (var i = 0; i < errorFields.length; i++) {
-                var field = errorFields[i];
-
-                var errorString = errorResponse.errors[field].join(', ');
-                this$1.$validator.errors.add({ field: field, msg: errorString });
-            }
-        };
-
-        Vue.prototype.$laravelData = {};
-        if (options) {
-            Vue.prototype.$laravelData = options;
-        }
-    }
-};
-
-return veeValidateLaravel;
-
-})));
 
 
 /***/ })

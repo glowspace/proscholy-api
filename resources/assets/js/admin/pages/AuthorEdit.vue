@@ -141,17 +141,24 @@ export default {
             });
         })
         .catch(error => {
-        //   this.$setLaravelValidationErrorsFromResponse(error.data);
-        //   console.log(error);
-            // this.err = error;
             this.$validator.errors.clear();
-            var errorFields = error.graphQLErrors[0].extensions.validation;
+
+            if (error.graphQLErrors.count() == 0) {
+                // unknown error happened
+                this.$notify({
+                    group: "admin",
+                    title: "Chyba při ukládání",
+                    text: "Uživatel nebyl uložen",
+                    type: "error"
+                });
+                return;
+            }
+
+            let errorFields = error.graphQLErrors[0].extensions.validation;
 
             for (const [key, value] of Object.entries(errorFields)) {
                 this.$validator.errors.add({ field: key, msg: value });
             }
-
-            console.log(errorFields);
         });
     },
 
