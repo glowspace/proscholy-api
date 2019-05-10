@@ -25,6 +25,8 @@ Vue.component('externals-list', require('./components/ExternalsList.vue'));
 Vue.component('files-list', require('./components/FilesList.vue'));
 Vue.component('authors-list', require('./components/AuthorsList.vue'));
 
+Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
+
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -73,33 +75,11 @@ const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
 })
 
-import Vuetify, {
-  VApp, // required
-  VNavigationDrawer,
-  VDataTable,
-  VContainer,
-  VLayout,
-  VFlex,
-  VCard,
-  VCardText,
-  VTextField
-} from 'vuetify/lib'
+import Vuetify from 'vuetify'
 
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VNavigationDrawer,
-    VDataTable,
-    VContainer,
-    VLayout,
-    VFlex,
-    VCard,
-    VCardText,
-    VTextField
-  }
-})
+Vue.use(Vuetify)
 
-// import 'vuetify/dist/vuetify.min.css'
+import 'vuetify/dist/vuetify.min.css'
 
 const app = new Vue({
     el: '#app',

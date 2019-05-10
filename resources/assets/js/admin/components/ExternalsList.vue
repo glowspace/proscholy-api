@@ -7,7 +7,7 @@
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row>
+      <v-layout row> 
         <v-flex xs12>
           <v-data-table
             :headers="headers"

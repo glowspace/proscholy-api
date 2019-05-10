@@ -33,15 +33,21 @@ type Query {
     tags(type: Int @eq): [Tag] @all
     me: User @auth
 
-    author(id: ID!): Author! @find
+    author(id: ID! @eq): Author! @find
 }
 
-type Mutation @group(middleware: ["auth:api"]) {
+type Mutation @group(middleware: []) {
     delete_author(id: ID!): Author @delete
     delete_external(id: ID!): External @delete
     delete_file(id: ID!): File @delete
     delete_song_lyric(id: ID!): SongLyric @delete
     delete_tag(id: ID!): Tag @delete
+
+    update_author(id: ID!, 
+        name: String!
+        type: Int!
+        description: String
+    ): Author @update
 }
 
 type User {
@@ -55,6 +61,7 @@ type Author {
     description: String
     type: Int
     type_string: String
+    type_string_values: [String]
     email: String
     url: String
     visits: Int
