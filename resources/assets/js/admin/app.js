@@ -76,10 +76,16 @@ const apolloProvider = new VueApollo({
 })
 
 import Vuetify from 'vuetify'
-
 Vue.use(Vuetify)
-
 import 'vuetify/dist/vuetify.min.css'
+
+
+import Notifications from 'vue-notification'
+Vue.use(Notifications)
+
+import VeeValidate from 'vee-validate'
+Vue.use(VeeValidate)
+
 
 const app = new Vue({
     el: '#app',

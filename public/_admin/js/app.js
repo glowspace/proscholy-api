@@ -2206,11 +2206,11 @@ function toComment(sourceMap) {
 /* unused harmony export concat */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApolloLink; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return execute; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__ = __webpack_require__(31);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ts_invariant__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_apollo_utilities__ = __webpack_require__(5);
 /* unused harmony reexport getOperationName */
@@ -2751,9 +2751,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GraphQLError = GraphQLError;
 
-var _printError = __webpack_require__(27);
+var _printError = __webpack_require__(28);
 
-var _location = __webpack_require__(28);
+var _location = __webpack_require__(29);
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -2907,7 +2907,7 @@ exports.visitWithTypeInfo = visitWithTypeInfo;
 exports.getVisitFn = getVisitFn;
 exports.BREAK = exports.QueryDocumentKeys = void 0;
 
-var _inspect = _interopRequireDefault(__webpack_require__(22));
+var _inspect = _interopRequireDefault(__webpack_require__(23));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16912,6 +16912,17 @@ module.exports = Cancel;
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
+if (false) {
+  module.exports = require('./vue.common.prod.js')
+} else {
+  module.exports = __webpack_require__(57)
+}
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -16920,7 +16931,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = inspect;
 
-var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(23));
+var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(24));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17050,7 +17061,7 @@ function getObjectTag(object) {
 }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17074,7 +17085,7 @@ var _default = nodejsCustomInspectSymbol;
 exports.default = _default;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17085,7 +17096,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = defineToJSON;
 
-var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(23));
+var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(24));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17114,7 +17125,7 @@ classObject) {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17141,7 +17152,7 @@ function invariant(condition, message) {
 }
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17187,12 +17198,12 @@ var _syntaxError = __webpack_require__(65);
 
 var _locatedError = __webpack_require__(66);
 
-var _printError = __webpack_require__(27);
+var _printError = __webpack_require__(28);
 
 var _formatError = __webpack_require__(67);
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17203,7 +17214,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.printError = printError;
 
-var _location = __webpack_require__(28);
+var _location = __webpack_require__(29);
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -17344,7 +17355,7 @@ function lpad(len, str) {
 }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17390,7 +17401,7 @@ function getLocation(source, position) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17498,7 +17509,7 @@ function printBlockString(value) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17515,7 +17526,7 @@ var Observable = __WEBPACK_IMPORTED_MODULE_0_zen_observable___default.a;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17528,7 +17539,7 @@ exports.print = print;
 
 var _visitor = __webpack_require__(12);
 
-var _blockString = __webpack_require__(29);
+var _blockString = __webpack_require__(30);
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -17838,7 +17849,7 @@ function hasMultilineItems(maybeArray) {
 }
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17870,17 +17881,6 @@ exports.get = function () {
 };
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-if (false) {
-  module.exports = require('./vue.common.prod.js')
-} else {
-  module.exports = __webpack_require__(57)
-}
-
 
 /***/ }),
 /* 34 */
@@ -54765,13 +54765,13 @@ exports.parseConstValue = parseConstValue;
 exports.parseTypeReference = parseTypeReference;
 exports.parseNamedType = parseNamedType;
 
-var _inspect = _interopRequireDefault(__webpack_require__(22));
+var _inspect = _interopRequireDefault(__webpack_require__(23));
 
-var _defineToJSON = _interopRequireDefault(__webpack_require__(24));
+var _defineToJSON = _interopRequireDefault(__webpack_require__(25));
 
 var _source = __webpack_require__(63);
 
-var _error = __webpack_require__(26);
+var _error = __webpack_require__(27);
 
 var _lexer = __webpack_require__(68);
 
@@ -56294,7 +56294,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Source = void 0;
 
-var _invariant = _interopRequireDefault(__webpack_require__(25));
+var _invariant = _interopRequireDefault(__webpack_require__(26));
 
 var _defineToStringTag = _interopRequireDefault(__webpack_require__(64));
 
@@ -56457,7 +56457,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatError = formatError;
 
-var _invariant = _interopRequireDefault(__webpack_require__(25));
+var _invariant = _interopRequireDefault(__webpack_require__(26));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56506,11 +56506,11 @@ exports.createLexer = createLexer;
 exports.getTokenDesc = getTokenDesc;
 exports.TokenKind = void 0;
 
-var _defineToJSON = _interopRequireDefault(__webpack_require__(24));
+var _defineToJSON = _interopRequireDefault(__webpack_require__(25));
 
-var _error = __webpack_require__(26);
+var _error = __webpack_require__(27);
 
-var _blockString = __webpack_require__(29);
+var _blockString = __webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60699,7 +60699,7 @@ var HttpLink = (function (_super) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return serializeFetchParameter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return selectURI; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ts_invariant__ = __webpack_require__(82);
 
@@ -62131,7 +62131,7 @@ var Cache;
 var Cache = __webpack_require__(86).Cache;
 var tuple = __webpack_require__(87).tuple;
 var Entry = __webpack_require__(88).Entry;
-var getLocal = __webpack_require__(32).get;
+var getLocal = __webpack_require__(33).get;
 
 // Exported so that custom makeCacheKey functions can easily reuse the
 // default implementation (with different arguments).
@@ -62635,7 +62635,7 @@ tuple.prototype.concat = function () {
 "use strict";
 
 
-var getLocal = __webpack_require__(32).get;
+var getLocal = __webpack_require__(33).get;
 var UNKNOWN_VALUE = Object.create(null);
 var emptySetPool = [];
 var entryPool = [];
@@ -65539,6 +65539,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuetify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_notification__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65552,7 +65557,7 @@ __webpack_require__(35);
 //  */
 // require('materialize-css');
 
-window.Vue = __webpack_require__(33);
+window.Vue = __webpack_require__(22);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -65616,10 +65621,16 @@ var apolloProvider = new __WEBPACK_IMPORTED_MODULE_4_vue_apollo__["a" /* default
 });
 
 
-
 Vue.use(__WEBPACK_IMPORTED_MODULE_5_vuetify___default.a);
 
 
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_7_vue_notification___default.a);
+
+
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_8_vee_validate__["a" /* default */]);
+Vue.use(__WEBPACK_IMPORTED_MODULE_9_vee_validate_laravel___default.a);
 
 var app = new Vue({
   el: '#app',
@@ -67097,8 +67108,10 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(['\n    query ($id: ID!) {\n        author(id: $id) {\n            id,\n            name,\n            type,\n            type_string_values,\n            description\n        }\n    }'], ['\n    query ($id: ID!) {\n        author(id: $id) {\n            id,\n            name,\n            type,\n            type_string_values,\n            description\n        }\n    }']),
-    _templateObject2 = _taggedTemplateLiteral(['\n    mutation ($id: ID!, $name: String!, $description: String, $type: Int!) {\n        update_author(id: $id, name: $name, description: $description, type: $type) {\n            id\n        }\n    }\n'], ['\n    mutation ($id: ID!, $name: String!, $description: String, $type: Int!) {\n        update_author(id: $id, name: $name, description: $description, type: $type) {\n            id\n        }\n    }\n']);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"], ["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"], ["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -67131,7 +67144,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
-
+//
 
 
 
@@ -67140,64 +67153,135 @@ var fetch_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateOb
 var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
+  props: ["preset-id"],
 
-    data: function data() {
-        return {
-            type: undefined,
-            type_values: [],
-            description: "",
-            name: ""
-        };
-    },
+  data: function data() {
+    return {
+      id: undefined,
+      type: undefined,
+      type_values: [],
+      description: "",
+      name: "",
+      err: "",
 
-
-    apollo: {
-        author: {
-            query: fetch_item,
-            variables: function variables() {
-                return {
-                    id: this.id
-                };
-            },
-
-            result: function result(result) {
-                var author = result.data.author;
-                console.log(author);
-                // one-way copy the data
-                this.description = author.description;
-                this.name = author.name;
-                this.type = author.type;
-                this.type_values = author.type_string_values.map(function (val, index) {
-                    return { value: index, text: val };
-                });
+      dictionary: {
+        attributes: {
+          email: "E-mail Address"
+        },
+        custom: {
+          name: {
+            required: function required() {
+              return "Name can not be empty";
             }
+          }
         }
-    },
+      }
+    };
+  },
 
-    computed: {},
 
-    methods: {
-        submit: function submit() {
-            this.$apollo.mutate({
-                mutation: update_item,
-                variables: {
-                    id: this.id,
-                    name: this.name,
-                    description: this.description,
-                    type: this.type
-                }
-                // refetchQueries: [{
-                //     query: fetch_item
-                // }]
-            }).then(function (result) {
-                console.log(result);
-                console.log('uspesne upraveno');
-            }).catch(function (error) {
-                console.log('error');
-            });
-        }
+  apollo: {
+    author: {
+      query: fetch_item,
+      variables: function variables() {
+        return {
+          id: this.id
+        };
+      },
+
+      result: function result(result) {
+        var author = result.data.author;
+        console.log(author);
+        // one-way copy the data
+        this.description = author.description;
+        this.name = author.name;
+        this.type = author.type;
+        this.type_values = author.type_string_values.map(function (val, index) {
+          return { value: index, text: val };
+        });
+      }
     }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    this.id = this.presetId;
+    this.$validator.localize('en', this.dictionary);
+  },
+
+
+  computed: {},
+
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      this.$apollo.mutate({
+        mutation: update_item,
+        variables: {
+          id: this.id,
+          name: this.name,
+          description: this.description,
+          type: this.type
+          // refetchQueries: [{
+          //     query: fetch_item
+          // }]
+        } }).then(function (result) {
+        _this.$validator.errors.clear();
+        console.log(result);
+        _this.$notify({
+          group: "admin",
+          title: "Úspěšně uloženo :)",
+          text: "Autor byl úspěšně uložen",
+          type: "success"
+        });
+      }).catch(function (error) {
+        //   this.$setLaravelValidationErrorsFromResponse(error.data);
+        //   console.log(error);
+        // this.err = error;
+        _this.$validator.errors.clear();
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = Object.entries(errorFields)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _ref = _step.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            _this.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        console.log(errorFields);
+      });
+    },
+    move: function move(diff) {
+      this.id = Number(this.id) + diff;
+    }
+  }
 });
 
 /***/ }),
@@ -67211,6 +67295,8 @@ var render = function() {
   return _c(
     "v-app",
     [
+      _c("notifications", { attrs: { group: "admin" } }),
+      _vm._v(" "),
       _c(
         "v-container",
         { attrs: { "grid-list-xs": "" } },
@@ -67225,9 +67311,15 @@ var render = function() {
                 [
                   _c(
                     "v-form",
+                    { ref: "form" },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "Jméno autora", required: "" },
+                        attrs: {
+                          label: "Jméno autora",
+                          required: "",
+                          "data-vv-name": "name",
+                          "error-messages": _vm.errors.collect("name")
+                        },
                         model: {
                           value: _vm.name,
                           callback: function($$v) {
@@ -67249,7 +67341,12 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-textarea", {
-                        attrs: { name: "input-7-4", label: "Popis autora" },
+                        attrs: {
+                          name: "input-7-4",
+                          label: "Popis autora",
+                          "data-vv-name": "description",
+                          "error-messages": _vm.errors.collect("description")
+                        },
                         model: {
                           value: _vm.description,
                           callback: function($$v) {
@@ -67261,7 +67358,31 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-btn", { on: { click: _vm.submit } }, [
                         _vm._v("Uložit")
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.move(-1)
+                            }
+                          }
+                        },
+                        [_vm._v("Předchozí uživatel")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.move(1)
+                            }
+                          }
+                        },
+                        [_vm._v("Další uživatel")]
+                      )
                     ],
                     1
                   )
@@ -67296,7 +67417,7 @@ if (false) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(33));
+		module.exports = factory(__webpack_require__(22));
 	else if(typeof define === 'function' && define.amd)
 		define(["vue"], factory);
 	else if(typeof exports === 'object')
@@ -93312,6 +93433,12235 @@ exports = module.exports = __webpack_require__(7)(false);
 exports.push([module.i, "/*!\n* Vuetify v1.5.14\n* Forged by John Leider\n* Released under the MIT License.\n*/@-webkit-keyframes shake{59%{margin-left:0}60%,80%{margin-left:2px}70%,90%{margin-left:-2px}}@keyframes shake{59%{margin-left:0}60%,80%{margin-left:2px}70%,90%{margin-left:-2px}}.black{background-color:#000!important;border-color:#000!important}.black--text{color:#000!important;caret-color:#000!important}.white{background-color:#fff!important;border-color:#fff!important}.white--text{color:#fff!important;caret-color:#fff!important}.transparent{background-color:transparent!important;border-color:transparent!important}.transparent--text{color:transparent!important;caret-color:transparent!important}.red{background-color:#f44336!important;border-color:#f44336!important}.red--text{color:#f44336!important;caret-color:#f44336!important}.red.lighten-5{background-color:#ffebee!important;border-color:#ffebee!important}.red--text.text--lighten-5{color:#ffebee!important;caret-color:#ffebee!important}.red.lighten-4{background-color:#ffcdd2!important;border-color:#ffcdd2!important}.red--text.text--lighten-4{color:#ffcdd2!important;caret-color:#ffcdd2!important}.red.lighten-3{background-color:#ef9a9a!important;border-color:#ef9a9a!important}.red--text.text--lighten-3{color:#ef9a9a!important;caret-color:#ef9a9a!important}.red.lighten-2{background-color:#e57373!important;border-color:#e57373!important}.red--text.text--lighten-2{color:#e57373!important;caret-color:#e57373!important}.red.lighten-1{background-color:#ef5350!important;border-color:#ef5350!important}.red--text.text--lighten-1{color:#ef5350!important;caret-color:#ef5350!important}.red.darken-1{background-color:#e53935!important;border-color:#e53935!important}.red--text.text--darken-1{color:#e53935!important;caret-color:#e53935!important}.red.darken-2{background-color:#d32f2f!important;border-color:#d32f2f!important}.red--text.text--darken-2{color:#d32f2f!important;caret-color:#d32f2f!important}.red.darken-3{background-color:#c62828!important;border-color:#c62828!important}.red--text.text--darken-3{color:#c62828!important;caret-color:#c62828!important}.red.darken-4{background-color:#b71c1c!important;border-color:#b71c1c!important}.red--text.text--darken-4{color:#b71c1c!important;caret-color:#b71c1c!important}.red.accent-1{background-color:#ff8a80!important;border-color:#ff8a80!important}.red--text.text--accent-1{color:#ff8a80!important;caret-color:#ff8a80!important}.red.accent-2{background-color:#ff5252!important;border-color:#ff5252!important}.red--text.text--accent-2{color:#ff5252!important;caret-color:#ff5252!important}.red.accent-3{background-color:#ff1744!important;border-color:#ff1744!important}.red--text.text--accent-3{color:#ff1744!important;caret-color:#ff1744!important}.red.accent-4{background-color:#d50000!important;border-color:#d50000!important}.red--text.text--accent-4{color:#d50000!important;caret-color:#d50000!important}.pink{background-color:#e91e63!important;border-color:#e91e63!important}.pink--text{color:#e91e63!important;caret-color:#e91e63!important}.pink.lighten-5{background-color:#fce4ec!important;border-color:#fce4ec!important}.pink--text.text--lighten-5{color:#fce4ec!important;caret-color:#fce4ec!important}.pink.lighten-4{background-color:#f8bbd0!important;border-color:#f8bbd0!important}.pink--text.text--lighten-4{color:#f8bbd0!important;caret-color:#f8bbd0!important}.pink.lighten-3{background-color:#f48fb1!important;border-color:#f48fb1!important}.pink--text.text--lighten-3{color:#f48fb1!important;caret-color:#f48fb1!important}.pink.lighten-2{background-color:#f06292!important;border-color:#f06292!important}.pink--text.text--lighten-2{color:#f06292!important;caret-color:#f06292!important}.pink.lighten-1{background-color:#ec407a!important;border-color:#ec407a!important}.pink--text.text--lighten-1{color:#ec407a!important;caret-color:#ec407a!important}.pink.darken-1{background-color:#d81b60!important;border-color:#d81b60!important}.pink--text.text--darken-1{color:#d81b60!important;caret-color:#d81b60!important}.pink.darken-2{background-color:#c2185b!important;border-color:#c2185b!important}.pink--text.text--darken-2{color:#c2185b!important;caret-color:#c2185b!important}.pink.darken-3{background-color:#ad1457!important;border-color:#ad1457!important}.pink--text.text--darken-3{color:#ad1457!important;caret-color:#ad1457!important}.pink.darken-4{background-color:#880e4f!important;border-color:#880e4f!important}.pink--text.text--darken-4{color:#880e4f!important;caret-color:#880e4f!important}.pink.accent-1{background-color:#ff80ab!important;border-color:#ff80ab!important}.pink--text.text--accent-1{color:#ff80ab!important;caret-color:#ff80ab!important}.pink.accent-2{background-color:#ff4081!important;border-color:#ff4081!important}.pink--text.text--accent-2{color:#ff4081!important;caret-color:#ff4081!important}.pink.accent-3{background-color:#f50057!important;border-color:#f50057!important}.pink--text.text--accent-3{color:#f50057!important;caret-color:#f50057!important}.pink.accent-4{background-color:#c51162!important;border-color:#c51162!important}.pink--text.text--accent-4{color:#c51162!important;caret-color:#c51162!important}.purple{background-color:#9c27b0!important;border-color:#9c27b0!important}.purple--text{color:#9c27b0!important;caret-color:#9c27b0!important}.purple.lighten-5{background-color:#f3e5f5!important;border-color:#f3e5f5!important}.purple--text.text--lighten-5{color:#f3e5f5!important;caret-color:#f3e5f5!important}.purple.lighten-4{background-color:#e1bee7!important;border-color:#e1bee7!important}.purple--text.text--lighten-4{color:#e1bee7!important;caret-color:#e1bee7!important}.purple.lighten-3{background-color:#ce93d8!important;border-color:#ce93d8!important}.purple--text.text--lighten-3{color:#ce93d8!important;caret-color:#ce93d8!important}.purple.lighten-2{background-color:#ba68c8!important;border-color:#ba68c8!important}.purple--text.text--lighten-2{color:#ba68c8!important;caret-color:#ba68c8!important}.purple.lighten-1{background-color:#ab47bc!important;border-color:#ab47bc!important}.purple--text.text--lighten-1{color:#ab47bc!important;caret-color:#ab47bc!important}.purple.darken-1{background-color:#8e24aa!important;border-color:#8e24aa!important}.purple--text.text--darken-1{color:#8e24aa!important;caret-color:#8e24aa!important}.purple.darken-2{background-color:#7b1fa2!important;border-color:#7b1fa2!important}.purple--text.text--darken-2{color:#7b1fa2!important;caret-color:#7b1fa2!important}.purple.darken-3{background-color:#6a1b9a!important;border-color:#6a1b9a!important}.purple--text.text--darken-3{color:#6a1b9a!important;caret-color:#6a1b9a!important}.purple.darken-4{background-color:#4a148c!important;border-color:#4a148c!important}.purple--text.text--darken-4{color:#4a148c!important;caret-color:#4a148c!important}.purple.accent-1{background-color:#ea80fc!important;border-color:#ea80fc!important}.purple--text.text--accent-1{color:#ea80fc!important;caret-color:#ea80fc!important}.purple.accent-2{background-color:#e040fb!important;border-color:#e040fb!important}.purple--text.text--accent-2{color:#e040fb!important;caret-color:#e040fb!important}.purple.accent-3{background-color:#d500f9!important;border-color:#d500f9!important}.purple--text.text--accent-3{color:#d500f9!important;caret-color:#d500f9!important}.purple.accent-4{background-color:#a0f!important;border-color:#a0f!important}.purple--text.text--accent-4{color:#a0f!important;caret-color:#a0f!important}.deep-purple{background-color:#673ab7!important;border-color:#673ab7!important}.deep-purple--text{color:#673ab7!important;caret-color:#673ab7!important}.deep-purple.lighten-5{background-color:#ede7f6!important;border-color:#ede7f6!important}.deep-purple--text.text--lighten-5{color:#ede7f6!important;caret-color:#ede7f6!important}.deep-purple.lighten-4{background-color:#d1c4e9!important;border-color:#d1c4e9!important}.deep-purple--text.text--lighten-4{color:#d1c4e9!important;caret-color:#d1c4e9!important}.deep-purple.lighten-3{background-color:#b39ddb!important;border-color:#b39ddb!important}.deep-purple--text.text--lighten-3{color:#b39ddb!important;caret-color:#b39ddb!important}.deep-purple.lighten-2{background-color:#9575cd!important;border-color:#9575cd!important}.deep-purple--text.text--lighten-2{color:#9575cd!important;caret-color:#9575cd!important}.deep-purple.lighten-1{background-color:#7e57c2!important;border-color:#7e57c2!important}.deep-purple--text.text--lighten-1{color:#7e57c2!important;caret-color:#7e57c2!important}.deep-purple.darken-1{background-color:#5e35b1!important;border-color:#5e35b1!important}.deep-purple--text.text--darken-1{color:#5e35b1!important;caret-color:#5e35b1!important}.deep-purple.darken-2{background-color:#512da8!important;border-color:#512da8!important}.deep-purple--text.text--darken-2{color:#512da8!important;caret-color:#512da8!important}.deep-purple.darken-3{background-color:#4527a0!important;border-color:#4527a0!important}.deep-purple--text.text--darken-3{color:#4527a0!important;caret-color:#4527a0!important}.deep-purple.darken-4{background-color:#311b92!important;border-color:#311b92!important}.deep-purple--text.text--darken-4{color:#311b92!important;caret-color:#311b92!important}.deep-purple.accent-1{background-color:#b388ff!important;border-color:#b388ff!important}.deep-purple--text.text--accent-1{color:#b388ff!important;caret-color:#b388ff!important}.deep-purple.accent-2{background-color:#7c4dff!important;border-color:#7c4dff!important}.deep-purple--text.text--accent-2{color:#7c4dff!important;caret-color:#7c4dff!important}.deep-purple.accent-3{background-color:#651fff!important;border-color:#651fff!important}.deep-purple--text.text--accent-3{color:#651fff!important;caret-color:#651fff!important}.deep-purple.accent-4{background-color:#6200ea!important;border-color:#6200ea!important}.deep-purple--text.text--accent-4{color:#6200ea!important;caret-color:#6200ea!important}.indigo{background-color:#3f51b5!important;border-color:#3f51b5!important}.indigo--text{color:#3f51b5!important;caret-color:#3f51b5!important}.indigo.lighten-5{background-color:#e8eaf6!important;border-color:#e8eaf6!important}.indigo--text.text--lighten-5{color:#e8eaf6!important;caret-color:#e8eaf6!important}.indigo.lighten-4{background-color:#c5cae9!important;border-color:#c5cae9!important}.indigo--text.text--lighten-4{color:#c5cae9!important;caret-color:#c5cae9!important}.indigo.lighten-3{background-color:#9fa8da!important;border-color:#9fa8da!important}.indigo--text.text--lighten-3{color:#9fa8da!important;caret-color:#9fa8da!important}.indigo.lighten-2{background-color:#7986cb!important;border-color:#7986cb!important}.indigo--text.text--lighten-2{color:#7986cb!important;caret-color:#7986cb!important}.indigo.lighten-1{background-color:#5c6bc0!important;border-color:#5c6bc0!important}.indigo--text.text--lighten-1{color:#5c6bc0!important;caret-color:#5c6bc0!important}.indigo.darken-1{background-color:#3949ab!important;border-color:#3949ab!important}.indigo--text.text--darken-1{color:#3949ab!important;caret-color:#3949ab!important}.indigo.darken-2{background-color:#303f9f!important;border-color:#303f9f!important}.indigo--text.text--darken-2{color:#303f9f!important;caret-color:#303f9f!important}.indigo.darken-3{background-color:#283593!important;border-color:#283593!important}.indigo--text.text--darken-3{color:#283593!important;caret-color:#283593!important}.indigo.darken-4{background-color:#1a237e!important;border-color:#1a237e!important}.indigo--text.text--darken-4{color:#1a237e!important;caret-color:#1a237e!important}.indigo.accent-1{background-color:#8c9eff!important;border-color:#8c9eff!important}.indigo--text.text--accent-1{color:#8c9eff!important;caret-color:#8c9eff!important}.indigo.accent-2{background-color:#536dfe!important;border-color:#536dfe!important}.indigo--text.text--accent-2{color:#536dfe!important;caret-color:#536dfe!important}.indigo.accent-3{background-color:#3d5afe!important;border-color:#3d5afe!important}.indigo--text.text--accent-3{color:#3d5afe!important;caret-color:#3d5afe!important}.indigo.accent-4{background-color:#304ffe!important;border-color:#304ffe!important}.indigo--text.text--accent-4{color:#304ffe!important;caret-color:#304ffe!important}.blue{background-color:#2196f3!important;border-color:#2196f3!important}.blue--text{color:#2196f3!important;caret-color:#2196f3!important}.blue.lighten-5{background-color:#e3f2fd!important;border-color:#e3f2fd!important}.blue--text.text--lighten-5{color:#e3f2fd!important;caret-color:#e3f2fd!important}.blue.lighten-4{background-color:#bbdefb!important;border-color:#bbdefb!important}.blue--text.text--lighten-4{color:#bbdefb!important;caret-color:#bbdefb!important}.blue.lighten-3{background-color:#90caf9!important;border-color:#90caf9!important}.blue--text.text--lighten-3{color:#90caf9!important;caret-color:#90caf9!important}.blue.lighten-2{background-color:#64b5f6!important;border-color:#64b5f6!important}.blue--text.text--lighten-2{color:#64b5f6!important;caret-color:#64b5f6!important}.blue.lighten-1{background-color:#42a5f5!important;border-color:#42a5f5!important}.blue--text.text--lighten-1{color:#42a5f5!important;caret-color:#42a5f5!important}.blue.darken-1{background-color:#1e88e5!important;border-color:#1e88e5!important}.blue--text.text--darken-1{color:#1e88e5!important;caret-color:#1e88e5!important}.blue.darken-2{background-color:#1976d2!important;border-color:#1976d2!important}.blue--text.text--darken-2{color:#1976d2!important;caret-color:#1976d2!important}.blue.darken-3{background-color:#1565c0!important;border-color:#1565c0!important}.blue--text.text--darken-3{color:#1565c0!important;caret-color:#1565c0!important}.blue.darken-4{background-color:#0d47a1!important;border-color:#0d47a1!important}.blue--text.text--darken-4{color:#0d47a1!important;caret-color:#0d47a1!important}.blue.accent-1{background-color:#82b1ff!important;border-color:#82b1ff!important}.blue--text.text--accent-1{color:#82b1ff!important;caret-color:#82b1ff!important}.blue.accent-2{background-color:#448aff!important;border-color:#448aff!important}.blue--text.text--accent-2{color:#448aff!important;caret-color:#448aff!important}.blue.accent-3{background-color:#2979ff!important;border-color:#2979ff!important}.blue--text.text--accent-3{color:#2979ff!important;caret-color:#2979ff!important}.blue.accent-4{background-color:#2962ff!important;border-color:#2962ff!important}.blue--text.text--accent-4{color:#2962ff!important;caret-color:#2962ff!important}.light-blue{background-color:#03a9f4!important;border-color:#03a9f4!important}.light-blue--text{color:#03a9f4!important;caret-color:#03a9f4!important}.light-blue.lighten-5{background-color:#e1f5fe!important;border-color:#e1f5fe!important}.light-blue--text.text--lighten-5{color:#e1f5fe!important;caret-color:#e1f5fe!important}.light-blue.lighten-4{background-color:#b3e5fc!important;border-color:#b3e5fc!important}.light-blue--text.text--lighten-4{color:#b3e5fc!important;caret-color:#b3e5fc!important}.light-blue.lighten-3{background-color:#81d4fa!important;border-color:#81d4fa!important}.light-blue--text.text--lighten-3{color:#81d4fa!important;caret-color:#81d4fa!important}.light-blue.lighten-2{background-color:#4fc3f7!important;border-color:#4fc3f7!important}.light-blue--text.text--lighten-2{color:#4fc3f7!important;caret-color:#4fc3f7!important}.light-blue.lighten-1{background-color:#29b6f6!important;border-color:#29b6f6!important}.light-blue--text.text--lighten-1{color:#29b6f6!important;caret-color:#29b6f6!important}.light-blue.darken-1{background-color:#039be5!important;border-color:#039be5!important}.light-blue--text.text--darken-1{color:#039be5!important;caret-color:#039be5!important}.light-blue.darken-2{background-color:#0288d1!important;border-color:#0288d1!important}.light-blue--text.text--darken-2{color:#0288d1!important;caret-color:#0288d1!important}.light-blue.darken-3{background-color:#0277bd!important;border-color:#0277bd!important}.light-blue--text.text--darken-3{color:#0277bd!important;caret-color:#0277bd!important}.light-blue.darken-4{background-color:#01579b!important;border-color:#01579b!important}.light-blue--text.text--darken-4{color:#01579b!important;caret-color:#01579b!important}.light-blue.accent-1{background-color:#80d8ff!important;border-color:#80d8ff!important}.light-blue--text.text--accent-1{color:#80d8ff!important;caret-color:#80d8ff!important}.light-blue.accent-2{background-color:#40c4ff!important;border-color:#40c4ff!important}.light-blue--text.text--accent-2{color:#40c4ff!important;caret-color:#40c4ff!important}.light-blue.accent-3{background-color:#00b0ff!important;border-color:#00b0ff!important}.light-blue--text.text--accent-3{color:#00b0ff!important;caret-color:#00b0ff!important}.light-blue.accent-4{background-color:#0091ea!important;border-color:#0091ea!important}.light-blue--text.text--accent-4{color:#0091ea!important;caret-color:#0091ea!important}.cyan{background-color:#00bcd4!important;border-color:#00bcd4!important}.cyan--text{color:#00bcd4!important;caret-color:#00bcd4!important}.cyan.lighten-5{background-color:#e0f7fa!important;border-color:#e0f7fa!important}.cyan--text.text--lighten-5{color:#e0f7fa!important;caret-color:#e0f7fa!important}.cyan.lighten-4{background-color:#b2ebf2!important;border-color:#b2ebf2!important}.cyan--text.text--lighten-4{color:#b2ebf2!important;caret-color:#b2ebf2!important}.cyan.lighten-3{background-color:#80deea!important;border-color:#80deea!important}.cyan--text.text--lighten-3{color:#80deea!important;caret-color:#80deea!important}.cyan.lighten-2{background-color:#4dd0e1!important;border-color:#4dd0e1!important}.cyan--text.text--lighten-2{color:#4dd0e1!important;caret-color:#4dd0e1!important}.cyan.lighten-1{background-color:#26c6da!important;border-color:#26c6da!important}.cyan--text.text--lighten-1{color:#26c6da!important;caret-color:#26c6da!important}.cyan.darken-1{background-color:#00acc1!important;border-color:#00acc1!important}.cyan--text.text--darken-1{color:#00acc1!important;caret-color:#00acc1!important}.cyan.darken-2{background-color:#0097a7!important;border-color:#0097a7!important}.cyan--text.text--darken-2{color:#0097a7!important;caret-color:#0097a7!important}.cyan.darken-3{background-color:#00838f!important;border-color:#00838f!important}.cyan--text.text--darken-3{color:#00838f!important;caret-color:#00838f!important}.cyan.darken-4{background-color:#006064!important;border-color:#006064!important}.cyan--text.text--darken-4{color:#006064!important;caret-color:#006064!important}.cyan.accent-1{background-color:#84ffff!important;border-color:#84ffff!important}.cyan--text.text--accent-1{color:#84ffff!important;caret-color:#84ffff!important}.cyan.accent-2{background-color:#18ffff!important;border-color:#18ffff!important}.cyan--text.text--accent-2{color:#18ffff!important;caret-color:#18ffff!important}.cyan.accent-3{background-color:#00e5ff!important;border-color:#00e5ff!important}.cyan--text.text--accent-3{color:#00e5ff!important;caret-color:#00e5ff!important}.cyan.accent-4{background-color:#00b8d4!important;border-color:#00b8d4!important}.cyan--text.text--accent-4{color:#00b8d4!important;caret-color:#00b8d4!important}.teal{background-color:#009688!important;border-color:#009688!important}.teal--text{color:#009688!important;caret-color:#009688!important}.teal.lighten-5{background-color:#e0f2f1!important;border-color:#e0f2f1!important}.teal--text.text--lighten-5{color:#e0f2f1!important;caret-color:#e0f2f1!important}.teal.lighten-4{background-color:#b2dfdb!important;border-color:#b2dfdb!important}.teal--text.text--lighten-4{color:#b2dfdb!important;caret-color:#b2dfdb!important}.teal.lighten-3{background-color:#80cbc4!important;border-color:#80cbc4!important}.teal--text.text--lighten-3{color:#80cbc4!important;caret-color:#80cbc4!important}.teal.lighten-2{background-color:#4db6ac!important;border-color:#4db6ac!important}.teal--text.text--lighten-2{color:#4db6ac!important;caret-color:#4db6ac!important}.teal.lighten-1{background-color:#26a69a!important;border-color:#26a69a!important}.teal--text.text--lighten-1{color:#26a69a!important;caret-color:#26a69a!important}.teal.darken-1{background-color:#00897b!important;border-color:#00897b!important}.teal--text.text--darken-1{color:#00897b!important;caret-color:#00897b!important}.teal.darken-2{background-color:#00796b!important;border-color:#00796b!important}.teal--text.text--darken-2{color:#00796b!important;caret-color:#00796b!important}.teal.darken-3{background-color:#00695c!important;border-color:#00695c!important}.teal--text.text--darken-3{color:#00695c!important;caret-color:#00695c!important}.teal.darken-4{background-color:#004d40!important;border-color:#004d40!important}.teal--text.text--darken-4{color:#004d40!important;caret-color:#004d40!important}.teal.accent-1{background-color:#a7ffeb!important;border-color:#a7ffeb!important}.teal--text.text--accent-1{color:#a7ffeb!important;caret-color:#a7ffeb!important}.teal.accent-2{background-color:#64ffda!important;border-color:#64ffda!important}.teal--text.text--accent-2{color:#64ffda!important;caret-color:#64ffda!important}.teal.accent-3{background-color:#1de9b6!important;border-color:#1de9b6!important}.teal--text.text--accent-3{color:#1de9b6!important;caret-color:#1de9b6!important}.teal.accent-4{background-color:#00bfa5!important;border-color:#00bfa5!important}.teal--text.text--accent-4{color:#00bfa5!important;caret-color:#00bfa5!important}.green{background-color:#4caf50!important;border-color:#4caf50!important}.green--text{color:#4caf50!important;caret-color:#4caf50!important}.green.lighten-5{background-color:#e8f5e9!important;border-color:#e8f5e9!important}.green--text.text--lighten-5{color:#e8f5e9!important;caret-color:#e8f5e9!important}.green.lighten-4{background-color:#c8e6c9!important;border-color:#c8e6c9!important}.green--text.text--lighten-4{color:#c8e6c9!important;caret-color:#c8e6c9!important}.green.lighten-3{background-color:#a5d6a7!important;border-color:#a5d6a7!important}.green--text.text--lighten-3{color:#a5d6a7!important;caret-color:#a5d6a7!important}.green.lighten-2{background-color:#81c784!important;border-color:#81c784!important}.green--text.text--lighten-2{color:#81c784!important;caret-color:#81c784!important}.green.lighten-1{background-color:#66bb6a!important;border-color:#66bb6a!important}.green--text.text--lighten-1{color:#66bb6a!important;caret-color:#66bb6a!important}.green.darken-1{background-color:#43a047!important;border-color:#43a047!important}.green--text.text--darken-1{color:#43a047!important;caret-color:#43a047!important}.green.darken-2{background-color:#388e3c!important;border-color:#388e3c!important}.green--text.text--darken-2{color:#388e3c!important;caret-color:#388e3c!important}.green.darken-3{background-color:#2e7d32!important;border-color:#2e7d32!important}.green--text.text--darken-3{color:#2e7d32!important;caret-color:#2e7d32!important}.green.darken-4{background-color:#1b5e20!important;border-color:#1b5e20!important}.green--text.text--darken-4{color:#1b5e20!important;caret-color:#1b5e20!important}.green.accent-1{background-color:#b9f6ca!important;border-color:#b9f6ca!important}.green--text.text--accent-1{color:#b9f6ca!important;caret-color:#b9f6ca!important}.green.accent-2{background-color:#69f0ae!important;border-color:#69f0ae!important}.green--text.text--accent-2{color:#69f0ae!important;caret-color:#69f0ae!important}.green.accent-3{background-color:#00e676!important;border-color:#00e676!important}.green--text.text--accent-3{color:#00e676!important;caret-color:#00e676!important}.green.accent-4{background-color:#00c853!important;border-color:#00c853!important}.green--text.text--accent-4{color:#00c853!important;caret-color:#00c853!important}.light-green{background-color:#8bc34a!important;border-color:#8bc34a!important}.light-green--text{color:#8bc34a!important;caret-color:#8bc34a!important}.light-green.lighten-5{background-color:#f1f8e9!important;border-color:#f1f8e9!important}.light-green--text.text--lighten-5{color:#f1f8e9!important;caret-color:#f1f8e9!important}.light-green.lighten-4{background-color:#dcedc8!important;border-color:#dcedc8!important}.light-green--text.text--lighten-4{color:#dcedc8!important;caret-color:#dcedc8!important}.light-green.lighten-3{background-color:#c5e1a5!important;border-color:#c5e1a5!important}.light-green--text.text--lighten-3{color:#c5e1a5!important;caret-color:#c5e1a5!important}.light-green.lighten-2{background-color:#aed581!important;border-color:#aed581!important}.light-green--text.text--lighten-2{color:#aed581!important;caret-color:#aed581!important}.light-green.lighten-1{background-color:#9ccc65!important;border-color:#9ccc65!important}.light-green--text.text--lighten-1{color:#9ccc65!important;caret-color:#9ccc65!important}.light-green.darken-1{background-color:#7cb342!important;border-color:#7cb342!important}.light-green--text.text--darken-1{color:#7cb342!important;caret-color:#7cb342!important}.light-green.darken-2{background-color:#689f38!important;border-color:#689f38!important}.light-green--text.text--darken-2{color:#689f38!important;caret-color:#689f38!important}.light-green.darken-3{background-color:#558b2f!important;border-color:#558b2f!important}.light-green--text.text--darken-3{color:#558b2f!important;caret-color:#558b2f!important}.light-green.darken-4{background-color:#33691e!important;border-color:#33691e!important}.light-green--text.text--darken-4{color:#33691e!important;caret-color:#33691e!important}.light-green.accent-1{background-color:#ccff90!important;border-color:#ccff90!important}.light-green--text.text--accent-1{color:#ccff90!important;caret-color:#ccff90!important}.light-green.accent-2{background-color:#b2ff59!important;border-color:#b2ff59!important}.light-green--text.text--accent-2{color:#b2ff59!important;caret-color:#b2ff59!important}.light-green.accent-3{background-color:#76ff03!important;border-color:#76ff03!important}.light-green--text.text--accent-3{color:#76ff03!important;caret-color:#76ff03!important}.light-green.accent-4{background-color:#64dd17!important;border-color:#64dd17!important}.light-green--text.text--accent-4{color:#64dd17!important;caret-color:#64dd17!important}.lime{background-color:#cddc39!important;border-color:#cddc39!important}.lime--text{color:#cddc39!important;caret-color:#cddc39!important}.lime.lighten-5{background-color:#f9fbe7!important;border-color:#f9fbe7!important}.lime--text.text--lighten-5{color:#f9fbe7!important;caret-color:#f9fbe7!important}.lime.lighten-4{background-color:#f0f4c3!important;border-color:#f0f4c3!important}.lime--text.text--lighten-4{color:#f0f4c3!important;caret-color:#f0f4c3!important}.lime.lighten-3{background-color:#e6ee9c!important;border-color:#e6ee9c!important}.lime--text.text--lighten-3{color:#e6ee9c!important;caret-color:#e6ee9c!important}.lime.lighten-2{background-color:#dce775!important;border-color:#dce775!important}.lime--text.text--lighten-2{color:#dce775!important;caret-color:#dce775!important}.lime.lighten-1{background-color:#d4e157!important;border-color:#d4e157!important}.lime--text.text--lighten-1{color:#d4e157!important;caret-color:#d4e157!important}.lime.darken-1{background-color:#c0ca33!important;border-color:#c0ca33!important}.lime--text.text--darken-1{color:#c0ca33!important;caret-color:#c0ca33!important}.lime.darken-2{background-color:#afb42b!important;border-color:#afb42b!important}.lime--text.text--darken-2{color:#afb42b!important;caret-color:#afb42b!important}.lime.darken-3{background-color:#9e9d24!important;border-color:#9e9d24!important}.lime--text.text--darken-3{color:#9e9d24!important;caret-color:#9e9d24!important}.lime.darken-4{background-color:#827717!important;border-color:#827717!important}.lime--text.text--darken-4{color:#827717!important;caret-color:#827717!important}.lime.accent-1{background-color:#f4ff81!important;border-color:#f4ff81!important}.lime--text.text--accent-1{color:#f4ff81!important;caret-color:#f4ff81!important}.lime.accent-2{background-color:#eeff41!important;border-color:#eeff41!important}.lime--text.text--accent-2{color:#eeff41!important;caret-color:#eeff41!important}.lime.accent-3{background-color:#c6ff00!important;border-color:#c6ff00!important}.lime--text.text--accent-3{color:#c6ff00!important;caret-color:#c6ff00!important}.lime.accent-4{background-color:#aeea00!important;border-color:#aeea00!important}.lime--text.text--accent-4{color:#aeea00!important;caret-color:#aeea00!important}.yellow{background-color:#ffeb3b!important;border-color:#ffeb3b!important}.yellow--text{color:#ffeb3b!important;caret-color:#ffeb3b!important}.yellow.lighten-5{background-color:#fffde7!important;border-color:#fffde7!important}.yellow--text.text--lighten-5{color:#fffde7!important;caret-color:#fffde7!important}.yellow.lighten-4{background-color:#fff9c4!important;border-color:#fff9c4!important}.yellow--text.text--lighten-4{color:#fff9c4!important;caret-color:#fff9c4!important}.yellow.lighten-3{background-color:#fff59d!important;border-color:#fff59d!important}.yellow--text.text--lighten-3{color:#fff59d!important;caret-color:#fff59d!important}.yellow.lighten-2{background-color:#fff176!important;border-color:#fff176!important}.yellow--text.text--lighten-2{color:#fff176!important;caret-color:#fff176!important}.yellow.lighten-1{background-color:#ffee58!important;border-color:#ffee58!important}.yellow--text.text--lighten-1{color:#ffee58!important;caret-color:#ffee58!important}.yellow.darken-1{background-color:#fdd835!important;border-color:#fdd835!important}.yellow--text.text--darken-1{color:#fdd835!important;caret-color:#fdd835!important}.yellow.darken-2{background-color:#fbc02d!important;border-color:#fbc02d!important}.yellow--text.text--darken-2{color:#fbc02d!important;caret-color:#fbc02d!important}.yellow.darken-3{background-color:#f9a825!important;border-color:#f9a825!important}.yellow--text.text--darken-3{color:#f9a825!important;caret-color:#f9a825!important}.yellow.darken-4{background-color:#f57f17!important;border-color:#f57f17!important}.yellow--text.text--darken-4{color:#f57f17!important;caret-color:#f57f17!important}.yellow.accent-1{background-color:#ffff8d!important;border-color:#ffff8d!important}.yellow--text.text--accent-1{color:#ffff8d!important;caret-color:#ffff8d!important}.yellow.accent-2{background-color:#ff0!important;border-color:#ff0!important}.yellow--text.text--accent-2{color:#ff0!important;caret-color:#ff0!important}.yellow.accent-3{background-color:#ffea00!important;border-color:#ffea00!important}.yellow--text.text--accent-3{color:#ffea00!important;caret-color:#ffea00!important}.yellow.accent-4{background-color:#ffd600!important;border-color:#ffd600!important}.yellow--text.text--accent-4{color:#ffd600!important;caret-color:#ffd600!important}.amber{background-color:#ffc107!important;border-color:#ffc107!important}.amber--text{color:#ffc107!important;caret-color:#ffc107!important}.amber.lighten-5{background-color:#fff8e1!important;border-color:#fff8e1!important}.amber--text.text--lighten-5{color:#fff8e1!important;caret-color:#fff8e1!important}.amber.lighten-4{background-color:#ffecb3!important;border-color:#ffecb3!important}.amber--text.text--lighten-4{color:#ffecb3!important;caret-color:#ffecb3!important}.amber.lighten-3{background-color:#ffe082!important;border-color:#ffe082!important}.amber--text.text--lighten-3{color:#ffe082!important;caret-color:#ffe082!important}.amber.lighten-2{background-color:#ffd54f!important;border-color:#ffd54f!important}.amber--text.text--lighten-2{color:#ffd54f!important;caret-color:#ffd54f!important}.amber.lighten-1{background-color:#ffca28!important;border-color:#ffca28!important}.amber--text.text--lighten-1{color:#ffca28!important;caret-color:#ffca28!important}.amber.darken-1{background-color:#ffb300!important;border-color:#ffb300!important}.amber--text.text--darken-1{color:#ffb300!important;caret-color:#ffb300!important}.amber.darken-2{background-color:#ffa000!important;border-color:#ffa000!important}.amber--text.text--darken-2{color:#ffa000!important;caret-color:#ffa000!important}.amber.darken-3{background-color:#ff8f00!important;border-color:#ff8f00!important}.amber--text.text--darken-3{color:#ff8f00!important;caret-color:#ff8f00!important}.amber.darken-4{background-color:#ff6f00!important;border-color:#ff6f00!important}.amber--text.text--darken-4{color:#ff6f00!important;caret-color:#ff6f00!important}.amber.accent-1{background-color:#ffe57f!important;border-color:#ffe57f!important}.amber--text.text--accent-1{color:#ffe57f!important;caret-color:#ffe57f!important}.amber.accent-2{background-color:#ffd740!important;border-color:#ffd740!important}.amber--text.text--accent-2{color:#ffd740!important;caret-color:#ffd740!important}.amber.accent-3{background-color:#ffc400!important;border-color:#ffc400!important}.amber--text.text--accent-3{color:#ffc400!important;caret-color:#ffc400!important}.amber.accent-4{background-color:#ffab00!important;border-color:#ffab00!important}.amber--text.text--accent-4{color:#ffab00!important;caret-color:#ffab00!important}.orange{background-color:#ff9800!important;border-color:#ff9800!important}.orange--text{color:#ff9800!important;caret-color:#ff9800!important}.orange.lighten-5{background-color:#fff3e0!important;border-color:#fff3e0!important}.orange--text.text--lighten-5{color:#fff3e0!important;caret-color:#fff3e0!important}.orange.lighten-4{background-color:#ffe0b2!important;border-color:#ffe0b2!important}.orange--text.text--lighten-4{color:#ffe0b2!important;caret-color:#ffe0b2!important}.orange.lighten-3{background-color:#ffcc80!important;border-color:#ffcc80!important}.orange--text.text--lighten-3{color:#ffcc80!important;caret-color:#ffcc80!important}.orange.lighten-2{background-color:#ffb74d!important;border-color:#ffb74d!important}.orange--text.text--lighten-2{color:#ffb74d!important;caret-color:#ffb74d!important}.orange.lighten-1{background-color:#ffa726!important;border-color:#ffa726!important}.orange--text.text--lighten-1{color:#ffa726!important;caret-color:#ffa726!important}.orange.darken-1{background-color:#fb8c00!important;border-color:#fb8c00!important}.orange--text.text--darken-1{color:#fb8c00!important;caret-color:#fb8c00!important}.orange.darken-2{background-color:#f57c00!important;border-color:#f57c00!important}.orange--text.text--darken-2{color:#f57c00!important;caret-color:#f57c00!important}.orange.darken-3{background-color:#ef6c00!important;border-color:#ef6c00!important}.orange--text.text--darken-3{color:#ef6c00!important;caret-color:#ef6c00!important}.orange.darken-4{background-color:#e65100!important;border-color:#e65100!important}.orange--text.text--darken-4{color:#e65100!important;caret-color:#e65100!important}.orange.accent-1{background-color:#ffd180!important;border-color:#ffd180!important}.orange--text.text--accent-1{color:#ffd180!important;caret-color:#ffd180!important}.orange.accent-2{background-color:#ffab40!important;border-color:#ffab40!important}.orange--text.text--accent-2{color:#ffab40!important;caret-color:#ffab40!important}.orange.accent-3{background-color:#ff9100!important;border-color:#ff9100!important}.orange--text.text--accent-3{color:#ff9100!important;caret-color:#ff9100!important}.orange.accent-4{background-color:#ff6d00!important;border-color:#ff6d00!important}.orange--text.text--accent-4{color:#ff6d00!important;caret-color:#ff6d00!important}.deep-orange{background-color:#ff5722!important;border-color:#ff5722!important}.deep-orange--text{color:#ff5722!important;caret-color:#ff5722!important}.deep-orange.lighten-5{background-color:#fbe9e7!important;border-color:#fbe9e7!important}.deep-orange--text.text--lighten-5{color:#fbe9e7!important;caret-color:#fbe9e7!important}.deep-orange.lighten-4{background-color:#ffccbc!important;border-color:#ffccbc!important}.deep-orange--text.text--lighten-4{color:#ffccbc!important;caret-color:#ffccbc!important}.deep-orange.lighten-3{background-color:#ffab91!important;border-color:#ffab91!important}.deep-orange--text.text--lighten-3{color:#ffab91!important;caret-color:#ffab91!important}.deep-orange.lighten-2{background-color:#ff8a65!important;border-color:#ff8a65!important}.deep-orange--text.text--lighten-2{color:#ff8a65!important;caret-color:#ff8a65!important}.deep-orange.lighten-1{background-color:#ff7043!important;border-color:#ff7043!important}.deep-orange--text.text--lighten-1{color:#ff7043!important;caret-color:#ff7043!important}.deep-orange.darken-1{background-color:#f4511e!important;border-color:#f4511e!important}.deep-orange--text.text--darken-1{color:#f4511e!important;caret-color:#f4511e!important}.deep-orange.darken-2{background-color:#e64a19!important;border-color:#e64a19!important}.deep-orange--text.text--darken-2{color:#e64a19!important;caret-color:#e64a19!important}.deep-orange.darken-3{background-color:#d84315!important;border-color:#d84315!important}.deep-orange--text.text--darken-3{color:#d84315!important;caret-color:#d84315!important}.deep-orange.darken-4{background-color:#bf360c!important;border-color:#bf360c!important}.deep-orange--text.text--darken-4{color:#bf360c!important;caret-color:#bf360c!important}.deep-orange.accent-1{background-color:#ff9e80!important;border-color:#ff9e80!important}.deep-orange--text.text--accent-1{color:#ff9e80!important;caret-color:#ff9e80!important}.deep-orange.accent-2{background-color:#ff6e40!important;border-color:#ff6e40!important}.deep-orange--text.text--accent-2{color:#ff6e40!important;caret-color:#ff6e40!important}.deep-orange.accent-3{background-color:#ff3d00!important;border-color:#ff3d00!important}.deep-orange--text.text--accent-3{color:#ff3d00!important;caret-color:#ff3d00!important}.deep-orange.accent-4{background-color:#dd2c00!important;border-color:#dd2c00!important}.deep-orange--text.text--accent-4{color:#dd2c00!important;caret-color:#dd2c00!important}.brown{background-color:#795548!important;border-color:#795548!important}.brown--text{color:#795548!important;caret-color:#795548!important}.brown.lighten-5{background-color:#efebe9!important;border-color:#efebe9!important}.brown--text.text--lighten-5{color:#efebe9!important;caret-color:#efebe9!important}.brown.lighten-4{background-color:#d7ccc8!important;border-color:#d7ccc8!important}.brown--text.text--lighten-4{color:#d7ccc8!important;caret-color:#d7ccc8!important}.brown.lighten-3{background-color:#bcaaa4!important;border-color:#bcaaa4!important}.brown--text.text--lighten-3{color:#bcaaa4!important;caret-color:#bcaaa4!important}.brown.lighten-2{background-color:#a1887f!important;border-color:#a1887f!important}.brown--text.text--lighten-2{color:#a1887f!important;caret-color:#a1887f!important}.brown.lighten-1{background-color:#8d6e63!important;border-color:#8d6e63!important}.brown--text.text--lighten-1{color:#8d6e63!important;caret-color:#8d6e63!important}.brown.darken-1{background-color:#6d4c41!important;border-color:#6d4c41!important}.brown--text.text--darken-1{color:#6d4c41!important;caret-color:#6d4c41!important}.brown.darken-2{background-color:#5d4037!important;border-color:#5d4037!important}.brown--text.text--darken-2{color:#5d4037!important;caret-color:#5d4037!important}.brown.darken-3{background-color:#4e342e!important;border-color:#4e342e!important}.brown--text.text--darken-3{color:#4e342e!important;caret-color:#4e342e!important}.brown.darken-4{background-color:#3e2723!important;border-color:#3e2723!important}.brown--text.text--darken-4{color:#3e2723!important;caret-color:#3e2723!important}.blue-grey{background-color:#607d8b!important;border-color:#607d8b!important}.blue-grey--text{color:#607d8b!important;caret-color:#607d8b!important}.blue-grey.lighten-5{background-color:#eceff1!important;border-color:#eceff1!important}.blue-grey--text.text--lighten-5{color:#eceff1!important;caret-color:#eceff1!important}.blue-grey.lighten-4{background-color:#cfd8dc!important;border-color:#cfd8dc!important}.blue-grey--text.text--lighten-4{color:#cfd8dc!important;caret-color:#cfd8dc!important}.blue-grey.lighten-3{background-color:#b0bec5!important;border-color:#b0bec5!important}.blue-grey--text.text--lighten-3{color:#b0bec5!important;caret-color:#b0bec5!important}.blue-grey.lighten-2{background-color:#90a4ae!important;border-color:#90a4ae!important}.blue-grey--text.text--lighten-2{color:#90a4ae!important;caret-color:#90a4ae!important}.blue-grey.lighten-1{background-color:#78909c!important;border-color:#78909c!important}.blue-grey--text.text--lighten-1{color:#78909c!important;caret-color:#78909c!important}.blue-grey.darken-1{background-color:#546e7a!important;border-color:#546e7a!important}.blue-grey--text.text--darken-1{color:#546e7a!important;caret-color:#546e7a!important}.blue-grey.darken-2{background-color:#455a64!important;border-color:#455a64!important}.blue-grey--text.text--darken-2{color:#455a64!important;caret-color:#455a64!important}.blue-grey.darken-3{background-color:#37474f!important;border-color:#37474f!important}.blue-grey--text.text--darken-3{color:#37474f!important;caret-color:#37474f!important}.blue-grey.darken-4{background-color:#263238!important;border-color:#263238!important}.blue-grey--text.text--darken-4{color:#263238!important;caret-color:#263238!important}.grey{background-color:#9e9e9e!important;border-color:#9e9e9e!important}.grey--text{color:#9e9e9e!important;caret-color:#9e9e9e!important}.grey.lighten-5{background-color:#fafafa!important;border-color:#fafafa!important}.grey--text.text--lighten-5{color:#fafafa!important;caret-color:#fafafa!important}.grey.lighten-4{background-color:#f5f5f5!important;border-color:#f5f5f5!important}.grey--text.text--lighten-4{color:#f5f5f5!important;caret-color:#f5f5f5!important}.grey.lighten-3{background-color:#eee!important;border-color:#eee!important}.grey--text.text--lighten-3{color:#eee!important;caret-color:#eee!important}.grey.lighten-2{background-color:#e0e0e0!important;border-color:#e0e0e0!important}.grey--text.text--lighten-2{color:#e0e0e0!important;caret-color:#e0e0e0!important}.grey.lighten-1{background-color:#bdbdbd!important;border-color:#bdbdbd!important}.grey--text.text--lighten-1{color:#bdbdbd!important;caret-color:#bdbdbd!important}.grey.darken-1{background-color:#757575!important;border-color:#757575!important}.grey--text.text--darken-1{color:#757575!important;caret-color:#757575!important}.grey.darken-2{background-color:#616161!important;border-color:#616161!important}.grey--text.text--darken-2{color:#616161!important;caret-color:#616161!important}.grey.darken-3{background-color:#424242!important;border-color:#424242!important}.grey--text.text--darken-3{color:#424242!important;caret-color:#424242!important}.grey.darken-4{background-color:#212121!important;border-color:#212121!important}.grey--text.text--darken-4{color:#212121!important;caret-color:#212121!important}.shades.black{background-color:#000!important;border-color:#000!important}.shades--text.text--black{color:#000!important;caret-color:#000!important}.shades.white{background-color:#fff!important;border-color:#fff!important}.shades--text.text--white{color:#fff!important;caret-color:#fff!important}.shades.transparent{background-color:transparent!important;border-color:transparent!important}.shades--text.text--transparent{color:transparent!important;caret-color:transparent!important}.elevation-0{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)!important}.elevation-1{box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12)!important}.elevation-2{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)!important}.elevation-3{box-shadow:0 3px 3px -2px rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 1px 8px 0 rgba(0,0,0,.12)!important}.elevation-4{box-shadow:0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12)!important}.elevation-5{box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 5px 8px 0 rgba(0,0,0,.14),0 1px 14px 0 rgba(0,0,0,.12)!important}.elevation-6{box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12)!important}.elevation-7{box-shadow:0 4px 5px -2px rgba(0,0,0,.2),0 7px 10px 1px rgba(0,0,0,.14),0 2px 16px 1px rgba(0,0,0,.12)!important}.elevation-8{box-shadow:0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)!important}.elevation-9{box-shadow:0 5px 6px -3px rgba(0,0,0,.2),0 9px 12px 1px rgba(0,0,0,.14),0 3px 16px 2px rgba(0,0,0,.12)!important}.elevation-10{box-shadow:0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12)!important}.elevation-11{box-shadow:0 6px 7px -4px rgba(0,0,0,.2),0 11px 15px 1px rgba(0,0,0,.14),0 4px 20px 3px rgba(0,0,0,.12)!important}.elevation-12{box-shadow:0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12)!important}.elevation-13{box-shadow:0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12)!important}.elevation-14{box-shadow:0 7px 9px -4px rgba(0,0,0,.2),0 14px 21px 2px rgba(0,0,0,.14),0 5px 26px 4px rgba(0,0,0,.12)!important}.elevation-15{box-shadow:0 8px 9px -5px rgba(0,0,0,.2),0 15px 22px 2px rgba(0,0,0,.14),0 6px 28px 5px rgba(0,0,0,.12)!important}.elevation-16{box-shadow:0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12)!important}.elevation-17{box-shadow:0 8px 11px -5px rgba(0,0,0,.2),0 17px 26px 2px rgba(0,0,0,.14),0 6px 32px 5px rgba(0,0,0,.12)!important}.elevation-18{box-shadow:0 9px 11px -5px rgba(0,0,0,.2),0 18px 28px 2px rgba(0,0,0,.14),0 7px 34px 6px rgba(0,0,0,.12)!important}.elevation-19{box-shadow:0 9px 12px -6px rgba(0,0,0,.2),0 19px 29px 2px rgba(0,0,0,.14),0 7px 36px 6px rgba(0,0,0,.12)!important}.elevation-20{box-shadow:0 10px 13px -6px rgba(0,0,0,.2),0 20px 31px 3px rgba(0,0,0,.14),0 8px 38px 7px rgba(0,0,0,.12)!important}.elevation-21{box-shadow:0 10px 13px -6px rgba(0,0,0,.2),0 21px 33px 3px rgba(0,0,0,.14),0 8px 40px 7px rgba(0,0,0,.12)!important}.elevation-22{box-shadow:0 10px 14px -6px rgba(0,0,0,.2),0 22px 35px 3px rgba(0,0,0,.14),0 8px 42px 7px rgba(0,0,0,.12)!important}.elevation-23{box-shadow:0 11px 14px -7px rgba(0,0,0,.2),0 23px 36px 3px rgba(0,0,0,.14),0 9px 44px 8px rgba(0,0,0,.12)!important}.elevation-24{box-shadow:0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)!important}html{box-sizing:border-box;overflow-y:scroll;-webkit-text-size-adjust:100%}*,:after,:before{box-sizing:inherit}:after,:before{text-decoration:inherit;vertical-align:inherit}*{background-repeat:no-repeat;padding:0;margin:0}audio:not([controls]){display:none;height:0}hr{overflow:visible}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}summary{display:list-item}small{font-size:80%}[hidden],template{display:none}abbr[title]{border-bottom:1px dotted;text-decoration:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}code,kbd,pre,samp{font-family:monospace,monospace}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}input{border-radius:0}[role=button],[type=button],[type=reset],[type=submit],button{cursor:pointer}[disabled]{cursor:default}[type=number]{width:auto}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}textarea{overflow:auto;resize:vertical}button,input,optgroup,select,textarea{font:inherit}optgroup{font-weight:700}button{overflow:visible}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:0;padding:0}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button:-moz-focusring{outline:0;border:0}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}button,select{text-transform:none}button,input,select,textarea{background-color:transparent;border-style:none;color:inherit}select{-moz-appearance:none;-webkit-appearance:none}select::-ms-expand{display:none}select::-ms-value{color:currentColor}legend{border:0;color:inherit;display:table;max-width:100%;white-space:normal}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}img{border-style:none}progress{vertical-align:baseline}svg:not(:root){overflow:hidden}audio,canvas,progress,video{display:inline-block}[aria-busy=true]{cursor:progress}[aria-controls]{cursor:pointer}[aria-disabled]{cursor:default}::selection{background-color:#b3d4fc;color:#000;text-shadow:none}.bottom-sheet-transition-enter,.bottom-sheet-transition-leave-to{-webkit-transform:translateY(100%);transform:translateY(100%)}.carousel-transition-enter{-webkit-transform:translate(100%);transform:translate(100%)}.carousel-transition-leave,.carousel-transition-leave-to{position:absolute;top:0}.carousel-reverse-transition-enter,.carousel-transition-leave,.carousel-transition-leave-to{-webkit-transform:translate(-100%);transform:translate(-100%)}.carousel-reverse-transition-leave,.carousel-reverse-transition-leave-to{position:absolute;top:0;-webkit-transform:translate(100%);transform:translate(100%)}.dialog-transition-enter,.dialog-transition-leave-to{-webkit-transform:scale(.5);transform:scale(.5);opacity:0}.dialog-transition-enter-to,.dialog-transition-leave{opacity:1}.dialog-bottom-transition-enter,.dialog-bottom-transition-leave-to{-webkit-transform:translateY(100%);transform:translateY(100%)}.picker-reverse-transition-enter-active,.picker-reverse-transition-leave-active,.picker-transition-enter-active,.picker-transition-leave-active{transition:.3s cubic-bezier(0,0,.2,1)}.picker-reverse-transition-enter,.picker-reverse-transition-leave-to,.picker-transition-enter,.picker-transition-leave-to{opacity:0}.picker-reverse-transition-leave,.picker-reverse-transition-leave-active,.picker-reverse-transition-leave-to,.picker-transition-leave,.picker-transition-leave-active,.picker-transition-leave-to{position:absolute!important}.picker-transition-enter{-webkit-transform:translateY(100%);transform:translateY(100%)}.picker-reverse-transition-enter,.picker-transition-leave-to{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.picker-reverse-transition-leave-to{-webkit-transform:translateY(100%);transform:translateY(100%)}.picker-title-transition-enter-to,.picker-title-transition-leave{-webkit-transform:translate(0);transform:translate(0)}.picker-title-transition-enter{-webkit-transform:translate(-100%);transform:translate(-100%)}.picker-title-transition-leave-to{opacity:0;-webkit-transform:translate(100%);transform:translate(100%)}.picker-title-transition-leave,.picker-title-transition-leave-active,.picker-title-transition-leave-to{position:absolute!important}.tab-transition-enter{-webkit-transform:translate(100%);transform:translate(100%)}.tab-transition-leave,.tab-transition-leave-active{position:absolute;top:0}.tab-transition-leave-to{position:absolute}.tab-reverse-transition-enter,.tab-transition-leave-to{-webkit-transform:translate(-100%);transform:translate(-100%)}.tab-reverse-transition-leave,.tab-reverse-transition-leave-to{top:0;position:absolute;-webkit-transform:translate(100%);transform:translate(100%)}.expand-transition-enter-active,.expand-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.expand-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.expand-x-transition-enter-active,.expand-x-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.expand-x-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.scale-transition-enter-active,.scale-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.scale-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.scale-transition-enter,.scale-transition-leave,.scale-transition-leave-to{opacity:0;-webkit-transform:scale(0);transform:scale(0)}.message-transition-enter-active,.message-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.message-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.message-transition-enter,.message-transition-leave-to{opacity:0;-webkit-transform:translateY(-15px);transform:translateY(-15px)}.message-transition-leave,.message-transition-leave-active{position:absolute}.slide-y-transition-enter-active,.slide-y-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.slide-y-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.slide-y-transition-enter,.slide-y-transition-leave-to{opacity:0;-webkit-transform:translateY(-15px);transform:translateY(-15px)}.slide-y-reverse-transition-enter-active,.slide-y-reverse-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.slide-y-reverse-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.slide-y-reverse-transition-enter,.slide-y-reverse-transition-leave-to{opacity:0;-webkit-transform:translateY(15px);transform:translateY(15px)}.scroll-y-transition-enter-active,.scroll-y-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.scroll-y-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.scroll-y-transition-enter,.scroll-y-transition-leave-to{opacity:0}.scroll-y-transition-enter{-webkit-transform:translateY(-15px);transform:translateY(-15px)}.scroll-y-transition-leave-to{-webkit-transform:translateY(15px);transform:translateY(15px)}.scroll-y-reverse-transition-enter-active,.scroll-y-reverse-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.scroll-y-reverse-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.scroll-y-reverse-transition-enter,.scroll-y-reverse-transition-leave-to{opacity:0}.scroll-y-reverse-transition-enter{-webkit-transform:translateY(15px);transform:translateY(15px)}.scroll-y-reverse-transition-leave-to{-webkit-transform:translateY(-15px);transform:translateY(-15px)}.scroll-x-transition-enter-active,.scroll-x-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.scroll-x-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.scroll-x-transition-enter,.scroll-x-transition-leave-to{opacity:0}.scroll-x-transition-enter{-webkit-transform:translateX(-15px);transform:translateX(-15px)}.scroll-x-transition-leave-to{-webkit-transform:translateX(15px);transform:translateX(15px)}.scroll-x-reverse-transition-enter-active,.scroll-x-reverse-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.scroll-x-reverse-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.scroll-x-reverse-transition-enter,.scroll-x-reverse-transition-leave-to{opacity:0}.scroll-x-reverse-transition-enter{-webkit-transform:translateX(15px);transform:translateX(15px)}.scroll-x-reverse-transition-leave-to{-webkit-transform:translateX(-15px);transform:translateX(-15px)}.slide-x-transition-enter-active,.slide-x-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.slide-x-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.slide-x-transition-enter,.slide-x-transition-leave-to{opacity:0;-webkit-transform:translateX(-15px);transform:translateX(-15px)}.slide-x-reverse-transition-enter-active,.slide-x-reverse-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.slide-x-reverse-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.slide-x-reverse-transition-enter,.slide-x-reverse-transition-leave-to{opacity:0;-webkit-transform:translateX(15px);transform:translateX(15px)}.fade-transition-enter-active,.fade-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.fade-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.fade-transition-enter,.fade-transition-leave-to{opacity:0}.fab-transition-enter-active,.fab-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.fab-transition-move{transition:-webkit-transform .6s;transition:transform .6s;transition:transform .6s,-webkit-transform .6s}.fab-transition-enter,.fab-transition-leave-to{-webkit-transform:scale(0) rotate(-45deg);transform:scale(0) rotate(-45deg)}.blockquote{padding:16px 0 16px 24px;font-size:18px;font-weight:300}code,kbd{display:inline-block;border-radius:3px;white-space:pre-wrap;font-size:85%;font-weight:900}code:after,code:before,kbd:after,kbd:before{content:\"\\A0\";letter-spacing:-1px}code{background-color:#f5f5f5;color:#bd4147;box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12)}kbd{background:#616161;color:#fff}html{font-size:14px;overflow-x:hidden;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-tap-highlight-color:rgba(0,0,0,0)}.application{font-family:Roboto,sans-serif;line-height:1.5}::-ms-clear,::-ms-reveal{display:none}ol,ul{padding-left:24px}.display-4{font-size:112px!important;font-weight:300;line-height:1!important;letter-spacing:-.04em!important;font-family:Roboto,sans-serif!important}.display-3{font-size:56px!important;line-height:1.35!important;letter-spacing:-.02em!important}.display-2,.display-3{font-weight:400;font-family:Roboto,sans-serif!important}.display-2{font-size:45px!important;line-height:48px!important;letter-spacing:normal!important}.display-1{font-size:34px!important;line-height:40px!important}.display-1,.headline{font-weight:400;letter-spacing:normal!important;font-family:Roboto,sans-serif!important}.headline{font-size:24px!important;line-height:32px!important}.title{font-size:20px!important;font-weight:500;line-height:1!important;letter-spacing:.02em!important;font-family:Roboto,sans-serif!important}.subheading{font-size:16px!important;font-weight:400}.body-2{font-weight:500}.body-1,.body-2{font-size:14px!important}.body-1,.caption{font-weight:400}.caption{font-size:12px!important}p{margin-bottom:16px}.overflow-hidden{overflow:hidden}.overflow-x-hidden{overflow-x:hidden}.overflow-y-hidden{overflow-y:hidden}.right{float:right!important}.left{float:left!important}.ma-auto{margin:auto!important}.my-auto{margin-top:auto!important;margin-bottom:auto!important}.mx-auto{margin-left:auto!important;margin-right:auto!important}.mt-auto{margin-top:auto!important}.mr-auto{margin-right:auto!important}.mb-auto{margin-bottom:auto!important}.ml-auto{margin-left:auto!important}.ma-0{margin:0!important}.my-0{margin-top:0!important;margin-bottom:0!important}.mx-0{margin-left:0!important;margin-right:0!important}.mt-0{margin-top:0!important}.mr-0{margin-right:0!important}.mb-0{margin-bottom:0!important}.ml-0{margin-left:0!important}.pa-0{padding:0!important}.py-0{padding-top:0!important;padding-bottom:0!important}.px-0{padding-left:0!important;padding-right:0!important}.pt-0{padding-top:0!important}.pr-0{padding-right:0!important}.pb-0{padding-bottom:0!important}.pl-0{padding-left:0!important}.ma-1{margin:4px!important}.my-1{margin-top:4px!important;margin-bottom:4px!important}.mx-1{margin-left:4px!important;margin-right:4px!important}.mt-1{margin-top:4px!important}.mr-1{margin-right:4px!important}.mb-1{margin-bottom:4px!important}.ml-1{margin-left:4px!important}.pa-1{padding:4px!important}.py-1{padding-top:4px!important;padding-bottom:4px!important}.px-1{padding-left:4px!important;padding-right:4px!important}.pt-1{padding-top:4px!important}.pr-1{padding-right:4px!important}.pb-1{padding-bottom:4px!important}.pl-1{padding-left:4px!important}.ma-2{margin:8px!important}.my-2{margin-top:8px!important;margin-bottom:8px!important}.mx-2{margin-left:8px!important;margin-right:8px!important}.mt-2{margin-top:8px!important}.mr-2{margin-right:8px!important}.mb-2{margin-bottom:8px!important}.ml-2{margin-left:8px!important}.pa-2{padding:8px!important}.py-2{padding-top:8px!important;padding-bottom:8px!important}.px-2{padding-left:8px!important;padding-right:8px!important}.pt-2{padding-top:8px!important}.pr-2{padding-right:8px!important}.pb-2{padding-bottom:8px!important}.pl-2{padding-left:8px!important}.ma-3{margin:16px!important}.my-3{margin-top:16px!important;margin-bottom:16px!important}.mx-3{margin-left:16px!important;margin-right:16px!important}.mt-3{margin-top:16px!important}.mr-3{margin-right:16px!important}.mb-3{margin-bottom:16px!important}.ml-3{margin-left:16px!important}.pa-3{padding:16px!important}.py-3{padding-top:16px!important;padding-bottom:16px!important}.px-3{padding-left:16px!important;padding-right:16px!important}.pt-3{padding-top:16px!important}.pr-3{padding-right:16px!important}.pb-3{padding-bottom:16px!important}.pl-3{padding-left:16px!important}.ma-4{margin:24px!important}.my-4{margin-top:24px!important;margin-bottom:24px!important}.mx-4{margin-left:24px!important;margin-right:24px!important}.mt-4{margin-top:24px!important}.mr-4{margin-right:24px!important}.mb-4{margin-bottom:24px!important}.ml-4{margin-left:24px!important}.pa-4{padding:24px!important}.py-4{padding-top:24px!important;padding-bottom:24px!important}.px-4{padding-left:24px!important;padding-right:24px!important}.pt-4{padding-top:24px!important}.pr-4{padding-right:24px!important}.pb-4{padding-bottom:24px!important}.pl-4{padding-left:24px!important}.ma-5{margin:48px!important}.my-5{margin-top:48px!important;margin-bottom:48px!important}.mx-5{margin-left:48px!important;margin-right:48px!important}.mt-5{margin-top:48px!important}.mr-5{margin-right:48px!important}.mb-5{margin-bottom:48px!important}.ml-5{margin-left:48px!important}.pa-5{padding:48px!important}.py-5{padding-top:48px!important;padding-bottom:48px!important}.px-5{padding-left:48px!important;padding-right:48px!important}.pt-5{padding-top:48px!important}.pr-5{padding-right:48px!important}.pb-5{padding-bottom:48px!important}.pl-5{padding-left:48px!important}.font-weight-thin{font-weight:100!important}.font-weight-light{font-weight:300!important}.font-weight-regular{font-weight:400!important}.font-weight-medium{font-weight:500!important}.font-weight-bold{font-weight:700!important}.font-weight-black{font-weight:900!important}.font-italic{font-style:italic!important}.text-capitalize{text-transform:capitalize!important}.text-lowercase{text-transform:lowercase!important}.text-none{text-transform:none!important}.text-uppercase{text-transform:uppercase!important}.text-no-wrap,.text-truncate{white-space:nowrap!important}.text-truncate{overflow:hidden!important;text-overflow:ellipsis!important;line-height:1.1!important}.transition-fast-out-slow-in{transition:.3s cubic-bezier(.4,0,.2,1)!important}.transition-linear-out-slow-in{transition:.3s cubic-bezier(0,0,.2,1)!important}.transition-fast-out-linear-in{transition:.3s cubic-bezier(.4,0,1,1)!important}.transition-ease-in-out{transition:.3s cubic-bezier(.4,0,.6,1)!important}.transition-fast-in-fast-out{transition:.3s cubic-bezier(.25,.8,.25,1)!important}.transition-swing{transition:.3s cubic-bezier(.25,.8,.5,1)!important}@media screen{[hidden~=screen]{display:inherit}[hidden~=screen]:not(:active):not(:focus):not(:target){position:absolute!important;clip:rect(0 0 0 0)!important}}@media only print{.hidden-print-only{display:none!important}}@media only screen{.hidden-screen-only{display:none!important}}@media only screen and (max-width:599px){.hidden-xs-only{display:none!important}}@media only screen and (min-width:600px) and (max-width:959px){.hidden-sm-only{display:none!important}}@media only screen and (max-width:959px){.hidden-sm-and-down{display:none!important}}@media only screen and (min-width:600px){.hidden-sm-and-up{display:none!important}}@media only screen and (min-width:960px) and (max-width:1263px){.hidden-md-only{display:none!important}}@media only screen and (max-width:1263px){.hidden-md-and-down{display:none!important}}@media only screen and (min-width:960px){.hidden-md-and-up{display:none!important}}@media only screen and (min-width:1264px) and (max-width:1903px){.hidden-lg-only{display:none!important}}@media only screen and (max-width:1903px){.hidden-lg-and-down{display:none!important}}@media only screen and (min-width:1264px){.hidden-lg-and-up{display:none!important}}@media only screen and (min-width:1904px){.hidden-xl-only{display:none!important}}@media (min-width:0){.text-xs-left{text-align:left!important}.text-xs-center{text-align:center!important}.text-xs-right{text-align:right!important}.text-xs-justify{text-align:justify!important}}@media (min-width:600px){.text-sm-left{text-align:left!important}.text-sm-center{text-align:center!important}.text-sm-right{text-align:right!important}.text-sm-justify{text-align:justify!important}}@media (min-width:960px){.text-md-left{text-align:left!important}.text-md-center{text-align:center!important}.text-md-right{text-align:right!important}.text-md-justify{text-align:justify!important}}@media (min-width:1264px){.text-lg-left{text-align:left!important}.text-lg-center{text-align:center!important}.text-lg-right{text-align:right!important}.text-lg-justify{text-align:justify!important}}@media (min-width:1904px){.text-xl-left{text-align:left!important}.text-xl-center{text-align:center!important}.text-xl-right{text-align:right!important}.text-xl-justify{text-align:justify!important}}.application{display:flex}.application a{cursor:pointer}.application--is-rtl{direction:rtl}.application--wrap{flex:1 1 auto;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;min-height:100vh;max-width:100%;position:relative}.theme--light.application{background:#fafafa;color:rgba(0,0,0,.87)}.theme--light.application .text--primary{color:rgba(0,0,0,.87)!important}.theme--light.application .text--secondary{color:rgba(0,0,0,.54)!important}.theme--light.application .text--disabled{color:rgba(0,0,0,.38)!important}.theme--dark.application{background:#303030;color:#fff}.theme--dark.application .text--primary{color:#fff!important}.theme--dark.application .text--secondary{color:hsla(0,0%,100%,.7)!important}.theme--dark.application .text--disabled{color:hsla(0,0%,100%,.5)!important}@media print{@-moz-document url-prefix(){.application,.application--wrap{display:block}}}.v-alert{border-radius:0;border-width:4px 0 0;border-style:solid;color:#fff;display:flex;font-size:14px;margin:4px auto;padding:16px;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-alert .v-alert__icon.v-icon,.v-alert__dismissible .v-icon{align-self:center;color:rgba(0,0,0,.3);font-size:24px}.v-alert--outline .v-icon{color:inherit!important}.v-alert__icon{margin-right:16px}.v-alert__dismissible{align-self:flex-start;color:inherit;margin-left:16px;margin-right:0;text-decoration:none;transition:.3s cubic-bezier(.25,.8,.5,1);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-alert__dismissible:hover{opacity:.8}.v-alert--no-icon .v-alert__icon{display:none}.v-alert>div{align-self:center;flex:1 1}.v-alert.v-alert{border-color:rgba(0,0,0,.12)!important}.v-alert.v-alert--outline{border:1px solid!important}@media screen and (max-width:600px){.v-alert__icon{display:none}}.theme--light.v-icon{color:rgba(0,0,0,.54)}.theme--light.v-icon.v-icon--disabled{color:rgba(0,0,0,.38)!important}.theme--dark.v-icon{color:#fff}.theme--dark.v-icon.v-icon--disabled{color:hsla(0,0%,100%,.5)!important}.v-icon{align-items:center;display:inline-flex;-webkit-font-feature-settings:\"liga\";font-feature-settings:\"liga\";font-size:24px;justify-content:center;line-height:1;transition:.3s cubic-bezier(.25,.8,.5,1);vertical-align:text-bottom}.v-icon--right{margin-left:16px}.v-icon--left{margin-right:16px}.v-icon.v-icon.v-icon--link{cursor:pointer}.v-icon--disabled{pointer-events:none;opacity:.6}.v-icon--is-component{height:24px}.v-autocomplete.v-input>.v-input__control>.v-input__slot{cursor:text}.v-autocomplete input{align-self:center}.v-autocomplete--is-selecting-index input{opacity:0}.v-autocomplete.v-text-field--enclosed:not(.v-text-field--solo):not(.v-text-field--single-line) .v-select__slot>input{margin-top:24px}.v-autocomplete:not(.v-input--is-disabled).v-select.v-text-field input{pointer-events:inherit}.v-autocomplete__content.v-menu__content,.v-autocomplete__content.v-menu__content .v-card{border-radius:0}.theme--light.v-text-field>.v-input__control>.v-input__slot:before{border-color:rgba(0,0,0,.42)}.theme--light.v-text-field:not(.v-input--has-state)>.v-input__control>.v-input__slot:hover:before{border-color:rgba(0,0,0,.87)}.theme--light.v-text-field.v-input--is-disabled>.v-input__control>.v-input__slot:before{border-image:repeating-linear-gradient(90deg,rgba(0,0,0,.38) 0,rgba(0,0,0,.38) 2px,transparent 0,transparent 4px) 1 repeat}.theme--light.v-text-field.v-input--is-disabled>.v-input__control>.v-input__slot:before .v-text-field__prefix,.theme--light.v-text-field.v-input--is-disabled>.v-input__control>.v-input__slot:before .v-text-field__suffix{color:rgba(0,0,0,.38)}.theme--light.v-text-field__prefix,.theme--light.v-text-field__suffix{color:rgba(0,0,0,.54)}.theme--light.v-text-field--solo>.v-input__control>.v-input__slot{border-radius:2px;background:#fff}.theme--light.v-text-field--solo-inverted.v-text-field--solo>.v-input__control>.v-input__slot{background:rgba(0,0,0,.16)}.theme--light.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused>.v-input__control>.v-input__slot{background:#424242}.theme--light.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused>.v-input__control>.v-input__slot .v-label,.theme--light.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused>.v-input__control>.v-input__slot input{color:#fff}.theme--light.v-text-field--box>.v-input__control>.v-input__slot{background:rgba(0,0,0,.06)}.theme--light.v-text-field--box .v-text-field__prefix{max-height:32px;margin-top:22px}.theme--light.v-text-field--box.v-input--is-dirty .v-text-field__prefix,.theme--light.v-text-field--box.v-input--is-focused .v-text-field__prefix,.theme--light.v-text-field--box.v-text-field--placeholder .v-text-field__prefix{margin-top:22px;transition:.3s cubic-bezier(.25,.8,.5,1)}.theme--light.v-text-field--box:not(.v-input--is-focused)>.v-input__control>.v-input__slot:hover{background:rgba(0,0,0,.12)}.theme--light.v-text-field--outline>.v-input__control>.v-input__slot{border:2px solid rgba(0,0,0,.54)}.theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state)>.v-input__control>.v-input__slot:hover{border:2px solid rgba(0,0,0,.87)}.theme--dark.v-text-field>.v-input__control>.v-input__slot:before{border-color:hsla(0,0%,100%,.7)}.theme--dark.v-text-field:not(.v-input--has-state)>.v-input__control>.v-input__slot:hover:before{border-color:#fff}.theme--dark.v-text-field.v-input--is-disabled>.v-input__control>.v-input__slot:before{border-image:repeating-linear-gradient(90deg,hsla(0,0%,100%,.5) 0,hsla(0,0%,100%,.5) 2px,transparent 0,transparent 4px) 1 repeat}.theme--dark.v-text-field.v-input--is-disabled>.v-input__control>.v-input__slot:before .v-text-field__prefix,.theme--dark.v-text-field.v-input--is-disabled>.v-input__control>.v-input__slot:before .v-text-field__suffix{color:hsla(0,0%,100%,.5)}.theme--dark.v-text-field__prefix,.theme--dark.v-text-field__suffix{color:hsla(0,0%,100%,.7)}.theme--dark.v-text-field--solo>.v-input__control>.v-input__slot{border-radius:2px;background:#424242}.theme--dark.v-text-field--solo-inverted.v-text-field--solo>.v-input__control>.v-input__slot{background:hsla(0,0%,100%,.16)}.theme--dark.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused>.v-input__control>.v-input__slot{background:#fff}.theme--dark.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused>.v-input__control>.v-input__slot .v-label,.theme--dark.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused>.v-input__control>.v-input__slot input{color:rgba(0,0,0,.87)}.theme--dark.v-text-field--box>.v-input__control>.v-input__slot{background:rgba(0,0,0,.1)}.theme--dark.v-text-field--box .v-text-field__prefix{max-height:32px;margin-top:22px}.theme--dark.v-text-field--box.v-input--is-dirty .v-text-field__prefix,.theme--dark.v-text-field--box.v-input--is-focused .v-text-field__prefix,.theme--dark.v-text-field--box.v-text-field--placeholder .v-text-field__prefix{margin-top:22px;transition:.3s cubic-bezier(.25,.8,.5,1)}.theme--dark.v-text-field--box:not(.v-input--is-focused)>.v-input__control>.v-input__slot:hover{background:rgba(0,0,0,.2)}.theme--dark.v-text-field--outline>.v-input__control>.v-input__slot{border:2px solid hsla(0,0%,100%,.7)}.theme--dark.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state)>.v-input__control>.v-input__slot:hover{border:2px solid #fff}.application--is-rtl .v-text-field .v-label{-webkit-transform-origin:top right;transform-origin:top right}.application--is-rtl .v-text-field .v-counter{margin-left:0;margin-right:8px}.application--is-rtl .v-text-field--enclosed .v-input__append-outer{margin-left:0;margin-right:16px}.application--is-rtl .v-text-field--enclosed .v-input__prepend-outer{margin-left:16px;margin-right:0}.application--is-rtl .v-text-field--reverse input{text-align:left}.application--is-rtl .v-text-field--reverse .v-label{-webkit-transform-origin:top left;transform-origin:top left}.application--is-rtl .v-text-field__prefix{text-align:left;padding-right:0;padding-left:4px}.application--is-rtl .v-text-field__suffix{padding-left:0;padding-right:4px}.application--is-rtl .v-text-field--reverse .v-text-field__prefix{text-align:right;padding-left:0;padding-right:4px}.application--is-rtl .v-text-field--reverse .v-text-field__suffix{padding-left:0;padding-right:4px}.v-text-field{padding-top:12px;margin-top:4px}.v-text-field input{flex:1 1 auto;line-height:20px;padding:8px 0;max-width:100%;min-width:0;width:100%}.v-text-field .v-input__append-inner,.v-text-field .v-input__prepend-inner{align-self:flex-start;display:inline-flex;margin-top:4px;line-height:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-text-field .v-input__prepend-inner{margin-right:auto;padding-right:4px}.v-text-field .v-input__append-inner{margin-left:auto;padding-left:4px}.v-text-field .v-counter{margin-left:8px;white-space:nowrap}.v-text-field .v-label{max-width:90%;overflow:hidden;text-overflow:ellipsis;top:6px;-webkit-transform-origin:top left;transform-origin:top left;white-space:nowrap;pointer-events:none}.v-text-field .v-label--active{max-width:133%;-webkit-transform:translateY(-18px) scale(.75);transform:translateY(-18px) scale(.75)}.v-text-field>.v-input__control>.v-input__slot{cursor:text;transition:background .3s cubic-bezier(.25,.8,.5,1)}.v-text-field>.v-input__control>.v-input__slot:after,.v-text-field>.v-input__control>.v-input__slot:before{bottom:-1px;content:\"\";left:0;position:absolute;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-text-field>.v-input__control>.v-input__slot:before{border-style:solid;border-width:thin 0 0}.v-text-field>.v-input__control>.v-input__slot:after{border-color:currentcolor;border-style:solid;border-width:thin 0;-webkit-transform:scaleX(0);transform:scaleX(0)}.v-text-field__details{display:flex;flex:1 0 auto;max-width:100%;overflow:hidden}.v-text-field__prefix,.v-text-field__suffix{align-self:center;cursor:default}.v-text-field__prefix{text-align:right;padding-right:4px}.v-text-field__suffix{padding-left:4px;white-space:nowrap}.v-text-field--reverse .v-text-field__prefix{text-align:left;padding-right:0;padding-left:4px}.v-text-field--reverse .v-text-field__suffix{padding-left:0;padding-right:4px}.v-text-field>.v-input__control>.v-input__slot>.v-text-field__slot{display:flex;flex:1 1 auto;position:relative}.v-text-field--box,.v-text-field--full-width,.v-text-field--outline{position:relative}.v-text-field--box>.v-input__control>.v-input__slot,.v-text-field--full-width>.v-input__control>.v-input__slot,.v-text-field--outline>.v-input__control>.v-input__slot{align-items:stretch;min-height:56px}.v-text-field--box input,.v-text-field--full-width input,.v-text-field--outline input{margin-top:22px}.v-text-field--box.v-text-field--single-line input,.v-text-field--full-width.v-text-field--single-line input,.v-text-field--outline.v-text-field--single-line input{margin-top:12px}.v-text-field--box .v-label,.v-text-field--full-width .v-label,.v-text-field--outline .v-label{top:18px}.v-text-field--box .v-label--active,.v-text-field--full-width .v-label--active,.v-text-field--outline .v-label--active{-webkit-transform:translateY(-6px) scale(.75);transform:translateY(-6px) scale(.75)}.v-text-field--box>.v-input__control>.v-input__slot{border-top-left-radius:4px;border-top-right-radius:4px}.v-text-field--box>.v-input__control>.v-input__slot:before{border-style:solid;border-width:thin 0}.v-text-field.v-text-field--enclosed{margin:0;padding:0}.v-text-field.v-text-field--enclosed:not(.v-text-field--box) .v-progress-linear__background{display:none}.v-text-field.v-text-field--enclosed .v-input__append-inner,.v-text-field.v-text-field--enclosed .v-input__append-outer,.v-text-field.v-text-field--enclosed .v-input__prepend-inner,.v-text-field.v-text-field--enclosed .v-input__prepend-outer{margin-top:16px}.v-text-field.v-text-field--enclosed .v-text-field__details,.v-text-field.v-text-field--enclosed>.v-input__control>.v-input__slot{padding:0 12px}.v-text-field.v-text-field--enclosed .v-text-field__details{margin-bottom:8px}.v-text-field--reverse input{text-align:right}.v-text-field--reverse .v-label{-webkit-transform-origin:top right;transform-origin:top right}.v-text-field--reverse .v-text-field__slot,.v-text-field--reverse>.v-input__control>.v-input__slot{flex-direction:row-reverse}.v-text-field--full-width>.v-input__control>.v-input__slot:after,.v-text-field--full-width>.v-input__control>.v-input__slot:before,.v-text-field--outline>.v-input__control>.v-input__slot:after,.v-text-field--outline>.v-input__control>.v-input__slot:before,.v-text-field--solo>.v-input__control>.v-input__slot:after,.v-text-field--solo>.v-input__control>.v-input__slot:before{display:none}.v-text-field--outline{margin-bottom:16px;transition:border .3s cubic-bezier(.25,.8,.5,1)}.v-text-field--outline>.v-input__control>.v-input__slot{background:transparent!important;border-radius:4px}.v-text-field--outline .v-text-field__prefix{margin-top:22px;max-height:32px}.v-text-field--outline .v-input__append-outer,.v-text-field--outline .v-input__prepend-outer{margin-top:18px}.v-text-field--outline.v-input--is-dirty .v-text-field__prefix,.v-text-field--outline.v-input--is-focused .v-text-field__prefix,.v-text-field--outline.v-text-field--placeholder .v-text-field__prefix{margin-top:22px;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-text-field--outline.v-input--has-state>.v-input__control>.v-input__slot,.v-text-field--outline.v-input--is-focused>.v-input__control>.v-input__slot{border:2px solid;transition:border .3s cubic-bezier(.25,.8,.5,1)}.v-text-field.v-text-field--solo .v-label{top:calc(50% - 10px)}.v-text-field.v-text-field--solo .v-input__control{min-height:48px;padding:0}.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)>.v-input__control>.v-input__slot{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-text-field.v-text-field--solo .v-text-field__slot{align-items:center}.v-text-field.v-text-field--solo .v-input__append-inner,.v-text-field.v-text-field--solo .v-input__prepend-inner{align-self:center;margin-top:0}.v-text-field.v-text-field--solo .v-input__append-outer,.v-text-field.v-text-field--solo .v-input__prepend-outer{margin-top:12px}.v-text-field.v-input--is-focused>.v-input__control>.v-input__slot:after{-webkit-transform:scaleX(1);transform:scaleX(1)}.v-text-field.v-input--has-state>.v-input__control>.v-input__slot:before{border-color:currentColor}.theme--light.v-select .v-select__selections{color:rgba(0,0,0,.87)}.theme--light.v-select .v-chip--disabled,.theme--light.v-select.v-input--is-disabled .v-select__selections,.theme--light.v-select .v-select__selection--disabled{color:rgba(0,0,0,.38)}.theme--dark.v-select .v-select__selections,.theme--light.v-select.v-text-field--solo-inverted.v-input--is-focused .v-select__selections{color:#fff}.theme--dark.v-select .v-chip--disabled,.theme--dark.v-select.v-input--is-disabled .v-select__selections,.theme--dark.v-select .v-select__selection--disabled{color:hsla(0,0%,100%,.5)}.theme--dark.v-select.v-text-field--solo-inverted.v-input--is-focused .v-select__selections{color:rgba(0,0,0,.87)}.v-select{position:relative}.v-select>.v-input__control>.v-input__slot{cursor:pointer}.v-select .v-chip{flex:0 1 auto}.v-select .fade-transition-leave-active{position:absolute;left:0}.v-select.v-input--is-dirty ::-webkit-input-placeholder{color:transparent!important}.v-select.v-input--is-dirty :-ms-input-placeholder{color:transparent!important}.v-select.v-input--is-dirty ::-ms-input-placeholder{color:transparent!important}.v-select.v-input--is-dirty ::placeholder{color:transparent!important}.v-select:not(.v-input--is-dirty):not(.v-input--is-focused) .v-text-field__prefix{line-height:20px;position:absolute;top:7px;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-select.v-text-field--enclosed:not(.v-text-field--single-line) .v-select__selections{padding-top:24px}.v-select.v-text-field input{flex:1 1;margin-top:0;min-width:0;pointer-events:none;position:relative}.v-select.v-select--is-menu-active .v-input__icon--append .v-icon{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.v-select.v-select--chips input{margin:0}.v-select.v-select--chips .v-select__selections{min-height:42px}.v-select.v-select--chips.v-select--chips--small .v-select__selections{min-height:32px}.v-select.v-select--chips:not(.v-text-field--single-line).v-text-field--box .v-select__selections,.v-select.v-select--chips:not(.v-text-field--single-line).v-text-field--enclosed .v-select__selections{min-height:68px}.v-select.v-select--chips:not(.v-text-field--single-line).v-text-field--box.v-select--chips--small .v-select__selections,.v-select.v-select--chips:not(.v-text-field--single-line).v-text-field--enclosed.v-select--chips--small .v-select__selections{min-height:56px}.v-select.v-text-field--reverse .v-select__selections,.v-select.v-text-field--reverse .v-select__slot{flex-direction:row-reverse}.v-select__selections{align-items:center;display:flex;flex:1 1 auto;flex-wrap:wrap;line-height:18px}.v-select__selection{max-width:90%}.v-select__selection--comma{align-items:center;display:inline-flex;margin:7px 4px 7px 0}.v-select__slot{position:relative;align-items:center;display:flex;width:100%}.v-select:not(.v-text-field--single-line) .v-select__slot>input{align-self:flex-end}.theme--light.v-input:not(.v-input--is-disabled) input,.theme--light.v-input:not(.v-input--is-disabled) textarea{color:rgba(0,0,0,.87)}.theme--light.v-input input::-webkit-input-placeholder,.theme--light.v-input textarea::-webkit-input-placeholder{color:rgba(0,0,0,.38)}.theme--light.v-input input:-ms-input-placeholder,.theme--light.v-input textarea:-ms-input-placeholder{color:rgba(0,0,0,.38)}.theme--light.v-input input::-ms-input-placeholder,.theme--light.v-input textarea::-ms-input-placeholder{color:rgba(0,0,0,.38)}.theme--light.v-input input::placeholder,.theme--light.v-input textarea::placeholder{color:rgba(0,0,0,.38)}.theme--light.v-input--is-disabled .v-label,.theme--light.v-input--is-disabled input,.theme--light.v-input--is-disabled textarea{color:rgba(0,0,0,.38)}.theme--dark.v-input:not(.v-input--is-disabled) input,.theme--dark.v-input:not(.v-input--is-disabled) textarea{color:#fff}.theme--dark.v-input input::-webkit-input-placeholder,.theme--dark.v-input textarea::-webkit-input-placeholder{color:hsla(0,0%,100%,.5)}.theme--dark.v-input input:-ms-input-placeholder,.theme--dark.v-input textarea:-ms-input-placeholder{color:hsla(0,0%,100%,.5)}.theme--dark.v-input input::-ms-input-placeholder,.theme--dark.v-input textarea::-ms-input-placeholder{color:hsla(0,0%,100%,.5)}.theme--dark.v-input input::placeholder,.theme--dark.v-input textarea::placeholder{color:hsla(0,0%,100%,.5)}.theme--dark.v-input--is-disabled .v-label,.theme--dark.v-input--is-disabled input,.theme--dark.v-input--is-disabled textarea{color:hsla(0,0%,100%,.5)}.v-input{align-items:flex-start;display:flex;flex:1 1 auto;font-size:16px;text-align:left}.v-input .v-progress-linear{top:calc(100% - 1px);left:0;margin:0;position:absolute}.v-input input{max-height:32px}.v-input input:invalid,.v-input textarea:invalid{box-shadow:none}.v-input input:active,.v-input input:focus,.v-input textarea:active,.v-input textarea:focus{outline:none}.v-input .v-label{height:20px;line-height:20px}.v-input__append-outer,.v-input__prepend-outer{display:inline-flex;margin-bottom:4px;margin-top:4px;line-height:1}.v-input__append-outer .v-icon,.v-input__prepend-outer .v-icon{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-input__append-outer{margin-left:9px}.v-input__prepend-outer{margin-right:9px}.v-input__control{display:flex;flex-direction:column;height:auto;flex-grow:1;flex-wrap:wrap;width:100%}.v-input__icon{align-items:center;display:inline-flex;height:24px;flex:1 0 auto;justify-content:center;min-width:24px;width:24px}.v-input__icon--clear{border-radius:50%}.v-input__slot{align-items:center;color:inherit;display:flex;margin-bottom:8px;min-height:inherit;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-input--is-disabled:not(.v-input--is-readonly){pointer-events:none}.v-input--is-loading>.v-input__control>.v-input__slot:after,.v-input--is-loading>.v-input__control>.v-input__slot:before{display:none}.v-input--hide-details>.v-input__control>.v-input__slot{margin-bottom:0}.v-input--has-state.error--text .v-label{-webkit-animation:shake .6s cubic-bezier(.25,.8,.5,1);animation:shake .6s cubic-bezier(.25,.8,.5,1)}.theme--light.v-label{color:rgba(0,0,0,.54)}.theme--light.v-label--is-disabled{color:rgba(0,0,0,.38)}.theme--dark.v-label{color:hsla(0,0%,100%,.7)}.theme--dark.v-label--is-disabled{color:hsla(0,0%,100%,.5)}.v-label{font-size:16px;line-height:1;min-height:8px;transition:.3s cubic-bezier(.25,.8,.5,1)}.theme--light.v-messages{color:rgba(0,0,0,.54)}.theme--dark.v-messages{color:hsla(0,0%,100%,.7)}.application--is-rtl .v-messages{text-align:right}.v-messages{flex:1 1 auto;font-size:12px;min-height:12px;min-width:1px;position:relative}.v-messages__message{line-height:normal;word-break:break-word;overflow-wrap:break-word;word-wrap:break-word;-webkit-hyphens:auto;-ms-hyphens:auto;hyphens:auto}.v-progress-linear{background:transparent;margin:1rem 0;overflow:hidden;width:100%;position:relative}.v-progress-linear__bar{width:100%;position:relative;z-index:1}.v-progress-linear__bar,.v-progress-linear__bar__determinate{height:inherit;transition:.2s cubic-bezier(.4,0,.6,1)}.v-progress-linear__bar__indeterminate .long,.v-progress-linear__bar__indeterminate .short{height:inherit;position:absolute;left:0;top:0;bottom:0;will-change:left,right;width:auto;background-color:inherit}.v-progress-linear__bar__indeterminate--active .long{-webkit-animation:indeterminate;animation:indeterminate;-webkit-animation-duration:2.2s;animation-duration:2.2s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}.v-progress-linear__bar__indeterminate--active .short{-webkit-animation:indeterminate-short;animation:indeterminate-short;-webkit-animation-duration:2.2s;animation-duration:2.2s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}.v-progress-linear__background{position:absolute;top:0;left:0;bottom:0;transition:.3s ease-in}.v-progress-linear__content{width:100%;height:100%;position:absolute;top:0;left:0;z-index:2}.v-progress-linear--query .v-progress-linear__bar__indeterminate--active .long{-webkit-animation:query;animation:query;-webkit-animation-duration:2s;animation-duration:2s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}.v-progress-linear--query .v-progress-linear__bar__indeterminate--active .short{-webkit-animation:query-short;animation:query-short;-webkit-animation-duration:2s;animation-duration:2s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}@-webkit-keyframes indeterminate{0%{left:-90%;right:100%}60%{left:-90%;right:100%}to{left:100%;right:-35%}}@keyframes indeterminate{0%{left:-90%;right:100%}60%{left:-90%;right:100%}to{left:100%;right:-35%}}@-webkit-keyframes indeterminate-short{0%{left:-200%;right:100%}60%{left:107%;right:-8%}to{left:107%;right:-8%}}@keyframes indeterminate-short{0%{left:-200%;right:100%}60%{left:107%;right:-8%}to{left:107%;right:-8%}}@-webkit-keyframes query{0%{right:-90%;left:100%}60%{right:-90%;left:100%}to{right:100%;left:-35%}}@keyframes query{0%{right:-90%;left:100%}60%{right:-90%;left:100%}to{right:100%;left:-35%}}@-webkit-keyframes query-short{0%{right:-200%;left:100%}60%{right:107%;left:-8%}to{right:107%;left:-8%}}@keyframes query-short{0%{right:-200%;left:100%}60%{right:107%;left:-8%}to{right:107%;left:-8%}}.theme--light.v-counter{color:rgba(0,0,0,.54)}.theme--dark.v-counter{color:hsla(0,0%,100%,.7)}.v-counter{flex:0 1 auto;font-size:12px;min-height:12px;line-height:1}.theme--light.v-card{background-color:#fff;border-color:#fff;color:rgba(0,0,0,.87)}.theme--dark.v-card{background-color:#424242;border-color:#424242;color:#fff}.v-card{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);text-decoration:none}.v-card>:first-child:not(.v-btn):not(.v-chip){border-top-left-radius:inherit;border-top-right-radius:inherit}.v-card>:last-child:not(.v-btn):not(.v-chip){border-bottom-left-radius:inherit;border-bottom-right-radius:inherit}.v-card--flat{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)}.v-card--hover{cursor:pointer;transition:all .4s cubic-bezier(.25,.8,.25,1);transition-property:box-shadow}.v-card--hover:hover{box-shadow:0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)}.v-card__title{align-items:center;display:flex;flex-wrap:wrap;padding:16px}.v-card__title--primary{padding-top:24px}.v-card__text{padding:16px;width:100%}.v-card__actions{align-items:center;display:flex;padding:8px}.v-card__actions .v-btn,.v-card__actions>*{margin:0}.v-card__actions .v-btn+.v-btn{margin-left:8px}.theme--light.v-input--selection-controls.v-input--is-disabled .v-icon{color:rgba(0,0,0,.26)!important}.theme--dark.v-input--selection-controls.v-input--is-disabled .v-icon{color:hsla(0,0%,100%,.3)!important}.application--is-rtl .v-input--selection-controls .v-input--selection-controls__input{margin-right:0;margin-left:8px}.v-input--selection-controls{margin-top:16px;padding-top:4px}.v-input--selection-controls .v-input__append-outer,.v-input--selection-controls .v-input__prepend-outer{margin-top:0;margin-bottom:0}.v-input--selection-controls .v-input__control{flex-grow:0;width:auto}.v-input--selection-controls:not(.v-input--hide-details) .v-input__slot{margin-bottom:12px}.v-input--selection-controls__input{color:inherit;display:inline-flex;flex:0 0 auto;height:24px;position:relative;margin-right:8px;transition:.3s cubic-bezier(.25,.8,.25,1);transition-property:color,-webkit-transform;transition-property:color,transform;transition-property:color,transform,-webkit-transform;width:24px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-input--selection-controls__input input{position:absolute;opacity:0;width:100%;height:100%}.v-input--selection-controls__input+.v-label,.v-input--selection-controls__input input{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-input--selection-controls__ripple{border-radius:50%;cursor:pointer;height:34px;position:absolute;transition:inherit;width:34px;left:-12px;top:calc(50% - 24px);margin:7px}.v-input--selection-controls__ripple:before{border-radius:inherit;bottom:0;content:\"\";position:absolute;opacity:.2;left:0;right:0;top:0;-webkit-transform-origin:center center;transform-origin:center center;-webkit-transform:scale(.2);transform:scale(.2);transition:inherit}.v-input--selection-controls__ripple .v-ripple__container{-webkit-transform:scale(1.4);transform:scale(1.4)}.v-input--selection-controls.v-input .v-label{align-items:center;display:inline-flex;top:0;height:auto}.v-input--selection-controls.v-input--is-focused .v-input--selection-controls__ripple:before,.v-input--selection-controls .v-radio--is-focused .v-input--selection-controls__ripple:before{background:currentColor;-webkit-transform:scale(.8);transform:scale(.8)}.theme--light.v-divider{border-color:rgba(0,0,0,.12)}.theme--dark.v-divider{border-color:hsla(0,0%,100%,.12)}.v-divider{display:block;flex:1 1 0px;max-width:100%;height:0;max-height:0;border:solid;border-width:thin 0 0;transition:inherit}.v-divider--inset:not(.v-divider--vertical){margin-left:72px;max-width:calc(100% - 72px)}.v-divider--vertical{align-self:stretch;border:solid;border-width:0 thin 0 0;display:inline-flex;height:inherit;min-height:100%;max-height:100%;max-width:0;width:0;vertical-align:text-bottom}.v-divider--vertical.v-divider--inset{margin-top:8px;min-height:0;max-height:calc(100% - 16px)}.theme--light.v-subheader{color:rgba(0,0,0,.54)}.theme--dark.v-subheader{color:hsla(0,0%,100%,.7)}.v-subheader{align-items:center;display:flex;height:48px;font-size:14px;font-weight:500;padding:0 16px}.v-subheader--inset{margin-left:56px}.theme--light.v-list{background:#fff;color:rgba(0,0,0,.87)}.theme--light.v-list .v-list--disabled{color:rgba(0,0,0,.38)}.theme--light.v-list .v-list__tile__sub-title{color:rgba(0,0,0,.54)}.theme--light.v-list .v-list__tile__mask{color:rgba(0,0,0,.38);background:#eee}.theme--light.v-list .v-list__group__header:hover,.theme--light.v-list .v-list__tile--highlighted,.theme--light.v-list .v-list__tile--link:hover{background:rgba(0,0,0,.04)}.theme--light.v-list .v-list__group--active:after,.theme--light.v-list .v-list__group--active:before{background:rgba(0,0,0,.12)}.theme--light.v-list .v-list__group--disabled .v-list__group__header__prepend-icon .v-icon,.theme--light.v-list .v-list__group--disabled .v-list__tile{color:rgba(0,0,0,.38)!important}.theme--dark.v-list{background:#424242;color:#fff}.theme--dark.v-list .v-list--disabled{color:hsla(0,0%,100%,.5)}.theme--dark.v-list .v-list__tile__sub-title{color:hsla(0,0%,100%,.7)}.theme--dark.v-list .v-list__tile__mask{color:hsla(0,0%,100%,.5);background:#494949}.theme--dark.v-list .v-list__group__header:hover,.theme--dark.v-list .v-list__tile--highlighted,.theme--dark.v-list .v-list__tile--link:hover{background:hsla(0,0%,100%,.08)}.theme--dark.v-list .v-list__group--active:after,.theme--dark.v-list .v-list__group--active:before{background:hsla(0,0%,100%,.12)}.theme--dark.v-list .v-list__group--disabled .v-list__group__header__prepend-icon .v-icon,.theme--dark.v-list .v-list__group--disabled .v-list__tile{color:hsla(0,0%,100%,.5)!important}.application--is-rtl .v-list__tile__content,.application--is-rtl .v-list__tile__title{text-align:right}.v-list{list-style-type:none;padding:8px 0;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-list>div{transition:inherit}.v-list__tile{align-items:center;color:inherit;display:flex;font-size:16px;font-weight:400;height:48px;margin:0;padding:0 16px;position:relative;text-decoration:none;transition:background .3s cubic-bezier(.25,.8,.5,1)}.v-list__tile--link{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-list__tile__action,.v-list__tile__content{height:100%}.v-list__tile__sub-title,.v-list__tile__title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-list__tile__title{height:24px;line-height:24px;position:relative;text-align:left}.v-list__tile__sub-title{font-size:14px}.v-list__tile__action,.v-list__tile__avatar{display:flex;justify-content:flex-start;min-width:56px}.v-list__tile__action{align-items:center}.v-list__tile__action .v-btn{padding:0;margin:0}.v-list__tile__action .v-btn--icon{margin:-6px}.v-list__tile__action .v-radio.v-radio{margin:0}.v-list__tile__action .v-input--selection-controls{padding:0;margin:0}.v-list__tile__action .v-input--selection-controls .v-messages{display:none}.v-list__tile__action .v-input--selection-controls .v-input__slot{margin:0}.v-list__tile__action-text{color:#9e9e9e;font-size:12px}.v-list__tile__action--stack{align-items:flex-end;justify-content:space-between;padding-top:8px;padding-bottom:8px;white-space:nowrap;flex-direction:column}.v-list__tile__content{text-align:left;flex:1 1 auto;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;flex-direction:column}.v-list__tile__content~.v-list__tile__action:not(.v-list__tile__action--stack),.v-list__tile__content~.v-list__tile__avatar{justify-content:flex-end}.v-list__tile--active .v-list__tile__action:first-of-type .v-icon{color:inherit}.v-list__tile--avatar{height:56px}.v-list--dense{padding-top:4px;padding-bottom:4px}.v-list--dense .v-subheader{font-size:13px;height:40px}.v-list--dense .v-list__group .v-subheader{height:40px}.v-list--dense .v-list__tile{font-size:13px}.v-list--dense .v-list__tile--avatar{height:48px}.v-list--dense .v-list__tile:not(.v-list__tile--avatar){height:40px}.v-list--dense .v-list__tile .v-icon{font-size:22px}.v-list--dense .v-list__tile__sub-title{font-size:13px}.v-list--disabled{pointer-events:none}.v-list--two-line .v-list__tile{height:72px}.v-list--two-line.v-list--dense .v-list__tile{height:60px}.v-list--three-line .v-list__tile{height:88px}.v-list--three-line .v-list__tile__avatar{margin-top:-18px}.v-list--three-line .v-list__tile__sub-title{white-space:normal;-webkit-line-clamp:2;display:-webkit-box}.v-list--three-line.v-list--dense .v-list__tile{height:76px}.v-list>.v-list__group:before{top:0}.v-list>.v-list__group:before .v-list__tile__avatar{margin-top:-14px}.v-list__group{padding:0;position:relative;transition:inherit}.v-list__group:after,.v-list__group:before{content:\"\";height:1px;left:0;position:absolute;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-list__group--active~.v-list__group:before{display:none}.v-list__group__header{align-items:center;cursor:pointer;display:flex;list-style-type:none}.v-list__group__header>div:not(.v-list__group__header__prepend-icon):not(.v-list__group__header__append-icon){flex:1 1 auto;overflow:hidden}.v-list__group__header .v-list__group__header__append-icon,.v-list__group__header .v-list__group__header__prepend-icon{padding:0 16px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-list__group__header--sub-group{align-items:center;display:flex}.v-list__group__header--sub-group div .v-list__tile{padding-left:0}.v-list__group__header--sub-group .v-list__group__header__prepend-icon{padding:0 0 0 40px;margin-right:8px}.v-list__group__header .v-list__group__header__prepend-icon{display:flex;justify-content:flex-start;min-width:56px}.v-list__group__header--active .v-list__group__header__append-icon .v-icon{-webkit-transform:rotate(-180deg);transform:rotate(-180deg)}.v-list__group__header--active .v-list__group__header__prepend-icon .v-icon{color:inherit}.v-list__group__header--active.v-list__group__header--sub-group .v-list__group__header__prepend-icon .v-icon{-webkit-transform:rotate(-180deg);transform:rotate(-180deg)}.v-list__group__items{position:relative;padding:0;transition:inherit}.v-list__group__items>div{display:block}.v-list__group__items--no-action .v-list__tile{padding-left:72px}.v-list__group--disabled{pointer-events:none}.v-list--subheader{padding-top:0}.v-avatar{align-items:center;border-radius:50%;display:inline-flex;justify-content:center;position:relative;text-align:center;vertical-align:middle}.v-avatar .v-icon,.v-avatar .v-image,.v-avatar img{border-radius:50%;display:inline-flex;height:inherit;width:inherit}.v-avatar--tile,.v-avatar--tile .v-icon,.v-avatar--tile .v-image,.v-avatar--tile img{border-radius:0}.theme--light.v-chip{background:#e0e0e0;color:rgba(0,0,0,.87)}.theme--light.v-chip--disabled{color:rgba(0,0,0,.38)}.theme--dark.v-chip{background:#555;color:#fff}.theme--dark.v-chip--disabled{color:hsla(0,0%,100%,.5)}.application--is-rtl .v-chip__close{margin:0 8px 0 2px}.application--is-rtl .v-chip--removable .v-chip__content{padding:0 12px 0 4px}.application--is-rtl .v-chip--select-multi{margin:4px 0 4px 4px}.application--is-rtl .v-chip .v-avatar{margin-right:-12px;margin-left:8px}.application--is-rtl .v-chip .v-icon--right{margin-right:12px;margin-left:-8px}.application--is-rtl .v-chip .v-icon--left{margin-right:-8px;margin-left:12px}.v-chip{font-size:13px;margin:4px;outline:none;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-chip,.v-chip .v-chip__content{align-items:center;border-radius:28px;display:inline-flex;vertical-align:middle}.v-chip .v-chip__content{cursor:default;height:32px;justify-content:space-between;padding:0 12px;white-space:nowrap;z-index:1}.v-chip--removable .v-chip__content{padding:0 4px 0 12px}.v-chip .v-avatar{height:32px!important;margin-left:-12px;margin-right:8px;min-width:32px;width:32px!important}.v-chip .v-avatar img{height:100%;width:100%}.v-chip--active,.v-chip--selected,.v-chip:focus:not(.v-chip--disabled){border-color:rgba(0,0,0,.13);box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-chip--active:after,.v-chip--selected:after,.v-chip:focus:not(.v-chip--disabled):after{background:currentColor;border-radius:inherit;content:\"\";height:100%;position:absolute;top:0;left:0;transition:inherit;width:100%;pointer-events:none;opacity:.13}.v-chip--label,.v-chip--label .v-chip__content{border-radius:2px}.v-chip.v-chip.v-chip--outline{background:transparent!important;border:1px solid;color:#9e9e9e;height:32px}.v-chip.v-chip.v-chip--outline .v-avatar{margin-left:-13px}.v-chip--small{height:24px!important}.v-chip--small .v-avatar{height:24px!important;min-width:24px;width:24px!important}.v-chip--small .v-icon{font-size:20px}.v-chip__close{align-items:center;color:inherit;display:flex;font-size:20px;margin:0 2px 0 8px;text-decoration:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-chip__close>.v-icon{color:inherit!important;font-size:20px;cursor:pointer;opacity:.5}.v-chip__close>.v-icon:hover{opacity:1}.v-chip--disabled .v-chip__close{pointer-events:none}.v-chip--select-multi{margin:4px 4px 4px 0}.v-chip .v-icon{color:inherit}.v-chip .v-icon--right{margin-left:12px;margin-right:-8px}.v-chip .v-icon--left{margin-left:-8px;margin-right:12px}.v-menu{display:block;vertical-align:middle}.v-menu--inline{display:inline-block}.v-menu__activator{align-items:center;cursor:pointer;display:flex}.v-menu__activator *{cursor:pointer}.v-menu__content{position:absolute;display:inline-block;border-radius:2px;max-width:80%;overflow-y:auto;overflow-x:hidden;contain:content;will-change:transform;box-shadow:0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)}.v-menu__content--active{pointer-events:none}.v-menu__content--fixed{position:fixed}.v-menu__content>.card{contain:content;-webkit-backface-visibility:hidden;backface-visibility:hidden}.v-menu>.v-menu__content{max-width:none}.v-menu-transition-enter .v-list__tile{min-width:0;pointer-events:none}.v-menu-transition-enter-to .v-list__tile{pointer-events:auto;transition-delay:.1s}.v-menu-transition-leave-active,.v-menu-transition-leave-to{pointer-events:none}.v-menu-transition-enter,.v-menu-transition-leave-to{opacity:0}.v-menu-transition-enter-active,.v-menu-transition-leave-active{transition:all .3s cubic-bezier(.25,.8,.25,1)}.v-menu-transition-enter.v-menu__content--auto{transition:none!important}.v-menu-transition-enter.v-menu__content--auto .v-list__tile{opacity:0;-webkit-transform:translateY(-15px);transform:translateY(-15px)}.v-menu-transition-enter.v-menu__content--auto .v-list__tile--active{opacity:1;-webkit-transform:none!important;transform:none!important;pointer-events:auto}.application--is-rtl .v-badge__badge{right:auto;left:-22px}.application--is-rtl .v-badge--overlap .v-badge__badge{right:auto;left:-8px}.application--is-rtl .v-badge--overlap.v-badge--left .v-badge__badge{right:-8px;left:auto}.application--is-rtl .v-badge--left .v-badge__badge{right:-22px;left:auto}.v-badge{display:inline-block;position:relative}.v-badge__badge{color:#fff;display:flex;position:absolute;font-size:14px;top:-11px;right:-22px;border-radius:50%;height:22px;width:22px;justify-content:center;align-items:center;flex-direction:row;flex-wrap:wrap;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-badge__badge .v-icon{font-size:14px}.v-badge--overlap .v-badge__badge{top:-8px;right:-8px}.v-badge--overlap.v-badge--left .v-badge__badge{left:-8px;right:auto}.v-badge--overlap.v-badge--bottom .v-badge__badge{bottom:-8px;top:auto}.v-badge--left .v-badge__badge{left:-22px}.v-badge--bottom .v-badge__badge{bottom:-11px;top:auto}.theme--light.v-bottom-nav{background-color:#fff}.theme--light.v-bottom-nav .v-btn:not(.v-btn--active){color:rgba(0,0,0,.54)!important}.theme--dark.v-bottom-nav{background-color:#424242}.theme--dark.v-bottom-nav .v-btn:not(.v-btn--active){color:hsla(0,0%,100%,.7)!important}.v-item-group.v-bottom-nav{bottom:0;box-shadow:0 3px 14px 2px rgba(0,0,0,.12);display:flex;left:0;justify-content:center;-webkit-transform:translateY(60px);transform:translateY(60px);transition:all .4s cubic-bezier(.25,.8,.5,1);width:100%}.v-item-group.v-bottom-nav--absolute{position:absolute}.v-item-group.v-bottom-nav--active{-webkit-transform:translate(0);transform:translate(0)}.v-item-group.v-bottom-nav--fixed{position:fixed;z-index:4}.v-item-group.v-bottom-nav .v-btn{background:transparent!important;border-radius:0;box-shadow:none!important;font-weight:400;height:100%;margin:0;max-width:168px;min-width:80px;padding:8px 12px 10px;text-transform:none;width:100%;flex-shrink:1}.v-item-group.v-bottom-nav .v-btn .v-btn__content{flex-direction:column-reverse;font-size:12px;white-space:nowrap;will-change:font-size}.v-item-group.v-bottom-nav .v-btn .v-btn__content i.v-icon{color:inherit;margin-bottom:4px;transition:all .4s cubic-bezier(.25,.8,.5,1)}.v-item-group.v-bottom-nav .v-btn .v-btn__content span{line-height:1}.v-item-group.v-bottom-nav .v-btn--active{padding-top:6px}.v-item-group.v-bottom-nav .v-btn--active:before{background-color:transparent}.v-item-group.v-bottom-nav .v-btn--active .v-btn__content{font-size:14px}.v-item-group.v-bottom-nav .v-btn--active .v-btn__content .v-icon{-webkit-transform:none;transform:none}.v-item-group.v-bottom-nav--shift .v-btn__content{font-size:14px}.v-item-group.v-bottom-nav--shift .v-btn{transition:all .3s;min-width:56px;max-width:96px}.v-item-group.v-bottom-nav--shift .v-btn--active{min-width:96px;max-width:168px}.v-bottom-nav--shift .v-btn:not(.v-btn--active) .v-btn__content .v-icon{-webkit-transform:scale(1) translateY(8px);transform:scale(1) translateY(8px)}.v-bottom-nav--shift .v-btn:not(.v-btn--active) .v-btn__content>span:not(.v-badge){color:transparent}.v-item-group{flex:0 1 auto;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-item-group>*{cursor:pointer;flex:1 1 auto}.v-bottom-sheet.v-dialog{align-self:flex-end;border-radius:0;flex:1 0 100%;margin:0;min-width:100%;overflow:visible;transition:.3s cubic-bezier(.25,.8,.25,1)}.v-bottom-sheet.v-dialog.v-bottom-sheet--inset{max-width:70%;min-width:0}@media only screen and (max-width:599px){.v-bottom-sheet.v-dialog.v-bottom-sheet--inset{max-width:none}}.v-dialog{box-shadow:0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);border-radius:2px;margin:24px;overflow-y:auto;pointer-events:auto;transition:.3s cubic-bezier(.25,.8,.25,1);width:100%;z-index:inherit}.v-dialog__content{align-items:center;display:flex;height:100%;justify-content:center;left:0;pointer-events:none;position:fixed;top:0;transition:.2s cubic-bezier(.25,.8,.25,1);width:100%;z-index:6;outline:none}.v-dialog:not(.v-dialog--fullscreen){max-height:90%}.v-dialog__activator,.v-dialog__activator *{cursor:pointer}.v-dialog__container{display:inline-block;vertical-align:middle}.v-dialog--animated{-webkit-animation-duration:.15s;animation-duration:.15s;-webkit-animation-name:animate-dialog;animation-name:animate-dialog;-webkit-animation-timing-function:cubic-bezier(.25,.8,.25,1);animation-timing-function:cubic-bezier(.25,.8,.25,1)}.v-dialog--fullscreen{border-radius:0;margin:0;height:100%;position:fixed;overflow-y:auto;top:0;left:0}.v-dialog--fullscreen>.v-card{min-height:100%;min-width:100%;margin:0!important;padding:0!important}.v-dialog--scrollable,.v-dialog--scrollable>form{display:flex}.v-dialog--scrollable>.v-card,.v-dialog--scrollable>form>.v-card{display:flex;flex:1 1 100%;max-width:100%;flex-direction:column}.v-dialog--scrollable>.v-card>.v-card__actions,.v-dialog--scrollable>.v-card>.v-card__title,.v-dialog--scrollable>form>.v-card>.v-card__actions,.v-dialog--scrollable>form>.v-card>.v-card__title{flex:1 0 auto}.v-dialog--scrollable>.v-card>.v-card__text,.v-dialog--scrollable>form>.v-card>.v-card__text{overflow-y:auto;-webkit-backface-visibility:hidden;backface-visibility:hidden}@-webkit-keyframes animate-dialog{0%{-webkit-transform:scale(1);transform:scale(1)}50%{-webkit-transform:scale(1.03);transform:scale(1.03)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes animate-dialog{0%{-webkit-transform:scale(1);transform:scale(1)}50%{-webkit-transform:scale(1.03);transform:scale(1.03)}to{-webkit-transform:scale(1);transform:scale(1)}}.v-overlay{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:.3s cubic-bezier(.25,.8,.5,1);z-index:5}.v-overlay--absolute{position:absolute}.v-overlay:before{background-color:#212121;bottom:0;content:\"\";height:100%;left:0;opacity:0;position:absolute;right:0;top:0;transition:inherit;transition-delay:.15s;width:100%}.v-overlay--active{pointer-events:auto;touch-action:none}.v-overlay--active:before{opacity:.46}.theme--light.v-breadcrumbs .v-breadcrumbs__divider,.theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled{color:rgba(0,0,0,.38)}.theme--dark.v-breadcrumbs .v-breadcrumbs__divider,.theme--dark.v-breadcrumbs .v-breadcrumbs__item--disabled{color:hsla(0,0%,100%,.5)}.v-breadcrumbs{align-items:center;display:flex;flex-wrap:wrap;flex:0 1 auto;list-style-type:none;margin:0;padding:18px 12px}.v-breadcrumbs li{align-items:center;display:inline-flex;font-size:14px}.v-breadcrumbs li .v-icon{font-size:16px}.v-breadcrumbs li:nth-child(2n){padding:0 12px}.v-breadcrumbs--large li,.v-breadcrumbs--large li .v-icon{font-size:16px}.v-breadcrumbs__item{align-items:center;display:inline-flex;text-decoration:none;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-breadcrumbs__item--disabled{pointer-events:none}.v-ripple__container{border-radius:inherit;width:100%;height:100%;z-index:0;contain:strict}.v-ripple__animation,.v-ripple__container{color:inherit;position:absolute;left:0;top:0;overflow:hidden;pointer-events:none}.v-ripple__animation{border-radius:50%;background:currentColor;opacity:0;will-change:transform,opacity}.v-ripple__animation--enter{transition:none}.v-ripple__animation--in{transition:opacity .1s cubic-bezier(.4,0,.2,1),-webkit-transform .25s cubic-bezier(.4,0,.2,1);transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .1s cubic-bezier(.4,0,.2,1);transition:transform .25s cubic-bezier(.4,0,.2,1),opacity .1s cubic-bezier(.4,0,.2,1),-webkit-transform .25s cubic-bezier(.4,0,.2,1)}.v-ripple__animation--out{transition:opacity .3s cubic-bezier(.4,0,.2,1)}.theme--light.v-btn{color:rgba(0,0,0,.87)}.theme--light.v-btn.v-btn--disabled,.theme--light.v-btn.v-btn--disabled .v-btn__loading,.theme--light.v-btn.v-btn--disabled .v-icon{color:rgba(0,0,0,.26)!important}.theme--light.v-btn.v-btn--disabled:not(.v-btn--icon):not(.v-btn--flat):not(.v-btn--outline){background-color:rgba(0,0,0,.12)!important}.theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat){background-color:#f5f5f5}.theme--dark.v-btn{color:#fff}.theme--dark.v-btn.v-btn--disabled,.theme--dark.v-btn.v-btn--disabled .v-btn__loading,.theme--dark.v-btn.v-btn--disabled .v-icon{color:hsla(0,0%,100%,.3)!important}.theme--dark.v-btn.v-btn--disabled:not(.v-btn--icon):not(.v-btn--flat):not(.v-btn--outline){background-color:hsla(0,0%,100%,.12)!important}.theme--dark.v-btn:not(.v-btn--icon):not(.v-btn--flat){background-color:#212121}.v-btn{align-items:center;border-radius:2px;display:inline-flex;height:36px;flex:0 0 auto;font-size:14px;font-weight:500;justify-content:center;margin:6px 8px;min-width:88px;outline:0;text-transform:uppercase;text-decoration:none;transition:.3s cubic-bezier(.25,.8,.5,1),color 1ms;position:relative;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-btn:before{border-radius:inherit;color:inherit;content:\"\";position:absolute;left:0;top:0;height:100%;opacity:.12;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-btn{padding:0 16px}.v-btn--active,.v-btn:focus,.v-btn:hover{position:relative}.v-btn--active:before,.v-btn:focus:before,.v-btn:hover:before{background-color:currentColor}.v-btn__content{align-items:center;border-radius:inherit;color:inherit;display:flex;flex:1 0 auto;justify-content:center;margin:0 auto;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1);white-space:nowrap;width:inherit}.v-btn--small{font-size:13px;height:28px;padding:0 8px}.v-btn--large{font-size:15px;height:44px;padding:0 32px}.v-btn .v-btn__content .v-icon{color:inherit}.v-btn:not(.v-btn--depressed):not(.v-btn--flat){will-change:box-shadow;box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-btn:not(.v-btn--depressed):not(.v-btn--flat):active{box-shadow:0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)}.v-btn--icon{background:transparent;box-shadow:none!important;border-radius:50%;justify-content:center;min-width:0;width:36px}.v-btn--icon.v-btn--small{width:28px}.v-btn--icon.v-btn--large{width:44px}.v-btn--floating,.v-btn--icon:before{border-radius:50%}.v-btn--floating{min-width:0;height:56px;width:56px;padding:0}.v-btn--floating.v-btn--absolute,.v-btn--floating.v-btn--fixed{z-index:4}.v-btn--floating:not(.v-btn--depressed):not(.v-btn--flat){box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12)}.v-btn--floating:not(.v-btn--depressed):not(.v-btn--flat):active{box-shadow:0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12)}.v-btn--floating .v-btn__content{flex:1 1 auto;margin:0;height:100%}.v-btn--floating:after{border-radius:50%}.v-btn--floating .v-btn__content>:not(:only-child){transition:.3s cubic-bezier(.25,.8,.5,1)}.v-btn--floating .v-btn__content>:not(:only-child):first-child{opacity:1}.v-btn--floating .v-btn__content>:not(:only-child):last-child{opacity:0;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.v-btn--floating .v-btn__content>:not(:only-child):first-child,.v-btn--floating .v-btn__content>:not(:only-child):last-child{-webkit-backface-visibility:hidden;position:absolute;left:0;top:0}.v-btn--floating.v-btn--active .v-btn__content>:not(:only-child):first-child{opacity:0;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.v-btn--floating.v-btn--active .v-btn__content>:not(:only-child):last-child{opacity:1;-webkit-transform:rotate(0);transform:rotate(0)}.v-btn--floating .v-icon{height:inherit;width:inherit}.v-btn--floating.v-btn--small{height:40px;width:40px}.v-btn--floating.v-btn--small .v-icon{font-size:18px}.v-btn--floating.v-btn--large{height:72px;width:72px}.v-btn--floating.v-btn--large .v-icon{font-size:30px}.v-btn--reverse .v-btn__content{flex-direction:row-reverse}.v-btn--reverse.v-btn--column .v-btn__content{flex-direction:column-reverse}.v-btn--absolute,.v-btn--fixed{margin:0}.v-btn.v-btn--absolute{position:absolute}.v-btn.v-btn--fixed{position:fixed}.v-btn--top:not(.v-btn--absolute){top:16px}.v-btn--top.v-btn--absolute{top:-28px}.v-btn--top.v-btn--absolute.v-btn--small{top:-20px}.v-btn--top.v-btn--absolute.v-btn--large{top:-36px}.v-btn--bottom:not(.v-btn--absolute){bottom:16px}.v-btn--bottom.v-btn--absolute{bottom:-28px}.v-btn--bottom.v-btn--absolute.v-btn--small{bottom:-20px}.v-btn--bottom.v-btn--absolute.v-btn--large{bottom:-36px}.v-btn--left{left:16px}.v-btn--right{right:16px}.v-btn.v-btn--disabled{box-shadow:none!important;pointer-events:none}.v-btn:not(.v-btn--disabled):not(.v-btn--floating):not(.v-btn--icon) .v-btn__content .v-icon{transition:none}.v-btn--icon{padding:0}.v-btn--loader{pointer-events:none}.v-btn--loader .v-btn__content{opacity:0}.v-btn__loading{align-items:center;display:flex;height:100%;justify-content:center;left:0;position:absolute;top:0;width:100%}.v-btn__loading .v-icon--left{margin-right:1rem;line-height:inherit}.v-btn__loading .v-icon--right{margin-left:1rem;line-height:inherit}.v-btn.v-btn--outline{border:1px solid;background:transparent!important;box-shadow:none}.v-btn.v-btn--outline:hover{box-shadow:none}.v-btn--block{display:flex;flex:1;margin:6px 0;width:100%}.v-btn--round,.v-btn--round:after{border-radius:28px}.v-btn:not(.v-btn--outline).accent,.v-btn:not(.v-btn--outline).error,.v-btn:not(.v-btn--outline).info,.v-btn:not(.v-btn--outline).primary,.v-btn:not(.v-btn--outline).secondary,.v-btn:not(.v-btn--outline).success,.v-btn:not(.v-btn--outline).warning{color:#fff}@media (hover:none){.v-btn:hover:before{background-color:transparent}}.v-progress-circular{position:relative;display:inline-flex;vertical-align:middle}.v-progress-circular svg{width:100%;height:100%;margin:auto;position:absolute;top:0;bottom:0;left:0;right:0;z-index:0}.v-progress-circular--indeterminate svg{-webkit-animation:progress-circular-rotate 1.4s linear infinite;animation:progress-circular-rotate 1.4s linear infinite;-webkit-transform-origin:center center;transform-origin:center center;transition:all .2s ease-in-out}.v-progress-circular--indeterminate .v-progress-circular__overlay{-webkit-animation:progress-circular-dash 1.4s ease-in-out infinite;animation:progress-circular-dash 1.4s ease-in-out infinite;stroke-linecap:round;stroke-dasharray:80,200;stroke-dashoffset:0px}.v-progress-circular__underlay{stroke:rgba(0,0,0,.1);z-index:1}.v-progress-circular__overlay{stroke:currentColor;z-index:2;transition:all .6s ease-in-out}.v-progress-circular__info{position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}@-webkit-keyframes progress-circular-dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0px}50%{stroke-dasharray:100,200;stroke-dashoffset:-15px}to{stroke-dasharray:100,200;stroke-dashoffset:-125px}}@keyframes progress-circular-dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0px}50%{stroke-dasharray:100,200;stroke-dashoffset:-15px}to{stroke-dasharray:100,200;stroke-dashoffset:-125px}}@-webkit-keyframes progress-circular-rotate{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes progress-circular-rotate{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}.theme--light.v-btn-toggle{background:#fff}.theme--light.v-btn-toggle .v-btn{color:rgba(0,0,0,.87)}.theme--light.v-btn-toggle:not(.v-btn-toggle--only-child) .v-btn.v-btn--active:not(:last-child){border-right-color:rgba(0,0,0,.26)}.theme--dark.v-btn-toggle{background:#424242}.theme--dark.v-btn-toggle .v-btn{color:#fff}.theme--dark.v-btn-toggle:not(.v-btn-toggle--only-child) .v-btn.v-btn--active:not(:last-child){border-right-color:hsla(0,0%,100%,.3)}.v-btn-toggle{display:inline-flex;border-radius:2px;transition:.3s cubic-bezier(.25,.8,.5,1);will-change:background,box-shadow}.v-btn-toggle .v-btn{justify-content:center;min-width:auto;width:auto;padding:0 8px;margin:0;opacity:.4;border-radius:0}.v-btn-toggle .v-btn:not(:last-child){border-right:1px solid transparent}.v-btn-toggle .v-btn:after{display:none}.v-btn-toggle .v-btn.v-btn--active{opacity:1}.v-btn-toggle .v-btn span+.v-icon{font-size:medium;margin-left:10px}.v-btn-toggle .v-btn:first-child{border-radius:2px 0 0 2px}.v-btn-toggle .v-btn:last-child{border-radius:0 2px 2px 0}.v-btn-toggle--selected{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.theme--light.v-calendar-weekly{background-color:#fff}.theme--light.v-calendar-weekly .v-calendar-weekly__head-weekday{border-right:1px solid #e0e0e0;color:#000}.theme--light.v-calendar-weekly .v-calendar-weekly__head-weekday.v-past{color:rgba(0,0,0,.38)}.theme--light.v-calendar-weekly .v-calendar-weekly__head-weekday.v-outside{background-color:#f7f7f7}.theme--light.v-calendar-weekly .v-calendar-weekly__day{border-right:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;color:#000}.theme--light.v-calendar-weekly .v-calendar-weekly__day.v-outside{background-color:#f7f7f7}.theme--dark.v-calendar-weekly{background-color:#303030}.theme--dark.v-calendar-weekly .v-calendar-weekly__head-weekday{border-right:1px solid #9e9e9e;color:#fff}.theme--dark.v-calendar-weekly .v-calendar-weekly__head-weekday.v-past{color:hsla(0,0%,100%,.5)}.theme--dark.v-calendar-weekly .v-calendar-weekly__head-weekday.v-outside{background-color:#202020}.theme--dark.v-calendar-weekly .v-calendar-weekly__day{border-right:1px solid #9e9e9e;border-bottom:1px solid #9e9e9e;color:#fff}.theme--dark.v-calendar-weekly .v-calendar-weekly__day.v-outside{background-color:#202020}.v-calendar-weekly{width:100%;height:100%;display:flex;flex-direction:column}.v-calendar-weekly__head{display:flex}.v-calendar-weekly__head,.v-calendar-weekly__head-weekday{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-calendar-weekly__head-weekday{flex:1 0 20px;padding:0 4px;font-size:14px}.v-calendar-weekly__week{display:flex;flex:1}.v-calendar-weekly__day{flex:1;width:0;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;padding:32px 4px 4px}.v-calendar-weekly__day.v-present .v-calendar-weekly__day-label{border:1px solid}.v-calendar-weekly__day.v-present .v-calendar-weekly__day-month{color:currentColor}.v-calendar-weekly__day-label{position:absolute;text-decoration:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;box-shadow:none;text-align:center;left:0;top:0;border-radius:16px;width:32px;height:32px;line-height:32px}.v-calendar-weekly__day-label:hover{text-decoration:underline}.v-calendar-weekly__day-month{position:absolute;text-decoration:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;box-shadow:none;top:0;left:36px;height:32px;line-height:32px}.theme--light.v-calendar-daily{background-color:#fff}.theme--light.v-calendar-daily .v-calendar-daily__intervals-head{border-right:1px solid #e0e0e0}.theme--light.v-calendar-daily .v-calendar-daily_head-day{border-right:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;color:#000}.theme--light.v-calendar-daily .v-calendar-daily_head-day.v-past .v-calendar-daily_head-day-label,.theme--light.v-calendar-daily .v-calendar-daily_head-day.v-past .v-calendar-daily_head-weekday{color:rgba(0,0,0,.38)}.theme--light.v-calendar-daily .v-calendar-daily__intervals-body{border-right:1px solid #e0e0e0}.theme--light.v-calendar-daily .v-calendar-daily__intervals-body .v-calendar-daily__interval-text{color:#424242}.theme--light.v-calendar-daily .v-calendar-daily__day{border-right:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0}.theme--light.v-calendar-daily .v-calendar-daily__day-interval{border-top:1px solid #e0e0e0}.theme--light.v-calendar-daily .v-calendar-daily__day-interval:first-child{border-top:none!important}.theme--dark.v-calendar-daily{background-color:#303030}.theme--dark.v-calendar-daily .v-calendar-daily__intervals-head{border-right:1px solid #9e9e9e}.theme--dark.v-calendar-daily .v-calendar-daily_head-day{border-right:1px solid #9e9e9e;border-bottom:1px solid #9e9e9e;color:#fff}.theme--dark.v-calendar-daily .v-calendar-daily_head-day.v-past .v-calendar-daily_head-day-label,.theme--dark.v-calendar-daily .v-calendar-daily_head-day.v-past .v-calendar-daily_head-weekday{color:hsla(0,0%,100%,.5)}.theme--dark.v-calendar-daily .v-calendar-daily__intervals-body{border-right:1px solid #9e9e9e}.theme--dark.v-calendar-daily .v-calendar-daily__intervals-body .v-calendar-daily__interval-text{color:#eee}.theme--dark.v-calendar-daily .v-calendar-daily__day{border-right:1px solid #616161;border-bottom:1px solid #616161}.theme--dark.v-calendar-daily .v-calendar-daily__day-interval{border-top:1px solid #616161}.theme--dark.v-calendar-daily .v-calendar-daily__day-interval:first-child{border-top:none!important}.v-calendar-daily{display:flex;flex-direction:column;overflow:hidden;height:100%}.v-calendar-daily__head{flex:none;display:flex}.v-calendar-daily__intervals-head{flex:none;width:44px}.v-calendar-daily_head-day{flex:1 1 auto;width:0}.v-calendar-daily_head-weekday{padding:4px 4px 4px 8px;font-size:14px}.v-calendar-daily_head-day-label,.v-calendar-daily_head-weekday{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-calendar-daily_head-day-label{font-size:40px;padding:0 4px 4px 8px;line-height:40px;cursor:pointer}.v-calendar-daily_head-day-label:hover{text-decoration:underline}.v-calendar-daily__body{flex:1 1 60%;overflow:hidden;display:flex;position:relative;flex-direction:column}.v-calendar-daily__scroll-area{overflow-y:scroll;flex:1 1 auto;display:flex;align-items:flex-start}.v-calendar-daily__pane{width:100%;overflow-y:hidden;flex:none;display:flex;align-items:flex-start}.v-calendar-daily__day-container{display:flex;flex:1;width:100%;height:100%}.v-calendar-daily__intervals-body{flex:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:44px}.v-calendar-daily__interval{text-align:center;border-bottom:none}.v-calendar-daily__interval-text{display:block;position:relative;top:-6px;font-size:10px}.v-calendar-daily__day{flex:1;width:0;position:relative}.theme--light.v-sheet{background-color:#fff;border-color:#fff;color:rgba(0,0,0,.87)}.theme--dark.v-sheet{background-color:#424242;border-color:#424242;color:#fff}.v-sheet{display:block;border-radius:2px;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-sheet--tile{border-radius:0}.v-image{z-index:0}.v-image__image,.v-image__placeholder{z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%}.v-image__image{background-repeat:no-repeat}.v-image__image--preload{-webkit-filter:blur(2px);filter:blur(2px)}.v-image__image--contain{background-size:contain}.v-image__image--cover{background-size:cover}.v-responsive{position:relative;overflow:hidden;flex:1 0 auto;display:flex}.v-responsive__content{flex:1 0 0px}.v-responsive__sizer{transition:padding-bottom .2s cubic-bezier(.25,.8,.5,1);flex:0 0 0px}.application--is-rtl .v-carousel__prev{left:auto;right:5px}.application--is-rtl .v-carousel__next{left:5px;right:auto}.v-carousel{width:100%;position:relative;overflow:hidden;box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-carousel__next,.v-carousel__prev{position:absolute;top:50%;z-index:1;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.v-carousel__next .v-btn,.v-carousel__prev .v-btn{margin:0;height:auto;width:auto}.v-carousel__next .v-btn i,.v-carousel__prev .v-btn i{font-size:48px}.v-carousel__next .v-btn:hover,.v-carousel__prev .v-btn:hover{background:none}.v-carousel__prev{left:5px}.v-carousel__next{right:5px}.v-carousel__controls{background:rgba(0,0,0,.5);align-items:center;bottom:0;display:flex;justify-content:center;left:0;position:absolute;height:50px;list-style-type:none;width:100%;z-index:1}.v-carousel__controls>.v-item-group{flex:0 1 auto}.v-carousel__controls__item{margin:0 8px!important}.v-carousel__controls__item .v-icon{opacity:.5;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-carousel__controls__item--active .v-icon{opacity:1;vertical-align:middle}.v-carousel__controls__item:hover{background:none}.v-carousel__controls__item:hover .v-icon{opacity:.8}.v-window__container{position:relative;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-window__container--is-active{overflow:hidden}.v-window-x-reverse-transition-enter-active,.v-window-x-reverse-transition-leave-active,.v-window-x-transition-enter-active,.v-window-x-transition-leave-active,.v-window-y-reverse-transition-enter-active,.v-window-y-reverse-transition-leave-active,.v-window-y-transition-enter-active,.v-window-y-transition-leave-active{transition:.3s cubic-bezier(.25,.8,.5,1)}.v-window-x-reverse-transition-leave,.v-window-x-reverse-transition-leave-to,.v-window-x-transition-leave,.v-window-x-transition-leave-to,.v-window-y-reverse-transition-leave,.v-window-y-reverse-transition-leave-to,.v-window-y-transition-leave,.v-window-y-transition-leave-to{position:absolute!important;top:0;width:100%}.v-window-x-transition-enter{-webkit-transform:translateX(100%);transform:translateX(100%)}.v-window-x-reverse-transition-enter,.v-window-x-transition-leave-to{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.v-window-x-reverse-transition-leave-to{-webkit-transform:translateX(100%);transform:translateX(100%)}.v-window-y-transition-enter{-webkit-transform:translateY(100%);transform:translateY(100%)}.v-window-y-reverse-transition-enter,.v-window-y-transition-leave-to{-webkit-transform:translateY(-100%);transform:translateY(-100%)}.v-window-y-reverse-transition-leave-to{-webkit-transform:translateY(100%);transform:translateY(100%)}.theme--light.v-data-iterator .v-data-iterator__actions{color:rgba(0,0,0,.54)}.theme--light.v-data-iterator .v-data-iterator__actions__select .v-select .v-input__append-inner,.theme--light.v-data-iterator .v-data-iterator__actions__select .v-select .v-select__selection--comma{color:rgba(0,0,0,.54)!important}.theme--dark.v-data-iterator .v-data-iterator__actions{color:hsla(0,0%,100%,.7)}.theme--dark.v-data-iterator .v-data-iterator__actions__select .v-select .v-input__append-inner,.theme--dark.v-data-iterator .v-data-iterator__actions__select .v-select .v-select__selection--comma{color:hsla(0,0%,100%,.7)!important}.v-data-iterator__actions{display:flex;justify-content:flex-end;align-items:center;font-size:12px;flex-wrap:wrap-reverse}.v-data-iterator__actions .v-btn{color:inherit}.v-data-iterator__actions .v-btn:last-of-type{margin-left:14px}.v-data-iterator__actions__range-controls{display:flex;align-items:center;min-height:48px}.v-data-iterator__actions__pagination{display:block;text-align:center;margin:0 32px 0 24px}.v-data-iterator__actions__select{display:flex;align-items:center;justify-content:flex-end;margin-right:14px;white-space:nowrap}.v-data-iterator__actions__select .v-select{flex:0 1 0;margin:13px 0 13px 34px;padding:0;position:static}.v-data-iterator__actions__select .v-select__selections{flex-wrap:nowrap}.v-data-iterator__actions__select .v-select__selections .v-select__selection--comma{font-size:12px}.theme--light.v-overflow-btn .v-input__control:before,.theme--light.v-overflow-btn .v-input__slot:before{background-color:rgba(0,0,0,.12)!important}.theme--light.v-overflow-btn.v-text-field--outline .v-input__control:before,.theme--light.v-overflow-btn.v-text-field--outline .v-input__slot:before{background-color:transparent!important}.theme--light.v-overflow-btn--editable.v-input--is-focused .v-input__append-inner,.theme--light.v-overflow-btn--editable.v-select--is-menu-active .v-input__append-inner,.theme--light.v-overflow-btn--editable:hover .v-input__append-inner,.theme--light.v-overflow-btn--segmented .v-input__append-inner{border-left:1px solid rgba(0,0,0,.12)}.theme--light.v-overflow-btn.v-input--is-focused .v-input__slot,.theme--light.v-overflow-btn.v-select--is-menu-active .v-input__slot,.theme--light.v-overflow-btn:hover .v-input__slot{background:#fff}.theme--dark.v-overflow-btn .v-input__control:before,.theme--dark.v-overflow-btn .v-input__slot:before{background-color:hsla(0,0%,100%,.12)!important}.theme--dark.v-overflow-btn.v-text-field--outline .v-input__control:before,.theme--dark.v-overflow-btn.v-text-field--outline .v-input__slot:before{background-color:transparent!important}.theme--dark.v-overflow-btn--editable.v-input--is-focused .v-input__append-inner,.theme--dark.v-overflow-btn--editable.v-select--is-menu-active .v-input__append-inner,.theme--dark.v-overflow-btn--editable:hover .v-input__append-inner,.theme--dark.v-overflow-btn--segmented .v-input__append-inner{border-left:1px solid hsla(0,0%,100%,.12)}.theme--dark.v-overflow-btn.v-input--is-focused .v-input__slot,.theme--dark.v-overflow-btn.v-select--is-menu-active .v-input__slot,.theme--dark.v-overflow-btn:hover .v-input__slot{background:#424242}.v-overflow-btn{margin-top:12px;padding-top:0}.v-overflow-btn:not(.v-overflow-btn--editable)>.v-input__control>.v-input__slot{cursor:pointer}.v-overflow-btn .v-select__slot{height:48px}.v-overflow-btn .v-select__slot input{margin-left:16px;cursor:pointer}.v-overflow-btn .v-select__selection--comma:first-child{margin-left:16px}.v-overflow-btn .v-input__slot{transition:.3s cubic-bezier(.25,.8,.5,1)}.v-overflow-btn .v-input__slot:after{content:none}.v-overflow-btn .v-label{margin-left:16px;top:calc(50% - 10px)}.v-overflow-btn .v-input__append-inner{width:48px;height:48px;align-self:auto;align-items:center;margin-top:0;padding:0;flex-shrink:0}.v-overflow-btn .v-input__append-outer,.v-overflow-btn .v-input__prepend-outer{margin-top:12px;margin-bottom:12px}.v-overflow-btn .v-input__control:before{height:1px;top:-1px;content:\"\";left:0;position:absolute;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-overflow-btn.v-input--is-focused .v-input__slot,.v-overflow-btn.v-select--is-menu-active .v-input__slot{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-overflow-btn .v-select__selections{width:0}.v-overflow-btn--segmented .v-select__selections{flex-wrap:nowrap}.v-overflow-btn--segmented .v-select__selections .v-btn{border-radius:0;margin:0 -16px 0 0;height:48px;width:100%}.v-overflow-btn--segmented .v-select__selections .v-btn__content{justify-content:start}.v-overflow-btn--segmented .v-select__selections .v-btn__content:before{background-color:transparent}.v-overflow-btn--editable .v-select__slot input{cursor:text}.v-overflow-btn--editable .v-input__append-inner,.v-overflow-btn--editable .v-input__append-inner *{cursor:pointer}.theme--light.v-table{background-color:#fff;color:rgba(0,0,0,.87)}.theme--light.v-table thead tr:first-child{border-bottom:1px solid rgba(0,0,0,.12)}.theme--light.v-table thead th{color:rgba(0,0,0,.54)}.theme--light.v-table tbody tr:not(:last-child){border-bottom:1px solid rgba(0,0,0,.12)}.theme--light.v-table tbody tr[active]{background:#f5f5f5}.theme--light.v-table tbody tr:hover:not(.v-datatable__expand-row){background:#eee}.theme--light.v-table tfoot tr{border-top:1px solid rgba(0,0,0,.12)}.theme--dark.v-table{background-color:#424242;color:#fff}.theme--dark.v-table thead tr:first-child{border-bottom:1px solid hsla(0,0%,100%,.12)}.theme--dark.v-table thead th{color:hsla(0,0%,100%,.7)}.theme--dark.v-table tbody tr:not(:last-child){border-bottom:1px solid hsla(0,0%,100%,.12)}.theme--dark.v-table tbody tr[active]{background:#505050}.theme--dark.v-table tbody tr:hover:not(.v-datatable__expand-row){background:#616161}.theme--dark.v-table tfoot tr{border-top:1px solid hsla(0,0%,100%,.12)}.v-table__overflow{width:100%;overflow-x:auto;overflow-y:hidden}table.v-table{border-radius:2px;border-collapse:collapse;border-spacing:0;width:100%;max-width:100%}table.v-table tbody td:first-child,table.v-table tbody td:not(:first-child),table.v-table tbody th:first-child,table.v-table tbody th:not(:first-child),table.v-table thead td:first-child,table.v-table thead td:not(:first-child),table.v-table thead th:first-child,table.v-table thead th:not(:first-child){padding:0 24px}table.v-table thead tr{height:56px}table.v-table thead th{font-weight:500;font-size:12px;transition:.3s cubic-bezier(.25,.8,.5,1);white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}table.v-table thead th.sortable{pointer-events:auto}table.v-table thead th>div{width:100%}table.v-table tbody tr{transition:background .3s cubic-bezier(.25,.8,.5,1);will-change:background}table.v-table tbody td,table.v-table tbody th{height:48px}table.v-table tbody td{font-weight:400;font-size:13px}table.v-table .input-group--selection-controls{padding:0}table.v-table .input-group--selection-controls .input-group__details{display:none}table.v-table .input-group--selection-controls.checkbox .v-icon{left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}table.v-table .input-group--selection-controls.checkbox .input-group--selection-controls__ripple{left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}table.v-table tfoot tr{height:48px}table.v-table tfoot tr td{padding:0 24px}.theme--light.v-datatable thead th.column.sortable .v-icon{color:rgba(0,0,0,.38)}.theme--light.v-datatable thead th.column.sortable.active,.theme--light.v-datatable thead th.column.sortable.active .v-icon,.theme--light.v-datatable thead th.column.sortable:hover{color:rgba(0,0,0,.87)}.theme--light.v-datatable .v-datatable__actions{background-color:#fff;color:rgba(0,0,0,.54);border-top:1px solid rgba(0,0,0,.12)}.theme--dark.v-datatable thead th.column.sortable .v-icon{color:hsla(0,0%,100%,.5)}.theme--dark.v-datatable thead th.column.sortable.active,.theme--dark.v-datatable thead th.column.sortable.active .v-icon,.theme--dark.v-datatable thead th.column.sortable:hover{color:#fff}.theme--dark.v-datatable .v-datatable__actions{background-color:#424242;color:hsla(0,0%,100%,.7);border-top:1px solid hsla(0,0%,100%,.12)}.v-datatable .v-input--selection-controls{margin:0;padding:0}.v-datatable thead th.column.sortable{cursor:pointer;outline:0}.v-datatable thead th.column.sortable .v-icon{font-size:16px;display:inline-block;opacity:0;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-datatable thead th.column.sortable:focus .v-icon,.v-datatable thead th.column.sortable:hover .v-icon{opacity:.6}.v-datatable thead th.column.sortable.active{-webkit-transform:none;transform:none}.v-datatable thead th.column.sortable.active .v-icon{opacity:1}.v-datatable thead th.column.sortable.active.desc .v-icon{-webkit-transform:rotate(-180deg);transform:rotate(-180deg)}.v-datatable__actions{display:flex;justify-content:flex-end;align-items:center;font-size:12px;flex-wrap:wrap-reverse}.v-datatable__actions .v-btn{color:inherit}.v-datatable__actions .v-btn:last-of-type{margin-left:14px}.v-datatable__actions__range-controls{display:flex;align-items:center;min-height:48px}.v-datatable__actions__pagination{display:block;text-align:center;margin:0 32px 0 24px}.v-datatable__actions__select{display:flex;align-items:center;justify-content:flex-end;margin-right:14px;white-space:nowrap}.v-datatable__actions__select .v-select{flex:0 1 0;margin:13px 0 13px 34px;padding:0;position:static}.v-datatable__actions__select .v-select__selections{flex-wrap:nowrap}.v-datatable__actions__select .v-select__selections .v-select__selection--comma{font-size:12px}.v-datatable__progress,.v-datatable__progress td,.v-datatable__progress th,.v-datatable__progress tr{height:auto!important}.v-datatable__progress th{padding:0!important}.v-datatable__progress th .v-progress-linear{margin:0}.v-datatable__expand-row{border:none!important}.v-datatable__expand-col{padding:0!important;height:0!important}.v-datatable__expand-col--expanded{border-bottom:1px solid rgba(0,0,0,.12)}.v-datatable__expand-content{transition:height .3s cubic-bezier(.25,.8,.5,1)}.v-datatable__expand-content>.card{border-radius:0;box-shadow:none}.theme--light.v-small-dialog a{color:rgba(0,0,0,.87)}.theme--dark.v-small-dialog a{color:#fff}.theme--light.v-small-dialog__content{background:#fff}.theme--dark.v-small-dialog__content{background:#424242}.theme--light.v-small-dialog__actions{background:#fff}.theme--dark.v-small-dialog__actions{background:#424242}.v-small-dialog{display:block;width:100%;height:100%}.v-small-dialog__content{padding:0 24px}.v-small-dialog__actions{text-align:right;white-space:pre}.v-small-dialog a{display:flex;align-items:center;height:100%;text-decoration:none}.v-small-dialog a>*{width:100%}.v-small-dialog .v-menu__activator{height:100%}.theme--light.v-picker__title{background:#e0e0e0}.theme--dark.v-picker__title{background:#616161}.theme--light.v-picker__body{background:#fff}.theme--dark.v-picker__body{background:#424242}.v-picker{border-radius:2px;contain:layout style;display:inline-flex;flex-direction:column;vertical-align:top;position:relative}.v-picker--full-width{display:flex}.v-picker__title{color:#fff;border-top-left-radius:2px;border-top-right-radius:2px;padding:16px}.v-picker__title__btn{transition:.3s cubic-bezier(.25,.8,.5,1)}.v-picker__title__btn:not(.v-picker__title__btn--active){opacity:.6;cursor:pointer}.v-picker__title__btn:not(.v-picker__title__btn--active):hover:not(:focus){opacity:1}.v-picker__title__btn--readonly{pointer-events:none}.v-picker__title__btn--active{opacity:1}.v-picker__body{height:auto;overflow:hidden;position:relative;z-index:0;flex:1 0 auto;display:flex;flex-direction:column;align-items:center}.v-picker__body>div{width:100%}.v-picker__body>div.fade-transition-leave-active{position:absolute}.v-picker--landscape .v-picker__title{border-top-right-radius:0;border-bottom-right-radius:0;width:170px;position:absolute;top:0;left:0;height:100%;z-index:1}.v-picker--landscape .v-picker__actions,.v-picker--landscape .v-picker__body{margin-left:170px}.application--is-rtl .v-date-picker-title .v-picker__title__btn{text-align:right}.v-date-picker-title{display:flex;justify-content:space-between;flex-direction:column;flex-wrap:wrap;line-height:1}.v-date-picker-title__year{align-items:center;display:inline-flex;font-size:14px;font-weight:500;margin-bottom:8px}.v-date-picker-title__date{font-size:34px;text-align:left;font-weight:500;position:relative;overflow:hidden;padding-bottom:8px;margin-bottom:-8px}.v-date-picker-title__date>div{position:relative}.v-date-picker-title--disabled{pointer-events:none}.theme--light.v-date-picker-header .v-date-picker-header__value:not(.v-date-picker-header__value--disabled) button:not(:hover):not(:focus){color:rgba(0,0,0,.87)}.theme--light.v-date-picker-header .v-date-picker-header__value--disabled button{color:rgba(0,0,0,.38)}.theme--dark.v-date-picker-header .v-date-picker-header__value:not(.v-date-picker-header__value--disabled) button:not(:hover):not(:focus){color:#fff}.theme--dark.v-date-picker-header .v-date-picker-header__value--disabled button{color:hsla(0,0%,100%,.5)}.v-date-picker-header{padding:4px 16px;align-items:center;display:flex;justify-content:space-between;position:relative}.v-date-picker-header .v-btn{margin:0;z-index:auto}.v-date-picker-header .v-icon{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-date-picker-header__value{flex:1;text-align:center;position:relative;overflow:hidden}.v-date-picker-header__value div{transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-date-picker-header__value button{cursor:pointer;font-weight:700;outline:none;padding:.5rem;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-date-picker-header--disabled{pointer-events:none}.theme--light.v-date-picker-table .v-date-picker-table--date__week,.theme--light.v-date-picker-table th{color:rgba(0,0,0,.38)}.theme--dark.v-date-picker-table .v-date-picker-table--date__week,.theme--dark.v-date-picker-table th{color:hsla(0,0%,100%,.5)}.v-date-picker-table{position:relative;padding:0 12px;height:242px}.v-date-picker-table table{transition:.3s cubic-bezier(.25,.8,.5,1);top:0;table-layout:fixed;width:100%}.v-date-picker-table td,.v-date-picker-table th{text-align:center;position:relative}.v-date-picker-table th{font-size:12px}.v-date-picker-table--date .v-btn{height:32px;width:32px}.v-date-picker-table .v-btn{z-index:auto;margin:0;font-size:12px}.v-date-picker-table .v-btn.v-btn--active{color:#fff}.v-date-picker-table--month td{width:33.333333%;height:56px;vertical-align:middle;text-align:center}.v-date-picker-table--month td .v-btn{margin:0 auto;max-width:160px;min-width:40px;width:100%}.v-date-picker-table--date th{padding:8px 0;font-weight:600}.v-date-picker-table--date td{width:45px}.v-date-picker-table__events{height:8px;left:0;position:absolute;text-align:center;white-space:pre;width:100%}.v-date-picker-table__events>div{border-radius:50%;display:inline-block;height:8px;margin:0 1px;width:8px}.v-date-picker-table--date .v-date-picker-table__events{bottom:6px}.v-date-picker-table--month .v-date-picker-table__events{bottom:8px}.v-date-picker-table--disabled{pointer-events:none}.v-date-picker-years{font-size:16px;font-weight:400;height:286px;list-style-type:none;overflow:auto;padding:0;text-align:center}.v-date-picker-years li{cursor:pointer;padding:8px 0;transition:none}.v-date-picker-years li.active{font-size:26px;font-weight:500;padding:10px 0}.v-date-picker-years li:hover{background:rgba(0,0,0,.12)}.v-picker--landscape .v-date-picker-years{height:286px}.theme--light.v-expansion-panel .v-expansion-panel__container{border-top:1px solid rgba(0,0,0,.12);background-color:#fff;color:rgba(0,0,0,.87)}.theme--light.v-expansion-panel .v-expansion-panel__container .v-expansion-panel__header .v-expansion-panel__header__icon .v-icon{color:rgba(0,0,0,.54)}.theme--light.v-expansion-panel .v-expansion-panel__container--disabled{color:rgba(0,0,0,.38)}.theme--light.v-expansion-panel--focusable .v-expansion-panel__container:focus{background-color:#eee}.theme--dark.v-expansion-panel .v-expansion-panel__container{border-top:1px solid hsla(0,0%,100%,.12);background-color:#424242;color:#fff}.theme--dark.v-expansion-panel .v-expansion-panel__container .v-expansion-panel__header .v-expansion-panel__header__icon .v-icon{color:#fff}.theme--dark.v-expansion-panel .v-expansion-panel__container--disabled{color:hsla(0,0%,100%,.5)}.theme--dark.v-expansion-panel--focusable .v-expansion-panel__container:focus{background-color:#494949}.v-expansion-panel{display:flex;flex-wrap:wrap;justify-content:center;list-style-type:none;padding:0;text-align:left;width:100%;box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12)}.v-expansion-panel__container{flex:1 0 100%;max-width:100%;outline:none;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-expansion-panel__container:first-child{border-top:none!important}.v-expansion-panel__container .v-expansion-panel__header__iconnel__header__icon{margin-left:auto}.v-expansion-panel__container--disabled .v-expansion-panel__header{pointer-events:none}.v-expansion-panel__container--active>.v-expansion-panel__header .v-expansion-panel__header__icon .v-icon{-webkit-transform:rotate(-180deg);transform:rotate(-180deg)}.v-expansion-panel__header{display:flex;cursor:pointer;align-items:center;position:relative;padding:12px 24px;min-height:48px}.v-expansion-panel__header>:not(.v-expansion-panel__header__icon){flex:1 1 auto}.v-expansion-panel__body{transition:.3s cubic-bezier(.25,.8,.5,1)}.v-expansion-panel__body>.v-card{border-radius:0;box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)!important}.v-expansion-panel--inset,.v-expansion-panel--popout{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)}.v-expansion-panel--inset .v-expansion-panel__container--active,.v-expansion-panel--popout .v-expansion-panel__container--active{margin:16px;box-shadow:0 3px 3px -2px rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 1px 8px 0 rgba(0,0,0,.12)}.v-expansion-panel--inset .v-expansion-panel__container,.v-expansion-panel--popout .v-expansion-panel__container{max-width:95%}.v-expansion-panel--popout .v-expansion-panel__container--active{max-width:100%}.v-expansion-panel--inset .v-expansion-panel__container--active{max-width:85%}.theme--light.v-footer{background:#f5f5f5;color:rgba(0,0,0,.87)}.theme--dark.v-footer{background:#212121;color:#fff}.v-footer{align-items:center;display:flex;flex:0 1 auto!important;min-height:36px;transition:.2s cubic-bezier(.4,0,.2,1)}.v-footer--absolute,.v-footer--fixed{bottom:0;left:0;width:100%;z-index:3}.v-footer--inset{z-index:2}.v-footer--absolute{position:absolute}.v-footer--fixed{position:fixed}.v-form>.container{padding:16px}.v-form>.container>.layout>.flex{padding:8px}.v-form>.container>.layout:only-child{margin:-8px}.v-form>.container>.layout:not(:only-child){margin:auto -8px}.container{flex:1 1 100%;margin:auto;padding:24px;width:100%}.container.fluid{max-width:100%}.container.fill-height{align-items:center;display:flex}.container.fill-height>.layout{height:100%;flex:1 1 auto}.container.grid-list-xs .layout .flex{padding:1px}.container.grid-list-xs .layout:only-child{margin:-1px}.container.grid-list-xs .layout:not(:only-child){margin:auto -1px}.container.grid-list-xs :not(:only-child) .layout:first-child{margin-top:-1px}.container.grid-list-xs :not(:only-child) .layout:last-child{margin-bottom:-1px}.container.grid-list-sm .layout .flex{padding:2px}.container.grid-list-sm .layout:only-child{margin:-2px}.container.grid-list-sm .layout:not(:only-child){margin:auto -2px}.container.grid-list-sm :not(:only-child) .layout:first-child{margin-top:-2px}.container.grid-list-sm :not(:only-child) .layout:last-child{margin-bottom:-2px}.container.grid-list-md .layout .flex{padding:4px}.container.grid-list-md .layout:only-child{margin:-4px}.container.grid-list-md .layout:not(:only-child){margin:auto -4px}.container.grid-list-md :not(:only-child) .layout:first-child{margin-top:-4px}.container.grid-list-md :not(:only-child) .layout:last-child{margin-bottom:-4px}.container.grid-list-lg .layout .flex{padding:8px}.container.grid-list-lg .layout:only-child{margin:-8px}.container.grid-list-lg .layout:not(:only-child){margin:auto -8px}.container.grid-list-lg :not(:only-child) .layout:first-child{margin-top:-8px}.container.grid-list-lg :not(:only-child) .layout:last-child{margin-bottom:-8px}.container.grid-list-xl .layout .flex{padding:12px}.container.grid-list-xl .layout:only-child{margin:-12px}.container.grid-list-xl .layout:not(:only-child){margin:auto -12px}.container.grid-list-xl :not(:only-child) .layout:first-child{margin-top:-12px}.container.grid-list-xl :not(:only-child) .layout:last-child{margin-bottom:-12px}.layout{display:flex;flex:1 1 auto;flex-wrap:nowrap;min-width:0}.layout.row{flex-direction:row}.layout.row.reverse{flex-direction:row-reverse}.layout.column{flex-direction:column}.layout.column.reverse{flex-direction:column-reverse}.layout.column>.flex{max-width:100%}.layout.wrap{flex-wrap:wrap}.child-flex>*,.flex{flex:1 1 auto;max-width:100%}.align-start{align-items:flex-start}.align-end{align-items:flex-end}.align-center{align-items:center}.align-baseline{align-items:baseline}.align-self-start{align-self:flex-start}.align-self-end{align-self:flex-end}.align-self-center{align-self:center}.align-self-baseline{align-self:baseline}.align-content-start{align-content:flex-start}.align-content-end{align-content:flex-end}.align-content-center{align-content:center}.align-content-space-between{align-content:space-between}.align-content-space-around{align-content:space-around}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-space-around{justify-content:space-around}.justify-space-between{justify-content:space-between}.justify-self-start{justify-self:flex-start}.justify-self-end{justify-self:flex-end}.justify-self-center{justify-self:center}.justify-self-baseline{justify-self:baseline}.grow,.spacer{flex-grow:1!important}.grow{flex-shrink:0!important}.shrink{flex-grow:0!important;flex-shrink:1!important}.scroll-y{overflow-y:auto}.fill-height{height:100%}.hide-overflow{overflow:hidden!important}.show-overflow{overflow:visible!important}.ellipsis,.no-wrap{white-space:nowrap}.ellipsis{overflow:hidden;text-overflow:ellipsis}.d-flex{display:flex!important}.d-inline-flex{display:inline-flex!important}.d-flex>*,.d-inline-flex>*{flex:1 1 auto!important}.d-block{display:block!important}.d-inline-block{display:inline-block!important}.d-inline{display:inline!important}.d-none{display:none!important}@media only screen and (min-width:960px){.container{max-width:900px}}@media only screen and (min-width:1264px){.container{max-width:1185px}}@media only screen and (min-width:1904px){.container{max-width:1785px}}@media only screen and (max-width:959px){.container{padding:16px}}@media (min-width:0){.flex.xs1{flex-basis:8.333333333333332%;flex-grow:0;max-width:8.333333333333332%}.flex.order-xs1{order:1}.flex.xs2{flex-basis:16.666666666666664%;flex-grow:0;max-width:16.666666666666664%}.flex.order-xs2{order:2}.flex.xs3{flex-basis:25%;flex-grow:0;max-width:25%}.flex.order-xs3{order:3}.flex.xs4{flex-basis:33.33333333333333%;flex-grow:0;max-width:33.33333333333333%}.flex.order-xs4{order:4}.flex.xs5{flex-basis:41.66666666666667%;flex-grow:0;max-width:41.66666666666667%}.flex.order-xs5{order:5}.flex.xs6{flex-basis:50%;flex-grow:0;max-width:50%}.flex.order-xs6{order:6}.flex.xs7{flex-basis:58.333333333333336%;flex-grow:0;max-width:58.333333333333336%}.flex.order-xs7{order:7}.flex.xs8{flex-basis:66.66666666666666%;flex-grow:0;max-width:66.66666666666666%}.flex.order-xs8{order:8}.flex.xs9{flex-basis:75%;flex-grow:0;max-width:75%}.flex.order-xs9{order:9}.flex.xs10{flex-basis:83.33333333333334%;flex-grow:0;max-width:83.33333333333334%}.flex.order-xs10{order:10}.flex.xs11{flex-basis:91.66666666666666%;flex-grow:0;max-width:91.66666666666666%}.flex.order-xs11{order:11}.flex.xs12{flex-basis:100%;flex-grow:0;max-width:100%}.flex.order-xs12{order:12}.flex.offset-xs0{margin-left:0}.flex.offset-xs1{margin-left:8.333333333333332%}.flex.offset-xs2{margin-left:16.666666666666664%}.flex.offset-xs3{margin-left:25%}.flex.offset-xs4{margin-left:33.33333333333333%}.flex.offset-xs5{margin-left:41.66666666666667%}.flex.offset-xs6{margin-left:50%}.flex.offset-xs7{margin-left:58.333333333333336%}.flex.offset-xs8{margin-left:66.66666666666666%}.flex.offset-xs9{margin-left:75%}.flex.offset-xs10{margin-left:83.33333333333334%}.flex.offset-xs11{margin-left:91.66666666666666%}.flex.offset-xs12{margin-left:100%}}@media (min-width:600px){.flex.sm1{flex-basis:8.333333333333332%;flex-grow:0;max-width:8.333333333333332%}.flex.order-sm1{order:1}.flex.sm2{flex-basis:16.666666666666664%;flex-grow:0;max-width:16.666666666666664%}.flex.order-sm2{order:2}.flex.sm3{flex-basis:25%;flex-grow:0;max-width:25%}.flex.order-sm3{order:3}.flex.sm4{flex-basis:33.33333333333333%;flex-grow:0;max-width:33.33333333333333%}.flex.order-sm4{order:4}.flex.sm5{flex-basis:41.66666666666667%;flex-grow:0;max-width:41.66666666666667%}.flex.order-sm5{order:5}.flex.sm6{flex-basis:50%;flex-grow:0;max-width:50%}.flex.order-sm6{order:6}.flex.sm7{flex-basis:58.333333333333336%;flex-grow:0;max-width:58.333333333333336%}.flex.order-sm7{order:7}.flex.sm8{flex-basis:66.66666666666666%;flex-grow:0;max-width:66.66666666666666%}.flex.order-sm8{order:8}.flex.sm9{flex-basis:75%;flex-grow:0;max-width:75%}.flex.order-sm9{order:9}.flex.sm10{flex-basis:83.33333333333334%;flex-grow:0;max-width:83.33333333333334%}.flex.order-sm10{order:10}.flex.sm11{flex-basis:91.66666666666666%;flex-grow:0;max-width:91.66666666666666%}.flex.order-sm11{order:11}.flex.sm12{flex-basis:100%;flex-grow:0;max-width:100%}.flex.order-sm12{order:12}.flex.offset-sm0{margin-left:0}.flex.offset-sm1{margin-left:8.333333333333332%}.flex.offset-sm2{margin-left:16.666666666666664%}.flex.offset-sm3{margin-left:25%}.flex.offset-sm4{margin-left:33.33333333333333%}.flex.offset-sm5{margin-left:41.66666666666667%}.flex.offset-sm6{margin-left:50%}.flex.offset-sm7{margin-left:58.333333333333336%}.flex.offset-sm8{margin-left:66.66666666666666%}.flex.offset-sm9{margin-left:75%}.flex.offset-sm10{margin-left:83.33333333333334%}.flex.offset-sm11{margin-left:91.66666666666666%}.flex.offset-sm12{margin-left:100%}}@media (min-width:960px){.flex.md1{flex-basis:8.333333333333332%;flex-grow:0;max-width:8.333333333333332%}.flex.order-md1{order:1}.flex.md2{flex-basis:16.666666666666664%;flex-grow:0;max-width:16.666666666666664%}.flex.order-md2{order:2}.flex.md3{flex-basis:25%;flex-grow:0;max-width:25%}.flex.order-md3{order:3}.flex.md4{flex-basis:33.33333333333333%;flex-grow:0;max-width:33.33333333333333%}.flex.order-md4{order:4}.flex.md5{flex-basis:41.66666666666667%;flex-grow:0;max-width:41.66666666666667%}.flex.order-md5{order:5}.flex.md6{flex-basis:50%;flex-grow:0;max-width:50%}.flex.order-md6{order:6}.flex.md7{flex-basis:58.333333333333336%;flex-grow:0;max-width:58.333333333333336%}.flex.order-md7{order:7}.flex.md8{flex-basis:66.66666666666666%;flex-grow:0;max-width:66.66666666666666%}.flex.order-md8{order:8}.flex.md9{flex-basis:75%;flex-grow:0;max-width:75%}.flex.order-md9{order:9}.flex.md10{flex-basis:83.33333333333334%;flex-grow:0;max-width:83.33333333333334%}.flex.order-md10{order:10}.flex.md11{flex-basis:91.66666666666666%;flex-grow:0;max-width:91.66666666666666%}.flex.order-md11{order:11}.flex.md12{flex-basis:100%;flex-grow:0;max-width:100%}.flex.order-md12{order:12}.flex.offset-md0{margin-left:0}.flex.offset-md1{margin-left:8.333333333333332%}.flex.offset-md2{margin-left:16.666666666666664%}.flex.offset-md3{margin-left:25%}.flex.offset-md4{margin-left:33.33333333333333%}.flex.offset-md5{margin-left:41.66666666666667%}.flex.offset-md6{margin-left:50%}.flex.offset-md7{margin-left:58.333333333333336%}.flex.offset-md8{margin-left:66.66666666666666%}.flex.offset-md9{margin-left:75%}.flex.offset-md10{margin-left:83.33333333333334%}.flex.offset-md11{margin-left:91.66666666666666%}.flex.offset-md12{margin-left:100%}}@media (min-width:1264px){.flex.lg1{flex-basis:8.333333333333332%;flex-grow:0;max-width:8.333333333333332%}.flex.order-lg1{order:1}.flex.lg2{flex-basis:16.666666666666664%;flex-grow:0;max-width:16.666666666666664%}.flex.order-lg2{order:2}.flex.lg3{flex-basis:25%;flex-grow:0;max-width:25%}.flex.order-lg3{order:3}.flex.lg4{flex-basis:33.33333333333333%;flex-grow:0;max-width:33.33333333333333%}.flex.order-lg4{order:4}.flex.lg5{flex-basis:41.66666666666667%;flex-grow:0;max-width:41.66666666666667%}.flex.order-lg5{order:5}.flex.lg6{flex-basis:50%;flex-grow:0;max-width:50%}.flex.order-lg6{order:6}.flex.lg7{flex-basis:58.333333333333336%;flex-grow:0;max-width:58.333333333333336%}.flex.order-lg7{order:7}.flex.lg8{flex-basis:66.66666666666666%;flex-grow:0;max-width:66.66666666666666%}.flex.order-lg8{order:8}.flex.lg9{flex-basis:75%;flex-grow:0;max-width:75%}.flex.order-lg9{order:9}.flex.lg10{flex-basis:83.33333333333334%;flex-grow:0;max-width:83.33333333333334%}.flex.order-lg10{order:10}.flex.lg11{flex-basis:91.66666666666666%;flex-grow:0;max-width:91.66666666666666%}.flex.order-lg11{order:11}.flex.lg12{flex-basis:100%;flex-grow:0;max-width:100%}.flex.order-lg12{order:12}.flex.offset-lg0{margin-left:0}.flex.offset-lg1{margin-left:8.333333333333332%}.flex.offset-lg2{margin-left:16.666666666666664%}.flex.offset-lg3{margin-left:25%}.flex.offset-lg4{margin-left:33.33333333333333%}.flex.offset-lg5{margin-left:41.66666666666667%}.flex.offset-lg6{margin-left:50%}.flex.offset-lg7{margin-left:58.333333333333336%}.flex.offset-lg8{margin-left:66.66666666666666%}.flex.offset-lg9{margin-left:75%}.flex.offset-lg10{margin-left:83.33333333333334%}.flex.offset-lg11{margin-left:91.66666666666666%}.flex.offset-lg12{margin-left:100%}}@media (min-width:1904px){.flex.xl1{flex-basis:8.333333333333332%;flex-grow:0;max-width:8.333333333333332%}.flex.order-xl1{order:1}.flex.xl2{flex-basis:16.666666666666664%;flex-grow:0;max-width:16.666666666666664%}.flex.order-xl2{order:2}.flex.xl3{flex-basis:25%;flex-grow:0;max-width:25%}.flex.order-xl3{order:3}.flex.xl4{flex-basis:33.33333333333333%;flex-grow:0;max-width:33.33333333333333%}.flex.order-xl4{order:4}.flex.xl5{flex-basis:41.66666666666667%;flex-grow:0;max-width:41.66666666666667%}.flex.order-xl5{order:5}.flex.xl6{flex-basis:50%;flex-grow:0;max-width:50%}.flex.order-xl6{order:6}.flex.xl7{flex-basis:58.333333333333336%;flex-grow:0;max-width:58.333333333333336%}.flex.order-xl7{order:7}.flex.xl8{flex-basis:66.66666666666666%;flex-grow:0;max-width:66.66666666666666%}.flex.order-xl8{order:8}.flex.xl9{flex-basis:75%;flex-grow:0;max-width:75%}.flex.order-xl9{order:9}.flex.xl10{flex-basis:83.33333333333334%;flex-grow:0;max-width:83.33333333333334%}.flex.order-xl10{order:10}.flex.xl11{flex-basis:91.66666666666666%;flex-grow:0;max-width:91.66666666666666%}.flex.order-xl11{order:11}.flex.xl12{flex-basis:100%;flex-grow:0;max-width:100%}.flex.order-xl12{order:12}.flex.offset-xl0{margin-left:0}.flex.offset-xl1{margin-left:8.333333333333332%}.flex.offset-xl2{margin-left:16.666666666666664%}.flex.offset-xl3{margin-left:25%}.flex.offset-xl4{margin-left:33.33333333333333%}.flex.offset-xl5{margin-left:41.66666666666667%}.flex.offset-xl6{margin-left:50%}.flex.offset-xl7{margin-left:58.333333333333336%}.flex.offset-xl8{margin-left:66.66666666666666%}.flex.offset-xl9{margin-left:75%}.flex.offset-xl10{margin-left:83.33333333333334%}.flex.offset-xl11{margin-left:91.66666666666666%}.flex.offset-xl12{margin-left:100%}}.v-content{transition:none;display:flex;flex:1 0 auto;max-width:100%}.v-content[data-booted=true]{transition:.2s cubic-bezier(.4,0,.2,1)}.v-content__wrap{flex:1 1 auto;max-width:100%;position:relative}@media print{@-moz-document url-prefix(){.v-content{display:block}}}.theme--light.v-jumbotron .v-jumbotron__content{color:rgba(0,0,0,.87)}.theme--dark.v-jumbotron .v-jumbotron__content{color:#fff}.v-jumbotron{display:block;top:0;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-jumbotron__wrapper{height:100%;overflow:hidden;position:relative;transition:inherit;width:100%}.v-jumbotron__background{position:absolute;top:0;left:0;right:0;bottom:0;contain:strict;transition:inherit}.v-jumbotron__image{position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);min-width:100%;will-change:transform;transition:inherit}.v-jumbotron__content{height:100%;position:relative;transition:inherit}.theme--light.v-navigation-drawer{background-color:#fff}.theme--light.v-navigation-drawer:not(.v-navigation-drawer--floating) .v-navigation-drawer__border{background-color:rgba(0,0,0,.12)}.theme--light.v-navigation-drawer .v-divider{border-color:rgba(0,0,0,.12)}.theme--dark.v-navigation-drawer{background-color:#424242}.theme--dark.v-navigation-drawer:not(.v-navigation-drawer--floating) .v-navigation-drawer__border{background-color:hsla(0,0%,100%,.12)}.theme--dark.v-navigation-drawer .v-divider{border-color:hsla(0,0%,100%,.12)}.v-navigation-drawer{transition:none;display:block;left:0;max-width:100%;overflow-y:auto;overflow-x:hidden;pointer-events:auto;top:0;will-change:transform;z-index:3;-webkit-overflow-scrolling:touch}.v-navigation-drawer[data-booted=true]{transition:.2s cubic-bezier(.4,0,.2,1);transition-property:width,-webkit-transform;transition-property:transform,width;transition-property:transform,width,-webkit-transform}.v-navigation-drawer__border{position:absolute;right:0;top:0;height:100%;width:1px}.v-navigation-drawer.v-navigation-drawer--right:after{left:0;right:auto}.v-navigation-drawer--right{left:auto;right:0}.v-navigation-drawer--right>.v-navigation-drawer__border{right:auto;left:0}.v-navigation-drawer--absolute{position:absolute}.v-navigation-drawer--fixed{position:fixed}.v-navigation-drawer--floating:after{display:none}.v-navigation-drawer--mini-variant{overflow:hidden}.v-navigation-drawer--mini-variant .v-list__group__header__prepend-icon{flex:1 0 auto;justify-content:center;width:100%}.v-navigation-drawer--mini-variant .v-list__tile__action,.v-navigation-drawer--mini-variant .v-list__tile__avatar{justify-content:center;min-width:48px}.v-navigation-drawer--mini-variant .v-list__tile:after,.v-navigation-drawer--mini-variant .v-list__tile__content{opacity:0}.v-navigation-drawer--mini-variant .v-divider,.v-navigation-drawer--mini-variant .v-list--group,.v-navigation-drawer--mini-variant .v-subheader{display:none!important}.v-navigation-drawer--is-mobile,.v-navigation-drawer--temporary{z-index:6}.v-navigation-drawer--is-mobile:not(.v-navigation-drawer--close),.v-navigation-drawer--temporary:not(.v-navigation-drawer--close){box-shadow:0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12)}.v-navigation-drawer .v-list{background:inherit}.v-navigation-drawer>.v-list .v-list__tile{transition:none;font-weight:500}.v-navigation-drawer>.v-list .v-list__tile--active .v-list__tile__title{color:inherit}.v-navigation-drawer>.v-list .v-list--group .v-list__tile{font-weight:400}.v-navigation-drawer>.v-list .v-list--group__header--active:after{background:transparent}.v-navigation-drawer>.v-list:not(.v-list--dense) .v-list__tile{font-size:14px}.theme--light.v-pagination .v-pagination__item{background:#fff;color:#000;width:auto;min-width:34px;padding:0 5px}.theme--light.v-pagination .v-pagination__item--active{color:#fff}.theme--light.v-pagination .v-pagination__navigation{background:#fff}.theme--light.v-pagination .v-pagination__navigation .v-icon{color:rgba(0,0,0,.54)}.theme--dark.v-pagination .v-pagination__item{background:#424242;color:#fff;width:auto;min-width:34px;padding:0 5px}.theme--dark.v-pagination .v-pagination__item--active{color:#fff}.theme--dark.v-pagination .v-pagination__navigation{background:#424242}.theme--dark.v-pagination .v-pagination__navigation .v-icon{color:#fff}.v-pagination{align-items:center;display:inline-flex;list-style-type:none;margin:0;max-width:100%;padding:0}.v-pagination>li{align-items:center;display:flex}.v-pagination--circle .v-pagination__item,.v-pagination--circle .v-pagination__more,.v-pagination--circle .v-pagination__navigation{border-radius:50%}.v-pagination--disabled{pointer-events:none;opacity:.6}.v-pagination__item{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);border-radius:4px;font-size:14px;background:transparent;height:34px;width:34px;margin:.3rem;text-decoration:none;transition:.3s cubic-bezier(0,0,.2,1)}.v-pagination__item--active{box-shadow:0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12)}.v-pagination__navigation{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);display:inline-flex;justify-content:center;align-items:center;text-decoration:none;height:2rem;border-radius:4px;width:2rem;margin:.3rem 10px}.v-pagination__navigation .v-icon{font-size:2rem;transition:.2s cubic-bezier(.4,0,.6,1);vertical-align:middle}.v-pagination__navigation--disabled{opacity:.6;pointer-events:none}.v-pagination__more{margin:.3rem;display:inline-flex;align-items:flex-end;justify-content:center;height:2rem;width:2rem}.v-parallax{position:relative;overflow:hidden;z-index:0}.v-parallax__image-container{position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;contain:strict}.v-parallax__image{position:absolute;bottom:0;left:50%;min-width:100%;min-height:100%;display:none;-webkit-transform:translate(-50%);transform:translate(-50%);will-change:transform;transition:opacity .3s cubic-bezier(.25,.8,.5,1);z-index:1}.v-parallax__content{color:#fff;height:100%;z-index:2;position:relative;display:flex;flex-direction:column;justify-content:center;padding:0 1rem}.v-input--radio-group__input{display:flex;width:100%}.v-input--radio-group--column .v-input--radio-group__input>.v-label{padding-bottom:8px}.v-input--radio-group--row .v-input--radio-group__input>.v-label{padding-right:8px}.v-input--radio-group--row .v-input--radio-group__input{flex-direction:row;flex-wrap:wrap}.v-input--radio-group--column .v-radio:not(:last-child):not(:only-child){margin-bottom:8px}.v-input--radio-group--column .v-input--radio-group__input{flex-direction:column}.theme--light.v-radio--is-disabled label{color:rgba(0,0,0,.38)}.theme--light.v-radio--is-disabled .v-icon{color:rgba(0,0,0,.26)!important}.theme--dark.v-radio--is-disabled label{color:hsla(0,0%,100%,.5)}.theme--dark.v-radio--is-disabled .v-icon{color:hsla(0,0%,100%,.3)!important}.v-radio{align-items:center;display:flex;height:auto;margin-right:16px;outline:none}.v-radio--is-disabled{pointer-events:none}.theme--light.v-input--range-slider.v-input--slider.v-input--is-disabled .v-slider.v-slider .v-slider__thumb{background:#bdbdbd}.theme--dark.v-input--range-slider.v-input--slider.v-input--is-disabled .v-slider.v-slider .v-slider__thumb{background:#424242}.v-input--range-slider.v-input--is-disabled .v-slider__track-fill{display:none}.v-input--range-slider.v-input--is-disabled.v-input--slider .v-slider.v-slider .v-slider__thumb{border-color:transparent}.theme--light.v-input--slider .v-slider__track,.theme--light.v-input--slider .v-slider__track-fill{background:rgba(0,0,0,.26)}.theme--light.v-input--slider .v-slider__track__container:after{border:1px solid rgba(0,0,0,.87)}.theme--light.v-input--slider .v-slider__ticks{border-color:rgba(0,0,0,.87);color:rgba(0,0,0,.54)}.theme--light.v-input--slider:not(.v-input--is-dirty) .v-slider__thumb-label{background:rgba(0,0,0,.26)}.theme--light.v-input--slider:not(.v-input--is-dirty) .v-slider__thumb{border:3px solid rgba(0,0,0,.26)}.theme--light.v-input--slider:not(.v-input--is-dirty).v-input--slider--is-active .v-slider__thumb{border:3px solid rgba(0,0,0,.38)}.theme--light.v-input--slider.v-input--is-disabled .v-slider__thumb{border:5px solid rgba(0,0,0,.26)}.theme--light.v-input--slider.v-input--is-disabled.v-input--is-dirty .v-slider__thumb{background:rgba(0,0,0,.26)}.theme--light.v-input--slider.v-input--slider--is-active .v-slider__track{background:rgba(0,0,0,.38)}.theme--dark.v-input--slider .v-slider__track,.theme--dark.v-input--slider .v-slider__track-fill{background:hsla(0,0%,100%,.2)}.theme--dark.v-input--slider .v-slider__track__container:after{border:1px solid #fff}.theme--dark.v-input--slider .v-slider__ticks{border-color:#fff;color:hsla(0,0%,100%,.7)}.theme--dark.v-input--slider:not(.v-input--is-dirty) .v-slider__thumb-label{background:hsla(0,0%,100%,.2)}.theme--dark.v-input--slider:not(.v-input--is-dirty) .v-slider__thumb{border:3px solid hsla(0,0%,100%,.2)}.theme--dark.v-input--slider:not(.v-input--is-dirty).v-input--slider--is-active .v-slider__thumb{border:3px solid hsla(0,0%,100%,.3)}.theme--dark.v-input--slider.v-input--is-disabled .v-slider__thumb{border:5px solid hsla(0,0%,100%,.2)}.theme--dark.v-input--slider.v-input--is-disabled.v-input--is-dirty .v-slider__thumb{background:hsla(0,0%,100%,.2)}.theme--dark.v-input--slider.v-input--slider--is-active .v-slider__track{background:hsla(0,0%,100%,.3)}.application--is-rtl .v-input--slider .v-label{margin-left:16px;margin-right:0}.v-input--slider{margin-top:16px}.v-input--slider.v-input--is-focused .v-slider__thumb-container--is-active:not(.v-slider__thumb-container--show-label):before{opacity:.2;-webkit-transform:scale(1);transform:scale(1)}.v-input--slider.v-input--is-focused .v-slider__track{transition:none}.v-input--slider.v-input--is-focused.v-input--slider--ticks .v-slider .v-slider__tick,.v-input--slider.v-input--is-focused.v-input--slider--ticks .v-slider__track__container:after,.v-input--slider.v-input--slider--ticks .v-slider__ticks.v-slider__ticks--always-show{opacity:1}.v-input--slider.v-input--slider--ticks-labels .v-input__slot{margin-bottom:16px}.v-input--slider.v-input--is-readonly .v-input__control{pointer-events:none}.v-input--slider.v-input--is-disabled .v-slider__thumb{-webkit-transform:translateY(-50%) scale(.45);transform:translateY(-50%) scale(.45)}.v-input--slider.v-input--is-disabled.v-input--is-dirty .v-slider__thumb{border:0 solid transparent}.v-input--slider .v-input__slot>:first-child:not(:only-child){margin-right:16px}.v-slider{cursor:default;display:flex;align-items:center;position:relative;height:32px;flex:1;outline:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-slider input{cursor:default;opacity:0;padding:0;width:100%}.v-slider__track__container{height:2px;left:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);width:100%}.v-slider__track__container:after{content:\"\";position:absolute;right:0;top:0;height:2px;transition:.3s cubic-bezier(.25,.8,.5,1);width:2px;opacity:0}.v-slider__thumb,.v-slider__ticks,.v-slider__track{position:absolute;top:0}.v-slider__track{-webkit-transform-origin:right;transform-origin:right;overflow:hidden}.v-slider__track,.v-slider__track-fill{height:2px;left:0;transition:.3s cubic-bezier(.25,.8,.5,1);width:100%}.v-slider__track-fill{position:absolute;-webkit-transform-origin:left;transform-origin:left}.v-slider__ticks-container{position:absolute;left:0;height:2px;width:100%;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.v-slider__ticks{opacity:0;border-style:solid;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-slider__ticks>span{position:absolute;top:8px;-webkit-transform:translateX(-50%);transform:translateX(-50%);white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-slider__ticks:first-child>span{-webkit-transform:translateX(0);transform:translateX(0)}.v-slider__ticks:last-child>span{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.v-slider:not(.v-input--is-dirty) .v-slider__ticks:first-child{border-color:transparent}.v-slider__thumb-container{position:absolute;top:50%;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-slider__thumb-container:before{content:\"\";color:inherit;background:currentColor;height:32px;left:-16px;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:-16px;-webkit-transform:scale(.2);transform:scale(.2);width:32px;will-change:transform,opacity}.v-slider__thumb,.v-slider__thumb-container:before{border-radius:50%;transition:.3s cubic-bezier(.25,.8,.5,1)}.v-slider__thumb{width:24px;height:24px;left:-12px;top:50%;background:transparent;-webkit-transform:translateY(-50%) scale(.6);transform:translateY(-50%) scale(.6);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-slider--is-active .v-slider__thumb-container--is-active .v-slider__thumb{-webkit-transform:translateY(-50%) scale(1);transform:translateY(-50%) scale(1)}.v-slider--is-active .v-slider__thumb-container--is-active.v-slider__thumb-container--show-label .v-slider__thumb{-webkit-transform:translateY(-50%) scale(0);transform:translateY(-50%) scale(0)}.v-slider--is-active .v-slider__ticks-container .v-slider__ticks{opacity:1}.v-slider__thumb-label__container{top:0}.v-slider__thumb-label,.v-slider__thumb-label__container{position:absolute;left:0;transition:.3s cubic-bezier(.25,.8,.25,1)}.v-slider__thumb-label{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;width:32px;height:32px;border-radius:50% 50% 0;bottom:100%;-webkit-transform:translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg);transform:translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-slider__thumb-label>*{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.v-slider__track,.v-slider__track-fill{position:absolute}.v-rating .v-icon{padding:.5rem;border-radius:50%;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-rating--readonly .v-icon{pointer-events:none}.v-rating--dense .v-icon{padding:.1rem}.application--is-rtl .v-snack__content .v-btn{margin:0 24px 0 0}.v-snack{position:fixed;display:flex;align-items:center;color:#fff;pointer-events:none;z-index:1000;font-size:14px;left:0;right:0}.v-snack--absolute{position:absolute}.v-snack--top{top:0}.v-snack--bottom{bottom:0}.v-snack__wrapper{background-color:#323232;pointer-events:auto;box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12)}.v-snack__content,.v-snack__wrapper{display:flex;align-items:center;width:100%}.v-snack__content{height:48px;padding:14px 24px;justify-content:space-between;overflow:hidden}.v-snack__content .v-btn{color:#fff;flex:0 0 auto;padding:8px;margin:0 0 0 24px;height:auto;min-width:auto;width:auto}.v-snack__content .v-btn__content{margin:-2px}.v-snack__content .v-btn:before{display:none}.v-snack--multi-line .v-snack__content{height:80px;padding:24px}.v-snack--vertical .v-snack__content{height:112px;padding:24px 24px 14px;flex-direction:column;align-items:stretch}.v-snack--vertical .v-snack__content .v-btn.v-btn{justify-content:flex-end;padding:0;margin-left:0;margin-top:24px}.v-snack--vertical .v-snack__content .v-btn__content{flex:0 0 auto;margin:0}.v-snack--auto-height .v-snack__content{height:auto}.v-snack-transition-enter-active,.v-snack-transition-leave-active{transition:-webkit-transform .4s cubic-bezier(.25,.8,.5,1);transition:transform .4s cubic-bezier(.25,.8,.5,1);transition:transform .4s cubic-bezier(.25,.8,.5,1),-webkit-transform .4s cubic-bezier(.25,.8,.5,1)}.v-snack-transition-enter-active .v-snack__content,.v-snack-transition-leave-active .v-snack__content{transition:opacity .3s linear .1s}.v-snack-transition-enter .v-snack__content{opacity:0}.v-snack-transition-enter-to .v-snack__content,.v-snack-transition-leave .v-snack__content{opacity:1}.v-snack-transition-enter.v-snack.v-snack--top,.v-snack-transition-leave-to.v-snack.v-snack--top{-webkit-transform:translateY(calc(-100% - 8px));transform:translateY(calc(-100% - 8px))}.v-snack-transition-enter.v-snack.v-snack--bottom,.v-snack-transition-leave-to.v-snack.v-snack--bottom{-webkit-transform:translateY(100%);transform:translateY(100%)}@media only screen and (min-width:600px){.application--is-rtl .v-snack__content .v-btn:first-of-type{margin-left:0;margin-right:42px}.v-snack__wrapper{width:auto;max-width:568px;min-width:288px;margin:0 auto;border-radius:2px}.v-snack--left .v-snack__wrapper{margin-left:0}.v-snack--right .v-snack__wrapper{margin-right:0}.v-snack--left,.v-snack--right{margin:0 24px}.v-snack--left.v-snack--top,.v-snack--right.v-snack--top{-webkit-transform:translateY(24px);transform:translateY(24px)}.v-snack--left.v-snack--bottom,.v-snack--right.v-snack--bottom{-webkit-transform:translateY(-24px);transform:translateY(-24px)}.v-snack__content .v-btn:first-of-type{margin-left:42px}}.v-speed-dial{position:relative}.v-speed-dial--absolute{position:absolute}.v-speed-dial--fixed{position:fixed}.v-speed-dial--absolute,.v-speed-dial--fixed{z-index:4}.v-speed-dial--absolute>.v-btn--floating,.v-speed-dial--fixed>.v-btn--floating{margin:0}.v-speed-dial--top:not(.v-speed-dial--absolute){top:16px}.v-speed-dial--top.v-speed-dial--absolute{top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.v-speed-dial--bottom:not(.v-speed-dial--absolute){bottom:16px}.v-speed-dial--bottom.v-speed-dial--absolute{bottom:50%;-webkit-transform:translateY(50%);transform:translateY(50%)}.v-speed-dial--left{left:16px}.v-speed-dial--right{right:16px}.v-speed-dial--direction-left .v-speed-dial__list,.v-speed-dial--direction-right .v-speed-dial__list{height:100%;top:0}.v-speed-dial--direction-bottom .v-speed-dial__list,.v-speed-dial--direction-top .v-speed-dial__list{left:0;width:100%}.v-speed-dial--direction-top .v-speed-dial__list{flex-direction:column-reverse;bottom:100%}.v-speed-dial--direction-right .v-speed-dial__list{flex-direction:row;left:100%}.v-speed-dial--direction-bottom .v-speed-dial__list{flex-direction:column;top:100%}.v-speed-dial--direction-left .v-speed-dial__list{flex-direction:row-reverse;right:100%}.v-speed-dial__list{align-items:center;display:flex;justify-content:center;position:absolute}.theme--light.v-stepper{background:#fff}.theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step{background:rgba(0,0,0,.38)}.theme--light.v-stepper .v-stepper__step__step,.theme--light.v-stepper .v-stepper__step__step .v-icon{color:#fff}.theme--light.v-stepper .v-stepper__header .v-divider{border-color:rgba(0,0,0,.12)}.theme--light.v-stepper .v-stepper__step--active .v-stepper__label{text-shadow:0 0 0 #000}.theme--light.v-stepper .v-stepper__step--editable:hover{background:rgba(0,0,0,.06)}.theme--light.v-stepper .v-stepper__step--editable:hover .v-stepper__label{text-shadow:0 0 0 #000}.theme--light.v-stepper .v-stepper__step--complete .v-stepper__label{color:rgba(0,0,0,.87)}.theme--light.v-stepper .v-stepper__step--inactive.v-stepper__step--editable:not(.v-stepper__step--error):hover .v-stepper__step__step{background:rgba(0,0,0,.54)}.theme--light.v-stepper .v-stepper__label{color:rgba(0,0,0,.38)}.theme--light.v-stepper--non-linear .v-stepper__step:not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__label,.theme--light.v-stepper .v-stepper__label small{color:rgba(0,0,0,.54)}.theme--light.v-stepper--vertical .v-stepper__content:not(:last-child){border-left:1px solid rgba(0,0,0,.12)}.theme--dark.v-stepper{background:#303030}.theme--dark.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step{background:hsla(0,0%,100%,.5)}.theme--dark.v-stepper .v-stepper__step__step,.theme--dark.v-stepper .v-stepper__step__step .v-icon{color:#fff}.theme--dark.v-stepper .v-stepper__header .v-divider{border-color:hsla(0,0%,100%,.12)}.theme--dark.v-stepper .v-stepper__step--active .v-stepper__label{text-shadow:0 0 0 #fff}.theme--dark.v-stepper .v-stepper__step--editable:hover{background:hsla(0,0%,100%,.06)}.theme--dark.v-stepper .v-stepper__step--editable:hover .v-stepper__label{text-shadow:0 0 0 #fff}.theme--dark.v-stepper .v-stepper__step--complete .v-stepper__label{color:hsla(0,0%,100%,.87)}.theme--dark.v-stepper .v-stepper__step--inactive.v-stepper__step--editable:not(.v-stepper__step--error):hover .v-stepper__step__step{background:hsla(0,0%,100%,.75)}.theme--dark.v-stepper .v-stepper__label{color:hsla(0,0%,100%,.5)}.theme--dark.v-stepper--non-linear .v-stepper__step:not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__label,.theme--dark.v-stepper .v-stepper__label small{color:hsla(0,0%,100%,.7)}.theme--dark.v-stepper--vertical .v-stepper__content:not(:last-child){border-left:1px solid hsla(0,0%,100%,.12)}.application--is-rtl .v-stepper .v-stepper__step__step{margin-right:0;margin-left:12px}.v-stepper{overflow:hidden;position:relative}.v-stepper,.v-stepper__header{box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-stepper__header{height:72px;align-items:stretch;display:flex;flex-wrap:wrap;justify-content:space-between}.v-stepper__header .v-divider{align-self:center;margin:0 -16px}.v-stepper__items{position:relative;overflow:hidden}.v-stepper__step__step{align-items:center;border-radius:50%;display:inline-flex;font-size:12px;justify-content:center;height:24px;margin-right:8px;min-width:24px;width:24px;transition:.3s cubic-bezier(.25,.8,.25,1)}.v-stepper__step__step .v-icon{font-size:18px}.v-stepper__step{align-items:center;display:flex;flex-direction:row;padding:24px;position:relative}.v-stepper__step--active .v-stepper__label{transition:.3s cubic-bezier(.4,0,.6,1)}.v-stepper__step--editable{cursor:pointer}.v-stepper__step.v-stepper__step--error .v-stepper__step__step{background:transparent;color:inherit}.v-stepper__step.v-stepper__step--error .v-stepper__step__step .v-icon{font-size:24px;color:inherit}.v-stepper__step.v-stepper__step--error .v-stepper__label{color:inherit;text-shadow:none;font-weight:500}.v-stepper__step.v-stepper__step--error .v-stepper__label small{color:inherit}.v-stepper__label{align-items:flex-start;display:flex;flex-direction:column;text-align:left}.v-stepper__label small{font-size:12px;font-weight:300;text-shadow:none}.v-stepper__wrapper{overflow:hidden;transition:none}.v-stepper__content{top:0;padding:24px 24px 16px;flex:1 0 auto;width:100%}.v-stepper__content>.v-btn{margin:24px 8px 8px 0}.v-stepper--is-booted .v-stepper__content,.v-stepper--is-booted .v-stepper__wrapper{transition:.3s cubic-bezier(.25,.8,.5,1)}.v-stepper--vertical{padding-bottom:36px}.v-stepper--vertical .v-stepper__content{margin:-8px -36px -16px 36px;padding:16px 60px 16px 23px;width:auto}.v-stepper--vertical .v-stepper__step{padding:24px 24px 16px}.v-stepper--vertical .v-stepper__step__step{margin-right:12px}.v-stepper--alt-labels .v-stepper__header{height:auto}.v-stepper--alt-labels .v-stepper__header .v-divider{margin:35px -67px 0;align-self:flex-start}.v-stepper--alt-labels .v-stepper__step{flex-direction:column;justify-content:flex-start;align-items:center;flex-basis:175px}.v-stepper--alt-labels .v-stepper__step small{align-self:center}.v-stepper--alt-labels .v-stepper__step__step{margin-right:0;margin-bottom:11px}@media only screen and (max-width:959px){.v-stepper:not(.v-stepper--vertical) .v-stepper__label{display:none}.v-stepper:not(.v-stepper--vertical) .v-stepper__step__step{margin-right:0}}.theme--light.v-input--switch__thumb{color:#fafafa}.theme--light.v-input--switch__track{color:rgba(0,0,0,.38)}.theme--light.v-input--switch.v-input--is-disabled .v-input--switch__thumb{color:#bdbdbd!important}.theme--light.v-input--switch.v-input--is-disabled .v-input--switch__track{color:rgba(0,0,0,.12)!important}.theme--dark.v-input--switch__thumb{color:#bdbdbd}.theme--dark.v-input--switch__track{color:hsla(0,0%,100%,.3)}.theme--dark.v-input--switch.v-input--is-disabled .v-input--switch__thumb{color:#424242!important}.theme--dark.v-input--switch.v-input--is-disabled .v-input--switch__track{color:hsla(0,0%,100%,.1)!important}.application--is-rtl .v-input--switch .v-input--selection-controls__ripple{left:auto;right:-14px}.application--is-rtl .v-input--switch.v-input--is-dirty .v-input--selection-controls__ripple,.application--is-rtl .v-input--switch.v-input--is-dirty .v-input--switch__thumb{-webkit-transform:translate(-16px);transform:translate(-16px)}.v-input--switch__thumb,.v-input--switch__track{background-color:currentColor;pointer-events:none;transition:inherit}.v-input--switch__track{border-radius:8px;height:14px;left:2px;opacity:.6;position:absolute;right:2px;top:calc(50% - 7px)}.v-input--switch__thumb{border-radius:50%;top:calc(50% - 10px);height:20px;position:relative;width:20px;display:flex;justify-content:center;align-items:center;box-shadow:0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12)}.v-input--switch .v-input--selection-controls__input{width:38px}.v-input--switch .v-input--selection-controls__ripple{left:-14px;top:calc(50% - 24px)}.v-input--switch.v-input--is-dirty .v-input--selection-controls__ripple,.v-input--switch.v-input--is-dirty .v-input--switch__thumb{-webkit-transform:translate(16px);transform:translate(16px)}.theme--light.v-system-bar{background-color:#e0e0e0;color:rgba(0,0,0,.54)}.theme--light.v-system-bar .v-icon{color:rgba(0,0,0,.54)}.theme--light.v-system-bar--lights-out{background-color:hsla(0,0%,100%,.7)!important}.theme--dark.v-system-bar{background-color:#000;color:hsla(0,0%,100%,.7)}.theme--dark.v-system-bar .v-icon{color:hsla(0,0%,100%,.7)}.theme--dark.v-system-bar--lights-out{background-color:rgba(0,0,0,.2)!important}.v-system-bar{align-items:center;display:flex;font-size:14px;font-weight:500;padding:0 8px}.v-system-bar .v-icon{font-size:16px}.v-system-bar--absolute,.v-system-bar--fixed{left:0;top:0;width:100%;z-index:3}.v-system-bar--fixed{position:fixed}.v-system-bar--absolute{position:absolute}.v-system-bar--status .v-icon{margin-right:4px}.v-system-bar--window .v-icon{font-size:20px;margin-right:8px}.theme--light.v-tabs__bar{background-color:#fff}.theme--light.v-tabs__bar .v-tabs__div{color:rgba(0,0,0,.87)}.theme--light.v-tabs__bar .v-tabs__item--disabled{color:rgba(0,0,0,.26)}.theme--dark.v-tabs__bar{background-color:#424242}.theme--dark.v-tabs__bar .v-tabs__div{color:#fff}.theme--dark.v-tabs__bar .v-tabs__item--disabled{color:hsla(0,0%,100%,.3)}.v-tabs,.v-tabs__bar{position:relative}.v-tabs__bar{border-radius:inherit}.v-tabs__icon{align-items:center;cursor:pointer;display:inline-flex;height:100%;position:absolute;top:0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:32px}.v-tabs__icon--prev{left:4px}.v-tabs__icon--next{right:4px}.v-tabs__wrapper{overflow:hidden;contain:content;display:flex}.v-tabs__wrapper--show-arrows{margin-left:40px;margin-right:40px}.v-tabs__wrapper--show-arrows .v-tabs__container--align-with-title{padding-left:16px}.v-tabs__container{flex:1 0 auto;display:flex;height:48px;list-style-type:none;transition:-webkit-transform .6s cubic-bezier(.86,0,.07,1);transition:transform .6s cubic-bezier(.86,0,.07,1);transition:transform .6s cubic-bezier(.86,0,.07,1),-webkit-transform .6s cubic-bezier(.86,0,.07,1);white-space:nowrap;position:relative}.v-tabs__container--overflow .v-tabs__div{flex:1 0 auto}.v-tabs__container--grow .v-tabs__div{flex:1 0 auto;max-width:none}.v-tabs__container--icons-and-text{height:72px}.v-tabs__container--align-with-title{padding-left:56px}.v-tabs__container--fixed-tabs .v-tabs__div,.v-tabs__container--icons-and-text .v-tabs__div{min-width:72px}.v-tabs__container--centered .v-tabs__slider-wrapper+.v-tabs__div,.v-tabs__container--centered>.v-tabs__div:first-child,.v-tabs__container--fixed-tabs .v-tabs__slider-wrapper+.v-tabs__div,.v-tabs__container--fixed-tabs>.v-tabs__div:first-child,.v-tabs__container--right .v-tabs__slider-wrapper+.v-tabs__div,.v-tabs__container--right>.v-tabs__div:first-child{margin-left:auto}.v-tabs__container--centered>.v-tabs__div:last-child,.v-tabs__container--fixed-tabs>.v-tabs__div:last-child{margin-right:auto}.v-tabs__container--icons-and-text .v-tabs__item{flex-direction:column-reverse}.v-tabs__container--icons-and-text .v-tabs__item .v-icon{margin-bottom:6px}.v-tabs__div{align-items:center;display:inline-flex;flex:0 1 auto;font-size:14px;font-weight:500;line-height:normal;height:inherit;max-width:264px;text-align:center;text-transform:uppercase;vertical-align:middle}.v-tabs__item{align-items:center;color:inherit;display:flex;flex:1 1 auto;height:100%;justify-content:center;max-width:inherit;padding:6px 12px;text-decoration:none;transition:.3s cubic-bezier(.25,.8,.5,1);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;white-space:normal}.v-tabs__item:not(.v-tabs__item--active){opacity:.7}.v-tabs__item--disabled{pointer-events:none}.v-tabs__slider{height:2px;width:100%}.v-tabs__slider-wrapper{bottom:0;margin:0!important;position:absolute;transition:.3s cubic-bezier(.25,.8,.5,1)}@media only screen and (max-width:599px){.v-tabs__wrapper--show-arrows .v-tabs__container--align-with-title{padding-left:24px}.v-tabs__container--fixed-tabs .v-tabs__div{flex:1 0 auto}}@media only screen and (min-width:600px){.v-tabs__container--fixed-tabs .v-tabs__div,.v-tabs__container--icons-and-text .v-tabs__div{min-width:160px}}.theme--light.v-textarea.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused textarea{color:#fff}.theme--dark.v-textarea.v-text-field--solo-inverted.v-text-field--solo.v-input--is-focused textarea{color:rgba(0,0,0,.87)}.application--is-rtl .v-textarea.v-text-field--enclosed .v-text-field__slot{margin-right:0;margin-left:-12px}.application--is-rtl .v-textarea.v-text-field--enclosed .v-text-field__slot textarea{padding-right:0;padding-left:12px}.v-textarea textarea{flex:1 1 auto;line-height:18px;max-width:100%;min-height:32px;outline:none;padding:7px 0 8px;width:100%}.v-textarea .v-text-field__prefix{padding-top:4px;align-self:start}.v-textarea.v-text-field--full-width.v-text-field--single-line .v-text-field__slot textarea,.v-textarea.v-text-field--full-width .v-text-field__slot textarea{margin-top:0}.v-textarea.v-text-field--full-width.v-text-field--single-line .v-text-field__details,.v-textarea.v-text-field--full-width .v-text-field__details{bottom:4px}.v-textarea.v-text-field--enclosed .v-text-field__slot{margin-right:-12px}.v-textarea.v-text-field--enclosed .v-text-field__slot textarea{padding-right:12px}.v-textarea.v-text-field--box .v-text-field__prefix,.v-textarea.v-text-field--box textarea,.v-textarea.v-text-field--enclosed .v-text-field__prefix,.v-textarea.v-text-field--enclosed textarea{margin-top:24px}.v-textarea.v-text-field--box.v-text-field--single-line .v-text-field__prefix,.v-textarea.v-text-field--box.v-text-field--single-line textarea,.v-textarea.v-text-field--enclosed.v-text-field--single-line .v-text-field__prefix,.v-textarea.v-text-field--enclosed.v-text-field--single-line textarea{margin-top:12px}.v-textarea.v-text-field--box.v-text-field--single-line .v-label,.v-textarea.v-text-field--enclosed.v-text-field--single-line .v-label{top:18px}.v-textarea.v-text-field--box.v-text-field--single-line.v-text-field--outline .v-input__control,.v-textarea.v-text-field--enclosed.v-text-field--single-line.v-text-field--outline .v-input__control{padding-top:0}.v-textarea.v-text-field--solo{align-items:flex-start}.v-textarea.v-text-field--solo .v-input__append-inner,.v-textarea.v-text-field--solo .v-input__append-outer,.v-textarea.v-text-field--solo .v-input__prepend-inner,.v-textarea.v-text-field--solo .v-input__prepend-outer{align-self:flex-start;margin-top:16px}.v-textarea--auto-grow textarea{overflow:hidden}.v-textarea--no-resize textarea{resize:none}.theme--light.v-timeline:before{background:rgba(0,0,0,.12)}.theme--light.v-timeline .v-timeline-item__dot{background:#fff}.theme--light.v-timeline .v-timeline-item .v-card:before{border-right-color:rgba(0,0,0,.12)}.theme--dark.v-timeline:before{background:hsla(0,0%,100%,.12)}.theme--dark.v-timeline .v-timeline-item__dot{background:#424242}.theme--dark.v-timeline .v-timeline-item .v-card:before{border-right-color:rgba(0,0,0,.12)}.v-timeline-item{display:flex;flex-direction:row-reverse;padding-bottom:24px}.v-timeline-item--left,.v-timeline-item:nth-child(odd):not(.v-timeline-item--right){flex-direction:row}.v-timeline-item--left .v-card:after,.v-timeline-item--left .v-card:before,.v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-card:after,.v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-card:before{-webkit-transform:rotate(180deg);transform:rotate(180deg);left:100%}.v-timeline-item--left .v-timeline-item__opposite,.v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-timeline-item__opposite{margin-left:96px;text-align:left}.v-timeline-item--left .v-timeline-item__opposite .v-card:after,.v-timeline-item--left .v-timeline-item__opposite .v-card:before,.v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-timeline-item__opposite .v-card:after,.v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-timeline-item__opposite .v-card:before{-webkit-transform:rotate(0);transform:rotate(0);left:-10px}.v-timeline-item--right .v-card:after,.v-timeline-item--right .v-card:before,.v-timeline-item:nth-child(2n):not(.v-timeline-item--left) .v-card:after,.v-timeline-item:nth-child(2n):not(.v-timeline-item--left) .v-card:before{right:100%}.v-timeline-item--right .v-timeline-item__opposite,.v-timeline-item:nth-child(2n):not(.v-timeline-item--left) .v-timeline-item__opposite{margin-right:96px;text-align:right}.v-timeline-item--right .v-timeline-item__opposite .v-card:after,.v-timeline-item--right .v-timeline-item__opposite .v-card:before,.v-timeline-item:nth-child(2n):not(.v-timeline-item--left) .v-timeline-item__opposite .v-card:after,.v-timeline-item:nth-child(2n):not(.v-timeline-item--left) .v-timeline-item__opposite .v-card:before{-webkit-transform:rotate(180deg);transform:rotate(180deg);right:-10px}.v-timeline-item__dot,.v-timeline-item__inner-dot{border-radius:50%}.v-timeline-item__dot{box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);align-self:center;position:absolute;height:38px;left:calc(50% - 19px);width:38px}.v-timeline-item__dot .v-timeline-item__inner-dot{height:30px;margin:4px;width:30px}.v-timeline-item__dot--small{height:24px;left:calc(50% - 12px);width:24px}.v-timeline-item__dot--small .v-timeline-item__inner-dot{height:18px;margin:3px;width:18px}.v-timeline-item__dot--large{height:52px;left:calc(50% - 26px);width:52px}.v-timeline-item__dot--large .v-timeline-item__inner-dot{height:42px;margin:5px;width:42px}.v-timeline-item__inner-dot{display:flex;justify-content:center;align-items:center}.v-timeline-item__body{position:relative;height:100%;flex:1 1 100%;max-width:calc(50% - 48px)}.v-timeline-item .v-card:after,.v-timeline-item .v-card:before{content:\"\";position:absolute;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:10px solid #000;top:calc(50% - 10px)}.v-timeline-item .v-card:after{border-right-color:inherit}.v-timeline-item .v-card:before{top:calc(50% - 8px)}.v-timeline-item__opposite{flex:1 1 auto;align-self:center;max-width:calc(50% - 48px)}.v-timeline-item--fill-dot .v-timeline-item__inner-dot{height:inherit;margin:0;width:inherit}.v-timeline{padding-top:24px;position:relative}.v-timeline:before{bottom:0;content:\"\";height:100%;left:calc(50% - 1px);position:absolute;top:0;width:2px}.v-timeline--align-top .v-timeline-item{position:relative}.v-timeline--align-top .v-timeline-item__dot{top:6px}.v-timeline--align-top .v-timeline-item__dot--small{top:12px}.v-timeline--align-top .v-timeline-item__dot--large{top:0}.v-timeline--align-top .v-timeline-item .v-card:before{top:12px}.v-timeline--align-top .v-timeline-item .v-card:after{top:10px}.v-timeline--dense:before{left:18px}.v-timeline--dense .v-timeline-item--left,.v-timeline--dense .v-timeline-item:nth-child(odd):not(.v-timeline-item--right){flex-direction:row-reverse}.v-timeline--dense .v-timeline-item--left .v-card:after,.v-timeline--dense .v-timeline-item--left .v-card:before,.v-timeline--dense .v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-card:after,.v-timeline--dense .v-timeline-item:nth-child(odd):not(.v-timeline-item--right) .v-card:before{right:auto;left:-10px;-webkit-transform:none;transform:none}.v-timeline--dense .v-timeline-item__dot{left:0}.v-timeline--dense .v-timeline-item__dot--small{left:7px}.v-timeline--dense .v-timeline-item__dot--large{left:-7px}.v-timeline--dense .v-timeline-item__body{max-width:calc(100% - 64px)}.v-timeline--dense .v-timeline-item__opposite{display:none}.theme--light.v-time-picker-clock{background:#e0e0e0}.theme--light.v-time-picker-clock .v-time-picker-clock__item--disabled{color:rgba(0,0,0,.26)}.theme--light.v-time-picker-clock .v-time-picker-clock__item--disabled.v-time-picker-clock__item--active{color:hsla(0,0%,100%,.3)}.theme--light.v-time-picker-clock--indeterminate .v-time-picker-clock__hand{background-color:#bdbdbd}.theme--light.v-time-picker-clock--indeterminate .v-time-picker-clock__hand:after{color:#bdbdbd}.theme--light.v-time-picker-clock--indeterminate .v-time-picker-clock__item--active{background-color:#bdbdbd}.theme--dark.v-time-picker-clock{background:#616161}.theme--dark.v-time-picker-clock .v-time-picker-clock__item--disabled,.theme--dark.v-time-picker-clock .v-time-picker-clock__item--disabled.v-time-picker-clock__item--active{color:hsla(0,0%,100%,.3)}.theme--dark.v-time-picker-clock--indeterminate .v-time-picker-clock__hand{background-color:#757575}.theme--dark.v-time-picker-clock--indeterminate .v-time-picker-clock__hand:after{color:#757575}.theme--dark.v-time-picker-clock--indeterminate .v-time-picker-clock__item--active{background-color:#757575}.v-time-picker-clock{border-radius:100%;position:relative;transition:.3s cubic-bezier(.25,.8,.5,1);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:100%;padding-top:100%}.v-time-picker-clock__container{display:flex;align-items:center;justify-content:center;padding:10px}.v-time-picker-clock__hand{height:calc(50% - 4px);width:2px;bottom:50%;left:calc(50% - 1px);-webkit-transform-origin:center bottom;transform-origin:center bottom;position:absolute;will-change:transform;z-index:1}.v-time-picker-clock__hand:before{background:transparent;border:2px solid;border-color:inherit;border-radius:100%;width:10px;height:10px;top:-4px}.v-time-picker-clock__hand:after,.v-time-picker-clock__hand:before{content:\"\";position:absolute;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.v-time-picker-clock__hand:after{height:8px;width:8px;top:100%;border-radius:100%;border-style:solid;border-color:inherit;background-color:inherit}.v-time-picker-clock__hand--inner:after{height:14px}.v-picker--full-width .v-time-picker-clock__container{max-width:290px}.v-time-picker-clock__inner{position:absolute;bottom:27px;left:27px;right:27px;top:27px}.v-time-picker-clock__item{align-items:center;border-radius:100%;cursor:default;display:flex;font-size:16px;justify-content:center;height:40px;position:absolute;text-align:center;width:40px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.v-time-picker-clock__item>span{z-index:1}.v-time-picker-clock__item:after,.v-time-picker-clock__item:before{content:\"\";border-radius:100%;position:absolute;top:50%;left:50%;height:14px;width:14px;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);height:40px;width:40px}.v-time-picker-clock__item--active{color:#fff;cursor:default;z-index:2}.v-time-picker-clock__item--disabled{pointer-events:none}.v-time-picker-title{color:#fff;display:flex;line-height:1;justify-content:flex-end}.v-time-picker-title__time{white-space:nowrap}.v-time-picker-title__time .v-picker__title__btn,.v-time-picker-title__time span{align-items:center;display:inline-flex;height:70px;font-size:70px;justify-content:center}.v-time-picker-title__ampm{align-self:flex-end;display:flex;flex-direction:column;font-size:16px;margin:8px 0 6px 8px;text-transform:uppercase}.v-time-picker-title__ampm div:only-child{flex-direction:row}.v-picker__title--landscape .v-time-picker-title{flex-direction:column;justify-content:center;height:100%}.v-picker__title--landscape .v-time-picker-title__time{text-align:right}.v-picker__title--landscape .v-time-picker-title__time .v-picker__title__btn,.v-picker__title--landscape .v-time-picker-title__time span{height:55px;font-size:55px}.v-picker__title--landscape .v-time-picker-title__ampm{margin:16px 0 0;align-self:auto;text-align:center}.theme--light.v-toolbar{background-color:#f5f5f5;color:rgba(0,0,0,.87)}.theme--dark.v-toolbar{background-color:#212121;color:#fff}.application--is-rtl .v-toolbar__title:not(:first-child){margin-left:0;margin-right:20px}.v-toolbar{transition:none;box-shadow:0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);position:relative;width:100%;will-change:padding-left,padding-right}.v-toolbar[data-booted=true]{transition:.2s cubic-bezier(.4,0,.2,1)}.v-toolbar .v-text-field--box,.v-toolbar .v-text-field--enclosed{margin:0}.v-toolbar .v-text-field--box .v-text-field__details,.v-toolbar .v-text-field--enclosed .v-text-field__details{display:none}.v-toolbar .v-tabs{width:100%}.v-toolbar__title{font-size:20px;font-weight:500;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v-toolbar__title:not(:first-child){margin-left:20px}.v-toolbar__content,.v-toolbar__extension{align-items:center;display:flex;padding:0 24px}.v-toolbar__content .v-btn--icon,.v-toolbar__extension .v-btn--icon{margin:6px}.v-toolbar__content>:first-child,.v-toolbar__extension>:first-child{margin-left:0}.v-toolbar__content>:first-child.v-btn--icon,.v-toolbar__extension>:first-child.v-btn--icon{margin-left:-6px}.v-toolbar__content>:first-child.v-menu .v-menu__activator .v-btn,.v-toolbar__content>:first-child.v-tooltip span .v-btn,.v-toolbar__extension>:first-child.v-menu .v-menu__activator .v-btn,.v-toolbar__extension>:first-child.v-tooltip span .v-btn{margin-left:0}.v-toolbar__content>:first-child.v-menu .v-menu__activator .v-btn--icon,.v-toolbar__content>:first-child.v-tooltip span .v-btn--icon,.v-toolbar__extension>:first-child.v-menu .v-menu__activator .v-btn--icon,.v-toolbar__extension>:first-child.v-tooltip span .v-btn--icon{margin-left:-6px}.v-toolbar__content>:last-child,.v-toolbar__extension>:last-child{margin-right:0}.v-toolbar__content>:last-child.v-btn--icon,.v-toolbar__extension>:last-child.v-btn--icon{margin-right:-6px}.v-toolbar__content>:last-child.v-menu .v-menu__activator .v-btn,.v-toolbar__content>:last-child.v-tooltip span .v-btn,.v-toolbar__extension>:last-child.v-menu .v-menu__activator .v-btn,.v-toolbar__extension>:last-child.v-tooltip span .v-btn{margin-right:0}.v-toolbar__content>:last-child.v-menu .v-menu__activator .v-btn--icon,.v-toolbar__content>:last-child.v-tooltip span .v-btn--icon,.v-toolbar__extension>:last-child.v-menu .v-menu__activator .v-btn--icon,.v-toolbar__extension>:last-child.v-tooltip span .v-btn--icon{margin-right:-6px}.v-toolbar__content>.v-list,.v-toolbar__extension>.v-list{flex:1 1 auto;max-height:100%}.v-toolbar__content>.v-list:first-child,.v-toolbar__extension>.v-list:first-child{margin-left:-24px}.v-toolbar__content>.v-list:last-child,.v-toolbar__extension>.v-list:last-child{margin-right:-24px}.v-toolbar__extension>.v-toolbar__title{margin-left:72px}.v-toolbar__items{display:flex;height:inherit;max-width:100%;padding:0}.v-toolbar__items .v-btn{align-items:center;align-self:center}.v-toolbar__items .v-tooltip,.v-toolbar__items .v-tooltip>span{height:inherit}.v-toolbar__items .v-btn:not(.v-btn--floating):not(.v-btn--icon),.v-toolbar__items .v-menu,.v-toolbar__items .v-menu__activator{height:inherit;margin:0}.v-toolbar .v-btn-toggle,.v-toolbar .v-overflow-btn{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)}.v-toolbar .v-input{margin:0}.v-toolbar .v-overflow-btn .v-input__control:before,.v-toolbar .v-overflow-btn .v-input__slot:before{display:none}.v-toolbar--card{border-radius:2px 2px 0 0;box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12)}.v-toolbar--fixed{position:fixed;z-index:2}.v-toolbar--absolute,.v-toolbar--fixed{top:0;left:0}.v-toolbar--absolute{position:absolute;z-index:2}.v-toolbar--floating{display:inline-flex;margin:16px;width:auto}.v-toolbar--clipped{z-index:3}@media only screen and (max-width:959px){.v-toolbar__content,.v-toolbar__extension{padding:0 16px}.v-toolbar__content>.v-list:first-child,.v-toolbar__extension>.v-list:first-child{margin-left:-16px}.v-toolbar__content>.v-list:last-child,.v-toolbar__extension>.v-list:last-child{margin-right:-16px}}.v-tooltip__content{background:#616161;border-radius:2px;color:#fff;font-size:12px;display:inline-block;padding:5px 8px;position:absolute;text-transform:none;width:auto;box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)}.v-tooltip__content[class*=-active]{transition:.15s cubic-bezier(.25,.8,.5,1);pointer-events:none}.v-tooltip__content--fixed{position:fixed}@media only screen and (max-width:959px){.v-tooltip .v-tooltip__content{padding:10px 16px}}.theme--light.v-treeview{color:rgba(0,0,0,.87)}.theme--light.v-treeview--hoverable .v-treeview-node__root:hover,.theme--light.v-treeview .v-treeview-node--active{background:rgba(0,0,0,.12)}.theme--dark.v-treeview{color:#fff}.theme--dark.v-treeview--hoverable .v-treeview-node__root:hover,.theme--dark.v-treeview .v-treeview-node--active{background:hsla(0,0%,100%,.12)}.application--is-rtl .v-treeview>.v-treeview-node{margin-right:0}.application--is-rtl .v-treeview>.v-treeview-node--leaf{margin-right:24px;margin-left:0}.application--is-rtl .v-treeview-node{margin-right:26px;margin-left:0}.application--is-rtl .v-treeview-node--leaf{margin-right:50px;margin-left:0}.application--is-rtl .v-treeview-node__toggle{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.application--is-rtl .v-treeview-node__toggle--open{-webkit-transform:none;transform:none}.v-treeview>.v-treeview-node{margin-left:0}.v-treeview>.v-treeview-node--leaf{margin-left:24px}.v-treeview-node{margin-left:26px}.v-treeview-node--excluded{display:none}.v-treeview-node--click>.v-treeview-node__root,.v-treeview-node--click>.v-treeview-node__root>.v-treeview-node__content>*{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-treeview-node--leaf{margin-left:50px}.v-treeview-node__root{display:flex;align-items:center;min-height:34px}.v-treeview-node__content{display:flex;flex-grow:1;flex-shrink:0;align-items:center}.v-treeview-node__content .v-btn{flex-grow:0!important;flex-shrink:1!important}.v-treeview-node__label{font-size:1.2rem;margin-left:6px;flex-grow:1;flex-shrink:0}.v-treeview-node__label .v-icon{padding-right:8px}.v-treeview-node__checkbox,.v-treeview-node__toggle{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.v-treeview-node__toggle{-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}.v-treeview-node__toggle--open{-webkit-transform:none;transform:none}.v-treeview-node__toggle--loading{-webkit-animation:progress-circular-rotate 1s linear infinite;animation:progress-circular-rotate 1s linear infinite}.v-treeview-node__children{transition:all .2s cubic-bezier(0,0,.2,1)}", ""]);
 
 // exports
+
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(22));
+	else if(typeof define === 'function' && define.amd)
+		define(["vue"], factory);
+	else if(typeof exports === 'object')
+		exports["vue-notification"] = factory(require("vue"));
+	else
+		root["vue-notification"] = factory(root["vue"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_20__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = Object.create(options.computed || null)
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+    options.computed = computed
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return events; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+var events = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notifications_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Notifications_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__events__ = __webpack_require__(1);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+
+
+
+var Notify = {
+  install: function install(Vue) {
+    var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    if (this.installed) {
+      return;
+    }
+
+    this.installed = true;
+    this.params = args;
+
+    Vue.component(args.componentName || 'notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
+
+    var notify = function notify(params) {
+      if (typeof params === 'string') {
+        params = { title: '', text: params };
+      }
+
+      if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+        __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('add', params);
+      }
+    };
+
+    var name = args.name || 'notify';
+
+    Vue.prototype['$' + name] = notify;
+    Vue[name] = notify;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Notify);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(17)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(5),
+  /* template */
+  __webpack_require__(15),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'CssGroup',
+  props: ['name']
+});
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__events__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__defaults__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CssGroup_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CssGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__CssGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__parser__ = __webpack_require__(8);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
+var STATE = {
+  IDLE: 0,
+  DESTROYED: 2
+};
+
+var Component = {
+  name: 'Notifications',
+  components: {
+    VelocityGroup: __WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue___default.a,
+    CssGroup: __WEBPACK_IMPORTED_MODULE_5__CssGroup_vue___default.a
+  },
+  props: {
+    group: {
+      type: String,
+      default: ''
+    },
+
+    width: {
+      type: [Number, String],
+      default: 300
+    },
+
+    reverse: {
+      type: Boolean,
+      default: false
+    },
+
+    position: {
+      type: [String, Array],
+      default: function _default() {
+        return __WEBPACK_IMPORTED_MODULE_3__defaults__["a" /* default */].position;
+      }
+    },
+
+    classes: {
+      type: String,
+      default: 'vue-notification'
+    },
+
+    animationType: {
+      type: String,
+      default: 'css',
+      validator: function validator(value) {
+        return value === 'css' || value === 'velocity';
+      }
+    },
+
+    animation: {
+      type: Object,
+      default: function _default() {
+        return __WEBPACK_IMPORTED_MODULE_3__defaults__["a" /* default */].velocityAnimation;
+      }
+    },
+
+    animationName: {
+      type: String,
+      default: __WEBPACK_IMPORTED_MODULE_3__defaults__["a" /* default */].cssAnimation
+    },
+
+    speed: {
+      type: Number,
+      default: 300
+    },
+
+    cooldown: {
+      type: Number,
+      default: 0
+    },
+
+    duration: {
+      type: Number,
+      default: 3000
+    },
+
+    delay: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: Infinity
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: function data() {
+    return {
+      list: [],
+      velocity: __WEBPACK_IMPORTED_MODULE_0__index__["default"].params.velocity
+    };
+  },
+  mounted: function mounted() {
+    __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$on('add', this.addItem);
+  },
+
+  computed: {
+    actualWidth: function actualWidth() {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__parser__["a" /* default */])(this.width);
+    },
+    isVA: function isVA() {
+      return this.animationType === 'velocity';
+    },
+    componentName: function componentName() {
+      return this.isVA ? 'VelocityGroup' : 'CssGroup';
+    },
+    styles: function styles() {
+      var _listToDirection = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* listToDirection */])(this.position),
+          x = _listToDirection.x,
+          y = _listToDirection.y;
+
+      var width = this.actualWidth.value;
+      var suffix = this.actualWidth.type;
+
+      var styles = _defineProperty({
+        width: width + suffix
+      }, y, '0px');
+
+      if (x === 'center') {
+        styles['left'] = 'calc(50% - ' + width / 2 + suffix + ')';
+      } else {
+        styles[x] = '0px';
+      }
+
+      return styles;
+    },
+    active: function active() {
+      return this.list.filter(function (v) {
+        return v.state !== STATE.DESTROYED;
+      });
+    },
+    botToTop: function botToTop() {
+      return this.styles.hasOwnProperty('bottom');
+    }
+  },
+  methods: {
+    addItem: function addItem(event) {
+      var _this = this;
+
+      event.group = event.group || '';
+
+      if (this.group !== event.group) {
+        return;
+      }
+
+      if (event.clean || event.clear) {
+        this.destroyAll();
+        return;
+      }
+
+      var duration = typeof event.duration === 'number' ? event.duration : this.duration;
+
+      var speed = typeof event.speed === 'number' ? event.speed : this.speed;
+
+      var title = event.title,
+          text = event.text,
+          type = event.type,
+          data = event.data;
+
+
+      var item = {
+        id: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* Id */])(),
+        title: title,
+        text: text,
+        type: type,
+        state: STATE.IDLE,
+        speed: speed,
+        length: duration + 2 * speed,
+        data: data
+      };
+
+      if (duration >= 0) {
+        item.timer = setTimeout(function () {
+          _this.destroy(item);
+        }, item.length);
+      }
+
+      var direction = this.reverse ? !this.botToTop : this.botToTop;
+
+      var indexToDestroy = -1;
+
+      if (direction) {
+        this.list.push(item);
+
+        if (this.active.length > this.max) {
+          indexToDestroy = 0;
+        }
+      } else {
+        this.list.unshift(item);
+
+        if (this.active.length > this.max) {
+          indexToDestroy = this.active.length - 1;
+        }
+      }
+
+      if (indexToDestroy !== -1) {
+        this.destroy(this.active[indexToDestroy]);
+      }
+    },
+    notifyClass: function notifyClass(item) {
+      return ['vue-notification-template', this.classes, item.type];
+    },
+    notifyWrapperStyle: function notifyWrapperStyle(item) {
+      return this.isVA ? null : {
+        transition: 'all ' + item.speed + 'ms'
+      };
+    },
+    destroy: function destroy(item) {
+      clearTimeout(item.timer);
+      item.state = STATE.DESTROYED;
+
+      if (!this.isVA) {
+        this.clean();
+      }
+    },
+    destroyAll: function destroyAll() {
+      this.active.forEach(this.destroy);
+    },
+    getAnimation: function getAnimation(index, el) {
+      var animation = this.animation[index];
+
+      return typeof animation === 'function' ? animation.call(this, el) : animation;
+    },
+    enter: function enter(_ref) {
+      var el = _ref.el,
+          complete = _ref.complete;
+
+      var animation = this.getAnimation('enter', el);
+
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete: complete
+      });
+    },
+    leave: function leave(_ref2) {
+      var el = _ref2.el,
+          complete = _ref2.complete;
+
+      var animation = this.getAnimation('leave', el);
+
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete: complete
+      });
+    },
+    clean: function clean() {
+      this.list = this.list.filter(function (v) {
+        return v.state !== STATE.DESTROYED;
+      });
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Component);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'VelocityGroup',
+  methods: {
+    enter: function enter(el, complete) {
+      this.$emit('enter', { el: el, complete: complete });
+    },
+    leave: function leave(el, complete) {
+      this.$emit('leave', { el: el, complete: complete });
+    },
+    afterLeave: function afterLeave() {
+      this.$emit('afterLeave');
+    }
+  }
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  position: ['top', 'right'],
+  cssAnimation: 'vn-fade',
+  velocityAnimation: {
+    enter: function enter(el) {
+      var height = el.clientHeight;
+
+      return {
+        height: [height, 0],
+        opacity: [1, 0]
+      };
+    },
+    leave: {
+      height: 0,
+      opacity: [0, 1]
+    }
+  }
+});
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export parse */
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var floatRegexp = '[-+]?[0-9]*.?[0-9]+';
+
+var types = [{
+  name: 'px',
+  regexp: new RegExp('^' + floatRegexp + 'px$')
+}, {
+  name: '%',
+  regexp: new RegExp('^' + floatRegexp + '%$')
+}, {
+  name: 'px',
+  regexp: new RegExp('^' + floatRegexp + '$')
+}];
+
+var getType = function getType(value) {
+  if (value === 'auto') {
+    return {
+      type: value,
+      value: 0
+    };
+  }
+
+  for (var i = 0; i < types.length; i++) {
+    var type = types[i];
+    if (type.regexp.test(value)) {
+      return {
+        type: type.name,
+        value: parseFloat(value)
+      };
+    }
+  }
+
+  return {
+    type: '',
+    value: value
+  };
+};
+
+var parse = function parse(value) {
+  switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
+    case 'number':
+      return { type: 'px', value: value };
+    case 'string':
+      return getType(value);
+    default:
+      return { type: '', value: value };
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (parse);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Id; });
+/* unused harmony export split */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return listToDirection; });
+var directions = {
+  x: ['left', 'center', 'right'],
+  y: ['top', 'bottom']
+};
+
+var Id = function (i) {
+  return function () {
+    return i++;
+  };
+}(0);
+
+var split = function split(value) {
+  if (typeof value !== 'string') {
+    return [];
+  }
+
+  return value.split(/\s+/gi).filter(function (v) {
+    return v;
+  });
+};
+
+var listToDirection = function listToDirection(value) {
+  if (typeof value === 'string') {
+    value = split(value);
+  }
+
+  var x = null;
+  var y = null;
+
+  value.forEach(function (v) {
+    if (directions.y.indexOf(v) !== -1) {
+      y = v;
+    }
+    if (directions.x.indexOf(v) !== -1) {
+      x = v;
+    }
+  });
+
+  return { x: x, y: y };
+};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(11)();
+// imports
+
+
+// module
+exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification-title{font-weight:600}.vue-notification-template{background:#fff}.vue-notification,.vue-notification-template{display:block;box-sizing:border-box;text-align:left}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active,.vn-fade-move{transition:all .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(4),
+  /* template */
+  __webpack_require__(16),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(6),
+  /* template */
+  __webpack_require__(14),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('transition-group', {
+    attrs: {
+      "css": false
+    },
+    on: {
+      "enter": _vm.enter,
+      "leave": _vm.leave,
+      "after-leave": _vm.afterLeave
+    }
+  }, [_vm._t("default")], 2)
+},staticRenderFns: []}
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "notifications",
+    style: (_vm.styles)
+  }, [_c(_vm.componentName, {
+    tag: "component",
+    attrs: {
+      "name": _vm.animationName
+    },
+    on: {
+      "enter": _vm.enter,
+      "leave": _vm.leave,
+      "after-leave": _vm.clean
+    }
+  }, _vm._l((_vm.active), function(item) {
+    return _c('div', {
+      key: item.id,
+      staticClass: "notification-wrapper",
+      style: (_vm.notifyWrapperStyle(item)),
+      attrs: {
+        "data-id": item.id
+      }
+    }, [_vm._t("body", [_c('div', {
+      class: _vm.notifyClass(item),
+      on: {
+        "click": function($event) {
+          if (_vm.closeOnClick) { _vm.destroy(item) }
+        }
+      }
+    }, [(item.title) ? _c('div', {
+      staticClass: "notification-title",
+      domProps: {
+        "innerHTML": _vm._s(item.title)
+      }
+    }) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "notification-content",
+      domProps: {
+        "innerHTML": _vm._s(item.text)
+      }
+    })])], {
+      item: item,
+      close: function () { return _vm.destroy(item); }
+    })], 2)
+  }))], 1)
+},staticRenderFns: []}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('transition-group', {
+    attrs: {
+      "name": _vm.name
+    }
+  }, [_vm._t("default")], 2)
+},staticRenderFns: []}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(10);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(18)("2901aeae", content, true);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(19)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 150 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export install */
+/* unused harmony export directive */
+/* unused harmony export mixin */
+/* unused harmony export mapFields */
+/* unused harmony export Validator */
+/* unused harmony export ErrorBag */
+/* unused harmony export Rules */
+/* unused harmony export version */
+/* unused harmony export ValidationProvider */
+/* unused harmony export ValidationObserver */
+/* unused harmony export withValidation */
+/**
+  * vee-validate v2.2.7
+  * (c) 2019 Abdelrahman Awad
+  * @license MIT
+  */
+// 
+
+var isTextInput = function (el) {
+  return includes(['text', 'password', 'search', 'email', 'tel', 'url', 'textarea', 'number'], el.type);
+};
+
+var isCheckboxOrRadioInput = function (el) {
+  return includes(['radio', 'checkbox'], el.type);
+};
+
+var isDateInput = function (el) {
+  return includes(['date', 'week', 'month', 'datetime-local', 'time'], el.type);
+};
+
+/**
+ * Gets the data attribute. the name must be kebab-case.
+ */
+var getDataAttribute = function (el, name) { return el.getAttribute(("data-vv-" + name)); };
+
+var isNaN$1 = function (value) {
+  if ('isNaN' in Number) {
+    return Number.isNaN(value);
+  }
+
+  // eslint-disable-next-line
+  return value === value;
+};
+
+/**
+ * Checks if the values are either null or undefined.
+ */
+var isNullOrUndefined = function () {
+  var values = [], len = arguments.length;
+  while ( len-- ) values[ len ] = arguments[ len ];
+
+  return values.every(function (value) {
+    return value === null || value === undefined;
+  });
+};
+
+/**
+ * Creates the default flags object.
+ */
+var createFlags = function () { return ({
+  untouched: true,
+  touched: false,
+  dirty: false,
+  pristine: true,
+  valid: null,
+  invalid: null,
+  validated: false,
+  pending: false,
+  required: false,
+  changed: false
+}); };
+
+/**
+ * Shallow object comparison.
+ */
+var isEqual = function (lhs, rhs) {
+  if (lhs instanceof RegExp && rhs instanceof RegExp) {
+    return isEqual(lhs.source, rhs.source) && isEqual(lhs.flags, rhs.flags);
+  }
+
+  if (Array.isArray(lhs) && Array.isArray(rhs)) {
+    if (lhs.length !== rhs.length) { return false; }
+
+    for (var i = 0; i < lhs.length; i++) {
+      if (!isEqual(lhs[i], rhs[i])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // if both are objects, compare each key recursively.
+  if (isObject(lhs) && isObject(rhs)) {
+    return Object.keys(lhs).every(function (key) {
+      return isEqual(lhs[key], rhs[key]);
+    }) && Object.keys(rhs).every(function (key) {
+      return isEqual(lhs[key], rhs[key]);
+    });
+  }
+
+  if (isNaN$1(lhs) && isNaN$1(rhs)) {
+    return true;
+  }
+
+  return lhs === rhs;
+};
+
+/**
+ * Determines the input field scope.
+ */
+var getScope = function (el) {
+  var scope = getDataAttribute(el, 'scope');
+  if (isNullOrUndefined(scope)) {
+    var form = getForm(el);
+
+    if (form) {
+      scope = getDataAttribute(form, 'scope');
+    }
+  }
+
+  return !isNullOrUndefined(scope) ? scope : null;
+};
+
+/**
+ * Get the closest form element.
+ */
+var getForm = function (el) {
+  if (isNullOrUndefined(el)) { return null; }
+
+  if (el.tagName === 'FORM') { return el; }
+
+  if (!isNullOrUndefined(el.form)) { return el.form; }
+
+  return !isNullOrUndefined(el.parentNode) ? getForm(el.parentNode) : null;
+};
+
+/**
+ * Gets the value in an object safely.
+ */
+var getPath = function (path, target, def) {
+  if ( def === void 0 ) def = undefined;
+
+  if (!path || !target) { return def; }
+
+  var value = target;
+  path.split('.').every(function (prop) {
+    if (prop in value) {
+      value = value[prop];
+
+      return true;
+    }
+
+    value = def;
+
+    return false;
+  });
+
+  return value;
+};
+
+/**
+ * Checks if path exists within an object.
+ */
+var hasPath = function (path, target) {
+  var obj = target;
+  var previousPath = null;
+  var isNullOrNonObject = false;
+  var isValidPath = path.split('.').reduce(function (reducer, prop) {
+    if (obj == null || typeof obj !== 'object') {
+      isNullOrNonObject = true;
+      return reducer && false;
+    }
+
+    if (prop in obj) {
+      obj = obj[prop];
+      previousPath = previousPath === null ? prop : previousPath + '.' + prop;
+
+      return reducer && true;
+    }
+
+    return reducer && false;
+  }, true);
+
+  if (true) {
+    if (isNullOrNonObject) {
+      throw new Error(previousPath + ' is not an object');
+    }
+  }
+
+  return isValidPath;
+};
+
+/**
+ * Parses a rule string expression.
+ */
+var parseRule = function (rule) {
+  var params = [];
+  var name = rule.split(':')[0];
+
+  if (includes(rule, ':')) {
+    params = rule.split(':').slice(1).join(':').split(',');
+  }
+
+  return { name: name, params: params };
+};
+
+/**
+ * Debounces a function.
+ */
+var debounce = function (fn, wait, token) {
+  if ( wait === void 0 ) wait = 0;
+  if ( token === void 0 ) token = { cancelled: false };
+
+  if (wait === 0) {
+    return fn;
+  }
+
+  var timeout;
+
+  return function () {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    var later = function () {
+      timeout = null;
+
+      // check if the fn call was cancelled.
+      if (!token.cancelled) { fn.apply(void 0, args); }
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (!timeout) { fn.apply(void 0, args); }
+  };
+};
+
+/**
+ * Appends a rule definition to a list of rules.
+ */
+var appendRule = function (rule, rules) {
+  if (!rules) {
+    return normalizeRules(rule);
+  }
+
+  if (!rule) {
+    return normalizeRules(rules);
+  }
+
+  if (typeof rules === 'string') {
+    rules = normalizeRules(rules);
+  }
+
+  return assign({}, rules, normalizeRules(rule));
+};
+
+/**
+ * Normalizes the given rules expression.
+ */
+var normalizeRules = function (rules) {
+  // if falsy value return an empty object.
+  if (!rules) {
+    return {};
+  }
+
+  if (isObject(rules)) {
+    // $FlowFixMe
+    return Object.keys(rules).reduce(function (prev, curr) {
+      var params = [];
+      // $FlowFixMe
+      if (rules[curr] === true) {
+        params = [];
+      } else if (Array.isArray(rules[curr])) {
+        params = rules[curr];
+      } else if (isObject(rules[curr])) {
+        params = rules[curr];
+      } else {
+        params = [rules[curr]];
+      }
+
+      // $FlowFixMe
+      if (rules[curr] !== false) {
+        prev[curr] = params;
+      }
+
+      return prev;
+    }, {});
+  }
+
+  if (typeof rules !== 'string') {
+    warn('rules must be either a string or an object.');
+    return {};
+  }
+
+  return rules.split('|').reduce(function (prev, rule) {
+    var parsedRule = parseRule(rule);
+    if (!parsedRule.name) {
+      return prev;
+    }
+
+    prev[parsedRule.name] = parsedRule.params;
+    return prev;
+  }, {});
+};
+
+/**
+ * Emits a warning to the console.
+ */
+var warn = function (message) {
+  console.warn(("[vee-validate] " + message)); // eslint-disable-line
+};
+
+/**
+ * Creates a branded error object.
+ */
+var createError = function (message) { return new Error(("[vee-validate] " + message)); };
+
+/**
+ * Checks if the value is an object.
+ */
+var isObject = function (obj) { return obj !== null && obj && typeof obj === 'object' && ! Array.isArray(obj); };
+
+/**
+ * Checks if a function is callable.
+ */
+var isCallable = function (func) { return typeof func === 'function'; };
+
+/**
+ * Check if element has the css class on it.
+ */
+var hasClass = function (el, className) {
+  if (el.classList) {
+    return el.classList.contains(className);
+  }
+
+  return !!el.className.match(new RegExp(("(\\s|^)" + className + "(\\s|$)")));
+};
+
+/**
+ * Adds the provided css className to the element.
+ */
+var addClass = function (el, className) {
+  if (el.classList) {
+    el.classList.add(className);
+    return;
+  }
+
+  if (!hasClass(el, className)) {
+    el.className += " " + className;
+  }
+};
+
+/**
+ * Remove the provided css className from the element.
+ */
+var removeClass = function (el, className) {
+  if (el.classList) {
+    el.classList.remove(className);
+    return;
+  }
+
+  if (hasClass(el, className)) {
+    var reg = new RegExp(("(\\s|^)" + className + "(\\s|$)"));
+    el.className = el.className.replace(reg, ' ');
+  }
+};
+
+/**
+ * Adds or removes a class name on the input depending on the status flag.
+ */
+var toggleClass = function (el, className, status) {
+  if (!el || !className) { return; }
+
+  if (Array.isArray(className)) {
+    className.forEach(function (item) { return toggleClass(el, item, status); });
+    return;
+  }
+
+  if (status) {
+    return addClass(el, className);
+  }
+
+  removeClass(el, className);
+};
+
+/**
+ * Converts an array-like object to array, provides a simple polyfill for Array.from
+ */
+var toArray = function (arrayLike) {
+  if (isCallable(Array.from)) {
+    return Array.from(arrayLike);
+  }
+
+  var array = [];
+  var length = arrayLike.length;
+  /* istanbul ignore next */
+  for (var i = 0; i < length; i++) {
+    array.push(arrayLike[i]);
+  }
+
+  /* istanbul ignore next */
+  return array;
+};
+
+/**
+ * Converts an array-like object to array and place other elements in an array
+ */
+var ensureArray = function (arrayLike) {
+  if (Array.isArray(arrayLike)) {
+    return [].concat( arrayLike );
+  }
+  var array = toArray(arrayLike);
+  return isEmptyArray(array) ? [arrayLike] : array;
+};
+
+/**
+ * Assign polyfill from the mdn.
+ */
+var assign = function (target) {
+  var others = [], len = arguments.length - 1;
+  while ( len-- > 0 ) others[ len ] = arguments[ len + 1 ];
+
+  /* istanbul ignore else */
+  if (isCallable(Object.assign)) {
+    return Object.assign.apply(Object, [ target ].concat( others ));
+  }
+
+  /* istanbul ignore next */
+  if (target == null) {
+    throw new TypeError('Cannot convert undefined or null to object');
+  }
+
+  /* istanbul ignore next */
+  var to = Object(target);
+  /* istanbul ignore next */
+  others.forEach(function (arg) {
+    // Skip over if undefined or null
+    if (arg != null) {
+      Object.keys(arg).forEach(function (key) {
+        to[key] = arg[key];
+      });
+    }
+  });
+  /* istanbul ignore next */
+  return to;
+};
+
+var id = 0;
+var idTemplate = '{id}';
+
+/**
+ * Generates a unique id.
+ */
+var uniqId = function () {
+  // handle too many uses of uniqId, although unlikely.
+  if (id >= 9999) {
+    id = 0;
+    // shift the template.
+    idTemplate = idTemplate.replace('{id}', '_{id}');
+  }
+
+  id++;
+  var newId = idTemplate.replace('{id}', String(id));
+
+  return newId;
+};
+
+var findIndex = function (arrayLike, predicate) {
+  var array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike);
+  for (var i = 0; i < array.length; i++) {
+    if (predicate(array[i])) {
+      return i;
+    }
+  }
+
+  return -1;
+};
+
+/**
+ * finds the first element that satisfies the predicate callback, polyfills array.find
+ */
+var find = function (arrayLike, predicate) {
+  var array = Array.isArray(arrayLike) ? arrayLike : toArray(arrayLike);
+  var idx = findIndex(array, predicate);
+
+  return idx === -1 ? undefined : array[idx];
+};
+
+var isBuiltInComponent = function (vnode) {
+  if (!vnode) {
+    return false;
+  }
+
+  var tag = vnode.componentOptions.tag;
+
+  return /^(keep-alive|transition|transition-group)$/.test(tag);
+};
+
+var makeDelayObject = function (events, delay, delayConfig) {
+  if (typeof delay === 'number') {
+    return events.reduce(function (prev, e) {
+      prev[e] = delay;
+      return prev;
+    }, {});
+  }
+
+  return events.reduce(function (prev, e) {
+    if (typeof delay === 'object' && e in delay) {
+      prev[e] = delay[e];
+      return prev;
+    }
+
+    if (typeof delayConfig === 'number') {
+      prev[e] = delayConfig;
+      return prev;
+    }
+
+    prev[e] = (delayConfig && delayConfig[e]) || 0;
+
+    return prev;
+  }, {});
+};
+
+var deepParseInt = function (input) {
+  if (typeof input === 'number') { return input; }
+
+  if (typeof input === 'string') { return parseInt(input); }
+
+  var map = {};
+  for (var element in input) {
+    map[element] = parseInt(input[element]);
+  }
+
+  return map;
+};
+
+var merge = function (target, source) {
+  if (! (isObject(target) && isObject(source))) {
+    return target;
+  }
+
+  Object.keys(source).forEach(function (key) {
+    var obj, obj$1;
+
+    if (isObject(source[key])) {
+      if (! target[key]) {
+        assign(target, ( obj = {}, obj[key] = {}, obj ));
+      }
+
+      merge(target[key], source[key]);
+      return;
+    }
+
+    assign(target, ( obj$1 = {}, obj$1[key] = source[key], obj$1 ));
+  });
+
+  return target;
+};
+
+var fillRulesFromElement = function (el, rules) {
+  if (el.required) {
+    rules = appendRule('required', rules);
+  }
+
+  if (isTextInput(el)) {
+    if (el.type === 'email') {
+      rules = appendRule(("email" + (el.multiple ? ':multiple' : '')), rules);
+    }
+
+    if (el.pattern) {
+      rules = appendRule({ regex: el.pattern }, rules);
+    }
+
+    // 524288 is the max on some browsers and test environments.
+    if (el.maxLength >= 0 && el.maxLength < 524288) {
+      rules = appendRule(("max:" + (el.maxLength)), rules);
+    }
+
+    if (el.minLength > 0) {
+      rules = appendRule(("min:" + (el.minLength)), rules);
+    }
+
+    if (el.type === 'number') {
+      rules = appendRule('decimal', rules);
+      if (el.min !== '') {
+        rules = appendRule(("min_value:" + (el.min)), rules);
+      }
+
+      if (el.max !== '') {
+        rules = appendRule(("max_value:" + (el.max)), rules);
+      }
+    }
+
+    return rules;
+  }
+
+  if (isDateInput(el)) {
+    var timeFormat = el.step && Number(el.step) < 60 ? 'HH:mm:ss' : 'HH:mm';
+
+    if (el.type === 'date') {
+      return appendRule('date_format:yyyy-MM-dd', rules);
+    }
+
+    if (el.type === 'datetime-local') {
+      return appendRule(("date_format:yyyy-MM-ddT" + timeFormat), rules);
+    }
+
+    if (el.type === 'month') {
+      return appendRule('date_format:yyyy-MM', rules);
+    }
+
+    if (el.type === 'week') {
+      return appendRule('date_format:yyyy-[W]WW', rules);
+    }
+
+    if (el.type === 'time') {
+      return appendRule(("date_format:" + timeFormat), rules);
+    }
+  }
+
+  return rules;
+};
+
+var values = function (obj) {
+  if (isCallable(Object.values)) {
+    return Object.values(obj);
+  }
+
+  // fallback to keys()
+  /* istanbul ignore next */
+  return Object.keys(obj).map(function (k) { return obj[k]; });
+};
+
+var parseSelector = function (selector) {
+  var rule = null;
+  if (includes(selector, ':')) {
+    rule = selector.split(':').pop();
+    selector = selector.replace((":" + rule), '');
+  }
+
+  if (selector[0] === '#') {
+    return {
+      id: selector.slice(1),
+      rule: rule,
+      name: null,
+      scope: null
+    };
+  }
+
+  var scope = null;
+  var name = selector;
+  if (includes(selector, '.')) {
+    var parts = selector.split('.');
+    scope = parts[0];
+    name = parts.slice(1).join('.');
+  }
+
+  return {
+    id: null,
+    scope: scope,
+    name: name,
+    rule: rule
+  };
+};
+
+var includes = function (collection, item) {
+  return collection.indexOf(item) !== -1;
+};
+
+var isEmptyArray = function (arr) {
+  return Array.isArray(arr) && arr.length === 0;
+};
+
+var defineNonReactive = function (obj, prop, value) {
+  Object.defineProperty(obj, prop, {
+    configurable: false,
+    writable: true,
+    value: value
+  });
+};
+
+// 
+
+var LOCALE = 'en';
+
+var Dictionary = function Dictionary (dictionary) {
+  if ( dictionary === void 0 ) dictionary = {};
+
+  this.container = {};
+  this.merge(dictionary);
+};
+
+var prototypeAccessors = { locale: { configurable: true } };
+
+prototypeAccessors.locale.get = function () {
+  return LOCALE;
+};
+
+prototypeAccessors.locale.set = function (value) {
+  LOCALE = value || 'en';
+};
+
+Dictionary.prototype.hasLocale = function hasLocale (locale) {
+  return !!this.container[locale];
+};
+
+Dictionary.prototype.setDateFormat = function setDateFormat (locale, format) {
+  if (!this.container[locale]) {
+    this.container[locale] = {};
+  }
+
+  this.container[locale].dateFormat = format;
+};
+
+Dictionary.prototype.getDateFormat = function getDateFormat (locale) {
+  if (!this.container[locale] || !this.container[locale].dateFormat) {
+    return null;
+  }
+
+  return this.container[locale].dateFormat;
+};
+
+Dictionary.prototype.getMessage = function getMessage (locale, key, data) {
+  var message = null;
+  if (!this.hasMessage(locale, key)) {
+    message = this._getDefaultMessage(locale);
+  } else {
+    message = this.container[locale].messages[key];
+  }
+
+  return isCallable(message) ? message.apply(void 0, data) : message;
+};
+
+/**
+ * Gets a specific message for field. falls back to the rule message.
+ */
+Dictionary.prototype.getFieldMessage = function getFieldMessage (locale, field, key, data) {
+  if (!this.hasLocale(locale)) {
+    return this.getMessage(locale, key, data);
+  }
+
+  var dict = this.container[locale].custom && this.container[locale].custom[field];
+  if (!dict || !dict[key]) {
+    return this.getMessage(locale, key, data);
+  }
+
+  var message = dict[key];
+  return isCallable(message) ? message.apply(void 0, data) : message;
+};
+
+Dictionary.prototype._getDefaultMessage = function _getDefaultMessage (locale) {
+  if (this.hasMessage(locale, '_default')) {
+    return this.container[locale].messages._default;
+  }
+
+  return this.container.en.messages._default;
+};
+
+Dictionary.prototype.getAttribute = function getAttribute (locale, key, fallback) {
+    if ( fallback === void 0 ) fallback = '';
+
+  if (!this.hasAttribute(locale, key)) {
+    return fallback;
+  }
+
+  return this.container[locale].attributes[key];
+};
+
+Dictionary.prototype.hasMessage = function hasMessage (locale, key) {
+  return !! (
+    this.hasLocale(locale) &&
+          this.container[locale].messages &&
+          this.container[locale].messages[key]
+  );
+};
+
+Dictionary.prototype.hasAttribute = function hasAttribute (locale, key) {
+  return !! (
+    this.hasLocale(locale) &&
+          this.container[locale].attributes &&
+          this.container[locale].attributes[key]
+  );
+};
+
+Dictionary.prototype.merge = function merge$1 (dictionary) {
+  merge(this.container, dictionary);
+};
+
+Dictionary.prototype.setMessage = function setMessage (locale, key, message) {
+  if (! this.hasLocale(locale)) {
+    this.container[locale] = {
+      messages: {},
+      attributes: {}
+    };
+  }
+
+  this.container[locale].messages[key] = message;
+};
+
+Dictionary.prototype.setAttribute = function setAttribute (locale, key, attribute) {
+  if (! this.hasLocale(locale)) {
+    this.container[locale] = {
+      messages: {},
+      attributes: {}
+    };
+  }
+
+  this.container[locale].attributes[key] = attribute;
+};
+
+Object.defineProperties( Dictionary.prototype, prototypeAccessors );
+
+var drivers = {
+  default: new Dictionary({
+    en: {
+      messages: {},
+      attributes: {},
+      custom: {}
+    }
+  })
+};
+
+var currentDriver = 'default';
+
+var DictionaryResolver = function DictionaryResolver () {};
+
+DictionaryResolver._checkDriverName = function _checkDriverName (driver) {
+  if (!driver) {
+    throw createError('you must provide a name to the dictionary driver');
+  }
+};
+
+DictionaryResolver.setDriver = function setDriver (driver, implementation) {
+    if ( implementation === void 0 ) implementation = null;
+
+  this._checkDriverName(driver);
+  if (implementation) {
+    drivers[driver] = implementation;
+  }
+
+  currentDriver = driver;
+};
+
+DictionaryResolver.getDriver = function getDriver () {
+  return drivers[currentDriver];
+};
+
+// 
+
+var ErrorBag = function ErrorBag (errorBag, id) {
+  if ( errorBag === void 0 ) errorBag = null;
+  if ( id === void 0 ) id = null;
+
+  this.vmId = id || null;
+  // make this bag a mirror of the provided one, sharing the same items reference.
+  if (errorBag && errorBag instanceof ErrorBag) {
+    this.items = errorBag.items;
+  } else {
+    this.items = [];
+  }
+};
+
+ErrorBag.prototype[typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] = function () {
+    var this$1 = this;
+
+  var index = 0;
+  return {
+    next: function () {
+      return { value: this$1.items[index++], done: index > this$1.items.length };
+    }
+  };
+};
+
+/**
+ * Adds an error to the internal array.
+ */
+ErrorBag.prototype.add = function add (error) {
+    var ref;
+
+  (ref = this.items).push.apply(
+    ref, this._normalizeError(error)
+  );
+};
+
+/**
+ * Normalizes passed errors to an error array.
+ */
+ErrorBag.prototype._normalizeError = function _normalizeError (error) {
+    var this$1 = this;
+
+  if (Array.isArray(error)) {
+    return error.map(function (e) {
+      e.scope = !isNullOrUndefined(e.scope) ? e.scope : null;
+      e.vmId = !isNullOrUndefined(e.vmId) ? e.vmId : (this$1.vmId || null);
+
+      return e;
+    });
+  }
+
+  error.scope = !isNullOrUndefined(error.scope) ? error.scope : null;
+  error.vmId = !isNullOrUndefined(error.vmId) ? error.vmId : (this.vmId || null);
+
+  return [error];
+};
+
+/**
+ * Regenrates error messages if they have a generator function.
+ */
+ErrorBag.prototype.regenerate = function regenerate () {
+  this.items.forEach(function (i) {
+    i.msg = isCallable(i.regenerate) ? i.regenerate() : i.msg;
+  });
+};
+
+/**
+ * Updates a field error with the new field scope.
+ */
+ErrorBag.prototype.update = function update (id, error) {
+  var item = find(this.items, function (i) { return i.id === id; });
+  if (!item) {
+    return;
+  }
+
+  var idx = this.items.indexOf(item);
+  this.items.splice(idx, 1);
+  item.scope = error.scope;
+  this.items.push(item);
+};
+
+/**
+ * Gets all error messages from the internal array.
+ */
+ErrorBag.prototype.all = function all (scope) {
+    var this$1 = this;
+
+  var filterFn = function (item) {
+    var matchesScope = true;
+    var matchesVM = true;
+    if (!isNullOrUndefined(scope)) {
+      matchesScope = item.scope === scope;
+    }
+
+    if (!isNullOrUndefined(this$1.vmId)) {
+      matchesVM = item.vmId === this$1.vmId;
+    }
+
+    return matchesVM && matchesScope;
+  };
+
+  return this.items.filter(filterFn).map(function (e) { return e.msg; });
+};
+
+/**
+ * Checks if there are any errors in the internal array.
+ */
+ErrorBag.prototype.any = function any (scope) {
+    var this$1 = this;
+
+  var filterFn = function (item) {
+    var matchesScope = true;
+    var matchesVM = true;
+    if (!isNullOrUndefined(scope)) {
+      matchesScope = item.scope === scope;
+    }
+
+    if (!isNullOrUndefined(this$1.vmId)) {
+      matchesVM = item.vmId === this$1.vmId;
+    }
+
+    return matchesVM && matchesScope;
+  };
+
+  return !!this.items.filter(filterFn).length;
+};
+
+/**
+ * Removes all items from the internal array.
+ */
+ErrorBag.prototype.clear = function clear (scope) {
+    var this$1 = this;
+
+  var matchesVM = isNullOrUndefined(this.vmId) ? function () { return true; } : function (i) { return i.vmId === this$1.vmId; };
+  if (isNullOrUndefined(scope)) {
+    scope = null;
+  }
+
+  for (var i = 0; i < this.items.length; ++i) {
+    if (matchesVM(this.items[i]) && this.items[i].scope === scope) {
+      this.items.splice(i, 1);
+      --i;
+    }
+  }
+};
+
+/**
+ * Collects errors into groups or for a specific field.
+ */
+ErrorBag.prototype.collect = function collect (field, scope, map) {
+    var this$1 = this;
+    if ( map === void 0 ) map = true;
+
+  var isSingleField = !isNullOrUndefined(field) && !field.includes('*');
+  var groupErrors = function (items) {
+    var errors = items.reduce(function (collection, error) {
+      if (!isNullOrUndefined(this$1.vmId) && error.vmId !== this$1.vmId) {
+        return collection;
+      }
+
+      if (!collection[error.field]) {
+        collection[error.field] = [];
+      }
+
+      collection[error.field].push(map ? error.msg : error);
+
+      return collection;
+    }, {});
+
+    // reduce the collection to be a single array.
+    if (isSingleField) {
+      return values(errors)[0] || [];
+    }
+
+    return errors;
+  };
+
+  if (isNullOrUndefined(field)) {
+    return groupErrors(this.items);
+  }
+
+  var selector = isNullOrUndefined(scope) ? String(field) : (scope + "." + field);
+  var ref = this._makeCandidateFilters(selector);
+    var isPrimary = ref.isPrimary;
+    var isAlt = ref.isAlt;
+
+  var collected = this.items.reduce(function (prev, curr) {
+    if (isPrimary(curr)) {
+      prev.primary.push(curr);
+    }
+
+    if (isAlt(curr)) {
+      prev.alt.push(curr);
+    }
+
+    return prev;
+  }, { primary: [], alt: [] });
+
+  collected = collected.primary.length ? collected.primary : collected.alt;
+
+  return groupErrors(collected);
+};
+
+/**
+ * Gets the internal array length.
+ */
+ErrorBag.prototype.count = function count () {
+    var this$1 = this;
+
+  if (this.vmId) {
+    return this.items.filter(function (e) { return e.vmId === this$1.vmId; }).length;
+  }
+
+  return this.items.length;
+};
+
+/**
+ * Finds and fetches the first error message for the specified field id.
+ */
+ErrorBag.prototype.firstById = function firstById (id) {
+  var error = find(this.items, function (i) { return i.id === id; });
+
+  return error ? error.msg : undefined;
+};
+
+/**
+ * Gets the first error message for a specific field.
+ */
+ErrorBag.prototype.first = function first (field, scope) {
+    if ( scope === void 0 ) scope = null;
+
+  var selector = isNullOrUndefined(scope) ? field : (scope + "." + field);
+  var match = this._match(selector);
+
+  return match && match.msg;
+};
+
+/**
+ * Returns the first error rule for the specified field
+ */
+ErrorBag.prototype.firstRule = function firstRule (field, scope) {
+  var errors = this.collect(field, scope, false);
+
+  return (errors.length && errors[0].rule) || undefined;
+};
+
+/**
+ * Checks if the internal array has at least one error for the specified field.
+ */
+ErrorBag.prototype.has = function has (field, scope) {
+    if ( scope === void 0 ) scope = null;
+
+  return !!this.first(field, scope);
+};
+
+/**
+ * Gets the first error message for a specific field and a rule.
+ */
+ErrorBag.prototype.firstByRule = function firstByRule (name, rule, scope) {
+    if ( scope === void 0 ) scope = null;
+
+  var error = this.collect(name, scope, false).filter(function (e) { return e.rule === rule; })[0];
+
+  return (error && error.msg) || undefined;
+};
+
+/**
+ * Gets the first error message for a specific field that not match the rule.
+ */
+ErrorBag.prototype.firstNot = function firstNot (name, rule, scope) {
+    if ( rule === void 0 ) rule = 'required';
+    if ( scope === void 0 ) scope = null;
+
+  var error = this.collect(name, scope, false).filter(function (e) { return e.rule !== rule; })[0];
+
+  return (error && error.msg) || undefined;
+};
+
+/**
+ * Removes errors by matching against the id or ids.
+ */
+ErrorBag.prototype.removeById = function removeById (id) {
+  var condition = function (item) { return item.id === id; };
+  if (Array.isArray(id)) {
+    condition = function (item) { return id.indexOf(item.id) !== -1; };
+  }
+
+  for (var i = 0; i < this.items.length; ++i) {
+    if (condition(this.items[i])) {
+      this.items.splice(i, 1);
+      --i;
+    }
+  }
+};
+
+/**
+ * Removes all error messages associated with a specific field.
+ */
+ErrorBag.prototype.remove = function remove (field, scope, vmId) {
+  if (isNullOrUndefined(field)) {
+    return;
+  }
+
+  var selector = isNullOrUndefined(scope) ? String(field) : (scope + "." + field);
+  var ref = this._makeCandidateFilters(selector);
+    var isPrimary = ref.isPrimary;
+    var isAlt = ref.isAlt;
+  var matches = function (item) { return isPrimary(item) || isAlt(item); };
+  var shouldRemove = function (item) {
+    if (isNullOrUndefined(vmId)) { return matches(item); }
+
+    return matches(item) && item.vmId === vmId;
+  };
+
+  for (var i = 0; i < this.items.length; ++i) {
+    if (shouldRemove(this.items[i])) {
+      this.items.splice(i, 1);
+      --i;
+    }
+  }
+};
+
+ErrorBag.prototype._makeCandidateFilters = function _makeCandidateFilters (selector) {
+    var this$1 = this;
+
+  var matchesRule = function () { return true; };
+  var matchesScope = function () { return true; };
+  var matchesName = function () { return true; };
+  var matchesVM = function () { return true; };
+
+  var ref = parseSelector(selector);
+    var id = ref.id;
+    var rule = ref.rule;
+    var scope = ref.scope;
+    var name = ref.name;
+
+  if (rule) {
+    matchesRule = function (item) { return item.rule === rule; };
+  }
+
+  // match by id, can be combined with rule selection.
+  if (id) {
+    return {
+      isPrimary: function (item) { return matchesRule(item) && (function (item) { return id === item.id; }); },
+      isAlt: function () { return false; }
+    };
+  }
+
+  if (isNullOrUndefined(scope)) {
+    // if no scope specified, make sure the found error has no scope.
+    matchesScope = function (item) { return isNullOrUndefined(item.scope); };
+  } else {
+    matchesScope = function (item) { return item.scope === scope; };
+  }
+
+  if (!isNullOrUndefined(name) && name !== '*') {
+    matchesName = function (item) { return item.field === name; };
+  }
+
+  if (!isNullOrUndefined(this.vmId)) {
+    matchesVM = function (item) { return item.vmId === this$1.vmId; };
+  }
+
+  // matches the first candidate.
+  var isPrimary = function (item) {
+    return matchesVM(item) && matchesName(item) && matchesRule(item) && matchesScope(item);
+  };
+
+  // matches a second candidate, which is a field with a name containing the '.' character.
+  var isAlt = function (item) {
+    return matchesVM(item) && matchesRule(item) && item.field === (scope + "." + name);
+  };
+
+  return {
+    isPrimary: isPrimary,
+    isAlt: isAlt
+  };
+};
+
+ErrorBag.prototype._match = function _match (selector) {
+  if (isNullOrUndefined(selector)) {
+    return undefined;
+  }
+
+  var ref = this._makeCandidateFilters(selector);
+    var isPrimary = ref.isPrimary;
+    var isAlt = ref.isAlt;
+
+  return this.items.reduce(function (prev, item, idx, arr) {
+    var isLast = idx === arr.length - 1;
+    if (prev.primary) {
+      return isLast ? prev.primary : prev;
+    }
+
+    if (isPrimary(item)) {
+      prev.primary = item;
+    }
+
+    if (isAlt(item)) {
+      prev.alt = item;
+    }
+
+    // keep going.
+    if (!isLast) {
+      return prev;
+    }
+
+    return prev.primary || prev.alt;
+  }, {});
+};
+
+var DEFAULT_CONFIG = {
+  locale: 'en',
+  delay: 0,
+  errorBagName: 'errors',
+  dictionary: null,
+  fieldsBagName: 'fields',
+  classes: false,
+  classNames: null,
+  events: 'input',
+  inject: true,
+  fastExit: true,
+  aria: true,
+  validity: false,
+  mode: 'aggressive',
+  useConstraintAttrs: true,
+  i18n: null,
+  i18nRootKey: 'validation'
+};
+
+var currentConfig = assign({}, DEFAULT_CONFIG);
+
+var resolveConfig = function (ctx) {
+  var selfConfig = getPath('$options.$_veeValidate', ctx, {});
+
+  return assign({}, currentConfig, selfConfig);
+};
+
+var getConfig = function () { return currentConfig; };
+
+var setConfig = function (newConf) {
+  currentConfig = assign({}, currentConfig, newConf);
+};
+
+// VNode Utils
+
+// Gets the model object on the vnode.
+function findModel (vnode) {
+  if (!vnode.data) {
+    return null;
+  }
+
+  // Component Model
+  if (vnode.data.model) {
+    return vnode.data.model;
+  }
+
+  return !!(vnode.data.directives) && find(vnode.data.directives, function (d) { return d.name === 'model'; });
+}
+
+function extractChildren (vnode) {
+  if (Array.isArray(vnode)) {
+    return vnode;
+  }
+
+  if (Array.isArray(vnode.children)) {
+    return vnode.children;
+  }
+
+  if (vnode.componentOptions && Array.isArray(vnode.componentOptions.children)) {
+    return vnode.componentOptions.children;
+  }
+
+  return [];
+}
+
+function extractVNodes (vnode) {
+  if (findModel(vnode)) {
+    return [vnode];
+  }
+
+  var children = extractChildren(vnode);
+
+  return children.reduce(function (nodes, node) {
+    var candidates = extractVNodes(node);
+    if (candidates.length) {
+      nodes.push.apply(nodes, candidates);
+    }
+
+    return nodes;
+  }, []);
+}
+
+// Resolves v-model config if exists.
+function findModelConfig (vnode) {
+  if (!vnode.componentOptions) { return null; }
+
+  return vnode.componentOptions.Ctor.options.model;
+}
+// Adds a listener to vnode listener object.
+function mergeVNodeListeners (obj, eventName, handler) {
+  // Has a single listener.
+  if (isCallable(obj[eventName])) {
+    var prevHandler = obj[eventName];
+    obj[eventName] = [prevHandler];
+  }
+
+  // has other listeners.
+  if (Array.isArray(obj[eventName])) {
+    obj[eventName].push(handler);
+    return;
+  }
+
+  // no listener at all.
+  if (isNullOrUndefined(obj[eventName])) {
+    obj[eventName] = [handler];
+  }
+}
+
+// Adds a listener to a native HTML vnode.
+function addNativeNodeListener (node, eventName, handler) {
+  if (isNullOrUndefined(node.data.on)) {
+    node.data.on = {};
+  }
+
+  mergeVNodeListeners(node.data.on, eventName, handler);
+}
+
+// Adds a listener to a Vue component vnode.
+function addComponentNodeListener (node, eventName, handler) {
+  /* istanbul ignore next */
+  if (!node.componentOptions.listeners) {
+    node.componentOptions.listeners = {};
+  }
+
+  mergeVNodeListeners(node.componentOptions.listeners, eventName, handler);
+}
+function addVNodeListener (vnode, eventName, handler) {
+  if (vnode.componentOptions) {
+    addComponentNodeListener(vnode, eventName, handler);
+    return;
+  }
+
+  addNativeNodeListener(vnode, eventName, handler);
+}
+// Determines if `change` should be used over `input` for listeners.
+function getInputEventName (vnode, model) {
+  // Is a component.
+  if (vnode.componentOptions) {
+    var ref = findModelConfig(vnode) || { event: 'input' };
+    var event = ref.event;
+
+    return event;
+  }
+
+  // Lazy Models and select tag typically use change event
+  if ((model && model.modifiers && model.modifiers.lazy) || vnode.tag === 'select') {
+    return 'change';
+  }
+
+  // is a textual-type input.
+  if (vnode.data.attrs && isTextInput({ type: vnode.data.attrs.type || 'text' })) {
+    return 'input';
+  }
+
+  return 'change';
+}
+
+function normalizeSlots (slots, ctx) {
+  return Object.keys(slots).reduce(function (arr, key) {
+    slots[key].forEach(function (vnode) {
+      if (!vnode.context) {
+        slots[key].context = ctx;
+        if (!vnode.data) {
+          vnode.data = {};
+        }
+        vnode.data.slot = key;
+      }
+    });
+
+    return arr.concat(slots[key]);
+  }, []);
+}
+
+/**
+ * Generates the options required to construct a field.
+ */
+var Resolver = function Resolver () {};
+
+Resolver.generate = function generate (el, binding, vnode) {
+  var model = Resolver.resolveModel(binding, vnode);
+  var options = resolveConfig(vnode.context);
+
+  return {
+    name: Resolver.resolveName(el, vnode),
+    el: el,
+    listen: !binding.modifiers.disable,
+    bails: binding.modifiers.bails ? true : (binding.modifiers.continues === true ? false : undefined),
+    scope: Resolver.resolveScope(el, binding, vnode),
+    vm: vnode.context,
+    expression: binding.value,
+    component: vnode.componentInstance,
+    classes: options.classes,
+    classNames: options.classNames,
+    getter: Resolver.resolveGetter(el, vnode, model),
+    events: Resolver.resolveEvents(el, vnode) || options.events,
+    model: model,
+    delay: Resolver.resolveDelay(el, vnode, options),
+    rules: Resolver.resolveRules(el, binding, vnode),
+    immediate: !!binding.modifiers.initial || !!binding.modifiers.immediate,
+    persist: !!binding.modifiers.persist,
+    validity: options.validity && !vnode.componentInstance,
+    aria: options.aria && !vnode.componentInstance,
+    initialValue: Resolver.resolveInitialValue(vnode)
+  };
+};
+
+Resolver.getCtorConfig = function getCtorConfig (vnode) {
+  if (!vnode.componentInstance) { return null; }
+
+  var config = getPath('componentInstance.$options.$_veeValidate', vnode);
+
+  return config;
+};
+
+/**
+ * Resolves the rules defined on an element.
+ */
+Resolver.resolveRules = function resolveRules (el, binding, vnode) {
+  var rules = '';
+  if (!binding.value && (!binding || !binding.expression)) {
+    rules = getDataAttribute(el, 'rules');
+  }
+
+  if (binding.value && includes(['string', 'object'], typeof binding.value.rules)) {
+    rules = binding.value.rules;
+  } else if (binding.value) {
+    rules = binding.value;
+  }
+
+  if (vnode.componentInstance) {
+    return rules;
+  }
+
+  // If validity is disabled, ignore field rules.
+  var normalized = normalizeRules(rules);
+  if (!getConfig().useConstraintAttrs) {
+    return normalized;
+  }
+
+  return assign({}, fillRulesFromElement(el, {}), normalized);
+};
+
+/**
+ * @param {*} vnode
+ */
+Resolver.resolveInitialValue = function resolveInitialValue (vnode) {
+  var model = vnode.data.model || find(vnode.data.directives, function (d) { return d.name === 'model'; });
+
+  return model && model.value;
+};
+
+/**
+ * Resolves the delay value.
+ * @param {*} el
+ * @param {*} vnode
+ * @param {Object} options
+ */
+Resolver.resolveDelay = function resolveDelay (el, vnode, options) {
+  var delay = getDataAttribute(el, 'delay');
+  var globalDelay = (options && 'delay' in options) ? options.delay : 0;
+
+  if (!delay && vnode.componentInstance && vnode.componentInstance.$attrs) {
+    delay = vnode.componentInstance.$attrs['data-vv-delay'];
+  }
+
+  if (!isObject(globalDelay)) {
+    return deepParseInt(delay || globalDelay);
+  }
+
+  if (!isNullOrUndefined(delay)) {
+    globalDelay.input = delay;
+  }
+
+  return deepParseInt(globalDelay);
+};
+
+/**
+ * Resolves the events to validate in response to.
+ * @param {*} el
+ * @param {*} vnode
+ */
+Resolver.resolveEvents = function resolveEvents (el, vnode) {
+  // resolve it from the root element.
+  var events = getDataAttribute(el, 'validate-on');
+
+  // resolve from data-vv-validate-on if its a vue component.
+  if (!events && vnode.componentInstance && vnode.componentInstance.$attrs) {
+    events = vnode.componentInstance.$attrs['data-vv-validate-on'];
+  }
+
+  // resolve it from $_veeValidate options.
+  if (!events && vnode.componentInstance) {
+    var config = Resolver.getCtorConfig(vnode);
+    events = config && config.events;
+  }
+
+  if (!events && getConfig().events) {
+    events = getConfig().events;
+  }
+
+  // resolve the model event if its configured for custom components.
+  if (events && vnode.componentInstance && includes(events, 'input')) {
+    var ref = vnode.componentInstance.$options.model || { event: 'input' };
+      var event = ref.event;
+    // if the prop was configured but not the model.
+    if (!event) {
+      return events;
+    }
+
+    events = events.replace('input', event);
+  }
+
+  return events;
+};
+
+/**
+ * Resolves the scope for the field.
+ * @param {*} el
+ * @param {*} binding
+ */
+Resolver.resolveScope = function resolveScope (el, binding, vnode) {
+    if ( vnode === void 0 ) vnode = {};
+
+  var scope = null;
+  if (vnode.componentInstance && isNullOrUndefined(scope)) {
+    scope = vnode.componentInstance.$attrs && vnode.componentInstance.$attrs['data-vv-scope'];
+  }
+
+  return !isNullOrUndefined(scope) ? scope : getScope(el);
+};
+
+/**
+ * Checks if the node directives contains a v-model or a specified arg.
+ * Args take priority over models.
+ *
+ * @return {Object}
+ */
+Resolver.resolveModel = function resolveModel (binding, vnode) {
+  if (binding.arg) {
+    return { expression: binding.arg };
+  }
+
+  var model = findModel(vnode);
+  if (!model) {
+    return null;
+  }
+
+  // https://github.com/vuejs/vue/blob/dev/src/core/util/lang.js#L26
+  var watchable = !/[^\w.$]/.test(model.expression) && hasPath(model.expression, vnode.context);
+  var lazy = !!(model.modifiers && model.modifiers.lazy);
+
+  if (!watchable) {
+    return { expression: null, lazy: lazy };
+  }
+
+  return { expression: model.expression, lazy: lazy };
+};
+
+/**
+ * Resolves the field name to trigger validations.
+ * @return {String} The field name.
+ */
+Resolver.resolveName = function resolveName (el, vnode) {
+  var name = getDataAttribute(el, 'name');
+
+  if (!name && !vnode.componentInstance) {
+    return el.name;
+  }
+
+  if (!name && vnode.componentInstance && vnode.componentInstance.$attrs) {
+    name = vnode.componentInstance.$attrs['data-vv-name'] || vnode.componentInstance.$attrs['name'];
+  }
+
+  if (!name && vnode.componentInstance) {
+    var config = Resolver.getCtorConfig(vnode);
+    if (config && isCallable(config.name)) {
+      var boundGetter = config.name.bind(vnode.componentInstance);
+
+      return boundGetter();
+    }
+
+    return vnode.componentInstance.name;
+  }
+
+  return name;
+};
+
+/**
+ * Returns a value getter input type.
+ */
+Resolver.resolveGetter = function resolveGetter (el, vnode, model) {
+  if (model && model.expression) {
+    return function () {
+      return getPath(model.expression, vnode.context);
+    };
+  }
+
+  if (vnode.componentInstance) {
+    var path = getDataAttribute(el, 'value-path') || (vnode.componentInstance.$attrs && vnode.componentInstance.$attrs['data-vv-value-path']);
+    if (path) {
+      return function () {
+        return getPath(path, vnode.componentInstance);
+      };
+    }
+
+    var config = Resolver.getCtorConfig(vnode);
+    if (config && isCallable(config.value)) {
+      var boundGetter = config.value.bind(vnode.componentInstance);
+
+      return function () {
+        return boundGetter();
+      };
+    }
+
+    var ref = vnode.componentInstance.$options.model || { prop: 'value' };
+      var prop = ref.prop;
+
+    return function () {
+      return vnode.componentInstance[prop];
+    };
+  }
+
+  switch (el.type) {
+  case 'checkbox': return function () {
+    var els = document.querySelectorAll(("input[name=\"" + (el.name) + "\"]"));
+
+    els = toArray(els).filter(function (el) { return el.checked; });
+    if (!els.length) { return undefined; }
+
+    return els.map(function (checkbox) { return checkbox.value; });
+  };
+  case 'radio': return function () {
+    var els = document.querySelectorAll(("input[name=\"" + (el.name) + "\"]"));
+    var elm = find(els, function (el) { return el.checked; });
+
+    return elm && elm.value;
+  };
+  case 'file': return function (context) {
+    return toArray(el.files);
+  };
+  case 'select-multiple': return function () {
+    return toArray(el.options).filter(function (opt) { return opt.selected; }).map(function (opt) { return opt.value; });
+  };
+  default: return function () {
+    return el && el.value;
+  };
+  }
+};
+
+var RULES = {};
+
+var RuleContainer = function RuleContainer () {};
+
+var staticAccessors = { rules: { configurable: true } };
+
+RuleContainer.add = function add (name, ref) {
+    var validate = ref.validate;
+    var options = ref.options;
+    var paramNames = ref.paramNames;
+
+  RULES[name] = {
+    validate: validate,
+    options: options,
+    paramNames: paramNames
+  };
+};
+
+staticAccessors.rules.get = function () {
+  return RULES;
+};
+
+RuleContainer.has = function has (name) {
+  return !!RULES[name];
+};
+
+RuleContainer.isImmediate = function isImmediate (name) {
+  return !!(RULES[name] && RULES[name].options.immediate);
+};
+
+RuleContainer.isRequireRule = function isRequireRule (name) {
+  return !!(RULES[name] && RULES[name].options.computesRequired);
+};
+
+RuleContainer.isTargetRule = function isTargetRule (name) {
+  return !!(RULES[name] && RULES[name].options.hasTarget);
+};
+
+RuleContainer.remove = function remove (ruleName) {
+  delete RULES[ruleName];
+};
+
+RuleContainer.getParamNames = function getParamNames (ruleName) {
+  return RULES[ruleName] && RULES[ruleName].paramNames;
+};
+
+RuleContainer.getOptions = function getOptions (ruleName) {
+  return RULES[ruleName] && RULES[ruleName].options;
+};
+
+RuleContainer.getValidatorMethod = function getValidatorMethod (ruleName) {
+  return RULES[ruleName] ? RULES[ruleName].validate : null;
+};
+
+Object.defineProperties( RuleContainer, staticAccessors );
+
+// 
+
+var isEvent = function (evt) {
+  return (typeof Event !== 'undefined' && isCallable(Event) && evt instanceof Event) || (evt && evt.srcElement);
+};
+
+var normalizeEvents = function (evts) {
+  if (!evts) { return []; }
+
+  return (typeof evts === 'string' ? evts.split('|') : evts);
+};
+
+var supportsPassive = true;
+
+var detectPassiveSupport = function () {
+  try {
+    var opts = Object.defineProperty({}, 'passive', {
+      get: function get () {
+        supportsPassive = true;
+      }
+    });
+    window.addEventListener('testPassive', null, opts);
+    window.removeEventListener('testPassive', null, opts);
+  } catch (e) {
+    supportsPassive = false;
+  }
+  return supportsPassive;
+};
+
+var addEventListener = function (el, eventName, cb) {
+  el.addEventListener(eventName, cb, supportsPassive ? { passive: true } : false);
+};
+
+// 
+
+var DEFAULT_OPTIONS = {
+  targetOf: null,
+  immediate: false,
+  persist: false,
+  scope: null,
+  listen: true,
+  name: null,
+  rules: {},
+  vm: null,
+  classes: false,
+  validity: true,
+  aria: true,
+  events: 'input|blur',
+  delay: 0,
+  classNames: {
+    touched: 'touched', // the control has been blurred
+    untouched: 'untouched', // the control hasn't been blurred
+    valid: 'valid', // model is valid
+    invalid: 'invalid', // model is invalid
+    pristine: 'pristine', // control has not been interacted with
+    dirty: 'dirty' // control has been interacted with
+  }
+};
+
+var Field = function Field (options) {
+  if ( options === void 0 ) options = {};
+
+  this.id = uniqId();
+  this.el = options.el;
+  this.updated = false;
+  this.vmId = options.vmId;
+  defineNonReactive(this, 'dependencies', []);
+  defineNonReactive(this, 'watchers', []);
+  defineNonReactive(this, 'events', []);
+  this.delay = 0;
+  this.rules = {};
+  this.forceRequired = false;
+  this._cacheId(options);
+  this.classNames = assign({}, DEFAULT_OPTIONS.classNames);
+  options = assign({}, DEFAULT_OPTIONS, options);
+  this._delay = !isNullOrUndefined(options.delay) ? options.delay : 0; // cache initial delay
+  this.validity = options.validity;
+  this.aria = options.aria;
+  this.flags = options.flags || createFlags();
+  defineNonReactive(this, 'vm', options.vm);
+  defineNonReactive(this, 'componentInstance', options.component);
+  this.ctorConfig = this.componentInstance ? getPath('$options.$_veeValidate', this.componentInstance) : undefined;
+  this.update(options);
+  // set initial value.
+  this.initialValue = this.value;
+  this.updated = false;
+};
+
+var prototypeAccessors$1 = { validator: { configurable: true },isRequired: { configurable: true },isDisabled: { configurable: true },alias: { configurable: true },value: { configurable: true },bails: { configurable: true },rejectsFalse: { configurable: true } };
+
+prototypeAccessors$1.validator.get = function () {
+  if (!this.vm || !this.vm.$validator) {
+    return { validate: function () {} };
+  }
+
+  return this.vm.$validator;
+};
+
+prototypeAccessors$1.isRequired.get = function () {
+  return !!this.rules.required || this.forceRequired;
+};
+
+prototypeAccessors$1.isDisabled.get = function () {
+  return !!(this.el && this.el.disabled);
+};
+
+/**
+ * Gets the display name (user-friendly name).
+ */
+prototypeAccessors$1.alias.get = function () {
+  if (this._alias) {
+    return this._alias;
+  }
+
+  var alias = null;
+  if (this.ctorConfig && this.ctorConfig.alias) {
+    alias = isCallable(this.ctorConfig.alias) ? this.ctorConfig.alias.call(this.componentInstance) : this.ctorConfig.alias;
+  }
+
+  if (!alias && this.el) {
+    alias = getDataAttribute(this.el, 'as');
+  }
+
+  if (!alias && this.componentInstance) {
+    return this.componentInstance.$attrs && this.componentInstance.$attrs['data-vv-as'];
+  }
+
+  return alias;
+};
+
+/**
+ * Gets the input value.
+ */
+
+prototypeAccessors$1.value.get = function () {
+  if (!isCallable(this.getter)) {
+    return undefined;
+  }
+
+  return this.getter();
+};
+
+prototypeAccessors$1.bails.get = function () {
+  return this._bails;
+};
+
+/**
+ * If the field rejects false as a valid value for the required rule.
+ */
+
+prototypeAccessors$1.rejectsFalse.get = function () {
+  if (this.componentInstance && this.ctorConfig) {
+    return !!this.ctorConfig.rejectsFalse;
+  }
+
+  if (!this.el) {
+    return false;
+  }
+
+  return this.el.type === 'checkbox';
+};
+
+/**
+ * Determines if the instance matches the options provided.
+ */
+Field.prototype.matches = function matches (options) {
+    var this$1 = this;
+
+  if (!options) {
+    return true;
+  }
+
+  if (options.id) {
+    return this.id === options.id;
+  }
+
+  var matchesComponentId = isNullOrUndefined(options.vmId) ? function () { return true; } : function (id) { return id === this$1.vmId; };
+  if (!matchesComponentId(options.vmId)) {
+    return false;
+  }
+
+  if (options.name === undefined && options.scope === undefined) {
+    return true;
+  }
+
+  if (options.scope === undefined) {
+    return this.name === options.name;
+  }
+
+  if (options.name === undefined) {
+    return this.scope === options.scope;
+  }
+
+  return options.name === this.name && options.scope === this.scope;
+};
+
+/**
+ * Caches the field id.
+ */
+Field.prototype._cacheId = function _cacheId (options) {
+  if (this.el && !options.targetOf) {
+    this.el._veeValidateId = this.id;
+  }
+};
+
+/**
+ * Keeps a reference of the most current validation run.
+ */
+Field.prototype.waitFor = function waitFor (pendingPromise) {
+  this._waitingFor = pendingPromise;
+};
+
+Field.prototype.isWaitingFor = function isWaitingFor (promise) {
+  return this._waitingFor === promise;
+};
+
+/**
+ * Updates the field with changed data.
+ */
+Field.prototype.update = function update (options) {
+  this.targetOf = options.targetOf || null;
+  this.immediate = options.immediate || this.immediate || false;
+  this.persist = options.persist || this.persist || false;
+
+  // update errors scope if the field scope was changed.
+  if (!isNullOrUndefined(options.scope) && options.scope !== this.scope && isCallable(this.validator.update)) {
+    this.validator.update(this.id, { scope: options.scope });
+  }
+  this.scope = !isNullOrUndefined(options.scope) ? options.scope
+    : !isNullOrUndefined(this.scope) ? this.scope : null;
+  this.name = (!isNullOrUndefined(options.name) ? String(options.name) : options.name) || this.name || null;
+  this.rules = options.rules !== undefined ? normalizeRules(options.rules) : this.rules;
+  this._bails = options.bails !== undefined ? options.bails : this._bails;
+  this.model = options.model || this.model;
+  this.listen = options.listen !== undefined ? options.listen : this.listen;
+  this.classes = (options.classes || this.classes || false) && !this.componentInstance;
+  this.classNames = isObject(options.classNames) ? merge(this.classNames, options.classNames) : this.classNames;
+  this.getter = isCallable(options.getter) ? options.getter : this.getter;
+  this._alias = options.alias || this._alias;
+  this.events = (options.events) ? normalizeEvents(options.events) : this.events;
+  this.delay = makeDelayObject(this.events, options.delay || this.delay, this._delay);
+  this.updateDependencies();
+  this.addActionListeners();
+
+  if ("development" !== 'production' && !this.name && !this.targetOf) {
+    warn('A field is missing a "name" or "data-vv-name" attribute');
+  }
+
+  // update required flag flags
+  if (options.rules !== undefined) {
+    this.flags.required = this.isRequired;
+  }
+
+  // validate if it was validated before and field was updated and there was a rules mutation.
+  if (this.flags.validated && options.rules !== undefined && this.updated) {
+    this.validator.validate(("#" + (this.id)));
+  }
+
+  this.updated = true;
+  this.addValueListeners();
+
+  // no need to continue.
+  if (!this.el) {
+    return;
+  }
+  this.updateClasses();
+  this.updateAriaAttrs();
+};
+
+/**
+ * Resets field flags and errors.
+ */
+Field.prototype.reset = function reset () {
+    var this$1 = this;
+
+  if (this._cancellationToken) {
+    this._cancellationToken.cancelled = true;
+    delete this._cancellationToken;
+  }
+
+  var defaults = createFlags();
+  Object.keys(this.flags).filter(function (flag) { return flag !== 'required'; }).forEach(function (flag) {
+    this$1.flags[flag] = defaults[flag];
+  });
+
+  // update initial value
+  this.initialValue = this.value;
+  this.flags.changed = false;
+
+  this.addValueListeners();
+  this.addActionListeners();
+  this.updateClasses(true);
+  this.updateAriaAttrs();
+  this.updateCustomValidity();
+};
+
+/**
+ * Sets the flags and their negated counterparts, and updates the classes and re-adds action listeners.
+ */
+Field.prototype.setFlags = function setFlags (flags) {
+    var this$1 = this;
+
+  var negated = {
+    pristine: 'dirty',
+    dirty: 'pristine',
+    valid: 'invalid',
+    invalid: 'valid',
+    touched: 'untouched',
+    untouched: 'touched'
+  };
+
+  Object.keys(flags).forEach(function (flag) {
+    this$1.flags[flag] = flags[flag];
+    // if it has a negation and was not specified, set it as well.
+    if (negated[flag] && flags[negated[flag]] === undefined) {
+      this$1.flags[negated[flag]] = !flags[flag];
+    }
+  });
+
+  if (
+    flags.untouched !== undefined ||
+    flags.touched !== undefined ||
+    flags.dirty !== undefined ||
+    flags.pristine !== undefined
+  ) {
+    this.addActionListeners();
+  }
+  this.updateClasses();
+  this.updateAriaAttrs();
+  this.updateCustomValidity();
+};
+
+/**
+ * Determines if the field requires references to target fields.
+*/
+Field.prototype.updateDependencies = function updateDependencies () {
+    var this$1 = this;
+
+  // reset dependencies.
+  this.dependencies.forEach(function (d) { return d.field.destroy(); });
+  this.dependencies = [];
+
+  // we get the selectors for each field.
+  var fields = Object.keys(this.rules).reduce(function (prev, r) {
+    if (RuleContainer.isTargetRule(r)) {
+      prev.push({ selector: this$1.rules[r][0], name: r });
+    }
+
+    return prev;
+  }, []);
+
+  if (!fields.length || !this.vm || !this.vm.$el) { return; }
+
+  // must be contained within the same component, so we use the vm root element constrain our dom search.
+  fields.forEach(function (ref$1) {
+      var selector = ref$1.selector;
+      var name = ref$1.name;
+
+    var ref = this$1.vm.$refs[selector];
+    var el = Array.isArray(ref) ? ref[0] : ref;
+    if (!el) {
+      return;
+    }
+
+    var options = {
+      vm: this$1.vm,
+      classes: this$1.classes,
+      classNames: this$1.classNames,
+      delay: this$1.delay,
+      scope: this$1.scope,
+      events: this$1.events.join('|'),
+      immediate: this$1.immediate,
+      targetOf: this$1.id
+    };
+
+    // probably a component.
+    if (isCallable(el.$watch)) {
+      options.component = el;
+      options.el = el.$el;
+      options.getter = Resolver.resolveGetter(el.$el, el.$vnode);
+    } else {
+      options.el = el;
+      options.getter = Resolver.resolveGetter(el, {});
+    }
+
+    this$1.dependencies.push({ name: name, field: new Field(options) });
+  });
+};
+
+/**
+ * Removes listeners.
+ */
+Field.prototype.unwatch = function unwatch (tag) {
+    if ( tag === void 0 ) tag = null;
+
+  if (!tag) {
+    this.watchers.forEach(function (w) { return w.unwatch(); });
+    this.watchers = [];
+    return;
+  }
+
+  this.watchers.filter(function (w) { return tag.test(w.tag); }).forEach(function (w) { return w.unwatch(); });
+  this.watchers = this.watchers.filter(function (w) { return !tag.test(w.tag); });
+};
+
+/**
+ * Updates the element classes depending on each field flag status.
+ */
+Field.prototype.updateClasses = function updateClasses (isReset) {
+    var this$1 = this;
+    if ( isReset === void 0 ) isReset = false;
+
+  if (!this.classes || this.isDisabled) { return; }
+  var applyClasses = function (el) {
+    toggleClass(el, this$1.classNames.dirty, this$1.flags.dirty);
+    toggleClass(el, this$1.classNames.pristine, this$1.flags.pristine);
+    toggleClass(el, this$1.classNames.touched, this$1.flags.touched);
+    toggleClass(el, this$1.classNames.untouched, this$1.flags.untouched);
+
+    // remove valid/invalid classes on reset.
+    if (isReset) {
+      toggleClass(el, this$1.classNames.valid, false);
+      toggleClass(el, this$1.classNames.invalid, false);
+    }
+
+    // make sure we don't set any classes if the state is undetermined.
+    if (!isNullOrUndefined(this$1.flags.valid) && this$1.flags.validated) {
+      toggleClass(el, this$1.classNames.valid, this$1.flags.valid);
+    }
+
+    if (!isNullOrUndefined(this$1.flags.invalid) && this$1.flags.validated) {
+      toggleClass(el, this$1.classNames.invalid, this$1.flags.invalid);
+    }
+  };
+
+  if (!isCheckboxOrRadioInput(this.el)) {
+    applyClasses(this.el);
+    return;
+  }
+
+  var els = document.querySelectorAll(("input[name=\"" + (this.el.name) + "\"]"));
+  toArray(els).forEach(applyClasses);
+};
+
+/**
+ * Adds the listeners required for automatic classes and some flags.
+ */
+Field.prototype.addActionListeners = function addActionListeners () {
+    var this$1 = this;
+
+  // remove previous listeners.
+  this.unwatch(/class/);
+
+  if (!this.el) { return; }
+
+  var onBlur = function () {
+    this$1.flags.touched = true;
+    this$1.flags.untouched = false;
+    if (this$1.classes) {
+      toggleClass(this$1.el, this$1.classNames.touched, true);
+      toggleClass(this$1.el, this$1.classNames.untouched, false);
+    }
+
+    // only needed once.
+    this$1.unwatch(/^class_blur$/);
+  };
+
+  var inputEvent = isTextInput(this.el) ? 'input' : 'change';
+  var onInput = function () {
+    this$1.flags.dirty = true;
+    this$1.flags.pristine = false;
+    if (this$1.classes) {
+      toggleClass(this$1.el, this$1.classNames.pristine, false);
+      toggleClass(this$1.el, this$1.classNames.dirty, true);
+    }
+
+    // only needed once.
+    this$1.unwatch(/^class_input$/);
+  };
+
+  if (this.componentInstance && isCallable(this.componentInstance.$once)) {
+    this.componentInstance.$once('input', onInput);
+    this.componentInstance.$once('blur', onBlur);
+    this.watchers.push({
+      tag: 'class_input',
+      unwatch: function () {
+        this$1.componentInstance.$off('input', onInput);
+      }
+    });
+    this.watchers.push({
+      tag: 'class_blur',
+      unwatch: function () {
+        this$1.componentInstance.$off('blur', onBlur);
+      }
+    });
+    return;
+  }
+
+  if (!this.el) { return; }
+
+  addEventListener(this.el, inputEvent, onInput);
+  // Checkboxes and radio buttons on Mac don't emit blur naturally, so we listen on click instead.
+  var blurEvent = isCheckboxOrRadioInput(this.el) ? 'change' : 'blur';
+  addEventListener(this.el, blurEvent, onBlur);
+  this.watchers.push({
+    tag: 'class_input',
+    unwatch: function () {
+      this$1.el.removeEventListener(inputEvent, onInput);
+    }
+  });
+
+  this.watchers.push({
+    tag: 'class_blur',
+    unwatch: function () {
+      this$1.el.removeEventListener(blurEvent, onBlur);
+    }
+  });
+};
+
+Field.prototype.checkValueChanged = function checkValueChanged () {
+  // handle some people initialize the value to null, since text inputs have empty string value.
+  if (this.initialValue === null && this.value === '' && isTextInput(this.el)) {
+    return false;
+  }
+
+  return this.value !== this.initialValue;
+};
+
+/**
+ * Determines the suitable primary event to listen for.
+ */
+Field.prototype._determineInputEvent = function _determineInputEvent () {
+  // if its a custom component, use the customized model event or the input event.
+  if (this.componentInstance) {
+    return (this.componentInstance.$options.model && this.componentInstance.$options.model.event) || 'input';
+  }
+
+  if (this.model && this.model.lazy) {
+    return 'change';
+  }
+
+  if (isTextInput(this.el)) {
+    return 'input';
+  }
+
+  return 'change';
+};
+
+/**
+ * Determines the list of events to listen to.
+ */
+Field.prototype._determineEventList = function _determineEventList (defaultInputEvent) {
+    var this$1 = this;
+
+  // if no event is configured, or it is a component or a text input then respect the user choice.
+  if (!this.events.length || this.componentInstance || isTextInput(this.el)) {
+    return [].concat( this.events ).map(function (evt) {
+      if (evt === 'input' && this$1.model && this$1.model.lazy) {
+        return 'change';
+      }
+
+      return evt;
+    });
+  }
+
+  // force suitable event for non-text type fields.
+  return this.events.map(function (e) {
+    if (e === 'input') {
+      return defaultInputEvent;
+    }
+
+    return e;
+  });
+};
+
+/**
+ * Adds the listeners required for validation.
+ */
+Field.prototype.addValueListeners = function addValueListeners () {
+    var this$1 = this;
+
+  this.unwatch(/^input_.+/);
+  if (!this.listen || !this.el) { return; }
+
+  var token = { cancelled: false };
+  var fn = this.targetOf ? function () {
+    var target = this$1.validator._resolveField(("#" + (this$1.targetOf)));
+    if (target && target.flags.validated) {
+      this$1.validator.validate(("#" + (this$1.targetOf)));
+    }
+  } : function () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+    // if its a DOM event, resolve the value, otherwise use the first parameter as the value.
+    if (args.length === 0 || isEvent(args[0])) {
+      args[0] = this$1.value;
+    }
+
+    this$1.flags.pending = true;
+    this$1._cancellationToken = token;
+    this$1.validator.validate(("#" + (this$1.id)), args[0]);
+  };
+
+  var inputEvent = this._determineInputEvent();
+  var events = this._determineEventList(inputEvent);
+
+  // if there is a model and an on input validation is requested.
+  if (this.model && includes(events, inputEvent)) {
+    var ctx = null;
+    var expression = this.model.expression;
+    // if its watchable from the context vm.
+    if (this.model.expression) {
+      ctx = this.vm;
+      expression = this.model.expression;
+    }
+
+    // watch it from the custom component vm instead.
+    if (!expression && this.componentInstance && this.componentInstance.$options.model) {
+      ctx = this.componentInstance;
+      expression = this.componentInstance.$options.model.prop || 'value';
+    }
+
+    if (ctx && expression) {
+      var debouncedFn = debounce(fn, this.delay[inputEvent], token);
+      var unwatch = ctx.$watch(expression, debouncedFn);
+      this.watchers.push({
+        tag: 'input_model',
+        unwatch: function () {
+          this$1.vm.$nextTick(function () {
+            unwatch();
+          });
+        }
+      });
+
+      // filter out input event as it is already handled by the watcher API.
+      events = events.filter(function (e) { return e !== inputEvent; });
+    }
+  }
+
+  // Add events.
+  events.forEach(function (e) {
+    var debouncedFn = debounce(fn, this$1.delay[e], token);
+
+    this$1._addComponentEventListener(e, debouncedFn);
+    this$1._addHTMLEventListener(e, debouncedFn);
+  });
+};
+
+Field.prototype._addComponentEventListener = function _addComponentEventListener (evt, validate) {
+    var this$1 = this;
+
+  if (!this.componentInstance) { return; }
+
+  this.componentInstance.$on(evt, validate);
+  this.watchers.push({
+    tag: 'input_vue',
+    unwatch: function () {
+      this$1.componentInstance.$off(evt, validate);
+    }
+  });
+};
+
+Field.prototype._addHTMLEventListener = function _addHTMLEventListener (evt, validate) {
+    var this$1 = this;
+
+  if (!this.el || this.componentInstance) { return; }
+
+  // listen for the current element.
+  var addListener = function (el) {
+    addEventListener(el, evt, validate);
+    this$1.watchers.push({
+      tag: 'input_native',
+      unwatch: function () {
+        el.removeEventListener(evt, validate);
+      }
+    });
+  };
+
+  addListener(this.el);
+  if (!isCheckboxOrRadioInput(this.el)) {
+    return;
+  }
+
+  var els = document.querySelectorAll(("input[name=\"" + (this.el.name) + "\"]"));
+  toArray(els).forEach(function (el) {
+    // skip if it is added by v-validate and is not the current element.
+    if (el._veeValidateId && el !== this$1.el) {
+      return;
+    }
+
+    addListener(el);
+  });
+};
+
+/**
+ * Updates aria attributes on the element.
+ */
+Field.prototype.updateAriaAttrs = function updateAriaAttrs () {
+    var this$1 = this;
+
+  if (!this.aria || !this.el || !isCallable(this.el.setAttribute)) { return; }
+
+  var applyAriaAttrs = function (el) {
+    el.setAttribute('aria-required', this$1.isRequired ? 'true' : 'false');
+    el.setAttribute('aria-invalid', this$1.flags.invalid ? 'true' : 'false');
+  };
+
+  if (!isCheckboxOrRadioInput(this.el)) {
+    applyAriaAttrs(this.el);
+    return;
+  }
+
+  var els = document.querySelectorAll(("input[name=\"" + (this.el.name) + "\"]"));
+  toArray(els).forEach(applyAriaAttrs);
+};
+
+/**
+ * Updates the custom validity for the field.
+ */
+Field.prototype.updateCustomValidity = function updateCustomValidity () {
+  if (!this.validity || !this.el || !isCallable(this.el.setCustomValidity) || !this.validator.errors) { return; }
+
+  this.el.setCustomValidity(this.flags.valid ? '' : (this.validator.errors.firstById(this.id) || ''));
+};
+
+/**
+ * Removes all listeners.
+ */
+Field.prototype.destroy = function destroy () {
+  // ignore the result of any ongoing validation.
+  if (this._cancellationToken) {
+    this._cancellationToken.cancelled = true;
+  }
+
+  this.unwatch();
+  this.dependencies.forEach(function (d) { return d.field.destroy(); });
+  this.dependencies = [];
+};
+
+Object.defineProperties( Field.prototype, prototypeAccessors$1 );
+
+// 
+
+var FieldBag = function FieldBag (items) {
+  if ( items === void 0 ) items = [];
+
+  this.items = items || [];
+  this.itemsById = this.items.reduce(function (itemsById, item) {
+    itemsById[item.id] = item;
+    return itemsById;
+  }, {});
+};
+
+var prototypeAccessors$2 = { length: { configurable: true } };
+
+FieldBag.prototype[typeof Symbol === 'function' ? Symbol.iterator : '@@iterator'] = function () {
+    var this$1 = this;
+
+  var index = 0;
+  return {
+    next: function () {
+      return { value: this$1.items[index++], done: index > this$1.items.length };
+    }
+  };
+};
+
+/**
+ * Gets the current items length.
+ */
+
+prototypeAccessors$2.length.get = function () {
+  return this.items.length;
+};
+
+/**
+ * Finds the first field that matches the provided matcher object.
+ */
+FieldBag.prototype.find = function find$1 (matcher) {
+  return find(this.items, function (item) { return item.matches(matcher); });
+};
+
+/**
+ * Finds the field with the given id, using a plain object as a map to link
+ * ids to items faster than by looping over the array and matching.
+ */
+FieldBag.prototype.findById = function findById (id) {
+  return this.itemsById[id] || null;
+};
+
+/**
+ * Filters the items down to the matched fields.
+ */
+FieldBag.prototype.filter = function filter (matcher) {
+  // multiple matchers to be tried.
+  if (Array.isArray(matcher)) {
+    return this.items.filter(function (item) { return matcher.some(function (m) { return item.matches(m); }); });
+  }
+
+  return this.items.filter(function (item) { return item.matches(matcher); });
+};
+
+/**
+ * Maps the field items using the mapping function.
+ */
+FieldBag.prototype.map = function map (mapper) {
+  return this.items.map(mapper);
+};
+
+/**
+ * Finds and removes the first field that matches the provided matcher object, returns the removed item.
+ */
+FieldBag.prototype.remove = function remove (matcher) {
+  var item = null;
+  if (matcher instanceof Field) {
+    item = matcher;
+  } else {
+    item = this.find(matcher);
+  }
+
+  if (!item) { return null; }
+
+  var index = this.items.indexOf(item);
+  this.items.splice(index, 1);
+  delete this.itemsById[item.id];
+
+  return item;
+};
+
+/**
+ * Adds a field item to the list.
+ */
+FieldBag.prototype.push = function push (item) {
+  if (! (item instanceof Field)) {
+    throw createError('FieldBag only accepts instances of Field that has an id defined.');
+  }
+
+  if (!item.id) {
+    throw createError('Field id must be defined.');
+  }
+
+  if (this.findById(item.id)) {
+    throw createError(("Field with id " + (item.id) + " is already added."));
+  }
+
+  this.items.push(item);
+  this.itemsById[item.id] = item;
+};
+
+Object.defineProperties( FieldBag.prototype, prototypeAccessors$2 );
+
+var ScopedValidator = function ScopedValidator (base, vm) {
+  this.id = vm._uid;
+  this._base = base;
+  this._paused = false;
+
+  // create a mirror bag with limited component scope.
+  this.errors = new ErrorBag(base.errors, this.id);
+};
+
+var prototypeAccessors$3 = { flags: { configurable: true },rules: { configurable: true },fields: { configurable: true },dictionary: { configurable: true },locale: { configurable: true } };
+
+prototypeAccessors$3.flags.get = function () {
+    var this$1 = this;
+
+  return this._base.fields.items.filter(function (f) { return f.vmId === this$1.id; }).reduce(function (acc, field) {
+    if (field.scope) {
+      if (!acc[("$" + (field.scope))]) {
+        acc[("$" + (field.scope))] = {};
+      }
+
+      acc[("$" + (field.scope))][field.name] = field.flags;
+    }
+
+    acc[field.name] = field.flags;
+
+    return acc;
+  }, {});
+};
+
+prototypeAccessors$3.rules.get = function () {
+  return this._base.rules;
+};
+
+prototypeAccessors$3.fields.get = function () {
+  return new FieldBag(this._base.fields.filter({ vmId: this.id }));
+};
+
+prototypeAccessors$3.dictionary.get = function () {
+  return this._base.dictionary;
+};
+
+prototypeAccessors$3.locale.get = function () {
+  return this._base.locale;
+};
+
+prototypeAccessors$3.locale.set = function (val) {
+  this._base.locale = val;
+};
+
+ScopedValidator.prototype.localize = function localize () {
+    var ref;
+
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+  return (ref = this._base).localize.apply(ref, args);
+};
+
+ScopedValidator.prototype.update = function update () {
+    var ref;
+
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+  return (ref = this._base).update.apply(ref, args);
+};
+
+ScopedValidator.prototype.attach = function attach (opts) {
+  var attachOpts = assign({}, opts, { vmId: this.id });
+
+  return this._base.attach(attachOpts);
+};
+
+ScopedValidator.prototype.pause = function pause () {
+  this._paused = true;
+};
+
+ScopedValidator.prototype.resume = function resume () {
+  this._paused = false;
+};
+
+ScopedValidator.prototype.remove = function remove (ruleName) {
+  return this._base.remove(ruleName);
+};
+
+ScopedValidator.prototype.detach = function detach (name, scope) {
+  return this._base.detach(name, scope, this.id);
+};
+
+ScopedValidator.prototype.extend = function extend () {
+    var ref;
+
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+  return (ref = this._base).extend.apply(ref, args);
+};
+
+ScopedValidator.prototype.validate = function validate (descriptor, value, opts) {
+    if ( opts === void 0 ) opts = {};
+
+  if (this._paused) { return Promise.resolve(true); }
+
+  return this._base.validate(descriptor, value, assign({}, { vmId: this.id }, opts || {}));
+};
+
+ScopedValidator.prototype.verify = function verify () {
+    var ref;
+
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+  return (ref = this._base).verify.apply(ref, args);
+};
+
+ScopedValidator.prototype.validateAll = function validateAll (values, opts) {
+    if ( opts === void 0 ) opts = {};
+
+  if (this._paused) { return Promise.resolve(true); }
+
+  return this._base.validateAll(values, assign({}, { vmId: this.id }, opts || {}));
+};
+
+ScopedValidator.prototype.validateScopes = function validateScopes (opts) {
+    if ( opts === void 0 ) opts = {};
+
+  if (this._paused) { return Promise.resolve(true); }
+
+  return this._base.validateScopes(assign({}, { vmId: this.id }, opts || {}));
+};
+
+ScopedValidator.prototype.destroy = function destroy () {
+  delete this.id;
+  delete this._base;
+};
+
+ScopedValidator.prototype.reset = function reset (matcher) {
+  return this._base.reset(Object.assign({}, matcher || {}, { vmId: this.id }));
+};
+
+ScopedValidator.prototype.flag = function flag () {
+    var ref;
+
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+  return (ref = this._base).flag.apply(ref, args.concat( [this.id] ));
+};
+
+ScopedValidator.prototype._resolveField = function _resolveField () {
+    var ref;
+
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+  return (ref = this._base)._resolveField.apply(ref, args);
+};
+
+Object.defineProperties( ScopedValidator.prototype, prototypeAccessors$3 );
+
+var VALIDATOR = null;
+
+var getValidator = function () {
+  return VALIDATOR;
+};
+
+var setValidator = function (value) {
+  VALIDATOR = value;
+
+  return value;
+};
+
+// 
+
+/**
+ * Checks if a parent validator instance was requested.
+ */
+var requestsValidator = function (injections) {
+  if (isObject(injections) && injections.$validator) {
+    return true;
+  }
+
+  return false;
+};
+
+var mixin = {
+  provide: function provide () {
+    if (this.$validator && !isBuiltInComponent(this.$vnode)) {
+      return {
+        $validator: this.$validator
+      };
+    }
+
+    return {};
+  },
+  beforeCreate: function beforeCreate () {
+    // if built in do nothing.
+    if (isBuiltInComponent(this.$vnode) || this.$options.$__veeInject === false) {
+      return;
+    }
+
+    // if its a root instance set the config if it exists.
+    if (!this.$parent) {
+      setConfig(this.$options.$_veeValidate || {});
+    }
+
+    var options = resolveConfig(this);
+
+    // if its a root instance, inject anyways, or if it requested a new instance.
+    if (!this.$parent || (this.$options.$_veeValidate && /new/.test(this.$options.$_veeValidate.validator))) {
+      this.$validator = new ScopedValidator(getValidator(), this);
+    }
+
+    var requested = requestsValidator(this.$options.inject);
+
+    // if automatic injection is enabled and no instance was requested.
+    if (! this.$validator && options.inject && !requested) {
+      this.$validator = new ScopedValidator(getValidator(), this);
+    }
+
+    // don't inject errors or fieldBag as no validator was resolved.
+    if (!requested && !this.$validator) {
+      return;
+    }
+
+    // There is a validator but it isn't injected, mark as reactive.
+    if (!requested && this.$validator) {
+      var Vue = this.$options._base; // the vue constructor.
+      Vue.util.defineReactive(this.$validator, 'errors', this.$validator.errors);
+    }
+
+    if (!this.$options.computed) {
+      this.$options.computed = {};
+    }
+
+    this.$options.computed[options.errorBagName || 'errors'] = function errorBagGetter () {
+      return this.$validator.errors;
+    };
+    this.$options.computed[options.fieldsBagName || 'fields'] = function fieldBagGetter () {
+      return this.$validator.fields.items.reduce(function (acc, field) {
+        if (field.scope) {
+          if (!acc[("$" + (field.scope))]) {
+            acc[("$" + (field.scope))] = {};
+          }
+
+          acc[("$" + (field.scope))][field.name] = field.flags;
+
+          return acc;
+        }
+
+        acc[field.name] = field.flags;
+
+        return acc;
+      }, {});
+    };
+  },
+  beforeDestroy: function beforeDestroy () {
+    if (this.$validator && this._uid === this.$validator.id) {
+      this.$validator.errors.clear(); // remove errors generated by this component.
+    }
+  }
+};
+
+// 
+
+/**
+ * Finds the requested field by id from the context object.
+ */
+function findField (el, context) {
+  if (!context || !context.$validator) {
+    return null;
+  }
+
+  return context.$validator.fields.findById(el._veeValidateId);
+}
+var directive = {
+  bind: function bind (el, binding, vnode) {
+    var validator = vnode.context.$validator;
+    if (!validator) {
+      if (true) {
+        warn("No validator instance is present on vm, did you forget to inject '$validator'?");
+      }
+
+      return;
+    }
+
+    var fieldOptions = Resolver.generate(el, binding, vnode);
+    validator.attach(fieldOptions);
+  },
+  inserted: function inserted (el, binding, vnode) {
+    var field = findField(el, vnode.context);
+    var scope = Resolver.resolveScope(el, binding, vnode);
+
+    // skip if scope hasn't changed.
+    if (!field || scope === field.scope) { return; }
+
+    // only update scope.
+    field.update({ scope: scope });
+
+    // allows the field to re-evaluated once more in the update hook.
+    field.updated = false;
+  },
+  update: function update (el, binding, vnode) {
+    var field = findField(el, vnode.context);
+
+    // make sure we don't do unneccasary work if no important change was done.
+    if (!field || (field.updated && isEqual(binding.value, binding.oldValue))) { return; }
+    var scope = Resolver.resolveScope(el, binding, vnode);
+    var rules = Resolver.resolveRules(el, binding, vnode);
+
+    field.update({
+      scope: scope,
+      rules: rules
+    });
+  },
+  unbind: function unbind (el, binding, ref) {
+    var context = ref.context;
+
+    var field = findField(el, context);
+    if (!field) { return; }
+
+    context.$validator.detach(field);
+  }
+};
+
+// 
+
+var Validator = function Validator (validations, options, pluginContainer) {
+  if ( options === void 0 ) options = { fastExit: true };
+  if ( pluginContainer === void 0 ) pluginContainer = null;
+
+  this.errors = new ErrorBag();
+  this.fields = new FieldBag();
+  this._createFields(validations);
+  this.paused = false;
+  this.fastExit = !isNullOrUndefined(options && options.fastExit) ? options.fastExit : true;
+  this.$vee = pluginContainer || {
+    _vm: {
+      $nextTick: function (cb) { return isCallable(cb) ? cb() : Promise.resolve(); },
+      $emit: function () {},
+      $off: function () {}
+    }
+  };
+};
+
+var prototypeAccessors$4 = { rules: { configurable: true },dictionary: { configurable: true },flags: { configurable: true },locale: { configurable: true } };
+var staticAccessors$1 = { rules: { configurable: true },dictionary: { configurable: true },locale: { configurable: true } };
+
+/**
+ * @deprecated
+ */
+staticAccessors$1.rules.get = function () {
+  if (true) {
+    warn('this accessor will be deprecated, use `import { rules } from "vee-validate"` instead.');
+  }
+
+  return RuleContainer.rules;
+};
+
+/**
+ * @deprecated
+ */
+prototypeAccessors$4.rules.get = function () {
+  if (true) {
+    warn('this accessor will be deprecated, use `import { rules } from "vee-validate"` instead.');
+  }
+
+  return RuleContainer.rules;
+};
+
+prototypeAccessors$4.dictionary.get = function () {
+  return DictionaryResolver.getDriver();
+};
+
+staticAccessors$1.dictionary.get = function () {
+  return DictionaryResolver.getDriver();
+};
+
+prototypeAccessors$4.flags.get = function () {
+  return this.fields.items.reduce(function (acc, field) {
+      var obj;
+
+    if (field.scope) {
+      acc[("$" + (field.scope))] = ( obj = {}, obj[field.name] = field.flags, obj );
+
+      return acc;
+    }
+
+    acc[field.name] = field.flags;
+
+    return acc;
+  }, {});
+};
+
+/**
+ * Getter for the current locale.
+ */
+prototypeAccessors$4.locale.get = function () {
+  return Validator.locale;
+};
+
+/**
+ * Setter for the validator locale.
+ */
+prototypeAccessors$4.locale.set = function (value) {
+  Validator.locale = value;
+};
+
+staticAccessors$1.locale.get = function () {
+  return DictionaryResolver.getDriver().locale;
+};
+
+/**
+ * Setter for the validator locale.
+ */
+staticAccessors$1.locale.set = function (value) {
+  var hasChanged = value !== DictionaryResolver.getDriver().locale;
+  DictionaryResolver.getDriver().locale = value;
+  if (hasChanged && Validator.$vee && Validator.$vee._vm) {
+    Validator.$vee._vm.$emit('localeChanged');
+  }
+};
+
+/**
+ * Static constructor.
+ * @deprecated
+ */
+Validator.create = function create (validations, options) {
+  if (true) {
+    warn('Please use `new` to create new validator instances.');
+  }
+
+  return new Validator(validations, options);
+};
+
+/**
+ * Adds a custom validator to the list of validation rules.
+ */
+Validator.extend = function extend (name, validator, options) {
+    if ( options === void 0 ) options = {};
+
+  Validator._guardExtend(name, validator);
+  // rules imported from the minimal bundle
+  // will have the options embedded in them
+  var mergedOpts = validator.options || {};
+  Validator._merge(name, {
+    validator: validator,
+    paramNames: (options && options.paramNames) || validator.paramNames,
+    options: assign({ hasTarget: false, immediate: true }, mergedOpts, options || {})
+  });
+};
+
+/**
+ * Removes a rule from the list of validators.
+ * @deprecated
+ */
+Validator.remove = function remove (name) {
+  if (true) {
+    warn('this method will be deprecated, you can still override your rules with `extend`');
+  }
+
+  RuleContainer.remove(name);
+};
+
+/**
+ * Adds and sets the current locale for the validator.
+*/
+Validator.prototype.localize = function localize (lang, dictionary) {
+  Validator.localize(lang, dictionary);
+};
+
+/**
+ * Adds and sets the current locale for the validator.
+ */
+Validator.localize = function localize (lang, dictionary) {
+    var obj;
+
+  if (isObject(lang)) {
+    DictionaryResolver.getDriver().merge(lang);
+    return;
+  }
+
+  // merge the dictionary.
+  if (dictionary) {
+    var locale = lang || dictionary.name;
+    dictionary = assign({}, dictionary);
+    DictionaryResolver.getDriver().merge(( obj = {}, obj[locale] = dictionary, obj ));
+  }
+
+  if (lang) {
+    // set the locale.
+    Validator.locale = lang;
+  }
+};
+
+/**
+ * Registers a field to be validated.
+ */
+Validator.prototype.attach = function attach (fieldOpts) {
+    var this$1 = this;
+
+  // We search for a field with the same name & scope, having persist enabled
+  var oldFieldMatcher = { name: fieldOpts.name, scope: fieldOpts.scope, persist: true };
+  var oldField = fieldOpts.persist ? this.fields.find(oldFieldMatcher) : null;
+
+  if (oldField) {
+    // We keep the flags of the old field, then we remove its instance
+    fieldOpts.flags = oldField.flags;
+    oldField.destroy();
+    this.fields.remove(oldField);
+  }
+
+  // fixes initial value detection with v-model and select elements.
+  var value = fieldOpts.initialValue;
+  var field = new Field(fieldOpts);
+  this.fields.push(field);
+
+  // validate the field initially
+  if (field.immediate) {
+    this.$vee._vm.$nextTick(function () { return this$1.validate(("#" + (field.id)), value || field.value, { vmId: fieldOpts.vmId }); });
+  } else {
+    this._validate(field, value || field.value, { initial: true }).then(function (result) {
+      field.flags.valid = result.valid;
+      field.flags.invalid = !result.valid;
+    });
+  }
+
+  return field;
+};
+
+/**
+ * Sets the flags on a field.
+ */
+Validator.prototype.flag = function flag (name, flags, uid) {
+    if ( uid === void 0 ) uid = null;
+
+  var field = this._resolveField(name, undefined, uid);
+  if (!field || !flags) {
+    return;
+  }
+
+  field.setFlags(flags);
+};
+
+/**
+ * Removes a field from the validator.
+ */
+Validator.prototype.detach = function detach (name, scope, uid) {
+  var field = isCallable(name.destroy) ? name : this._resolveField(name, scope, uid);
+  if (!field) { return; }
+
+  // We destroy/remove the field & error instances if it's not a `persist` one
+  if (!field.persist) {
+    field.destroy();
+    this.errors.remove(field.name, field.scope, field.vmId);
+    this.fields.remove(field);
+  }
+};
+
+/**
+ * Adds a custom validator to the list of validation rules.
+ */
+Validator.prototype.extend = function extend (name, validator, options) {
+    if ( options === void 0 ) options = {};
+
+  Validator.extend(name, validator, options);
+};
+
+Validator.prototype.reset = function reset (matcher) {
+    var this$1 = this;
+
+  // two ticks
+  return this.$vee._vm.$nextTick().then(function () {
+    return this$1.$vee._vm.$nextTick();
+  }).then(function () {
+    this$1.fields.filter(matcher).forEach(function (field) {
+      field.waitFor(null);
+      field.reset(); // reset field flags.
+      this$1.errors.remove(field.name, field.scope, matcher && matcher.vmId);
+    });
+  });
+};
+
+/**
+ * Updates a field, updating both errors and flags.
+ */
+Validator.prototype.update = function update (id, ref) {
+    var scope = ref.scope;
+
+  var field = this._resolveField(("#" + id));
+  if (!field) { return; }
+
+  // remove old scope.
+  this.errors.update(id, { scope: scope });
+};
+
+/**
+ * Removes a rule from the list of validators.
+ * @deprecated
+ */
+Validator.prototype.remove = function remove (name) {
+  Validator.remove(name);
+};
+
+/**
+ * Validates a value against a registered field validations.
+ */
+Validator.prototype.validate = function validate (fieldDescriptor, value, ref) {
+    var this$1 = this;
+    if ( ref === void 0 ) ref = {};
+    var silent = ref.silent;
+    var vmId = ref.vmId;
+
+  if (this.paused) { return Promise.resolve(true); }
+
+  // overload to validate all.
+  if (isNullOrUndefined(fieldDescriptor)) {
+    return this.validateScopes({ silent: silent, vmId: vmId });
+  }
+
+  // overload to validate scope-less fields.
+  if (fieldDescriptor === '*') {
+    return this.validateAll(undefined, { silent: silent, vmId: vmId });
+  }
+
+  // if scope validation was requested.
+  if (/^(.+)\.\*$/.test(fieldDescriptor)) {
+    var matched = fieldDescriptor.match(/^(.+)\.\*$/)[1];
+    return this.validateAll(matched);
+  }
+
+  var field = this._resolveField(fieldDescriptor);
+  if (!field) {
+    return this._handleFieldNotFound(fieldDescriptor);
+  }
+
+  if (!silent) { field.flags.pending = true; }
+  if (value === undefined) {
+    value = field.value;
+  }
+
+  var validationPromise = this._validate(field, value);
+  field.waitFor(validationPromise);
+
+  return validationPromise.then(function (result) {
+    if (!silent && field.isWaitingFor(validationPromise)) {
+      // allow next validation to mutate the state.
+      field.waitFor(null);
+      this$1._handleValidationResults([result], vmId);
+    }
+
+    return result.valid;
+  });
+};
+
+/**
+ * Pauses the validator.
+ */
+Validator.prototype.pause = function pause () {
+  this.paused = true;
+
+  return this;
+};
+
+/**
+ * Resumes the validator.
+ */
+Validator.prototype.resume = function resume () {
+  this.paused = false;
+
+  return this;
+};
+
+/**
+ * Validates each value against the corresponding field validations.
+ */
+Validator.prototype.validateAll = function validateAll (values, ref) {
+    var this$1 = this;
+    if ( ref === void 0 ) ref = {};
+    var silent = ref.silent;
+    var vmId = ref.vmId;
+
+  if (this.paused) { return Promise.resolve(true); }
+
+  var matcher = null;
+  var providedValues = false;
+
+  if (typeof values === 'string') {
+    matcher = { scope: values, vmId: vmId };
+  } else if (isObject(values)) {
+    matcher = Object.keys(values).map(function (key) {
+      return { name: key, vmId: vmId, scope: null };
+    });
+    providedValues = true;
+  } else if (Array.isArray(values)) {
+    matcher = values.map(function (key) {
+      return typeof key === 'object' ? Object.assign({ vmId: vmId }, key) : { name: key, vmId: vmId };
+    });
+  } else {
+    matcher = { scope: null, vmId: vmId };
+  }
+
+  return Promise.all(
+    this.fields.filter(matcher).map(function (field) { return this$1._validate(field, providedValues ? values[field.name] : field.value); })
+  ).then(function (results) {
+    if (!silent) {
+      this$1._handleValidationResults(results, vmId);
+    }
+
+    return results.every(function (t) { return t.valid; });
+  });
+};
+
+/**
+ * Validates all scopes.
+ */
+Validator.prototype.validateScopes = function validateScopes (ref) {
+    var this$1 = this;
+    if ( ref === void 0 ) ref = {};
+    var silent = ref.silent;
+    var vmId = ref.vmId;
+
+  if (this.paused) { return Promise.resolve(true); }
+
+  return Promise.all(
+    this.fields.filter({ vmId: vmId }).map(function (field) { return this$1._validate(field, field.value); })
+  ).then(function (results) {
+    if (!silent) {
+      this$1._handleValidationResults(results, vmId);
+    }
+
+    return results.every(function (t) { return t.valid; });
+  });
+};
+
+/**
+ * Validates a value against the rules.
+ */
+Validator.prototype.verify = function verify (value, rules, options) {
+    if ( options === void 0 ) options = {};
+
+  var field = {
+    name: (options && options.name) || '{field}',
+    rules: normalizeRules(rules),
+    bails: getPath('bails', options, true),
+    forceRequired: false,
+    get isRequired () {
+      return !!this.rules.required || this.forceRequired;
+    }
+  };
+
+  var targetRules = Object.keys(field.rules).filter(RuleContainer.isTargetRule);
+  if (targetRules.length && options && isObject(options.values)) {
+    field.dependencies = targetRules.map(function (rule) {
+      var ref = field.rules[rule];
+        var targetKey = ref[0];
+
+      return {
+        name: rule,
+        field: { value: options.values[targetKey] }
+      };
+    });
+  }
+
+  return this._validate(field, value).then(function (result) {
+    var errors = [];
+    var ruleMap = {};
+    result.errors.forEach(function (e) {
+      errors.push(e.msg);
+      ruleMap[e.rule] = e.msg;
+    });
+
+    return {
+      valid: result.valid,
+      errors: errors,
+      failedRules: ruleMap
+    };
+  });
+};
+
+/**
+ * Perform cleanup.
+ */
+Validator.prototype.destroy = function destroy () {
+  this.$vee._vm.$off('localeChanged');
+};
+
+/**
+ * Creates the fields to be validated.
+ */
+Validator.prototype._createFields = function _createFields (validations) {
+    var this$1 = this;
+
+  if (!validations) { return; }
+
+  Object.keys(validations).forEach(function (field) {
+    var options = assign({}, { name: field, rules: validations[field] });
+    this$1.attach(options);
+  });
+};
+
+/**
+ * Date rules need the existence of a format, so date_format must be supplied.
+ */
+Validator.prototype._getDateFormat = function _getDateFormat (validations) {
+  var format = null;
+  if (validations.date_format && Array.isArray(validations.date_format)) {
+    format = validations.date_format[0];
+  }
+
+  return format || DictionaryResolver.getDriver().getDateFormat(this.locale);
+};
+
+/**
+ * Formats an error message for field and a rule.
+ */
+Validator.prototype._formatErrorMessage = function _formatErrorMessage (field, rule, data, targetName) {
+    if ( data === void 0 ) data = {};
+    if ( targetName === void 0 ) targetName = null;
+
+  var name = this._getFieldDisplayName(field);
+  var params = this._getLocalizedParams(rule, targetName);
+
+  return DictionaryResolver.getDriver().getFieldMessage(this.locale, field.name, rule.name, [name, params, data]);
+};
+
+/**
+ * We need to convert any object param to an array format since the locales do not handle params as objects yet.
+ */
+Validator.prototype._convertParamObjectToArray = function _convertParamObjectToArray (obj, ruleName) {
+  if (Array.isArray(obj)) {
+    return obj;
+  }
+
+  var paramNames = RuleContainer.getParamNames(ruleName);
+  if (!paramNames || !isObject(obj)) {
+    return obj;
+  }
+
+  return paramNames.reduce(function (prev, paramName) {
+    if (paramName in obj) {
+      prev.push(obj[paramName]);
+    }
+
+    return prev;
+  }, []);
+};
+
+/**
+ * Translates the parameters passed to the rule (mainly for target fields).
+ */
+Validator.prototype._getLocalizedParams = function _getLocalizedParams (rule, targetName) {
+    if ( targetName === void 0 ) targetName = null;
+
+  var params = this._convertParamObjectToArray(rule.params, rule.name);
+  if (rule.options.hasTarget && params && params[0]) {
+    var localizedName = targetName || DictionaryResolver.getDriver().getAttribute(this.locale, params[0], params[0]);
+    return [localizedName].concat(params.slice(1));
+  }
+
+  return params;
+};
+
+/**
+ * Resolves an appropriate display name, first checking 'data-as' or the registered 'prettyName'
+ */
+Validator.prototype._getFieldDisplayName = function _getFieldDisplayName (field) {
+  return field.alias || DictionaryResolver.getDriver().getAttribute(this.locale, field.name, field.name);
+};
+
+/**
+ * Converts an array of params to an object with named properties.
+ * Only works if the rule is configured with a paramNames array.
+ * Returns the same params if it cannot convert it.
+ */
+Validator.prototype._convertParamArrayToObj = function _convertParamArrayToObj (params, ruleName) {
+  var paramNames = RuleContainer.getParamNames(ruleName);
+  if (!paramNames) {
+    return params;
+  }
+
+  if (isObject(params)) {
+    // check if the object is either a config object or a single parameter that is an object.
+    var hasKeys = paramNames.some(function (name) { return Object.keys(params).indexOf(name) !== -1; });
+    // if it has some of the keys, return it as is.
+    if (hasKeys) {
+      return params;
+    }
+    // otherwise wrap the object in an array.
+    params = [params];
+  }
+
+  // Reduce the paramsNames to a param object.
+  return params.reduce(function (prev, value, idx) {
+    prev[paramNames[idx]] = value;
+
+    return prev;
+  }, {});
+};
+
+/**
+ * Tests a single input value against a rule.
+ */
+Validator.prototype._test = function _test (field, value, rule) {
+    var this$1 = this;
+
+  var validator = RuleContainer.getValidatorMethod(rule.name);
+  var params = Array.isArray(rule.params) ? toArray(rule.params) : rule.params;
+  if (!params) {
+    params = [];
+  }
+
+  var targetName = null;
+  if (!validator || typeof validator !== 'function') {
+    return Promise.reject(createError(("No such validator '" + (rule.name) + "' exists.")));
+  }
+
+  // has field dependencies.
+  if (rule.options.hasTarget && field.dependencies) {
+    var target = find(field.dependencies, function (d) { return d.name === rule.name; });
+    if (target) {
+      targetName = target.field.alias;
+      params = [target.field.value].concat(params.slice(1));
+    }
+  } else if (rule.name === 'required' && field.rejectsFalse) {
+    // invalidate false if no args were specified and the field rejects false by default.
+    params = params.length ? params : [true];
+  }
+
+  if (rule.options.isDate) {
+    var dateFormat = this._getDateFormat(field.rules);
+    if (rule.name !== 'date_format') {
+      params.push(dateFormat);
+    }
+  }
+
+  var result = validator(value, this._convertParamArrayToObj(params, rule.name));
+
+  // If it is a promise.
+  if (isCallable(result.then)) {
+    return result.then(function (values) {
+      var allValid = true;
+      var data = {};
+      if (Array.isArray(values)) {
+        allValid = values.every(function (t) { return (isObject(t) ? t.valid : t); });
+      } else { // Is a single object/boolean.
+        allValid = isObject(values) ? values.valid : values;
+        data = values.data;
+      }
+
+      return {
+        valid: allValid,
+        data: result.data,
+        errors: allValid ? [] : [this$1._createFieldError(field, rule, data, targetName)]
+      };
+    });
+  }
+
+  if (!isObject(result)) {
+    result = { valid: result, data: {} };
+  }
+
+  return {
+    valid: result.valid,
+    data: result.data,
+    errors: result.valid ? [] : [this._createFieldError(field, rule, result.data, targetName)]
+  };
+};
+
+/**
+ * Merges a validator object into the RULES and Messages.
+ */
+Validator._merge = function _merge (name, ref) {
+    var validator = ref.validator;
+    var options = ref.options;
+    var paramNames = ref.paramNames;
+
+  var validate = isCallable(validator) ? validator : validator.validate;
+  if (validator.getMessage) {
+    DictionaryResolver.getDriver().setMessage(Validator.locale, name, validator.getMessage);
+  }
+
+  RuleContainer.add(name, {
+    validate: validate,
+    options: options,
+    paramNames: paramNames
+  });
+};
+
+/**
+ * Guards from extension violations.
+ */
+Validator._guardExtend = function _guardExtend (name, validator) {
+  if (isCallable(validator)) {
+    return;
+  }
+
+  if (!isCallable(validator.validate)) {
+    throw createError(
+      ("Extension Error: The validator '" + name + "' must be a function or have a 'validate' method.")
+    );
+  }
+};
+
+/**
+ * Creates a Field Error Object.
+ */
+Validator.prototype._createFieldError = function _createFieldError (field, rule, data, targetName) {
+    var this$1 = this;
+
+  return {
+    id: field.id,
+    vmId: field.vmId,
+    field: field.name,
+    msg: this._formatErrorMessage(field, rule, data, targetName),
+    rule: rule.name,
+    scope: field.scope,
+    regenerate: function () {
+      return this$1._formatErrorMessage(field, rule, data, targetName);
+    }
+  };
+};
+
+/**
+ * Tries different strategies to find a field.
+ */
+Validator.prototype._resolveField = function _resolveField (name, scope, uid) {
+  if (name[0] === '#') {
+    return this.fields.findById(name.slice(1));
+  }
+
+  if (!isNullOrUndefined(scope)) {
+    return this.fields.find({ name: name, scope: scope, vmId: uid });
+  }
+
+  if (includes(name, '.')) {
+    var ref = name.split('.');
+      var fieldScope = ref[0];
+      var fieldName = ref.slice(1);
+    var field = this.fields.find({ name: fieldName.join('.'), scope: fieldScope, vmId: uid });
+    if (field) {
+      return field;
+    }
+  }
+
+  return this.fields.find({ name: name, scope: null, vmId: uid });
+};
+
+/**
+ * Handles when a field is not found.
+ */
+Validator.prototype._handleFieldNotFound = function _handleFieldNotFound (name, scope) {
+  var fullName = isNullOrUndefined(scope) ? name : ("" + (!isNullOrUndefined(scope) ? scope + '.' : '') + name);
+
+  return Promise.reject(createError(
+    ("Validating a non-existent field: \"" + fullName + "\". Use \"attach()\" first.")
+  ));
+};
+
+/**
+ * Handles validation results.
+ */
+Validator.prototype._handleValidationResults = function _handleValidationResults (results, vmId) {
+    var this$1 = this;
+
+  var matchers = results.map(function (result) { return ({ id: result.id }); });
+  this.errors.removeById(matchers.map(function (m) { return m.id; }));
+  // remove by name and scope to remove any custom errors added.
+  results.forEach(function (result) {
+    this$1.errors.remove(result.field, result.scope, vmId);
+  });
+  var allErrors = results.reduce(function (prev, curr) {
+    prev.push.apply(prev, curr.errors);
+
+    return prev;
+  }, []);
+
+  this.errors.add(allErrors);
+
+  // handle flags.
+  this.fields.filter(matchers).forEach(function (field) {
+    var result = find(results, function (r) { return r.id === field.id; });
+    field.setFlags({
+      pending: false,
+      valid: result.valid,
+      validated: true
+    });
+  });
+};
+
+Validator.prototype._shouldSkip = function _shouldSkip (field, value) {
+  // field is configured to run through the pipeline regardless
+  if (field.bails === false) {
+    return false;
+  }
+
+  // disabled fields are skipped if useConstraintAttrs is enabled in config
+  if (field.isDisabled && getConfig().useConstraintAttrs) {
+    return true;
+  }
+
+  // skip if the field is not required and has an empty value.
+  return !field.isRequired && (isNullOrUndefined(value) || value === '' || isEmptyArray(value));
+};
+
+Validator.prototype._shouldBail = function _shouldBail (field) {
+  // if the field was configured explicitly.
+  if (field.bails !== undefined) {
+    return field.bails;
+  }
+
+  return this.fastExit;
+};
+
+/**
+ * Starts the validation process.
+ */
+Validator.prototype._validate = function _validate (field, value, ref) {
+    var this$1 = this;
+    if ( ref === void 0 ) ref = {};
+    var initial = ref.initial;
+
+  var requireRules = Object.keys(field.rules).filter(RuleContainer.isRequireRule);
+
+  field.forceRequired = false;
+  requireRules.forEach(function (rule) {
+    var ruleOptions = RuleContainer.getOptions(rule);
+    var result = this$1._test(field, value, { name: rule, params: field.rules[rule], options: ruleOptions });
+
+    if (isCallable(result.then)) { throw createError('Require rules cannot be async'); }
+    if (!isObject(result)) { throw createError('Require rules has to return an object (see docs)'); }
+
+    if (result.data.required === true) {
+      field.forceRequired = true;
+    }
+  });
+
+  if (this._shouldSkip(field, value)) {
+    return Promise.resolve({ valid: true, id: field.id, field: field.name, scope: field.scope, errors: [] });
+  }
+
+  var promises = [];
+  var errors = [];
+  var isExitEarly = false;
+  if (isCallable(field.checkValueChanged)) {
+    field.flags.changed = field.checkValueChanged();
+  }
+
+  // use of '.some()' is to break iteration in middle by returning true
+  Object.keys(field.rules).filter(function (rule) {
+    if (!initial || !RuleContainer.has(rule)) { return true; }
+
+    return RuleContainer.isImmediate(rule);
+  }).some(function (rule) {
+    var ruleOptions = RuleContainer.getOptions(rule);
+    var result = this$1._test(field, value, { name: rule, params: field.rules[rule], options: ruleOptions });
+    if (isCallable(result.then)) {
+      promises.push(result);
+    } else if (!result.valid && this$1._shouldBail(field)) {
+      errors.push.apply(errors, result.errors);
+      isExitEarly = true;
+    } else {
+      // promisify the result.
+      promises.push(new Promise(function (resolve) { return resolve(result); }));
+    }
+
+    return isExitEarly;
+  });
+
+  if (isExitEarly) {
+    return Promise.resolve({ valid: false, errors: errors, id: field.id, field: field.name, scope: field.scope });
+  }
+
+  return Promise.all(promises).then(function (results) {
+    return results.reduce(function (prev, v) {
+        var ref;
+
+      if (!v.valid) {
+        (ref = prev.errors).push.apply(ref, v.errors);
+      }
+
+      prev.valid = prev.valid && v.valid;
+
+      return prev;
+    }, { valid: true, errors: errors, id: field.id, field: field.name, scope: field.scope });
+  });
+};
+
+Object.defineProperties( Validator.prototype, prototypeAccessors$4 );
+Object.defineProperties( Validator, staticAccessors$1 );
+
+// 
+
+var normalizeValue = function (value) {
+  if (isObject(value)) {
+    return Object.keys(value).reduce(function (prev, key) {
+      prev[key] = normalizeValue(value[key]);
+
+      return prev;
+    }, {});
+  }
+
+  if (isCallable(value)) {
+    return value('{0}', ['{1}', '{2}', '{3}']);
+  }
+
+  return value;
+};
+
+var normalizeFormat = function (locale) {
+  // normalize messages
+  var dictionary = {};
+  if (locale.messages) {
+    dictionary.messages = normalizeValue(locale.messages);
+  }
+
+  if (locale.custom) {
+    dictionary.custom = normalizeValue(locale.custom);
+  }
+
+  if (locale.attributes) {
+    dictionary.attributes = locale.attributes;
+  }
+
+  if (!isNullOrUndefined(locale.dateFormat)) {
+    dictionary.dateFormat = locale.dateFormat;
+  }
+
+  return dictionary;
+};
+
+var I18nDictionary = function I18nDictionary (i18n, rootKey) {
+  this.i18n = i18n;
+  this.rootKey = rootKey;
+};
+
+var prototypeAccessors$5 = { locale: { configurable: true } };
+
+prototypeAccessors$5.locale.get = function () {
+  return this.i18n.locale;
+};
+
+prototypeAccessors$5.locale.set = function (value) {
+  warn('Cannot set locale from the validator when using vue-i18n, use i18n.locale setter instead');
+};
+
+I18nDictionary.prototype.getDateFormat = function getDateFormat (locale) {
+  return this.i18n.getDateTimeFormat(locale || this.locale);
+};
+
+I18nDictionary.prototype.setDateFormat = function setDateFormat (locale, value) {
+  this.i18n.setDateTimeFormat(locale || this.locale, value);
+};
+
+I18nDictionary.prototype.getMessage = function getMessage (_, key, data) {
+  var path = (this.rootKey) + ".messages." + key;
+  var dataOptions = data;
+
+  if (Array.isArray(data)) {
+    dataOptions = [].concat.apply([], data);
+  }
+
+  if (this.i18n.te(path)) {
+    return this.i18n.t(path, dataOptions);
+  }
+
+  // fallback to the fallback message
+  if (this.i18n.te(path, this.i18n.fallbackLocale)) {
+    return this.i18n.t(path, this.i18n.fallbackLocale, dataOptions);
+  }
+
+  // fallback to the root message
+  return this.i18n.t(((this.rootKey) + ".messages._default"), dataOptions);
+};
+
+I18nDictionary.prototype.getAttribute = function getAttribute (_, key, fallback) {
+    if ( fallback === void 0 ) fallback = '';
+
+  var path = (this.rootKey) + ".attributes." + key;
+  if (this.i18n.te(path)) {
+    return this.i18n.t(path);
+  }
+
+  return fallback;
+};
+
+I18nDictionary.prototype.getFieldMessage = function getFieldMessage (_, field, key, data) {
+  var path = (this.rootKey) + ".custom." + field + "." + key;
+  if (this.i18n.te(path)) {
+    return this.i18n.t(path, data);
+  }
+
+  return this.getMessage(_, key, data);
+};
+
+I18nDictionary.prototype.merge = function merge$1 (dictionary) {
+    var this$1 = this;
+
+  Object.keys(dictionary).forEach(function (localeKey) {
+      var obj;
+
+    // i18n doesn't deep merge
+    // first clone the existing locale (avoid mutations to locale)
+    var clone = merge({}, getPath((localeKey + "." + (this$1.rootKey)), this$1.i18n.messages, {}));
+    // Merge cloned locale with new one
+    var locale = merge(clone, normalizeFormat(dictionary[localeKey]));
+    this$1.i18n.mergeLocaleMessage(localeKey, ( obj = {}, obj[this$1.rootKey] = locale, obj ));
+    if (locale.dateFormat) {
+      this$1.i18n.setDateTimeFormat(localeKey, locale.dateFormat);
+    }
+  });
+};
+
+I18nDictionary.prototype.setMessage = function setMessage (locale, key, value) {
+    var obj, obj$1;
+
+  this.merge(( obj$1 = {}, obj$1[locale] = {
+      messages: ( obj = {}, obj[key] = value, obj )
+    }, obj$1 ));
+};
+
+I18nDictionary.prototype.setAttribute = function setAttribute (locale, key, value) {
+    var obj, obj$1;
+
+  this.merge(( obj$1 = {}, obj$1[locale] = {
+      attributes: ( obj = {}, obj[key] = value, obj )
+    }, obj$1 ));
+};
+
+Object.defineProperties( I18nDictionary.prototype, prototypeAccessors$5 );
+
+var aggressive = function () { return ({
+  on: ['input']
+}); };
+
+var lazy = function () { return ({
+  on: ['change']
+}); };
+
+var eager = function (ref) {
+  var errors = ref.errors;
+
+  if (errors.length) {
+    return {
+      on: ['input']
+    };
+  }
+
+  return {
+    on: ['change', 'blur']
+  };
+};
+
+var passive = function () { return ({
+  on: []
+}); };
+
+var modes = {
+  aggressive: aggressive,
+  eager: eager,
+  passive: passive,
+  lazy: lazy
+};
+
+// 
+
+var Vue;
+var pendingPlugins;
+var pluginInstance;
+
+var VeeValidate$1 = function VeeValidate (config, _Vue) {
+  this.configure(config);
+  pluginInstance = this;
+  if (_Vue) {
+    Vue = _Vue;
+  }
+  this._validator = setValidator(
+    new Validator(null, { fastExit: config && config.fastExit }, this)
+  );
+  this._initVM(this.config);
+  this._initI18n(this.config);
+};
+
+var prototypeAccessors$6 = { i18nDriver: { configurable: true },config: { configurable: true } };
+var staticAccessors$2 = { i18nDriver: { configurable: true },config: { configurable: true } };
+
+VeeValidate$1.setI18nDriver = function setI18nDriver (driver, instance) {
+  DictionaryResolver.setDriver(driver, instance);
+};
+
+VeeValidate$1.configure = function configure (cfg) {
+  setConfig(cfg);
+};
+
+VeeValidate$1.setMode = function setMode (mode, implementation) {
+  setConfig({ mode: mode });
+  if (!implementation) {
+    return;
+  }
+
+  if (!isCallable(implementation)) {
+    throw new Error('A mode implementation must be a function');
+  }
+
+  modes[mode] = implementation;
+};
+
+VeeValidate$1.use = function use (plugin, options) {
+    if ( options === void 0 ) options = {};
+
+  if (!isCallable(plugin)) {
+    return warn('The plugin must be a callable function');
+  }
+
+  // Don't install plugins until vee-validate is installed.
+  if (!pluginInstance) {
+    if (!pendingPlugins) {
+      pendingPlugins = [];
+    }
+    pendingPlugins.push({ plugin: plugin, options: options });
+    return;
+  }
+
+  plugin({ Validator: Validator, ErrorBag: ErrorBag, Rules: Validator.rules }, options);
+};
+VeeValidate$1.install = function install (_Vue, opts) {
+  if (Vue && _Vue === Vue) {
+    if (true) {
+      warn('already installed, Vue.use(VeeValidate) should only be called once.');
+    }
+    return;
+  }
+
+  Vue = _Vue;
+  pluginInstance = new VeeValidate$1(opts);
+  // inject the plugin container statically into the validator class
+  Validator.$vee = pluginInstance;
+
+  detectPassiveSupport();
+
+  Vue.mixin(mixin);
+  Vue.directive('validate', directive);
+  if (pendingPlugins) {
+    pendingPlugins.forEach(function (ref) {
+        var plugin = ref.plugin;
+        var options = ref.options;
+
+      VeeValidate$1.use(plugin, options);
+    });
+    pendingPlugins = null;
+  }
+};
+
+prototypeAccessors$6.i18nDriver.get = function () {
+  return DictionaryResolver.getDriver();
+};
+
+staticAccessors$2.i18nDriver.get = function () {
+  return DictionaryResolver.getDriver();
+};
+
+prototypeAccessors$6.config.get = function () {
+  return getConfig();
+};
+
+staticAccessors$2.config.get = function () {
+  return getConfig();
+};
+
+VeeValidate$1.prototype._initVM = function _initVM (config) {
+    var this$1 = this;
+
+  this._vm = new Vue({
+    data: function () { return ({
+      errors: this$1._validator.errors,
+      fields: this$1._validator.fields
+    }); }
+  });
+};
+
+VeeValidate$1.prototype._initI18n = function _initI18n (config) {
+    var this$1 = this;
+
+  var dictionary = config.dictionary;
+    var i18n = config.i18n;
+    var i18nRootKey = config.i18nRootKey;
+    var locale = config.locale;
+  var onLocaleChanged = function () {
+    if (dictionary) {
+      this$1.i18nDriver.merge(dictionary);
+    }
+
+    this$1._validator.errors.regenerate();
+  };
+
+  // i18 is being used for localization.
+  if (i18n) {
+    VeeValidate$1.setI18nDriver('i18n', new I18nDictionary(i18n, i18nRootKey));
+    i18n._vm.$watch('locale', onLocaleChanged);
+  } else if (typeof window !== 'undefined') {
+    this._vm.$on('localeChanged', onLocaleChanged);
+  }
+
+  if (dictionary) {
+    this.i18nDriver.merge(dictionary);
+  }
+
+  if (locale && !i18n) {
+    this._validator.localize(locale);
+  }
+};
+
+VeeValidate$1.prototype.configure = function configure (cfg) {
+  setConfig(cfg);
+};
+
+Object.defineProperties( VeeValidate$1.prototype, prototypeAccessors$6 );
+Object.defineProperties( VeeValidate$1, staticAccessors$2 );
+
+VeeValidate$1.mixin = mixin;
+VeeValidate$1.directive = directive;
+VeeValidate$1.Validator = Validator;
+VeeValidate$1.ErrorBag = ErrorBag;
+
+/**
+ * Formates file size.
+ *
+ * @param {Number|String} size
+ */
+var formatFileSize = function (size) {
+  var units = ['Byte', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  var threshold = 1024;
+  size = Number(size) * threshold;
+  var i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(threshold));
+  return (((size / Math.pow(threshold, i)).toFixed(2) * 1) + " " + (units[i]));
+};
+
+/**
+ * Checks if vee-validate is defined globally.
+ */
+var isDefinedGlobally = function () {
+  return typeof VeeValidate !== 'undefined';
+};
+
+var obj;
+
+var messages = {
+  _default: function (field) { return ("The " + field + " value is not valid."); },
+  after: function (field, ref) {
+    var target = ref[0];
+    var inclusion = ref[1];
+
+    return ("The " + field + " must be after " + (inclusion ? 'or equal to ' : '') + target + ".");
+},
+  alpha: function (field) { return ("The " + field + " field may only contain alphabetic characters."); },
+  alpha_dash: function (field) { return ("The " + field + " field may contain alpha-numeric characters as well as dashes and underscores."); },
+  alpha_num: function (field) { return ("The " + field + " field may only contain alpha-numeric characters."); },
+  alpha_spaces: function (field) { return ("The " + field + " field may only contain alphabetic characters as well as spaces."); },
+  before: function (field, ref) {
+    var target = ref[0];
+    var inclusion = ref[1];
+
+    return ("The " + field + " must be before " + (inclusion ? 'or equal to ' : '') + target + ".");
+},
+  between: function (field, ref) {
+    var min = ref[0];
+    var max = ref[1];
+
+    return ("The " + field + " field must be between " + min + " and " + max + ".");
+},
+  confirmed: function (field) { return ("The " + field + " confirmation does not match."); },
+  credit_card: function (field) { return ("The " + field + " field is invalid."); },
+  date_between: function (field, ref) {
+    var min = ref[0];
+    var max = ref[1];
+
+    return ("The " + field + " must be between " + min + " and " + max + ".");
+},
+  date_format: function (field, ref) {
+    var format = ref[0];
+
+    return ("The " + field + " must be in the format " + format + ".");
+},
+  decimal: function (field, ref) {
+    if ( ref === void 0 ) ref = [];
+    var decimals = ref[0]; if ( decimals === void 0 ) decimals = '*';
+
+    return ("The " + field + " field must be numeric and may contain " + (!decimals || decimals === '*' ? '' : decimals) + " decimal points.");
+},
+  digits: function (field, ref) {
+    var length = ref[0];
+
+    return ("The " + field + " field must be numeric and exactly contain " + length + " digits.");
+},
+  dimensions: function (field, ref) {
+    var width = ref[0];
+    var height = ref[1];
+
+    return ("The " + field + " field must be " + width + " pixels by " + height + " pixels.");
+},
+  email: function (field) { return ("The " + field + " field must be a valid email."); },
+  excluded: function (field) { return ("The " + field + " field must be a valid value."); },
+  ext: function (field) { return ("The " + field + " field must be a valid file."); },
+  image: function (field) { return ("The " + field + " field must be an image."); },
+  included: function (field) { return ("The " + field + " field must be a valid value."); },
+  integer: function (field) { return ("The " + field + " field must be an integer."); },
+  ip: function (field) { return ("The " + field + " field must be a valid ip address."); },
+  ip_or_fqdn: function (field) { return ("The " + field + " field must be a valid ip address or FQDN."); },
+  length: function (field, ref) {
+    var length = ref[0];
+    var max = ref[1];
+
+    if (max) {
+      return ("The " + field + " length must be between " + length + " and " + max + ".");
+    }
+
+    return ("The " + field + " length must be " + length + ".");
+  },
+  max: function (field, ref) {
+    var length = ref[0];
+
+    return ("The " + field + " field may not be greater than " + length + " characters.");
+},
+  max_value: function (field, ref) {
+    var max = ref[0];
+
+    return ("The " + field + " field must be " + max + " or less.");
+},
+  mimes: function (field) { return ("The " + field + " field must have a valid file type."); },
+  min: function (field, ref) {
+    var length = ref[0];
+
+    return ("The " + field + " field must be at least " + length + " characters.");
+},
+  min_value: function (field, ref) {
+    var min = ref[0];
+
+    return ("The " + field + " field must be " + min + " or more.");
+},
+  numeric: function (field) { return ("The " + field + " field may only contain numeric characters."); },
+  regex: function (field) { return ("The " + field + " field format is invalid."); },
+  required: function (field) { return ("The " + field + " field is required."); },
+  required_if: function (field, ref) {
+    var target = ref[0];
+
+    return ("The " + field + " field is required when the " + target + " field has this value.");
+},
+  size: function (field, ref) {
+    var size = ref[0];
+
+    return ("The " + field + " size must be less than " + (formatFileSize(size)) + ".");
+},
+  url: function (field) { return ("The " + field + " field is not a valid URL."); }
+};
+
+var locale = {
+  name: 'en',
+  messages: messages,
+  attributes: {}
+};
+
+if (isDefinedGlobally()) {
+  // eslint-disable-next-line
+  VeeValidate.Validator.localize(( obj = {}, obj[locale.name] = locale, obj ));
+}
+
+function toInteger (dirtyNumber) {
+  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
+    return NaN
+  }
+
+  var number = Number(dirtyNumber);
+
+  if (isNaN(number)) {
+    return number
+  }
+
+  return number < 0 ? Math.ceil(number) : Math.floor(number)
+}
+
+var MILLISECONDS_IN_MINUTE = 60000;
+
+/**
+ * Google Chrome as of 67.0.3396.87 introduced timezones with offset that includes seconds.
+ * They usually appear for dates that denote time before the timezones were introduced
+ * (e.g. for 'Europe/Prague' timezone the offset is GMT+00:57:44 before 1 October 1891
+ * and GMT+01:00:00 after that date)
+ *
+ * Date#getTimezoneOffset returns the offset in minutes and would return 57 for the example above,
+ * which would lead to incorrect calculations.
+ *
+ * This function returns the timezone offset in milliseconds that takes seconds in account.
+ */
+function getTimezoneOffsetInMilliseconds (dirtyDate) {
+  var date = new Date(dirtyDate.getTime());
+  var baseTimezoneOffset = date.getTimezoneOffset();
+  date.setSeconds(0, 0);
+  var millisecondsPartOfTimezoneOffset = date.getTime() % MILLISECONDS_IN_MINUTE;
+
+  return baseTimezoneOffset * MILLISECONDS_IN_MINUTE + millisecondsPartOfTimezoneOffset
+}
+
+var MILLISECONDS_IN_HOUR = 3600000;
+var MILLISECONDS_IN_MINUTE$1 = 60000;
+var DEFAULT_ADDITIONAL_DIGITS = 2;
+
+var patterns = {
+  dateTimeDelimeter: /[T ]/,
+  plainTime: /:/,
+  timeZoneDelimeter: /[Z ]/i,
+
+  // year tokens
+  YY: /^(\d{2})$/,
+  YYY: [
+    /^([+-]\d{2})$/, // 0 additional digits
+    /^([+-]\d{3})$/, // 1 additional digit
+    /^([+-]\d{4})$/ // 2 additional digits
+  ],
+  YYYY: /^(\d{4})/,
+  YYYYY: [
+    /^([+-]\d{4})/, // 0 additional digits
+    /^([+-]\d{5})/, // 1 additional digit
+    /^([+-]\d{6})/ // 2 additional digits
+  ],
+
+  // date tokens
+  MM: /^-(\d{2})$/,
+  DDD: /^-?(\d{3})$/,
+  MMDD: /^-?(\d{2})-?(\d{2})$/,
+  Www: /^-?W(\d{2})$/,
+  WwwD: /^-?W(\d{2})-?(\d{1})$/,
+
+  HH: /^(\d{2}([.,]\d*)?)$/,
+  HHMM: /^(\d{2}):?(\d{2}([.,]\d*)?)$/,
+  HHMMSS: /^(\d{2}):?(\d{2}):?(\d{2}([.,]\d*)?)$/,
+
+  // timezone tokens
+  timezone: /([Z+-].*)$/,
+  timezoneZ: /^(Z)$/,
+  timezoneHH: /^([+-])(\d{2})$/,
+  timezoneHHMM: /^([+-])(\d{2}):?(\d{2})$/
+};
+
+/**
+ * @name toDate
+ * @category Common Helpers
+ * @summary Convert the given argument to an instance of Date.
+ *
+ * @description
+ * Convert the given argument to an instance of Date.
+ *
+ * If the argument is an instance of Date, the function returns its clone.
+ *
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If an argument is a string, the function tries to parse it.
+ * Function accepts complete ISO 8601 formats as well as partial implementations.
+ * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
+ * If the function cannot parse the string or the values are invalid, it returns Invalid Date.
+ *
+ * If the argument is none of the above, the function returns Invalid Date.
+ *
+ * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
+ * All *date-fns* functions will throw `RangeError` if `options.additionalDigits` is not 0, 1, 2 or undefined.
+ *
+ * @param {Date|String|Number} argument - the value to convert
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - the additional number of digits in the extended year format
+ * @returns {Date} the parsed date in the local time zone
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Convert string '2014-02-11T11:30:30' to date:
+ * var result = toDate('2014-02-11T11:30:30')
+ * //=> Tue Feb 11 2014 11:30:30
+ *
+ * @example
+ * // Convert string '+02014101' to date,
+ * // if the additional number of digits in the extended year format is 1:
+ * var result = toDate('+02014101', {additionalDigits: 1})
+ * //=> Fri Apr 11 2014 00:00:00
+ */
+function toDate (argument, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  if (argument === null) {
+    return new Date(NaN)
+  }
+
+  var options = dirtyOptions || {};
+
+  var additionalDigits = options.additionalDigits == null ? DEFAULT_ADDITIONAL_DIGITS : toInteger(options.additionalDigits);
+  if (additionalDigits !== 2 && additionalDigits !== 1 && additionalDigits !== 0) {
+    throw new RangeError('additionalDigits must be 0, 1 or 2')
+  }
+
+  // Clone the date
+  if (argument instanceof Date ||
+    (typeof argument === 'object' && Object.prototype.toString.call(argument) === '[object Date]')
+  ) {
+    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
+    return new Date(argument.getTime())
+  } else if (typeof argument === 'number' || Object.prototype.toString.call(argument) === '[object Number]') {
+    return new Date(argument)
+  } else if (!(typeof argument === 'string' || Object.prototype.toString.call(argument) === '[object String]')) {
+    return new Date(NaN)
+  }
+
+  var dateStrings = splitDateString(argument);
+
+  var parseYearResult = parseYear(dateStrings.date, additionalDigits);
+  var year = parseYearResult.year;
+  var restDateString = parseYearResult.restDateString;
+
+  var date = parseDate(restDateString, year);
+
+  if (isNaN(date)) {
+    return new Date(NaN)
+  }
+
+  if (date) {
+    var timestamp = date.getTime();
+    var time = 0;
+    var offset;
+
+    if (dateStrings.time) {
+      time = parseTime(dateStrings.time);
+
+      if (isNaN(time)) {
+        return new Date(NaN)
+      }
+    }
+
+    if (dateStrings.timezone) {
+      offset = parseTimezone(dateStrings.timezone);
+      if (isNaN(offset)) {
+        return new Date(NaN)
+      }
+    } else {
+      // get offset accurate to hour in timezones that change offset
+      offset = getTimezoneOffsetInMilliseconds(new Date(timestamp + time));
+      offset = getTimezoneOffsetInMilliseconds(new Date(timestamp + time + offset));
+    }
+
+    return new Date(timestamp + time + offset)
+  } else {
+    return new Date(NaN)
+  }
+}
+
+function splitDateString (dateString) {
+  var dateStrings = {};
+  var array = dateString.split(patterns.dateTimeDelimeter);
+  var timeString;
+
+  if (patterns.plainTime.test(array[0])) {
+    dateStrings.date = null;
+    timeString = array[0];
+  } else {
+    dateStrings.date = array[0];
+    timeString = array[1];
+    if (patterns.timeZoneDelimeter.test(dateStrings.date)) {
+      dateStrings.date = dateString.split(patterns.timeZoneDelimeter)[0];
+      timeString = dateString.substr(dateStrings.date.length, dateString.length);
+    }
+  }
+
+  if (timeString) {
+    var token = patterns.timezone.exec(timeString);
+    if (token) {
+      dateStrings.time = timeString.replace(token[1], '');
+      dateStrings.timezone = token[1];
+    } else {
+      dateStrings.time = timeString;
+    }
+  }
+
+  return dateStrings
+}
+
+function parseYear (dateString, additionalDigits) {
+  var patternYYY = patterns.YYY[additionalDigits];
+  var patternYYYYY = patterns.YYYYY[additionalDigits];
+
+  var token;
+
+  // YYYY or ±YYYYY
+  token = patterns.YYYY.exec(dateString) || patternYYYYY.exec(dateString);
+  if (token) {
+    var yearString = token[1];
+    return {
+      year: parseInt(yearString, 10),
+      restDateString: dateString.slice(yearString.length)
+    }
+  }
+
+  // YY or ±YYY
+  token = patterns.YY.exec(dateString) || patternYYY.exec(dateString);
+  if (token) {
+    var centuryString = token[1];
+    return {
+      year: parseInt(centuryString, 10) * 100,
+      restDateString: dateString.slice(centuryString.length)
+    }
+  }
+
+  // Invalid ISO-formatted year
+  return {
+    year: null
+  }
+}
+
+function parseDate (dateString, year) {
+  // Invalid ISO-formatted year
+  if (year === null) {
+    return null
+  }
+
+  var token;
+  var date;
+  var month;
+  var week;
+
+  // YYYY
+  if (dateString.length === 0) {
+    date = new Date(0);
+    date.setUTCFullYear(year);
+    return date
+  }
+
+  // YYYY-MM
+  token = patterns.MM.exec(dateString);
+  if (token) {
+    date = new Date(0);
+    month = parseInt(token[1], 10) - 1;
+
+    if (!validateDate(year, month)) {
+      return new Date(NaN)
+    }
+
+    date.setUTCFullYear(year, month);
+    return date
+  }
+
+  // YYYY-DDD or YYYYDDD
+  token = patterns.DDD.exec(dateString);
+  if (token) {
+    date = new Date(0);
+    var dayOfYear = parseInt(token[1], 10);
+
+    if (!validateDayOfYearDate(year, dayOfYear)) {
+      return new Date(NaN)
+    }
+
+    date.setUTCFullYear(year, 0, dayOfYear);
+    return date
+  }
+
+  // YYYY-MM-DD or YYYYMMDD
+  token = patterns.MMDD.exec(dateString);
+  if (token) {
+    date = new Date(0);
+    month = parseInt(token[1], 10) - 1;
+    var day = parseInt(token[2], 10);
+
+    if (!validateDate(year, month, day)) {
+      return new Date(NaN)
+    }
+
+    date.setUTCFullYear(year, month, day);
+    return date
+  }
+
+  // YYYY-Www or YYYYWww
+  token = patterns.Www.exec(dateString);
+  if (token) {
+    week = parseInt(token[1], 10) - 1;
+
+    if (!validateWeekDate(year, week)) {
+      return new Date(NaN)
+    }
+
+    return dayOfISOWeekYear(year, week)
+  }
+
+  // YYYY-Www-D or YYYYWwwD
+  token = patterns.WwwD.exec(dateString);
+  if (token) {
+    week = parseInt(token[1], 10) - 1;
+    var dayOfWeek = parseInt(token[2], 10) - 1;
+
+    if (!validateWeekDate(year, week, dayOfWeek)) {
+      return new Date(NaN)
+    }
+
+    return dayOfISOWeekYear(year, week, dayOfWeek)
+  }
+
+  // Invalid ISO-formatted date
+  return null
+}
+
+function parseTime (timeString) {
+  var token;
+  var hours;
+  var minutes;
+
+  // hh
+  token = patterns.HH.exec(timeString);
+  if (token) {
+    hours = parseFloat(token[1].replace(',', '.'));
+
+    if (!validateTime(hours)) {
+      return NaN
+    }
+
+    return (hours % 24) * MILLISECONDS_IN_HOUR
+  }
+
+  // hh:mm or hhmm
+  token = patterns.HHMM.exec(timeString);
+  if (token) {
+    hours = parseInt(token[1], 10);
+    minutes = parseFloat(token[2].replace(',', '.'));
+
+    if (!validateTime(hours, minutes)) {
+      return NaN
+    }
+
+    return (hours % 24) * MILLISECONDS_IN_HOUR +
+      minutes * MILLISECONDS_IN_MINUTE$1
+  }
+
+  // hh:mm:ss or hhmmss
+  token = patterns.HHMMSS.exec(timeString);
+  if (token) {
+    hours = parseInt(token[1], 10);
+    minutes = parseInt(token[2], 10);
+    var seconds = parseFloat(token[3].replace(',', '.'));
+
+    if (!validateTime(hours, minutes, seconds)) {
+      return NaN
+    }
+
+    return (hours % 24) * MILLISECONDS_IN_HOUR +
+      minutes * MILLISECONDS_IN_MINUTE$1 +
+      seconds * 1000
+  }
+
+  // Invalid ISO-formatted time
+  return null
+}
+
+function parseTimezone (timezoneString) {
+  var token;
+  var absoluteOffset;
+
+  // Z
+  token = patterns.timezoneZ.exec(timezoneString);
+  if (token) {
+    return 0
+  }
+
+  var hours;
+
+  // ±hh
+  token = patterns.timezoneHH.exec(timezoneString);
+  if (token) {
+    hours = parseInt(token[2], 10);
+
+    if (!validateTimezone(hours)) {
+      return NaN
+    }
+
+    absoluteOffset = hours * MILLISECONDS_IN_HOUR;
+    return (token[1] === '+') ? -absoluteOffset : absoluteOffset
+  }
+
+  // ±hh:mm or ±hhmm
+  token = patterns.timezoneHHMM.exec(timezoneString);
+  if (token) {
+    hours = parseInt(token[2], 10);
+    var minutes = parseInt(token[3], 10);
+
+    if (!validateTimezone(hours, minutes)) {
+      return NaN
+    }
+
+    absoluteOffset = hours * MILLISECONDS_IN_HOUR + minutes * MILLISECONDS_IN_MINUTE$1;
+    return (token[1] === '+') ? -absoluteOffset : absoluteOffset
+  }
+
+  return 0
+}
+
+function dayOfISOWeekYear (isoWeekYear, week, day) {
+  week = week || 0;
+  day = day || 0;
+  var date = new Date(0);
+  date.setUTCFullYear(isoWeekYear, 0, 4);
+  var fourthOfJanuaryDay = date.getUTCDay() || 7;
+  var diff = week * 7 + day + 1 - fourthOfJanuaryDay;
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date
+}
+
+// Validation functions
+
+var DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var DAYS_IN_MONTH_LEAP_YEAR = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+function isLeapYearIndex (year) {
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0)
+}
+
+function validateDate (year, month, date) {
+  if (month < 0 || month > 11) {
+    return false
+  }
+
+  if (date != null) {
+    if (date < 1) {
+      return false
+    }
+
+    var isLeapYear = isLeapYearIndex(year);
+    if (isLeapYear && date > DAYS_IN_MONTH_LEAP_YEAR[month]) {
+      return false
+    }
+    if (!isLeapYear && date > DAYS_IN_MONTH[month]) {
+      return false
+    }
+  }
+
+  return true
+}
+
+function validateDayOfYearDate (year, dayOfYear) {
+  if (dayOfYear < 1) {
+    return false
+  }
+
+  var isLeapYear = isLeapYearIndex(year);
+  if (isLeapYear && dayOfYear > 366) {
+    return false
+  }
+  if (!isLeapYear && dayOfYear > 365) {
+    return false
+  }
+
+  return true
+}
+
+function validateWeekDate (year, week, day) {
+  if (week < 0 || week > 52) {
+    return false
+  }
+
+  if (day != null && (day < 0 || day > 6)) {
+    return false
+  }
+
+  return true
+}
+
+function validateTime (hours, minutes, seconds) {
+  if (hours != null && (hours < 0 || hours >= 25)) {
+    return false
+  }
+
+  if (minutes != null && (minutes < 0 || minutes >= 60)) {
+    return false
+  }
+
+  if (seconds != null && (seconds < 0 || seconds >= 60)) {
+    return false
+  }
+
+  return true
+}
+
+function validateTimezone (hours, minutes) {
+  if (minutes != null && (minutes < 0 || minutes > 59)) {
+    return false
+  }
+
+  return true
+}
+
+/**
+ * @name addMilliseconds
+ * @category Millisecond Helpers
+ * @summary Add the specified number of milliseconds to the given date.
+ *
+ * @description
+ * Add the specified number of milliseconds to the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} amount - the amount of milliseconds to be added
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the milliseconds added
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Add 750 milliseconds to 10 July 2014 12:45:30.000:
+ * var result = addMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+ * //=> Thu Jul 10 2014 12:45:30.750
+ */
+function addMilliseconds (dirtyDate, dirtyAmount, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var timestamp = toDate(dirtyDate, dirtyOptions).getTime();
+  var amount = toInteger(dirtyAmount);
+  return new Date(timestamp + amount)
+}
+
+/**
+ * @name isValid
+ * @category Common Helpers
+ * @summary Is the given date valid?
+ *
+ * @description
+ * Returns false if argument is Invalid Date and true otherwise.
+ * Argument is converted to Date using `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * Invalid Date is a Date, whose time value is NaN.
+ *
+ * Time value of Date: http://es5.github.io/#x15.9.1.1
+ *
+ * @param {*} date - the date to check
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the date is valid
+ * @throws {TypeError} 1 argument required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // For the valid date:
+ * var result = isValid(new Date(2014, 1, 31))
+ * //=> true
+ *
+ * @example
+ * // For the value, convertable into a date:
+ * var result = isValid('2014-02-31')
+ * //=> true
+ *
+ * @example
+ * // For the invalid date:
+ * var result = isValid(new Date(''))
+ * //=> false
+ */
+function isValid (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  return !isNaN(date)
+}
+
+var formatDistanceLocale = {
+  lessThanXSeconds: {
+    one: 'less than a second',
+    other: 'less than {{count}} seconds'
+  },
+
+  xSeconds: {
+    one: '1 second',
+    other: '{{count}} seconds'
+  },
+
+  halfAMinute: 'half a minute',
+
+  lessThanXMinutes: {
+    one: 'less than a minute',
+    other: 'less than {{count}} minutes'
+  },
+
+  xMinutes: {
+    one: '1 minute',
+    other: '{{count}} minutes'
+  },
+
+  aboutXHours: {
+    one: 'about 1 hour',
+    other: 'about {{count}} hours'
+  },
+
+  xHours: {
+    one: '1 hour',
+    other: '{{count}} hours'
+  },
+
+  xDays: {
+    one: '1 day',
+    other: '{{count}} days'
+  },
+
+  aboutXMonths: {
+    one: 'about 1 month',
+    other: 'about {{count}} months'
+  },
+
+  xMonths: {
+    one: '1 month',
+    other: '{{count}} months'
+  },
+
+  aboutXYears: {
+    one: 'about 1 year',
+    other: 'about {{count}} years'
+  },
+
+  xYears: {
+    one: '1 year',
+    other: '{{count}} years'
+  },
+
+  overXYears: {
+    one: 'over 1 year',
+    other: 'over {{count}} years'
+  },
+
+  almostXYears: {
+    one: 'almost 1 year',
+    other: 'almost {{count}} years'
+  }
+};
+
+function formatDistance (token, count, options) {
+  options = options || {};
+
+  var result;
+  if (typeof formatDistanceLocale[token] === 'string') {
+    result = formatDistanceLocale[token];
+  } else if (count === 1) {
+    result = formatDistanceLocale[token].one;
+  } else {
+    result = formatDistanceLocale[token].other.replace('{{count}}', count);
+  }
+
+  if (options.addSuffix) {
+    if (options.comparison > 0) {
+      return 'in ' + result
+    } else {
+      return result + ' ago'
+    }
+  }
+
+  return result
+}
+
+function buildFormatLongFn (args) {
+  return function (dirtyOptions) {
+    var options = dirtyOptions || {};
+    var width = options.width ? String(options.width) : args.defaultWidth;
+    var format = args.formats[width] || args.formats[args.defaultWidth];
+    return format
+  }
+}
+
+var dateFormats = {
+  full: 'EEEE, MMMM do, y',
+  long: 'MMMM do, y',
+  medium: 'MMM d, y',
+  short: 'MM/dd/yyyy'
+};
+
+var timeFormats = {
+  full: 'h:mm:ss a zzzz',
+  long: 'h:mm:ss a z',
+  medium: 'h:mm:ss a',
+  short: 'h:mm a'
+};
+
+var dateTimeFormats = {
+  full: "{{date}} 'at' {{time}}",
+  long: "{{date}} 'at' {{time}}",
+  medium: '{{date}}, {{time}}',
+  short: '{{date}}, {{time}}'
+};
+
+var formatLong = {
+  date: buildFormatLongFn({
+    formats: dateFormats,
+    defaultWidth: 'full'
+  }),
+
+  time: buildFormatLongFn({
+    formats: timeFormats,
+    defaultWidth: 'full'
+  }),
+
+  dateTime: buildFormatLongFn({
+    formats: dateTimeFormats,
+    defaultWidth: 'full'
+  })
+};
+
+var formatRelativeLocale = {
+  lastWeek: "'last' eeee 'at' p",
+  yesterday: "'yesterday at' p",
+  today: "'today at' p",
+  tomorrow: "'tomorrow at' p",
+  nextWeek: "eeee 'at' p",
+  other: 'P'
+};
+
+function formatRelative (token, date, baseDate, options) {
+  return formatRelativeLocale[token]
+}
+
+function buildLocalizeFn (args) {
+  return function (dirtyIndex, dirtyOptions) {
+    var options = dirtyOptions || {};
+    var width = options.width ? String(options.width) : args.defaultWidth;
+    var context = options.context ? String(options.context) : 'standalone';
+
+    var valuesArray;
+    if (context === 'formatting' && args.formattingValues) {
+      valuesArray = args.formattingValues[width] || args.formattingValues[args.defaultFormattingWidth];
+    } else {
+      valuesArray = args.values[width] || args.values[args.defaultWidth];
+    }
+    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex;
+    return valuesArray[index]
+  }
+}
+
+var eraValues = {
+  narrow: ['B', 'A'],
+  abbreviated: ['BC', 'AD'],
+  wide: ['Before Christ', 'Anno Domini']
+};
+
+var quarterValues = {
+  narrow: ['1', '2', '3', '4'],
+  abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
+  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
+};
+
+// Note: in English, the names of days of the week and months are capitalized.
+// If you are making a new locale based on this one, check if the same is true for the language you're working on.
+// Generally, formatted dates should look like they are in the middle of a sentence,
+// e.g. in Spanish language the weekdays and months should be in the lowercase.
+var monthValues = {
+  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+  abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+};
+
+var dayValues = {
+  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+};
+
+var dayPeriodValues = {
+  narrow: {
+    am: 'a',
+    pm: 'p',
+    midnight: 'mi',
+    noon: 'n',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  },
+  abbreviated: {
+    am: 'AM',
+    pm: 'PM',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  },
+  wide: {
+    am: 'a.m.',
+    pm: 'p.m.',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  }
+};
+var formattingDayPeriodValues = {
+  narrow: {
+    am: 'a',
+    pm: 'p',
+    midnight: 'mi',
+    noon: 'n',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  },
+  abbreviated: {
+    am: 'AM',
+    pm: 'PM',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  },
+  wide: {
+    am: 'a.m.',
+    pm: 'p.m.',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  }
+};
+
+function ordinalNumber (dirtyNumber, dirtyOptions) {
+  var number = Number(dirtyNumber);
+
+  // If ordinal numbers depend on context, for example,
+  // if they are different for different grammatical genders,
+  // use `options.unit`:
+  //
+  //   var options = dirtyOptions || {}
+  //   var unit = String(options.unit)
+  //
+  // where `unit` can be 'year', 'quarter', 'month', 'week', 'date', 'dayOfYear',
+  // 'day', 'hour', 'minute', 'second'
+
+  var rem100 = number % 100;
+  if (rem100 > 20 || rem100 < 10) {
+    switch (rem100 % 10) {
+      case 1:
+        return number + 'st'
+      case 2:
+        return number + 'nd'
+      case 3:
+        return number + 'rd'
+    }
+  }
+  return number + 'th'
+}
+
+var localize = {
+  ordinalNumber: ordinalNumber,
+
+  era: buildLocalizeFn({
+    values: eraValues,
+    defaultWidth: 'wide'
+  }),
+
+  quarter: buildLocalizeFn({
+    values: quarterValues,
+    defaultWidth: 'wide',
+    argumentCallback: function (quarter) {
+      return Number(quarter) - 1
+    }
+  }),
+
+  month: buildLocalizeFn({
+    values: monthValues,
+    defaultWidth: 'wide'
+  }),
+
+  day: buildLocalizeFn({
+    values: dayValues,
+    defaultWidth: 'wide'
+  }),
+
+  dayPeriod: buildLocalizeFn({
+    values: dayPeriodValues,
+    defaultWidth: 'wide',
+    formattingValues: formattingDayPeriodValues,
+    defaulFormattingWidth: 'wide'
+  })
+};
+
+function buildMatchPatternFn (args) {
+  return function (dirtyString, dirtyOptions) {
+    var string = String(dirtyString);
+    var options = dirtyOptions || {};
+
+    var matchResult = string.match(args.matchPattern);
+    if (!matchResult) {
+      return null
+    }
+    var matchedString = matchResult[0];
+
+    var parseResult = string.match(args.parsePattern);
+    if (!parseResult) {
+      return null
+    }
+    var value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
+    value = options.valueCallback ? options.valueCallback(value) : value;
+
+    return {
+      value: value,
+      rest: string.slice(matchedString.length)
+    }
+  }
+}
+
+function buildMatchFn (args) {
+  return function (dirtyString, dirtyOptions) {
+    var string = String(dirtyString);
+    var options = dirtyOptions || {};
+    var width = options.width;
+
+    var matchPattern = (width && args.matchPatterns[width]) || args.matchPatterns[args.defaultMatchWidth];
+    var matchResult = string.match(matchPattern);
+
+    if (!matchResult) {
+      return null
+    }
+    var matchedString = matchResult[0];
+
+    var parsePatterns = (width && args.parsePatterns[width]) || args.parsePatterns[args.defaultParseWidth];
+
+    var value;
+    if (Object.prototype.toString.call(parsePatterns) === '[object Array]') {
+      value = parsePatterns.findIndex(function (pattern) {
+        return pattern.test(string)
+      });
+    } else {
+      value = findKey(parsePatterns, function (pattern) {
+        return pattern.test(string)
+      });
+    }
+
+    value = args.valueCallback ? args.valueCallback(value) : value;
+    value = options.valueCallback ? options.valueCallback(value) : value;
+
+    return {
+      value: value,
+      rest: string.slice(matchedString.length)
+    }
+  }
+}
+
+function findKey (object, predicate) {
+  for (var key in object) {
+    if (object.hasOwnProperty(key) && predicate(object[key])) {
+      return key
+    }
+  }
+}
+
+var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
+var parseOrdinalNumberPattern = /\d+/i;
+
+var matchEraPatterns = {
+  narrow: /^(b|a)/i,
+  abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
+  wide: /^(before christ|before common era|anno domini|common era)/i
+};
+var parseEraPatterns = {
+  any: [/^b/i, /^(a|c)/i]
+};
+
+var matchQuarterPatterns = {
+  narrow: /^[1234]/i,
+  abbreviated: /^q[1234]/i,
+  wide: /^[1234](th|st|nd|rd)? quarter/i
+};
+var parseQuarterPatterns = {
+  any: [/1/i, /2/i, /3/i, /4/i]
+};
+
+var matchMonthPatterns = {
+  narrow: /^[jfmasond]/i,
+  abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
+  wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
+};
+var parseMonthPatterns = {
+  narrow: [/^j/i, /^f/i, /^m/i, /^a/i, /^m/i, /^j/i, /^j/i, /^a/i, /^s/i, /^o/i, /^n/i, /^d/i],
+  any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i, /^n/i, /^d/i]
+};
+
+var matchDayPatterns = {
+  narrow: /^[smtwf]/i,
+  short: /^(su|mo|tu|we|th|fr|sa)/i,
+  abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
+  wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
+};
+var parseDayPatterns = {
+  narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+};
+
+var matchDayPeriodPatterns = {
+  narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+};
+var parseDayPeriodPatterns = {
+  any: {
+    am: /^a/i,
+    pm: /^p/i,
+    midnight: /^mi/i,
+    noon: /^no/i,
+    morning: /morning/i,
+    afternoon: /afternoon/i,
+    evening: /evening/i,
+    night: /night/i
+  }
+};
+
+var match = {
+  ordinalNumber: buildMatchPatternFn({
+    matchPattern: matchOrdinalNumberPattern,
+    parsePattern: parseOrdinalNumberPattern,
+    valueCallback: function (value) {
+      return parseInt(value, 10)
+    }
+  }),
+
+  era: buildMatchFn({
+    matchPatterns: matchEraPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseEraPatterns,
+    defaultParseWidth: 'any'
+  }),
+
+  quarter: buildMatchFn({
+    matchPatterns: matchQuarterPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseQuarterPatterns,
+    defaultParseWidth: 'any',
+    valueCallback: function (index) {
+      return index + 1
+    }
+  }),
+
+  month: buildMatchFn({
+    matchPatterns: matchMonthPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseMonthPatterns,
+    defaultParseWidth: 'any'
+  }),
+
+  day: buildMatchFn({
+    matchPatterns: matchDayPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseDayPatterns,
+    defaultParseWidth: 'any'
+  }),
+
+  dayPeriod: buildMatchFn({
+    matchPatterns: matchDayPeriodPatterns,
+    defaultMatchWidth: 'any',
+    parsePatterns: parseDayPeriodPatterns,
+    defaultParseWidth: 'any'
+  })
+};
+
+/**
+ * @type {Locale}
+ * @category Locales
+ * @summary English locale (United States).
+ * @language English
+ * @iso-639-2 eng
+ * @author Sasha Koss [@kossnocorp]{@link https://github.com/kossnocorp}
+ * @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
+ */
+var locale$1 = {
+  formatDistance: formatDistance,
+  formatLong: formatLong,
+  formatRelative: formatRelative,
+  localize: localize,
+  match: match,
+  options: {
+    weekStartsOn: 0 /* Sunday */,
+    firstWeekContainsDate: 1
+  }
+};
+
+var MILLISECONDS_IN_DAY = 86400000;
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCDayOfYear (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var timestamp = date.getTime();
+  date.setUTCMonth(0, 1);
+  date.setUTCHours(0, 0, 0, 0);
+  var startOfYearTimestamp = date.getTime();
+  var difference = timestamp - startOfYearTimestamp;
+  return Math.floor(difference / MILLISECONDS_IN_DAY) + 1
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function startOfUTCISOWeek (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var weekStartsOn = 1;
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCISOWeekYear (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var year = date.getUTCFullYear();
+
+  var fourthOfJanuaryOfNextYear = new Date(0);
+  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
+  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = startOfUTCISOWeek(fourthOfJanuaryOfNextYear, dirtyOptions);
+
+  var fourthOfJanuaryOfThisYear = new Date(0);
+  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
+  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = startOfUTCISOWeek(fourthOfJanuaryOfThisYear, dirtyOptions);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year
+  } else {
+    return year - 1
+  }
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function startOfUTCISOWeekYear (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var year = getUTCISOWeekYear(dirtyDate, dirtyOptions);
+  var fourthOfJanuary = new Date(0);
+  fourthOfJanuary.setUTCFullYear(year, 0, 4);
+  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
+  var date = startOfUTCISOWeek(fourthOfJanuary, dirtyOptions);
+  return date
+}
+
+var MILLISECONDS_IN_WEEK = 604800000;
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCISOWeek (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var diff = startOfUTCISOWeek(date, dirtyOptions).getTime() - startOfUTCISOWeekYear(date, dirtyOptions).getTime();
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function startOfUTCWeek (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : toInteger(options.weekStartsOn);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively')
+  }
+
+  var date = toDate(dirtyDate, options);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCWeekYear (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var year = date.getUTCFullYear();
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeFirstWeekContainsDate = locale &&
+    locale.options &&
+    locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate =
+    localeFirstWeekContainsDate == null
+      ? 1
+      : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate =
+    options.firstWeekContainsDate == null
+      ? defaultFirstWeekContainsDate
+      : toInteger(options.firstWeekContainsDate);
+
+  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively')
+  }
+
+  var firstWeekOfNextYear = new Date(0);
+  firstWeekOfNextYear.setUTCFullYear(year + 1, 0, firstWeekContainsDate);
+  firstWeekOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = startOfUTCWeek(firstWeekOfNextYear, dirtyOptions);
+
+  var firstWeekOfThisYear = new Date(0);
+  firstWeekOfThisYear.setUTCFullYear(year, 0, firstWeekContainsDate);
+  firstWeekOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = startOfUTCWeek(firstWeekOfThisYear, dirtyOptions);
+
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year
+  } else {
+    return year - 1
+  }
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function startOfUTCWeekYear (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeFirstWeekContainsDate = locale &&
+    locale.options &&
+    locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate =
+    localeFirstWeekContainsDate == null
+      ? 1
+      : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate =
+    options.firstWeekContainsDate == null
+      ? defaultFirstWeekContainsDate
+      : toInteger(options.firstWeekContainsDate);
+
+  var year = getUTCWeekYear(dirtyDate, dirtyOptions);
+  var firstWeek = new Date(0);
+  firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
+  firstWeek.setUTCHours(0, 0, 0, 0);
+  var date = startOfUTCWeek(firstWeek, dirtyOptions);
+  return date
+}
+
+var MILLISECONDS_IN_WEEK$1 = 604800000;
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function getUTCWeek (dirtyDate, dirtyOptions) {
+  if (arguments.length < 1) {
+    throw new TypeError('1 argument required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var diff = startOfUTCWeek(date, dirtyOptions).getTime() - startOfUTCWeekYear(date, dirtyOptions).getTime();
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK$1) + 1
+}
+
+var dayPeriodEnum = {
+  am: 'am',
+  pm: 'pm',
+  midnight: 'midnight',
+  noon: 'noon',
+  morning: 'morning',
+  afternoon: 'afternoon',
+  evening: 'evening',
+  night: 'night'
+};
+
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+ * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+ * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+ * |  d  | Day of month                   |  D  | Day of year                    |
+ * |  e  | Local day of week              |  E  | Day of week                    |
+ * |  f  |                                |  F* | Day of week in month           |
+ * |  g* | Modified Julian day            |  G  | Era                            |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  i! | ISO day of week                |  I! | ISO week of year               |
+ * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+ * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+ * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  n  |                                |  N  |                                |
+ * |  o! | Ordinal number modifier        |  O  | Timezone (GMT)                 |
+ * |  p! | Long localized time            |  P! | Long localized date            |
+ * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+ * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+ * |  u  | Extended year                  |  U* | Cyclic year                    |
+ * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+ * |  w  | Local week of year             |  W* | Week of month                  |
+ * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+ * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+ * |  z  | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ *
+ * Letters marked by ! are non-standard, but implemented by date-fns:
+ * - `o` modifies the previous token to turn it into an ordinal (see `format` docs)
+ * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+ *   i.e. 7 for Sunday, 1 for Monday, etc.
+ * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+ * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+ *   `R` is supposed to be used in conjunction with `I` and `i`
+ *   for universal ISO week-numbering date, whereas
+ *   `Y` is supposed to be used in conjunction with `w` and `e`
+ *   for week-numbering date specific to the locale.
+ * - `P` is long localized date format
+ * - `p` is long localized time format
+ */
+
+var formatters = {
+  // Era
+  G: function (date, token, localize) {
+    var era = date.getUTCFullYear() > 0 ? 1 : 0;
+    switch (token) {
+      // AD, BC
+      case 'G':
+      case 'GG':
+      case 'GGG':
+        return localize.era(era, {width: 'abbreviated'})
+      // A, B
+      case 'GGGGG':
+        return localize.era(era, {width: 'narrow'})
+      // Anno Domini, Before Christ
+      case 'GGGG':
+      default:
+        return localize.era(era, {width: 'wide'})
+    }
+  },
+
+  // Year
+  y: function (date, token, localize, options) {
+    // From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_tokens
+    // | Year     |     y | yy |   yyy |  yyyy | yyyyy |
+    // |----------|-------|----|-------|-------|-------|
+    // | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
+    // | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
+    // | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
+    // | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
+    // | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
+
+    var signedYear = date.getUTCFullYear();
+
+    // Returns 1 for 1 BC (which is year 0 in JavaScript)
+    var year = signedYear > 0 ? signedYear : 1 - signedYear;
+
+    // Two digit year
+    if (token === 'yy') {
+      var twoDigitYear = year % 100;
+      return addLeadingZeros(twoDigitYear, 2)
+    }
+
+    // Ordinal number
+    if (token === 'yo') {
+      return localize.ordinalNumber(year, {unit: 'year'})
+    }
+
+    // Padding
+    return addLeadingZeros(year, token.length)
+  },
+
+  // Local week-numbering year
+  Y: function (date, token, localize, options) {
+    var signedWeekYear = getUTCWeekYear(date, options);
+    var weekYear = signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear;
+
+    // Two digit year
+    if (token === 'YY') {
+      var twoDigitYear = weekYear % 100;
+      return addLeadingZeros(twoDigitYear, 2)
+    }
+
+    // Ordinal number
+    if (token === 'Yo') {
+      return localize.ordinalNumber(weekYear, {unit: 'year'})
+    }
+
+    // Padding
+    return addLeadingZeros(weekYear, token.length)
+  },
+
+  // ISO week-numbering year
+  R: function (date, token, localize, options) {
+    var isoWeekYear = getUTCISOWeekYear(date, options);
+
+    // Padding
+    return addLeadingZeros(isoWeekYear, token.length)
+  },
+
+  // Extended year. This is a single number designating the year of this calendar system.
+  // The main difference between `y` and `u` localizers are B.C. years:
+  // | Year | `y` | `u` |
+  // |------|-----|-----|
+  // | AC 1 |   1 |   1 |
+  // | BC 1 |   1 |   0 |
+  // | BC 2 |   2 |  -1 |
+  // Also `yy` always returns the last two digits of a year,
+  // while `uu` pads single digit years to 2 characters and returns other years unchanged.
+  u: function (date, token, localize, options) {
+    var year = date.getUTCFullYear();
+    return addLeadingZeros(year, token.length)
+  },
+
+  // Quarter
+  Q: function (date, token, localize, options) {
+    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+    switch (token) {
+      // 1, 2, 3, 4
+      case 'Q':
+        return String(quarter)
+      // 01, 02, 03, 04
+      case 'QQ':
+        return addLeadingZeros(quarter, 2)
+      // 1st, 2nd, 3rd, 4th
+      case 'Qo':
+        return localize.ordinalNumber(quarter, {unit: 'quarter'})
+      // Q1, Q2, Q3, Q4
+      case 'QQQ':
+        return localize.quarter(quarter, {width: 'abbreviated', context: 'formatting'})
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+      case 'QQQQQ':
+        return localize.quarter(quarter, {width: 'narrow', context: 'formatting'})
+      // 1st quarter, 2nd quarter, ...
+      case 'QQQQ':
+      default:
+        return localize.quarter(quarter, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // Stand-alone quarter
+  q: function (date, token, localize, options) {
+    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+    switch (token) {
+      // 1, 2, 3, 4
+      case 'q':
+        return String(quarter)
+      // 01, 02, 03, 04
+      case 'qq':
+        return addLeadingZeros(quarter, 2)
+      // 1st, 2nd, 3rd, 4th
+      case 'qo':
+        return localize.ordinalNumber(quarter, {unit: 'quarter'})
+      // Q1, Q2, Q3, Q4
+      case 'qqq':
+        return localize.quarter(quarter, {width: 'abbreviated', context: 'standalone'})
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+      case 'qqqqq':
+        return localize.quarter(quarter, {width: 'narrow', context: 'standalone'})
+      // 1st quarter, 2nd quarter, ...
+      case 'qqqq':
+      default:
+        return localize.quarter(quarter, {width: 'wide', context: 'standalone'})
+    }
+  },
+
+  // Month
+  M: function (date, token, localize, options) {
+    var month = date.getUTCMonth();
+    switch (token) {
+      // 1, 2, ..., 12
+      case 'M':
+        return String(month + 1)
+      // 01, 02, ..., 12
+      case 'MM':
+        return addLeadingZeros(month + 1, 2)
+      // 1st, 2nd, ..., 12th
+      case 'Mo':
+        return localize.ordinalNumber(month + 1, {unit: 'month'})
+      // Jan, Feb, ..., Dec
+      case 'MMM':
+        return localize.month(month, {width: 'abbreviated', context: 'formatting'})
+      // J, F, ..., D
+      case 'MMMMM':
+        return localize.month(month, {width: 'narrow', context: 'formatting'})
+      // January, February, ..., December
+      case 'MMMM':
+      default:
+        return localize.month(month, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // Stand-alone month
+  L: function (date, token, localize, options) {
+    var month = date.getUTCMonth();
+    switch (token) {
+      // 1, 2, ..., 12
+      case 'L':
+        return String(month + 1)
+      // 01, 02, ..., 12
+      case 'LL':
+        return addLeadingZeros(month + 1, 2)
+      // 1st, 2nd, ..., 12th
+      case 'Lo':
+        return localize.ordinalNumber(month + 1, {unit: 'month'})
+      // Jan, Feb, ..., Dec
+      case 'LLL':
+        return localize.month(month, {width: 'abbreviated', context: 'standalone'})
+      // J, F, ..., D
+      case 'LLLLL':
+        return localize.month(month, {width: 'narrow', context: 'standalone'})
+      // January, February, ..., December
+      case 'LLLL':
+      default:
+        return localize.month(month, {width: 'wide', context: 'standalone'})
+    }
+  },
+
+  // Local week of year
+  w: function (date, token, localize, options) {
+    var week = getUTCWeek(date, options);
+
+    if (token === 'wo') {
+      return localize.ordinalNumber(week, {unit: 'week'})
+    }
+
+    return addLeadingZeros(week, token.length)
+  },
+
+  // ISO week of year
+  I: function (date, token, localize, options) {
+    var isoWeek = getUTCISOWeek(date, options);
+
+    if (token === 'Io') {
+      return localize.ordinalNumber(isoWeek, {unit: 'week'})
+    }
+
+    return addLeadingZeros(isoWeek, token.length)
+  },
+
+  // Day of the month
+  d: function (date, token, localize, options) {
+    var dayOfMonth = date.getUTCDate();
+
+    if (token === 'do') {
+      return localize.ordinalNumber(dayOfMonth, {unit: 'date'})
+    }
+
+    return addLeadingZeros(dayOfMonth, token.length)
+  },
+
+  // Day of year
+  D: function (date, token, localize, options) {
+    var dayOfYear = getUTCDayOfYear(date, options);
+
+    if (token === 'Do') {
+      return localize.ordinalNumber(dayOfYear, {unit: 'dayOfYear'})
+    }
+
+    return addLeadingZeros(dayOfYear, token.length)
+  },
+
+  // Day of week
+  E: function (date, token, localize, options) {
+    var dayOfWeek = date.getUTCDay();
+    switch (token) {
+      // Tue
+      case 'E':
+      case 'EE':
+      case 'EEE':
+        return localize.day(dayOfWeek, {width: 'abbreviated', context: 'formatting'})
+      // T
+      case 'EEEEE':
+        return localize.day(dayOfWeek, {width: 'narrow', context: 'formatting'})
+      // Tu
+      case 'EEEEEE':
+        return localize.day(dayOfWeek, {width: 'short', context: 'formatting'})
+      // Tuesday
+      case 'EEEE':
+      default:
+        return localize.day(dayOfWeek, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // Local day of week
+  e: function (date, token, localize, options) {
+    var dayOfWeek = date.getUTCDay();
+    var localDayOfWeek = ((dayOfWeek - options.weekStartsOn + 8) % 7) || 7;
+    switch (token) {
+      // Numerical value (Nth day of week with current locale or weekStartsOn)
+      case 'e':
+        return String(localDayOfWeek)
+      // Padded numerical value
+      case 'ee':
+        return addLeadingZeros(localDayOfWeek, 2)
+      // 1st, 2nd, ..., 7th
+      case 'eo':
+        return localize.ordinalNumber(localDayOfWeek, {unit: 'day'})
+      case 'eee':
+        return localize.day(dayOfWeek, {width: 'abbreviated', context: 'formatting'})
+      // T
+      case 'eeeee':
+        return localize.day(dayOfWeek, {width: 'narrow', context: 'formatting'})
+      // Tu
+      case 'eeeeee':
+        return localize.day(dayOfWeek, {width: 'short', context: 'formatting'})
+      // Tuesday
+      case 'eeee':
+      default:
+        return localize.day(dayOfWeek, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // Stand-alone local day of week
+  c: function (date, token, localize, options) {
+    var dayOfWeek = date.getUTCDay();
+    var localDayOfWeek = ((dayOfWeek - options.weekStartsOn + 8) % 7) || 7;
+    switch (token) {
+      // Numerical value (same as in `e`)
+      case 'c':
+        return String(localDayOfWeek)
+      // Padded numberical value
+      case 'cc':
+        return addLeadingZeros(localDayOfWeek, token.length)
+      // 1st, 2nd, ..., 7th
+      case 'co':
+        return localize.ordinalNumber(localDayOfWeek, {unit: 'day'})
+      case 'ccc':
+        return localize.day(dayOfWeek, {width: 'abbreviated', context: 'standalone'})
+      // T
+      case 'ccccc':
+        return localize.day(dayOfWeek, {width: 'narrow', context: 'standalone'})
+      // Tu
+      case 'cccccc':
+        return localize.day(dayOfWeek, {width: 'short', context: 'standalone'})
+      // Tuesday
+      case 'cccc':
+      default:
+        return localize.day(dayOfWeek, {width: 'wide', context: 'standalone'})
+    }
+  },
+
+  // ISO day of week
+  i: function (date, token, localize, options) {
+    var dayOfWeek = date.getUTCDay();
+    var isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
+    switch (token) {
+      // 2
+      case 'i':
+        return String(isoDayOfWeek)
+      // 02
+      case 'ii':
+        return addLeadingZeros(isoDayOfWeek, token.length)
+      // 2nd
+      case 'io':
+        return localize.ordinalNumber(isoDayOfWeek, {unit: 'day'})
+      // Tue
+      case 'iii':
+        return localize.day(dayOfWeek, {width: 'abbreviated', context: 'formatting'})
+      // T
+      case 'iiiii':
+        return localize.day(dayOfWeek, {width: 'narrow', context: 'formatting'})
+      // Tu
+      case 'iiiiii':
+        return localize.day(dayOfWeek, {width: 'short', context: 'formatting'})
+      // Tuesday
+      case 'iiii':
+      default:
+        return localize.day(dayOfWeek, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // AM or PM
+  a: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    var dayPeriodEnumValue = (hours / 12) >= 1 ? 'pm' : 'am';
+
+    switch (token) {
+      case 'a':
+      case 'aa':
+      case 'aaa':
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'abbreviated', context: 'formatting'})
+      case 'aaaaa':
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'narrow', context: 'formatting'})
+      case 'aaaa':
+      default:
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // AM, PM, midnight, noon
+  b: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    var dayPeriodEnumValue;
+    if (hours === 12) {
+      dayPeriodEnumValue = dayPeriodEnum.noon;
+    } else if (hours === 0) {
+      dayPeriodEnumValue = dayPeriodEnum.midnight;
+    } else {
+      dayPeriodEnumValue = (hours / 12) >= 1 ? 'pm' : 'am';
+    }
+
+    switch (token) {
+      case 'b':
+      case 'bb':
+      case 'bbb':
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'abbreviated', context: 'formatting'})
+      case 'bbbbb':
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'narrow', context: 'formatting'})
+      case 'bbbb':
+      default:
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // in the morning, in the afternoon, in the evening, at night
+  B: function (date, token, localize) {
+    var hours = date.getUTCHours();
+    var dayPeriodEnumValue;
+    if (hours >= 17) {
+      dayPeriodEnumValue = dayPeriodEnum.evening;
+    } else if (hours >= 12) {
+      dayPeriodEnumValue = dayPeriodEnum.afternoon;
+    } else if (hours >= 4) {
+      dayPeriodEnumValue = dayPeriodEnum.morning;
+    } else {
+      dayPeriodEnumValue = dayPeriodEnum.night;
+    }
+
+    switch (token) {
+      case 'B':
+      case 'BB':
+      case 'BBB':
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'abbreviated', context: 'formatting'})
+      case 'BBBBB':
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'narrow', context: 'formatting'})
+      case 'BBBB':
+      default:
+        return localize.dayPeriod(dayPeriodEnumValue, {width: 'wide', context: 'formatting'})
+    }
+  },
+
+  // Hour [1-12]
+  h: function (date, token, localize, options) {
+    var hours = date.getUTCHours() % 12;
+
+    if (hours === 0) {
+      hours = 12;
+    }
+
+    if (token === 'ho') {
+      return localize.ordinalNumber(hours, {unit: 'hour'})
+    }
+
+    return addLeadingZeros(hours, token.length)
+  },
+
+  // Hour [0-23]
+  H: function (date, token, localize, options) {
+    var hours = date.getUTCHours();
+
+    if (token === 'Ho') {
+      return localize.ordinalNumber(hours, {unit: 'hour'})
+    }
+
+    return addLeadingZeros(hours, token.length)
+  },
+
+  // Hour [0-11]
+  K: function (date, token, localize, options) {
+    var hours = date.getUTCHours() % 12;
+
+    if (token === 'Ko') {
+      return localize.ordinalNumber(hours, {unit: 'hour'})
+    }
+
+    return addLeadingZeros(hours, token.length)
+  },
+
+  // Hour [1-24]
+  k: function (date, token, localize, options) {
+    var hours = date.getUTCHours();
+
+    if (hours === 0) {
+      hours = 24;
+    }
+
+    if (token === 'ko') {
+      return localize.ordinalNumber(hours, {unit: 'hour'})
+    }
+
+    return addLeadingZeros(hours, token.length)
+  },
+
+  // Minute
+  m: function (date, token, localize, options) {
+    var minutes = date.getUTCMinutes();
+
+    if (token === 'mo') {
+      return localize.ordinalNumber(minutes, {unit: 'minute'})
+    }
+
+    return addLeadingZeros(minutes, token.length)
+  },
+
+  // Second
+  s: function (date, token, localize, options) {
+    var seconds = date.getUTCSeconds();
+
+    if (token === 'so') {
+      return localize.ordinalNumber(seconds, {unit: 'second'})
+    }
+
+    return addLeadingZeros(seconds, token.length)
+  },
+
+  // Fraction of second
+  S: function (date, token, localize, options) {
+    var numberOfDigits = token.length;
+    var milliseconds = date.getUTCMilliseconds();
+    var fractionalSeconds = Math.floor(milliseconds * Math.pow(10, numberOfDigits - 3));
+    return addLeadingZeros(fractionalSeconds, numberOfDigits)
+  },
+
+  // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
+  X: function (date, token, localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    if (timezoneOffset === 0) {
+      return 'Z'
+    }
+
+    switch (token) {
+      // Hours and optional minutes
+      case 'X':
+        return formatTimezoneWithOptionalMinutes(timezoneOffset)
+
+      // Hours, minutes and optional seconds without `:` delimeter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `XX`
+      case 'XXXX':
+      case 'XX': // Hours and minutes without `:` delimeter
+        return formatTimezone(timezoneOffset)
+
+      // Hours, minutes and optional seconds with `:` delimeter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `XXX`
+      case 'XXXXX':
+      case 'XXX': // Hours and minutes with `:` delimeter
+      default:
+        return formatTimezone(timezoneOffset, ':')
+    }
+  },
+
+  // Timezone (ISO-8601. If offset is 0, output is `'+00:00'` or equivalent)
+  x: function (date, token, localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    switch (token) {
+      // Hours and optional minutes
+      case 'x':
+        return formatTimezoneWithOptionalMinutes(timezoneOffset)
+
+      // Hours, minutes and optional seconds without `:` delimeter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `xx`
+      case 'xxxx':
+      case 'xx': // Hours and minutes without `:` delimeter
+        return formatTimezone(timezoneOffset)
+
+      // Hours, minutes and optional seconds with `:` delimeter
+      // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
+      // so this token always has the same output as `xxx`
+      case 'xxxxx':
+      case 'xxx': // Hours and minutes with `:` delimeter
+      default:
+        return formatTimezone(timezoneOffset, ':')
+    }
+  },
+
+  // Timezone (GMT)
+  O: function (date, token, localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    switch (token) {
+      // Short
+      case 'O':
+      case 'OO':
+      case 'OOO':
+        return 'GMT' + formatTimezoneShort(timezoneOffset, ':')
+      // Long
+      case 'OOOO':
+      default:
+        return 'GMT' + formatTimezone(timezoneOffset, ':')
+    }
+  },
+
+  // Timezone (specific non-location)
+  z: function (date, token, localize, options) {
+    var originalDate = options._originalDate || date;
+    var timezoneOffset = originalDate.getTimezoneOffset();
+
+    switch (token) {
+      // Short
+      case 'z':
+      case 'zz':
+      case 'zzz':
+        return 'GMT' + formatTimezoneShort(timezoneOffset, ':')
+      // Long
+      case 'zzzz':
+      default:
+        return 'GMT' + formatTimezone(timezoneOffset, ':')
+    }
+  },
+
+  // Seconds timestamp
+  t: function (date, token, localize, options) {
+    var originalDate = options._originalDate || date;
+    var timestamp = Math.floor(originalDate.getTime() / 1000);
+    return addLeadingZeros(timestamp, token.length)
+  },
+
+  // Milliseconds timestamp
+  T: function (date, token, localize, options) {
+    var originalDate = options._originalDate || date;
+    var timestamp = originalDate.getTime();
+    return addLeadingZeros(timestamp, token.length)
+  }
+};
+
+function addLeadingZeros (number, targetLength) {
+  var sign = number < 0 ? '-' : '';
+  var output = Math.abs(number).toString();
+  while (output.length < targetLength) {
+    output = '0' + output;
+  }
+  return sign + output
+}
+
+function formatTimezone (offset, dirtyDelimeter) {
+  var delimeter = dirtyDelimeter || '';
+  var sign = offset > 0 ? '-' : '+';
+  var absOffset = Math.abs(offset);
+  var hours = addLeadingZeros(Math.floor(absOffset / 60), 2);
+  var minutes = addLeadingZeros(absOffset % 60, 2);
+  return sign + hours + delimeter + minutes
+}
+
+function formatTimezoneWithOptionalMinutes (offset, dirtyDelimeter) {
+  if (offset % 60 === 0) {
+    var sign = offset > 0 ? '-' : '+';
+    return sign + addLeadingZeros(Math.abs(offset) / 60, 2)
+  }
+  return formatTimezone(offset, dirtyDelimeter)
+}
+
+function formatTimezoneShort (offset, dirtyDelimeter) {
+  var sign = offset > 0 ? '-' : '+';
+  var absOffset = Math.abs(offset);
+  var hours = Math.floor(absOffset / 60);
+  var minutes = absOffset % 60;
+  if (minutes === 0) {
+    return sign + String(hours)
+  }
+  var delimeter = dirtyDelimeter || '';
+  return sign + String(hours) + delimeter + addLeadingZeros(minutes, 2)
+}
+
+function dateLongFormatter (pattern, formatLong, options) {
+  switch (pattern) {
+    case 'P':
+      return formatLong.date({width: 'short'})
+    case 'PP':
+      return formatLong.date({width: 'medium'})
+    case 'PPP':
+      return formatLong.date({width: 'long'})
+    case 'PPPP':
+    default:
+      return formatLong.date({width: 'full'})
+  }
+}
+
+function timeLongFormatter (pattern, formatLong, options) {
+  switch (pattern) {
+    case 'p':
+      return formatLong.time({width: 'short'})
+    case 'pp':
+      return formatLong.time({width: 'medium'})
+    case 'ppp':
+      return formatLong.time({width: 'long'})
+    case 'pppp':
+    default:
+      return formatLong.time({width: 'full'})
+  }
+}
+
+function dateTimeLongFormatter (pattern, formatLong, options) {
+  var matchResult = pattern.match(/(P+)(p+)?/);
+  var datePattern = matchResult[1];
+  var timePattern = matchResult[2];
+
+  if (!timePattern) {
+    return dateLongFormatter(pattern, formatLong, options)
+  }
+
+  var dateTimeFormat;
+
+  switch (datePattern) {
+    case 'P':
+      dateTimeFormat = formatLong.dateTime({width: 'short'});
+      break
+    case 'PP':
+      dateTimeFormat = formatLong.dateTime({width: 'medium'});
+      break
+    case 'PPP':
+      dateTimeFormat = formatLong.dateTime({width: 'long'});
+      break
+    case 'PPPP':
+    default:
+      dateTimeFormat = formatLong.dateTime({width: 'full'});
+      break
+  }
+
+  return dateTimeFormat
+    .replace('{{date}}', dateLongFormatter(datePattern, formatLong, options))
+    .replace('{{time}}', timeLongFormatter(timePattern, formatLong, options))
+}
+
+var longFormatters = {
+  p: timeLongFormatter,
+  P: dateTimeLongFormatter
+};
+
+/**
+ * @name subMilliseconds
+ * @category Millisecond Helpers
+ * @summary Subtract the specified number of milliseconds from the given date.
+ *
+ * @description
+ * Subtract the specified number of milliseconds from the given date.
+ *
+ * @param {Date|String|Number} date - the date to be changed
+ * @param {Number} amount - the amount of milliseconds to be subtracted
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Date} the new date with the milliseconds subtracted
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Subtract 750 milliseconds from 10 July 2014 12:45:30.000:
+ * var result = subMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+ * //=> Thu Jul 10 2014 12:45:29.250
+ */
+function subMilliseconds (dirtyDate, dirtyAmount, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var amount = toInteger(dirtyAmount);
+  return addMilliseconds(dirtyDate, -amount, dirtyOptions)
+}
+
+var protectedTokens = ['D', 'DD', 'YY', 'YYYY'];
+
+function isProtectedToken(token) {
+  return protectedTokens.indexOf(token) !== -1
+}
+
+function throwProtectedError(token) {
+  throw new RangeError(
+    '`options.awareOfUnicodeTokens` must be set to `true` to use `' +
+      token +
+      '` token; see: https://git.io/fxCyr'
+  )
+}
+
+// This RegExp consists of three parts separated by `|`:
+// - [yYQqMLwIdDecihHKkms]o matches any available ordinal number token
+//   (one of the certain letters followed by `o`)
+// - (\w)\1* matches any sequences of the same letter
+// - '' matches two quote characters in a row
+// - '(''|[^'])+('|$) matches anything surrounded by two quote characters ('),
+//   except a single quote symbol, which ends the sequence.
+//   Two quote characters do not end the sequence.
+//   If there is no matching single quote
+//   then the sequence will continue until the end of the string.
+// - . matches any single character unmatched by previous parts of the RegExps
+var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+
+// This RegExp catches symbols escaped by quotes, and also
+// sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
+var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+
+var escapedStringRegExp = /^'(.*?)'?$/;
+var doubleQuoteRegExp = /''/g;
+
+/**
+ * @name format
+ * @category Common Helpers
+ * @summary Format the date.
+ *
+ * @description
+ * Return the formatted date string in the given format. The result may vary by locale.
+ *
+ * > ⚠️ Please note that the `format` tokens differ from Moment.js and other libraries.
+ * > See: https://git.io/fxCyr
+ *
+ * The characters wrapped between two single quotes characters (') are escaped.
+ * Two single quotes in a row, whether inside or outside a quoted sequence, represent a 'real' single quote.
+ * (see the last example)
+ *
+ * Format of the string is based on Unicode Technical Standard #35:
+ * https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+ * with a few additions (see note 7 below the table).
+ *
+ * Accepted patterns:
+ * | Unit                            | Pattern | Result examples                   | Notes |
+ * |---------------------------------|---------|-----------------------------------|-------|
+ * | Era                             | G..GGG  | AD, BC                            |       |
+ * |                                 | GGGG    | Anno Domini, Before Christ        | 2     |
+ * |                                 | GGGGG   | A, B                              |       |
+ * | Calendar year                   | y       | 44, 1, 1900, 2017                 | 5     |
+ * |                                 | yo      | 44th, 1st, 0th, 17th              | 5,7   |
+ * |                                 | yy      | 44, 01, 00, 17                    | 5     |
+ * |                                 | yyy     | 044, 001, 1900, 2017              | 5     |
+ * |                                 | yyyy    | 0044, 0001, 1900, 2017            | 5     |
+ * |                                 | yyyyy   | ...                               | 3,5   |
+ * | Local week-numbering year       | Y       | 44, 1, 1900, 2017                 | 5     |
+ * |                                 | Yo      | 44th, 1st, 1900th, 2017th         | 5,7   |
+ * |                                 | YY      | 44, 01, 00, 17                    | 5,8   |
+ * |                                 | YYY     | 044, 001, 1900, 2017              | 5     |
+ * |                                 | YYYY    | 0044, 0001, 1900, 2017            | 5,8   |
+ * |                                 | YYYYY   | ...                               | 3,5   |
+ * | ISO week-numbering year         | R       | -43, 0, 1, 1900, 2017             | 5,7   |
+ * |                                 | RR      | -43, 00, 01, 1900, 2017           | 5,7   |
+ * |                                 | RRR     | -043, 000, 001, 1900, 2017        | 5,7   |
+ * |                                 | RRRR    | -0043, 0000, 0001, 1900, 2017     | 5,7   |
+ * |                                 | RRRRR   | ...                               | 3,5,7 |
+ * | Extended year                   | u       | -43, 0, 1, 1900, 2017             | 5     |
+ * |                                 | uu      | -43, 01, 1900, 2017               | 5     |
+ * |                                 | uuu     | -043, 001, 1900, 2017             | 5     |
+ * |                                 | uuuu    | -0043, 0001, 1900, 2017           | 5     |
+ * |                                 | uuuuu   | ...                               | 3,5   |
+ * | Quarter (formatting)            | Q       | 1, 2, 3, 4                        |       |
+ * |                                 | Qo      | 1st, 2nd, 3rd, 4th                | 7     |
+ * |                                 | QQ      | 01, 02, 03, 04                    |       |
+ * |                                 | QQQ     | Q1, Q2, Q3, Q4                    |       |
+ * |                                 | QQQQ    | 1st quarter, 2nd quarter, ...     | 2     |
+ * |                                 | QQQQQ   | 1, 2, 3, 4                        | 4     |
+ * | Quarter (stand-alone)           | q       | 1, 2, 3, 4                        |       |
+ * |                                 | qo      | 1st, 2nd, 3rd, 4th                | 7     |
+ * |                                 | qq      | 01, 02, 03, 04                    |       |
+ * |                                 | qqq     | Q1, Q2, Q3, Q4                    |       |
+ * |                                 | qqqq    | 1st quarter, 2nd quarter, ...     | 2     |
+ * |                                 | qqqqq   | 1, 2, 3, 4                        | 4     |
+ * | Month (formatting)              | M       | 1, 2, ..., 12                     |       |
+ * |                                 | Mo      | 1st, 2nd, ..., 12th               | 7     |
+ * |                                 | MM      | 01, 02, ..., 12                   |       |
+ * |                                 | MMM     | Jan, Feb, ..., Dec                |       |
+ * |                                 | MMMM    | January, February, ..., December  | 2     |
+ * |                                 | MMMMM   | J, F, ..., D                      |       |
+ * | Month (stand-alone)             | L       | 1, 2, ..., 12                     |       |
+ * |                                 | Lo      | 1st, 2nd, ..., 12th               | 7     |
+ * |                                 | LL      | 01, 02, ..., 12                   |       |
+ * |                                 | LLL     | Jan, Feb, ..., Dec                |       |
+ * |                                 | LLLL    | January, February, ..., December  | 2     |
+ * |                                 | LLLLL   | J, F, ..., D                      |       |
+ * | Local week of year              | w       | 1, 2, ..., 53                     |       |
+ * |                                 | wo      | 1st, 2nd, ..., 53th               | 7     |
+ * |                                 | ww      | 01, 02, ..., 53                   |       |
+ * | ISO week of year                | I       | 1, 2, ..., 53                     | 7     |
+ * |                                 | Io      | 1st, 2nd, ..., 53th               | 7     |
+ * |                                 | II      | 01, 02, ..., 53                   | 7     |
+ * | Day of month                    | d       | 1, 2, ..., 31                     |       |
+ * |                                 | do      | 1st, 2nd, ..., 31st               | 7     |
+ * |                                 | dd      | 01, 02, ..., 31                   |       |
+ * | Day of year                     | D       | 1, 2, ..., 365, 366               | 8     |
+ * |                                 | Do      | 1st, 2nd, ..., 365th, 366th       | 7     |
+ * |                                 | DD      | 01, 02, ..., 365, 366             | 8     |
+ * |                                 | DDD     | 001, 002, ..., 365, 366           |       |
+ * |                                 | DDDD    | ...                               | 3     |
+ * | Day of week (formatting)        | E..EEE  | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 | EEEE    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 | EEEEE   | M, T, W, T, F, S, S               |       |
+ * |                                 | EEEEEE  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | ISO day of week (formatting)    | i       | 1, 2, 3, ..., 7                   | 7     |
+ * |                                 | io      | 1st, 2nd, ..., 7th                | 7     |
+ * |                                 | ii      | 01, 02, ..., 07                   | 7     |
+ * |                                 | iii     | Mon, Tue, Wed, ..., Su            | 7     |
+ * |                                 | iiii    | Monday, Tuesday, ..., Sunday      | 2,7   |
+ * |                                 | iiiii   | M, T, W, T, F, S, S               | 7     |
+ * |                                 | iiiiii  | Mo, Tu, We, Th, Fr, Su, Sa        | 7     |
+ * | Local day of week (formatting)  | e       | 2, 3, 4, ..., 1                   |       |
+ * |                                 | eo      | 2nd, 3rd, ..., 1st                | 7     |
+ * |                                 | ee      | 02, 03, ..., 01                   |       |
+ * |                                 | eee     | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 | eeee    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 | eeeee   | M, T, W, T, F, S, S               |       |
+ * |                                 | eeeeee  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | Local day of week (stand-alone) | c       | 2, 3, 4, ..., 1                   |       |
+ * |                                 | co      | 2nd, 3rd, ..., 1st                | 7     |
+ * |                                 | cc      | 02, 03, ..., 01                   |       |
+ * |                                 | ccc     | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 | cccc    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 | ccccc   | M, T, W, T, F, S, S               |       |
+ * |                                 | cccccc  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | AM, PM                          | a..aaa  | AM, PM                            |       |
+ * |                                 | aaaa    | a.m., p.m.                        | 2     |
+ * |                                 | aaaaa   | a, p                              |       |
+ * | AM, PM, noon, midnight          | b..bbb  | AM, PM, noon, midnight            |       |
+ * |                                 | bbbb    | a.m., p.m., noon, midnight        | 2     |
+ * |                                 | bbbbb   | a, p, n, mi                       |       |
+ * | Flexible day period             | B..BBB  | at night, in the morning, ...     |       |
+ * |                                 | BBBB    | at night, in the morning, ...     | 2     |
+ * |                                 | BBBBB   | at night, in the morning, ...     |       |
+ * | Hour [1-12]                     | h       | 1, 2, ..., 11, 12                 |       |
+ * |                                 | ho      | 1st, 2nd, ..., 11th, 12th         | 7     |
+ * |                                 | hh      | 01, 02, ..., 11, 12               |       |
+ * | Hour [0-23]                     | H       | 0, 1, 2, ..., 23                  |       |
+ * |                                 | Ho      | 0th, 1st, 2nd, ..., 23rd          | 7     |
+ * |                                 | HH      | 00, 01, 02, ..., 23               |       |
+ * | Hour [0-11]                     | K       | 1, 2, ..., 11, 0                  |       |
+ * |                                 | Ko      | 1st, 2nd, ..., 11th, 0th          | 7     |
+ * |                                 | KK      | 1, 2, ..., 11, 0                  |       |
+ * | Hour [1-24]                     | k       | 24, 1, 2, ..., 23                 |       |
+ * |                                 | ko      | 24th, 1st, 2nd, ..., 23rd         | 7     |
+ * |                                 | kk      | 24, 01, 02, ..., 23               |       |
+ * | Minute                          | m       | 0, 1, ..., 59                     |       |
+ * |                                 | mo      | 0th, 1st, ..., 59th               | 7     |
+ * |                                 | mm      | 00, 01, ..., 59                   |       |
+ * | Second                          | s       | 0, 1, ..., 59                     |       |
+ * |                                 | so      | 0th, 1st, ..., 59th               | 7     |
+ * |                                 | ss      | 00, 01, ..., 59                   |       |
+ * | Fraction of second              | S       | 0, 1, ..., 9                      |       |
+ * |                                 | SS      | 00, 01, ..., 99                   |       |
+ * |                                 | SSS     | 000, 0001, ..., 999               |       |
+ * |                                 | SSSS    | ...                               | 3     |
+ * | Timezone (ISO-8601 w/ Z)        | X       | -08, +0530, Z                     |       |
+ * |                                 | XX      | -0800, +0530, Z                   |       |
+ * |                                 | XXX     | -08:00, +05:30, Z                 |       |
+ * |                                 | XXXX    | -0800, +0530, Z, +123456          | 2     |
+ * |                                 | XXXXX   | -08:00, +05:30, Z, +12:34:56      |       |
+ * | Timezone (ISO-8601 w/o Z)       | x       | -08, +0530, +00                   |       |
+ * |                                 | xx      | -0800, +0530, +0000               |       |
+ * |                                 | xxx     | -08:00, +05:30, +00:00            | 2     |
+ * |                                 | xxxx    | -0800, +0530, +0000, +123456      |       |
+ * |                                 | xxxxx   | -08:00, +05:30, +00:00, +12:34:56 |       |
+ * | Timezone (GMT)                  | O...OOO | GMT-8, GMT+5:30, GMT+0            |       |
+ * |                                 | OOOO    | GMT-08:00, GMT+05:30, GMT+00:00   | 2     |
+ * | Timezone (specific non-locat.)  | z...zzz | GMT-8, GMT+5:30, GMT+0            | 6     |
+ * |                                 | zzzz    | GMT-08:00, GMT+05:30, GMT+00:00   | 2,6   |
+ * | Seconds timestamp               | t       | 512969520                         | 7     |
+ * |                                 | tt      | ...                               | 3,7   |
+ * | Milliseconds timestamp          | T       | 512969520900                      | 7     |
+ * |                                 | TT      | ...                               | 3,7   |
+ * | Long localized date             | P       | 05/29/1453                        | 7     |
+ * |                                 | PP      | May 29, 1453                      | 7     |
+ * |                                 | PPP     | May 29th, 1453                    | 7     |
+ * |                                 | PPPP    | Sunday, May 29th, 1453            | 2,7   |
+ * | Long localized time             | p       | 12:00 AM                          | 7     |
+ * |                                 | pp      | 12:00:00 AM                       | 7     |
+ * |                                 | ppp     | 12:00:00 AM GMT+2                 | 7     |
+ * |                                 | pppp    | 12:00:00 AM GMT+02:00             | 2,7   |
+ * | Combination of date and time    | Pp      | 05/29/1453, 12:00 AM              | 7     |
+ * |                                 | PPpp    | May 29, 1453, 12:00:00 AM         | 7     |
+ * |                                 | PPPppp  | May 29th, 1453 at ...             | 7     |
+ * |                                 | PPPPpppp| Sunday, May 29th, 1453 at ...     | 2,7   |
+ * Notes:
+ * 1. "Formatting" units (e.g. formatting quarter) in the default en-US locale
+ *    are the same as "stand-alone" units, but are different in some languages.
+ *    "Formatting" units are declined according to the rules of the language
+ *    in the context of a date. "Stand-alone" units are always nominative singular:
+ *
+ *    `format(new Date(2017, 10, 6), 'do LLLL', {locale: cs}) //=> '6. listopad'`
+ *
+ *    `format(new Date(2017, 10, 6), 'do MMMM', {locale: cs}) //=> '6. listopadu'`
+ *
+ * 2. Any sequence of the identical letters is a pattern, unless it is escaped by
+ *    the single quote characters (see below).
+ *    If the sequence is longer than listed in table (e.g. `EEEEEEEEEEE`)
+ *    the output will be the same as default pattern for this unit, usually
+ *    the longest one (in case of ISO weekdays, `EEEE`). Default patterns for units
+ *    are marked with "2" in the last column of the table.
+ *
+ *    `format(new Date(2017, 10, 6), 'MMM') //=> 'Nov'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMM') //=> 'November'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMMM') //=> 'N'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMMMM') //=> 'November'`
+ *
+ *    `format(new Date(2017, 10, 6), 'MMMMMMM') //=> 'November'`
+ *
+ * 3. Some patterns could be unlimited length (such as `yyyyyyyy`).
+ *    The output will be padded with zeros to match the length of the pattern.
+ *
+ *    `format(new Date(2017, 10, 6), 'yyyyyyyy') //=> '00002017'`
+ *
+ * 4. `QQQQQ` and `qqqqq` could be not strictly numerical in some locales.
+ *    These tokens represent the shortest form of the quarter.
+ *
+ * 5. The main difference between `y` and `u` patterns are B.C. years:
+ *
+ *    | Year | `y` | `u` |
+ *    |------|-----|-----|
+ *    | AC 1 |   1 |   1 |
+ *    | BC 1 |   1 |   0 |
+ *    | BC 2 |   2 |  -1 |
+ *
+ *    Also `yy` always returns the last two digits of a year,
+ *    while `uu` pads single digit years to 2 characters and returns other years unchanged:
+ *
+ *    | Year | `yy` | `uu` |
+ *    |------|------|------|
+ *    | 1    |   01 |   01 |
+ *    | 14   |   14 |   14 |
+ *    | 376  |   76 |  376 |
+ *    | 1453 |   53 | 1453 |
+ *
+ *    The same difference is true for local and ISO week-numbering years (`Y` and `R`),
+ *    except local week-numbering years are dependent on `options.weekStartsOn`
+ *    and `options.firstWeekContainsDate` (compare [getISOWeekYear]{@link https://date-fns.org/docs/getISOWeekYear}
+ *    and [getWeekYear]{@link https://date-fns.org/docs/getWeekYear}).
+ *
+ * 6. Specific non-location timezones are currently unavailable in `date-fns`,
+ *    so right now these tokens fall back to GMT timezones.
+ *
+ * 7. These patterns are not in the Unicode Technical Standard #35:
+ *    - `i`: ISO day of week
+ *    - `I`: ISO week of year
+ *    - `R`: ISO week-numbering year
+ *    - `t`: seconds timestamp
+ *    - `T`: milliseconds timestamp
+ *    - `o`: ordinal number modifier
+ *    - `P`: long localized date
+ *    - `p`: long localized time
+ *
+ * 8. These tokens are often confused with others. See: https://git.io/fxCyr
+ *
+ * @param {Date|String|Number} date - the original date
+ * @param {String} format - the string of tokens
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {Number} [options.firstWeekContainsDate=1] - the day of January, which is
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {Boolean} [options.awareOfUnicodeTokens=false] - if true, allows usage of Unicode tokens causes confusion:
+ *   - Some of the day of year tokens (`D`, `DD`) that are confused with the day of month tokens (`d`, `dd`).
+ *   - Some of the local week-numbering year tokens (`YY`, `YYYY`) that are confused with the calendar year tokens (`yy`, `yyyy`).
+ *   See: https://git.io/fxCyr
+ * @returns {String} the formatted date string
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} `options.locale` must contain `localize` property
+ * @throws {RangeError} `options.locale` must contain `formatLong` property
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @throws {RangeError} `options.awareOfUnicodeTokens` must be set to `true` to use `XX` token; see: https://git.io/fxCyr
+ *
+ * @example
+ * // Represent 11 February 2014 in middle-endian format:
+ * var result = format(
+ *   new Date(2014, 1, 11),
+ *   'MM/dd/yyyy'
+ * )
+ * //=> '02/11/2014'
+ *
+ * @example
+ * // Represent 2 July 2014 in Esperanto:
+ * import { eoLocale } from 'date-fns/locale/eo'
+ * var result = format(
+ *   new Date(2014, 6, 2),
+ *   "do 'de' MMMM yyyy",
+ *   {locale: eoLocale}
+ * )
+ * //=> '2-a de julio 2014'
+ *
+ * @example
+ * // Escape string by single quote characters:
+ * var result = format(
+ *   new Date(2014, 6, 2, 15),
+ *   "h 'o''clock'"
+ * )
+ * //=> "3 o'clock"
+ */
+function format(dirtyDate, dirtyFormatStr, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError(
+      '2 arguments required, but only ' + arguments.length + ' present'
+    )
+  }
+
+  var formatStr = String(dirtyFormatStr);
+  var options = dirtyOptions || {};
+
+  var locale = options.locale || locale$1;
+
+  var localeFirstWeekContainsDate =
+    locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate =
+    localeFirstWeekContainsDate == null
+      ? 1
+      : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate =
+    options.firstWeekContainsDate == null
+      ? defaultFirstWeekContainsDate
+      : toInteger(options.firstWeekContainsDate);
+
+  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError(
+      'firstWeekContainsDate must be between 1 and 7 inclusively'
+    )
+  }
+
+  var localeWeekStartsOn = locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn =
+    localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn =
+    options.weekStartsOn == null
+      ? defaultWeekStartsOn
+      : toInteger(options.weekStartsOn);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively')
+  }
+
+  if (!locale.localize) {
+    throw new RangeError('locale must contain localize property')
+  }
+
+  if (!locale.formatLong) {
+    throw new RangeError('locale must contain formatLong property')
+  }
+
+  var originalDate = toDate(dirtyDate, options);
+
+  if (!isValid(originalDate, options)) {
+    return 'Invalid Date'
+  }
+
+  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
+  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
+  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
+  var timezoneOffset = getTimezoneOffsetInMilliseconds(originalDate);
+  var utcDate = subMilliseconds(originalDate, timezoneOffset, options);
+
+  var formatterOptions = {
+    firstWeekContainsDate: firstWeekContainsDate,
+    weekStartsOn: weekStartsOn,
+    locale: locale,
+    _originalDate: originalDate
+  };
+
+  var result = formatStr
+    .match(longFormattingTokensRegExp)
+    .map(function(substring) {
+      var firstCharacter = substring[0];
+      if (firstCharacter === 'p' || firstCharacter === 'P') {
+        var longFormatter = longFormatters[firstCharacter];
+        return longFormatter(substring, locale.formatLong, formatterOptions)
+      }
+      return substring
+    })
+    .join('')
+    .match(formattingTokensRegExp)
+    .map(function(substring) {
+      // Replace two single quote characters with one single quote character
+      if (substring === "''") {
+        return "'"
+      }
+
+      var firstCharacter = substring[0];
+      if (firstCharacter === "'") {
+        return cleanEscapedString(substring)
+      }
+
+      var formatter = formatters[firstCharacter];
+      if (formatter) {
+        if (!options.awareOfUnicodeTokens && isProtectedToken(substring)) {
+          throwProtectedError(substring);
+        }
+        return formatter(utcDate, substring, locale.localize, formatterOptions)
+      }
+
+      return substring
+    })
+    .join('');
+
+  return result
+}
+
+function cleanEscapedString(input) {
+  return input.match(escapedStringRegExp)[1].replace(doubleQuoteRegExp, "'")
+}
+
+/**
+ * @name isAfter
+ * @category Common Helpers
+ * @summary Is the first date after the second one?
+ *
+ * @description
+ * Is the first date after the second one?
+ *
+ * @param {Date|String|Number} date - the date that should be after the other one to return true
+ * @param {Date|String|Number} dateToCompare - the date to compare with
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the first date is after the second date
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Is 10 July 1989 after 11 February 1987?
+ * var result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> true
+ */
+function isAfter (dirtyDate, dirtyDateToCompare, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var dateToCompare = toDate(dirtyDateToCompare, dirtyOptions);
+  return date.getTime() > dateToCompare.getTime()
+}
+
+/**
+ * @name isBefore
+ * @category Common Helpers
+ * @summary Is the first date before the second one?
+ *
+ * @description
+ * Is the first date before the second one?
+ *
+ * @param {Date|String|Number} date - the date that should be before the other one to return true
+ * @param {Date|String|Number} dateToCompare - the date to compare with
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the first date is before the second date
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Is 10 July 1989 before 11 February 1987?
+ * var result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> false
+ */
+function isBefore (dirtyDate, dirtyDateToCompare, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var dateToCompare = toDate(dirtyDateToCompare, dirtyOptions);
+  return date.getTime() < dateToCompare.getTime()
+}
+
+/**
+ * @name isDate
+ * @category Common Helpers
+ * @summary Is the given value a date?
+ *
+ * @description
+ * Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
+ *
+ * @param {*} value - the value to check
+ * @param {Options} [options] - the object with options. Unused; present for FP submodule compatibility sake. See [Options]{@link https://date-fns.org/docs/Options}
+ * @returns {boolean} true if the given value is a date
+ * @throws {TypeError} 1 arguments required
+ *
+ * @example
+ * // For a valid date:
+ * var result = isDate(new Date())
+ * //=> true
+ *
+ * @example
+ * // For an invalid date:
+ * var result = isDate(new Date(NaN))
+ * //=> true
+ *
+ * @example
+ * // For some value:
+ * var result = isDate('2014-02-31')
+ * //=> false
+ *
+ * @example
+ * // For an object:
+ * var result = isDate({})
+ * //=> false
+ */
+
+/**
+ * @name isEqual
+ * @category Common Helpers
+ * @summary Are the given dates equal?
+ *
+ * @description
+ * Are the given dates equal?
+ *
+ * @param {Date|String|Number} dateLeft - the first date to compare
+ * @param {Date|String|Number} dateRight - the second date to compare
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @returns {Boolean} the dates are equal
+ * @throws {TypeError} 2 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ *
+ * @example
+ * // Are 2 July 2014 06:30:45.000 and 2 July 2014 06:30:45.500 equal?
+ * var result = isEqual(
+ *   new Date(2014, 6, 2, 6, 30, 45, 0)
+ *   new Date(2014, 6, 2, 6, 30, 45, 500)
+ * )
+ * //=> false
+ */
+function isEqual$1 (dirtyLeftDate, dirtyRightDate, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var dateLeft = toDate(dirtyLeftDate, dirtyOptions);
+  var dateRight = toDate(dirtyRightDate, dirtyOptions);
+  return dateLeft.getTime() === dateRight.getTime()
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function setUTCDay (dirtyDate, dirtyDay, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var options = dirtyOptions || {};
+  var locale = options.locale;
+  var localeWeekStartsOn = locale && locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : toInteger(options.weekStartsOn);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var day = toInteger(dirtyDay);
+
+  var currentDay = date.getUTCDay();
+
+  var remainder = day % 7;
+  var dayIndex = (remainder + 7) % 7;
+
+  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
+
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function setUTCWeek (dirtyDate, dirtyWeek, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var week = toInteger(dirtyWeek);
+  var diff = getUTCWeek(date, dirtyOptions) - week;
+  date.setUTCDate(date.getUTCDate() - diff * 7);
+  return date
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function setUTCISODay (dirtyDate, dirtyDay, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var day = toInteger(dirtyDay);
+
+  if (day % 7 === 0) {
+    day = day - 7;
+  }
+
+  var weekStartsOn = 1;
+  var date = toDate(dirtyDate, dirtyOptions);
+  var currentDay = date.getUTCDay();
+
+  var remainder = day % 7;
+  var dayIndex = (remainder + 7) % 7;
+
+  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
+
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date
+}
+
+// This function will be a part of public API when UTC function will be implemented.
+// See issue: https://github.com/date-fns/date-fns/issues/376
+function setUTCISOWeek (dirtyDate, dirtyISOWeek, dirtyOptions) {
+  if (arguments.length < 2) {
+    throw new TypeError('2 arguments required, but only ' + arguments.length + ' present')
+  }
+
+  var date = toDate(dirtyDate, dirtyOptions);
+  var isoWeek = toInteger(dirtyISOWeek);
+  var diff = getUTCISOWeek(date, dirtyOptions) - isoWeek;
+  date.setUTCDate(date.getUTCDate() - diff * 7);
+  return date
+}
+
+var MILLISECONDS_IN_HOUR$1 = 3600000;
+var MILLISECONDS_IN_MINUTE$2 = 60000;
+var MILLISECONDS_IN_SECOND = 1000;
+
+var numericPatterns = {
+  month: /^(1[0-2]|0?\d)/, // 0 to 12
+  date: /^(3[0-1]|[0-2]?\d)/, // 0 to 31
+  dayOfYear: /^(36[0-6]|3[0-5]\d|[0-2]?\d?\d)/, // 0 to 366
+  week: /^(5[0-3]|[0-4]?\d)/, // 0 to 53
+  hour23h: /^(2[0-3]|[0-1]?\d)/, // 0 to 23
+  hour24h: /^(2[0-4]|[0-1]?\d)/, // 0 to 24
+  hour11h: /^(1[0-1]|0?\d)/, // 0 to 11
+  hour12h: /^(1[0-2]|0?\d)/, // 0 to 12
+  minute: /^[0-5]?\d/, // 0 to 59
+  second: /^[0-5]?\d/, // 0 to 59
+
+  singleDigit: /^\d/, // 0 to 9
+  twoDigits: /^\d{1,2}/, // 0 to 99
+  threeDigits: /^\d{1,3}/, // 0 to 999
+  fourDigits: /^\d{1,4}/, // 0 to 9999
+
+  anyDigitsSigned: /^-?\d+/,
+  singleDigitSigned: /^-?\d/, // 0 to 9, -0 to -9
+  twoDigitsSigned: /^-?\d{1,2}/, // 0 to 99, -0 to -99
+  threeDigitsSigned: /^-?\d{1,3}/, // 0 to 999, -0 to -999
+  fourDigitsSigned: /^-?\d{1,4}/ // 0 to 9999, -0 to -9999
+};
+
+var timezonePatterns = {
+  basicOptionalMinutes: /^([+-])(\d{2})(\d{2})?|Z/,
+  basic: /^([+-])(\d{2})(\d{2})|Z/,
+  basicOptionalSeconds: /^([+-])(\d{2})(\d{2})((\d{2}))?|Z/,
+  extended: /^([+-])(\d{2}):(\d{2})|Z/,
+  extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/
+};
+
+function parseNumericPattern (pattern, string, valueCallback) {
+  var matchResult = string.match(pattern);
+
+  if (!matchResult) {
+    return null
+  }
+
+  var value = parseInt(matchResult[0], 10);
+
+  return {
+    value: valueCallback ? valueCallback(value) : value,
+    rest: string.slice(matchResult[0].length)
+  }
+}
+
+function parseTimezonePattern (pattern, string) {
+  var matchResult = string.match(pattern);
+
+  if (!matchResult) {
+    return null
+  }
+
+  // Input is 'Z'
+  if (matchResult[0] === 'Z') {
+    return {
+      value: 0,
+      rest: string.slice(1)
+    }
+  }
+
+  var sign = matchResult[1] === '+' ? 1 : -1;
+  var hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
+  var minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
+  var seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
+
+  return {
+    value: sign * (
+      hours * MILLISECONDS_IN_HOUR$1 +
+        minutes * MILLISECONDS_IN_MINUTE$2 +
+        seconds * MILLISECONDS_IN_SECOND
+    ),
+    rest: string.slice(matchResult[0].length)
+  }
+}
+
+function parseAnyDigitsSigned (string, valueCallback) {
+  return parseNumericPattern(numericPatterns.anyDigitsSigned, string, valueCallback)
+}
+
+function parseNDigits (n, string, valueCallback) {
+  switch (n) {
+    case 1:
+      return parseNumericPattern(numericPatterns.singleDigit, string, valueCallback)
+    case 2:
+      return parseNumericPattern(numericPatterns.twoDigits, string, valueCallback)
+    case 3:
+      return parseNumericPattern(numericPatterns.threeDigits, string, valueCallback)
+    case 4:
+      return parseNumericPattern(numericPatterns.fourDigits, string, valueCallback)
+    default:
+      return parseNumericPattern(new RegExp('^\\d{1,' + n + '}'), string, valueCallback)
+  }
+}
+
+function parseNDigitsSigned (n, string, valueCallback) {
+  switch (n) {
+    case 1:
+      return parseNumericPattern(numericPatterns.singleDigitSigned, string, valueCallback)
+    case 2:
+      return parseNumericPattern(numericPatterns.twoDigitsSigned, string, valueCallback)
+    case 3:
+      return parseNumericPattern(numericPatterns.threeDigitsSigned, string, valueCallback)
+    case 4:
+      return parseNumericPattern(numericPatterns.fourDigitsSigned, string, valueCallback)
+    default:
+      return parseNumericPattern(new RegExp('^-?\\d{1,' + n + '}'), string, valueCallback)
+  }
+}
+
+function dayPeriodEnumToHours (enumValue) {
+  switch (enumValue) {
+    case 'morning':
+      return 4
+    case 'evening':
+      return 17
+    case 'pm':
+    case 'noon':
+    case 'afternoon':
+      return 12
+    case 'am':
+    case 'midnight':
+    case 'night':
+    default:
+      return 0
+  }
+}
+
+function normalizeTwoDigitYear (twoDigitYear, currentYear) {
+  var isCommonEra = currentYear > 0;
+  // Absolute number of the current year:
+  // 1 -> 1 AC
+  // 0 -> 1 BC
+  // -1 -> 2 BC
+  var absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
+
+  var result;
+  if (absCurrentYear <= 50) {
+    result = twoDigitYear || 100;
+  } else {
+    var rangeEnd = absCurrentYear + 50;
+    var rangeEndCentury = Math.floor(rangeEnd / 100) * 100;
+    var isPreviousCentury = twoDigitYear >= rangeEnd % 100;
+    result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
+  }
+
+  return isCommonEra ? result : 1 - result
+}
+
+var DAYS_IN_MONTH$1 = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var DAYS_IN_MONTH_LEAP_YEAR$1 = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+// User for validation
+function isLeapYearIndex$1 (year) {
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0)
+}
+
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+ * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+ * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+ * |  d  | Day of month                   |  D  | Day of year                    |
+ * |  e  | Local day of week              |  E  | Day of week                    |
+ * |  f  |                                |  F* | Day of week in month           |
+ * |  g* | Modified Julian day            |  G  | Era                            |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  i! | ISO day of week                |  I! | ISO week of year               |
+ * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+ * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+ * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  n  |                                |  N  |                                |
+ * |  o! | Ordinal number modifier        |  O* | Timezone (GMT)                 |
+ * |  p  |                                |  P  |                                |
+ * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+ * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+ * |  u  | Extended year                  |  U* | Cyclic year                    |
+ * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+ * |  w  | Local week of year             |  W* | Week of month                  |
+ * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+ * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+ * |  z* | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ *
+ * Letters marked by ! are non-standard, but implemented by date-fns:
+ * - `o` modifies the previous token to turn it into an ordinal (see `parse` docs)
+ * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+ *   i.e. 7 for Sunday, 1 for Monday, etc.
+ * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+ * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+ *   `R` is supposed to be used in conjunction with `I` and `i`
+ *   for universal ISO week-numbering date, whereas
+ *   `Y` is supposed to be used in conjunction with `w` and `e`
+ *   for week-numbering date specific to the locale.
+ */
+var parsers = {
+  // Era
+  G: {
+    priority: 140,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        // AD, BC
+        case 'G':
+        case 'GG':
+        case 'GGG':
+          return match.era(string, {width: 'abbreviated'}) ||
+            match.era(string, {width: 'narrow'})
+        // A, B
+        case 'GGGGG':
+          return match.era(string, {width: 'narrow'})
+        // Anno Domini, Before Christ
+        case 'GGGG':
+        default:
+          return match.era(string, {width: 'wide'}) ||
+            match.era(string, {width: 'abbreviated'}) ||
+            match.era(string, {width: 'narrow'})
+      }
+    },
+    set: function (date, value, options) {
+      // Sets year 10 BC if BC, or 10 AC if AC
+      date.setUTCFullYear(value === 1 ? 10 : -9, 0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Year
+  y: {
+    // From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
+    // | Year     |     y | yy |   yyy |  yyyy | yyyyy |
+    // |----------|-------|----|-------|-------|-------|
+    // | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
+    // | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
+    // | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
+    // | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
+    // | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
+
+    priority: 130,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (year) {
+        return {
+          year: year,
+          isTwoDigitYear: token === 'yy'
+        }
+      };
+
+      switch (token) {
+        case 'y':
+          return parseNDigits(4, string, valueCallback)
+        case 'yo':
+          return match.ordinalNumber(string, {unit: 'year', valueCallback: valueCallback})
+        default:
+          return parseNDigits(token.length, string, valueCallback)
+      }
+    },
+    validate: function (date, value, options) {
+      return value.isTwoDigitYear || value.year > 0
+    },
+    set: function (date, value, options) {
+      var currentYear = getUTCWeekYear(date, options);
+
+      if (value.isTwoDigitYear) {
+        var normalizedTwoDigitYear = normalizeTwoDigitYear(value.year, currentYear);
+        date.setUTCFullYear(normalizedTwoDigitYear, 0, 1);
+        date.setUTCHours(0, 0, 0, 0);
+        return date
+      }
+
+      var year = currentYear > 0 ? value.year : 1 - value.year;
+      date.setUTCFullYear(year, 0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Local week-numbering year
+  Y: {
+    priority: 130,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (year) {
+        return {
+          year: year,
+          isTwoDigitYear: token === 'YY'
+        }
+      };
+
+      switch (token) {
+        case 'Y':
+          return parseNDigits(4, string, valueCallback)
+        case 'Yo':
+          return match.ordinalNumber(string, {unit: 'year', valueCallback: valueCallback})
+        default:
+          return parseNDigits(token.length, string, valueCallback)
+      }
+    },
+    validate: function (date, value, options) {
+      return value.isTwoDigitYear || value.year > 0
+    },
+    set: function (date, value, options) {
+      var currentYear = date.getUTCFullYear();
+
+      if (value.isTwoDigitYear) {
+        var normalizedTwoDigitYear = normalizeTwoDigitYear(value.year, currentYear);
+        date.setUTCFullYear(normalizedTwoDigitYear, 0, options.firstWeekContainsDate);
+        date.setUTCHours(0, 0, 0, 0);
+        return startOfUTCWeek(date, options)
+      }
+
+      var year = currentYear > 0 ? value.year : 1 - value.year;
+      date.setUTCFullYear(year, 0, options.firstWeekContainsDate);
+      date.setUTCHours(0, 0, 0, 0);
+      return startOfUTCWeek(date, options)
+    }
+  },
+
+  // ISO week-numbering year
+  R: {
+    priority: 130,
+    parse: function (string, token, match, options) {
+      if (token === 'R') {
+        return parseNDigitsSigned(4, string)
+      }
+
+      return parseNDigitsSigned(token.length, string)
+    },
+    set: function (date, value, options) {
+      var firstWeekOfYear = new Date(0);
+      firstWeekOfYear.setUTCFullYear(value, 0, 4);
+      firstWeekOfYear.setUTCHours(0, 0, 0, 0);
+      return startOfUTCISOWeek(firstWeekOfYear)
+    }
+  },
+
+  // Extended year
+  u: {
+    priority: 130,
+    parse: function (string, token, match, options) {
+      if (token === 'u') {
+        return parseNDigitsSigned(4, string)
+      }
+
+      return parseNDigitsSigned(token.length, string)
+    },
+    set: function (date, value, options) {
+      date.setUTCFullYear(value, 0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Quarter
+  Q: {
+    priority: 120,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        // 1, 2, 3, 4
+        case 'Q':
+        case 'QQ': // 01, 02, 03, 04
+          return parseNDigits(token.length, string)
+        // 1st, 2nd, 3rd, 4th
+        case 'Qo':
+          return match.ordinalNumber(string, {unit: 'quarter'})
+        // Q1, Q2, Q3, Q4
+        case 'QQQ':
+          return match.quarter(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.quarter(string, {width: 'narrow', context: 'formatting'})
+        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+        case 'QQQQQ':
+          return match.quarter(string, {width: 'narrow', context: 'formatting'})
+        // 1st quarter, 2nd quarter, ...
+        case 'QQQQ':
+        default:
+          return match.quarter(string, {width: 'wide', context: 'formatting'}) ||
+            match.quarter(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.quarter(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 4
+    },
+    set: function (date, value, options) {
+      date.setUTCMonth((value - 1) * 3, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Stand-alone quarter
+  q: {
+    priority: 120,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        // 1, 2, 3, 4
+        case 'q':
+        case 'qq': // 01, 02, 03, 04
+          return parseNDigits(token.length, string)
+        // 1st, 2nd, 3rd, 4th
+        case 'qo':
+          return match.ordinalNumber(string, {unit: 'quarter'})
+        // Q1, Q2, Q3, Q4
+        case 'qqq':
+          return match.quarter(string, {width: 'abbreviated', context: 'standalone'}) ||
+            match.quarter(string, {width: 'narrow', context: 'standalone'})
+        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+        case 'qqqqq':
+          return match.quarter(string, {width: 'narrow', context: 'standalone'})
+        // 1st quarter, 2nd quarter, ...
+        case 'qqqq':
+        default:
+          return match.quarter(string, {width: 'wide', context: 'standalone'}) ||
+            match.quarter(string, {width: 'abbreviated', context: 'standalone'}) ||
+            match.quarter(string, {width: 'narrow', context: 'standalone'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 4
+    },
+    set: function (date, value, options) {
+      date.setUTCMonth((value - 1) * 3, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Month
+  M: {
+    priority: 110,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (value) {
+        return value - 1
+      };
+
+      switch (token) {
+        // 1, 2, ..., 12
+        case 'M':
+          return parseNumericPattern(numericPatterns.month, string, valueCallback)
+        // 01, 02, ..., 12
+        case 'MM':
+          return parseNDigits(2, string, valueCallback)
+        // 1st, 2nd, ..., 12th
+        case 'Mo':
+          return match.ordinalNumber(string, {unit: 'month', valueCallback: valueCallback})
+        // Jan, Feb, ..., Dec
+        case 'MMM':
+          return match.month(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.month(string, {width: 'narrow', context: 'formatting'})
+        // J, F, ..., D
+        case 'MMMMM':
+          return match.month(string, {width: 'narrow', context: 'formatting'})
+        // January, February, ..., December
+        case 'MMMM':
+        default:
+          return match.month(string, {width: 'wide', context: 'formatting'}) ||
+            match.month(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.month(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 11
+    },
+    set: function (date, value, options) {
+      date.setUTCMonth(value, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Stand-alone month
+  L: {
+    priority: 110,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (value) {
+        return value - 1
+      };
+
+      switch (token) {
+        // 1, 2, ..., 12
+        case 'L':
+          return parseNumericPattern(numericPatterns.month, string, valueCallback)
+        // 01, 02, ..., 12
+        case 'LL':
+          return parseNDigits(2, string, valueCallback)
+        // 1st, 2nd, ..., 12th
+        case 'Lo':
+          return match.ordinalNumber(string, {unit: 'month', valueCallback: valueCallback})
+        // Jan, Feb, ..., Dec
+        case 'LLL':
+          return match.month(string, {width: 'abbreviated', context: 'standalone'}) ||
+            match.month(string, {width: 'narrow', context: 'standalone'})
+        // J, F, ..., D
+        case 'LLLLL':
+          return match.month(string, {width: 'narrow', context: 'standalone'})
+        // January, February, ..., December
+        case 'LLLL':
+        default:
+          return match.month(string, {width: 'wide', context: 'standalone'}) ||
+            match.month(string, {width: 'abbreviated', context: 'standalone'}) ||
+            match.month(string, {width: 'narrow', context: 'standalone'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 11
+    },
+    set: function (date, value, options) {
+      date.setUTCMonth(value, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Local week of year
+  w: {
+    priority: 100,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'w':
+          return parseNumericPattern(numericPatterns.week, string)
+        case 'wo':
+          return match.ordinalNumber(string, {unit: 'week'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 53
+    },
+    set: function (date, value, options) {
+      return startOfUTCWeek(setUTCWeek(date, value, options), options)
+    }
+  },
+
+  // ISO week of year
+  I: {
+    priority: 100,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'I':
+          return parseNumericPattern(numericPatterns.week, string)
+        case 'Io':
+          return match.ordinalNumber(string, {unit: 'week'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 53
+    },
+    set: function (date, value, options) {
+      return startOfUTCISOWeek(setUTCISOWeek(date, value, options), options)
+    }
+  },
+
+  // Day of the month
+  d: {
+    priority: 90,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'd':
+          return parseNumericPattern(numericPatterns.date, string)
+        case 'do':
+          return match.ordinalNumber(string, {unit: 'date'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      var year = date.getUTCFullYear();
+      var isLeapYear = isLeapYearIndex$1(year);
+      var month = date.getUTCMonth();
+      if (isLeapYear) {
+        return value >= 1 && value <= DAYS_IN_MONTH_LEAP_YEAR$1[month]
+      } else {
+        return value >= 1 && value <= DAYS_IN_MONTH$1[month]
+      }
+    },
+    set: function (date, value, options) {
+      date.setUTCDate(value);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Day of year
+  D: {
+    priority: 90,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'D':
+        case 'DD':
+          return parseNumericPattern(numericPatterns.dayOfYear, string)
+        case 'Do':
+          return match.ordinalNumber(string, {unit: 'date'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      var year = date.getUTCFullYear();
+      var isLeapYear = isLeapYearIndex$1(year);
+      if (isLeapYear) {
+        return value >= 1 && value <= 366
+      } else {
+        return value >= 1 && value <= 365
+      }
+    },
+    set: function (date, value, options) {
+      date.setUTCMonth(0, value);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Day of week
+  E: {
+    priority: 90,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        // Tue
+        case 'E':
+        case 'EE':
+        case 'EEE':
+          return match.day(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.day(string, {width: 'short', context: 'formatting'}) ||
+            match.day(string, {width: 'narrow', context: 'formatting'})
+        // T
+        case 'EEEEE':
+          return match.day(string, {width: 'narrow', context: 'formatting'})
+        // Tu
+        case 'EEEEEE':
+          return match.day(string, {width: 'short', context: 'formatting'}) ||
+          match.day(string, {width: 'narrow', context: 'formatting'})
+        // Tuesday
+        case 'EEEE':
+        default:
+          return match.day(string, {width: 'wide', context: 'formatting'}) ||
+            match.day(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.day(string, {width: 'short', context: 'formatting'}) ||
+            match.day(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 6
+    },
+    set: function (date, value, options) {
+      date = setUTCDay(date, value, options);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Local day of week
+  e: {
+    priority: 90,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (value) {
+        var wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+        return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays
+      };
+
+      switch (token) {
+        // 3
+        case 'e':
+        case 'ee': // 03
+          return parseNDigits(token.length, string, valueCallback)
+        // 3rd
+        case 'eo':
+          return match.ordinalNumber(string, {unit: 'day', valueCallback: valueCallback})
+        // Tue
+        case 'eee':
+          return match.day(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.day(string, {width: 'short', context: 'formatting'}) ||
+            match.day(string, {width: 'narrow', context: 'formatting'})
+        // T
+        case 'eeeee':
+          return match.day(string, {width: 'narrow', context: 'formatting'})
+        // Tu
+        case 'eeeeee':
+          return match.day(string, {width: 'short', context: 'formatting'}) ||
+          match.day(string, {width: 'narrow', context: 'formatting'})
+        // Tuesday
+        case 'eeee':
+        default:
+          return match.day(string, {width: 'wide', context: 'formatting'}) ||
+            match.day(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.day(string, {width: 'short', context: 'formatting'}) ||
+            match.day(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 6
+    },
+    set: function (date, value, options) {
+      date = setUTCDay(date, value, options);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Stand-alone local day of week
+  c: {
+    priority: 90,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (value) {
+        var wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+        return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays
+      };
+
+      switch (token) {
+        // 3
+        case 'c':
+        case 'cc': // 03
+          return parseNDigits(token.length, string, valueCallback)
+        // 3rd
+        case 'co':
+          return match.ordinalNumber(string, {unit: 'day', valueCallback: valueCallback})
+        // Tue
+        case 'ccc':
+          return match.day(string, {width: 'abbreviated', context: 'standalone'}) ||
+            match.day(string, {width: 'short', context: 'standalone'}) ||
+            match.day(string, {width: 'narrow', context: 'standalone'})
+        // T
+        case 'ccccc':
+          return match.day(string, {width: 'narrow', context: 'standalone'})
+        // Tu
+        case 'cccccc':
+          return match.day(string, {width: 'short', context: 'standalone'}) ||
+          match.day(string, {width: 'narrow', context: 'standalone'})
+        // Tuesday
+        case 'cccc':
+        default:
+          return match.day(string, {width: 'wide', context: 'standalone'}) ||
+            match.day(string, {width: 'abbreviated', context: 'standalone'}) ||
+            match.day(string, {width: 'short', context: 'standalone'}) ||
+            match.day(string, {width: 'narrow', context: 'standalone'})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 6
+    },
+    set: function (date, value, options) {
+      date = setUTCDay(date, value, options);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // ISO day of week
+  i: {
+    priority: 90,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (value) {
+        if (value === 0) {
+          return 7
+        }
+        return value
+      };
+
+      switch (token) {
+        // 2
+        case 'i':
+        case 'ii': // 02
+          return parseNDigits(token.length, string)
+        // 2nd
+        case 'io':
+          return match.ordinalNumber(string, {unit: 'day'})
+        // Tue
+        case 'iii':
+          return match.day(string, {width: 'abbreviated', context: 'formatting', valueCallback: valueCallback}) ||
+            match.day(string, {width: 'short', context: 'formatting', valueCallback: valueCallback}) ||
+            match.day(string, {width: 'narrow', context: 'formatting', valueCallback: valueCallback})
+        // T
+        case 'iiiii':
+          return match.day(string, {width: 'narrow', context: 'formatting', valueCallback: valueCallback})
+        // Tu
+        case 'iiiiii':
+          return match.day(string, {width: 'short', context: 'formatting', valueCallback: valueCallback}) ||
+          match.day(string, {width: 'narrow', context: 'formatting', valueCallback: valueCallback})
+        // Tuesday
+        case 'iiii':
+        default:
+          return match.day(string, {width: 'wide', context: 'formatting', valueCallback: valueCallback}) ||
+            match.day(string, {width: 'abbreviated', context: 'formatting', valueCallback: valueCallback}) ||
+            match.day(string, {width: 'short', context: 'formatting', valueCallback: valueCallback}) ||
+            match.day(string, {width: 'narrow', context: 'formatting', valueCallback: valueCallback})
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 7
+    },
+    set: function (date, value, options) {
+      date = setUTCISODay(date, value, options);
+      date.setUTCHours(0, 0, 0, 0);
+      return date
+    }
+  },
+
+  // AM or PM
+  a: {
+    priority: 80,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'a':
+        case 'aa':
+        case 'aaa':
+          return match.dayPeriod(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+        case 'aaaaa':
+          return match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+        case 'aaaa':
+        default:
+          return match.dayPeriod(string, {width: 'wide', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    set: function (date, value, options) {
+      date.setUTCHours(dayPeriodEnumToHours(value), 0, 0, 0);
+      return date
+    }
+  },
+
+  // AM, PM, midnight
+  b: {
+    priority: 80,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'b':
+        case 'bb':
+        case 'bbb':
+          return match.dayPeriod(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+        case 'bbbbb':
+          return match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+        case 'bbbb':
+        default:
+          return match.dayPeriod(string, {width: 'wide', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    set: function (date, value, options) {
+      date.setUTCHours(dayPeriodEnumToHours(value), 0, 0, 0);
+      return date
+    }
+  },
+
+  // in the morning, in the afternoon, in the evening, at night
+  B: {
+    priority: 80,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'B':
+        case 'BB':
+        case 'BBB':
+          return match.dayPeriod(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+        case 'BBBBB':
+          return match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+        case 'BBBB':
+        default:
+          return match.dayPeriod(string, {width: 'wide', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'abbreviated', context: 'formatting'}) ||
+            match.dayPeriod(string, {width: 'narrow', context: 'formatting'})
+      }
+    },
+    set: function (date, value, options) {
+      date.setUTCHours(dayPeriodEnumToHours(value), 0, 0, 0);
+      return date
+    }
+  },
+
+  // Hour [1-12]
+  h: {
+    priority: 70,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'h':
+          return parseNumericPattern(numericPatterns.hour12h, string)
+        case 'ho':
+          return match.ordinalNumber(string, {unit: 'hour'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 12
+    },
+    set: function (date, value, options) {
+      var isPM = date.getUTCHours() >= 12;
+      if (isPM && value < 12) {
+        date.setUTCHours(value + 12, 0, 0, 0);
+      } else if (!isPM && value === 12) {
+        date.setUTCHours(0, 0, 0, 0);
+      } else {
+        date.setUTCHours(value, 0, 0, 0);
+      }
+      return date
+    }
+  },
+
+  // Hour [0-23]
+  H: {
+    priority: 70,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'H':
+          return parseNumericPattern(numericPatterns.hour23h, string)
+        case 'Ho':
+          return match.ordinalNumber(string, {unit: 'hour'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 23
+    },
+    set: function (date, value, options) {
+      date.setUTCHours(value, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Hour [0-11]
+  K: {
+    priority: 70,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'K':
+          return parseNumericPattern(numericPatterns.hour11h, string)
+        case 'Ko':
+          return match.ordinalNumber(string, {unit: 'hour'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 11
+    },
+    set: function (date, value, options) {
+      var isPM = date.getUTCHours() >= 12;
+      if (isPM && value < 12) {
+        date.setUTCHours(value + 12, 0, 0, 0);
+      } else {
+        date.setUTCHours(value, 0, 0, 0);
+      }
+      return date
+    }
+  },
+
+  // Hour [1-24]
+  k: {
+    priority: 70,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'k':
+          return parseNumericPattern(numericPatterns.hour24h, string)
+        case 'ko':
+          return match.ordinalNumber(string, {unit: 'hour'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 1 && value <= 24
+    },
+    set: function (date, value, options) {
+      var hours = value <= 24 ? value % 24 : value;
+      date.setUTCHours(hours, 0, 0, 0);
+      return date
+    }
+  },
+
+  // Minute
+  m: {
+    priority: 60,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'm':
+          return parseNumericPattern(numericPatterns.minute, string)
+        case 'mo':
+          return match.ordinalNumber(string, {unit: 'minute'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 59
+    },
+    set: function (date, value, options) {
+      date.setUTCMinutes(value, 0, 0);
+      return date
+    }
+  },
+
+  // Second
+  s: {
+    priority: 50,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 's':
+          return parseNumericPattern(numericPatterns.second, string)
+        case 'so':
+          return match.ordinalNumber(string, {unit: 'second'})
+        default:
+          return parseNDigits(token.length, string)
+      }
+    },
+    validate: function (date, value, options) {
+      return value >= 0 && value <= 59
+    },
+    set: function (date, value, options) {
+      date.setUTCSeconds(value, 0);
+      return date
+    }
+  },
+
+  // Fraction of second
+  S: {
+    priority: 40,
+    parse: function (string, token, match, options) {
+      var valueCallback = function (value) {
+        return Math.floor(value * Math.pow(10, -token.length + 3))
+      };
+      return parseNDigits(token.length, string, valueCallback)
+    },
+    set: function (date, value, options) {
+      date.setUTCMilliseconds(value);
+      return date
+    }
+  },
+
+  // Timezone (ISO-8601. +00:00 is `'Z'`)
+  X: {
+    priority: 20,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'X':
+          return parseTimezonePattern(timezonePatterns.basicOptionalMinutes, string)
+        case 'XX':
+          return parseTimezonePattern(timezonePatterns.basic, string)
+        case 'XXXX':
+          return parseTimezonePattern(timezonePatterns.basicOptionalSeconds, string)
+        case 'XXXXX':
+          return parseTimezonePattern(timezonePatterns.extendedOptionalSeconds, string)
+        case 'XXX':
+        default:
+          return parseTimezonePattern(timezonePatterns.extended, string)
+      }
+    },
+    set: function (date, value, options) {
+      return new Date(date.getTime() - value)
+    }
+  },
+
+  // Timezone (ISO-8601)
+  x: {
+    priority: 20,
+    parse: function (string, token, match, options) {
+      switch (token) {
+        case 'x':
+          return parseTimezonePattern(timezonePatterns.basicOptionalMinutes, string)
+        case 'xx':
+          return parseTimezonePattern(timezonePatterns.basic, string)
+        case 'xxxx':
+          return parseTimezonePattern(timezonePatterns.basicOptionalSeconds, string)
+        case 'xxxxx':
+          return parseTimezonePattern(timezonePatterns.extendedOptionalSeconds, string)
+        case 'xxx':
+        default:
+          return parseTimezonePattern(timezonePatterns.extended, string)
+      }
+    },
+    set: function (date, value, options) {
+      return new Date(date.getTime() - value)
+    }
+  },
+
+  // Seconds timestamp
+  t: {
+    priority: 10,
+    parse: function (string, token, match, options) {
+      return parseAnyDigitsSigned(string)
+    },
+    set: function (date, value, options) {
+      return new Date(value * 1000)
+    }
+  },
+
+  // Milliseconds timestamp
+  T: {
+    priority: 10,
+    parse: function (string, token, match, options) {
+      return parseAnyDigitsSigned(string)
+    },
+    set: function (date, value, options) {
+      return new Date(value)
+    }
+  }
+};
+
+var TIMEZONE_UNIT_PRIORITY = 20;
+
+// This RegExp consists of three parts separated by `|`:
+// - [yYQqMLwIdDecihHKkms]o matches any available ordinal number token
+//   (one of the certain letters followed by `o`)
+// - (\w)\1* matches any sequences of the same letter
+// - '' matches two quote characters in a row
+// - '(''|[^'])+('|$) matches anything surrounded by two quote characters ('),
+//   except a single quote symbol, which ends the sequence.
+//   Two quote characters do not end the sequence.
+//   If there is no matching single quote
+//   then the sequence will continue until the end of the string.
+// - . matches any single character unmatched by previous parts of the RegExps
+var formattingTokensRegExp$1 = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+
+var escapedStringRegExp$1 = /^'(.*?)'?$/;
+var doubleQuoteRegExp$1 = /''/g;
+
+var notWhitespaceRegExp = /\S/;
+
+/**
+ * @name parse
+ * @category Common Helpers
+ * @summary Parse the date.
+ *
+ * @description
+ * Return the date parsed from string using the given format string.
+ *
+ * > ⚠️ Please note that the `format` tokens differ from Moment.js and other libraries.
+ * > See: https://git.io/fxCyr
+ *
+ * The characters in the format string wrapped between two single quotes characters (') are escaped.
+ * Two single quotes in a row, whether inside or outside a quoted sequence, represent a 'real' single quote.
+ *
+ * Format of the format string is based on Unicode Technical Standard #35:
+ * https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+ * with a few additions (see note 5 below the table).
+ *
+ * Accepted format string patterns:
+ * | Unit                            |Prior| Pattern | Result examples                   | Notes |
+ * |---------------------------------|-----|---------|-----------------------------------|-------|
+ * | Era                             | 140 | G..GGG  | AD, BC                            |       |
+ * |                                 |     | GGGG    | Anno Domini, Before Christ        | 2     |
+ * |                                 |     | GGGGG   | A, B                              |       |
+ * | Calendar year                   | 130 | y       | 44, 1, 1900, 2017, 9999           | 4     |
+ * |                                 |     | yo      | 44th, 1st, 1900th, 9999999th      | 4,5   |
+ * |                                 |     | yy      | 44, 01, 00, 17                    | 4     |
+ * |                                 |     | yyy     | 044, 001, 123, 999                | 4     |
+ * |                                 |     | yyyy    | 0044, 0001, 1900, 2017            | 4     |
+ * |                                 |     | yyyyy   | ...                               | 2,4   |
+ * | Local week-numbering year       | 130 | Y       | 44, 1, 1900, 2017, 9000           | 4     |
+ * |                                 |     | Yo      | 44th, 1st, 1900th, 9999999th      | 4,5   |
+ * |                                 |     | YY      | 44, 01, 00, 17                    | 4,6   |
+ * |                                 |     | YYY     | 044, 001, 123, 999                | 4     |
+ * |                                 |     | YYYY    | 0044, 0001, 1900, 2017            | 4,6   |
+ * |                                 |     | YYYYY   | ...                               | 2,4   |
+ * | ISO week-numbering year         | 130 | R       | -43, 1, 1900, 2017, 9999, -9999   | 4,5   |
+ * |                                 |     | RR      | -43, 01, 00, 17                   | 4,5   |
+ * |                                 |     | RRR     | -043, 001, 123, 999, -999         | 4,5   |
+ * |                                 |     | RRRR    | -0043, 0001, 2017, 9999, -9999    | 4,5   |
+ * |                                 |     | RRRRR   | ...                               | 2,4,5 |
+ * | Extended year                   | 130 | u       | -43, 1, 1900, 2017, 9999, -999    | 4     |
+ * |                                 |     | uu      | -43, 01, 99, -99                  | 4     |
+ * |                                 |     | uuu     | -043, 001, 123, 999, -999         | 4     |
+ * |                                 |     | uuuu    | -0043, 0001, 2017, 9999, -9999    | 4     |
+ * |                                 |     | uuuuu   | ...                               | 2,4   |
+ * | Quarter (formatting)            | 120 | Q       | 1, 2, 3, 4                        |       |
+ * |                                 |     | Qo      | 1st, 2nd, 3rd, 4th                | 5     |
+ * |                                 |     | QQ      | 01, 02, 03, 04                    |       |
+ * |                                 |     | QQQ     | Q1, Q2, Q3, Q4                    |       |
+ * |                                 |     | QQQQ    | 1st quarter, 2nd quarter, ...     | 2     |
+ * |                                 |     | QQQQQ   | 1, 2, 3, 4                        | 4     |
+ * | Quarter (stand-alone)           | 120 | q       | 1, 2, 3, 4                        |       |
+ * |                                 |     | qo      | 1st, 2nd, 3rd, 4th                | 5     |
+ * |                                 |     | qq      | 01, 02, 03, 04                    |       |
+ * |                                 |     | qqq     | Q1, Q2, Q3, Q4                    |       |
+ * |                                 |     | qqqq    | 1st quarter, 2nd quarter, ...     | 2     |
+ * |                                 |     | qqqqq   | 1, 2, 3, 4                        | 3     |
+ * | Month (formatting)              | 110 | M       | 1, 2, ..., 12                     |       |
+ * |                                 |     | Mo      | 1st, 2nd, ..., 12th               | 5     |
+ * |                                 |     | MM      | 01, 02, ..., 12                   |       |
+ * |                                 |     | MMM     | Jan, Feb, ..., Dec                |       |
+ * |                                 |     | MMMM    | January, February, ..., December  | 2     |
+ * |                                 |     | MMMMM   | J, F, ..., D                      |       |
+ * | Month (stand-alone)             | 110 | L       | 1, 2, ..., 12                     |       |
+ * |                                 |     | Lo      | 1st, 2nd, ..., 12th               | 5     |
+ * |                                 |     | LL      | 01, 02, ..., 12                   |       |
+ * |                                 |     | LLL     | Jan, Feb, ..., Dec                |       |
+ * |                                 |     | LLLL    | January, February, ..., December  | 2     |
+ * |                                 |     | LLLLL   | J, F, ..., D                      |       |
+ * | Local week of year              | 100 | w       | 1, 2, ..., 53                     |       |
+ * |                                 |     | wo      | 1st, 2nd, ..., 53th               | 5     |
+ * |                                 |     | ww      | 01, 02, ..., 53                   |       |
+ * | ISO week of year                | 100 | I       | 1, 2, ..., 53                     | 5     |
+ * |                                 |     | Io      | 1st, 2nd, ..., 53th               | 5     |
+ * |                                 |     | II      | 01, 02, ..., 53                   | 5     |
+ * | Day of month                    |  90 | d       | 1, 2, ..., 31                     |       |
+ * |                                 |     | do      | 1st, 2nd, ..., 31st               | 5     |
+ * |                                 |     | dd      | 01, 02, ..., 31                   |       |
+ * | Day of year                     |  90 | D       | 1, 2, ..., 365, 366               | 6     |
+ * |                                 |     | Do      | 1st, 2nd, ..., 365th, 366th       | 5     |
+ * |                                 |     | DD      | 01, 02, ..., 365, 366             | 6     |
+ * |                                 |     | DDD     | 001, 002, ..., 365, 366           |       |
+ * |                                 |     | DDDD    | ...                               | 2     |
+ * | Day of week (formatting)        |  90 | E..EEE  | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 |     | EEEE    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 |     | EEEEE   | M, T, W, T, F, S, S               |       |
+ * |                                 |     | EEEEEE  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | ISO day of week (formatting)    |  90 | i       | 1, 2, 3, ..., 7                   | 5     |
+ * |                                 |     | io      | 1st, 2nd, ..., 7th                | 5     |
+ * |                                 |     | ii      | 01, 02, ..., 07                   | 5     |
+ * |                                 |     | iii     | Mon, Tue, Wed, ..., Su            | 5     |
+ * |                                 |     | iiii    | Monday, Tuesday, ..., Sunday      | 2,5   |
+ * |                                 |     | iiiii   | M, T, W, T, F, S, S               | 5     |
+ * |                                 |     | iiiiii  | Mo, Tu, We, Th, Fr, Su, Sa        | 5     |
+ * | Local day of week (formatting)  |  90 | e       | 2, 3, 4, ..., 1                   |       |
+ * |                                 |     | eo      | 2nd, 3rd, ..., 1st                | 5     |
+ * |                                 |     | ee      | 02, 03, ..., 01                   |       |
+ * |                                 |     | eee     | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 |     | eeee    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 |     | eeeee   | M, T, W, T, F, S, S               |       |
+ * |                                 |     | eeeeee  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | Local day of week (stand-alone) |  90 | c       | 2, 3, 4, ..., 1                   |       |
+ * |                                 |     | co      | 2nd, 3rd, ..., 1st                | 5     |
+ * |                                 |     | cc      | 02, 03, ..., 01                   |       |
+ * |                                 |     | ccc     | Mon, Tue, Wed, ..., Su            |       |
+ * |                                 |     | cccc    | Monday, Tuesday, ..., Sunday      | 2     |
+ * |                                 |     | ccccc   | M, T, W, T, F, S, S               |       |
+ * |                                 |     | cccccc  | Mo, Tu, We, Th, Fr, Su, Sa        |       |
+ * | AM, PM                          |  80 | a..aaa  | AM, PM                            |       |
+ * |                                 |     | aaaa    | a.m., p.m.                        | 2     |
+ * |                                 |     | aaaaa   | a, p                              |       |
+ * | AM, PM, noon, midnight          |  80 | b..bbb  | AM, PM, noon, midnight            |       |
+ * |                                 |     | bbbb    | a.m., p.m., noon, midnight        | 2     |
+ * |                                 |     | bbbbb   | a, p, n, mi                       |       |
+ * | Flexible day period             |  80 | B..BBB  | at night, in the morning, ...     |       |
+ * |                                 |     | BBBB    | at night, in the morning, ...     | 2     |
+ * |                                 |     | BBBBB   | at night, in the morning, ...     |       |
+ * | Hour [1-12]                     |  70 | h       | 1, 2, ..., 11, 12                 |       |
+ * |                                 |     | ho      | 1st, 2nd, ..., 11th, 12th         | 5     |
+ * |                                 |     | hh      | 01, 02, ..., 11, 12               |       |
+ * | Hour [0-23]                     |  70 | H       | 0, 1, 2, ..., 23                  |       |
+ * |                                 |     | Ho      | 0th, 1st, 2nd, ..., 23rd          | 5     |
+ * |                                 |     | HH      | 00, 01, 02, ..., 23               |       |
+ * | Hour [0-11]                     |  70 | K       | 1, 2, ..., 11, 0                  |       |
+ * |                                 |     | Ko      | 1st, 2nd, ..., 11th, 0th          | 5     |
+ * |                                 |     | KK      | 1, 2, ..., 11, 0                  |       |
+ * | Hour [1-24]                     |  70 | k       | 24, 1, 2, ..., 23                 |       |
+ * |                                 |     | ko      | 24th, 1st, 2nd, ..., 23rd         | 5     |
+ * |                                 |     | kk      | 24, 01, 02, ..., 23               |       |
+ * | Minute                          |  60 | m       | 0, 1, ..., 59                     |       |
+ * |                                 |     | mo      | 0th, 1st, ..., 59th               | 5     |
+ * |                                 |     | mm      | 00, 01, ..., 59                   |       |
+ * | Second                          |  50 | s       | 0, 1, ..., 59                     |       |
+ * |                                 |     | so      | 0th, 1st, ..., 59th               | 5     |
+ * |                                 |     | ss      | 00, 01, ..., 59                   |       |
+ * | Fraction of second              |  40 | S       | 0, 1, ..., 9                      |       |
+ * |                                 |     | SS      | 00, 01, ..., 99                   |       |
+ * |                                 |     | SSS     | 000, 0001, ..., 999               |       |
+ * |                                 |     | SSSS    | ...                               | 2     |
+ * | Timezone (ISO-8601 w/ Z)        |  20 | X       | -08, +0530, Z                     |       |
+ * |                                 |     | XX      | -0800, +0530, Z                   |       |
+ * |                                 |     | XXX     | -08:00, +05:30, Z                 |       |
+ * |                                 |     | XXXX    | -0800, +0530, Z, +123456          | 2     |
+ * |                                 |     | XXXXX   | -08:00, +05:30, Z, +12:34:56      |       |
+ * | Timezone (ISO-8601 w/o Z)       |  20 | x       | -08, +0530, +00                   |       |
+ * |                                 |     | xx      | -0800, +0530, +0000               |       |
+ * |                                 |     | xxx     | -08:00, +05:30, +00:00            | 2     |
+ * |                                 |     | xxxx    | -0800, +0530, +0000, +123456      |       |
+ * |                                 |     | xxxxx   | -08:00, +05:30, +00:00, +12:34:56 |       |
+ * | Seconds timestamp               |  10 | t       | 512969520                         |       |
+ * |                                 |     | tt      | ...                               | 2     |
+ * | Milliseconds timestamp          |  10 | T       | 512969520900                      |       |
+ * |                                 |     | TT      | ...                               | 2     |
+ * Notes:
+ * 1. "Formatting" units (e.g. formatting quarter) in the default en-US locale
+ *    are the same as "stand-alone" units, but are different in some languages.
+ *    "Formatting" units are declined according to the rules of the language
+ *    in the context of a date. "Stand-alone" units are always nominative singular.
+ *    In `format` function, they will produce different result:
+ *
+ *    `format(new Date(2017, 10, 6), 'do LLLL', {locale: cs}) //=> '6. listopad'`
+ *
+ *    `format(new Date(2017, 10, 6), 'do MMMM', {locale: cs}) //=> '6. listopadu'`
+ *
+ *    `parse` will try to match both formatting and stand-alone units interchangably.
+ *
+ * 2. Any sequence of the identical letters is a pattern, unless it is escaped by
+ *    the single quote characters (see below).
+ *    If the sequence is longer than listed in table:
+ *    - for numerical units (`yyyyyyyy`) `parse` will try to match a number
+ *      as wide as the sequence
+ *    - for text units (`MMMMMMMM`) `parse` will try to match the widest variation of the unit.
+ *      These variations are marked with "2" in the last column of the table.
+ *
+ * 3. `QQQQQ` and `qqqqq` could be not strictly numerical in some locales.
+ *    These tokens represent the shortest form of the quarter.
+ *
+ * 4. The main difference between `y` and `u` patterns are B.C. years:
+ *
+ *    | Year | `y` | `u` |
+ *    |------|-----|-----|
+ *    | AC 1 |   1 |   1 |
+ *    | BC 1 |   1 |   0 |
+ *    | BC 2 |   2 |  -1 |
+ *
+ *    Also `yy` will try to guess the century of two digit year by proximity with `baseDate`:
+ *
+ *    `parse('50', 'yy', new Date(2018, 0, 1)) //=> Sat Jan 01 2050 00:00:00`
+ *
+ *    `parse('75', 'yy', new Date(2018, 0, 1)) //=> Wed Jan 01 1975 00:00:00`
+ *
+ *    while `uu` will just assign the year as is:
+ *
+ *    `parse('50', 'uu', new Date(2018, 0, 1)) //=> Sat Jan 01 0050 00:00:00`
+ *
+ *    `parse('75', 'uu', new Date(2018, 0, 1)) //=> Tue Jan 01 0075 00:00:00`
+ *
+ *    The same difference is true for local and ISO week-numbering years (`Y` and `R`),
+ *    except local week-numbering years are dependent on `options.weekStartsOn`
+ *    and `options.firstWeekContainsDate` (compare [setISOWeekYear]{@link https://date-fns.org/docs/setISOWeekYear}
+ *    and [setWeekYear]{@link https://date-fns.org/docs/setWeekYear}).
+ *
+ * 5. These patterns are not in the Unicode Technical Standard #35:
+ *    - `i`: ISO day of week
+ *    - `I`: ISO week of year
+ *    - `R`: ISO week-numbering year
+ *    - `o`: ordinal number modifier
+ *
+ * 6. These tokens are often confused with others. See: https://git.io/fxCyr
+ *
+ * Values will be assigned to the date in the descending order of its unit's priority.
+ * Units of an equal priority overwrite each other in the order of appearance.
+ *
+ * If no values of higher priority are parsed (e.g. when parsing string 'January 1st' without a year),
+ * the values will be taken from 3rd argument `baseDate` which works as a context of parsing.
+ *
+ * `baseDate` must be passed for correct work of the function.
+ * If you're not sure which `baseDate` to supply, create a new instance of Date:
+ * `parse('02/11/2014', 'MM/dd/yyyy', new Date())`
+ * In this case parsing will be done in the context of the current date.
+ * If `baseDate` is `Invalid Date` or a value not convertible to valid `Date`,
+ * then `Invalid Date` will be returned.
+ *
+ * The result may vary by locale.
+ *
+ * If `formatString` matches with `dateString` but does not provides tokens, `baseDate` will be returned.
+ *
+ * If parsing failed, `Invalid Date` will be returned.
+ * Invalid Date is a Date, whose time value is NaN.
+ * Time value of Date: http://es5.github.io/#x15.9.1.1
+ *
+ * @param {String} dateString - the string to parse
+ * @param {String} formatString - the string of tokens
+ * @param {Date|String|Number} baseDate - defines values missing from the parsed dateString
+ * @param {Options} [options] - the object with options. See [Options]{@link https://date-fns.org/docs/Options}
+ * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
+ * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
+ * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
+ * @param {Boolean} [options.awareOfUnicodeTokens=false] - if true, allows usage of Unicode tokens causes confusion:
+ *   - Some of the day of year tokens (`D`, `DD`) that are confused with the day of month tokens (`d`, `dd`).
+ *   - Some of the local week-numbering year tokens (`YY`, `YYYY`) that are confused with the calendar year tokens (`yy`, `yyyy`).
+ *   See: https://git.io/fxCyr
+ * @returns {Date} the parsed date
+ * @throws {TypeError} 3 arguments required
+ * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @throws {RangeError} `options.locale` must contain `match` property
+ * @throws {RangeError} `options.awareOfUnicodeTokens` must be set to `true` to use `XX` token; see: https://git.io/fxCyr
+ *
+ * @example
+ * // Parse 11 February 2014 from middle-endian format:
+ * var result = parse(
+ *   '02/11/2014',
+ *   'MM/dd/yyyy',
+ *   new Date()
+ * )
+ * //=> Tue Feb 11 2014 00:00:00
+ *
+ * @example
+ * // Parse 28th of February in Esperanto locale in the context of 2010 year:
+ * import eo from 'date-fns/locale/eo'
+ * var result = parse(
+ *   '28-a de februaro',
+ *   "do 'de' MMMM",
+ *   new Date(2010, 0, 1),
+ *   {locale: eo}
+ * )
+ * //=> Sun Feb 28 2010 00:00:00
+ */
+function parse(
+  dirtyDateString,
+  dirtyFormatString,
+  dirtyBaseDate,
+  dirtyOptions
+) {
+  if (arguments.length < 3) {
+    throw new TypeError(
+      '3 arguments required, but only ' + arguments.length + ' present'
+    )
+  }
+
+  var dateString = String(dirtyDateString);
+  var formatString = String(dirtyFormatString);
+  var options = dirtyOptions || {};
+
+  var locale = options.locale || locale$1;
+
+  if (!locale.match) {
+    throw new RangeError('locale must contain match property')
+  }
+
+  var localeFirstWeekContainsDate =
+    locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate =
+    localeFirstWeekContainsDate == null
+      ? 1
+      : toInteger(localeFirstWeekContainsDate);
+  var firstWeekContainsDate =
+    options.firstWeekContainsDate == null
+      ? defaultFirstWeekContainsDate
+      : toInteger(options.firstWeekContainsDate);
+
+  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError(
+      'firstWeekContainsDate must be between 1 and 7 inclusively'
+    )
+  }
+
+  var localeWeekStartsOn = locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn =
+    localeWeekStartsOn == null ? 0 : toInteger(localeWeekStartsOn);
+  var weekStartsOn =
+    options.weekStartsOn == null
+      ? defaultWeekStartsOn
+      : toInteger(options.weekStartsOn);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively')
+  }
+
+  if (formatString === '') {
+    if (dateString === '') {
+      return toDate(dirtyBaseDate, options)
+    } else {
+      return new Date(NaN)
+    }
+  }
+
+  var subFnOptions = {
+    firstWeekContainsDate: firstWeekContainsDate,
+    weekStartsOn: weekStartsOn,
+    locale: locale
+  };
+
+  // If timezone isn't specified, it will be set to the system timezone
+  var setters = [
+    {
+      priority: TIMEZONE_UNIT_PRIORITY,
+      set: dateToSystemTimezone,
+      index: 0
+    }
+  ];
+
+  var i;
+
+  var tokens = formatString.match(formattingTokensRegExp$1);
+
+  for (i = 0; i < tokens.length; i++) {
+    var token = tokens[i];
+
+    if (!options.awareOfUnicodeTokens && isProtectedToken(token)) {
+      throwProtectedError(token);
+    }
+
+    var firstCharacter = token[0];
+    var parser = parsers[firstCharacter];
+    if (parser) {
+      var parseResult = parser.parse(
+        dateString,
+        token,
+        locale.match,
+        subFnOptions
+      );
+
+      if (!parseResult) {
+        return new Date(NaN)
+      }
+
+      setters.push({
+        priority: parser.priority,
+        set: parser.set,
+        validate: parser.validate,
+        value: parseResult.value,
+        index: setters.length
+      });
+
+      dateString = parseResult.rest;
+    } else {
+      // Replace two single quote characters with one single quote character
+      if (token === "''") {
+        token = "'";
+      } else if (firstCharacter === "'") {
+        token = cleanEscapedString$1(token);
+      }
+
+      // Cut token from string, or, if string doesn't match the token, return Invalid Date
+      if (dateString.indexOf(token) === 0) {
+        dateString = dateString.slice(token.length);
+      } else {
+        return new Date(NaN)
+      }
+    }
+  }
+
+  // Check if the remaining input contains something other than whitespace
+  if (dateString.length > 0 && notWhitespaceRegExp.test(dateString)) {
+    return new Date(NaN)
+  }
+
+  var uniquePrioritySetters = setters
+    .map(function(setter) {
+      return setter.priority
+    })
+    .sort(function(a, b) {
+      return b - a
+    })
+    .filter(function(priority, index, array) {
+      return array.indexOf(priority) === index
+    })
+    .map(function(priority) {
+      return setters
+        .filter(function(setter) {
+          return setter.priority === priority
+        })
+        .reverse()
+    })
+    .map(function(setterArray) {
+      return setterArray[0]
+    });
+
+  var date = toDate(dirtyBaseDate, options);
+
+  if (isNaN(date)) {
+    return new Date(NaN)
+  }
+
+  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
+  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
+  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/37
+  var utcDate = subMilliseconds(date, getTimezoneOffsetInMilliseconds(date));
+
+  for (i = 0; i < uniquePrioritySetters.length; i++) {
+    var setter = uniquePrioritySetters[i];
+
+    if (
+      setter.validate &&
+      !setter.validate(utcDate, setter.value, subFnOptions)
+    ) {
+      return new Date(NaN)
+    }
+
+    utcDate = setter.set(utcDate, setter.value, subFnOptions);
+  }
+
+  return utcDate
+}
+
+function dateToSystemTimezone(date) {
+  var convertedDate = new Date(0);
+  convertedDate.setFullYear(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate()
+  );
+  convertedDate.setHours(
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+    date.getUTCMilliseconds()
+  );
+  return convertedDate
+}
+
+function cleanEscapedString$1(input) {
+  return input.match(escapedStringRegExp$1)[1].replace(doubleQuoteRegExp$1, "'")
+}
+
+// This file is generated automatically by `scripts/build/indices.js`. Please, don't change it.
+
+// 
+
+/**
+ * Custom parse behavior on top of date-fns parse function.
+ */
+function parseDate$1 (date, format$1) {
+  if (typeof date !== 'string') {
+    return isValid(date) ? date : null;
+  }
+
+  var parsed = parse(date, format$1, new Date());
+
+  // if date is not valid or the formatted output after parsing does not match
+  // the string value passed in (avoids overflows)
+  if (!isValid(parsed) || format(parsed, format$1) !== date) {
+    return null;
+  }
+
+  return parsed;
+}
+
+var afterValidator = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var targetValue = ref.targetValue;
+  var inclusion = ref.inclusion; if ( inclusion === void 0 ) inclusion = false;
+  var format = ref.format;
+
+  if (typeof format === 'undefined') {
+    format = inclusion;
+    inclusion = false;
+  }
+
+  value = parseDate$1(value, format);
+  targetValue = parseDate$1(targetValue, format);
+
+  // if either is not valid.
+  if (!value || !targetValue) {
+    return false;
+  }
+
+  return isAfter(value, targetValue) || (inclusion && isEqual$1(value, targetValue));
+};
+
+var options = {
+  hasTarget: true,
+  isDate: true
+};
+
+// required to convert from a list of array values to an object.
+var paramNames = ['targetValue', 'inclusion', 'format'];
+
+var after = {
+  validate: afterValidator,
+  options: options,
+  paramNames: paramNames
+};
+
+/**
+ * Some Alpha Regex helpers.
+ * https://github.com/chriso/validator.js/blob/master/src/lib/alpha.js
+ */
+
+var alpha = {
+  en: /^[A-Z]*$/i,
+  cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+  da: /^[A-ZÆØÅ]*$/i,
+  de: /^[A-ZÄÖÜß]*$/i,
+  es: /^[A-ZÁÉÍÑÓÚÜ]*$/i,
+  fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+  it: /^[A-Z\xC0-\xFF]*$/i,
+  lt: /^[A-ZĄČĘĖĮŠŲŪŽ]*$/i,
+  nl: /^[A-ZÉËÏÓÖÜ]*$/i,
+  hu: /^[A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+  pl: /^[A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+  pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+  ru: /^[А-ЯЁ]*$/i,
+  sk: /^[A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ]*$/i,
+  sr: /^[A-ZČĆŽŠĐ]*$/i,
+  sv: /^[A-ZÅÄÖ]*$/i,
+  tr: /^[A-ZÇĞİıÖŞÜ]*$/i,
+  uk: /^[А-ЩЬЮЯЄІЇҐ]*$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
+  az: /^[A-ZÇƏĞİıÖŞÜ]*$/i
+};
+
+var alphaSpaces = {
+  en: /^[A-Z\s]*$/i,
+  cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ\s]*$/i,
+  da: /^[A-ZÆØÅ\s]*$/i,
+  de: /^[A-ZÄÖÜß\s]*$/i,
+  es: /^[A-ZÁÉÍÑÓÚÜ\s]*$/i,
+  fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ\s]*$/i,
+  it: /^[A-Z\xC0-\xFF\s]*$/i,
+  lt: /^[A-ZĄČĘĖĮŠŲŪŽ\s]*$/i,
+  nl: /^[A-ZÉËÏÓÖÜ\s]*$/i,
+  hu: /^[A-ZÁÉÍÓÖŐÚÜŰ\s]*$/i,
+  pl: /^[A-ZĄĆĘŚŁŃÓŻŹ\s]*$/i,
+  pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ\s]*$/i,
+  ru: /^[А-ЯЁ\s]*$/i,
+  sk: /^[A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ\s]*$/i,
+  sr: /^[A-ZČĆŽŠĐ\s]*$/i,
+  sv: /^[A-ZÅÄÖ\s]*$/i,
+  tr: /^[A-ZÇĞİıÖŞÜ\s]*$/i,
+  uk: /^[А-ЩЬЮЯЄІЇҐ\s]*$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/,
+  az: /^[A-ZÇƏĞİıÖŞÜ\s]*$/i
+};
+
+var alphanumeric = {
+  en: /^[0-9A-Z]*$/i,
+  cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+  da: /^[0-9A-ZÆØÅ]$/i,
+  de: /^[0-9A-ZÄÖÜß]*$/i,
+  es: /^[0-9A-ZÁÉÍÑÓÚÜ]*$/i,
+  fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+  it: /^[0-9A-Z\xC0-\xFF]*$/i,
+  lt: /^[0-9A-ZĄČĘĖĮŠŲŪŽ]*$/i,
+  hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+  nl: /^[0-9A-ZÉËÏÓÖÜ]*$/i,
+  pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+  pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+  ru: /^[0-9А-ЯЁ]*$/i,
+  sk: /^[0-9A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ]*$/i,
+  sr: /^[0-9A-ZČĆŽŠĐ]*$/i,
+  sv: /^[0-9A-ZÅÄÖ]*$/i,
+  tr: /^[0-9A-ZÇĞİıÖŞÜ]*$/i,
+  uk: /^[0-9А-ЩЬЮЯЄІЇҐ]*$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
+  az: /^[0-9A-ZÇƏĞİıÖŞÜ]*$/i
+};
+
+var alphaDash = {
+  en: /^[0-9A-Z_-]*$/i,
+  cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_-]*$/i,
+  da: /^[0-9A-ZÆØÅ_-]*$/i,
+  de: /^[0-9A-ZÄÖÜß_-]*$/i,
+  es: /^[0-9A-ZÁÉÍÑÓÚÜ_-]*$/i,
+  fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ_-]*$/i,
+  it: /^[0-9A-Z\xC0-\xFF_-]*$/i,
+  lt: /^[0-9A-ZĄČĘĖĮŠŲŪŽ_-]*$/i,
+  nl: /^[0-9A-ZÉËÏÓÖÜ_-]*$/i,
+  hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ_-]*$/i,
+  pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ_-]*$/i,
+  pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ_-]*$/i,
+  ru: /^[0-9А-ЯЁ_-]*$/i,
+  sk: /^[0-9A-ZÁÄČĎÉÍĹĽŇÓŔŠŤÚÝŽ_-]*$/i,
+  sr: /^[0-9A-ZČĆŽŠĐ_-]*$/i,
+  sv: /^[0-9A-ZÅÄÖ_-]*$/i,
+  tr: /^[0-9A-ZÇĞİıÖŞÜ_-]*$/i,
+  uk: /^[0-9А-ЩЬЮЯЄІЇҐ_-]*$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/,
+  az: /^[0-9A-ZÇƏĞİıÖŞÜ_-]*$/i
+};
+
+var validate = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var locale = ref.locale;
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate(val, [locale]); });
+  }
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alpha).some(function (loc) { return alpha[loc].test(value); });
+  }
+
+  return (alpha[locale] || alpha.en).test(value);
+};
+
+var paramNames$1 = ['locale'];
+
+var alpha$1 = {
+  validate: validate,
+  paramNames: paramNames$1
+};
+
+var validate$1 = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var locale = ref.locale;
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$1(val, [locale]); });
+  }
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphaDash).some(function (loc) { return alphaDash[loc].test(value); });
+  }
+
+  return (alphaDash[locale] || alphaDash.en).test(value);
+};
+
+var paramNames$2 = ['locale'];
+
+var alpha_dash = {
+  validate: validate$1,
+  paramNames: paramNames$2
+};
+
+var validate$2 = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var locale = ref.locale;
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$2(val, [locale]); });
+  }
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphanumeric).some(function (loc) { return alphanumeric[loc].test(value); });
+  }
+
+  return (alphanumeric[locale] || alphanumeric.en).test(value);
+};
+
+var paramNames$3 = ['locale'];
+
+var alpha_num = {
+  validate: validate$2,
+  paramNames: paramNames$3
+};
+
+var validate$3 = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var locale = ref.locale;
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$3(val, [locale]); });
+  }
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphaSpaces).some(function (loc) { return alphaSpaces[loc].test(value); });
+  }
+
+  return (alphaSpaces[locale] || alphaSpaces.en).test(value);
+};
+
+var paramNames$4 = ['locale'];
+
+var alpha_spaces = {
+  validate: validate$3,
+  paramNames: paramNames$4
+};
+
+var validate$4 = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var targetValue = ref.targetValue;
+  var inclusion = ref.inclusion; if ( inclusion === void 0 ) inclusion = false;
+  var format = ref.format;
+
+  if (typeof format === 'undefined') {
+    format = inclusion;
+    inclusion = false;
+  }
+
+  value = parseDate$1(value, format);
+  targetValue = parseDate$1(targetValue, format);
+
+  // if either is not valid.
+  if (!value || !targetValue) {
+    return false;
+  }
+
+  return isBefore(value, targetValue) || (inclusion && isEqual$1(value, targetValue));
+};
+
+var options$1 = {
+  hasTarget: true,
+  isDate: true
+};
+
+var paramNames$5 = ['targetValue', 'inclusion', 'format'];
+
+var before = {
+  validate: validate$4,
+  options: options$1,
+  paramNames: paramNames$5
+};
+
+var validate$5 = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var min = ref.min;
+  var max = ref.max;
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$5(val, { min: min, max: max }); });
+  }
+
+  return Number(min) <= value && Number(max) >= value;
+};
+
+var paramNames$6 = ['min', 'max'];
+
+var between = {
+  validate: validate$5,
+  paramNames: paramNames$6
+};
+
+var validate$6 = function (value, ref) {
+  var targetValue = ref.targetValue;
+
+  return String(value) === String(targetValue);
+};
+var options$2 = {
+  hasTarget: true
+};
+
+var paramNames$7 = ['targetValue'];
+
+var confirmed = {
+  validate: validate$6,
+  options: options$2,
+  paramNames: paramNames$7
+};
+
+function unwrapExports (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
+}
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var assertString_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = assertString;
+function assertString(input) {
+  var isString = typeof input === 'string' || input instanceof String;
+
+  if (!isString) {
+    var invalidType = void 0;
+    if (input === null) {
+      invalidType = 'null';
+    } else {
+      invalidType = typeof input === 'undefined' ? 'undefined' : _typeof(input);
+      if (invalidType === 'object' && input.constructor && input.constructor.hasOwnProperty('name')) {
+        invalidType = input.constructor.name;
+      } else {
+        invalidType = 'a ' + invalidType;
+      }
+    }
+    throw new TypeError('Expected string but received ' + invalidType + '.');
+  }
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(assertString_1);
+
+var isCreditCard_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isCreditCard;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable max-len */
+var creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11}|6[27][0-9]{14})$/;
+/* eslint-enable max-len */
+
+function isCreditCard(str) {
+  (0, _assertString2.default)(str);
+  var sanitized = str.replace(/[- ]+/g, '');
+  if (!creditCard.test(sanitized)) {
+    return false;
+  }
+  var sum = 0;
+  var digit = void 0;
+  var tmpNum = void 0;
+  var shouldDouble = void 0;
+  for (var i = sanitized.length - 1; i >= 0; i--) {
+    digit = sanitized.substring(i, i + 1);
+    tmpNum = parseInt(digit, 10);
+    if (shouldDouble) {
+      tmpNum *= 2;
+      if (tmpNum >= 10) {
+        sum += tmpNum % 10 + 1;
+      } else {
+        sum += tmpNum;
+      }
+    } else {
+      sum += tmpNum;
+    }
+    shouldDouble = !shouldDouble;
+  }
+  return !!(sum % 10 === 0 ? sanitized : false);
+}
+module.exports = exports['default'];
+});
+
+var isCreditCard = unwrapExports(isCreditCard_1);
+
+var validate$7 = function (value) { return isCreditCard(String(value)); };
+
+var credit_card = {
+  validate: validate$7
+};
+
+var validate$8 = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var min = ref.min;
+  var max = ref.max;
+  var inclusivity = ref.inclusivity; if ( inclusivity === void 0 ) inclusivity = '()';
+  var format = ref.format;
+
+  if (typeof format === 'undefined') {
+    format = inclusivity;
+    inclusivity = '()';
+  }
+
+  var minDate = parseDate$1(String(min), format);
+  var maxDate = parseDate$1(String(max), format);
+  var dateVal = parseDate$1(String(value), format);
+
+  if (!minDate || !maxDate || !dateVal) {
+    return false;
+  }
+
+  if (inclusivity === '()') {
+    return isAfter(dateVal, minDate) && isBefore(dateVal, maxDate);
+  }
+
+  if (inclusivity === '(]') {
+    return isAfter(dateVal, minDate) && (isEqual$1(dateVal, maxDate) || isBefore(dateVal, maxDate));
+  }
+
+  if (inclusivity === '[)') {
+    return isBefore(dateVal, maxDate) && (isEqual$1(dateVal, minDate) || isAfter(dateVal, minDate));
+  }
+
+  return isEqual$1(dateVal, maxDate) || isEqual$1(dateVal, minDate) ||
+    (isBefore(dateVal, maxDate) && isAfter(dateVal, minDate));
+};
+
+var options$3 = {
+  isDate: true
+};
+
+var paramNames$8 = ['min', 'max', 'inclusivity', 'format'];
+
+var date_between = {
+  validate: validate$8,
+  options: options$3,
+  paramNames: paramNames$8
+};
+
+var validate$9 = function (value, ref) {
+  var format = ref.format;
+
+  return !!parseDate$1(value, format);
+};
+
+var options$4 = {
+  isDate: true
+};
+
+var paramNames$9 = ['format'];
+
+var date_format = {
+  validate: validate$9,
+  options: options$4,
+  paramNames: paramNames$9
+};
+
+var validate$a = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var decimals = ref.decimals; if ( decimals === void 0 ) decimals = '*';
+  var separator = ref.separator; if ( separator === void 0 ) separator = '.';
+
+  if (isNullOrUndefined(value) || value === '') {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$a(val, { decimals: decimals, separator: separator }); });
+  }
+
+  // if is 0.
+  if (Number(decimals) === 0) {
+    return /^-?\d*$/.test(value);
+  }
+
+  var regexPart = decimals === '*' ? '+' : ("{1," + decimals + "}");
+  var regex = new RegExp(("^[-+]?\\d*(\\" + separator + "\\d" + regexPart + ")?([eE]{1}[-]?\\d+)?$"));
+
+  if (! regex.test(value)) {
+    return false;
+  }
+
+  var parsedValue = parseFloat(value);
+
+  // eslint-disable-next-line
+  return parsedValue === parsedValue;
+};
+
+var paramNames$a = ['decimals', 'separator'];
+
+var decimal = {
+  validate: validate$a,
+  paramNames: paramNames$a
+};
+
+var validate$b = function (value, ref) {
+  var length = ref[0];
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$b(val, [length]); });
+  }
+  var strVal = String(value);
+
+  return /^[0-9]*$/.test(strVal) && strVal.length === Number(length);
+};
+
+var digits = {
+  validate: validate$b
+};
+
+var imageRegex = /\.(jpg|svg|jpeg|png|bmp|gif)$/i;
+
+var validateImage = function (file, width, height) {
+  var URL = window.URL || window.webkitURL;
+  return new Promise(function (resolve) {
+    var image = new Image();
+    image.onerror = function () { return resolve({ valid: false }); };
+    image.onload = function () { return resolve({
+      valid: image.width === Number(width) && image.height === Number(height)
+    }); };
+
+    image.src = URL.createObjectURL(file);
+  });
+};
+
+var validate$c = function (files, ref) {
+  var width = ref[0];
+  var height = ref[1];
+
+  var images = ensureArray(files).filter(function (file) { return imageRegex.test(file.name); });
+  if (images.length === 0) {
+    return false;
+  }
+  return Promise.all(images.map(function (image) { return validateImage(image, width, height); }));
+};
+
+var dimensions = {
+  validate: validate$c
+};
+
+var merge_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = merge;
+function merge() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var defaults = arguments[1];
+
+  for (var key in defaults) {
+    if (typeof obj[key] === 'undefined') {
+      obj[key] = defaults[key];
+    }
+  }
+  return obj;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(merge_1);
+
+var isByteLength_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = isByteLength;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable prefer-rest-params */
+function isByteLength(str, options) {
+  (0, _assertString2.default)(str);
+  var min = void 0;
+  var max = void 0;
+  if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+    min = options.min || 0;
+    max = options.max;
+  } else {
+    // backwards compatibility: isByteLength(str, min [, max])
+    min = arguments[1];
+    max = arguments[2];
+  }
+  var len = encodeURI(str).split(/%..|./).length - 1;
+  return len >= min && (typeof max === 'undefined' || len <= max);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isByteLength_1);
+
+var isFQDN_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isFQDN;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_fqdn_options = {
+  require_tld: true,
+  allow_underscores: false,
+  allow_trailing_dot: false
+};
+
+function isFQDN(str, options) {
+  (0, _assertString2.default)(str);
+  options = (0, _merge2.default)(options, default_fqdn_options);
+
+  /* Remove the optional trailing dot before checking validity */
+  if (options.allow_trailing_dot && str[str.length - 1] === '.') {
+    str = str.substring(0, str.length - 1);
+  }
+  var parts = str.split('.');
+  for (var i = 0; i < parts.length; i++) {
+    if (parts[i].length > 63) {
+      return false;
+    }
+  }
+  if (options.require_tld) {
+    var tld = parts.pop();
+    if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
+      return false;
+    }
+    // disallow spaces
+    if (/[\s\u2002-\u200B\u202F\u205F\u3000\uFEFF\uDB40\uDC20]/.test(tld)) {
+      return false;
+    }
+  }
+  for (var part, _i = 0; _i < parts.length; _i++) {
+    part = parts[_i];
+    if (options.allow_underscores) {
+      part = part.replace(/_/g, '');
+    }
+    if (!/^[a-z\u00a1-\uffff0-9-]+$/i.test(part)) {
+      return false;
+    }
+    // disallow full-width chars
+    if (/[\uff01-\uff5e]/.test(part)) {
+      return false;
+    }
+    if (part[0] === '-' || part[part.length - 1] === '-') {
+      return false;
+    }
+  }
+  return true;
+}
+module.exports = exports['default'];
+});
+
+var isFQDN = unwrapExports(isFQDN_1);
+
+var isIP_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isIP;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ipv4Maybe = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+var ipv6Block = /^[0-9A-F]{1,4}$/i;
+
+function isIP(str) {
+  var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  (0, _assertString2.default)(str);
+  version = String(version);
+  if (!version) {
+    return isIP(str, 4) || isIP(str, 6);
+  } else if (version === '4') {
+    if (!ipv4Maybe.test(str)) {
+      return false;
+    }
+    var parts = str.split('.').sort(function (a, b) {
+      return a - b;
+    });
+    return parts[3] <= 255;
+  } else if (version === '6') {
+    var blocks = str.split(':');
+    var foundOmissionBlock = false; // marker to indicate ::
+
+    // At least some OS accept the last 32 bits of an IPv6 address
+    // (i.e. 2 of the blocks) in IPv4 notation, and RFC 3493 says
+    // that '::ffff:a.b.c.d' is valid for IPv4-mapped IPv6 addresses,
+    // and '::a.b.c.d' is deprecated, but also valid.
+    var foundIPv4TransitionBlock = isIP(blocks[blocks.length - 1], 4);
+    var expectedNumberOfBlocks = foundIPv4TransitionBlock ? 7 : 8;
+
+    if (blocks.length > expectedNumberOfBlocks) {
+      return false;
+    }
+    // initial or final ::
+    if (str === '::') {
+      return true;
+    } else if (str.substr(0, 2) === '::') {
+      blocks.shift();
+      blocks.shift();
+      foundOmissionBlock = true;
+    } else if (str.substr(str.length - 2) === '::') {
+      blocks.pop();
+      blocks.pop();
+      foundOmissionBlock = true;
+    }
+
+    for (var i = 0; i < blocks.length; ++i) {
+      // test for a :: which can not be at the string start/end
+      // since those cases have been handled above
+      if (blocks[i] === '' && i > 0 && i < blocks.length - 1) {
+        if (foundOmissionBlock) {
+          return false; // multiple :: in address
+        }
+        foundOmissionBlock = true;
+      } else if (foundIPv4TransitionBlock && i === blocks.length - 1) ; else if (!ipv6Block.test(blocks[i])) {
+        return false;
+      }
+    }
+    if (foundOmissionBlock) {
+      return blocks.length >= 1;
+    }
+    return blocks.length === expectedNumberOfBlocks;
+  }
+  return false;
+}
+module.exports = exports['default'];
+});
+
+var isIP = unwrapExports(isIP_1);
+
+var isEmail_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isEmail;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+
+
+var _isByteLength2 = _interopRequireDefault(isByteLength_1);
+
+
+
+var _isFQDN2 = _interopRequireDefault(isFQDN_1);
+
+
+
+var _isIP2 = _interopRequireDefault(isIP_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_email_options = {
+  allow_display_name: false,
+  require_display_name: false,
+  allow_utf8_local_part: true,
+  require_tld: true
+};
+
+/* eslint-disable max-len */
+/* eslint-disable no-control-regex */
+var displayName = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\,\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s]*<(.+)>$/i;
+var emailUserPart = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i;
+var gmailUserPart = /^[a-z\d]+$/;
+var quotedEmailUser = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f]))*$/i;
+var emailUserUtf8Part = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+$/i;
+var quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*$/i;
+/* eslint-enable max-len */
+/* eslint-enable no-control-regex */
+
+function isEmail(str, options) {
+  (0, _assertString2.default)(str);
+  options = (0, _merge2.default)(options, default_email_options);
+
+  if (options.require_display_name || options.allow_display_name) {
+    var display_email = str.match(displayName);
+    if (display_email) {
+      str = display_email[1];
+    } else if (options.require_display_name) {
+      return false;
+    }
+  }
+
+  var parts = str.split('@');
+  var domain = parts.pop();
+  var user = parts.join('@');
+
+  var lower_domain = domain.toLowerCase();
+
+  if (options.domain_specific_validation && (lower_domain === 'gmail.com' || lower_domain === 'googlemail.com')) {
+    /*
+      Previously we removed dots for gmail addresses before validating.
+      This was removed because it allows `multiple..dots@gmail.com`
+      to be reported as valid, but it is not.
+      Gmail only normalizes single dots, removing them from here is pointless,
+      should be done in normalizeEmail
+    */
+    user = user.toLowerCase();
+
+    // Removing sub-address from username before gmail validation
+    var username = user.split('+')[0];
+
+    // Dots are not included in gmail length restriction
+    if (!(0, _isByteLength2.default)(username.replace('.', ''), { min: 6, max: 30 })) {
+      return false;
+    }
+
+    var _user_parts = username.split('.');
+    for (var i = 0; i < _user_parts.length; i++) {
+      if (!gmailUserPart.test(_user_parts[i])) {
+        return false;
+      }
+    }
+  }
+
+  if (!(0, _isByteLength2.default)(user, { max: 64 }) || !(0, _isByteLength2.default)(domain, { max: 254 })) {
+    return false;
+  }
+
+  if (!(0, _isFQDN2.default)(domain, { require_tld: options.require_tld })) {
+    if (!options.allow_ip_domain) {
+      return false;
+    }
+
+    if (!(0, _isIP2.default)(domain)) {
+      if (!domain.startsWith('[') || !domain.endsWith(']')) {
+        return false;
+      }
+
+      var noBracketdomain = domain.substr(1, domain.length - 2);
+
+      if (noBracketdomain.length === 0 || !(0, _isIP2.default)(noBracketdomain)) {
+        return false;
+      }
+    }
+  }
+
+  if (user[0] === '"') {
+    user = user.slice(1, user.length - 1);
+    return options.allow_utf8_local_part ? quotedEmailUserUtf8.test(user) : quotedEmailUser.test(user);
+  }
+
+  var pattern = options.allow_utf8_local_part ? emailUserUtf8Part : emailUserPart;
+
+  var user_parts = user.split('.');
+  for (var _i = 0; _i < user_parts.length; _i++) {
+    if (!pattern.test(user_parts[_i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+module.exports = exports['default'];
+});
+
+var isEmail = unwrapExports(isEmail_1);
+
+function objectWithoutProperties (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
+
+var validate$d = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var multiple = ref.multiple; if ( multiple === void 0 ) multiple = false;
+  var rest = objectWithoutProperties( ref, ["multiple"] );
+  var options = rest;
+
+  if (multiple && !Array.isArray(value)) {
+    value = String(value).split(',').map(function (emailStr) { return emailStr.trim(); });
+  }
+
+  var validatorOptions = assign({}, options);
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return isEmail(String(val), validatorOptions); });
+  }
+
+  return isEmail(String(value), validatorOptions);
+};
+
+var email = {
+  validate: validate$d
+};
+
+var validate$e = function (value, options) {
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$e(val, options); });
+  }
+
+  return toArray(options).some(function (item) {
+    // eslint-disable-next-line
+    return item == value;
+  });
+};
+
+var included = {
+  validate: validate$e
+};
+
+var validate$f = function () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  return !validate$e.apply(void 0, args);
+};
+
+var excluded = {
+  validate: validate$f
+};
+
+var validate$g = function (files, extensions) {
+  var regex = new RegExp((".(" + (extensions.join('|')) + ")$"), 'i');
+  return ensureArray(files).every(function (file) { return regex.test(file.name); });
+};
+
+var ext = {
+  validate: validate$g
+};
+
+var validate$h = function (files) { return (Array.isArray(files) ? files : [files]).every(function (file) { return /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name); }); };
+
+var image = {
+  validate: validate$h
+};
+
+var validate$i = function (value) {
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return /^-?[0-9]+$/.test(String(val)); });
+  }
+
+  return /^-?[0-9]+$/.test(String(value));
+};
+
+var integer = {
+  validate: validate$i
+};
+
+var validate$j = function (value, ref) {
+  if ( ref === void 0 ) ref = {};
+  var version = ref.version; if ( version === void 0 ) version = 4;
+
+  if (isNullOrUndefined(value)) {
+    value = '';
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return isIP(val, version); });
+  }
+
+  return isIP(value, version);
+};
+
+var paramNames$b = ['version'];
+
+var ip = {
+  validate: validate$j,
+  paramNames: paramNames$b
+};
+
+var validate$k = function (value) {
+  if (isNullOrUndefined(value)) {
+    value = '';
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return (isIP(val, '') || isFQDN(val)); });
+  }
+
+  return isIP(value, '') || isFQDN(value);
+};
+
+var ip_or_fqdn = {
+  validate: validate$k
+};
+
+var validate$l = function (value, ref) {
+  if ( ref === void 0 ) ref = [];
+  var other = ref[0];
+
+  return value === other;
+};
+
+var is = {
+  validate: validate$l
+};
+
+var validate$m = function (value, ref) {
+  if ( ref === void 0 ) ref = [];
+  var other = ref[0];
+
+  return value !== other;
+};
+
+var is_not = {
+  validate: validate$m
+};
+
+/**
+ * @param {Array|String} value
+ * @param {Number} length
+ * @param {Number} max
+ */
+var compare = function (value, length, max) {
+  if (max === undefined) {
+    return value.length === length;
+  }
+
+  // cast to number.
+  max = Number(max);
+
+  return value.length >= length && value.length <= max;
+};
+
+var validate$n = function (value, ref) {
+  var length = ref[0];
+  var max = ref[1]; if ( max === void 0 ) max = undefined;
+
+  if (isNullOrUndefined(value)) {
+    return false;
+  }
+
+  length = Number(length);
+  if (typeof value === 'number') {
+    value = String(value);
+  }
+
+  if (!value.length) {
+    value = toArray(value);
+  }
+
+  return compare(value, length, max);
+};
+
+var length = {
+  validate: validate$n
+};
+
+var validate$o = function (value, ref) {
+  var length = ref[0];
+
+  if (isNullOrUndefined(value)) {
+    return length >= 0;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$o(val, [length]); });
+  }
+
+  return String(value).length <= length;
+};
+
+var max = {
+  validate: validate$o
+};
+
+var validate$p = function (value, ref) {
+  var max = ref[0];
+
+  if (isNullOrUndefined(value) || value === '') {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return value.length > 0 && value.every(function (val) { return validate$p(val, [max]); });
+  }
+
+  return Number(value) <= max;
+};
+
+var max_value = {
+  validate: validate$p
+};
+
+var validate$q = function (files, mimes) {
+  var regex = new RegExp(((mimes.join('|').replace('*', '.+')) + "$"), 'i');
+  return ensureArray(files).every(function (file) { return regex.test(file.type); });
+};
+
+var mimes = {
+  validate: validate$q
+};
+
+var validate$r = function (value, ref) {
+  var length = ref[0];
+
+  if (isNullOrUndefined(value)) {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$r(val, [length]); });
+  }
+
+  return String(value).length >= length;
+};
+
+var min = {
+  validate: validate$r
+};
+
+var validate$s = function (value, ref) {
+  var min = ref[0];
+
+  if (isNullOrUndefined(value) || value === '') {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return value.length > 0 && value.every(function (val) { return validate$s(val, [min]); });
+  }
+
+  return Number(value) >= min;
+};
+
+var min_value = {
+  validate: validate$s
+};
+
+var ar = /^[٠١٢٣٤٥٦٧٨٩]+$/;
+var en = /^[0-9]+$/;
+
+var validate$t = function (value) {
+  var testValue = function (val) {
+    var strValue = String(val);
+
+    return en.test(strValue) || ar.test(strValue);
+  };
+
+  if (Array.isArray(value)) {
+    return value.every(testValue);
+  }
+
+  return testValue(value);
+};
+
+var numeric = {
+  validate: validate$t
+};
+
+var validate$u = function (value, ref) {
+  var expression = ref.expression;
+
+  if (typeof expression === 'string') {
+    expression = new RegExp(expression);
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate$u(val, { expression: expression }); });
+  }
+
+  return expression.test(String(value));
+};
+
+var paramNames$c = ['expression'];
+
+var regex = {
+  validate: validate$u,
+  paramNames: paramNames$c
+};
+
+var validate$v = function (value, ref) {
+  if ( ref === void 0 ) ref = [];
+  var invalidateFalse = ref[0]; if ( invalidateFalse === void 0 ) invalidateFalse = false;
+
+  if (isNullOrUndefined(value) || isEmptyArray(value)) {
+    return false;
+  }
+
+  // incase a field considers `false` as an empty value like checkboxes.
+  if (value === false && invalidateFalse) {
+    return false;
+  }
+
+  return !!String(value).trim().length;
+};
+
+var required = {
+  validate: validate$v
+};
+
+var validate$w = function (value, ref) {
+  if ( ref === void 0 ) ref = [];
+  var otherFieldVal = ref[0];
+  var possibleVals = ref.slice(1);
+
+  var required = possibleVals.includes(String(otherFieldVal).trim());
+
+  if (!required) {
+    return {
+      valid: true,
+      data: {
+        required: required
+      }
+    };
+  }
+
+  var invalid = (isEmptyArray(value) || [false, null, undefined].includes(value));
+
+  invalid = invalid || !String(value).trim().length;
+
+  return {
+    valid: !invalid,
+    data: {
+      required: required
+    }
+  };
+};
+
+var options$5 = {
+  hasTarget: true,
+  computesRequired: true
+};
+
+var required_if = {
+  validate: validate$w,
+  options: options$5
+};
+
+var validate$x = function (files, ref) {
+  var size = ref[0];
+
+  if (isNaN(size)) {
+    return false;
+  }
+  var nSize = Number(size) * 1024;
+  return ensureArray(files).every(function (file) { return file.size <= nSize; });
+};
+
+var size = {
+  validate: validate$x
+};
+
+var isURL_1 = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isURL;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _isFQDN2 = _interopRequireDefault(isFQDN_1);
+
+
+
+var _isIP2 = _interopRequireDefault(isIP_1);
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_url_options = {
+  protocols: ['http', 'https', 'ftp'],
+  require_tld: true,
+  require_protocol: false,
+  require_host: true,
+  require_valid_protocol: true,
+  allow_underscores: false,
+  allow_trailing_dot: false,
+  allow_protocol_relative_urls: false
+};
+
+var wrapped_ipv6 = /^\[([^\]]+)\](?::([0-9]+))?$/;
+
+function isRegExp(obj) {
+  return Object.prototype.toString.call(obj) === '[object RegExp]';
+}
+
+function checkHost(host, matches) {
+  for (var i = 0; i < matches.length; i++) {
+    var match = matches[i];
+    if (host === match || isRegExp(match) && match.test(host)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isURL(url, options) {
+  (0, _assertString2.default)(url);
+  if (!url || url.length >= 2083 || /[\s<>]/.test(url)) {
+    return false;
+  }
+  if (url.indexOf('mailto:') === 0) {
+    return false;
+  }
+  options = (0, _merge2.default)(options, default_url_options);
+  var protocol = void 0,
+      auth = void 0,
+      host = void 0,
+      hostname = void 0,
+      port = void 0,
+      port_str = void 0,
+      split = void 0,
+      ipv6 = void 0;
+
+  split = url.split('#');
+  url = split.shift();
+
+  split = url.split('?');
+  url = split.shift();
+
+  split = url.split('://');
+  if (split.length > 1) {
+    protocol = split.shift().toLowerCase();
+    if (options.require_valid_protocol && options.protocols.indexOf(protocol) === -1) {
+      return false;
+    }
+  } else if (options.require_protocol) {
+    return false;
+  } else if (url.substr(0, 2) === '//') {
+    if (!options.allow_protocol_relative_urls) {
+      return false;
+    }
+    split[0] = url.substr(2);
+  }
+  url = split.join('://');
+
+  if (url === '') {
+    return false;
+  }
+
+  split = url.split('/');
+  url = split.shift();
+
+  if (url === '' && !options.require_host) {
+    return true;
+  }
+
+  split = url.split('@');
+  if (split.length > 1) {
+    auth = split.shift();
+    if (auth.indexOf(':') >= 0 && auth.split(':').length > 2) {
+      return false;
+    }
+  }
+  hostname = split.join('@');
+
+  port_str = null;
+  ipv6 = null;
+  var ipv6_match = hostname.match(wrapped_ipv6);
+  if (ipv6_match) {
+    host = '';
+    ipv6 = ipv6_match[1];
+    port_str = ipv6_match[2] || null;
+  } else {
+    split = hostname.split(':');
+    host = split.shift();
+    if (split.length) {
+      port_str = split.join(':');
+    }
+  }
+
+  if (port_str !== null) {
+    port = parseInt(port_str, 10);
+    if (!/^[0-9]+$/.test(port_str) || port <= 0 || port > 65535) {
+      return false;
+    }
+  }
+
+  if (!(0, _isIP2.default)(host) && !(0, _isFQDN2.default)(host, options) && (!ipv6 || !(0, _isIP2.default)(ipv6, 6))) {
+    return false;
+  }
+
+  host = host || ipv6;
+
+  if (options.host_whitelist && !checkHost(host, options.host_whitelist)) {
+    return false;
+  }
+  if (options.host_blacklist && checkHost(host, options.host_blacklist)) {
+    return false;
+  }
+
+  return true;
+}
+module.exports = exports['default'];
+});
+
+var isURL = unwrapExports(isURL_1);
+
+var validate$y = function (value, options) {
+  if ( options === void 0 ) options = {};
+
+  if (isNullOrUndefined(value)) {
+    value = '';
+  }
+
+  var validatorOptions = assign({}, options);
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return isURL(val, validatorOptions); });
+  }
+
+  return isURL(value, validatorOptions);
+};
+
+var url = {
+  validate: validate$y
+};
+
+/* eslint-disable camelcase */
+
+var Rules = /*#__PURE__*/Object.freeze({
+  after: after,
+  alpha_dash: alpha_dash,
+  alpha_num: alpha_num,
+  alpha_spaces: alpha_spaces,
+  alpha: alpha$1,
+  before: before,
+  between: between,
+  confirmed: confirmed,
+  credit_card: credit_card,
+  date_between: date_between,
+  date_format: date_format,
+  decimal: decimal,
+  digits: digits,
+  dimensions: dimensions,
+  email: email,
+  ext: ext,
+  image: image,
+  included: included,
+  integer: integer,
+  length: length,
+  ip: ip,
+  ip_or_fqdn: ip_or_fqdn,
+  is_not: is_not,
+  is: is,
+  max: max,
+  max_value: max_value,
+  mimes: mimes,
+  min: min,
+  min_value: min_value,
+  excluded: excluded,
+  numeric: numeric,
+  regex: regex,
+  required: required,
+  required_if: required_if,
+  size: size,
+  url: url
+});
+
+// 
+
+var normalize = function (fields) {
+  if (Array.isArray(fields)) {
+    return fields.reduce(function (prev, curr) {
+      if (includes(curr, '.')) {
+        prev[curr.split('.')[1]] = curr;
+      } else {
+        prev[curr] = curr;
+      }
+
+      return prev;
+    }, {});
+  }
+
+  return fields;
+};
+
+// Combines two flags using either AND or OR depending on the flag type.
+var combine = function (lhs, rhs) {
+  var mapper = {
+    pristine: function (lhs, rhs) { return lhs && rhs; },
+    dirty: function (lhs, rhs) { return lhs || rhs; },
+    touched: function (lhs, rhs) { return lhs || rhs; },
+    untouched: function (lhs, rhs) { return lhs && rhs; },
+    valid: function (lhs, rhs) { return lhs && rhs; },
+    invalid: function (lhs, rhs) { return lhs || rhs; },
+    pending: function (lhs, rhs) { return lhs || rhs; },
+    required: function (lhs, rhs) { return lhs || rhs; },
+    validated: function (lhs, rhs) { return lhs && rhs; }
+  };
+
+  return Object.keys(mapper).reduce(function (flags, flag) {
+    flags[flag] = mapper[flag](lhs[flag], rhs[flag]);
+
+    return flags;
+  }, {});
+};
+
+var mapScope = function (scope, deep) {
+  if ( deep === void 0 ) deep = true;
+
+  return Object.keys(scope).reduce(function (flags, field) {
+    if (!flags) {
+      flags = assign({}, scope[field]);
+      return flags;
+    }
+
+    // scope.
+    var isScope = field.indexOf('$') === 0;
+    if (deep && isScope) {
+      return combine(mapScope(scope[field]), flags);
+    } else if (!deep && isScope) {
+      return flags;
+    }
+
+    flags = combine(flags, scope[field]);
+
+    return flags;
+  }, null);
+};
+
+/**
+ * Maps fields to computed functions.
+ */
+var mapFields = function (fields) {
+  if (!fields) {
+    return function () {
+      return mapScope(this.$validator.flags);
+    };
+  }
+
+  var normalized = normalize(fields);
+  return Object.keys(normalized).reduce(function (prev, curr) {
+    var field = normalized[curr];
+    prev[curr] = function mappedField () {
+      // if field exists
+      if (this.$validator.flags[field]) {
+        return this.$validator.flags[field];
+      }
+
+      // scopeless fields were selected.
+      if (normalized[curr] === '*') {
+        return mapScope(this.$validator.flags, false);
+      }
+
+      // if it has a scope defined
+      var index = field.indexOf('.');
+      if (index <= 0) {
+        return {};
+      }
+
+      var ref = field.split('.');
+      var scope = ref[0];
+      var name = ref.slice(1);
+
+      scope = this.$validator.flags[("$" + scope)];
+      name = name.join('.');
+
+      // an entire scope was selected: scope.*
+      if (name === '*' && scope) {
+        return mapScope(scope);
+      }
+
+      if (scope && scope[name]) {
+        return scope[name];
+      }
+
+      return {};
+    };
+
+    return prev;
+  }, {});
+};
+
+var $validator = null;
+
+var PROVIDER_COUNTER = 0;
+
+function createValidationCtx (ctx) {
+  return {
+    errors: ctx.messages,
+    flags: ctx.flags,
+    classes: ctx.classes,
+    valid: ctx.isValid,
+    failedRules: ctx.failedRules,
+    reset: function () { return ctx.reset(); },
+    validate: function () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      return ctx.validate.apply(ctx, args);
+  },
+    aria: {
+      'aria-invalid': ctx.flags.invalid ? 'true' : 'false',
+      'aria-required': ctx.isRequired ? 'true' : 'false'
+    }
+  };
+}
+
+function normalizeValue$1 (value) {
+  if (isEvent(value)) {
+    return value.target.type === 'file' ? toArray(value.target.files) : value.target.value;
+  }
+
+  return value;
+}
+
+/**
+ * Determines if a provider needs to run validation.
+ */
+function shouldValidate (ctx, model) {
+  // when an immediate/initial validation is needed and wasn't done before.
+  if (!ctx._ignoreImmediate && ctx.immediate) {
+    return true;
+  }
+
+  // when the value changes for whatever reason.
+  if (ctx.value !== model.value) {
+    return true;
+  }
+
+  // when it needs validation due to props/cross-fields changes.
+  if (ctx._needsValidation) {
+    return true;
+  }
+
+  // when the initial value is undefined and the field wasn't rendered yet.
+  if (!ctx.initialized && model.value === undefined) {
+    return true;
+  }
+
+  return false;
+}
+
+function computeModeSetting (ctx) {
+  var compute = isCallable(ctx.mode) ? ctx.mode : modes[ctx.mode];
+
+  return compute({
+    errors: ctx.messages,
+    value: ctx.value,
+    flags: ctx.flags
+  });
+}
+
+function onRenderUpdate (model) {
+  if (!this.initialized) {
+    this.initialValue = model.value;
+  }
+
+  var validateNow = shouldValidate(this, model);
+  this._needsValidation = false;
+  this.value = model.value;
+  this._ignoreImmediate = true;
+
+  if (!validateNow) {
+    return;
+  }
+
+  this.validateSilent().then(this.immediate || this.flags.validated ? this.applyResult : function (x) { return x; });
+}
+
+// Creates the common handlers for a validatable context.
+function createCommonHandlers (ctx) {
+  var onInput = function (e) {
+    ctx.syncValue(e); // track and keep the value updated.
+    ctx.setFlags({ dirty: true, pristine: false });
+  };
+
+  // Blur event listener.
+  var onBlur = function () {
+    ctx.setFlags({ touched: true, untouched: false });
+  };
+
+  var onValidate = ctx.$veeHandler;
+  var mode = computeModeSetting(ctx);
+
+  // Handle debounce changes.
+  if (!onValidate || ctx.$veeDebounce !== ctx.debounce) {
+    onValidate = debounce(
+      function () {
+        ctx.$nextTick(function () {
+          var pendingPromise = ctx.validateSilent();
+          // avoids race conditions between successive validations.
+          ctx._pendingValidation = pendingPromise;
+          pendingPromise.then(function (result) {
+            if (pendingPromise === ctx._pendingValidation) {
+              ctx.applyResult(result);
+              ctx._pendingValidation = null;
+            }
+          });
+        });
+      },
+      mode.debounce || ctx.debounce
+    );
+
+    // Cache the handler so we don't create it each time.
+    ctx.$veeHandler = onValidate;
+    // cache the debounce value so we detect if it was changed.
+    ctx.$veeDebounce = ctx.debounce;
+  }
+
+  return { onInput: onInput, onBlur: onBlur, onValidate: onValidate };
+}
+
+// Adds all plugin listeners to the vnode.
+function addListeners (node) {
+  var model = findModel(node);
+  // cache the input eventName.
+  this._inputEventName = this._inputEventName || getInputEventName(node, model);
+
+  onRenderUpdate.call(this, model);
+
+  var ref = createCommonHandlers(this);
+  var onInput = ref.onInput;
+  var onBlur = ref.onBlur;
+  var onValidate = ref.onValidate;
+  addVNodeListener(node, this._inputEventName, onInput);
+  addVNodeListener(node, 'blur', onBlur);
+
+  // add the validation listeners.
+  this.normalizedEvents.forEach(function (evt) {
+    addVNodeListener(node, evt, onValidate);
+  });
+
+  this.initialized = true;
+}
+
+function createValuesLookup (ctx) {
+  var providers = ctx.$_veeObserver.refs;
+
+  return ctx.fieldDeps.reduce(function (acc, depName) {
+    if (!providers[depName]) {
+      return acc;
+    }
+
+    acc[depName] = providers[depName].value;
+
+    return acc;
+  }, {});
+}
+
+function updateRenderingContextRefs (ctx) {
+  // IDs should not be nullable.
+  if (isNullOrUndefined(ctx.id) && ctx.id === ctx.vid) {
+    ctx.id = PROVIDER_COUNTER;
+    PROVIDER_COUNTER++;
+  }
+
+  var id = ctx.id;
+  var vid = ctx.vid;
+  // Nothing has changed.
+  if (ctx.isDeactivated || (id === vid && ctx.$_veeObserver.refs[id])) {
+    return;
+  }
+
+  // vid was changed.
+  if (id !== vid && ctx.$_veeObserver.refs[id] === ctx) {
+    ctx.$_veeObserver.unsubscribe(ctx);
+  }
+
+  ctx.$_veeObserver.subscribe(ctx);
+  ctx.id = vid;
+}
+
+function createObserver () {
+  return {
+    refs: {},
+    subscribe: function subscribe (ctx) {
+      this.refs[ctx.vid] = ctx;
+    },
+    unsubscribe: function unsubscribe (ctx) {
+      delete this.refs[ctx.vid];
+    }
+  };
+}
+
+var ValidationProvider = {
+  $__veeInject: false,
+  inject: {
+    $_veeObserver: {
+      from: '$_veeObserver',
+      default: function default$1 () {
+        if (!this.$vnode.context.$_veeObserver) {
+          this.$vnode.context.$_veeObserver = createObserver();
+        }
+
+        return this.$vnode.context.$_veeObserver;
+      }
+    }
+  },
+  props: {
+    vid: {
+      type: [String, Number],
+      default: function () {
+        PROVIDER_COUNTER++;
+
+        return ("_vee_" + PROVIDER_COUNTER);
+      }
+    },
+    name: {
+      type: String,
+      default: null
+    },
+    mode: {
+      type: [String, Function],
+      default: function () {
+        return getConfig().mode;
+      }
+    },
+    events: {
+      type: Array,
+      validate: function () {
+        /* istanbul ignore next */
+        if (true) {
+          warn('events prop and config will be deprecated in future version please use the interaction modes instead');
+        }
+
+        return true;
+      },
+      default: function () {
+        var events = getConfig().events;
+        if (typeof events === 'string') {
+          return events.split('|');
+        }
+
+        return events;
+      }
+    },
+    rules: {
+      type: [Object, String],
+      default: null
+    },
+    immediate: {
+      type: Boolean,
+      default: false
+    },
+    persist: {
+      type: Boolean,
+      default: false
+    },
+    bails: {
+      type: Boolean,
+      default: function () { return getConfig().fastExit; }
+    },
+    debounce: {
+      type: Number,
+      default: function () { return getConfig().delay || 0; }
+    },
+    tag: {
+      type: String,
+      default: 'span'
+    }
+  },
+  watch: {
+    rules: {
+      deep: true,
+      handler: function handler (val, oldVal) {
+        this._needsValidation = !isEqual(val, oldVal);
+      }
+    }
+  },
+  data: function () { return ({
+    messages: [],
+    value: undefined,
+    initialized: false,
+    initialValue: undefined,
+    flags: createFlags(),
+    failedRules: {},
+    forceRequired: false,
+    isDeactivated: false,
+    id: null
+  }); },
+  computed: {
+    isValid: function isValid () {
+      return this.flags.valid;
+    },
+    fieldDeps: function fieldDeps () {
+      var this$1 = this;
+
+      var rules = normalizeRules(this.rules);
+      var providers = this.$_veeObserver.refs;
+
+      return Object.keys(rules).filter(RuleContainer.isTargetRule).map(function (rule) {
+        var depName = rules[rule][0];
+        var watcherName = "$__" + depName;
+        if (!isCallable(this$1[watcherName]) && providers[depName]) {
+          this$1[watcherName] = providers[depName].$watch('value', function () {
+            if (this$1.flags.validated) {
+              this$1._needsValidation = true;
+              this$1.validate();
+            }
+          });
+        }
+
+        return depName;
+      });
+    },
+    normalizedEvents: function normalizedEvents () {
+      var this$1 = this;
+
+      var ref = computeModeSetting(this);
+      var on = ref.on;
+
+      return normalizeEvents(on || this.events || []).map(function (e) {
+        if (e === 'input') {
+          return this$1._inputEventName;
+        }
+
+        return e;
+      });
+    },
+    isRequired: function isRequired () {
+      var rules = normalizeRules(this.rules);
+      var forceRequired = this.forceRequired;
+
+      var isRequired = rules.required || forceRequired;
+      this.flags.required = isRequired;
+
+      return isRequired;
+    },
+    classes: function classes () {
+      var this$1 = this;
+
+      var names = getConfig().classNames;
+      return Object.keys(this.flags).reduce(function (classes, flag) {
+        var className = (names && names[flag]) || flag;
+        if (isNullOrUndefined(this$1.flags[flag])) {
+          return classes;
+        }
+
+        if (className) {
+          classes[className] = this$1.flags[flag];
+        }
+
+        return classes;
+      }, {});
+    }
+  },
+  render: function render (h) {
+    var this$1 = this;
+
+    this.registerField();
+    var ctx = createValidationCtx(this);
+
+    // Gracefully handle non-existent scoped slots.
+    var slot = this.$scopedSlots.default;
+    /* istanbul ignore next */
+    if (!isCallable(slot)) {
+      if (true) {
+        warn('ValidationProvider expects a scoped slot. Did you forget to add "slot-scope" to your slot?');
+      }
+
+      return h(this.tag, this.$slots.default);
+    }
+
+    var nodes = slot(ctx);
+    // Handle single-root slot.
+    extractVNodes(nodes).forEach(function (input) {
+      addListeners.call(this$1, input);
+    });
+
+    return h(this.tag, nodes);
+  },
+  beforeDestroy: function beforeDestroy () {
+    // cleanup reference.
+    this.$_veeObserver.unsubscribe(this);
+  },
+  activated: function activated () {
+    this.$_veeObserver.subscribe(this);
+    this.isDeactivated = false;
+  },
+  deactivated: function deactivated () {
+    this.$_veeObserver.unsubscribe(this);
+    this.isDeactivated = true;
+  },
+  methods: {
+    setFlags: function setFlags (flags) {
+      var this$1 = this;
+
+      Object.keys(flags).forEach(function (flag) {
+        this$1.flags[flag] = flags[flag];
+      });
+    },
+    syncValue: function syncValue (e) {
+      var value = normalizeValue$1(e);
+      this.value = value;
+      this.flags.changed = this.initialValue !== value;
+    },
+    reset: function reset () {
+      this.messages = [];
+      this._pendingValidation = null;
+      this.initialValue = this.value;
+      var flags = createFlags();
+      this.setFlags(flags);
+    },
+    validate: function validate () {
+      var this$1 = this;
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      if (args.length > 0) {
+        this.syncValue(args[0]);
+      }
+
+      return this.validateSilent().then(function (result) {
+        this$1.applyResult(result);
+
+        return result;
+      });
+    },
+    validateSilent: function validateSilent () {
+      var this$1 = this;
+
+      this.setFlags({ pending: true });
+
+      return $validator.verify(this.value, this.rules, {
+        name: this.name,
+        values: createValuesLookup(this),
+        bails: this.bails
+      }).then(function (result) {
+        this$1.setFlags({ pending: false });
+        if (!this$1.isRequired) {
+          this$1.setFlags({ valid: result.valid, invalid: !result.valid });
+        }
+
+        return result;
+      });
+    },
+    applyResult: function applyResult (ref) {
+      var errors = ref.errors;
+      var failedRules = ref.failedRules;
+
+      this.messages = errors;
+      this.failedRules = assign({}, failedRules);
+      this.setFlags({
+        valid: !errors.length,
+        changed: this.value !== this.initialValue,
+        invalid: !!errors.length,
+        validated: true
+      });
+    },
+    registerField: function registerField () {
+      if (!$validator) {
+        $validator = getValidator() || new Validator(null, { fastExit: getConfig().fastExit });
+      }
+
+      updateRenderingContextRefs(this);
+    }
+  }
+};
+
+var flagMergingStrategy = {
+  pristine: 'every',
+  dirty: 'some',
+  touched: 'some',
+  untouched: 'every',
+  valid: 'every',
+  invalid: 'some',
+  pending: 'some',
+  validated: 'every'
+};
+
+function mergeFlags (lhs, rhs, strategy) {
+  var stratName = flagMergingStrategy[strategy];
+
+  return [lhs, rhs][stratName](function (f) { return f; });
+}
+
+var OBSERVER_COUNTER = 0;
+
+var ValidationObserver = {
+  name: 'ValidationObserver',
+  provide: function provide () {
+    return {
+      $_veeObserver: this
+    };
+  },
+  inject: {
+    $_veeObserver: {
+      from: '$_veeObserver',
+      default: function default$1 () {
+        if (!this.$vnode.context.$_veeObserver) {
+          return null;
+        }
+
+        return this.$vnode.context.$_veeObserver;
+      }
+    }
+  },
+  props: {
+    tag: {
+      type: String,
+      default: 'span'
+    }
+  },
+  data: function () { return ({
+    vid: ("obs_" + (OBSERVER_COUNTER++)),
+    refs: {},
+    observers: [],
+  }); },
+  computed: {
+    ctx: function ctx () {
+      var this$1 = this;
+
+      var ctx = {
+        errors: {},
+        validate: function (arg) {
+          var promise = this$1.validate(arg);
+
+          return {
+            then: function then (thenable) {
+              promise.then(function (success) {
+                if (success && isCallable(thenable)) {
+                  return Promise.resolve(thenable());
+                }
+
+                return Promise.resolve(success);
+              });
+            }
+          };
+        },
+        reset: function () { return this$1.reset(); }
+      };
+
+      return values(this.refs).concat( this.observers ).reduce(function (acc, provider) {
+        Object.keys(flagMergingStrategy).forEach(function (flag) {
+          var flags = provider.flags || provider.ctx;
+          if (!(flag in acc)) {
+            acc[flag] = flags[flag];
+            return;
+          }
+
+          acc[flag] = mergeFlags(acc[flag], flags[flag], flag);
+        });
+
+        acc.errors[provider.vid] = provider.messages || values(provider.ctx.errors).reduce(function (errs, obsErrors) {
+          return errs.concat(obsErrors);
+        }, []);
+
+        return acc;
+      }, ctx);
+    }
+  },
+  created: function created () {
+    if (this.$_veeObserver) {
+      this.$_veeObserver.subscribe(this, 'observer');
+    }
+  },
+  activated: function activated () {
+    if (this.$_veeObserver) {
+      this.$_veeObserver.subscribe(this, 'observer');
+    }
+  },
+  deactivated: function deactivated () {
+    if (this.$_veeObserver) {
+      this.$_veeObserver.unsubscribe(this, 'observer');
+    }
+  },
+  beforeDestroy: function beforeDestroy () {
+    if (this.$_veeObserver) {
+      this.$_veeObserver.unsubscribe(this, 'observer');
+    }
+  },
+  render: function render (h) {
+    var slots = this.$scopedSlots.default;
+    this._persistedStore = this._persistedStore || {};
+    if (!isCallable(slots)) {
+      return h(this.tag, this.$slots.default);
+    }
+
+    return h(this.tag, {
+      on: this.$listeners,
+      attrs: this.$attrs
+    }, slots(this.ctx));
+  },
+  methods: {
+    subscribe: function subscribe (subscriber, kind) {
+      var obj;
+
+      if ( kind === void 0 ) kind = 'provider';
+      if (kind === 'observer') {
+        this.observers.push(subscriber);
+        return;
+      }
+
+      this.refs = Object.assign({}, this.refs, ( obj = {}, obj[subscriber.vid] = subscriber, obj ));
+      if (subscriber.persist && this._persistedStore[subscriber.vid]) {
+        this.restoreProviderState(subscriber);
+      }
+    },
+    unsubscribe: function unsubscribe (ref, kind) {
+      var vid = ref.vid;
+      if ( kind === void 0 ) kind = 'provider';
+
+      if (kind === 'provider') {
+        this.removeProvider(vid);
+      }
+
+      var idx = findIndex(this.observers, function (o) { return o.vid === vid; });
+      if (idx !== -1) {
+        this.observers.splice(idx, 1);
+      }
+    },
+    validate: function validate (ref) {
+      if ( ref === void 0 ) ref = { silent: false };
+      var silent = ref.silent;
+
+      return Promise.all(values(this.refs).map(function (ref) { return ref[silent ? 'validateSilent' : 'validate']().then(function (r) { return r.valid; }); }).concat( this.observers.map(function (obs) { return obs.validate({ silent: silent }); })
+      )).then(function (results) { return results.every(function (r) { return r; }); });
+    },
+    reset: function reset () {
+      return values(this.refs).concat( this.observers).forEach(function (ref) { return ref.reset(); });
+    },
+    restoreProviderState: function restoreProviderState (provider) {
+      var state = this._persistedStore[provider.vid];
+      provider.setFlags(state.flags);
+      provider.applyResult(state);
+      delete this._persistedStore[provider.vid];
+    },
+    removeProvider: function removeProvider (vid) {
+      var provider = this.refs[vid];
+      // save it for the next time.
+      if (provider && provider.persist) {
+        /* istanbul ignore else */
+        if (true) {
+          if (vid.indexOf('_vee_') === 0) {
+            warn('Please provide a `vid` prop when using `persist`, there might be unexpected issues otherwise.');
+          }
+        }
+
+        this._persistedStore[vid] = {
+          flags: provider.flags,
+          errors: provider.messages,
+          failedRules: provider.failedRules
+        };
+      }
+
+      this.$delete(this.refs, vid);
+    },
+  }
+};
+
+function withValidation (component, ctxToProps) {
+  if ( ctxToProps === void 0 ) ctxToProps = null;
+
+  var options = isCallable(component) ? component.options : component;
+  options.$__veeInject = false;
+  var hoc = {
+    name: ((options.name || 'AnonymousHoc') + "WithValidation"),
+    props: assign({}, ValidationProvider.props),
+    data: ValidationProvider.data,
+    computed: assign({}, ValidationProvider.computed),
+    methods: assign({}, ValidationProvider.methods),
+    $__veeInject: false,
+    beforeDestroy: ValidationProvider.beforeDestroy,
+    inject: ValidationProvider.inject
+  };
+
+  // Default ctx converts ctx props to component props.
+  if (!ctxToProps) {
+    ctxToProps = function (ctx) { return ctx; };
+  }
+
+  var eventName = (options.model && options.model.event) || 'input';
+
+  hoc.render = function (h) {
+    var obj;
+
+    this.registerField();
+    var vctx = createValidationCtx(this);
+    var listeners = assign({}, this.$listeners);
+
+    var model = findModel(this.$vnode);
+    this._inputEventName = this._inputEventName || getInputEventName(this.$vnode, model);
+    onRenderUpdate.call(this, model);
+
+    var ref = createCommonHandlers(this);
+    var onInput = ref.onInput;
+    var onBlur = ref.onBlur;
+    var onValidate = ref.onValidate;
+
+    mergeVNodeListeners(listeners, eventName, onInput);
+    mergeVNodeListeners(listeners, 'blur', onBlur);
+    this.normalizedEvents.forEach(function (evt, idx) {
+      mergeVNodeListeners(listeners, evt, onValidate);
+    });
+
+    // Props are any attrs not associated with ValidationProvider Plus the model prop.
+    // WARNING: Accidental prop overwrite will probably happen.
+    var ref$1 = findModelConfig(this.$vnode) || { prop: 'value' };
+    var prop = ref$1.prop;
+    var props = assign({}, this.$attrs, ( obj = {}, obj[prop] = model.value, obj ), ctxToProps(vctx));
+
+    return h(options, {
+      attrs: this.$attrs,
+      props: props,
+      on: listeners
+    }, normalizeSlots(this.$slots, this.$vnode.context));
+  };
+
+  return hoc;
+}
+
+var version = '2.2.7';
+
+Object.keys(Rules).forEach(function (rule) {
+  Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }));
+});
+
+// Merge the english messages.
+Validator.localize({ en: locale });
+
+var install = VeeValidate$1.install;
+
+VeeValidate$1.version = version;
+VeeValidate$1.mapFields = mapFields;
+VeeValidate$1.ValidationProvider = ValidationProvider;
+VeeValidate$1.ValidationObserver = ValidationObserver;
+VeeValidate$1.withValidation = withValidation;
+
+/* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
+
+
+
+/***/ }),
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+* vee-validate-laravel v1.0.1
+*/
+(function (global, factory) {
+	 true ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.VeeValidateLaravel = factory());
+}(this, (function () { 'use strict';
+
+var veeValidateLaravel = {
+    install: function install(Vue, options) {
+        Vue.prototype.$setLaravelValidationErrorsFromResponse = function(errorResponse) {
+            var this$1 = this;
+
+            // only allow this function to be run if the validator exists
+            if (!this.hasOwnProperty('$validator')) {
+                return;
+            }
+
+            // clear errors
+            this.$validator.errors.clear();
+
+            // check if errors exist
+            if (!errorResponse.hasOwnProperty('errors')) {
+                return;
+            }
+
+            var errorFields = Object.keys(errorResponse.errors);
+
+            // insert laravel errors
+            for (var i = 0; i < errorFields.length; i++) {
+                var field = errorFields[i];
+
+                var errorString = errorResponse.errors[field].join(', ');
+                this$1.$validator.errors.add({ field: field, msg: errorString });
+            }
+        };
+
+        Vue.prototype.$laravelData = {};
+        if (options) {
+            Vue.prototype.$laravelData = options;
+        }
+    }
+};
+
+return veeValidateLaravel;
+
+})));
 
 
 /***/ })

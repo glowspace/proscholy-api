@@ -33,7 +33,7 @@ type Query {
     tags(type: Int @eq): [Tag] @all
     me: User @auth
 
-    author(id: ID! @eq): Author! @find
+    author(id: ID! @eq): Author @find
 }
 
 type Mutation @group(middleware: []) {
@@ -44,9 +44,9 @@ type Mutation @group(middleware: []) {
     delete_tag(id: ID!): Tag @delete
 
     update_author(id: ID!, 
-        name: String!
+        name: String @rules(apply: ["required", "min:2"])
         type: Int!
-        description: String
+        description: String @rules(apply: ["required"])
     ): Author @update
 }
 
