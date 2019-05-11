@@ -8,20 +8,20 @@
             <v-text-field
               label="Jméno autora"
               required
-              v-model="name"
+              v-model="model.name"
               data-vv-name="input.name"
               :error-messages="errors.collect('input.name')"
             ></v-text-field>
-            <v-select :items="type_values" v-model="type" label="Typ"></v-select>
+            <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
             <v-textarea
               name="input-7-4"
               label="Popis autora"
-              v-model="description"
+              v-model="model.description"
               data-vv-name="input.description"
               :error-messages="errors.collect('input.description')"
             ></v-textarea>
 
-            <v-btn @click="submit">Uložit</v-btn>
+            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
         <v-flex xs12 md6></v-flex>
@@ -34,20 +34,20 @@
 import gql from "graphql-tag";
 import fragment from "@/graphql/client/author_fragment.graphql";
 
-const fetch_item = gql`
+const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
-    author(id: $id) {
-      ...AuthorFragment
+    model_database: author(id: $id) {
+      ...AuthorFillableFragment
       type_string_values
     }
   }
   ${fragment}
 `;
 
-const update_item = gql`
+const MUTATE_MODEL_DATABASE = gql`
   mutation($input: UpdateAuthorInput!) {
     update_author(input: $input) {
-      ...AuthorFragment
+      ...AuthorFillableFragment
     }
   }
   ${fragment}
@@ -58,29 +58,33 @@ export default {
 
   data() {
     return {
-      id: undefined,
-      type: undefined,
+      model: {
+        // here goes the definition of model attributes 
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        name: undefined,
+        type: undefined,
+        description: undefined
+      },
       type_values: [],
-      description: "",
-      name: "",
-      err: ""
     };
   },
 
   apollo: {
-    author: {
-      query: fetch_item,
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
       variables() {
         return {
-          id: this.id
+          id: this.model.id
         };
       },
-      result: function result(result) {
-        let author = result.data.author;
-        // load the requested fields to the vue data property
-        this.getFieldsFromFragment(false).forEach(field => {
-          this[field] = author[field];
-        })
+      result(result) {
+        let author = result.data.model_database;
+        // load the requested fields to the vue data.model property
+        for (let field of this.getFieldsFromFragment(false)) {
+          Vue.set(this.model, field, author[field]);
+        }
+
         this.type_values = author.type_string_values.map((val, index) => {
           return { value: index, text: val };
         });
@@ -93,24 +97,37 @@ export default {
   },
 
   mounted() {
-    this.id = this.presetId;
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = e => {
+      if (this.isDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
   },
 
-  computed: {},
+  computed: {
+    isDirty() {
+      if (!this.model_database)
+        return false;
+
+      for (let field of this.getFieldsFromFragment(this)) {
+        if (this.model[field] !== this.model_database[field])
+          return true;
+      }
+
+      return false;
+    }
+  },
 
   methods: {
     submit() {
       this.$apollo
         .mutate({
-          mutation: update_item,
-          variables: {
-            input: {
-              id: this.id,
-              name: this.name,
-              description: this.description,
-              type: this.type
-            }
-          }
+          mutation: MUTATE_MODEL_DATABASE,
+          variables: { input: this.model }
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -121,8 +138,6 @@ export default {
           });
         })
         .catch(error => {
-          this.$validator.errors.clear();
-
           if (error.graphQLErrors.length == 0) {
             // unknown error happened
             this.$notify({
@@ -135,6 +150,8 @@ export default {
 
           let errorFields = error.graphQLErrors[0].extensions.validation;
 
+          // clear the old errors and (add new ones if exist)
+          this.$validator.errors.clear();
           for (const [key, value] of Object.entries(errorFields)) {
             this.$validator.errors.add({ field: key, msg: value });
           }
@@ -144,16 +161,13 @@ export default {
     // helper method to load field names defined in fragment graphql definition
     getFieldsFromFragment(includeId) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
-
-      let fieldNames = fieldDefs.map(field => {
-        return field.name.value;
-      });
+      let fieldNames = fieldDefs.map(field => { return field.name.value; });
 
       if (!includeId)
         fieldNames = fieldNames.filter(field => {return field != "id"});
 
       return fieldNames;
-    }
+    },
   }
 };
 </script>

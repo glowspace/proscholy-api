@@ -67104,12 +67104,12 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    author(id: $id) {\n      ...AuthorFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    author(id: $id) {\n      ...AuthorFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFragment\n    }\n  }\n  ", "\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: author(id: $id) {\n      ...AuthorFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: author(id: $id) {\n      ...AuthorFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFillableFragment\n    }\n  }\n  ", "\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -67149,110 +67149,48 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 
 
-var fetch_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
 
-var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
 
   data: function data() {
     return {
-      id: undefined,
-      type: undefined,
-      type_values: [],
-      description: "",
-      name: "",
-      err: ""
+      model: {
+        // here goes the definition of model attributes 
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        name: undefined,
+        type: undefined,
+        description: undefined
+      },
+      type_values: []
     };
   },
 
 
   apollo: {
-    author: {
-      query: fetch_item,
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
       variables: function variables() {
         return {
-          id: this.id
+          id: this.model.id
         };
       },
-
-      result: function result(result) {
-        var _this = this;
-
-        var author = result.data.author;
-        // load the requested fields to the vue data property
-        this.getFieldsFromFragment(false).forEach(function (field) {
-          _this[field] = author[field];
-        });
-        this.type_values = author.type_string_values.map(function (val, index) {
-          return { value: index, text: val };
-        });
-      }
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted: function mounted() {
-    this.id = this.presetId;
-  },
-
-
-  computed: {},
-
-  methods: {
-    submit: function submit() {
-      var _this2 = this;
-
-      this.$apollo.mutate({
-        mutation: update_item,
-        variables: {
-          input: {
-            id: this.id,
-            name: this.name,
-            description: this.description,
-            type: this.type
-          }
-        }
-      }).then(function (result) {
-        _this2.$validator.errors.clear();
-        _this2.$notify({
-          title: "Úspěšně uloženo :)",
-          text: "Autor byl úspěšně uložen",
-          type: "success"
-        });
-      }).catch(function (error) {
-        _this2.$validator.errors.clear();
-
-        if (error.graphQLErrors.length == 0) {
-          // unknown error happened
-          _this2.$notify({
-            title: "Chyba při ukládání",
-            text: "Uživatel nebyl uložen",
-            type: "error"
-          });
-          return;
-        }
-
-        var errorFields = error.graphQLErrors[0].extensions.validation;
-
+      result: function result(_result) {
+        var author = _result.data.model_database;
+        // load the requested fields to the vue data.model property
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = Object.entries(errorFields)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var _ref = _step.value;
+          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var field = _step.value;
 
-            var _ref2 = _slicedToArray(_ref, 2);
-
-            var key = _ref2[0];
-            var value = _ref2[1];
-
-            _this2.$validator.errors.add({ field: key, msg: value });
+            Vue.set(this.model, field, author[field]);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -67268,6 +67206,124 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
             }
           }
         }
+
+        this.type_values = author.type_string_values.map(function (val, index) {
+          return { value: index, text: val };
+        });
+      }
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = function (e) {
+      if (_this.isDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+  },
+
+
+  computed: {
+    isDirty: function isDirty() {
+      if (!this.model_database) return false;
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var field = _step2.value;
+
+          if (this.model[field] !== this.model_database[field]) return true;
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      return false;
+    }
+  },
+
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.$apollo.mutate({
+        mutation: MUTATE_MODEL_DATABASE,
+        variables: { input: this.model }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
+          title: "Úspěšně uloženo :)",
+          text: "Autor byl úspěšně uložen",
+          type: "success"
+        });
+      }).catch(function (error) {
+        if (error.graphQLErrors.length == 0) {
+          // unknown error happened
+          _this2.$notify({
+            title: "Chyba při ukládání",
+            text: "Uživatel nebyl uložen",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this2.$validator.errors.clear();
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var _ref = _step3.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            _this2.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
       });
     },
 
@@ -67275,7 +67331,6 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
     // helper method to load field names defined in fragment graphql definition
     getFieldsFromFragment: function getFieldsFromFragment(includeId) {
       var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a.definitions[0].selectionSet.selections;
-
       var fieldNames = fieldDefs.map(function (field) {
         return field.name.value;
       });
@@ -67290,7 +67345,36 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 });
 
 /***/ }),
-/* 145 */,
+/* 145 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":86}};
+    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
+
+
+/***/ }),
 /* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -67327,22 +67411,22 @@ var render = function() {
                           "error-messages": _vm.errors.collect("input.name")
                         },
                         model: {
-                          value: _vm.name,
+                          value: _vm.model.name,
                           callback: function($$v) {
-                            _vm.name = $$v
+                            _vm.$set(_vm.model, "name", $$v)
                           },
-                          expression: "name"
+                          expression: "model.name"
                         }
                       }),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { items: _vm.type_values, label: "Typ" },
                         model: {
-                          value: _vm.type,
+                          value: _vm.model.type,
                           callback: function($$v) {
-                            _vm.type = $$v
+                            _vm.$set(_vm.model, "type", $$v)
                           },
-                          expression: "type"
+                          expression: "model.type"
                         }
                       }),
                       _vm._v(" "),
@@ -67356,17 +67440,22 @@ var render = function() {
                           )
                         },
                         model: {
-                          value: _vm.description,
+                          value: _vm.model.description,
                           callback: function($$v) {
-                            _vm.description = $$v
+                            _vm.$set(_vm.model, "description", $$v)
                           },
-                          expression: "description"
+                          expression: "model.description"
                         }
                       }),
                       _vm._v(" "),
-                      _c("v-btn", { on: { click: _vm.submit } }, [
-                        _vm._v("Uložit")
-                      ])
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: !_vm.isDirty },
+                          on: { click: _vm.submit }
+                        },
+                        [_vm._v("Uložit")]
+                      )
                     ],
                     1
                   )
@@ -105588,41 +105677,6 @@ VeeValidate$1.withValidation = withValidation;
 
 /* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
 
-
-
-/***/ }),
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */
-/***/ (function(module, exports) {
-
-
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":80}};
-    doc.loc.source = {"body":"\n\nfragment AuthorFragment on Author {\n    id\n    name\n    type\n    description\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    var names = {};
-    function unique(defs) {
-      return defs.filter(
-        function(def) {
-          if (def.kind !== 'FragmentDefinition') return true;
-          var name = def.name.value
-          if (names[name]) {
-            return false;
-          } else {
-            names[name] = true;
-            return true;
-          }
-        }
-      )
-    }
-  
-
-      module.exports = doc;
-    
 
 
 /***/ })

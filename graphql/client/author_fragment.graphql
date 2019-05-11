@@ -1,4 +1,4 @@
-fragment AuthorFragment on Author {
+fragment AuthorFillableFragment on Author {
     id
     name
     type
