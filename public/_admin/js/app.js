@@ -105921,8 +105921,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
             url: this.model.url,
             type: this.model.type,
             authors: {
-              create: [],
-              sync: []
+              create: this.getModelsToCreate(this.model.authors),
+              sync: this.getModelsToSync(this.model.authors)
             }
           }
         }
@@ -105993,6 +105993,20 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
       });
 
       return fieldNames;
+    },
+    getModelsToCreate: function getModelsToCreate(models) {
+      return models.filter(function (model) {
+        if (model.id) return false;
+        return true;
+      });
+    },
+    getModelsToSync: function getModelsToSync(models) {
+      return models.filter(function (model) {
+        if (model.id) return true;
+        return false;
+      }).map(function (model) {
+        return model.id;
+      });
     }
   }
 });

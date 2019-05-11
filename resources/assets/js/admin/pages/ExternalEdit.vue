@@ -147,8 +147,8 @@ export default {
               url: this.model.url,
               type: this.model.type,
               authors: {
-                create: [],
-                sync: []
+                create: this.getModelsToCreate(this.model.authors),
+                sync: this.getModelsToSync(this.model.authors)
               }
             }
           }
@@ -196,6 +196,22 @@ export default {
 
       return fieldNames;
     },
+
+    getModelsToCreate(models){
+      return models.filter(model => {
+        if(model.id) return false;
+        return true;
+      });
+    },
+
+    getModelsToSync(models){
+      return models.filter(model => {
+        if(model.id) return true;
+        return false;
+      }).map(model => {
+        return model.id
+      });
+    }
   },
 };
 </script>
