@@ -48,10 +48,12 @@ const fetch_item = gql`
 const update_item = gql`
   mutation($id: ID!, $name: String, $description: String, $type: Int!) {
     update_author(
-      id: $id
-      name: $name
-      description: $description
-      type: $type
+      input: {
+        id: $id
+        name: $name
+        description: $description
+        type: $type
+      }
     ) {
       id
       name
