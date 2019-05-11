@@ -13,7 +13,9 @@
               :error-messages="errors.collect('input.url')"
             ></v-text-field>
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
-
+              <items-combo-box
+              v-bind:p-items="authors"
+              v-model="model.authors"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -24,14 +26,19 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/external_fragment.graphql";
+import ItemsComboBox from "../components/ItemsComboBox.vue"
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
     model_database: external(id: $id) {
       ...ExternalFillableFragment
       type_string_values
+      song_lyric {
+        id
+        name
+      }
     }
   }
   ${fragment}
@@ -46,17 +53,30 @@ const MUTATE_MODEL_DATABASE = gql`
   ${fragment}
 `;
 
+const FETCH_AUTHORS = gql`
+  query {
+    authors {
+      id
+      name
+    }
+  }
+`;
+
 export default {
   props: ["preset-id"],
+  components: {
+    ItemsComboBox
+  },
 
   data() {
     return {
       model: {
-        // here goes the definition of model attributes 
+        // here goes the definition of model attributes
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         url: undefined,
         type: undefined,
+        authors: []
       },
       type_values: [],
     };
@@ -81,6 +101,9 @@ export default {
           return { value: index, text: val };
         });
       }
+    },
+    authors: {
+      query: FETCH_AUTHORS,
     }
   },
 
@@ -95,19 +118,18 @@ export default {
     window.onbeforeunload = e => {
       if (this.isDirty) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
   },
 
   computed: {
     isDirty() {
-      if (!this.model_database)
-        return false;
+      if (!this.model_database) return false;
 
       for (let field of this.getFieldsFromFragment(this)) {
-        if (this.model[field] !== this.model_database[field])
-          return true;
+        // todo: compare objects
+        if (this.model[field] !== this.model_database[field]) return true;
       }
 
       return false;
@@ -119,7 +141,17 @@ export default {
       this.$apollo
         .mutate({
           mutation: MUTATE_MODEL_DATABASE,
-          variables: { input: this.model }
+          variables: { 
+            input: {
+              id: this.model.id,
+              url: this.model.url,
+              type: this.model.type,
+              authors: {
+                create: [],
+                sync: []
+              }
+            }
+          }
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -153,13 +185,17 @@ export default {
     // helper method to load field names defined in fragment graphql definition
     getFieldsFromFragment(includeId) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => { return field.name.value; });
+      let fieldNames = fieldDefs.map(field => {
+        return field.name.value;
+      });
 
       if (!includeId)
-        fieldNames = fieldNames.filter(field => {return field != "id"});
+        fieldNames = fieldNames.filter(field => {
+          return field != "id";
+        });
 
       return fieldNames;
     },
-  }
+  },
 };
 </script>

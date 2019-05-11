@@ -2,4 +2,8 @@ fragment ExternalFillableFragment on External  {
     id
     url
     type
+    authors {
+        id
+        name
+    }
 }

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf;
 use Hash;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\External
  *
@@ -192,12 +195,12 @@ class External extends Model
         ]);
     }
 
-    public function authors()
+    public function authors() : BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function song_lyric()
+    public function song_lyric() : BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
     }

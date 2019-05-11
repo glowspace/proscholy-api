@@ -105741,10 +105741,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n      song_lyric {\n        id\n        name\n      }\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n      song_lyric {\n        id\n        name\n      }\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -105773,6 +105776,9 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+
 
 
 
@@ -105781,17 +105787,23 @@ var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_
 
 var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a);
 
+var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
+  components: {
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a
+  },
 
   data: function data() {
     return {
       model: {
-        // here goes the definition of model attributes 
+        // here goes the definition of model attributes
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         url: undefined,
-        type: undefined
+        type: undefined,
+        authors: []
       },
       type_values: []
     };
@@ -105838,6 +105850,9 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
           return { value: index, text: val };
         });
       }
+    },
+    authors: {
+      query: FETCH_AUTHORS
     }
   },
 
@@ -105854,7 +105869,7 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
     window.onbeforeunload = function (e) {
       if (_this.isDirty) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
   },
@@ -105872,6 +105887,7 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
         for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var field = _step2.value;
 
+          // todo: compare objects
           if (this.model[field] !== this.model_database[field]) return true;
         }
       } catch (err) {
@@ -105899,7 +105915,17 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 
       this.$apollo.mutate({
         mutation: MUTATE_MODEL_DATABASE,
-        variables: { input: this.model }
+        variables: {
+          input: {
+            id: this.model.id,
+            url: this.model.url,
+            type: this.model.type,
+            authors: {
+              create: [],
+              sync: []
+            }
+          }
+        }
       }).then(function (result) {
         _this2.$validator.errors.clear();
         _this2.$notify({
@@ -105976,8 +106002,8 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":74}};
-    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":118}};
+    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -106057,6 +106083,17 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: { "p-items": _vm.authors },
+                        model: {
+                          value: _vm.model.authors,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "authors", $$v)
+                          },
+                          expression: "model.authors"
+                        }
+                      }),
+                      _vm._v(" "),
                       _c(
                         "v-btn",
                         {
@@ -106090,6 +106127,339 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-08145df2", module.exports)
+  }
+}
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(161)
+/* template */
+var __vue_template__ = __webpack_require__(162)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/ItemsComboBox.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-49b66d54", Component.options)
+  } else {
+    hotAPI.reload("data-v-49b66d54", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["p-items", "value"],
+
+  data: function data() {
+    return {
+      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
+      editing: null,
+      index: -1,
+      search: null,
+      items: [{ header: 'Select an option or create one' }]
+    };
+  },
+
+  computed: {
+    internalValue: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(val) {
+        this.$emit("input", val);
+      }
+    }
+  },
+
+  watch: {
+    internalValue: function internalValue(val, prev) {
+      var _this = this;
+
+      if (val.length === prev.length) return;
+
+      this.internalValue = val.map(function (v) {
+        if (typeof v === "string") {
+          v = {
+            name: v
+          };
+
+          _this.items.push(v);
+        }
+
+        return v;
+      });
+    },
+    pItems: function pItems(val, prev) {
+      this.items = this.items.concat(this.pItems);
+    }
+  },
+
+  methods: {
+    edit: function edit(index, item) {
+      if (!this.editing) {
+        this.editing = item;
+        this.index = index;
+      } else {
+        this.editing = null;
+        this.index = -1;
+      }
+    },
+    filter: function filter(item, queryText, itemText) {
+      if (item.header) return false;
+
+      var hasValue = function hasValue(val) {
+        return val != null ? val : "";
+      };
+
+      var text = hasValue(itemText);
+      var query = hasValue(queryText);
+
+      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
+    },
+    getColor: function getColor(item) {
+      if (item.id) {
+        return "blue lighten-3";
+      } else {
+        return "green lighten-3";
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("v-combobox", {
+    attrs: {
+      filter: _vm.filter,
+      "hide-no-data": !_vm.search,
+      items: _vm.items,
+      "search-input": _vm.search,
+      "item-text": "name",
+      "hide-selected": "",
+      label: "Search for an option",
+      multiple: "",
+      "small-chips": ""
+    },
+    on: {
+      "update:searchInput": function($event) {
+        _vm.search = $event
+      },
+      "update:search-input": function($event) {
+        _vm.search = $event
+      }
+    },
+    scopedSlots: _vm._u([
+      {
+        key: "no-data",
+        fn: function() {
+          return [
+            _c(
+              "v-list-tile",
+              [
+                _c("span", { staticClass: "subheading" }, [_vm._v("Create")]),
+                _vm._v(" "),
+                _c(
+                  "v-chip",
+                  { attrs: { color: "green lighten-3", label: "", small: "" } },
+                  [_vm._v(_vm._s(_vm.search))]
+                )
+              ],
+              1
+            )
+          ]
+        },
+        proxy: true
+      },
+      {
+        key: "selection",
+        fn: function(ref) {
+          var item = ref.item
+          var parent = ref.parent
+          var selected = ref.selected
+          return [
+            item === Object(item)
+              ? _c(
+                  "v-chip",
+                  {
+                    attrs: {
+                      color: _vm.getColor(item),
+                      selected: selected,
+                      label: "",
+                      small: ""
+                    }
+                  },
+                  [
+                    _c("span", { staticClass: "pr-2" }, [
+                      _vm._v(_vm._s(item.name))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { small: "" },
+                        on: {
+                          click: function($event) {
+                            return parent.selectItem(item)
+                          }
+                        }
+                      },
+                      [_vm._v("close")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]
+        }
+      },
+      {
+        key: "item",
+        fn: function(ref) {
+          var index = ref.index
+          var item = ref.item
+          return [
+            _c(
+              "v-list-tile-content",
+              [
+                _vm.editing !== item
+                  ? _c(
+                      "v-chip",
+                      {
+                        attrs: {
+                          color: _vm.getColor(item),
+                          dark: "",
+                          label: "",
+                          small: ""
+                        }
+                      },
+                      [_vm._v(_vm._s(item.name))]
+                    )
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-spacer")
+          ]
+        }
+      }
+    ]),
+    model: {
+      value: _vm.internalValue,
+      callback: function($$v) {
+        _vm.internalValue = $$v
+      },
+      expression: "internalValue"
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-49b66d54", module.exports)
   }
 }
 
