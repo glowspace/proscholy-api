@@ -106669,6 +106669,19 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -106700,6 +106713,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         is_original: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
+        lyrics: undefined,
         tags_unofficial: [],
         tags_official: [],
         authors: []
@@ -106859,6 +106873,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
             lang: this.model.lang,
             has_anonymous_author: this.model.has_anonymous_author,
             is_original: this.model.is_original,
+            lyrics: this.model.lyrics,
             authors: {
               create: this.getModelsToCreateBelongsToMany(this.model.authors),
               sync: this.getModelsToSyncBelongsToMany(this.model.authors)
@@ -106866,6 +106881,10 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
             tags_unofficial: {
               create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
               sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
+            },
+            tags_official: {
+              // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
+              sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
             }
           }
         }
@@ -106973,8 +106992,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":229}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":305}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -107084,17 +107103,6 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { items: _vm.lang_values, label: "Jazyk" },
-                        model: {
-                          value: _vm.model.lang,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "lang", $$v)
-                          },
-                          expression: "model.lang"
-                        }
-                      }),
-                      _vm._v(" "),
                       _c("items-combo-box", {
                         attrs: {
                           "p-items": _vm.tags_unofficial,
@@ -107109,6 +107117,49 @@ var render = function() {
                             _vm.$set(_vm.model, "tags_unofficial", $$v)
                           },
                           expression: "model.tags_unofficial"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.tags_official,
+                          label: "Liturgie",
+                          "create-label": "Vyberte část liturgie z nabídky",
+                          multiple: true
+                        },
+                        model: {
+                          value: _vm.model.tags_official,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "tags_official", $$v)
+                          },
+                          expression: "model.tags_official"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { items: _vm.lang_values, label: "Jazyk" },
+                        model: {
+                          value: _vm.model.lang,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "lang", $$v)
+                          },
+                          expression: "model.lang"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-textarea", {
+                        attrs: {
+                          "auto-grow": "",
+                          outline: "",
+                          name: "input-7-4",
+                          label: "Text"
+                        },
+                        model: {
+                          value: _vm.model.lyrics,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "lyrics", $$v)
+                          },
+                          expression: "model.lyrics"
                         }
                       }),
                       _vm._v(" "),

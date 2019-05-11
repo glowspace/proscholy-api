@@ -43,6 +43,12 @@ input UpdateSongLyricInput {
     lang: String!
     authors: SyncAuthorsRelation
     tags_unofficial: SyncUnofficialTagsRelation
+    tags_official: SyncOfficialTagsRelation
+    lyrics: String
+}
+
+input SyncOfficialTagsRelation {
+  sync: [ID!]
 }
 
 input SyncUnofficialTagsRelation {

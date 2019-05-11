@@ -8,6 +8,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 /**
  * App\SongLyric
  *
@@ -128,27 +132,27 @@ class SongLyric extends Model
         return self::$lang_string_values;
     }
 
-    public function song()
+    public function song() : BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
 
-    public function authors()
+    public function authors() : BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function tags()
+    public function tags() : BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function externals()
+    public function externals() : HasMany
     {
         return $this->hasMany(External::class);
     }
 
-    public function files()
+    public function files() : HasMany
     {
         return $this->hasMany(File::class);
     }

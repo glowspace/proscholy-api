@@ -8,6 +8,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Log;
 use App\SongLyric;
 use App\Author;
+use function Safe\array_combine;
 
 class UpdateSongLyric
 {
@@ -49,14 +50,28 @@ class UpdateSongLyric
             }
         }
 
-        // HANDLE TAGS
+        $tagsToSync = [];
+
+        // HANDLE TAGS - sync
         if (isset($input["tags_unofficial"]["sync"]))
-            $song_lyric->tags()->sync($input["tags_unofficial"]["sync"]);
+            $tagsToSync = $input["tags_unofficial"]["sync"];
+        if (isset($input["tags_official"]["sync"]))
+            $tagsToSync = array_merge($tagsToSync, $input["tags_official"]["sync"]);
+
+        $song_lyric->tags()->sync($tagsToSync);
+
+        // CREATE NEW TAGS
         if (isset($input["tags_unofficial"]["create"])) {
             foreach ($input["tags_unofficial"]["create"] as $author) {
                 $song_lyric->tags()->create(['name' => $author["name"]]);
             }
         }
+
+        // if (isset($input["tags_official"]["create"])) {
+        //     foreach ($input["tags_official"]["create"] as $author) {
+        //         $song_lyric->tags()->create(['name' => $author["name"]]);
+        //     }
+        // }
 
         $song_lyric->save();
 

@@ -12,4 +12,9 @@ fragment SongLyricFillableFragment on SongLyric  {
         id
         name
     }
+    tags_official: tags(type: 1) {
+        id
+        name
+    }
+    lyrics
 }

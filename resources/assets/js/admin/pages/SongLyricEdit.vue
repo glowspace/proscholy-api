@@ -23,13 +23,26 @@
               label="Anonymní autor (nezobrazovat v to-do)"
             ></v-checkbox>
             <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select>
-            <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
             <items-combo-box
               v-bind:p-items="tags_unofficial"
               v-model="model.tags_unofficial"
               label="Štítky"
               create-label="Vyberte štítek z nabídky nebo vytvořte nový"
               :multiple="true"></items-combo-box>
+            <items-combo-box
+              v-bind:p-items="tags_official"
+              v-model="model.tags_official"
+              label="Liturgie"
+              create-label="Vyberte část liturgie z nabídky"
+              :multiple="true"></items-combo-box>
+            <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
+            <v-textarea
+              auto-grow
+              outline
+              name="input-7-4"
+              label="Text"
+              v-model="model.lyrics"
+            ></v-textarea>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -107,6 +120,7 @@ export default {
         is_original: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
+        lyrics: undefined,
         tags_unofficial: [],
         tags_official: [],
         authors: [],
@@ -195,6 +209,7 @@ export default {
               lang: this.model.lang,
               has_anonymous_author: this.model.has_anonymous_author,
               is_original: this.model.is_original,
+              lyrics: this.model.lyrics,
               authors: {
                 create: this.getModelsToCreateBelongsToMany(this.model.authors),
                 sync: this.getModelsToSyncBelongsToMany(this.model.authors)
@@ -202,6 +217,10 @@ export default {
               tags_unofficial: {
                 create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
                 sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
+              },
+              tags_official: {
+                // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
+                sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
               }
             }
           }
