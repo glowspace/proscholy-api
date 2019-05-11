@@ -7,7 +7,7 @@
     :search-input.sync="search"
     item-text="name"
     hide-selected
-    label="Search for an option"
+    :label="label"
     multiple
     small-chips
   >
@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  props: ["p-items", "value"],
+  props: ["p-items", "value", "label"],
 
   data: () => ({
     colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],

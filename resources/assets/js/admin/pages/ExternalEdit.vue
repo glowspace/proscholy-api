@@ -15,7 +15,8 @@
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
               <items-combo-box
               v-bind:p-items="authors"
-              v-model="model.authors"></items-combo-box>
+              v-model="model.authors"
+              label="Autoři"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -128,8 +129,9 @@ export default {
       if (!this.model_database) return false;
 
       for (let field of this.getFieldsFromFragment(this)) {
-        // todo: compare objects
-        if (this.model[field] !== this.model_database[field]) return true;
+        if (!_.isEqual(this.model[field], this.model_database[field])){
+          return true;
+        }
       }
 
       return false;

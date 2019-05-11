@@ -67246,7 +67246,9 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
         for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var field = _step2.value;
 
-          if (this.model[field] !== this.model_database[field]) return true;
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -105778,6 +105780,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
 
 
 
@@ -105887,8 +105890,9 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
         for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var field = _step2.value;
 
-          // todo: compare objects
-          if (this.model[field] !== this.model_database[field]) return true;
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -106098,7 +106102,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("items-combo-box", {
-                        attrs: { "p-items": _vm.authors },
+                        attrs: { "p-items": _vm.authors, label: "Autoři" },
                         model: {
                           value: _vm.model.authors,
                           callback: function($$v) {
@@ -106256,7 +106260,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["p-items", "value"],
+  props: ["p-items", "value", "label"],
 
   data: function data() {
     return {
@@ -106350,7 +106354,7 @@ var render = function() {
       "search-input": _vm.search,
       "item-text": "name",
       "hide-selected": "",
-      label: "Search for an option",
+      label: _vm.label,
       multiple: "",
       "small-chips": ""
     },

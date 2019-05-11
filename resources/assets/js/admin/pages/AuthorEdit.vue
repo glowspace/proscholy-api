@@ -114,8 +114,9 @@ export default {
         return false;
 
       for (let field of this.getFieldsFromFragment(this)) {
-        if (this.model[field] !== this.model_database[field])
+        if (!_.isEqual(this.model[field], this.model_database[field])){
           return true;
+        }
       }
 
       return false;
