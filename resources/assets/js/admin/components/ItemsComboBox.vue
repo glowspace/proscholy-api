@@ -8,10 +8,10 @@
     item-text="name"
     hide-selected
     :label="label"
-    multiple
+    :multiple="multiple"
     small-chips
   >
-    <template v-slot:no-data>
+    <template v-slot:no-data v-if="enableCustom">
       <v-list-tile>
         <span class="subheading">Create</span>
         <v-chip :color="`green lighten-3`" label small>{{ search }}</v-chip>
@@ -57,14 +57,14 @@
 
 <script>
 export default {
-  props: ["p-items", "value", "label"],
+  props: ["p-items", "value", "label", "create-label", "multiple", "enable-custom"],
 
   data: () => ({
     colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
     editing: null,
     index: -1,
     search: null,
-    items: [{ header: 'Select an option or create one' }]
+    items: [{ header: "" }]
   }),
 
   computed: {
@@ -78,8 +78,16 @@ export default {
     }
   },
 
+  mounted(){
+    this.items[0].header = this.createLabel;
+    // Vue.set(this.items[0], "header")
+  },
+
   watch: {
     internalValue(val, prev) {
+      if (!val) return;
+      if(!Array.isArray(val)) return;
+
       if (val.length === prev.length) return;
 
       this.internalValue = val.map(v => {

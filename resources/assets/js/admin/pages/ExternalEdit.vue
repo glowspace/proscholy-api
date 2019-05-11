@@ -13,10 +13,20 @@
               :error-messages="errors.collect('input.url')"
             ></v-text-field>
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
-              <items-combo-box
+            <items-combo-box
               v-bind:p-items="authors"
               v-model="model.authors"
-              label="Autoři"></items-combo-box>
+              label="Autoři"
+              create-label="Vyberte autora z nabídky nebo vytvořte novou"
+              :multiple="true"
+              :enable-custom="true"></items-combo-box>
+            <items-combo-box
+              v-bind:p-items="song_lyrics"
+              v-model="model.song_lyric"
+              label="Píseň"
+              create-label="Vyberte píseň"
+              :multiple="false"
+              :enable-custom="false"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -36,10 +46,6 @@ const FETCH_MODEL_DATABASE = gql`
     model_database: external(id: $id) {
       ...ExternalFillableFragment
       type_string_values
-      song_lyric {
-        id
-        name
-      }
     }
   }
   ${fragment}
@@ -63,6 +69,15 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
+const FETCH_SONG_LYRICS= gql`
+  query {
+    song_lyrics {
+      id
+      name
+    }
+  }
+`;
+
 export default {
   props: ["preset-id"],
   components: {
@@ -77,7 +92,8 @@ export default {
         id: undefined,
         url: undefined,
         type: undefined,
-        authors: []
+        authors: [],
+        song_lyric: undefined
       },
       type_values: [],
     };
@@ -105,6 +121,9 @@ export default {
     },
     authors: {
       query: FETCH_AUTHORS,
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS,
     }
   },
 
@@ -148,9 +167,10 @@ export default {
               id: this.model.id,
               url: this.model.url,
               type: this.model.type,
+              song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
               authors: {
-                create: this.getModelsToCreate(this.model.authors),
-                sync: this.getModelsToSync(this.model.authors)
+                create: this.getModelsToCreateBelongsToMany(this.model.authors),
+                sync: this.getModelsToSyncBelongsToMany(this.model.authors)
               }
             }
           }
@@ -199,20 +219,38 @@ export default {
       return fieldNames;
     },
 
-    getModelsToCreate(models){
+    getModelsToCreateBelongsToMany(models){
       return models.filter(model => {
         if(model.id) return false;
         return true;
       });
     },
 
-    getModelsToSync(models){
+    getModelsToSyncBelongsToMany(models){
       return models.filter(model => {
         if(model.id) return true;
         return false;
       }).map(model => {
         return model.id
       });
+    },
+
+    getModelToSyncBelongsTo(model) {
+      let obj = {};
+
+      if (model) {
+        obj.update = {
+          id: model.id
+        }
+      } else {
+        obj.disconnect = true;
+      }
+      
+      return obj;
+      // update: {
+      //   id: this.model.song_lyric ? this.model.song_lyric.id : null
+      // },
+      // disconnect: this.model.song_lyric ? false : true
     }
   },
 };

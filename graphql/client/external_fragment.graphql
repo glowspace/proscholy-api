@@ -6,4 +6,8 @@ fragment ExternalFillableFragment on External  {
         id
         name
     }
+    song_lyric {
+        id
+        name
+    }
 }

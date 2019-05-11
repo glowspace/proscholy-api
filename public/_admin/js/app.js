@@ -65535,13 +65535,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_cache_inmemory__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_apollo_link__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_apollo__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_notification__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(158);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65569,7 +65569,7 @@ Vue.component('files-list', __webpack_require__(133));
 Vue.component('authors-list', __webpack_require__(138));
 
 Vue.component('author-edit', __webpack_require__(143));
-Vue.component('external-edit', __webpack_require__(156));
+Vue.component('external-edit', __webpack_require__(147));
 
 
 
@@ -67489,6 +67489,883 @@ if (false) {
 
 /***/ }),
 /* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(148)
+/* template */
+var __vue_template__ = __webpack_require__(153)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/ExternalEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-08145df2", Component.options)
+  } else {
+    hotAPI.reload("data-v-08145df2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 148 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a);
+
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a);
+
+var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
+
+var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject4);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["preset-id"],
+  components: {
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a
+  },
+
+  data: function data() {
+    return {
+      model: {
+        // here goes the definition of model attributes
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        url: undefined,
+        type: undefined,
+        authors: [],
+        song_lyric: undefined
+      },
+      type_values: []
+    };
+  },
+
+
+  apollo: {
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
+      variables: function variables() {
+        return {
+          id: this.model.id
+        };
+      },
+      result: function result(_result) {
+        var external = _result.data.model_database;
+        // load the requested fields to the vue data.model property
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var field = _step.value;
+
+            Vue.set(this.model, field, external[field]);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        this.type_values = external.type_string_values.map(function (val, index) {
+          return { value: index, text: val };
+        });
+      }
+    },
+    authors: {
+      query: FETCH_AUTHORS
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = function (e) {
+      if (_this.isDirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+  },
+
+
+  computed: {
+    isDirty: function isDirty() {
+      if (!this.model_database) return false;
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var field = _step2.value;
+
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      return false;
+    }
+  },
+
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.$apollo.mutate({
+        mutation: MUTATE_MODEL_DATABASE,
+        variables: {
+          input: {
+            id: this.model.id,
+            url: this.model.url,
+            type: this.model.type,
+            song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
+            authors: {
+              create: this.getModelsToCreateBelongsToMany(this.model.authors),
+              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+            }
+          }
+        }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
+          title: "Úspěšně uloženo :)",
+          text: "Externí odkaz byl úspěšně uložen",
+          type: "success"
+        });
+      }).catch(function (error) {
+        if (error.graphQLErrors.length == 0) {
+          // unknown error happened
+          _this2.$notify({
+            title: "Chyba při ukládání",
+            text: "Externí odkaz nebyl uložen",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this2.$validator.errors.clear();
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var _ref = _step3.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            _this2.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+      });
+    },
+
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+      var fieldNames = fieldDefs.map(function (field) {
+        return field.name.value;
+      });
+
+      if (!includeId) fieldNames = fieldNames.filter(function (field) {
+        return field != "id";
+      });
+
+      return fieldNames;
+    },
+    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return false;
+        return true;
+      });
+    },
+    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return true;
+        return false;
+      }).map(function (model) {
+        return model.id;
+      });
+    },
+    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
+      var obj = {};
+
+      if (model) {
+        obj.update = {
+          id: model.id
+        };
+      } else {
+        obj.disconnect = true;
+      }
+
+      return obj;
+      // update: {
+      //   id: this.model.song_lyric ? this.model.song_lyric.id : null
+      // },
+      // disconnect: this.model.song_lyric ? false : true
+    }
+  }
+});
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyric"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":165}};
+    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n    song_lyric {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
+
+
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(151)
+/* template */
+var __vue_template__ = __webpack_require__(152)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/ItemsComboBox.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-49b66d54", Component.options)
+  } else {
+    hotAPI.reload("data-v-49b66d54", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 151 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["p-items", "value", "label", "create-label", "multiple", "enable-custom"],
+
+  data: function data() {
+    return {
+      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
+      editing: null,
+      index: -1,
+      search: null,
+      items: [{ header: "" }]
+    };
+  },
+
+  computed: {
+    internalValue: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(val) {
+        this.$emit("input", val);
+      }
+    }
+  },
+
+  mounted: function mounted() {
+    this.items[0].header = this.createLabel;
+    // Vue.set(this.items[0], "header")
+  },
+
+
+  watch: {
+    internalValue: function internalValue(val, prev) {
+      var _this = this;
+
+      if (!val) return;
+      if (!Array.isArray(val)) return;
+
+      if (val.length === prev.length) return;
+
+      this.internalValue = val.map(function (v) {
+        if (typeof v === "string") {
+          v = {
+            name: v
+          };
+
+          _this.items.push(v);
+        }
+
+        return v;
+      });
+    },
+    pItems: function pItems(val, prev) {
+      this.items = this.items.concat(this.pItems);
+    }
+  },
+
+  methods: {
+    edit: function edit(index, item) {
+      if (!this.editing) {
+        this.editing = item;
+        this.index = index;
+      } else {
+        this.editing = null;
+        this.index = -1;
+      }
+    },
+    filter: function filter(item, queryText, itemText) {
+      if (item.header) return false;
+
+      var hasValue = function hasValue(val) {
+        return val != null ? val : "";
+      };
+
+      var text = hasValue(itemText);
+      var query = hasValue(queryText);
+
+      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
+    },
+    getColor: function getColor(item) {
+      if (item.id) {
+        return "blue lighten-3";
+      } else {
+        return "green lighten-3";
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("v-combobox", {
+    attrs: {
+      filter: _vm.filter,
+      "hide-no-data": !_vm.search,
+      items: _vm.items,
+      "search-input": _vm.search,
+      "item-text": "name",
+      "hide-selected": "",
+      label: _vm.label,
+      multiple: _vm.multiple,
+      "small-chips": ""
+    },
+    on: {
+      "update:searchInput": function($event) {
+        _vm.search = $event
+      },
+      "update:search-input": function($event) {
+        _vm.search = $event
+      }
+    },
+    scopedSlots: _vm._u(
+      [
+        _vm.enableCustom
+          ? {
+              key: "no-data",
+              fn: function() {
+                return [
+                  _c(
+                    "v-list-tile",
+                    [
+                      _c("span", { staticClass: "subheading" }, [
+                        _vm._v("Create")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-chip",
+                        {
+                          attrs: {
+                            color: "green lighten-3",
+                            label: "",
+                            small: ""
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.search))]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              },
+              proxy: true
+            }
+          : null,
+        {
+          key: "selection",
+          fn: function(ref) {
+            var item = ref.item
+            var parent = ref.parent
+            var selected = ref.selected
+            return [
+              item === Object(item)
+                ? _c(
+                    "v-chip",
+                    {
+                      attrs: {
+                        color: _vm.getColor(item),
+                        selected: selected,
+                        label: "",
+                        small: ""
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "pr-2" }, [
+                        _vm._v(_vm._s(item.name))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return parent.selectItem(item)
+                            }
+                          }
+                        },
+                        [_vm._v("close")]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ]
+          }
+        },
+        {
+          key: "item",
+          fn: function(ref) {
+            var index = ref.index
+            var item = ref.item
+            return [
+              _c(
+                "v-list-tile-content",
+                [
+                  _vm.editing !== item
+                    ? _c(
+                        "v-chip",
+                        {
+                          attrs: {
+                            color: _vm.getColor(item),
+                            dark: "",
+                            label: "",
+                            small: ""
+                          }
+                        },
+                        [_vm._v(_vm._s(item.name))]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-spacer")
+            ]
+          }
+        }
+      ],
+      null,
+      true
+    ),
+    model: {
+      value: _vm.internalValue,
+      callback: function($$v) {
+        _vm.internalValue = $$v
+      },
+      expression: "internalValue"
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-49b66d54", module.exports)
+  }
+}
+
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c("notifications"),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "", md6: "" } },
+                [
+                  _c(
+                    "v-form",
+                    { ref: "form" },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Url odkaz",
+                          required: "",
+                          "data-vv-name": "input.url",
+                          "error-messages": _vm.errors.collect("input.url")
+                        },
+                        model: {
+                          value: _vm.model.url,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "url", $$v)
+                          },
+                          expression: "model.url"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { items: _vm.type_values, label: "Typ" },
+                        model: {
+                          value: _vm.model.type,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "type", $$v)
+                          },
+                          expression: "model.type"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.authors,
+                          label: "Autoři",
+                          "create-label":
+                            "Vyberte autora z nabídky nebo vytvořte novou",
+                          multiple: true,
+                          "enable-custom": true
+                        },
+                        model: {
+                          value: _vm.model.authors,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "authors", $$v)
+                          },
+                          expression: "model.authors"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.song_lyrics,
+                          label: "Píseň",
+                          "create-label": "Vyberte píseň",
+                          multiple: false,
+                          "enable-custom": false
+                        },
+                        model: {
+                          value: _vm.model.song_lyric,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "song_lyric", $$v)
+                          },
+                          expression: "model.song_lyric"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: !_vm.isDirty },
+                          on: { click: _vm.submit }
+                        },
+                        [_vm._v("Uložit")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-flex", { attrs: { xs12: "", md6: "" } })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-08145df2", module.exports)
+  }
+}
+
+/***/ }),
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -93467,13 +94344,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 //# sourceMappingURL=vuetify.js.map
 
 /***/ }),
-/* 148 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(149);
+var content = __webpack_require__(156);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -93498,7 +94375,7 @@ if(false) {
 }
 
 /***/ }),
-/* 149 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -93512,7 +94389,7 @@ exports.push([module.i, "/*!\n* Vuetify v1.5.14\n* Forged by John Leider\n* Rele
 
 
 /***/ }),
-/* 150 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -94643,7 +95520,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 151 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105681,805 +106558,6 @@ VeeValidate$1.withValidation = withValidation;
 /* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
 
 
-
-/***/ }),
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(157)
-/* template */
-var __vue_template__ = __webpack_require__(159)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/ExternalEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-08145df2", Component.options)
-  } else {
-    hotAPI.reload("data-v-08145df2", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 157 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n      song_lyric {\n        id\n        name\n      }\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n      song_lyric {\n        id\n        name\n      }\n    }\n  }\n  ", "\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a);
-
-var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a);
-
-var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["preset-id"],
-  components: {
-    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a
-  },
-
-  data: function data() {
-    return {
-      model: {
-        // here goes the definition of model attributes
-        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
-        id: undefined,
-        url: undefined,
-        type: undefined,
-        authors: []
-      },
-      type_values: []
-    };
-  },
-
-
-  apollo: {
-    model_database: {
-      query: FETCH_MODEL_DATABASE,
-      variables: function variables() {
-        return {
-          id: this.model.id
-        };
-      },
-      result: function result(_result) {
-        var external = _result.data.model_database;
-        // load the requested fields to the vue data.model property
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var field = _step.value;
-
-            Vue.set(this.model, field, external[field]);
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        this.type_values = external.type_string_values.map(function (val, index) {
-          return { value: index, text: val };
-        });
-      }
-    },
-    authors: {
-      query: FETCH_AUTHORS
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted: function mounted() {
-    var _this = this;
-
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = function (e) {
-      if (_this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-  },
-
-
-  computed: {
-    isDirty: function isDirty() {
-      if (!this.model_database) return false;
-
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var field = _step2.value;
-
-          if (!_.isEqual(this.model[field], this.model_database[field])) {
-            return true;
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      return false;
-    }
-  },
-
-  methods: {
-    submit: function submit() {
-      var _this2 = this;
-
-      this.$apollo.mutate({
-        mutation: MUTATE_MODEL_DATABASE,
-        variables: {
-          input: {
-            id: this.model.id,
-            url: this.model.url,
-            type: this.model.type,
-            authors: {
-              create: this.getModelsToCreate(this.model.authors),
-              sync: this.getModelsToSync(this.model.authors)
-            }
-          }
-        }
-      }).then(function (result) {
-        _this2.$validator.errors.clear();
-        _this2.$notify({
-          title: "Úspěšně uloženo :)",
-          text: "Externí odkaz byl úspěšně uložen",
-          type: "success"
-        });
-      }).catch(function (error) {
-        if (error.graphQLErrors.length == 0) {
-          // unknown error happened
-          _this2.$notify({
-            title: "Chyba při ukládání",
-            text: "Externí odkaz nebyl uložen",
-            type: "error"
-          });
-          return;
-        }
-
-        var errorFields = error.graphQLErrors[0].extensions.validation;
-
-        // clear the old errors and (add new ones if exist)
-        _this2.$validator.errors.clear();
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
-
-        try {
-          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var _ref = _step3.value;
-
-            var _ref2 = _slicedToArray(_ref, 2);
-
-            var key = _ref2[0];
-            var value = _ref2[1];
-
-            _this2.$validator.errors.add({ field: key, msg: value });
-          }
-        } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-              _iterator3.return();
-            }
-          } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
-            }
-          }
-        }
-      });
-    },
-
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
-      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default.a.definitions[0].selectionSet.selections;
-      var fieldNames = fieldDefs.map(function (field) {
-        return field.name.value;
-      });
-
-      if (!includeId) fieldNames = fieldNames.filter(function (field) {
-        return field != "id";
-      });
-
-      return fieldNames;
-    },
-    getModelsToCreate: function getModelsToCreate(models) {
-      return models.filter(function (model) {
-        if (model.id) return false;
-        return true;
-      });
-    },
-    getModelsToSync: function getModelsToSync(models) {
-      return models.filter(function (model) {
-        if (model.id) return true;
-        return false;
-      }).map(function (model) {
-        return model.id;
-      });
-    }
-  }
-});
-
-/***/ }),
-/* 158 */
-/***/ (function(module, exports) {
-
-
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":118}};
-    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    var names = {};
-    function unique(defs) {
-      return defs.filter(
-        function(def) {
-          if (def.kind !== 'FragmentDefinition') return true;
-          var name = def.name.value
-          if (names[name]) {
-            return false;
-          } else {
-            names[name] = true;
-            return true;
-          }
-        }
-      )
-    }
-  
-
-      module.exports = doc;
-    
-
-
-/***/ }),
-/* 159 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c("notifications"),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "", md6: "" } },
-                [
-                  _c(
-                    "v-form",
-                    { ref: "form" },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Url odkaz",
-                          required: "",
-                          "data-vv-name": "input.url",
-                          "error-messages": _vm.errors.collect("input.url")
-                        },
-                        model: {
-                          value: _vm.model.url,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "url", $$v)
-                          },
-                          expression: "model.url"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { items: _vm.type_values, label: "Typ" },
-                        model: {
-                          value: _vm.model.type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "type", $$v)
-                          },
-                          expression: "model.type"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("items-combo-box", {
-                        attrs: { "p-items": _vm.authors, label: "Autoři" },
-                        model: {
-                          value: _vm.model.authors,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "authors", $$v)
-                          },
-                          expression: "model.authors"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("Uložit")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-flex", { attrs: { xs12: "", md6: "" } })
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-08145df2", module.exports)
-  }
-}
-
-/***/ }),
-/* 160 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(161)
-/* template */
-var __vue_template__ = __webpack_require__(162)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/components/ItemsComboBox.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-49b66d54", Component.options)
-  } else {
-    hotAPI.reload("data-v-49b66d54", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 161 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["p-items", "value", "label"],
-
-  data: function data() {
-    return {
-      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
-      editing: null,
-      index: -1,
-      search: null,
-      items: [{ header: 'Select an option or create one' }]
-    };
-  },
-
-  computed: {
-    internalValue: {
-      get: function get() {
-        return this.value;
-      },
-      set: function set(val) {
-        this.$emit("input", val);
-      }
-    }
-  },
-
-  watch: {
-    internalValue: function internalValue(val, prev) {
-      var _this = this;
-
-      if (val.length === prev.length) return;
-
-      this.internalValue = val.map(function (v) {
-        if (typeof v === "string") {
-          v = {
-            name: v
-          };
-
-          _this.items.push(v);
-        }
-
-        return v;
-      });
-    },
-    pItems: function pItems(val, prev) {
-      this.items = this.items.concat(this.pItems);
-    }
-  },
-
-  methods: {
-    edit: function edit(index, item) {
-      if (!this.editing) {
-        this.editing = item;
-        this.index = index;
-      } else {
-        this.editing = null;
-        this.index = -1;
-      }
-    },
-    filter: function filter(item, queryText, itemText) {
-      if (item.header) return false;
-
-      var hasValue = function hasValue(val) {
-        return val != null ? val : "";
-      };
-
-      var text = hasValue(itemText);
-      var query = hasValue(queryText);
-
-      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
-    },
-    getColor: function getColor(item) {
-      if (item.id) {
-        return "blue lighten-3";
-      } else {
-        return "green lighten-3";
-      }
-    }
-  }
-});
-
-/***/ }),
-/* 162 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("v-combobox", {
-    attrs: {
-      filter: _vm.filter,
-      "hide-no-data": !_vm.search,
-      items: _vm.items,
-      "search-input": _vm.search,
-      "item-text": "name",
-      "hide-selected": "",
-      label: _vm.label,
-      multiple: "",
-      "small-chips": ""
-    },
-    on: {
-      "update:searchInput": function($event) {
-        _vm.search = $event
-      },
-      "update:search-input": function($event) {
-        _vm.search = $event
-      }
-    },
-    scopedSlots: _vm._u([
-      {
-        key: "no-data",
-        fn: function() {
-          return [
-            _c(
-              "v-list-tile",
-              [
-                _c("span", { staticClass: "subheading" }, [_vm._v("Create")]),
-                _vm._v(" "),
-                _c(
-                  "v-chip",
-                  { attrs: { color: "green lighten-3", label: "", small: "" } },
-                  [_vm._v(_vm._s(_vm.search))]
-                )
-              ],
-              1
-            )
-          ]
-        },
-        proxy: true
-      },
-      {
-        key: "selection",
-        fn: function(ref) {
-          var item = ref.item
-          var parent = ref.parent
-          var selected = ref.selected
-          return [
-            item === Object(item)
-              ? _c(
-                  "v-chip",
-                  {
-                    attrs: {
-                      color: _vm.getColor(item),
-                      selected: selected,
-                      label: "",
-                      small: ""
-                    }
-                  },
-                  [
-                    _c("span", { staticClass: "pr-2" }, [
-                      _vm._v(_vm._s(item.name))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { small: "" },
-                        on: {
-                          click: function($event) {
-                            return parent.selectItem(item)
-                          }
-                        }
-                      },
-                      [_vm._v("close")]
-                    )
-                  ],
-                  1
-                )
-              : _vm._e()
-          ]
-        }
-      },
-      {
-        key: "item",
-        fn: function(ref) {
-          var index = ref.index
-          var item = ref.item
-          return [
-            _c(
-              "v-list-tile-content",
-              [
-                _vm.editing !== item
-                  ? _c(
-                      "v-chip",
-                      {
-                        attrs: {
-                          color: _vm.getColor(item),
-                          dark: "",
-                          label: "",
-                          small: ""
-                        }
-                      },
-                      [_vm._v(_vm._s(item.name))]
-                    )
-                  : _vm._e()
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("v-spacer")
-          ]
-        }
-      }
-    ]),
-    model: {
-      value: _vm.internalValue,
-      callback: function($$v) {
-        _vm.internalValue = $$v
-      },
-      expression: "internalValue"
-    }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-49b66d54", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);
