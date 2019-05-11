@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // todo: make api calls secure // potentially vulnerable
-Route::post('/api/parse/opensong', 'Api\OpenSongController@parseOpenSong')->name('api.parse.opensong');
+Route::post('/parse/opensong', 'Api\OpenSongController@parseOpenSong')->name('api.parse.opensong');

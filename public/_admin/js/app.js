@@ -106681,7 +106681,6 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
-//
 
 
 
@@ -106698,7 +106697,7 @@ var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject5);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["preset-id"],
+  props: ["preset-id", "csrf"],
   components: {
     ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a
   },
@@ -106983,6 +106982,28 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       }
 
       return obj;
+    },
+    handleOpensongFile: function handleOpensongFile(e) {
+      var _this3 = this;
+
+      // console.log(e);
+      var file = e.target.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        console.log("file loaded succesfully");
+
+        $.post('/api/parse/opensong', {
+          file_contents: e.target.result,
+          _token: _this3.csrf
+        }, function (data) {
+          // var input_lyrics = document.getElementById("input_lyrics");
+          // input_lyrics.value = data;
+          _this3.model.lyrics = data;
+        });
+      };
+
+      reader.readAsText(file);
     }
   }
 });
@@ -107145,6 +107166,27 @@ var render = function() {
                           },
                           expression: "model.lang"
                         }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { id: "file_select" },
+                          on: {
+                            click: function($event) {
+                              return _vm.$refs.fileinput.click()
+                            }
+                          }
+                        },
+                        [_vm._v("Nahrát ze souboru OpenSong")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        ref: "fileinput",
+                        staticClass: "d-none",
+                        attrs: { type: "file" },
+                        on: { change: _vm.handleOpensongFile }
                       }),
                       _vm._v(" "),
                       _c("v-textarea", {

@@ -17,7 +17,8 @@
               v-model="model.authors"
               label="Autoři"
               create-label="Vyberte autora z nabídky nebo vytvořte nového"
-              :multiple="true"></items-combo-box>
+              :multiple="true"
+            ></items-combo-box>
             <v-checkbox
               v-model="model.has_anonymous_author"
               label="Anonymní autor (nezobrazovat v to-do)"
@@ -28,21 +29,19 @@
               v-model="model.tags_unofficial"
               label="Štítky"
               create-label="Vyberte štítek z nabídky nebo vytvořte nový"
-              :multiple="true"></items-combo-box>
+              :multiple="true"
+            ></items-combo-box>
             <items-combo-box
               v-bind:p-items="tags_official"
               v-model="model.tags_official"
               label="Liturgie"
               create-label="Vyberte část liturgie z nabídky"
-              :multiple="true"></items-combo-box>
+              :multiple="true"
+            ></items-combo-box>
             <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
-            <v-textarea
-              auto-grow
-              outline
-              name="input-7-4"
-              label="Text"
-              v-model="model.lyrics"
-            ></v-textarea>
+            <a id="file_select" class="btn btn-primary" v-on:click="$refs.fileinput.click()">Nahrát ze souboru OpenSong</a>
+            <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
+            <v-textarea auto-grow outline name="input-7-4" label="Text" v-model="model.lyrics"></v-textarea>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -55,7 +54,7 @@
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/song_lyric_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue"
+import ItemsComboBox from "../components/ItemsComboBox.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -103,9 +102,8 @@ const FETCH_TAGS_OFFICIAL = gql`
   }
 `;
 
-
 export default {
-  props: ["preset-id"],
+  props: ["preset-id", "csrf"],
   components: {
     ItemsComboBox
   },
@@ -123,11 +121,11 @@ export default {
         lyrics: undefined,
         tags_unofficial: [],
         tags_official: [],
-        authors: [],
+        authors: []
       },
       is_original_values: [
         { value: true, text: "Originál" },
-        { value: false, text: "Překlad" },
+        { value: false, text: "Překlad" }
       ],
       lang_values: []
     };
@@ -157,13 +155,13 @@ export default {
       }
     },
     authors: {
-      query: FETCH_AUTHORS,
+      query: FETCH_AUTHORS
     },
     tags_official: {
-      query: FETCH_TAGS_OFFICIAL,
+      query: FETCH_TAGS_OFFICIAL
     },
     tags_unofficial: {
-      query: FETCH_TAGS_UNOFFICIAL,
+      query: FETCH_TAGS_UNOFFICIAL
     }
   },
 
@@ -188,7 +186,7 @@ export default {
       if (!this.model_database) return false;
 
       for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])){
+        if (!_.isEqual(this.model[field], this.model_database[field])) {
           return true;
         }
       }
@@ -202,7 +200,7 @@ export default {
       this.$apollo
         .mutate({
           mutation: MUTATE_MODEL_DATABASE,
-          variables: { 
+          variables: {
             input: {
               id: this.model.id,
               name: this.model.name,
@@ -215,12 +213,18 @@ export default {
                 sync: this.getModelsToSyncBelongsToMany(this.model.authors)
               },
               tags_unofficial: {
-                create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
-                sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
+                create: this.getModelsToCreateBelongsToMany(
+                  this.model.tags_unofficial
+                ),
+                sync: this.getModelsToSyncBelongsToMany(
+                  this.model.tags_unofficial
+                )
               },
               tags_official: {
                 // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
-                sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
+                sync: this.getModelsToSyncBelongsToMany(
+                  this.model.tags_official
+                )
               }
             }
           }
@@ -258,8 +262,7 @@ export default {
     getFieldsFromFragment(includeId) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
       let fieldNames = fieldDefs.map(field => {
-        if (field.alias)
-          return field.alias.value;
+        if (field.alias) return field.alias.value;
         return field.name.value;
       });
 
@@ -271,20 +274,22 @@ export default {
       return fieldNames;
     },
 
-    getModelsToCreateBelongsToMany(models){
+    getModelsToCreateBelongsToMany(models) {
       return models.filter(model => {
-        if(model.id) return false;
+        if (model.id) return false;
         return true;
       });
     },
 
-    getModelsToSyncBelongsToMany(models){
-      return models.filter(model => {
-        if(model.id) return true;
-        return false;
-      }).map(model => {
-        return model.id
-      });
+    getModelsToSyncBelongsToMany(models) {
+      return models
+        .filter(model => {
+          if (model.id) return true;
+          return false;
+        })
+        .map(model => {
+          return model.id;
+        });
     },
 
     getModelToSyncBelongsTo(model) {
@@ -293,13 +298,38 @@ export default {
       if (model) {
         obj.update = {
           id: model.id
-        }
+        };
       } else {
         obj.disconnect = true;
       }
-      
+
       return obj;
+    },
+
+    handleOpensongFile(e) {
+      // console.log(e);
+      var file = e.target.files[0];
+
+      var reader = new FileReader();
+      reader.onload = e => {
+        console.log("file loaded succesfully");
+
+        $.post(
+          '/api/parse/opensong',
+          {
+            file_contents: e.target.result,
+            _token: this.csrf
+          },
+          data => {
+            // var input_lyrics = document.getElementById("input_lyrics");
+            // input_lyrics.value = data;
+            this.model.lyrics = data;
+          }
+        );
+      };
+
+      reader.readAsText(file);
     }
-  },
+  }
 };
 </script>
