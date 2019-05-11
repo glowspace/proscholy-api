@@ -38,7 +38,18 @@ input UpdateSongLyricInput {
     id: ID!
     name: String @rules(apply: ["required"], messages: { 
             required: "Jméno písně nesmí zůstat prázdné"})
-    authors: SyncAuthorsRelation
     has_anonymous_author: Boolean!
     is_original: Boolean!
+    lang: String!
+    authors: SyncAuthorsRelation
+    tags_unofficial: SyncUnofficialTagsRelation
+}
+
+input SyncUnofficialTagsRelation {
+  create: [CreateUnofficialTagInput!]
+  sync: [ID!]
+}
+
+input CreateUnofficialTagInput {
+  name: String!
 }

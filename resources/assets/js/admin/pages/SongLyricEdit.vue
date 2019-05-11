@@ -12,18 +12,24 @@
               data-vv-name="input.name"
               :error-messages="errors.collect('input.name')"
             ></v-text-field>
-            <!-- <v-select :items="type_values" v-model="model.type" label="Typ"></v-select> -->
             <items-combo-box
               v-bind:p-items="authors"
               v-model="model.authors"
               label="Autoři"
-              create-label="Vyberte autora z nabídky nebo vytvořte novou"
+              create-label="Vyberte autora z nabídky nebo vytvořte nového"
               :multiple="true"></items-combo-box>
             <v-checkbox
               v-model="model.has_anonymous_author"
               label="Anonymní autor (nezobrazovat v to-do)"
             ></v-checkbox>
             <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select>
+            <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
+            <items-combo-box
+              v-bind:p-items="tags_unofficial"
+              v-model="model.tags_unofficial"
+              label="Štítky"
+              create-label="Vyberte štítek z nabídky nebo vytvořte nový"
+              :multiple="true"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -42,6 +48,7 @@ const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
     model_database: song_lyric(id: $id) {
       ...SongLyricFillableFragment
+      lang_string_values
     }
   }
   ${fragment}
@@ -65,6 +72,25 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
+const FETCH_TAGS_UNOFFICIAL = gql`
+  query {
+    tags_unofficial: tags(type: 0) {
+      id
+      name
+    }
+  }
+`;
+
+const FETCH_TAGS_OFFICIAL = gql`
+  query {
+    tags_official: tags(type: 1) {
+      id
+      name
+    }
+  }
+`;
+
+
 export default {
   props: ["preset-id"],
   components: {
@@ -80,12 +106,16 @@ export default {
         name: undefined,
         is_original: undefined,
         has_anonymous_author: undefined,
+        lang: undefined,
+        tags_unofficial: [],
+        tags_official: [],
         authors: [],
       },
       is_original_values: [
         { value: true, text: "Originál" },
         { value: false, text: "Překlad" },
       ],
+      lang_values: []
     };
   },
 
@@ -104,13 +134,22 @@ export default {
           Vue.set(this.model, field, song_lyric[field]);
         }
 
-        // this.type_values = song_lyric.type_string_values.map((val, index) => {
-        //   return { value: index, text: val };
-        // });
+        // lang string values are an associative array passed as JSON object
+        let parsed_obj = JSON.parse(song_lyric.lang_string_values);
+
+        for (const [key, value] of Object.entries(parsed_obj)) {
+          this.lang_values.push({ value: key, text: value });
+        }
       }
     },
     authors: {
       query: FETCH_AUTHORS,
+    },
+    tags_official: {
+      query: FETCH_TAGS_OFFICIAL,
+    },
+    tags_unofficial: {
+      query: FETCH_TAGS_UNOFFICIAL,
     }
   },
 
@@ -153,11 +192,16 @@ export default {
             input: {
               id: this.model.id,
               name: this.model.name,
+              lang: this.model.lang,
               has_anonymous_author: this.model.has_anonymous_author,
               is_original: this.model.is_original,
               authors: {
                 create: this.getModelsToCreateBelongsToMany(this.model.authors),
                 sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+              },
+              tags_unofficial: {
+                create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
+                sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
               }
             }
           }
@@ -166,7 +210,7 @@ export default {
           this.$validator.errors.clear();
           this.$notify({
             title: "Úspěšně uloženo :)",
-            text: "Externí odkaz byl úspěšně uložen",
+            text: "Píseň byla úspěšně uložena",
             type: "success"
           });
         })
@@ -175,7 +219,7 @@ export default {
             // unknown error happened
             this.$notify({
               title: "Chyba při ukládání",
-              text: "Externí odkaz nebyl uložen",
+              text: "Píseň nebyla uložena",
               type: "error"
             });
             return;
@@ -195,6 +239,8 @@ export default {
     getFieldsFromFragment(includeId) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
       let fieldNames = fieldDefs.map(field => {
+        if (field.alias)
+          return field.alias.value;
         return field.name.value;
       });
 

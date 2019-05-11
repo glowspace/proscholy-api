@@ -106620,12 +106620,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
     _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]);
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -106672,6 +106680,10 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 
 var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
 
+var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject4);
+
+var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject5);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
   components: {
@@ -106687,9 +106699,13 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
         name: undefined,
         is_original: undefined,
         has_anonymous_author: undefined,
+        lang: undefined,
+        tags_unofficial: [],
+        tags_official: [],
         authors: []
       },
-      is_original_values: [{ value: true, text: "Originál" }, { value: false, text: "Překlad" }]
+      is_original_values: [{ value: true, text: "Originál" }, { value: false, text: "Překlad" }],
+      lang_values: []
     };
   },
 
@@ -106716,9 +106732,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
             Vue.set(this.model, field, song_lyric[field]);
           }
 
-          // this.type_values = song_lyric.type_string_values.map((val, index) => {
-          //   return { value: index, text: val };
-          // });
+          // lang string values are an associative array passed as JSON object
         } catch (err) {
           _didIteratorError = true;
           _iteratorError = err;
@@ -106733,10 +106747,48 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
             }
           }
         }
+
+        var parsed_obj = JSON.parse(song_lyric.lang_string_values);
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = Object.entries(parsed_obj)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _ref = _step2.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            this.lang_values.push({ value: key, text: value });
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
       }
     },
     authors: {
       query: FETCH_AUTHORS
+    },
+    tags_official: {
+      query: FETCH_TAGS_OFFICIAL
+    },
+    tags_unofficial: {
+      query: FETCH_TAGS_UNOFFICIAL
     }
   },
 
@@ -106763,29 +106815,29 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
     isDirty: function isDirty() {
       if (!this.model_database) return false;
 
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
       try {
-        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var field = _step2.value;
+        for (var _iterator3 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var field = _step3.value;
 
           if (!_.isEqual(this.model[field], this.model_database[field])) {
             return true;
           }
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
           }
         } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
+          if (_didIteratorError3) {
+            throw _iteratorError3;
           }
         }
       }
@@ -106804,11 +106856,16 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
           input: {
             id: this.model.id,
             name: this.model.name,
+            lang: this.model.lang,
             has_anonymous_author: this.model.has_anonymous_author,
             is_original: this.model.is_original,
             authors: {
               create: this.getModelsToCreateBelongsToMany(this.model.authors),
               sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+            },
+            tags_unofficial: {
+              create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
+              sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
             }
           }
         }
@@ -106816,7 +106873,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
         _this2.$validator.errors.clear();
         _this2.$notify({
           title: "Úspěšně uloženo :)",
-          text: "Externí odkaz byl úspěšně uložen",
+          text: "Píseň byla úspěšně uložena",
           type: "success"
         });
       }).catch(function (error) {
@@ -106824,7 +106881,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
           // unknown error happened
           _this2.$notify({
             title: "Chyba při ukládání",
-            text: "Externí odkaz nebyl uložen",
+            text: "Píseň nebyla uložena",
             type: "error"
           });
           return;
@@ -106834,32 +106891,32 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
 
         // clear the old errors and (add new ones if exist)
         _this2.$validator.errors.clear();
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
 
         try {
-          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var _ref = _step3.value;
+          for (var _iterator4 = Object.entries(errorFields)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var _ref3 = _step4.value;
 
-            var _ref2 = _slicedToArray(_ref, 2);
+            var _ref4 = _slicedToArray(_ref3, 2);
 
-            var key = _ref2[0];
-            var value = _ref2[1];
+            var key = _ref4[0];
+            var value = _ref4[1];
 
             _this2.$validator.errors.add({ field: key, msg: value });
           }
         } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-              _iterator3.return();
+            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+              _iterator4.return();
             }
           } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
+            if (_didIteratorError4) {
+              throw _iteratorError4;
             }
           }
         }
@@ -106871,6 +106928,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
     getFieldsFromFragment: function getFieldsFromFragment(includeId) {
       var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a.definitions[0].selectionSet.selections;
       var fieldNames = fieldDefs.map(function (field) {
+        if (field.alias) return field.alias.value;
         return field.name.value;
       });
 
@@ -106915,8 +106973,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":153}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":229}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -106990,7 +107048,7 @@ var render = function() {
                           "p-items": _vm.authors,
                           label: "Autoři",
                           "create-label":
-                            "Vyberte autora z nabídky nebo vytvořte novou",
+                            "Vyberte autora z nabídky nebo vytvořte nového",
                           multiple: true
                         },
                         model: {
@@ -107023,6 +107081,34 @@ var render = function() {
                             _vm.$set(_vm.model, "is_original", $$v)
                           },
                           expression: "model.is_original"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { items: _vm.lang_values, label: "Jazyk" },
+                        model: {
+                          value: _vm.model.lang,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "lang", $$v)
+                          },
+                          expression: "model.lang"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.tags_unofficial,
+                          label: "Štítky",
+                          "create-label":
+                            "Vyberte štítek z nabídky nebo vytvořte nový",
+                          multiple: true
+                        },
+                        model: {
+                          value: _vm.model.tags_unofficial,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "tags_unofficial", $$v)
+                          },
+                          expression: "model.tags_unofficial"
                         }
                       }),
                       _vm._v(" "),

@@ -49,6 +49,15 @@ class UpdateSongLyric
             }
         }
 
+        // HANDLE TAGS
+        if (isset($input["tags_unofficial"]["sync"]))
+            $song_lyric->tags()->sync($input["tags_unofficial"]["sync"]);
+        if (isset($input["tags_unofficial"]["create"])) {
+            foreach ($input["tags_unofficial"]["create"] as $author) {
+                $song_lyric->tags()->create(['name' => $author["name"]]);
+            }
+        }
+
         $song_lyric->save();
 
         return $song_lyric;

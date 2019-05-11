@@ -7,4 +7,9 @@ fragment SongLyricFillableFragment on SongLyric  {
     }
     has_anonymous_author
     is_original
+    lang
+    tags_unofficial: tags(type: 0) {
+        id
+        name
+    }
 }

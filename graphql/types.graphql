@@ -36,7 +36,7 @@ type SongLyric {
     has_anonymous_author: Boolean!
     lang: String
     lang_string: String
-    lang_string_values: []
+    lang_string_values: JSON
     updated_at: String
     authors: [Author] @belongsToMany
     externals(id: Int @eq, type: Int @eq): [External] @hasMany
