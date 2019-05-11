@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Log;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+
 /**
  * App\Song
  *
@@ -35,7 +38,7 @@ class Song extends Model
     /**
      * Returns all SongLyrics instances
      */
-    public function song_lyrics()
+    public function song_lyrics() : HasMany
     {
         return $this->hasMany(SongLyric::class);
     }

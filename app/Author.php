@@ -8,6 +8,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Author
  *
@@ -91,7 +94,7 @@ class Author extends Model
         }
     }
 
-    public function members()
+    public function members() : BelongsToMany
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -99,7 +102,7 @@ class Author extends Model
             'author_id');
     }
 
-    public function memberships()
+    public function memberships() : BelongsToMany
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -107,12 +110,12 @@ class Author extends Model
             'is_member_of');
     }
 
-    public function externals()
+    public function externals() : BelongsToMany
     {
         return $this->belongsToMany(External::class);
     }
 
-    public function files()
+    public function files() : BelongsToMany
     {
         return $this->belongsToMany(File::class);
     }
