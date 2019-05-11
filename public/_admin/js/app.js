@@ -106656,6 +106656,11 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -106680,9 +106685,11 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
+        is_original: undefined,
+        has_anonymous_author: undefined,
         authors: []
       },
-      type_values: []
+      is_original_values: [{ value: true, text: "Originál" }, { value: false, text: "Překlad" }]
     };
   },
 
@@ -106797,7 +106804,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
           input: {
             id: this.model.id,
             name: this.model.name,
-            // type: this.model.type,
+            has_anonymous_author: this.model.has_anonymous_author,
+            is_original: this.model.is_original,
             authors: {
               create: this.getModelsToCreateBelongsToMany(this.model.authors),
               sync: this.getModelsToSyncBelongsToMany(this.model.authors)
@@ -106907,8 +106915,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templat
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":112}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":153}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -106991,6 +106999,30 @@ var render = function() {
                             _vm.$set(_vm.model, "authors", $$v)
                           },
                           expression: "model.authors"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-checkbox", {
+                        attrs: {
+                          label: "Anonymní autor (nezobrazovat v to-do)"
+                        },
+                        model: {
+                          value: _vm.model.has_anonymous_author,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "has_anonymous_author", $$v)
+                          },
+                          expression: "model.has_anonymous_author"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { items: _vm.is_original_values, label: "Typ" },
+                        model: {
+                          value: _vm.model.is_original,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "is_original", $$v)
+                          },
+                          expression: "model.is_original"
                         }
                       }),
                       _vm._v(" "),

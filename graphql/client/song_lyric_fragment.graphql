@@ -5,4 +5,6 @@ fragment SongLyricFillableFragment on SongLyric  {
         id
         name
     }
+    has_anonymous_author
+    is_original
 }

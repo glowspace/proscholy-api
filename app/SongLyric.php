@@ -77,7 +77,7 @@ class SongLyric extends Model
             'user_creator_id'
         ];
 
-    public static $lang_string = [
+    private static $lang_string_values = [
         'cs' => 'čeština',
         'sk' => 'slovenština',
         'en' => 'angličtina',
@@ -113,9 +113,19 @@ class SongLyric extends Model
         return $str;
     }
 
-    public function getLanguageName()
+    // public function getLanguageName()
+    // {
+    //     return self::$lang_string_values[$this->lang];
+    // }
+
+    public function getLangStringAttribute()
     {
-        return self::$lang_string[$this->lang];
+        return self::$lang_string_values[$this->lang];
+    }
+
+    public function getLangStringValuesAttribute()
+    {
+        return self::$lang_string_values;
     }
 
     public function song()

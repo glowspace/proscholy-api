@@ -19,6 +19,11 @@
               label="Autoři"
               create-label="Vyberte autora z nabídky nebo vytvořte novou"
               :multiple="true"></items-combo-box>
+            <v-checkbox
+              v-model="model.has_anonymous_author"
+              label="Anonymní autor (nezobrazovat v to-do)"
+            ></v-checkbox>
+            <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -73,9 +78,14 @@ export default {
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
+        is_original: undefined,
+        has_anonymous_author: undefined,
         authors: [],
       },
-      type_values: [],
+      is_original_values: [
+        { value: true, text: "Originál" },
+        { value: false, text: "Překlad" },
+      ],
     };
   },
 
@@ -143,7 +153,8 @@ export default {
             input: {
               id: this.model.id,
               name: this.model.name,
-              // type: this.model.type,
+              has_anonymous_author: this.model.has_anonymous_author,
+              is_original: this.model.is_original,
               authors: {
                 create: this.getModelsToCreateBelongsToMany(this.model.authors),
                 sync: this.getModelsToSyncBelongsToMany(this.model.authors)
