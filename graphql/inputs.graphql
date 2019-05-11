@@ -9,7 +9,7 @@ input UpdateAuthorInput {
 
 input UpdateExternalInput {
     id: ID!
-    url: String @rules(apply: ["required", "min:2"], messages: { 
+    url: String @rules(apply: ["required"], messages: { 
             required: "Url odkazu nesmí být prázdná"})
     type: Int!
     authors: SyncAuthorsRelation
@@ -32,4 +32,11 @@ input SyncSongLyricRelation {
 
 input UpdateSongLyricInput {
   id: ID
+}
+
+input UpdateSongLyricInput {
+    id: ID!
+    name: String @rules(apply: ["required"], messages: { 
+            required: "Jméno písně nesmí zůstat prázdné"})
+    authors: SyncAuthorsRelation
 }

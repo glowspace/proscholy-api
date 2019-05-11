@@ -1,0 +1,8 @@
+fragment SongLyricFillableFragment on SongLyric  {
+    id
+    name
+    authors {
+        id
+        name
+    }
+}

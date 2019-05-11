@@ -65570,6 +65570,7 @@ Vue.component('authors-list', __webpack_require__(138));
 
 Vue.component('author-edit', __webpack_require__(143));
 Vue.component('external-edit', __webpack_require__(147));
+Vue.component('song-lyric-edit', __webpack_require__(163));
 
 
 
@@ -67842,10 +67843,6 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
       }
 
       return obj;
-      // update: {
-      //   id: this.model.song_lyric ? this.model.song_lyric.id : null
-      // },
-      // disconnect: this.model.song_lyric ? false : true
     }
   }
 });
@@ -106557,6 +106554,481 @@ VeeValidate$1.withValidation = withValidation;
 /* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
 
 
+
+/***/ }),
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(164)
+/* template */
+var __vue_template__ = __webpack_require__(166)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/SongLyricEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-741f5d72", Component.options)
+  } else {
+    hotAPI.reload("data-v-741f5d72", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a);
+
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a);
+
+var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["preset-id"],
+  components: {
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a
+  },
+
+  data: function data() {
+    return {
+      model: {
+        // here goes the definition of model attributes
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        name: undefined,
+        authors: []
+      },
+      type_values: []
+    };
+  },
+
+
+  apollo: {
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
+      variables: function variables() {
+        return {
+          id: this.model.id
+        };
+      },
+      result: function result(_result) {
+        var song_lyric = _result.data.model_database;
+        // load the requested fields to the vue data.model property
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var field = _step.value;
+
+            Vue.set(this.model, field, song_lyric[field]);
+          }
+
+          // this.type_values = song_lyric.type_string_values.map((val, index) => {
+          //   return { value: index, text: val };
+          // });
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+    },
+    authors: {
+      query: FETCH_AUTHORS
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = function (e) {
+      if (_this.isDirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+  },
+
+
+  computed: {
+    isDirty: function isDirty() {
+      if (!this.model_database) return false;
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var field = _step2.value;
+
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      return false;
+    }
+  },
+
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.$apollo.mutate({
+        mutation: MUTATE_MODEL_DATABASE,
+        variables: {
+          input: {
+            id: this.model.id,
+            name: this.model.name,
+            // type: this.model.type,
+            authors: {
+              create: this.getModelsToCreateBelongsToMany(this.model.authors),
+              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+            }
+          }
+        }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
+          title: "Úspěšně uloženo :)",
+          text: "Externí odkaz byl úspěšně uložen",
+          type: "success"
+        });
+      }).catch(function (error) {
+        if (error.graphQLErrors.length == 0) {
+          // unknown error happened
+          _this2.$notify({
+            title: "Chyba při ukládání",
+            text: "Externí odkaz nebyl uložen",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this2.$validator.errors.clear();
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var _ref = _step3.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            _this2.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+      });
+    },
+
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+      var fieldNames = fieldDefs.map(function (field) {
+        return field.name.value;
+      });
+
+      if (!includeId) fieldNames = fieldNames.filter(function (field) {
+        return field != "id";
+      });
+
+      return fieldNames;
+    },
+    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return false;
+        return true;
+      });
+    },
+    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return true;
+        return false;
+      }).map(function (model) {
+        return model.id;
+      });
+    },
+    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
+      var obj = {};
+
+      if (model) {
+        obj.update = {
+          id: model.id
+        };
+      } else {
+        obj.disconnect = true;
+      }
+
+      return obj;
+    }
+  }
+});
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":112}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
+
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c("notifications"),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "", md6: "" } },
+                [
+                  _c(
+                    "v-form",
+                    { ref: "form" },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Název písně",
+                          required: "",
+                          "data-vv-name": "input.name",
+                          "error-messages": _vm.errors.collect("input.name")
+                        },
+                        model: {
+                          value: _vm.model.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "name", $$v)
+                          },
+                          expression: "model.name"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.authors,
+                          label: "Autoři",
+                          "create-label":
+                            "Vyberte autora z nabídky nebo vytvořte novou",
+                          multiple: true
+                        },
+                        model: {
+                          value: _vm.model.authors,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "authors", $$v)
+                          },
+                          expression: "model.authors"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: !_vm.isDirty },
+                          on: { click: _vm.submit }
+                        },
+                        [_vm._v("Uložit")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-flex", { attrs: { xs12: "", md6: "" } })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-741f5d72", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

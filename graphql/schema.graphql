@@ -38,6 +38,7 @@ type Query {
 
     author(id: ID! @eq): Author @find
     external(id: ID! @eq): External @find
+    song_lyric(id: ID! @eq): SongLyric @find
 }
 
 type Mutation @group(middleware: []) {
@@ -49,4 +50,5 @@ type Mutation @group(middleware: []) {
 
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
     update_external(input: UpdateExternalInput!): External @update(flatten: true)
+    update_song_lyric(input: UpdateSongLyricInput!): SongLyric
 }

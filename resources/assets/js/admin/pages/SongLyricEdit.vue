@@ -6,26 +6,19 @@
         <v-flex xs12 md6>
           <v-form ref="form">
             <v-text-field
-              label="Url odkaz"
+              label="Název písně"
               required
-              v-model="model.url"
-              data-vv-name="input.url"
-              :error-messages="errors.collect('input.url')"
+              v-model="model.name"
+              data-vv-name="input.name"
+              :error-messages="errors.collect('input.name')"
             ></v-text-field>
-            <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
+            <!-- <v-select :items="type_values" v-model="model.type" label="Typ"></v-select> -->
             <items-combo-box
               v-bind:p-items="authors"
               v-model="model.authors"
               label="Autoři"
               create-label="Vyberte autora z nabídky nebo vytvořte novou"
               :multiple="true"></items-combo-box>
-            <items-combo-box
-              v-bind:p-items="song_lyrics"
-              v-model="model.song_lyric"
-              label="Píseň"
-              create-label="Vyberte píseň"
-              :multiple="false"
-              :enable-custom="false"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
         </v-flex>
@@ -37,23 +30,22 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "@/graphql/client/external_fragment.graphql";
+import fragment from "@/graphql/client/song_lyric_fragment.graphql";
 import ItemsComboBox from "../components/ItemsComboBox.vue"
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
-    model_database: external(id: $id) {
-      ...ExternalFillableFragment
-      type_string_values
+    model_database: song_lyric(id: $id) {
+      ...SongLyricFillableFragment
     }
   }
   ${fragment}
 `;
 
 const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateExternalInput!) {
-    update_external(input: $input) {
-      ...ExternalFillableFragment
+  mutation($input: UpdateSongLyricInput!) {
+    update_song_lyric(input: $input) {
+      ...SongLyricFillableFragment
     }
   }
   ${fragment}
@@ -62,15 +54,6 @@ const MUTATE_MODEL_DATABASE = gql`
 const FETCH_AUTHORS = gql`
   query {
     authors {
-      id
-      name
-    }
-  }
-`;
-
-const FETCH_SONG_LYRICS= gql`
-  query {
-    song_lyrics {
       id
       name
     }
@@ -89,10 +72,8 @@ export default {
         // here goes the definition of model attributes
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
-        url: undefined,
-        type: undefined,
+        name: undefined,
         authors: [],
-        song_lyric: undefined
       },
       type_values: [],
     };
@@ -107,22 +88,19 @@ export default {
         };
       },
       result(result) {
-        let external = result.data.model_database;
+        let song_lyric = result.data.model_database;
         // load the requested fields to the vue data.model property
         for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, external[field]);
+          Vue.set(this.model, field, song_lyric[field]);
         }
 
-        this.type_values = external.type_string_values.map((val, index) => {
-          return { value: index, text: val };
-        });
+        // this.type_values = song_lyric.type_string_values.map((val, index) => {
+        //   return { value: index, text: val };
+        // });
       }
     },
     authors: {
       query: FETCH_AUTHORS,
-    },
-    song_lyrics: {
-      query: FETCH_SONG_LYRICS,
     }
   },
 
@@ -164,9 +142,8 @@ export default {
           variables: { 
             input: {
               id: this.model.id,
-              url: this.model.url,
-              type: this.model.type,
-              song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
+              name: this.model.name,
+              // type: this.model.type,
               authors: {
                 create: this.getModelsToCreateBelongsToMany(this.model.authors),
                 sync: this.getModelsToSyncBelongsToMany(this.model.authors)
