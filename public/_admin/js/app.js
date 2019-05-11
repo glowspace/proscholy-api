@@ -67107,13 +67107,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"], ["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"], ["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n    }\n  }\n"]);
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n      name\n      type\n      description\n    }\n  }\n"], ["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n      name\n      type\n      description\n    }\n  }\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-//
-//
 //
 //
 //
@@ -67153,8 +67150,6 @@ var fetch_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateOb
 
 var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
 
-var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
 
@@ -67165,20 +67160,7 @@ var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3
       type_values: [],
       description: "",
       name: "",
-      err: "",
-
-      dictionary: {
-        attributes: {
-          email: "E-mail Address"
-        },
-        custom: {
-          name: {
-            required: function required() {
-              return "Name can not be empty";
-            }
-          }
-        }
-      }
+      err: ""
     };
   },
 
@@ -67202,9 +67184,6 @@ var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3
           return { value: index, text: val };
         });
       }
-    },
-    authors: {
-      query: items
     }
   },
 
@@ -67237,7 +67216,6 @@ var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3
         } }).then(function (result) {
         _this.$validator.errors.clear();
         _this.$notify({
-          group: "admin",
           title: "Úspěšně uloženo :)",
           text: "Autor byl úspěšně uložen",
           type: "success"
@@ -67248,7 +67226,6 @@ var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3
         if (error.graphQLErrors.length == 0) {
           // unknown error happened
           _this.$notify({
-            group: "admin",
             title: "Chyba při ukládání",
             text: "Uživatel nebyl uložen",
             type: "error"
@@ -67288,53 +67265,6 @@ var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3
           }
         }
       });
-    },
-    move: function move(diff) {
-      var index = void 0;
-
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = Object.entries(this.authors)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var _ref3 = _step2.value;
-
-          var _ref4 = _slicedToArray(_ref3, 2);
-
-          var key = _ref4[0];
-          var value = _ref4[1];
-
-          if (value.id == this.id) {
-            index = Number(key);
-            break;
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      console.log(index);
-      // js % modulo is keeping the negative numbers
-      index = this.mod(index + diff, this.authors.length);
-      console.log(index);
-
-      this.id = this.authors[index].id;
-      this.$validator.errors.clear();
-    },
-    mod: function mod(n, m) {
-      return (n % m + m) % m;
     }
   }
 });
@@ -67350,7 +67280,7 @@ var render = function() {
   return _c(
     "v-app",
     [
-      _c("notifications", { attrs: { group: "admin" } }),
+      _c("notifications"),
       _vm._v(" "),
       _c(
         "v-container",
@@ -67413,31 +67343,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-btn", { on: { click: _vm.submit } }, [
                         _vm._v("Uložit")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          on: {
-                            click: function($event) {
-                              return _vm.move(-1)
-                            }
-                          }
-                        },
-                        [_vm._v("Předchozí uživatel")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          on: {
-                            click: function($event) {
-                              return _vm.move(1)
-                            }
-                          }
-                        },
-                        [_vm._v("Další uživatel")]
-                      )
+                      ])
                     ],
                     1
                   )

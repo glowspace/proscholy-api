@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <notifications group="admin"/>
+    <notifications/>
     <v-container grid-list-xs>
       <v-layout row>
         <v-flex xs12 md6>
@@ -22,8 +22,6 @@
             ></v-textarea>
 
             <v-btn @click="submit">Uložit</v-btn>
-            <v-btn @click="move(-1)">Předchozí uživatel</v-btn>
-            <v-btn @click="move(1)">Další uživatel</v-btn>
           </v-form>
         </v-flex>
         <v-flex xs12 md6></v-flex>
@@ -56,14 +54,9 @@ const update_item = gql`
       type: $type
     ) {
       id
-    }
-  }
-`;
-
-const items = gql`
-  query {
-    authors {
-      id
+      name
+      type
+      description
     }
   }
 `;
@@ -79,17 +72,6 @@ export default {
       description: "",
       name: "",
       err: "",
-
-      dictionary: {
-        attributes: {
-          email: "E-mail Address"
-        },
-        custom: {
-          name: {
-            required: () => "Name can not be empty"
-          }
-        }
-      }
     };
   },
 
@@ -111,9 +93,6 @@ export default {
           return { value: index, text: val };
         });
       }
-    },
-    authors: {
-      query: items
     }
   },
 
@@ -146,7 +125,6 @@ export default {
         .then(result => {
           this.$validator.errors.clear();
           this.$notify({
-            group: "admin",
             title: "Úspěšně uloženo :)",
             text: "Autor byl úspěšně uložen",
             type: "success"
@@ -158,7 +136,6 @@ export default {
           if (error.graphQLErrors.length == 0) {
             // unknown error happened
             this.$notify({
-              group: "admin",
               title: "Chyba při ukládání",
               text: "Uživatel nebyl uložen",
               type: "error"
@@ -172,29 +149,6 @@ export default {
             this.$validator.errors.add({ field: key, msg: value });
           }
         });
-    },
-
-    move(diff) {
-      let index;
-
-      for (const [key, value] of Object.entries(this.authors)) {
-        if (value.id == this.id) {
-          index = Number(key);
-          break;
-        }
-      }
-
-      console.log(index);
-      // js % modulo is keeping the negative numbers
-      index = this.mod((index + diff), this.authors.length);
-      console.log(index);
-
-      this.id = this.authors[index].id;
-      this.$validator.errors.clear();
-    },
-
-    mod(n, m) {
-      return ((n % m) + m) % m;
     }
   }
 };
