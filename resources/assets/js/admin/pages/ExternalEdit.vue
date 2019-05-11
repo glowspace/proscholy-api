@@ -6,20 +6,13 @@
         <v-flex xs12 md6>
           <v-form ref="form">
             <v-text-field
-              label="Jméno autora"
+              label="Url odkaz"
               required
-              v-model="model.name"
-              data-vv-name="input.name"
-              :error-messages="errors.collect('input.name')"
+              v-model="model.url"
+              data-vv-name="input.url"
+              :error-messages="errors.collect('input.url')"
             ></v-text-field>
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
-            <v-textarea
-              name="input-7-4"
-              label="Popis autora"
-              v-model="model.description"
-              data-vv-name="input.description"
-              :error-messages="errors.collect('input.description')"
-            ></v-textarea>
 
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
           </v-form>
@@ -32,12 +25,12 @@
 
 <script>
 import gql from "graphql-tag";
-import fragment from "@/graphql/client/author_fragment.graphql";
+import fragment from "@/graphql/client/external_fragment.graphql";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
-    model_database: author(id: $id) {
-      ...AuthorFillableFragment
+    model_database: external(id: $id) {
+      ...ExternalFillableFragment
       type_string_values
     }
   }
@@ -45,9 +38,9 @@ const FETCH_MODEL_DATABASE = gql`
 `;
 
 const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateAuthorInput!) {
-    update_author(input: $input) {
-      ...AuthorFillableFragment
+  mutation($input: UpdateExternalInput!) {
+    update_external(input: $input) {
+      ...ExternalFillableFragment
     }
   }
   ${fragment}
@@ -62,9 +55,8 @@ export default {
         // here goes the definition of model attributes 
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
-        name: undefined,
+        url: undefined,
         type: undefined,
-        description: undefined
       },
       type_values: [],
     };
@@ -79,13 +71,13 @@ export default {
         };
       },
       result(result) {
-        let author = result.data.model_database;
+        let external = result.data.model_database;
         // load the requested fields to the vue data.model property
         for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, author[field]);
+          Vue.set(this.model, field, external[field]);
         }
 
-        this.type_values = author.type_string_values.map((val, index) => {
+        this.type_values = external.type_string_values.map((val, index) => {
           return { value: index, text: val };
         });
       }
@@ -133,7 +125,7 @@ export default {
           this.$validator.errors.clear();
           this.$notify({
             title: "Úspěšně uloženo :)",
-            text: "Autor byl úspěšně uložen",
+            text: "Externí odkaz byl úspěšně uložen",
             type: "success"
           });
         })
@@ -142,7 +134,7 @@ export default {
             // unknown error happened
             this.$notify({
               title: "Chyba při ukládání",
-              text: "Autor nebyl uložen",
+              text: "Externí odkaz nebyl uložen",
               type: "error"
             });
             return;

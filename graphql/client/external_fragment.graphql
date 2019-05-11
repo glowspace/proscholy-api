@@ -1,0 +1,5 @@
+fragment ExternalFillableFragment on External  {
+    id
+    url
+    type
+}

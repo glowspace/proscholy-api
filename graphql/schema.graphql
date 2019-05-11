@@ -37,6 +37,7 @@ type Query {
     me: User @auth
 
     author(id: ID! @eq): Author @find
+    external(id: ID! @eq): External @find
 }
 
 type Mutation @group(middleware: []) {
@@ -47,4 +48,5 @@ type Mutation @group(middleware: []) {
     delete_tag(id: ID!): Tag @delete
 
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
+    update_external(input: UpdateExternalInput!): External @update(flatten: true)
 }

@@ -48,8 +48,10 @@ type External {
     public_name: String
     type: Int
     type_string: String
+    type_string_values: [String]
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
+    url: String
 }
 
 type File {

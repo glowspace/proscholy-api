@@ -26,6 +26,7 @@ Vue.component('files-list', require('./components/FilesList.vue'));
 Vue.component('authors-list', require('./components/AuthorsList.vue'));
 
 Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
+Vue.component('external-edit', require('./pages/ExternalEdit.vue'));
 
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
