@@ -1,0 +1,6 @@
+fragment AuthorFragment on Author {
+    id
+    name
+    type
+    description
+}

@@ -9,16 +9,16 @@
               label="Jméno autora"
               required
               v-model="name"
-              data-vv-name="name"
-              :error-messages="errors.collect('name')"
+              data-vv-name="input.name"
+              :error-messages="errors.collect('input.name')"
             ></v-text-field>
             <v-select :items="type_values" v-model="type" label="Typ"></v-select>
             <v-textarea
               name="input-7-4"
               label="Popis autora"
               v-model="description"
-              data-vv-name="description"
-              :error-messages="errors.collect('description')"
+              data-vv-name="input.description"
+              :error-messages="errors.collect('input.description')"
             ></v-textarea>
 
             <v-btn @click="submit">Uložit</v-btn>
@@ -32,35 +32,25 @@
 
 <script>
 import gql from "graphql-tag";
+import fragment from "@/graphql/client/author_fragment.graphql";
 
 const fetch_item = gql`
   query($id: ID!) {
     author(id: $id) {
-      id
-      name
-      type
+      ...AuthorFragment
       type_string_values
-      description
     }
   }
+  ${fragment}
 `;
 
 const update_item = gql`
-  mutation($id: ID!, $name: String, $description: String, $type: Int!) {
-    update_author(
-      input: {
-        id: $id
-        name: $name
-        description: $description
-        type: $type
-      }
-    ) {
-      id
-      name
-      type
-      description
+  mutation($input: UpdateAuthorInput!) {
+    update_author(input: $input) {
+      ...AuthorFragment
     }
   }
+  ${fragment}
 `;
 
 export default {
@@ -73,7 +63,7 @@ export default {
       type_values: [],
       description: "",
       name: "",
-      err: "",
+      err: ""
     };
   },
 
@@ -87,10 +77,10 @@ export default {
       },
       result: function result(result) {
         let author = result.data.author;
-        // one-way copy the data
-        this.description = author.description;
-        this.name = author.name;
-        this.type = author.type;
+        // load the requested fields to the vue data property
+        this.getFieldsFromFragment(false).forEach(field => {
+          this[field] = author[field];
+        })
         this.type_values = author.type_string_values.map((val, index) => {
           return { value: index, text: val };
         });
@@ -104,7 +94,6 @@ export default {
 
   mounted() {
     this.id = this.presetId;
-    this.$validator.localize("en", this.dictionary);
   },
 
   computed: {},
@@ -115,14 +104,13 @@ export default {
         .mutate({
           mutation: update_item,
           variables: {
-            id: this.id,
-            name: this.name,
-            description: this.description,
-            type: this.type
+            input: {
+              id: this.id,
+              name: this.name,
+              description: this.description,
+              type: this.type
+            }
           }
-          // refetchQueries: [{
-          //     query: fetch_item
-          // }]
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -151,6 +139,20 @@ export default {
             this.$validator.errors.add({ field: key, msg: value });
           }
         });
+    },
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment(includeId) {
+      let fieldDefs = fragment.definitions[0].selectionSet.selections;
+
+      let fieldNames = fieldDefs.map(field => {
+        return field.name.value;
+      });
+
+      if (!includeId)
+        fieldNames = fieldNames.filter(field => {return field != "id"});
+
+      return fieldNames;
     }
   }
 };

@@ -1,0 +1,71 @@
+type User {
+    id: ID!
+    name: String
+}
+
+type Author {
+    id: ID!
+    name: String!
+    description: String
+    type: Int
+    type_string: String
+    type_string_values: [String]
+    email: String
+    url: String
+    visits: Int
+    public_url: String
+    externals: [External] @belongsToMany
+    files: [File] @belongsToMany
+}
+
+type Song {
+    id: ID!
+    name: String
+    song_lyrics(is_original: Boolean @eq): [SongLyric] @hasMany
+}
+
+type SongLyric {
+    id: ID!
+    name: String
+    public_url: String
+    lyrics_no_chords: String
+    lyrics: String
+    is_original: Boolean!
+    is_approved_by_author: Boolean!
+    is_published: Boolean!
+    lang: String
+    updated_at: String
+    authors: [Author] @belongsToMany
+    externals(id: Int @eq, type: Int @eq): [External] @hasMany
+    files(id: Int @eq, type: Int @eq): [File] @hasMany
+    tags(type: Int @eq): [Tag] @belongsToMany
+    song: Song! @belongsTo
+    has_chords: Boolean!
+}
+
+type External {
+    id: ID!
+    public_name: String
+    type: Int
+    type_string: String
+    authors: [Author] @belongsToMany
+    song_lyric: SongLyric @belongsTo
+}
+
+type File {
+    id: ID!
+    public_name: String
+    download_url: String
+    type: Int
+    type_string: String
+    authors: [Author] @belongsToMany
+    song_lyric: SongLyric @belongsTo
+}
+
+type Tag {
+    id: ID!
+    name: String
+    type: Int
+    parent_tag: Tag @belongsTo
+    child_tags: [Tag] @hasMany
+}

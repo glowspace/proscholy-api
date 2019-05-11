@@ -17,8 +17,17 @@ mix.webpackConfig({
             {
                 test: /\.styl$/,
                 loader: ['style-loader', 'css-loader', 'stylus-loader']
+            },
+            {
+                test: /\.(graphql|gql)$/,
+                loader: 'graphql-tag/loader'
             }
         ]
+    },
+    resolve: {
+        alias: {
+            '@': __dirname
+        },
     }
 })
 

@@ -65535,13 +65535,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_cache_inmemory__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_apollo_link__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_apollo__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_notification__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(151);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -67058,7 +67058,7 @@ var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(144)
 /* template */
-var __vue_template__ = __webpack_require__(145)
+var __vue_template__ = __webpack_require__(146)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -67104,10 +67104,12 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"], ["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      input: {\n        id: $id\n        name: $name\n        description: $description\n        type: $type\n      }\n    ) {\n      id\n      name\n      type\n      description\n    }\n  }\n"], ["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      input: {\n        id: $id\n        name: $name\n        description: $description\n        type: $type\n      }\n    ) {\n      id\n      name\n      type\n      description\n    }\n  }\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    author(id: $id) {\n      ...AuthorFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    author(id: $id) {\n      ...AuthorFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFragment\n    }\n  }\n  ", "\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -67146,9 +67148,10 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 
 
-var fetch_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
-var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+var fetch_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
+
+var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
@@ -67175,11 +67178,13 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
       },
 
       result: function result(result) {
+        var _this = this;
+
         var author = result.data.author;
-        // one-way copy the data
-        this.description = author.description;
-        this.name = author.name;
-        this.type = author.type;
+        // load the requested fields to the vue data property
+        this.getFieldsFromFragment(false).forEach(function (field) {
+          _this[field] = author[field];
+        });
         this.type_values = author.type_string_values.map(function (val, index) {
           return { value: index, text: val };
         });
@@ -67193,7 +67198,6 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
   mounted: function mounted() {
     this.id = this.presetId;
-    this.$validator.localize("en", this.dictionary);
   },
 
 
@@ -67201,31 +67205,31 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
   methods: {
     submit: function submit() {
-      var _this = this;
+      var _this2 = this;
 
       this.$apollo.mutate({
         mutation: update_item,
         variables: {
-          id: this.id,
-          name: this.name,
-          description: this.description,
-          type: this.type
-          // refetchQueries: [{
-          //     query: fetch_item
-          // }]
-        } }).then(function (result) {
-        _this.$validator.errors.clear();
-        _this.$notify({
+          input: {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            type: this.type
+          }
+        }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
           title: "Úspěšně uloženo :)",
           text: "Autor byl úspěšně uložen",
           type: "success"
         });
       }).catch(function (error) {
-        _this.$validator.errors.clear();
+        _this2.$validator.errors.clear();
 
         if (error.graphQLErrors.length == 0) {
           // unknown error happened
-          _this.$notify({
+          _this2.$notify({
             title: "Chyba při ukládání",
             text: "Uživatel nebyl uložen",
             type: "error"
@@ -67248,7 +67252,7 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
             var key = _ref2[0];
             var value = _ref2[1];
 
-            _this.$validator.errors.add({ field: key, msg: value });
+            _this2.$validator.errors.add({ field: key, msg: value });
           }
         } catch (err) {
           _didIteratorError = true;
@@ -67265,12 +67269,29 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
           }
         }
       });
+    },
+
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+
+      var fieldNames = fieldDefs.map(function (field) {
+        return field.name.value;
+      });
+
+      if (!includeId) fieldNames = fieldNames.filter(function (field) {
+        return field != "id";
+      });
+
+      return fieldNames;
     }
   }
 });
 
 /***/ }),
-/* 145 */
+/* 145 */,
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -67302,8 +67323,8 @@ var render = function() {
                         attrs: {
                           label: "Jméno autora",
                           required: "",
-                          "data-vv-name": "name",
-                          "error-messages": _vm.errors.collect("name")
+                          "data-vv-name": "input.name",
+                          "error-messages": _vm.errors.collect("input.name")
                         },
                         model: {
                           value: _vm.name,
@@ -67329,8 +67350,10 @@ var render = function() {
                         attrs: {
                           name: "input-7-4",
                           label: "Popis autora",
-                          "data-vv-name": "description",
-                          "error-messages": _vm.errors.collect("description")
+                          "data-vv-name": "input.description",
+                          "error-messages": _vm.errors.collect(
+                            "input.description"
+                          )
                         },
                         model: {
                           value: _vm.description,
@@ -67373,7 +67396,7 @@ if (false) {
 }
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -93352,13 +93375,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 //# sourceMappingURL=vuetify.js.map
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(148);
+var content = __webpack_require__(149);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -93383,7 +93406,7 @@ if(false) {
 }
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -93397,7 +93420,7 @@ exports.push([module.i, "/*!\n* Vuetify v1.5.14\n* Forged by John Leider\n* Rele
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -94528,7 +94551,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105565,6 +105588,41 @@ VeeValidate$1.withValidation = withValidation;
 
 /* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
 
+
+
+/***/ }),
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":80}};
+    doc.loc.source = {"body":"\n\nfragment AuthorFragment on Author {\n    id\n    name\n    type\n    description\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
 
 
 /***/ })

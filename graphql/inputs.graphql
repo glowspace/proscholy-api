@@ -1,0 +1,9 @@
+input UpdateAuthorInput {
+    id: ID!
+    name: String @rules
+        (apply: ["required", "min:2"], messages: { 
+            required: "Jméno autora nesmí zůstat prázdné", 
+            min: "Jméno autora by mělo mít aspoň 2 znaky"})
+    type: Int!
+    description: String
+}
