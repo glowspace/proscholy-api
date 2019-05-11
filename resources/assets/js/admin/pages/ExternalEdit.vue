@@ -18,8 +18,7 @@
               v-model="model.authors"
               label="Autoři"
               create-label="Vyberte autora z nabídky nebo vytvořte novou"
-              :multiple="true"
-              :enable-custom="true"></items-combo-box>
+              :multiple="true"></items-combo-box>
             <items-combo-box
               v-bind:p-items="song_lyrics"
               v-model="model.song_lyric"

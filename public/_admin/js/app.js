@@ -67592,7 +67592,6 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
-//
 
 
 
@@ -67993,6 +67992,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // todo: enable-custom set to false not working for multiple entry
   props: ["p-items", "value", "label", "create-label", "multiple", "enable-custom"],
 
   data: function data() {
@@ -68299,8 +68299,7 @@ var render = function() {
                           label: "Autoři",
                           "create-label":
                             "Vyberte autora z nabídky nebo vytvořte novou",
-                          multiple: true,
-                          "enable-custom": true
+                          multiple: true
                         },
                         model: {
                           value: _vm.model.authors,
