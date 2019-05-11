@@ -67107,10 +67107,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"], ["\n  query($id: ID!) {\n    author(id: $id) {\n      id\n      name\n      type\n      type_string_values\n      description\n    }\n  }\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"], ["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"]);
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"], ["\n  mutation($id: ID!, $name: String, $description: String, $type: Int!) {\n    update_author(\n      id: $id\n      name: $name\n      description: $description\n      type: $type\n    ) {\n      id\n    }\n  }\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n    }\n  }\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
+//
+//
 //
 //
 //
@@ -67147,6 +67152,8 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var fetch_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
 var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+var items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
@@ -67187,7 +67194,6 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
       result: function result(result) {
         var author = result.data.author;
-        console.log(author);
         // one-way copy the data
         this.description = author.description;
         this.name = author.name;
@@ -67196,6 +67202,9 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
           return { value: index, text: val };
         });
       }
+    },
+    authors: {
+      query: items
     }
   },
 
@@ -67205,7 +67214,7 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
   mounted: function mounted() {
     this.id = this.presetId;
-    this.$validator.localize('en', this.dictionary);
+    this.$validator.localize("en", this.dictionary);
   },
 
 
@@ -67227,7 +67236,6 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
           // }]
         } }).then(function (result) {
         _this.$validator.errors.clear();
-        console.log(result);
         _this.$notify({
           group: "admin",
           title: "Úspěšně uloženo :)",
@@ -67237,7 +67245,7 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
       }).catch(function (error) {
         _this.$validator.errors.clear();
 
-        if (error.graphQLErrors.count() == 0) {
+        if (error.graphQLErrors.length == 0) {
           // unknown error happened
           _this.$notify({
             group: "admin",
@@ -67282,7 +67290,51 @@ var update_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
       });
     },
     move: function move(diff) {
-      this.id = Number(this.id) + diff;
+      var index = void 0;
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = Object.entries(this.authors)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var _ref3 = _step2.value;
+
+          var _ref4 = _slicedToArray(_ref3, 2);
+
+          var key = _ref4[0];
+          var value = _ref4[1];
+
+          if (value.id == this.id) {
+            index = Number(key);
+            break;
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      console.log(index);
+      // js % modulo is keeping the negative numbers
+      index = this.mod(index + diff, this.authors.length);
+      console.log(index);
+
+      this.id = this.authors[index].id;
+      this.$validator.errors.clear();
+    },
+    mod: function mod(n, m) {
+      return (n % m + m) % m;
     }
   }
 });

@@ -13,9 +13,13 @@
               :error-messages="errors.collect('name')"
             ></v-text-field>
             <v-select :items="type_values" v-model="type" label="Typ"></v-select>
-            <v-textarea name="input-7-4" label="Popis autora" v-model="description" 
-                data-vv-name="description"
-                :error-messages="errors.collect('description')"></v-textarea>
+            <v-textarea
+              name="input-7-4"
+              label="Popis autora"
+              v-model="description"
+              data-vv-name="description"
+              :error-messages="errors.collect('description')"
+            ></v-textarea>
 
             <v-btn @click="submit">Uložit</v-btn>
             <v-btn @click="move(-1)">Předchozí uživatel</v-btn>
@@ -56,6 +60,14 @@ const update_item = gql`
   }
 `;
 
+const items = gql`
+  query {
+    authors {
+      id
+    }
+  }
+`;
+
 export default {
   props: ["preset-id"],
 
@@ -74,8 +86,8 @@ export default {
         },
         custom: {
           name: {
-            required: () => "Name can not be empty",
-          },
+            required: () => "Name can not be empty"
+          }
         }
       }
     };
@@ -91,7 +103,6 @@ export default {
       },
       result: function result(result) {
         let author = result.data.author;
-        console.log(author);
         // one-way copy the data
         this.description = author.description;
         this.name = author.name;
@@ -100,6 +111,9 @@ export default {
           return { value: index, text: val };
         });
       }
+    },
+    authors: {
+      query: items
     }
   },
 
@@ -109,14 +123,13 @@ export default {
 
   mounted() {
     this.id = this.presetId;
-    this.$validator.localize('en', this.dictionary)
+    this.$validator.localize("en", this.dictionary);
   },
 
   computed: {},
 
   methods: {
     submit() {
-
       this.$apollo
         .mutate({
           mutation: update_item,
@@ -124,46 +137,64 @@ export default {
             id: this.id,
             name: this.name,
             description: this.description,
-            type: this.type,
+            type: this.type
           }
           // refetchQueries: [{
           //     query: fetch_item
           // }]
         })
         .then(result => {
-            this.$validator.errors.clear();
-            console.log(result);
-            this.$notify({
-                group: "admin",
-                title: "Úspěšně uloženo :)",
-                text: "Autor byl úspěšně uložen",
-                type: "success"
-            });
+          this.$validator.errors.clear();
+          this.$notify({
+            group: "admin",
+            title: "Úspěšně uloženo :)",
+            text: "Autor byl úspěšně uložen",
+            type: "success"
+          });
         })
         .catch(error => {
-            this.$validator.errors.clear();
+          this.$validator.errors.clear();
 
-            if (error.graphQLErrors.count() == 0) {
-                // unknown error happened
-                this.$notify({
-                    group: "admin",
-                    title: "Chyba při ukládání",
-                    text: "Uživatel nebyl uložen",
-                    type: "error"
-                });
-                return;
-            }
+          if (error.graphQLErrors.length == 0) {
+            // unknown error happened
+            this.$notify({
+              group: "admin",
+              title: "Chyba při ukládání",
+              text: "Uživatel nebyl uložen",
+              type: "error"
+            });
+            return;
+          }
 
-            let errorFields = error.graphQLErrors[0].extensions.validation;
+          let errorFields = error.graphQLErrors[0].extensions.validation;
 
-            for (const [key, value] of Object.entries(errorFields)) {
-                this.$validator.errors.add({ field: key, msg: value });
-            }
+          for (const [key, value] of Object.entries(errorFields)) {
+            this.$validator.errors.add({ field: key, msg: value });
+          }
         });
     },
 
     move(diff) {
-      this.id = Number(this.id) + diff;
+      let index;
+
+      for (const [key, value] of Object.entries(this.authors)) {
+        if (value.id == this.id) {
+          index = Number(key);
+          break;
+        }
+      }
+
+      console.log(index);
+      // js % modulo is keeping the negative numbers
+      index = this.mod((index + diff), this.authors.length);
+      console.log(index);
+
+      this.id = this.authors[index].id;
+      this.$validator.errors.clear();
+    },
+
+    mod(n, m) {
+      return ((n % m) + m) % m;
     }
   }
 };

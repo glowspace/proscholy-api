@@ -65555,7 +65555,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.transposition < 0) {
                 this.transposition = 12 + this.transposition;
             }
-            console.log(val);
         },
 
         switchChordMode: function switchChordMode() {
