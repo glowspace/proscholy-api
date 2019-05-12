@@ -106628,6 +106628,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
@@ -106711,6 +106713,18 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -106733,7 +106747,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
   props: ["preset-id", "csrf"],
   components: {
     ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a,
-    SongLyricsGroup: __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default.a
+    SongLyricsGroup: __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default.a,
+    SelectSongGroupDialog: __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue___default.a
   },
 
   data: function data() {
@@ -106743,7 +106758,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
-        type: undefined,
+        // type: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -106780,7 +106795,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
           for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var field = _step.value;
 
-            Vue.set(this.model, field, song_lyric[field]);
+            var clone = _.cloneDeep(song_lyric[field]);
+            Vue.set(this.model, field, clone);
           }
 
           // lang string values are an associative array passed as JSON object
@@ -106832,9 +106848,9 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         }
       }
     },
-    song_lyrics: {
-      query: FETCH_SONG_LYRICS
-    },
+    // song_lyrics: {
+    //   query: FETCH_SONG_LYRICS
+    // },
     authors: {
       query: FETCH_AUTHORS
     },
@@ -106912,8 +106928,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
             name: this.model.name,
             lang: this.model.lang,
             has_anonymous_author: this.model.has_anonymous_author,
-            // type: this.model.type,
             lyrics: this.model.lyrics,
+            song: this.model.song,
             authors: {
               create: this.getModelsToCreateBelongsToMany(this.model.authors),
               sync: this.getModelsToSyncBelongsToMany(this.model.authors)
@@ -106936,7 +106952,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
           type: "success"
         });
       }).catch(function (error) {
-        if (error.graphQLErrors.length == 0) {
+        if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
           // unknown error happened
           _this2.$notify({
             title: "Chyba při ukládání",
@@ -107042,6 +107058,21 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       };
 
       reader.readAsText(file);
+    },
+    resetGroup: function resetGroup() {
+      var _this4 = this;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(function (song_lyric) {
+        return song_lyric.id === _this4.model.id;
+      });
+    },
+    addToGroup: function addToGroup(song) {
+      // check if there is original in the group and then 
+      if (song.song_lyrics.filter(function (sl) {
+        return sl.type == 0;
+      }).length > 0) this.model.song.song_lyrics[0].type = 1;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
     }
   }
 });
@@ -107051,8 +107082,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}}]}}],"loc":{"start":0,"end":409}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    type\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        name\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}}]}}],"loc":{"start":0,"end":398}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        id\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -107153,16 +107184,40 @@ var render = function() {
                       _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
-                      _vm.model.song
-                        ? _c("song-lyrics-group", {
-                            model: {
-                              value: _vm.model.song.song_lyrics,
-                              callback: function($$v) {
-                                _vm.$set(_vm.model.song, "song_lyrics", $$v)
-                              },
-                              expression: "model.song.song_lyrics"
-                            }
-                          })
+                      _vm.model.song && _vm.model_database.song
+                        ? [
+                            _vm.model.song.song_lyrics.length > 1
+                              ? _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "error" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.resetGroup()
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Odstranit ze skupiny")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.model_database.song.song_lyrics.length == 1 &&
+                            _vm.model.song.song_lyrics.length == 1
+                              ? _c("select-song-group-dialog", {
+                                  on: { submit: _vm.addToGroup }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("song-lyrics-group", {
+                              model: {
+                                value: _vm.model.song.song_lyrics,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.model.song, "song_lyrics", $$v)
+                                },
+                                expression: "model.song.song_lyrics"
+                              }
+                            })
+                          ]
                         : _vm._e(),
                       _vm._v(" "),
                       _c("items-combo-box", {
@@ -107255,7 +107310,7 @@ var render = function() {
                         [_vm._v("Uložit")]
                       )
                     ],
-                    1
+                    2
                   )
                 ],
                 1
@@ -107350,6 +107405,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
 
+  watch: {
+    value: function value(val, prev) {
+      this.index = this.value ? this.value : 0;
+    }
+  },
+
   computed: {
     internalIndex: {
       get: function get() {
@@ -107364,8 +107425,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     next: function next(e) {
-      this.$emit("click", e);
       this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
+      // this.$emit("click", e);
     },
     mod: function mod(n, m) {
       return (n % m + m) % m;
@@ -107473,25 +107534,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    ButtonColorToggle: __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default.a
-  },
+    components: {
+        ButtonColorToggle: __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default.a
+    },
 
-  props: ["value"],
+    props: ["value"],
 
-  data: function data() {
-    return {
-      colors: ["info", "success", "warning"]
-      // types - 0: original 1: translation 2: authorized translation
-    };
-  },
+    data: function data() {
+        return {
+            colors: ["info", "success", "warning"]
+            // types - 0: original 1: translation 2: authorized translation
+            //   lazyValue: this.value
+        };
+    },
 
 
-  methods: {
-    updated: function updated(last) {
-      // check the consistency
+    //   computed: {
+    //       song_lyrics: {
+    //           get() {
+    //               return this.lazyValue;
+    //           },
+    //           set(val) {
+    //               this.lazyValue = val;
+    //           }
+    //       }
+    //   },
+
+    methods: {
+        updated: function updated(last) {
+            // check the consistency
+            if (last.type === 0) {
+                console.log("aj");
+                // allow only one original -> set other originals to translation
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var song_lyric = _step.value;
+
+                        if (song_lyric.type == 0 && song_lyric.id !== last.id) {
+                            Vue.set(song_lyric, "type", 1);
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
 });
 
 /***/ }),
@@ -107511,7 +107614,7 @@ var render = function() {
           key: song_lyric.id,
           attrs: { colors: _vm.colors },
           on: {
-            click: function($event) {
+            input: function($event) {
               return _vm.updated(song_lyric)
             }
           },
@@ -107536,6 +107639,275 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-243145ef", module.exports)
+  }
+}
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(174)
+/* template */
+var __vue_template__ = __webpack_require__(175)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/SelectSongGroupDialog.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35675a4f", Component.options)
+  } else {
+    hotAPI.reload("data-v-35675a4f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+var _templateObject = _taggedTemplateLiteral(["\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n"], ["\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n"]);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var FETCH_SONGS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialog: false,
+      song: undefined
+    };
+  },
+
+
+  apollo: {
+    songs: {
+      query: FETCH_SONGS
+    }
+  },
+
+  methods: {
+    getSongLyricNames: function getSongLyricNames(song) {
+      var name = "";
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = song.song_lyrics[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var sl = _step.value;
+
+          name += sl.name + ", ";
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return name.slice(0, name.length - 2);
+      // return song.song_lyrics[0].name;
+    },
+    onCancel: function onCancel() {
+      this.dialog = false;
+    },
+    onSubmit: function onSubmit() {
+      this.dialog = false;
+      this.$emit("submit", this.song);
+    }
+  }
+});
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", "justify-center": "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "600px" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g({ attrs: { color: "primary", dark: "" } }, on),
+                    [_vm._v("Přidat do skupiny")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { staticClass: "headline" }, [
+                _vm._v("Výběr skupiny písní\n      ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c("v-combobox", {
+                    attrs: {
+                      items: _vm.songs,
+                      "item-value": "id",
+                      "item-text": _vm.getSongLyricNames,
+                      label: "Vyberte skupinu písní"
+                    },
+                    model: {
+                      value: _vm.song,
+                      callback: function($$v) {
+                        _vm.song = $$v
+                      },
+                      expression: "song"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "green darken-1", flat: "" },
+                      on: { click: _vm.onCancel }
+                    },
+                    [_vm._v("Zrušit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "green darken-1",
+                        disabled:
+                          _vm.song == undefined || _vm.song.id == undefined,
+                        flat: ""
+                      },
+                      on: { click: _vm.onSubmit }
+                    },
+                    [_vm._v("OK")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-35675a4f", module.exports)
   }
 }
 

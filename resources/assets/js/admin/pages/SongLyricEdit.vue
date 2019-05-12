@@ -40,8 +40,19 @@
             ></items-combo-box> -->
 
             <br>
+            <template v-if="model.song && model_database.song">
+              <v-btn color="error" 
+                @click="resetGroup()" 
+                v-if="model.song.song_lyrics.length > 1">Odstranit ze skupiny</v-btn>
+              <select-song-group-dialog v-if="
+                model_database.song.song_lyrics.length == 1 &&
+                model.song.song_lyrics.length == 1"
+                v-on:submit="addToGroup"></select-song-group-dialog>
 
-            <song-lyrics-group v-if="model.song" v-model="model.song.song_lyrics"></song-lyrics-group>
+              <song-lyrics-group 
+                v-model="model.song.song_lyrics"></song-lyrics-group>
+
+            </template>
 
             <items-combo-box
               v-bind:p-items="tags_unofficial"
@@ -75,6 +86,7 @@ import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/song_lyric_fragment.graphql";
 import ItemsComboBox from "../components/ItemsComboBox.vue";
 import SongLyricsGroup from "../components/SongLyricsGroup.vue";
+import SelectSongGroupDialog from "../components/SelectSongGroupDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -135,7 +147,8 @@ export default {
   props: ["preset-id", "csrf"],
   components: {
     ItemsComboBox,
-    SongLyricsGroup
+    SongLyricsGroup,
+    SelectSongGroupDialog
   },
 
   data() {
@@ -145,7 +158,7 @@ export default {
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
-        type: undefined,
+        // type: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -174,7 +187,8 @@ export default {
         let song_lyric = result.data.model_database;
         // load the requested fields to the vue data.model property
         for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, song_lyric[field]);
+          let clone =_.cloneDeep(song_lyric[field]);
+          Vue.set(this.model, field, clone);
         }
 
         // lang string values are an associative array passed as JSON object
@@ -185,9 +199,9 @@ export default {
         }
       }
     },
-    song_lyrics: {
-      query: FETCH_SONG_LYRICS
-    },
+    // song_lyrics: {
+    //   query: FETCH_SONG_LYRICS
+    // },
     authors: {
       query: FETCH_AUTHORS
     },
@@ -227,16 +241,6 @@ export default {
 
       return false;
     },
-
-    // disableAssignSongs() {
-    //   if (!this.model_database)
-    //     return null;
-
-    //   var hasSavedSiblings = this.model_database.song.song_lyrics.length > 1;
-    //   var isDomestic = this.model_database.song.name === this.model_database.name;
-
-    //   return hasSavedSiblings && isDomestic;
-    // }
   },
 
   methods: {
@@ -250,8 +254,8 @@ export default {
               name: this.model.name,
               lang: this.model.lang,
               has_anonymous_author: this.model.has_anonymous_author,
-              // type: this.model.type,
               lyrics: this.model.lyrics,
+              song: this.model.song,
               authors: {
                 create: this.getModelsToCreateBelongsToMany(this.model.authors),
                 sync: this.getModelsToSyncBelongsToMany(this.model.authors)
@@ -272,7 +276,7 @@ export default {
               }
             }
           }
-        })
+        })  
         .then(result => {
           this.$validator.errors.clear();
           this.$notify({
@@ -282,7 +286,7 @@ export default {
           });
         })
         .catch(error => {
-          if (error.graphQLErrors.length == 0) {
+          if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
             // unknown error happened
             this.$notify({
               title: "Chyba při ukládání",
@@ -371,6 +375,20 @@ export default {
 
       reader.readAsText(file);
     },
+
+    resetGroup(){
+      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(song_lyric => {
+        return song_lyric.id === this.model.id
+      });
+    },
+
+    addToGroup(song){
+      // check if there is original in the group and then 
+      if (song.song_lyrics.filter(sl => {return sl.type == 0}).length > 0)
+        this.model.song.song_lyrics[0].type = 1;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
+    }
   }
 };
 </script>

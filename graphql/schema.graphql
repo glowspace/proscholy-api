@@ -27,6 +27,7 @@ type Query {
         has_chords: Boolean
         order_abc: Boolean
     ): [SongLyric!]!
+    songs: [Song!]!
     externals (
         type: Int
         is_todo: Boolean

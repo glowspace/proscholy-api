@@ -12,6 +12,12 @@ export default {
       }
   },
 
+  watch: {
+    value(val, prev) {
+      this.index = this.value ? this.value : 0;
+    }
+  },
+
   computed: {
     internalIndex: {
       get() {
@@ -26,8 +32,8 @@ export default {
 
   methods: {
     next(e) {
-        this.$emit("click", e);
-        this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
+      this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
+      // this.$emit("click", e);
     },
 
     mod(n, m) {
