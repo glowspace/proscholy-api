@@ -106724,6 +106724,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
 
 
 
@@ -106997,6 +106998,33 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         }
       });
     },
+    reset: function reset() {
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = this.getFieldsFromFragment(false)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var field = _step5.value;
+
+          var clone = _.cloneDeep(this.model_database[field]);
+          Vue.set(this.model, field, clone);
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
+    },
 
 
     // helper method to load field names defined in fragment graphql definition
@@ -107191,11 +107219,7 @@ var render = function() {
                                   "v-btn",
                                   {
                                     attrs: { color: "error" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.resetGroup()
-                                      }
-                                    }
+                                    on: { click: _vm.resetGroup }
                                   },
                                   [_vm._v("Odstranit ze skupiny")]
                                 )
@@ -107308,6 +107332,15 @@ var render = function() {
                           on: { click: _vm.submit }
                         },
                         [_vm._v("Uložit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: !_vm.isDirty },
+                          on: { click: _vm.reset }
+                        },
+                        [_vm._v("Vrátit změny")]
                       )
                     ],
                     2

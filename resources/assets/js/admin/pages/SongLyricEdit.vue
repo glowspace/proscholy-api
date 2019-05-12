@@ -42,10 +42,10 @@
             <br>
             <template v-if="model.song && model_database.song">
               <v-btn color="error" 
-                @click="resetGroup()" 
+                @click="resetGroup" 
                 v-if="model.song.song_lyrics.length > 1">Odstranit ze skupiny</v-btn>
-              <select-song-group-dialog v-if="
-                model_database.song.song_lyrics.length == 1 &&
+              <select-song-group-dialog 
+                v-if="model_database.song.song_lyrics.length == 1 &&
                 model.song.song_lyrics.length == 1"
                 v-on:submit="addToGroup"></select-song-group-dialog>
 
@@ -73,6 +73,7 @@
             <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
             <v-textarea auto-grow outline name="input-7-4" label="Text" v-model="model.lyrics"></v-textarea>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn @click="reset" :disabled="!isDirty">Vrátit změny</v-btn>
           </v-form>
         </v-flex>
         <v-flex xs12 md6></v-flex>
@@ -304,6 +305,13 @@ export default {
             this.$validator.errors.add({ field: key, msg: value });
           }
         });
+    },
+
+    reset() {
+      for (let field of this.getFieldsFromFragment(false)) {
+          let clone =_.cloneDeep(this.model_database[field]);
+          Vue.set(this.model, field, clone);
+      }
     },
 
     // helper method to load field names defined in fragment graphql definition
