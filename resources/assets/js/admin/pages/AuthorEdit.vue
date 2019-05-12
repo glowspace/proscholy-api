@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <notifications/>
-    <v-container grid-list-xs>
+    <v-container fluid grid-list-xs>
       <v-layout row>
         <v-flex xs12 md6>
           <v-form ref="form">

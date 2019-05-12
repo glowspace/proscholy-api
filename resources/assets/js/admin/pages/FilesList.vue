@@ -1,7 +1,7 @@
 <template>
 <!-- v-app must wrap all the components -->
   <v-app>
-    <v-container grid-list-xs>
+    <v-container fluid grid-list-xs>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>

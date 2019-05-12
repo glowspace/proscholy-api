@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <notifications/>
-    <v-container grid-list-xs>
+    <v-container fluid grid-list-xs>
       <v-layout row>
         <v-flex xs12 md6>
           <v-form ref="form">
@@ -144,7 +144,6 @@ export default {
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
-        // type: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -153,10 +152,6 @@ export default {
         authors: [],
         song: undefined
       },
-      // is_original_values: [
-      //   { value: true, text: "Originál" },
-      //   { value: false, text: "Překlad" }
-      // ],
       lang_values: []
     };
   },
@@ -185,9 +180,6 @@ export default {
         }
       }
     },
-    // song_lyrics: {
-    //   query: FETCH_SONG_LYRICS
-    // },
     authors: {
       query: FETCH_AUTHORS
     },
