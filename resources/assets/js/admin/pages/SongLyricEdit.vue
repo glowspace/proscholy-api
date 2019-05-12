@@ -145,7 +145,7 @@ export default {
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
-        is_original: undefined,
+        type: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -154,10 +154,10 @@ export default {
         authors: [],
         song: undefined
       },
-      is_original_values: [
-        { value: true, text: "Originál" },
-        { value: false, text: "Překlad" }
-      ],
+      // is_original_values: [
+      //   { value: true, text: "Originál" },
+      //   { value: false, text: "Překlad" }
+      // ],
       lang_values: []
     };
   },
@@ -250,7 +250,7 @@ export default {
               name: this.model.name,
               lang: this.model.lang,
               has_anonymous_author: this.model.has_anonymous_author,
-              is_original: this.model.is_original,
+              // type: this.model.type,
               lyrics: this.model.lyrics,
               authors: {
                 create: this.getModelsToCreateBelongsToMany(this.model.authors),

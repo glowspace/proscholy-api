@@ -76,12 +76,12 @@ class Author extends Model
 
     public function songOriginalLyrics()
     {
-        return $this->songLyrics()->where('is_original', true);
+        return $this->songLyrics()->where('type', 0);
     }
 
     public function songNotOriginalLyrics()
     {
-        return $this->songLyrics()->where('is_original', false);
+        return $this->songLyrics()->where('type', '!=', 0);
     }
 
     // 

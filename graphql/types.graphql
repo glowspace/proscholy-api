@@ -21,7 +21,7 @@ type Author {
 type Song {
     id: ID!
     name: String
-    song_lyrics(is_original: Boolean @eq): [SongLyric] @hasMany
+    song_lyrics(type: Int @eq): [SongLyric] @hasMany
 }
 
 type SongLyric {
@@ -30,10 +30,11 @@ type SongLyric {
     public_url: String
     lyrics_no_chords: String
     lyrics: String
-    is_original: Boolean!
+    type: Int!
+    is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
+    is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
     is_approved_by_author: Boolean!
     is_published: Boolean!
-    is_authorized: Boolean!
     has_anonymous_author: Boolean!
     lang: String
     lang_string: String

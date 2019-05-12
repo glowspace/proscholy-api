@@ -65736,11 +65736,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                is_original,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                is_original,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
 //
 //
 //
@@ -65809,7 +65810,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
   data: function data() {
     return {
-      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'is_original' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
+      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'type' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
       search_string: ""
     };
   },
@@ -65947,12 +65948,16 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("td", [
-                              props.item.is_original
+                              props.item.type === 0
                                 ? _c("span", [_vm._v("Originál")])
                                 : _vm._e(),
                               _vm._v(" "),
-                              !props.item.is_original
+                              props.item.type === 1
                                 ? _c("span", [_vm._v("Překlad")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.item.type === 2
+                                ? _c("span", [_vm._v("Autorizovaný překlad")])
                                 : _vm._e()
                             ]),
                             _vm._v(" "),
@@ -106738,7 +106743,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
-        is_original: undefined,
+        type: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -106747,7 +106752,10 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         authors: [],
         song: undefined
       },
-      is_original_values: [{ value: true, text: "Originál" }, { value: false, text: "Překlad" }],
+      // is_original_values: [
+      //   { value: true, text: "Originál" },
+      //   { value: false, text: "Překlad" }
+      // ],
       lang_values: []
     };
   },
@@ -106904,7 +106912,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
             name: this.model.name,
             lang: this.model.lang,
             has_anonymous_author: this.model.has_anonymous_author,
-            is_original: this.model.is_original,
+            // type: this.model.type,
             lyrics: this.model.lyrics,
             authors: {
               create: this.getModelsToCreateBelongsToMany(this.model.authors),
@@ -107043,8 +107051,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_authorized"},"arguments":[],"directives":[]}]}}]}}]}}],"loc":{"start":0,"end":449}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        name\n        song_lyrics {\n            id\n            name\n            is_original\n            is_authorized\n        }\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}}]}}],"loc":{"start":0,"end":409}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    type\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        name\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -107355,7 +107363,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    next: function next() {
+    next: function next(e) {
+      this.$emit("click", e);
       this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
     },
     mod: function mod(n, m) {
@@ -107376,11 +107385,7 @@ var render = function() {
     "v-btn",
     {
       attrs: { color: _vm.colors[_vm.internalIndex] },
-      on: {
-        click: function($event) {
-          return _vm.next()
-        }
-      }
+      on: { click: _vm.next }
     },
     [_vm._t("default")],
     2
@@ -107463,6 +107468,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -107481,42 +107487,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
 
-  computed: {
-    song_lyrics_typed: {
-      get: function get() {
-        return this.value.map(function (song_lyric) {
-          var mapped = { id: song_lyric.id, name: song_lyric.name };
-
-          if (song_lyric.is_original) {
-            mapped.type = 0;
-          } else {
-            if (song_lyric.is_authorized) {
-              mapped.type = 2;
-            } else {
-              mapped.type = 1;
-            }
-          }
-
-          return mapped;
-        });
-      },
-      set: function set(val) {
-        this.$emit("input", val);
-      }
+  methods: {
+    updated: function updated(last) {
+      // check the consistency
     }
   }
-
-  //   computed: {
-  //     internalValue: {
-  //       get() {
-  //         return this.lazyValue;
-  //       },
-  //       set(val) {
-  //         // this.lazyValue = val;
-  //         this.$emit("input", val);
-  //       }
-  //     }
-  //   },
 });
 
 /***/ }),
@@ -107529,12 +107504,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.song_lyrics_typed, function(song_lyric) {
+    _vm._l(_vm.value, function(song_lyric) {
       return _c(
         "button-color-toggle",
         {
           key: song_lyric.id,
           attrs: { colors: _vm.colors },
+          on: {
+            click: function($event) {
+              return _vm.updated(song_lyric)
+            }
+          },
           model: {
             value: song_lyric.type,
             callback: function($$v) {

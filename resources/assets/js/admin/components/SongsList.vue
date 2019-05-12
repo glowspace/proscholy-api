@@ -22,8 +22,9 @@
                 <a :href="'/admin/song/' + props.item.id">{{ props.item.name }}</a>
               </td>
               <td>
-                <span v-if="props.item.is_original">Originál</span>
-                <span v-if="!props.item.is_original">Překlad</span>
+                <span v-if="props.item.type === 0">Originál</span>
+                <span v-if="props.item.type === 1">Překlad</span>
+                <span v-if="props.item.type === 2">Autorizovaný překlad</span>
               </td>
               <td>{{ props.item.updated_at }}</td>
               <td>
@@ -68,7 +69,7 @@ const fetch_items = gql`
                 id,
                 name,
                 updated_at,
-                is_original,
+                type,
                 is_published,
                 is_approved_by_author
             }
@@ -88,7 +89,7 @@ export default {
     return {
       headers: [
         { text: 'Název písničky', value: 'name' },
-        { text: 'Typ', value: 'is_original' },
+        { text: 'Typ', value: 'type' },
         { text: 'Naposledy upraveno', value: 'updated_at' },
         { text: 'Publikováno', value: 'is_published' },
         { text: 'Schváleno autorem', value: 'is_approved_by_author' },

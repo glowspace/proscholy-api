@@ -3,7 +3,7 @@
     $original_lyric = $song_l->song->getOriginalSongLyric();
 @endphp
 
-@if(! $song_l->is_original) {{-- translation --}}
+@if(! $song_l->type != 0) {{-- translation --}}
 
     <span>
         @if($authors_count == 0)

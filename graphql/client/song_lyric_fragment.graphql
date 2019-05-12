@@ -6,7 +6,7 @@ fragment SongLyricFillableFragment on SongLyric  {
         name
     }
     has_anonymous_author
-    is_original
+    type
     lang
     tags_unofficial: tags(type: 0) {
         id
@@ -22,8 +22,7 @@ fragment SongLyricFillableFragment on SongLyric  {
         song_lyrics {
             id
             name
-            is_original
-            is_authorized
+            type
         }
     }
 }

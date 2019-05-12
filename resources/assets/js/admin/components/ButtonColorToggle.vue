@@ -1,5 +1,5 @@
 <template>
-  <v-btn :color="colors[internalIndex]" @click="next()"><slot></slot></v-btn>
+  <v-btn :color="colors[internalIndex]" @click="next"><slot></slot></v-btn>
 </template>
 
 <script>
@@ -25,7 +25,8 @@ export default {
   },
 
   methods: {
-    next() {
+    next(e) {
+        this.$emit("click", e);
         this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
     },
 

@@ -45,7 +45,7 @@ class Song extends Model
 
     public function translations()
     {
-        return $this->song_lyrics()->where('is_original', 0);
+        return $this->song_lyrics()->where('type', '!=', 0);
     }
 
     public function getDomesticSongLyric($id_exclude)
@@ -55,6 +55,6 @@ class Song extends Model
 
     public function getOriginalSongLyric()
     {
-        return $this->song_lyrics()->where('is_original', 1)->get()->first();
+        return $this->song_lyrics()->where('type', 0)->get()->first();
     }
 }

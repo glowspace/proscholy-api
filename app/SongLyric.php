@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property int                                                           $id
  * @property string|null                                                   $name
- * @property int|null                                                      $is_authorized
- * @property int|null                                                      $is_original
  * @property string|null                                                   $description
  * @property string|null                                                   $lyrics
  * @property int|null                                                      $is_opensong
@@ -68,8 +66,9 @@ class SongLyric extends Model
             'song_id',
             'lyrics',
             'id',
-            'is_original',
-            'is_authorized',
+            // 'is_original',
+            // 'is_authorized',
+            'type',
             'lang',
             'creating_at',
             'has_anonymous_author',
@@ -122,6 +121,18 @@ class SongLyric extends Model
     //     return self::$lang_string_values[$this->lang];
     // }
 
+    // ! deprecated soon
+    public function getIsOriginalAttribute()
+    {
+        return $this->type == 0;
+    }
+
+    // ! deprecated soon
+    public function getIsAuthorizedAttribute()
+    {
+        return $this->type == 2;
+    }
+
     public function getLangStringAttribute()
     {
         return self::$lang_string_values[$this->lang];
@@ -159,12 +170,12 @@ class SongLyric extends Model
 
     public function scopeTranslations($query)
     {
-        return $query->where('is_original', false);
+        return $query->where('type', '!=', 0);
     }
 
     public function scopeOriginals($query)
     {
-        return $query->where('is_original', true);
+        return $query->where('type', 0);
     }
 
     public function scopePublished($query)
