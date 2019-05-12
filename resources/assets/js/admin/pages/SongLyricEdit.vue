@@ -11,6 +11,7 @@
               v-model="model.name"
               data-vv-name="input.name"
               :error-messages="errors.collect('input.name')"
+              v-on:input="onNameChange"
             ></v-text-field>
             <items-combo-box
               v-bind:p-items="authors"
@@ -23,35 +24,19 @@
               v-model="model.has_anonymous_author"
               label="Anonymní autor (nezobrazovat v to-do)"
             ></v-checkbox>
-            <!-- <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select> -->
 
-            <!-- <template v-if="disableAssignSongs === true">
-                <span>Píseň je nastavena jako originál následujících skladeb:</span>
-                <p v-for="song_lyric in model.siblings" v-bind:key="song_lyric.id">{{ song_lyric.name }}</p>
-            </template> -->
-            <!-- here must go v-show, otherwise if using v-if, the items property won't get updated -->
-            <!-- <items-combo-box v-show="disableAssignSongs === false"
-              v-bind:p-items="song_lyrics"
-              v-model="model.siblings"
-              label="Asociované písně"
-              create-label="Vyberte píseň z nabídky nebo vytvořte novou"
-              :multiple="true"
-              enable-custom
-            ></items-combo-box> -->
-
-            <br>
             <template v-if="model.song && model_database.song">
-              <v-btn color="error" 
+              <song-lyrics-group 
+                v-model="model.song.song_lyrics"
+                :edit-id="model.id"></song-lyrics-group>
+
+              <v-btn color="error" outline
                 @click="resetGroup" 
-                v-if="model.song.song_lyrics.length > 1">Odstranit ze skupiny</v-btn>
-              <select-song-group-dialog 
+                v-if="model.song.song_lyrics.length > 1">Odstranit píseň ze skupiny</v-btn>
+              <select-song-group-dialog outline
                 v-if="model_database.song.song_lyrics.length == 1 &&
                 model.song.song_lyrics.length == 1"
                 v-on:submit="addToGroup"></select-song-group-dialog>
-
-              <song-lyrics-group 
-                v-model="model.song.song_lyrics"></song-lyrics-group>
-
             </template>
 
             <items-combo-box
@@ -396,6 +381,15 @@ export default {
         this.model.song.song_lyrics[0].type = 1;
 
       this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
+    },
+
+    onNameChange(name) {
+      // update the corresponding name in song.song_lyrics
+      for (var song_lyric of this.model.song.song_lyrics) {
+        if (song_lyric.id == this.model.id) {
+          Vue.set(song_lyric, "name", name);
+        }
+      }
     }
   }
 };

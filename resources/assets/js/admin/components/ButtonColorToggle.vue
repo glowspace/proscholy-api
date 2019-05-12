@@ -1,15 +1,39 @@
 <template>
-  <v-btn :color="colors[internalIndex]" @click="next"><slot></slot></v-btn>
+  <v-hover>
+  <div class="hover-container" slot-scope="{ hover }">
+    <v-slide-x-reverse-transition>
+      <!-- <div class="['hover-text']" v-if="hover"> -->
+        <v-chip  class="hover-text" v-if="hover" :color="colors[internalIndex]">{{ hoverTexts[internalIndex] }}</v-chip>
+      <!-- </div> -->
+    </v-slide-x-reverse-transition>
+    <v-btn :color="colors[internalIndex]" @click="next">
+      <slot></slot>
+    </v-btn>
+  </div>
+  </v-hover>
 </template>
+
+<style>
+.hover-container {
+  position: relative;
+}
+
+.hover-text {
+  position: absolute;
+  color: white;
+  right: 0;
+}
+</style>
+
 
 <script>
 export default {
-  props: ["colors", "value"],
+  props: ["colors", "value", "hover-texts"],
 
   data() {
-      return {
-          index: this.value ? this.value : 0
-      }
+    return {
+      index: this.value ? this.value : 0
+    };
   },
 
   watch: {

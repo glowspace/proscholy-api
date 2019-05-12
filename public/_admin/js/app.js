@@ -106710,21 +106710,6 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -107101,6 +107086,35 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       }).length > 0) this.model.song.song_lyrics[0].type = 1;
 
       this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
+    },
+    onNameChange: function onNameChange(name) {
+      // update the corresponding name in song.song_lyrics
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = this.model.song.song_lyrics[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var song_lyric = _step6.value;
+
+          if (song_lyric.id == this.model.id) {
+            Vue.set(song_lyric, "name", name);
+          }
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6.return) {
+            _iterator6.return();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
     }
   }
 });
@@ -107171,6 +107185,7 @@ var render = function() {
                           "data-vv-name": "input.name",
                           "error-messages": _vm.errors.collect("input.name")
                         },
+                        on: { input: _vm.onNameChange },
                         model: {
                           value: _vm.model.name,
                           callback: function($$v) {
@@ -107210,29 +107225,10 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
                       _vm.model.song && _vm.model_database.song
                         ? [
-                            _vm.model.song.song_lyrics.length > 1
-                              ? _c(
-                                  "v-btn",
-                                  {
-                                    attrs: { color: "error" },
-                                    on: { click: _vm.resetGroup }
-                                  },
-                                  [_vm._v("Odstranit ze skupiny")]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.model_database.song.song_lyrics.length == 1 &&
-                            _vm.model.song.song_lyrics.length == 1
-                              ? _c("select-song-group-dialog", {
-                                  on: { submit: _vm.addToGroup }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
                             _c("song-lyrics-group", {
+                              attrs: { "edit-id": _vm.model.id },
                               model: {
                                 value: _vm.model.song.song_lyrics,
                                 callback: function($$v) {
@@ -107240,7 +107236,26 @@ var render = function() {
                                 },
                                 expression: "model.song.song_lyrics"
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.model.song.song_lyrics.length > 1
+                              ? _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "error", outline: "" },
+                                    on: { click: _vm.resetGroup }
+                                  },
+                                  [_vm._v("Odstranit píseň ze skupiny")]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.model_database.song.song_lyrics.length == 1 &&
+                            _vm.model.song.song_lyrics.length == 1
+                              ? _c("select-song-group-dialog", {
+                                  attrs: { outline: "" },
+                                  on: { submit: _vm.addToGroup }
+                                })
+                              : _vm._e()
                           ]
                         : _vm._e(),
                       _vm._v(" "),
@@ -107375,6 +107390,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(176)
+}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(168)
@@ -107383,7 +107402,7 @@ var __vue_template__ = __webpack_require__(169)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -107427,9 +107446,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["colors", "value"],
+  props: ["colors", "value", "hover-texts"],
 
   data: function data() {
     return {
@@ -107475,15 +107518,53 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-btn",
-    {
-      attrs: { color: _vm.colors[_vm.internalIndex] },
-      on: { click: _vm.next }
-    },
-    [_vm._t("default")],
-    2
-  )
+  return _c("v-hover", {
+    scopedSlots: _vm._u(
+      [
+        {
+          key: "default",
+          fn: function(ref) {
+            var hover = ref.hover
+            return _c(
+              "div",
+              { staticClass: "hover-container" },
+              [
+                _c(
+                  "v-slide-x-reverse-transition",
+                  [
+                    hover
+                      ? _c(
+                          "v-chip",
+                          {
+                            staticClass: "hover-text",
+                            attrs: { color: _vm.colors[_vm.internalIndex] }
+                          },
+                          [_vm._v(_vm._s(_vm.hoverTexts[_vm.internalIndex]))]
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { color: _vm.colors[_vm.internalIndex] },
+                    on: { click: _vm.next }
+                  },
+                  [_vm._t("default")],
+                  2
+                )
+              ],
+              1
+            )
+          }
+        }
+      ],
+      null,
+      true
+    )
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -107563,71 +107644,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        ButtonColorToggle: __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default.a
-    },
+  components: {
+    ButtonColorToggle: __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default.a
+  },
 
-    props: ["value"],
+  props: ["value", "edit-id"],
 
-    data: function data() {
-        return {
-            colors: ["info", "success", "warning"]
-            // types - 0: original 1: translation 2: authorized translation
-            //   lazyValue: this.value
-        };
-    },
+  data: function data() {
+    return {
+      colors_def: ["info lighten-1", "success lighten-1", "warning lighten-1"],
+      colors: ["info", "success", "warning"],
+      hoverTexts: ["Originál", "Překlad", "Autorizovaný překlad"]
+      // types - 0: original 1: translation 2: authorized translation
+    };
+  },
 
 
-    //   computed: {
-    //       song_lyrics: {
-    //           get() {
-    //               return this.lazyValue;
-    //           },
-    //           set(val) {
-    //               this.lazyValue = val;
-    //           }
-    //       }
-    //   },
+  computed: {
+    orderedValues: function orderedValues() {
+      var _this = this;
 
-    methods: {
-        updated: function updated(last) {
-            // check the consistency
-            if (last.type === 0) {
-                console.log("aj");
-                // allow only one original -> set other originals to translation
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
-
-                try {
-                    for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        var song_lyric = _step.value;
-
-                        if (song_lyric.type == 0 && song_lyric.id !== last.id) {
-                            Vue.set(song_lyric, "type", 1);
-                        }
-                    }
-                } catch (err) {
-                    _didIteratorError = true;
-                    _iteratorError = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                            _iterator.return();
-                        }
-                    } finally {
-                        if (_didIteratorError) {
-                            throw _iteratorError;
-                        }
-                    }
-                }
-            }
-        }
+      // .slice() is to make .sort immutable 
+      // see https://stackoverflow.com/questions/30431304/functional-non-destructive-array-sort
+      return this.value.slice().sort(function (a, b) {
+        if (a.id == _this.editId) return -1;
+        if (b.id == _this.editId) return 1;
+        return a.name.localeCompare(b.name);
+      });
     }
+  },
+
+  methods: {
+    updated: function updated(last) {
+      // check the consistency
+      if (last.type === 0) {
+        console.log("aj");
+        // allow only one original -> set other originals to translation
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var song_lyric = _step.value;
+
+            if (song_lyric.type == 0 && song_lyric.id !== last.id) {
+              Vue.set(song_lyric, "type", 1);
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -107640,12 +107727,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.value, function(song_lyric) {
+    _vm._l(_vm.orderedValues, function(song_lyric) {
       return _c(
         "button-color-toggle",
         {
           key: song_lyric.id,
-          attrs: { colors: _vm.colors },
+          attrs: {
+            colors: _vm.editId == song_lyric.id ? _vm.colors : _vm.colors_def,
+            "hover-texts": _vm.hoverTexts
+          },
           on: {
             input: function($event) {
               return _vm.updated(song_lyric)
@@ -107761,14 +107851,14 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
-//
-//
 
 
 
 var FETCH_SONGS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['outline'],
+
   data: function data() {
     return {
       dialog: false,
@@ -107833,96 +107923,93 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-layout",
-    { attrs: { row: "", "justify-center": "" } },
-    [
-      _c(
-        "v-dialog",
+    "v-dialog",
+    {
+      attrs: { persistent: "", "max-width": "600px" },
+      scopedSlots: _vm._u([
         {
-          attrs: { persistent: "", "max-width": "600px" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._g({ attrs: { color: "primary", dark: "" } }, on),
-                    [_vm._v("Přidat do skupiny")]
-                  )
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  {
+                    attrs: { outline: _vm.outline, color: "primary", dark: "" }
+                  },
+                  on
+                ),
+                [_vm._v("Přidat k písni nebo skupině písní")]
+              )
+            ]
           }
+        }
+      ]),
+      model: {
+        value: _vm.dialog,
+        callback: function($$v) {
+          _vm.dialog = $$v
         },
+        expression: "dialog"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
         [
+          _c("v-card-title", { staticClass: "headline" }, [
+            _vm._v("Výběr\n    ")
+          ]),
           _vm._v(" "),
           _c(
-            "v-card",
+            "v-card-text",
             [
-              _c("v-card-title", { staticClass: "headline" }, [
-                _vm._v("Výběr skupiny písní\n      ")
-              ]),
+              _c("v-combobox", {
+                attrs: {
+                  items: _vm.songs,
+                  "item-value": "id",
+                  "item-text": _vm.getSongLyricNames,
+                  label: "Vyberte píseň resp. skupinu písní"
+                },
+                model: {
+                  value: _vm.song,
+                  callback: function($$v) {
+                    _vm.song = $$v
+                  },
+                  expression: "song"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
               _vm._v(" "),
               _c(
-                "v-card-text",
-                [
-                  _c("v-combobox", {
-                    attrs: {
-                      items: _vm.songs,
-                      "item-value": "id",
-                      "item-text": _vm.getSongLyricNames,
-                      label: "Vyberte skupinu písní"
-                    },
-                    model: {
-                      value: _vm.song,
-                      callback: function($$v) {
-                        _vm.song = $$v
-                      },
-                      expression: "song"
-                    }
-                  })
-                ],
-                1
+                "v-btn",
+                {
+                  attrs: { color: "green darken-1", flat: "" },
+                  on: { click: _vm.onCancel }
+                },
+                [_vm._v("Zrušit")]
               ),
               _vm._v(" "),
               _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "green darken-1", flat: "" },
-                      on: { click: _vm.onCancel }
-                    },
-                    [_vm._v("Zrušit")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: {
-                        color: "green darken-1",
-                        disabled:
-                          _vm.song == undefined || _vm.song.id == undefined,
-                        flat: ""
-                      },
-                      on: { click: _vm.onSubmit }
-                    },
-                    [_vm._v("OK")]
-                  )
-                ],
-                1
+                "v-btn",
+                {
+                  attrs: {
+                    color: "green darken-1",
+                    disabled: _vm.song == undefined || _vm.song.id == undefined,
+                    flat: ""
+                  },
+                  on: { click: _vm.onSubmit }
+                },
+                [_vm._v("OK")]
               )
             ],
             1
@@ -107943,6 +108030,46 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-35675a4f", module.exports)
   }
 }
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(177);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(10)("22428dc7", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-305044c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ButtonColorToggle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-305044c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ButtonColorToggle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.hover-container {\n  position: relative;\n}\n.hover-text {\n  position: absolute;\n  color: white;\n  right: 0;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

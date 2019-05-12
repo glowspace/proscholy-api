@@ -50,6 +50,7 @@ class UpdateSongLyric
                 $song_lyric->authors()->create(['name' => $author["name"]]);
             }
         }
+        $song_lyric->save();
 
         $tagsToSync = [];
 
@@ -67,7 +68,6 @@ class UpdateSongLyric
                 $song_lyric->tags()->create(['name' => $author["name"]]);
             }
         }
-
         $song_lyric->save();
 
         // HANDLE ASSOCIATED SONG LYRICS
@@ -116,6 +116,7 @@ class UpdateSongLyric
             }
         }
 
-        return $song_lyric;
+        // reload from database
+        return SongLyric::find($input["id"]);
     }
 }

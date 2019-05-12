@@ -1,8 +1,10 @@
 <template>
     <div>
         <button-color-toggle 
-            v-for="song_lyric in value" 
-            v-bind:key="song_lyric.id" :colors="colors"
+            v-for="song_lyric in orderedValues" 
+            v-bind:key="song_lyric.id"
+            :colors="editId == song_lyric.id ? colors : colors_def"
+            :hover-texts="hoverTexts"
             v-model="song_lyric.type"
             v-on:input="updated(song_lyric)">
             {{ song_lyric.name }}
@@ -19,26 +21,30 @@ export default {
     ButtonColorToggle
   },
 
-  props: ["value"],
+  props: ["value", "edit-id"],
 
   data() {
     return {
+      colors_def: ["info lighten-1", "success lighten-1", "warning lighten-1"],
       colors: ["info", "success", "warning"],
+      hoverTexts: ["Originál", "Překlad", "Autorizovaný překlad"]
       // types - 0: original 1: translation 2: authorized translation
-    //   lazyValue: this.value
     };
   },
 
-//   computed: {
-//       song_lyrics: {
-//           get() {
-//               return this.lazyValue;
-//           },
-//           set(val) {
-//               this.lazyValue = val;
-//           }
-//       }
-//   },
+  computed: {
+    orderedValues() {
+      // .slice() is to make .sort immutable 
+      // see https://stackoverflow.com/questions/30431304/functional-non-destructive-array-sort
+      return this.value.slice().sort((a,b) => {
+        if (a.id == this.editId)
+          return -1;
+        if (b.id == this.editId)
+          return 1;
+        return a.name.localeCompare(b.name);
+      });
+    }
+  },
 
   methods: {
       updated(last) {
