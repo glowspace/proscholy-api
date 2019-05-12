@@ -19,9 +19,11 @@ fragment SongLyricFillableFragment on SongLyric  {
     lyrics
     song {
         name
-    }
-    siblings {
-        id
-        name
+        song_lyrics {
+            id
+            name
+            is_original
+            is_authorized
+        }
     }
 }

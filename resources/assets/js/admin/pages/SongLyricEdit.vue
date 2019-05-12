@@ -23,23 +23,25 @@
               v-model="model.has_anonymous_author"
               label="Anonymní autor (nezobrazovat v to-do)"
             ></v-checkbox>
-            <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select>
+            <!-- <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select> -->
 
-            <template v-if="disableAssignSongs === true">
+            <!-- <template v-if="disableAssignSongs === true">
                 <span>Píseň je nastavena jako originál následujících skladeb:</span>
                 <p v-for="song_lyric in model.siblings" v-bind:key="song_lyric.id">{{ song_lyric.name }}</p>
-            </template>
+            </template> -->
             <!-- here must go v-show, otherwise if using v-if, the items property won't get updated -->
-            <items-combo-box v-show="disableAssignSongs === false"
+            <!-- <items-combo-box v-show="disableAssignSongs === false"
               v-bind:p-items="song_lyrics"
               v-model="model.siblings"
               label="Asociované písně"
               create-label="Vyberte píseň z nabídky nebo vytvořte novou"
               :multiple="true"
               enable-custom
-            ></items-combo-box>
+            ></items-combo-box> -->
 
             <br>
+
+            <song-lyrics-group v-if="model.song" v-model="model.song.song_lyrics"></song-lyrics-group>
 
             <items-combo-box
               v-bind:p-items="tags_unofficial"
@@ -72,6 +74,7 @@
 import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/song_lyric_fragment.graphql";
 import ItemsComboBox from "../components/ItemsComboBox.vue";
+import SongLyricsGroup from "../components/SongLyricsGroup.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -131,7 +134,8 @@ const FETCH_TAGS_OFFICIAL = gql`
 export default {
   props: ["preset-id", "csrf"],
   components: {
-    ItemsComboBox
+    ItemsComboBox,
+    SongLyricsGroup
   },
 
   data() {
@@ -148,8 +152,7 @@ export default {
         tags_unofficial: [],
         tags_official: [],
         authors: [],
-        song: undefined,
-        siblings: [],
+        song: undefined
       },
       is_original_values: [
         { value: true, text: "Originál" },
@@ -225,15 +228,15 @@ export default {
       return false;
     },
 
-    disableAssignSongs() {
-      if (!this.model_database)
-        return null;
+    // disableAssignSongs() {
+    //   if (!this.model_database)
+    //     return null;
 
-      var hasSavedSiblings = this.model_database.siblings.length > 0;
-      var isDomestic = this.model_database.song.name === this.model_database.name;
+    //   var hasSavedSiblings = this.model_database.song.song_lyrics.length > 1;
+    //   var isDomestic = this.model_database.song.name === this.model_database.name;
 
-      return hasSavedSiblings && isDomestic;
-    }
+    //   return hasSavedSiblings && isDomestic;
+    // }
   },
 
   methods: {

@@ -33,6 +33,7 @@ type SongLyric {
     is_original: Boolean!
     is_approved_by_author: Boolean!
     is_published: Boolean!
+    is_authorized: Boolean!
     has_anonymous_author: Boolean!
     lang: String
     lang_string: String
