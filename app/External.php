@@ -190,6 +190,9 @@ class External extends Model
 
     public function getThumbnailUrlAttribute()
     {
+        if (!$this->canHaveThumbnail())
+            return;
+
         return route('external.thumbnail', [
             'external' => $this->id,
         ]);

@@ -73,6 +73,9 @@ class File extends Model
 
     public function getThumbnailUrlAttribute()
     {
+        if (!$this->canHaveThumbnail())
+            return;
+            
         return route('file.thumbnail', [
             'file' => $this->id,
         ]);

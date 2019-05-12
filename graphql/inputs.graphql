@@ -26,11 +26,11 @@ input CreateAuthorInput {
 }
 
 input SyncSongLyricRelation {
-  update: UpdateSongLyricInput
+  update: UpdateSongLyricRelation
   disconnect: Boolean
 }
 
-input UpdateSongLyricInput {
+input UpdateSongLyricRelation {
   id: ID
 }
 

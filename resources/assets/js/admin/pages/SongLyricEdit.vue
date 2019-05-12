@@ -2,67 +2,97 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-      <v-layout row>
-        <v-flex xs12 md6>
-          <v-form ref="form">
-            <v-text-field
-              label="Název písně"
-              required
-              v-model="model.name"
-              data-vv-name="input.name"
-              :error-messages="errors.collect('input.name')"
-              v-on:input="onNameChange"
-            ></v-text-field>
-            <items-combo-box
-              v-bind:p-items="authors"
-              v-model="model.authors"
-              label="Autoři"
-              create-label="Vyberte autora z nabídky nebo vytvořte nového"
-              :multiple="true"
-            ></items-combo-box>
-            <v-checkbox
-              v-model="model.has_anonymous_author"
-              label="Anonymní autor (nezobrazovat v to-do)"
-            ></v-checkbox>
+      <v-tabs  color="transparent">
+        <v-tab>Údaje o písni</v-tab>
+        <v-tab>Text</v-tab>
+        <v-tab-item>
+          <v-layout row pt-2>
+            <v-flex xs12 md6>
+              <v-form ref="form">
+                <v-text-field
+                  label="Název písně"
+                  required
+                  v-model="model.name"
+                  data-vv-name="input.name"
+                  :error-messages="errors.collect('input.name')"
+                  v-on:input="onNameChange"
+                ></v-text-field>
+                <items-combo-box
+                  v-bind:p-items="authors"
+                  v-model="model.authors"
+                  label="Autoři"
+                  create-label="Vyberte autora z nabídky nebo vytvořte nového"
+                  :multiple="true"
+                ></items-combo-box>
+                <v-checkbox
+                  v-model="model.has_anonymous_author"
+                  label="Anonymní autor (nezobrazovat v to-do)"
+                ></v-checkbox>
 
-            <template v-if="model.song && model_database.song">
-              <song-lyrics-group 
-                v-model="model.song.song_lyrics"
-                :edit-id="model.id"></song-lyrics-group>
+                <div v-if="model.song && model_database.song" class="mb-3">
+                  <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
 
-              <v-btn color="error" outline
-                @click="resetGroup" 
-                v-if="model.song.song_lyrics.length > 1">Odstranit píseň ze skupiny</v-btn>
-              <select-song-group-dialog outline
-                v-if="model_database.song.song_lyrics.length == 1 &&
+                  <v-btn
+                    color="error"
+                    outline
+                    @click="resetGroup"
+                    v-if="model.song.song_lyrics.length > 1"
+                  >Odstranit píseň ze skupiny</v-btn>
+                  <select-song-group-dialog
+                    outline
+                    v-if="model_database.song.song_lyrics.length == 1 &&
                 model.song.song_lyrics.length == 1"
-                v-on:submit="addToGroup"></select-song-group-dialog>
-            </template>
+                    v-on:submit="addToGroup"
+                  ></select-song-group-dialog>
+                </div>
 
-            <items-combo-box
-              v-bind:p-items="tags_unofficial"
-              v-model="model.tags_unofficial"
-              label="Štítky"
-              create-label="Vyberte štítek z nabídky nebo vytvořte nový"
-              :multiple="true"
-            ></items-combo-box>
-            <items-combo-box
-              v-bind:p-items="tags_official"
-              v-model="model.tags_official"
-              label="Liturgie"
-              create-label="Vyberte část liturgie z nabídky"
-              :multiple="true"
-            ></items-combo-box>
-            <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
-            <a id="file_select" class="btn btn-primary" v-on:click="$refs.fileinput.click()">Nahrát ze souboru OpenSong</a>
-            <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
-            <v-textarea auto-grow outline name="input-7-4" label="Text" v-model="model.lyrics"></v-textarea>
-            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn @click="reset" :disabled="!isDirty">Vrátit změny</v-btn>
-          </v-form>
-        </v-flex>
-        <v-flex xs12 md6></v-flex>
-      </v-layout>
+                <items-combo-box
+                  v-bind:p-items="tags_unofficial"
+                  v-model="model.tags_unofficial"
+                  label="Štítky"
+                  create-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                  :multiple="true"
+                ></items-combo-box>
+                <items-combo-box
+                  v-bind:p-items="tags_official"
+                  v-model="model.tags_official"
+                  label="Liturgie"
+                  create-label="Vyberte část liturgie z nabídky"
+                  :multiple="true"
+                ></items-combo-box>
+              </v-form>
+            </v-flex>
+            <v-flex xs12 md6></v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row>
+            <v-flex xs12 md6>
+              <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
+                <a
+                  id="file_select"
+                  class="btn btn-primary"
+                  v-on:click="$refs.fileinput.click()"
+                >Nahrát ze souboru OpenSong</a>
+                <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
+                <v-textarea auto-grow outline name="input-7-4" label="Text" v-model="model.lyrics"></v-textarea>
+            </v-flex>
+            <v-flex xs12 md6>
+              <!-- externals and files view -->
+              <!-- <p v-for="external in model.externals" v-bind:key="external.id">{{ external.public_name }}</p> -->
+              <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
+              <v-img v-for="external in model.externals" v-bind:key="external.id"
+                  :src="external.thubmnail_url"
+                  :lazy-src="external.thubmnail_url"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                ></v-img>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+      </v-tabs>
+      <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny</v-btn>
     </v-container>
   </v-app>
 </template>
@@ -150,6 +180,8 @@ export default {
         tags_unofficial: [],
         tags_official: [],
         authors: [],
+        externals: [],
+        files: [],
         song: undefined
       },
       lang_values: []
@@ -168,7 +200,7 @@ export default {
         let song_lyric = result.data.model_database;
         // load the requested fields to the vue data.model property
         for (let field of this.getFieldsFromFragment(false)) {
-          let clone =_.cloneDeep(song_lyric[field]);
+          let clone = _.cloneDeep(song_lyric[field]);
           Vue.set(this.model, field, clone);
         }
 
@@ -218,7 +250,7 @@ export default {
       }
 
       return false;
-    },
+    }
   },
 
   methods: {
@@ -254,7 +286,7 @@ export default {
               }
             }
           }
-        })  
+        })
         .then(result => {
           this.$validator.errors.clear();
           this.$notify({
@@ -264,7 +296,10 @@ export default {
           });
         })
         .catch(error => {
-          if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
+          if (
+            error.graphQLErrors.length == 0 ||
+            error.graphQLErrors[0].extensions.validation === undefined
+          ) {
             // unknown error happened
             this.$notify({
               title: "Chyba při ukládání",
@@ -286,8 +321,8 @@ export default {
 
     reset() {
       for (let field of this.getFieldsFromFragment(false)) {
-          let clone =_.cloneDeep(this.model_database[field]);
-          Vue.set(this.model, field, clone);
+        let clone = _.cloneDeep(this.model_database[field]);
+        Vue.set(this.model, field, clone);
       }
     },
 
@@ -347,7 +382,7 @@ export default {
         console.log("file loaded succesfully");
 
         $.post(
-          '/api/parse/opensong',
+          "/api/parse/opensong",
           {
             file_contents: e.target.result,
             _token: this.csrf
@@ -361,18 +396,26 @@ export default {
       reader.readAsText(file);
     },
 
-    resetGroup(){
-      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(song_lyric => {
-        return song_lyric.id === this.model.id
-      });
+    resetGroup() {
+      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(
+        song_lyric => {
+          return song_lyric.id === this.model.id;
+        }
+      );
     },
 
-    addToGroup(song){
-      // check if there is original in the group and then 
-      if (song.song_lyrics.filter(sl => {return sl.type == 0}).length > 0)
+    addToGroup(song) {
+      // check if there is original in the group and then
+      if (
+        song.song_lyrics.filter(sl => {
+          return sl.type == 0;
+        }).length > 0
+      )
         this.model.song.song_lyrics[0].type = 1;
 
-      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
+      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(
+        song.song_lyrics
+      );
     },
 
     onNameChange(name) {

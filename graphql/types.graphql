@@ -58,6 +58,7 @@ type External {
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     url: String
+    thumbnail_url: String
 }
 
 type File {
@@ -68,6 +69,7 @@ type File {
     type_string: String
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
+    thumbnail_url: String
 }
 
 type Tag {

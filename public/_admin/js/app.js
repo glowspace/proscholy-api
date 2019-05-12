@@ -105313,6 +105313,36 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -105353,6 +105383,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         tags_unofficial: [],
         tags_official: [],
         authors: [],
+        externals: [],
+        files: [],
         song: undefined
       },
       lang_values: []
@@ -105657,7 +105689,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       reader.onload = function (e) {
         console.log("file loaded succesfully");
 
-        $.post('/api/parse/opensong', {
+        $.post("/api/parse/opensong", {
           file_contents: e.target.result,
           _token: _this3.csrf
         }, function (data) {
@@ -105675,7 +105707,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       });
     },
     addToGroup: function addToGroup(song) {
-      // check if there is original in the group and then 
+      // check if there is original in the group and then
       if (song.song_lyrics.filter(function (sl) {
         return sl.type == 0;
       }).length > 0) this.model.song.song_lyrics[0].type = 1;
@@ -105719,8 +105751,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}}]}}],"loc":{"start":0,"end":398}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        id\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thumbnail_url"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"download_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thumbnail_url"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":603}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        id\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n    externals {\n        id\n        public_name\n        url\n        type\n        thumbnail_url\n    }\n    files {\n        id\n        public_name\n        download_url\n        type\n        thumbnail_url\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -105762,206 +105794,278 @@ var render = function() {
         { attrs: { fluid: "", "grid-list-xs": "" } },
         [
           _c(
-            "v-layout",
-            { attrs: { row: "" } },
+            "v-tabs",
+            { attrs: { color: "transparent" } },
             [
+              _c("v-tab", [_vm._v("Údaje o písni")]),
+              _vm._v(" "),
+              _c("v-tab", [_vm._v("Text")]),
+              _vm._v(" "),
               _c(
-                "v-flex",
-                { attrs: { xs12: "", md6: "" } },
+                "v-tab-item",
                 [
                   _c(
-                    "v-form",
-                    { ref: "form" },
+                    "v-layout",
+                    { attrs: { row: "", "pt-2": "" } },
                     [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Název písně",
-                          required: "",
-                          "data-vv-name": "input.name",
-                          "error-messages": _vm.errors.collect("input.name")
-                        },
-                        on: { input: _vm.onNameChange },
-                        model: {
-                          value: _vm.model.name,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "name", $$v)
-                          },
-                          expression: "model.name"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("items-combo-box", {
-                        attrs: {
-                          "p-items": _vm.authors,
-                          label: "Autoři",
-                          "create-label":
-                            "Vyberte autora z nabídky nebo vytvořte nového",
-                          multiple: true
-                        },
-                        model: {
-                          value: _vm.model.authors,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "authors", $$v)
-                          },
-                          expression: "model.authors"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-checkbox", {
-                        attrs: {
-                          label: "Anonymní autor (nezobrazovat v to-do)"
-                        },
-                        model: {
-                          value: _vm.model.has_anonymous_author,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "has_anonymous_author", $$v)
-                          },
-                          expression: "model.has_anonymous_author"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.model.song && _vm.model_database.song
-                        ? [
-                            _c("song-lyrics-group", {
-                              attrs: { "edit-id": _vm.model.id },
-                              model: {
-                                value: _vm.model.song.song_lyrics,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.model.song, "song_lyrics", $$v)
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        [
+                          _c(
+                            "v-form",
+                            { ref: "form" },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Název písně",
+                                  required: "",
+                                  "data-vv-name": "input.name",
+                                  "error-messages": _vm.errors.collect(
+                                    "input.name"
+                                  )
                                 },
-                                expression: "model.song.song_lyrics"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.model.song.song_lyrics.length > 1
-                              ? _c(
-                                  "v-btn",
-                                  {
-                                    attrs: { color: "error", outline: "" },
-                                    on: { click: _vm.resetGroup }
+                                on: { input: _vm.onNameChange },
+                                model: {
+                                  value: _vm.model.name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "name", $$v)
                                   },
-                                  [_vm._v("Odstranit píseň ze skupiny")]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.model_database.song.song_lyrics.length == 1 &&
-                            _vm.model.song.song_lyrics.length == 1
-                              ? _c("select-song-group-dialog", {
-                                  attrs: { outline: "" },
-                                  on: { submit: _vm.addToGroup }
-                                })
-                              : _vm._e()
-                          ]
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("items-combo-box", {
-                        attrs: {
-                          "p-items": _vm.tags_unofficial,
-                          label: "Štítky",
-                          "create-label":
-                            "Vyberte štítek z nabídky nebo vytvořte nový",
-                          multiple: true
-                        },
-                        model: {
-                          value: _vm.model.tags_unofficial,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "tags_unofficial", $$v)
-                          },
-                          expression: "model.tags_unofficial"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("items-combo-box", {
-                        attrs: {
-                          "p-items": _vm.tags_official,
-                          label: "Liturgie",
-                          "create-label": "Vyberte část liturgie z nabídky",
-                          multiple: true
-                        },
-                        model: {
-                          value: _vm.model.tags_official,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "tags_official", $$v)
-                          },
-                          expression: "model.tags_official"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { items: _vm.lang_values, label: "Jazyk" },
-                        model: {
-                          value: _vm.model.lang,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "lang", $$v)
-                          },
-                          expression: "model.lang"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { id: "file_select" },
-                          on: {
-                            click: function($event) {
-                              return _vm.$refs.fileinput.click()
-                            }
-                          }
-                        },
-                        [_vm._v("Nahrát ze souboru OpenSong")]
+                                  expression: "model.name"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("items-combo-box", {
+                                attrs: {
+                                  "p-items": _vm.authors,
+                                  label: "Autoři",
+                                  "create-label":
+                                    "Vyberte autora z nabídky nebo vytvořte nového",
+                                  multiple: true
+                                },
+                                model: {
+                                  value: _vm.model.authors,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "authors", $$v)
+                                  },
+                                  expression: "model.authors"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-checkbox", {
+                                attrs: {
+                                  label: "Anonymní autor (nezobrazovat v to-do)"
+                                },
+                                model: {
+                                  value: _vm.model.has_anonymous_author,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.model,
+                                      "has_anonymous_author",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "model.has_anonymous_author"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.model.song && _vm.model_database.song
+                                ? _c(
+                                    "div",
+                                    { staticClass: "mb-3" },
+                                    [
+                                      _c("song-lyrics-group", {
+                                        attrs: { "edit-id": _vm.model.id },
+                                        model: {
+                                          value: _vm.model.song.song_lyrics,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.model.song,
+                                              "song_lyrics",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "model.song.song_lyrics"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.model.song.song_lyrics.length > 1
+                                        ? _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "error",
+                                                outline: ""
+                                              },
+                                              on: { click: _vm.resetGroup }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Odstranit píseň ze skupiny"
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.model_database.song.song_lyrics
+                                        .length == 1 &&
+                                      _vm.model.song.song_lyrics.length == 1
+                                        ? _c("select-song-group-dialog", {
+                                            attrs: { outline: "" },
+                                            on: { submit: _vm.addToGroup }
+                                          })
+                                        : _vm._e()
+                                    ],
+                                    1
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("items-combo-box", {
+                                attrs: {
+                                  "p-items": _vm.tags_unofficial,
+                                  label: "Štítky",
+                                  "create-label":
+                                    "Vyberte štítek z nabídky nebo vytvořte nový",
+                                  multiple: true
+                                },
+                                model: {
+                                  value: _vm.model.tags_unofficial,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "tags_unofficial", $$v)
+                                  },
+                                  expression: "model.tags_unofficial"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("items-combo-box", {
+                                attrs: {
+                                  "p-items": _vm.tags_official,
+                                  label: "Liturgie",
+                                  "create-label":
+                                    "Vyberte část liturgie z nabídky",
+                                  multiple: true
+                                },
+                                model: {
+                                  value: _vm.model.tags_official,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "tags_official", $$v)
+                                  },
+                                  expression: "model.tags_official"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
                       ),
                       _vm._v(" "),
-                      _c("input", {
-                        ref: "fileinput",
-                        staticClass: "d-none",
-                        attrs: { type: "file" },
-                        on: { change: _vm.handleOpensongFile }
-                      }),
-                      _vm._v(" "),
-                      _c("v-textarea", {
-                        attrs: {
-                          "auto-grow": "",
-                          outline: "",
-                          name: "input-7-4",
-                          label: "Text"
-                        },
-                        model: {
-                          value: _vm.model.lyrics,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "lyrics", $$v)
-                          },
-                          expression: "model.lyrics"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("Uložit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.reset }
-                        },
-                        [_vm._v("Vrátit změny")]
-                      )
+                      _c("v-flex", { attrs: { xs12: "", md6: "" } })
                     ],
-                    2
+                    1
                   )
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("v-flex", { attrs: { xs12: "", md6: "" } })
+              _c(
+                "v-tab-item",
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        [
+                          _c("v-select", {
+                            attrs: { items: _vm.lang_values, label: "Jazyk" },
+                            model: {
+                              value: _vm.model.lang,
+                              callback: function($$v) {
+                                _vm.$set(_vm.model, "lang", $$v)
+                              },
+                              expression: "model.lang"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { id: "file_select" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$refs.fileinput.click()
+                                }
+                              }
+                            },
+                            [_vm._v("Nahrát ze souboru OpenSong")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            ref: "fileinput",
+                            staticClass: "d-none",
+                            attrs: { type: "file" },
+                            on: { change: _vm.handleOpensongFile }
+                          }),
+                          _vm._v(" "),
+                          _c("v-textarea", {
+                            attrs: {
+                              "auto-grow": "",
+                              outline: "",
+                              name: "input-7-4",
+                              label: "Text"
+                            },
+                            model: {
+                              value: _vm.model.lyrics,
+                              callback: function($$v) {
+                                _vm.$set(_vm.model, "lyrics", $$v)
+                              },
+                              expression: "model.lyrics"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        _vm._l(_vm.model.externals, function(external) {
+                          return _c("v-img", {
+                            key: external.id,
+                            staticClass: "grey lighten-2",
+                            attrs: {
+                              src: external.thubmnail_url,
+                              "lazy-src": external.thubmnail_url,
+                              "aspect-ratio": "1"
+                            }
+                          })
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.submit } },
+            [_vm._v("Uložit")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.reset } },
+            [_vm._v("Vrátit změny")]
           )
         ],
         1
