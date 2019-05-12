@@ -81,7 +81,6 @@ export default {
 
   mounted(){
     this.items[0].header = this.createLabel;
-    // Vue.set(this.items[0], "header")
   },
 
   watch: {
@@ -90,6 +89,9 @@ export default {
       if(!Array.isArray(val)) return;
 
       if (val.length === prev.length) return;
+
+      // fix when the search string remained after selecting an item
+      this.search = null;
 
       this.internalValue = val.map(v => {
         if (typeof v === "string") {
@@ -105,6 +107,7 @@ export default {
     },
 
     pItems(val, prev) {
+        console.log("updated " + this.pItems.length);
         this.items = this.items.concat(this.pItems);
     }
   },

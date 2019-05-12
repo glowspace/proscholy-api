@@ -68015,7 +68015,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   mounted: function mounted() {
     this.items[0].header = this.createLabel;
-    // Vue.set(this.items[0], "header")
   },
 
 
@@ -68027,6 +68026,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!Array.isArray(val)) return;
 
       if (val.length === prev.length) return;
+
+      // fix when the search string remained after selecting an item
+      this.search = null;
 
       this.internalValue = val.map(function (v) {
         if (typeof v === "string") {
@@ -68041,6 +68043,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     pItems: function pItems(val, prev) {
+      console.log("updated " + this.pItems.length);
       this.items = this.items.concat(this.pItems);
     }
   },
@@ -106623,11 +106626,29 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
     _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
     _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
+    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject6 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -106692,9 +106713,11 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 
 var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
 
-var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject4);
+var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject4);
 
-var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject5);
+var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject5);
+
+var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject6);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id", "csrf"],
@@ -106715,7 +106738,9 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         lyrics: undefined,
         tags_unofficial: [],
         tags_official: [],
-        authors: []
+        authors: [],
+        song: undefined,
+        siblings: []
       },
       is_original_values: [{ value: true, text: "Originál" }, { value: false, text: "Překlad" }],
       lang_values: []
@@ -106794,6 +106819,9 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         }
       }
     },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
+    },
     authors: {
       query: FETCH_AUTHORS
     },
@@ -106856,6 +106884,14 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       }
 
       return false;
+    },
+    disableAssignSongs: function disableAssignSongs() {
+      if (!this.model_database) return null;
+
+      var hasSavedSiblings = this.model_database.siblings.length > 0;
+      var isDomestic = this.model_database.song.name === this.model_database.name;
+
+      return hasSavedSiblings && isDomestic;
     }
   },
 
@@ -106986,7 +107022,6 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
     handleOpensongFile: function handleOpensongFile(e) {
       var _this3 = this;
 
-      // console.log(e);
       var file = e.target.files[0];
 
       var reader = new FileReader();
@@ -106997,8 +107032,6 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
           file_contents: e.target.result,
           _token: _this3.csrf
         }, function (data) {
-          // var input_lyrics = document.getElementById("input_lyrics");
-          // input_lyrics.value = data;
           _this3.model.lyrics = data;
         });
       };
@@ -107013,8 +107046,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":305}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"is_original"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"siblings"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":380}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    is_original\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        name\n    }\n    siblings {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -107124,6 +107157,50 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
+                      _vm.disableAssignSongs === true
+                        ? [
+                            _c("span", [
+                              _vm._v(
+                                "Píseň je nastavena jako originál následujících skladeb:"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.model.siblings, function(song_lyric) {
+                              return _c("p", { key: song_lyric.id }, [
+                                _vm._v(_vm._s(song_lyric.name))
+                              ])
+                            })
+                          ]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.disableAssignSongs === false,
+                            expression: "disableAssignSongs === false"
+                          }
+                        ],
+                        attrs: {
+                          "p-items": _vm.song_lyrics,
+                          label: "Asociované písně",
+                          "create-label":
+                            "Vyberte píseň z nabídky nebo vytvořte novou",
+                          multiple: true,
+                          "enable-custom": ""
+                        },
+                        model: {
+                          value: _vm.model.siblings,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "siblings", $$v)
+                          },
+                          expression: "model.siblings"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
                       _c("items-combo-box", {
                         attrs: {
                           "p-items": _vm.tags_unofficial,
@@ -107214,7 +107291,7 @@ var render = function() {
                         [_vm._v("Uložit")]
                       )
                     ],
-                    1
+                    2
                   )
                 ],
                 1

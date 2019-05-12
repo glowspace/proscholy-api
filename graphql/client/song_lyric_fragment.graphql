@@ -17,4 +17,11 @@ fragment SongLyricFillableFragment on SongLyric  {
         name
     }
     lyrics
+    song {
+        name
+    }
+    siblings {
+        id
+        name
+    }
 }

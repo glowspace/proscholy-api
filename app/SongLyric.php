@@ -259,7 +259,7 @@ class SongLyric extends Model
 
     public function getSiblings()
     {
-        return $this->song->song_lyrics()->where('id', '!=', $this->id);
+        return $this->song->song_lyrics()->where('id', '!=', $this->id)->get();
     }
 
     public function hasSiblings()

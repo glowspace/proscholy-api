@@ -24,6 +24,23 @@
               label="Anonymní autor (nezobrazovat v to-do)"
             ></v-checkbox>
             <v-select :items="is_original_values" v-model="model.is_original" label="Typ"></v-select>
+
+            <template v-if="disableAssignSongs === true">
+                <span>Píseň je nastavena jako originál následujících skladeb:</span>
+                <p v-for="song_lyric in model.siblings" v-bind:key="song_lyric.id">{{ song_lyric.name }}</p>
+            </template>
+            <!-- here must go v-show, otherwise if using v-if, the items property won't get updated -->
+            <items-combo-box v-show="disableAssignSongs === false"
+              v-bind:p-items="song_lyrics"
+              v-model="model.siblings"
+              label="Asociované písně"
+              create-label="Vyberte píseň z nabídky nebo vytvořte novou"
+              :multiple="true"
+              enable-custom
+            ></items-combo-box>
+
+            <br>
+
             <items-combo-box
               v-bind:p-items="tags_unofficial"
               v-model="model.tags_unofficial"
@@ -84,6 +101,15 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
+const FETCH_SONG_LYRICS = gql`
+  query {
+    song_lyrics {
+      id
+      name
+    }
+  }
+`;
+
 const FETCH_TAGS_UNOFFICIAL = gql`
   query {
     tags_unofficial: tags(type: 0) {
@@ -121,7 +147,9 @@ export default {
         lyrics: undefined,
         tags_unofficial: [],
         tags_official: [],
-        authors: []
+        authors: [],
+        song: undefined,
+        siblings: [],
       },
       is_original_values: [
         { value: true, text: "Originál" },
@@ -153,6 +181,9 @@ export default {
           this.lang_values.push({ value: key, text: value });
         }
       }
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
     },
     authors: {
       query: FETCH_AUTHORS
@@ -192,6 +223,16 @@ export default {
       }
 
       return false;
+    },
+
+    disableAssignSongs() {
+      if (!this.model_database)
+        return null;
+
+      var hasSavedSiblings = this.model_database.siblings.length > 0;
+      var isDomestic = this.model_database.song.name === this.model_database.name;
+
+      return hasSavedSiblings && isDomestic;
     }
   },
 
@@ -307,7 +348,6 @@ export default {
     },
 
     handleOpensongFile(e) {
-      // console.log(e);
       var file = e.target.files[0];
 
       var reader = new FileReader();
@@ -321,15 +361,13 @@ export default {
             _token: this.csrf
           },
           data => {
-            // var input_lyrics = document.getElementById("input_lyrics");
-            // input_lyrics.value = data;
             this.model.lyrics = data;
           }
         );
       };
 
       reader.readAsText(file);
-    }
+    },
   }
 };
 </script>

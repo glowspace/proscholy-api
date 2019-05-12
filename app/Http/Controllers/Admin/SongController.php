@@ -86,6 +86,11 @@ class SongController extends Controller
 
     public function edit(SongLyric $song_lyric)
     {
+        return view('admin.song.edit', compact('song_lyric'));
+    }
+
+    public function edit_old(SongLyric $song_lyric)
+    {
         // check if user has permissions to edit current song
         if (Auth::user()->hasRole('autor') && 
             SongLyric::restricted()->where('id', $song_lyric->id)->count() == 0) {

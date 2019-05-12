@@ -60,7 +60,7 @@
                         @else
                             <p>Píseň je označena jako verze následujících písní: </p>
                         @endif
-                        @foreach ($song_lyric->getSiblings()->get() as $item)
+                        @foreach ($song_lyric->getSiblings() as $item)
                             {{ $item->name }}<br/>
                         @endforeach
                         <br/>
