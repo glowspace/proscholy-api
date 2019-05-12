@@ -101,6 +101,15 @@ class UpdateSongLyric
                     'song_id' => $new_song->id,
                     'type' => $sl_object["type"]
                 ]);
+            }
+            // 3. case: no insertions/deletions, just update the types
+            elseif ($song_lyric->getSiblings()->count() + 1 == $sl_group->count()) {
+                foreach ($sl_group as $sl_object) {
+                    $song_lyric = SongLyric::find($sl_object["id"]);
+                    $song_lyric->update([
+                        'type' => $sl_object["type"]
+                    ]);
+                }
             } else {
                 // todo: validation error
                 Log::error("situation 3 - error");
