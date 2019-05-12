@@ -67935,6 +67935,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__ = __webpack_require__(34);
 //
 //
 //
@@ -67992,6 +67993,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // todo: enable-custom set to false not working for multiple entry
@@ -68070,8 +68073,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return val != null ? val : "";
       };
 
-      var text = hasValue(itemText);
-      var query = hasValue(queryText);
+      var text = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__["a" /* default */])(hasValue(itemText));
+      var query = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__["a" /* default */])(hasValue(queryText));
 
       return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
     },
@@ -107820,7 +107823,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-var _templateObject = _taggedTemplateLiteral(["\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n"], ["\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n"]);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
+var _templateObject = _taggedTemplateLiteral(['\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n'], ['\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -107851,6 +107855,8 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+
 
 
 
@@ -107910,6 +107916,18 @@ var FETCH_SONGS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
     onSubmit: function onSubmit() {
       this.dialog = false;
       this.$emit("submit", this.song);
+    },
+    filter: function filter(item, queryText, itemText) {
+      if (item.header) return false;
+
+      var hasValue = function hasValue(val) {
+        return val != null ? val : "";
+      };
+
+      var text = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(hasValue(itemText));
+      var query = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(hasValue(queryText));
+
+      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
     }
   }
 });
@@ -107971,6 +107989,7 @@ var render = function() {
                   items: _vm.songs,
                   "item-value": "id",
                   "item-text": _vm.getSongLyricNames,
+                  filter: _vm.filter,
                   label: "Vyberte píseň resp. skupinu písní"
                 },
                 model: {

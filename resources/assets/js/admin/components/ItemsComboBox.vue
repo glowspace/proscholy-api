@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import removeDiacritics from '../helpers/removeDiacritics';
+
 export default {
   // todo: enable-custom set to false not working for multiple entry
   props: ["p-items", "value", "label", "create-label", "multiple", "enable-custom"],
@@ -127,8 +129,8 @@ export default {
 
       const hasValue = val => (val != null ? val : "");
 
-      const text = hasValue(itemText);
-      const query = hasValue(queryText);
+      const text = removeDiacritics(hasValue(itemText));
+      const query = removeDiacritics(hasValue(queryText));
 
       return (
         text

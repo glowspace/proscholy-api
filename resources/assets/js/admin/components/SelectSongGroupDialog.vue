@@ -12,6 +12,7 @@
           :items="songs"
           item-value="id"
           :item-text="getSongLyricNames"
+          :filter="filter"
           label="Vyberte píseň resp. skupinu písní"
         ></v-combobox>
 
@@ -27,6 +28,7 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
+import removeDiacritics from '../helpers/removeDiacritics';
 
 const FETCH_SONGS = gql`
   query {
@@ -75,7 +77,23 @@ export default {
     onSubmit(){
       this.dialog = false;
       this.$emit("submit", this.song);
-    }
+    },
+
+    filter(item, queryText, itemText) {
+      if (item.header) return false;
+
+      const hasValue = val => (val != null ? val : "");
+
+      const text = removeDiacritics(hasValue(itemText));
+      const query = removeDiacritics(hasValue(queryText));
+
+      return (
+        text
+          .toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
+      );
+    },
   }
 };
 </script>
