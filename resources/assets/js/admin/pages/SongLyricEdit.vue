@@ -2,7 +2,7 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-      <v-tabs  color="transparent" v-on:change="onTabChange">
+      <v-tabs color="transparent" v-on:change="onTabChange">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab-item>
@@ -69,22 +69,36 @@
           <v-layout row>
             <v-flex xs12 md6>
               <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
-                <a
-                  id="file_select"
-                  class="btn btn-primary"
-                  v-on:click="$refs.fileinput.click()"
-                >Nahrát ze souboru OpenSong</a>
-                <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
-                <v-textarea auto-grow outline name="input-7-4" label="Text" ref="textarea" v-model="model.lyrics"></v-textarea>
+              <a
+                id="file_select"
+                class="btn btn-primary"
+                v-on:click="$refs.fileinput.click()"
+              >Nahrát ze souboru OpenSong</a>
+              <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
+              <v-textarea
+                auto-grow
+                outline
+                name="input-7-4"
+                label="Text"
+                ref="textarea"
+                v-model="model.lyrics"
+              ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
               <!-- externals and files view -->
               <!-- <p v-for="external in model.externals" v-bind:key="external.id">{{ external.thumbnail_url }}</p> -->
               <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
-              <v-img v-for="external in model.externals" v-bind:key="external.id"
-                  v-bind:src="external.thumbnail_url"
-                  class="grey lighten-2"
-                ></v-img>
+              <template v-if="thumbnailables">
+                <v-select
+                  :items="thumbnailables"
+                  item-value="thumbnail_url"
+                  item-text="public_name"
+                  label="Náhled not (volba souboru/externího odkazu)"
+                  v-model="selected_thumbnail_url"
+                ></v-select>
+
+                <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img>
+              </template>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -183,7 +197,8 @@ export default {
         files: [],
         song: undefined
       },
-      lang_values: []
+      lang_values: [],
+      selected_thumbnail_url: undefined
     };
   },
 
@@ -208,6 +223,11 @@ export default {
 
         for (const [key, value] of Object.entries(parsed_obj)) {
           this.lang_values.push({ value: key, text: value });
+        }
+
+        // if there are any thumbnailables, then select the first one
+        if (this.thumbnailables.length) {
+          this.selected_thumbnail_url = this.thumbnailables[0].thumbnail_url;
         }
       }
     },
@@ -249,6 +269,15 @@ export default {
       }
 
       return false;
+    },
+
+    thumbnailables() {
+      // mix the externals and files that can have thumbnail
+      return this.model.externals
+        .concat(this.model.files)
+        .filter(thumbnailable => {
+          return thumbnailable.thumbnail_url ? true : false;
+        });
     }
   },
 
@@ -331,11 +360,10 @@ export default {
 
     onTabChange() {
       // it is needed to refresh the textareas manually
-      if (this.$refs.textarea)
-      {
+      if (this.$refs.textarea) {
         // somehow it doesn"t work without settimeout, not even with Vue.nexttick
         setTimeout(() => {
-            this.$refs.textarea.calculateInputHeight();
+          this.$refs.textarea.calculateInputHeight();
         }, 1);
       }
     },

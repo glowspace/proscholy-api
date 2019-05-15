@@ -68543,6 +68543,20 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -68587,7 +68601,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
         files: [],
         song: undefined
       },
-      lang_values: []
+      lang_values: [],
+      selected_thumbnail_url: undefined
     };
   },
 
@@ -68648,6 +68663,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 
             this.lang_values.push({ value: key, text: value });
           }
+
+          // if there are any thumbnailables, then select the first one
         } catch (err) {
           _didIteratorError2 = true;
           _iteratorError2 = err;
@@ -68661,6 +68678,10 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
               throw _iteratorError2;
             }
           }
+        }
+
+        if (this.thumbnailables.length) {
+          this.selected_thumbnail_url = this.thumbnailables[0].thumbnail_url;
         }
       }
     },
@@ -68726,6 +68747,12 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       }
 
       return false;
+    },
+    thumbnailables: function thumbnailables() {
+      // mix the externals and files that can have thumbnail
+      return this.model.externals.concat(this.model.files).filter(function (thumbnailable) {
+        return thumbnailable.thumbnail_url ? true : false;
+      });
     }
   },
 
@@ -69953,14 +69980,34 @@ var render = function() {
                       _c(
                         "v-flex",
                         { attrs: { xs12: "", md6: "" } },
-                        _vm._l(_vm.model.externals, function(external) {
-                          return _c("v-img", {
-                            key: external.id,
-                            staticClass: "grey lighten-2",
-                            attrs: { src: external.thumbnail_url }
-                          })
-                        }),
-                        1
+                        [
+                          _vm.thumbnailables
+                            ? [
+                                _c("v-select", {
+                                  attrs: {
+                                    items: _vm.thumbnailables,
+                                    "item-value": "thumbnail_url",
+                                    "item-text": "public_name",
+                                    label:
+                                      "Náhled not (volba souboru/externího odkazu)"
+                                  },
+                                  model: {
+                                    value: _vm.selected_thumbnail_url,
+                                    callback: function($$v) {
+                                      _vm.selected_thumbnail_url = $$v
+                                    },
+                                    expression: "selected_thumbnail_url"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("v-img", {
+                                  staticClass: "grey lighten-2",
+                                  attrs: { src: _vm.selected_thumbnail_url }
+                                })
+                              ]
+                            : _vm._e()
+                        ],
+                        2
                       )
                     ],
                     1
