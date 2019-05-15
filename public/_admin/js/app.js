@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 121);
+/******/ 	return __webpack_require__(__webpack_require__.s = 122);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(17);
+var bind = __webpack_require__(18);
 var isBuffer = __webpack_require__(40);
 
 /*global toString:true*/
@@ -589,33 +589,6 @@ function __importDefault(mod) {
 /* 2 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -722,7 +695,220 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parser = __webpack_require__(62);
+
+var parse = parser.parse;
+
+// Strip insignificant whitespace
+// Note that this could do a lot more, such as reorder fields etc.
+function normalize(string) {
+  return string.replace(/[\s,]+/g, ' ').trim();
+}
+
+// A map docString -> graphql document
+var docCache = {};
+
+// A map fragmentName -> [normalized source]
+var fragmentSourceMap = {};
+
+function cacheKeyFromLoc(loc) {
+  return normalize(loc.source.body.substring(loc.start, loc.end));
+}
+
+// For testing.
+function resetCaches() {
+  docCache = {};
+  fragmentSourceMap = {};
+}
+
+// Take a unstripped parsed document (query/mutation or even fragment), and
+// check all fragment definitions, checking for name->source uniqueness.
+// We also want to make sure only unique fragments exist in the document.
+var printFragmentWarnings = true;
+function processFragments(ast) {
+  var astFragmentMap = {};
+  var definitions = [];
+
+  for (var i = 0; i < ast.definitions.length; i++) {
+    var fragmentDefinition = ast.definitions[i];
+
+    if (fragmentDefinition.kind === 'FragmentDefinition') {
+      var fragmentName = fragmentDefinition.name.value;
+      var sourceKey = cacheKeyFromLoc(fragmentDefinition.loc);
+
+      // We know something about this fragment
+      if (fragmentSourceMap.hasOwnProperty(fragmentName) && !fragmentSourceMap[fragmentName][sourceKey]) {
+
+        // this is a problem because the app developer is trying to register another fragment with
+        // the same name as one previously registered. So, we tell them about it.
+        if (printFragmentWarnings) {
+          console.warn("Warning: fragment with name " + fragmentName + " already exists.\n"
+            + "graphql-tag enforces all fragment names across your application to be unique; read more about\n"
+            + "this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names");
+        }
+
+        fragmentSourceMap[fragmentName][sourceKey] = true;
+
+      } else if (!fragmentSourceMap.hasOwnProperty(fragmentName)) {
+        fragmentSourceMap[fragmentName] = {};
+        fragmentSourceMap[fragmentName][sourceKey] = true;
+      }
+
+      if (!astFragmentMap[sourceKey]) {
+        astFragmentMap[sourceKey] = true;
+        definitions.push(fragmentDefinition);
+      }
+    } else {
+      definitions.push(fragmentDefinition);
+    }
+  }
+
+  ast.definitions = definitions;
+  return ast;
+}
+
+function disableFragmentWarnings() {
+  printFragmentWarnings = false;
+}
+
+function stripLoc(doc, removeLocAtThisLevel) {
+  var docType = Object.prototype.toString.call(doc);
+
+  if (docType === '[object Array]') {
+    return doc.map(function (d) {
+      return stripLoc(d, removeLocAtThisLevel);
+    });
+  }
+
+  if (docType !== '[object Object]') {
+    throw new Error('Unexpected input.');
+  }
+
+  // We don't want to remove the root loc field so we can use it
+  // for fragment substitution (see below)
+  if (removeLocAtThisLevel && doc.loc) {
+    delete doc.loc;
+  }
+
+  // https://github.com/apollographql/graphql-tag/issues/40
+  if (doc.loc) {
+    delete doc.loc.startToken;
+    delete doc.loc.endToken;
+  }
+
+  var keys = Object.keys(doc);
+  var key;
+  var value;
+  var valueType;
+
+  for (key in keys) {
+    if (keys.hasOwnProperty(key)) {
+      value = doc[keys[key]];
+      valueType = Object.prototype.toString.call(value);
+
+      if (valueType === '[object Object]' || valueType === '[object Array]') {
+        doc[keys[key]] = stripLoc(value, true);
+      }
+    }
+  }
+
+  return doc;
+}
+
+var experimentalFragmentVariables = false;
+function parseDocument(doc) {
+  var cacheKey = normalize(doc);
+
+  if (docCache[cacheKey]) {
+    return docCache[cacheKey];
+  }
+
+  var parsed = parse(doc, { experimentalFragmentVariables: experimentalFragmentVariables });
+  if (!parsed || parsed.kind !== 'Document') {
+    throw new Error('Not a valid GraphQL document.');
+  }
+
+  // check that all "new" fragments inside the documents are consistent with
+  // existing fragments of the same name
+  parsed = processFragments(parsed);
+  parsed = stripLoc(parsed, false);
+  docCache[cacheKey] = parsed;
+
+  return parsed;
+}
+
+function enableExperimentalFragmentVariables() {
+  experimentalFragmentVariables = true;
+}
+
+function disableExperimentalFragmentVariables() {
+  experimentalFragmentVariables = false;
+}
+
+// XXX This should eventually disallow arbitrary string interpolation, like Relay does
+function gql(/* arguments */) {
+  var args = Array.prototype.slice.call(arguments);
+
+  var literals = args[0];
+
+  // We always get literals[0] and then matching post literals for each arg given
+  var result = (typeof(literals) === "string") ? literals : literals[0];
+
+  for (var i = 1; i < args.length; i++) {
+    if (args[i] && args[i].kind && args[i].kind === 'Document') {
+      result += args[i].loc.source.body;
+    } else {
+      result += args[i];
+    }
+
+    result += literals[i];
+  }
+
+  return parseDocument(result);
+}
+
+// Support typescript, which isn't as nice as Babel about default exports
+gql.default = gql;
+gql.resetCaches = resetCaches;
+gql.disableFragmentWarnings = disableFragmentWarnings;
+gql.enableExperimentalFragmentVariables = enableExperimentalFragmentVariables;
+gql.disableExperimentalFragmentVariables = disableExperimentalFragmentVariables;
+
+module.exports = gql;
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -912,7 +1098,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1920,193 +2106,7 @@ function stripSymbols(data) {
 
 //# sourceMappingURL=bundle.esm.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parser = __webpack_require__(62);
-
-var parse = parser.parse;
-
-// Strip insignificant whitespace
-// Note that this could do a lot more, such as reorder fields etc.
-function normalize(string) {
-  return string.replace(/[\s,]+/g, ' ').trim();
-}
-
-// A map docString -> graphql document
-var docCache = {};
-
-// A map fragmentName -> [normalized source]
-var fragmentSourceMap = {};
-
-function cacheKeyFromLoc(loc) {
-  return normalize(loc.source.body.substring(loc.start, loc.end));
-}
-
-// For testing.
-function resetCaches() {
-  docCache = {};
-  fragmentSourceMap = {};
-}
-
-// Take a unstripped parsed document (query/mutation or even fragment), and
-// check all fragment definitions, checking for name->source uniqueness.
-// We also want to make sure only unique fragments exist in the document.
-var printFragmentWarnings = true;
-function processFragments(ast) {
-  var astFragmentMap = {};
-  var definitions = [];
-
-  for (var i = 0; i < ast.definitions.length; i++) {
-    var fragmentDefinition = ast.definitions[i];
-
-    if (fragmentDefinition.kind === 'FragmentDefinition') {
-      var fragmentName = fragmentDefinition.name.value;
-      var sourceKey = cacheKeyFromLoc(fragmentDefinition.loc);
-
-      // We know something about this fragment
-      if (fragmentSourceMap.hasOwnProperty(fragmentName) && !fragmentSourceMap[fragmentName][sourceKey]) {
-
-        // this is a problem because the app developer is trying to register another fragment with
-        // the same name as one previously registered. So, we tell them about it.
-        if (printFragmentWarnings) {
-          console.warn("Warning: fragment with name " + fragmentName + " already exists.\n"
-            + "graphql-tag enforces all fragment names across your application to be unique; read more about\n"
-            + "this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names");
-        }
-
-        fragmentSourceMap[fragmentName][sourceKey] = true;
-
-      } else if (!fragmentSourceMap.hasOwnProperty(fragmentName)) {
-        fragmentSourceMap[fragmentName] = {};
-        fragmentSourceMap[fragmentName][sourceKey] = true;
-      }
-
-      if (!astFragmentMap[sourceKey]) {
-        astFragmentMap[sourceKey] = true;
-        definitions.push(fragmentDefinition);
-      }
-    } else {
-      definitions.push(fragmentDefinition);
-    }
-  }
-
-  ast.definitions = definitions;
-  return ast;
-}
-
-function disableFragmentWarnings() {
-  printFragmentWarnings = false;
-}
-
-function stripLoc(doc, removeLocAtThisLevel) {
-  var docType = Object.prototype.toString.call(doc);
-
-  if (docType === '[object Array]') {
-    return doc.map(function (d) {
-      return stripLoc(d, removeLocAtThisLevel);
-    });
-  }
-
-  if (docType !== '[object Object]') {
-    throw new Error('Unexpected input.');
-  }
-
-  // We don't want to remove the root loc field so we can use it
-  // for fragment substitution (see below)
-  if (removeLocAtThisLevel && doc.loc) {
-    delete doc.loc;
-  }
-
-  // https://github.com/apollographql/graphql-tag/issues/40
-  if (doc.loc) {
-    delete doc.loc.startToken;
-    delete doc.loc.endToken;
-  }
-
-  var keys = Object.keys(doc);
-  var key;
-  var value;
-  var valueType;
-
-  for (key in keys) {
-    if (keys.hasOwnProperty(key)) {
-      value = doc[keys[key]];
-      valueType = Object.prototype.toString.call(value);
-
-      if (valueType === '[object Object]' || valueType === '[object Array]') {
-        doc[keys[key]] = stripLoc(value, true);
-      }
-    }
-  }
-
-  return doc;
-}
-
-var experimentalFragmentVariables = false;
-function parseDocument(doc) {
-  var cacheKey = normalize(doc);
-
-  if (docCache[cacheKey]) {
-    return docCache[cacheKey];
-  }
-
-  var parsed = parse(doc, { experimentalFragmentVariables: experimentalFragmentVariables });
-  if (!parsed || parsed.kind !== 'Document') {
-    throw new Error('Not a valid GraphQL document.');
-  }
-
-  // check that all "new" fragments inside the documents are consistent with
-  // existing fragments of the same name
-  parsed = processFragments(parsed);
-  parsed = stripLoc(parsed, false);
-  docCache[cacheKey] = parsed;
-
-  return parsed;
-}
-
-function enableExperimentalFragmentVariables() {
-  experimentalFragmentVariables = true;
-}
-
-function disableExperimentalFragmentVariables() {
-  experimentalFragmentVariables = false;
-}
-
-// XXX This should eventually disallow arbitrary string interpolation, like Relay does
-function gql(/* arguments */) {
-  var args = Array.prototype.slice.call(arguments);
-
-  var literals = args[0];
-
-  // We always get literals[0] and then matching post literals for each arg given
-  var result = (typeof(literals) === "string") ? literals : literals[0];
-
-  for (var i = 1; i < args.length; i++) {
-    if (args[i] && args[i].kind && args[i].kind === 'Document') {
-      result += args[i].loc.source.body;
-    } else {
-      result += args[i];
-    }
-
-    result += literals[i];
-  }
-
-  return parseDocument(result);
-}
-
-// Support typescript, which isn't as nice as Babel about default exports
-gql.default = gql;
-gql.resetCaches = resetCaches;
-gql.disableFragmentWarnings = disableFragmentWarnings;
-gql.enableExperimentalFragmentVariables = enableExperimentalFragmentVariables;
-gql.disableExperimentalFragmentVariables = disableExperimentalFragmentVariables;
-
-module.exports = gql;
-
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
 /* 7 */
@@ -2192,327 +2192,6 @@ function toComment(sourceMap) {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export createOperation */
-/* unused harmony export makePromise */
-/* unused harmony export toPromise */
-/* unused harmony export fromPromise */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return fromError; });
-/* unused harmony export empty */
-/* unused harmony export from */
-/* unused harmony export split */
-/* unused harmony export concat */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApolloLink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return execute; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__ = __webpack_require__(31);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ts_invariant__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_apollo_utilities__ = __webpack_require__(5);
-/* unused harmony reexport getOperationName */
-
-
-
-
-
-
-
-
-function validateOperation(operation) {
-    var OPERATION_FIELDS = [
-        'query',
-        'operationName',
-        'variables',
-        'extensions',
-        'context',
-    ];
-    for (var _i = 0, _a = Object.keys(operation); _i < _a.length; _i++) {
-        var key = _a[_i];
-        if (OPERATION_FIELDS.indexOf(key) < 0) {
-            throw  false ? new InvariantError(2) : new __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["a" /* InvariantError */]("illegal argument: " + key);
-        }
-    }
-    return operation;
-}
-var LinkError = (function (_super) {
-    Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["c" /* __extends */])(LinkError, _super);
-    function LinkError(message, link) {
-        var _this = _super.call(this, message) || this;
-        _this.link = link;
-        return _this;
-    }
-    return LinkError;
-}(Error));
-function isTerminating(link) {
-    return link.request.length <= 1;
-}
-function toPromise(observable) {
-    var completed = false;
-    return new Promise(function (resolve, reject) {
-        observable.subscribe({
-            next: function (data) {
-                if (completed) {
-                    "development" === "production" || __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["b" /* invariant */].warn("Promise Wrapper does not support multiple results from Observable");
-                }
-                else {
-                    completed = true;
-                    resolve(data);
-                }
-            },
-            error: reject,
-        });
-    });
-}
-var makePromise = toPromise;
-function fromPromise(promise) {
-    return new __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */](function (observer) {
-        promise
-            .then(function (value) {
-            observer.next(value);
-            observer.complete();
-        })
-            .catch(observer.error.bind(observer));
-    });
-}
-function fromError(errorValue) {
-    return new __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */](function (observer) {
-        observer.error(errorValue);
-    });
-}
-function transformOperation(operation) {
-    var transformedOperation = {
-        variables: operation.variables || {},
-        extensions: operation.extensions || {},
-        operationName: operation.operationName,
-        query: operation.query,
-    };
-    if (!transformedOperation.operationName) {
-        transformedOperation.operationName =
-            typeof transformedOperation.query !== 'string'
-                ? Object(__WEBPACK_IMPORTED_MODULE_4_apollo_utilities__["n" /* getOperationName */])(transformedOperation.query)
-                : '';
-    }
-    return transformedOperation;
-}
-function createOperation(starting, operation) {
-    var context = Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, starting);
-    var setContext = function (next) {
-        if (typeof next === 'function') {
-            context = Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, context, next(context));
-        }
-        else {
-            context = Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, context, next);
-        }
-    };
-    var getContext = function () { return (Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, context)); };
-    Object.defineProperty(operation, 'setContext', {
-        enumerable: false,
-        value: setContext,
-    });
-    Object.defineProperty(operation, 'getContext', {
-        enumerable: false,
-        value: getContext,
-    });
-    Object.defineProperty(operation, 'toKey', {
-        enumerable: false,
-        value: function () { return getKey(operation); },
-    });
-    return operation;
-}
-function getKey(operation) {
-    return Object(__WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__["print"])(operation.query) + "|" + JSON.stringify(operation.variables) + "|" + operation.operationName;
-}
-
-function passthrough(op, forward) {
-    return forward ? forward(op) : __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
-}
-function toLink(handler) {
-    return typeof handler === 'function' ? new ApolloLink(handler) : handler;
-}
-function empty() {
-    return new ApolloLink(function () { return __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of(); });
-}
-function from(links) {
-    if (links.length === 0)
-        return empty();
-    return links.map(toLink).reduce(function (x, y) { return x.concat(y); });
-}
-function split(test, left, right) {
-    var leftLink = toLink(left);
-    var rightLink = toLink(right || new ApolloLink(passthrough));
-    if (isTerminating(leftLink) && isTerminating(rightLink)) {
-        return new ApolloLink(function (operation) {
-            return test(operation)
-                ? leftLink.request(operation) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of()
-                : rightLink.request(operation) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
-        });
-    }
-    else {
-        return new ApolloLink(function (operation, forward) {
-            return test(operation)
-                ? leftLink.request(operation, forward) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of()
-                : rightLink.request(operation, forward) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
-        });
-    }
-}
-var concat = function (first, second) {
-    var firstLink = toLink(first);
-    if (isTerminating(firstLink)) {
-        "development" === "production" || __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["b" /* invariant */].warn(new LinkError("You are calling concat on a terminating link, which will have no effect", firstLink));
-        return firstLink;
-    }
-    var nextLink = toLink(second);
-    if (isTerminating(nextLink)) {
-        return new ApolloLink(function (operation) {
-            return firstLink.request(operation, function (op) { return nextLink.request(op) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of(); }) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
-        });
-    }
-    else {
-        return new ApolloLink(function (operation, forward) {
-            return (firstLink.request(operation, function (op) {
-                return nextLink.request(op, forward) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
-            }) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of());
-        });
-    }
-};
-var ApolloLink = (function () {
-    function ApolloLink(request) {
-        if (request)
-            this.request = request;
-    }
-    ApolloLink.prototype.split = function (test, left, right) {
-        return this.concat(split(test, left, right || new ApolloLink(passthrough)));
-    };
-    ApolloLink.prototype.concat = function (next) {
-        return concat(this, next);
-    };
-    ApolloLink.prototype.request = function (operation, forward) {
-        throw  false ? new InvariantError(1) : new __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["a" /* InvariantError */]('request is not implemented');
-    };
-    ApolloLink.empty = empty;
-    ApolloLink.from = from;
-    ApolloLink.split = split;
-    ApolloLink.execute = execute;
-    return ApolloLink;
-}());
-function execute(link, operation) {
-    return (link.request(createOperation(operation.context, transformOperation(validateOperation(operation)))) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of());
-}
-
-
-//# sourceMappingURL=bundle.esm.js.map
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(42);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(18);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(18);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -2740,6 +2419,327 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export createOperation */
+/* unused harmony export makePromise */
+/* unused harmony export toPromise */
+/* unused harmony export fromPromise */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return fromError; });
+/* unused harmony export empty */
+/* unused harmony export from */
+/* unused harmony export split */
+/* unused harmony export concat */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApolloLink; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return execute; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__ = __webpack_require__(32);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ts_invariant__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_apollo_utilities__ = __webpack_require__(6);
+/* unused harmony reexport getOperationName */
+
+
+
+
+
+
+
+
+function validateOperation(operation) {
+    var OPERATION_FIELDS = [
+        'query',
+        'operationName',
+        'variables',
+        'extensions',
+        'context',
+    ];
+    for (var _i = 0, _a = Object.keys(operation); _i < _a.length; _i++) {
+        var key = _a[_i];
+        if (OPERATION_FIELDS.indexOf(key) < 0) {
+            throw  false ? new InvariantError(2) : new __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["a" /* InvariantError */]("illegal argument: " + key);
+        }
+    }
+    return operation;
+}
+var LinkError = (function (_super) {
+    Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["c" /* __extends */])(LinkError, _super);
+    function LinkError(message, link) {
+        var _this = _super.call(this, message) || this;
+        _this.link = link;
+        return _this;
+    }
+    return LinkError;
+}(Error));
+function isTerminating(link) {
+    return link.request.length <= 1;
+}
+function toPromise(observable) {
+    var completed = false;
+    return new Promise(function (resolve, reject) {
+        observable.subscribe({
+            next: function (data) {
+                if (completed) {
+                    "development" === "production" || __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["b" /* invariant */].warn("Promise Wrapper does not support multiple results from Observable");
+                }
+                else {
+                    completed = true;
+                    resolve(data);
+                }
+            },
+            error: reject,
+        });
+    });
+}
+var makePromise = toPromise;
+function fromPromise(promise) {
+    return new __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */](function (observer) {
+        promise
+            .then(function (value) {
+            observer.next(value);
+            observer.complete();
+        })
+            .catch(observer.error.bind(observer));
+    });
+}
+function fromError(errorValue) {
+    return new __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */](function (observer) {
+        observer.error(errorValue);
+    });
+}
+function transformOperation(operation) {
+    var transformedOperation = {
+        variables: operation.variables || {},
+        extensions: operation.extensions || {},
+        operationName: operation.operationName,
+        query: operation.query,
+    };
+    if (!transformedOperation.operationName) {
+        transformedOperation.operationName =
+            typeof transformedOperation.query !== 'string'
+                ? Object(__WEBPACK_IMPORTED_MODULE_4_apollo_utilities__["n" /* getOperationName */])(transformedOperation.query)
+                : '';
+    }
+    return transformedOperation;
+}
+function createOperation(starting, operation) {
+    var context = Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, starting);
+    var setContext = function (next) {
+        if (typeof next === 'function') {
+            context = Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, context, next(context));
+        }
+        else {
+            context = Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, context, next);
+        }
+    };
+    var getContext = function () { return (Object(__WEBPACK_IMPORTED_MODULE_2_tslib__["a" /* __assign */])({}, context)); };
+    Object.defineProperty(operation, 'setContext', {
+        enumerable: false,
+        value: setContext,
+    });
+    Object.defineProperty(operation, 'getContext', {
+        enumerable: false,
+        value: getContext,
+    });
+    Object.defineProperty(operation, 'toKey', {
+        enumerable: false,
+        value: function () { return getKey(operation); },
+    });
+    return operation;
+}
+function getKey(operation) {
+    return Object(__WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__["print"])(operation.query) + "|" + JSON.stringify(operation.variables) + "|" + operation.operationName;
+}
+
+function passthrough(op, forward) {
+    return forward ? forward(op) : __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
+}
+function toLink(handler) {
+    return typeof handler === 'function' ? new ApolloLink(handler) : handler;
+}
+function empty() {
+    return new ApolloLink(function () { return __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of(); });
+}
+function from(links) {
+    if (links.length === 0)
+        return empty();
+    return links.map(toLink).reduce(function (x, y) { return x.concat(y); });
+}
+function split(test, left, right) {
+    var leftLink = toLink(left);
+    var rightLink = toLink(right || new ApolloLink(passthrough));
+    if (isTerminating(leftLink) && isTerminating(rightLink)) {
+        return new ApolloLink(function (operation) {
+            return test(operation)
+                ? leftLink.request(operation) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of()
+                : rightLink.request(operation) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
+        });
+    }
+    else {
+        return new ApolloLink(function (operation, forward) {
+            return test(operation)
+                ? leftLink.request(operation, forward) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of()
+                : rightLink.request(operation, forward) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
+        });
+    }
+}
+var concat = function (first, second) {
+    var firstLink = toLink(first);
+    if (isTerminating(firstLink)) {
+        "development" === "production" || __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["b" /* invariant */].warn(new LinkError("You are calling concat on a terminating link, which will have no effect", firstLink));
+        return firstLink;
+    }
+    var nextLink = toLink(second);
+    if (isTerminating(nextLink)) {
+        return new ApolloLink(function (operation) {
+            return firstLink.request(operation, function (op) { return nextLink.request(op) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of(); }) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
+        });
+    }
+    else {
+        return new ApolloLink(function (operation, forward) {
+            return (firstLink.request(operation, function (op) {
+                return nextLink.request(op, forward) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of();
+            }) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of());
+        });
+    }
+};
+var ApolloLink = (function () {
+    function ApolloLink(request) {
+        if (request)
+            this.request = request;
+    }
+    ApolloLink.prototype.split = function (test, left, right) {
+        return this.concat(split(test, left, right || new ApolloLink(passthrough)));
+    };
+    ApolloLink.prototype.concat = function (next) {
+        return concat(this, next);
+    };
+    ApolloLink.prototype.request = function (operation, forward) {
+        throw  false ? new InvariantError(1) : new __WEBPACK_IMPORTED_MODULE_1_ts_invariant__["a" /* InvariantError */]('request is not implemented');
+    };
+    ApolloLink.empty = empty;
+    ApolloLink.from = from;
+    ApolloLink.split = split;
+    ApolloLink.execute = execute;
+    return ApolloLink;
+}());
+function execute(link, operation) {
+    return (link.request(createOperation(operation.context, transformOperation(validateOperation(operation)))) || __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a" /* default */].of());
+}
+
+
+//# sourceMappingURL=bundle.esm.js.map
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(42);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(19);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(19);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2751,9 +2751,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GraphQLError = GraphQLError;
 
-var _printError = __webpack_require__(28);
+var _printError = __webpack_require__(29);
 
-var _location = __webpack_require__(29);
+var _location = __webpack_require__(30);
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -2907,7 +2907,7 @@ exports.visitWithTypeInfo = visitWithTypeInfo;
 exports.getVisitFn = getVisitFn;
 exports.BREAK = exports.QueryDocumentKeys = void 0;
 
-var _inspect = _interopRequireDefault(__webpack_require__(23));
+var _inspect = _interopRequireDefault(__webpack_require__(24));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3406,6 +3406,22 @@ var invariant$1 = invariant;
 
 /***/ }),
 /* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = removeDiacritics;
+function removeDiacritics(str) {
+    var defaultDiacriticsRemovalMap = [{ 'base': 'A', 'letters': /[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g }, { 'base': 'AA', 'letters': /[\uA732]/g }, { 'base': 'AE', 'letters': /[\u00C6\u01FC\u01E2]/g }, { 'base': 'AO', 'letters': /[\uA734]/g }, { 'base': 'AU', 'letters': /[\uA736]/g }, { 'base': 'AV', 'letters': /[\uA738\uA73A]/g }, { 'base': 'AY', 'letters': /[\uA73C]/g }, { 'base': 'B', 'letters': /[\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181]/g }, { 'base': 'C', 'letters': /[\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E]/g }, { 'base': 'D', 'letters': /[\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779]/g }, { 'base': 'DZ', 'letters': /[\u01F1\u01C4]/g }, { 'base': 'Dz', 'letters': /[\u01F2\u01C5]/g }, { 'base': 'E', 'letters': /[\u0045\u24BA\uFF25\u00C8\u00C9\u00CA\u1EC0\u1EBE\u1EC4\u1EC2\u1EBC\u0112\u1E14\u1E16\u0114\u0116\u00CB\u1EBA\u011A\u0204\u0206\u1EB8\u1EC6\u0228\u1E1C\u0118\u1E18\u1E1A\u0190\u018E]/g }, { 'base': 'F', 'letters': /[\u0046\u24BB\uFF26\u1E1E\u0191\uA77B]/g }, { 'base': 'G', 'letters': /[\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E]/g }, { 'base': 'H', 'letters': /[\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D]/g }, { 'base': 'I', 'letters': /[\u0049\u24BE\uFF29\u00CC\u00CD\u00CE\u0128\u012A\u012C\u0130\u00CF\u1E2E\u1EC8\u01CF\u0208\u020A\u1ECA\u012E\u1E2C\u0197]/g }, { 'base': 'J', 'letters': /[\u004A\u24BF\uFF2A\u0134\u0248]/g }, { 'base': 'K', 'letters': /[\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2]/g }, { 'base': 'L', 'letters': /[\u004C\u24C1\uFF2C\u013F\u0139\u013D\u1E36\u1E38\u013B\u1E3C\u1E3A\u0141\u023D\u2C62\u2C60\uA748\uA746\uA780]/g }, { 'base': 'LJ', 'letters': /[\u01C7]/g }, { 'base': 'Lj', 'letters': /[\u01C8]/g }, { 'base': 'M', 'letters': /[\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C]/g }, { 'base': 'N', 'letters': /[\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4]/g }, { 'base': 'NJ', 'letters': /[\u01CA]/g }, { 'base': 'Nj', 'letters': /[\u01CB]/g }, { 'base': 'O', 'letters': /[\u004F\u24C4\uFF2F\u00D2\u00D3\u00D4\u1ED2\u1ED0\u1ED6\u1ED4\u00D5\u1E4C\u022C\u1E4E\u014C\u1E50\u1E52\u014E\u022E\u0230\u00D6\u022A\u1ECE\u0150\u01D1\u020C\u020E\u01A0\u1EDC\u1EDA\u1EE0\u1EDE\u1EE2\u1ECC\u1ED8\u01EA\u01EC\u00D8\u01FE\u0186\u019F\uA74A\uA74C]/g }, { 'base': 'OI', 'letters': /[\u01A2]/g }, { 'base': 'OO', 'letters': /[\uA74E]/g }, { 'base': 'OU', 'letters': /[\u0222]/g }, { 'base': 'P', 'letters': /[\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754]/g }, { 'base': 'Q', 'letters': /[\u0051\u24C6\uFF31\uA756\uA758\u024A]/g }, { 'base': 'R', 'letters': /[\u0052\u24C7\uFF32\u0154\u1E58\u0158\u0210\u0212\u1E5A\u1E5C\u0156\u1E5E\u024C\u2C64\uA75A\uA7A6\uA782]/g }, { 'base': 'S', 'letters': /[\u0053\u24C8\uFF33\u1E9E\u015A\u1E64\u015C\u1E60\u0160\u1E66\u1E62\u1E68\u0218\u015E\u2C7E\uA7A8\uA784]/g }, { 'base': 'T', 'letters': /[\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786]/g }, { 'base': 'TZ', 'letters': /[\uA728]/g }, { 'base': 'U', 'letters': /[\u0055\u24CA\uFF35\u00D9\u00DA\u00DB\u0168\u1E78\u016A\u1E7A\u016C\u00DC\u01DB\u01D7\u01D5\u01D9\u1EE6\u016E\u0170\u01D3\u0214\u0216\u01AF\u1EEA\u1EE8\u1EEE\u1EEC\u1EF0\u1EE4\u1E72\u0172\u1E76\u1E74\u0244]/g }, { 'base': 'V', 'letters': /[\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245]/g }, { 'base': 'VY', 'letters': /[\uA760]/g }, { 'base': 'W', 'letters': /[\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72]/g }, { 'base': 'X', 'letters': /[\u0058\u24CD\uFF38\u1E8A\u1E8C]/g }, { 'base': 'Y', 'letters': /[\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE]/g }, { 'base': 'Z', 'letters': /[\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762]/g }, { 'base': 'a', 'letters': /[\u0061\u24D0\uFF41\u1E9A\u00E0\u00E1\u00E2\u1EA7\u1EA5\u1EAB\u1EA9\u00E3\u0101\u0103\u1EB1\u1EAF\u1EB5\u1EB3\u0227\u01E1\u00E4\u01DF\u1EA3\u00E5\u01FB\u01CE\u0201\u0203\u1EA1\u1EAD\u1EB7\u1E01\u0105\u2C65\u0250]/g }, { 'base': 'aa', 'letters': /[\uA733]/g }, { 'base': 'ae', 'letters': /[\u00E6\u01FD\u01E3]/g }, { 'base': 'ao', 'letters': /[\uA735]/g }, { 'base': 'au', 'letters': /[\uA737]/g }, { 'base': 'av', 'letters': /[\uA739\uA73B]/g }, { 'base': 'ay', 'letters': /[\uA73D]/g }, { 'base': 'b', 'letters': /[\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253]/g }, { 'base': 'c', 'letters': /[\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184]/g }, { 'base': 'd', 'letters': /[\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A]/g }, { 'base': 'dz', 'letters': /[\u01F3\u01C6]/g }, { 'base': 'e', 'letters': /[\u0065\u24D4\uFF45\u00E8\u00E9\u00EA\u1EC1\u1EBF\u1EC5\u1EC3\u1EBD\u0113\u1E15\u1E17\u0115\u0117\u00EB\u1EBB\u011B\u0205\u0207\u1EB9\u1EC7\u0229\u1E1D\u0119\u1E19\u1E1B\u0247\u025B\u01DD]/g }, { 'base': 'f', 'letters': /[\u0066\u24D5\uFF46\u1E1F\u0192\uA77C]/g }, { 'base': 'g', 'letters': /[\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F]/g }, { 'base': 'h', 'letters': /[\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265]/g }, { 'base': 'hv', 'letters': /[\u0195]/g }, { 'base': 'i', 'letters': /[\u0069\u24D8\uFF49\u00EC\u00ED\u00EE\u0129\u012B\u012D\u00EF\u1E2F\u1EC9\u01D0\u0209\u020B\u1ECB\u012F\u1E2D\u0268\u0131]/g }, { 'base': 'j', 'letters': /[\u006A\u24D9\uFF4A\u0135\u01F0\u0249]/g }, { 'base': 'k', 'letters': /[\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3]/g }, { 'base': 'l', 'letters': /[\u006C\u24DB\uFF4C\u0140\u013A\u013E\u1E37\u1E39\u013C\u1E3D\u1E3B\u017F\u0142\u019A\u026B\u2C61\uA749\uA781\uA747]/g }, { 'base': 'lj', 'letters': /[\u01C9]/g }, { 'base': 'm', 'letters': /[\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F]/g }, { 'base': 'n', 'letters': /[\u006E\u24DD\uFF4E\u01F9\u0144\u00F1\u1E45\u0148\u1E47\u0146\u1E4B\u1E49\u019E\u0272\u0149\uA791\uA7A5]/g }, { 'base': 'nj', 'letters': /[\u01CC]/g }, { 'base': 'o', 'letters': /[\u006F\u24DE\uFF4F\u00F2\u00F3\u00F4\u1ED3\u1ED1\u1ED7\u1ED5\u00F5\u1E4D\u022D\u1E4F\u014D\u1E51\u1E53\u014F\u022F\u0231\u00F6\u022B\u1ECF\u0151\u01D2\u020D\u020F\u01A1\u1EDD\u1EDB\u1EE1\u1EDF\u1EE3\u1ECD\u1ED9\u01EB\u01ED\u00F8\u01FF\u0254\uA74B\uA74D\u0275]/g }, { 'base': 'oi', 'letters': /[\u01A3]/g }, { 'base': 'ou', 'letters': /[\u0223]/g }, { 'base': 'oo', 'letters': /[\uA74F]/g }, { 'base': 'p', 'letters': /[\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755]/g }, { 'base': 'q', 'letters': /[\u0071\u24E0\uFF51\u024B\uA757\uA759]/g }, { 'base': 'r', 'letters': /[\u0072\u24E1\uFF52\u0155\u1E59\u0159\u0211\u0213\u1E5B\u1E5D\u0157\u1E5F\u024D\u027D\uA75B\uA7A7\uA783]/g }, { 'base': 's', 'letters': /[\u0073\u24E2\uFF53\u00DF\u015B\u1E65\u015D\u1E61\u0161\u1E67\u1E63\u1E69\u0219\u015F\u023F\uA7A9\uA785\u1E9B]/g }, { 'base': 't', 'letters': /[\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787]/g }, { 'base': 'tz', 'letters': /[\uA729]/g }, { 'base': 'u', 'letters': /[\u0075\u24E4\uFF55\u00F9\u00FA\u00FB\u0169\u1E79\u016B\u1E7B\u016D\u00FC\u01DC\u01D8\u01D6\u01DA\u1EE7\u016F\u0171\u01D4\u0215\u0217\u01B0\u1EEB\u1EE9\u1EEF\u1EED\u1EF1\u1EE5\u1E73\u0173\u1E77\u1E75\u0289]/g }, { 'base': 'v', 'letters': /[\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C]/g }, { 'base': 'vy', 'letters': /[\uA761]/g }, { 'base': 'w', 'letters': /[\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73]/g }, { 'base': 'x', 'letters': /[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g }, { 'base': 'y', 'letters': /[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g }, { 'base': 'z', 'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g }];
+
+    for (var i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
+        str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
+    }
+
+    return str;
+}
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -3433,7 +3449,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6043,10 +6059,10 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -16641,7 +16657,7 @@ return jQuery;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16659,7 +16675,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16670,7 +16686,7 @@ var settle = __webpack_require__(43);
 var buildURL = __webpack_require__(45);
 var parseHeaders = __webpack_require__(46);
 var isURLSameOrigin = __webpack_require__(47);
-var createError = __webpack_require__(19);
+var createError = __webpack_require__(20);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(48);
 
 module.exports = function xhrAdapter(config) {
@@ -16846,7 +16862,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16871,7 +16887,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16883,7 +16899,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16909,7 +16925,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 if (false) {
@@ -16920,7 +16936,7 @@ if (false) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16931,7 +16947,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = inspect;
 
-var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(24));
+var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(25));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17061,7 +17077,7 @@ function getObjectTag(object) {
 }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17085,7 +17101,7 @@ var _default = nodejsCustomInspectSymbol;
 exports.default = _default;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17096,7 +17112,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = defineToJSON;
 
-var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(24));
+var _nodejsCustomInspectSymbol = _interopRequireDefault(__webpack_require__(25));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17125,7 +17141,7 @@ classObject) {
 }
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17152,7 +17168,7 @@ function invariant(condition, message) {
 }
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17198,12 +17214,12 @@ var _syntaxError = __webpack_require__(65);
 
 var _locatedError = __webpack_require__(66);
 
-var _printError = __webpack_require__(28);
+var _printError = __webpack_require__(29);
 
 var _formatError = __webpack_require__(67);
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17214,7 +17230,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.printError = printError;
 
-var _location = __webpack_require__(29);
+var _location = __webpack_require__(30);
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -17355,7 +17371,7 @@ function lpad(len, str) {
 }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17401,7 +17417,7 @@ function getLocation(source, position) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17509,7 +17525,7 @@ function printBlockString(value) {
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17526,7 +17542,7 @@ var Observable = __WEBPACK_IMPORTED_MODULE_0_zen_observable___default.a;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17539,7 +17555,7 @@ exports.print = print;
 
 var _visitor = __webpack_require__(12);
 
-var _blockString = __webpack_require__(30);
+var _blockString = __webpack_require__(31);
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -17849,7 +17865,7 @@ function hasMultilineItems(maybeArray) {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17880,23 +17896,7 @@ exports.get = function () {
   return fiber[localKey] || (fiber[localKey] = Object.create(null));
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
-
-/***/ }),
-/* 34 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = removeDiacritics;
-function removeDiacritics(str) {
-    var defaultDiacriticsRemovalMap = [{ 'base': 'A', 'letters': /[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g }, { 'base': 'AA', 'letters': /[\uA732]/g }, { 'base': 'AE', 'letters': /[\u00C6\u01FC\u01E2]/g }, { 'base': 'AO', 'letters': /[\uA734]/g }, { 'base': 'AU', 'letters': /[\uA736]/g }, { 'base': 'AV', 'letters': /[\uA738\uA73A]/g }, { 'base': 'AY', 'letters': /[\uA73C]/g }, { 'base': 'B', 'letters': /[\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181]/g }, { 'base': 'C', 'letters': /[\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E]/g }, { 'base': 'D', 'letters': /[\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779]/g }, { 'base': 'DZ', 'letters': /[\u01F1\u01C4]/g }, { 'base': 'Dz', 'letters': /[\u01F2\u01C5]/g }, { 'base': 'E', 'letters': /[\u0045\u24BA\uFF25\u00C8\u00C9\u00CA\u1EC0\u1EBE\u1EC4\u1EC2\u1EBC\u0112\u1E14\u1E16\u0114\u0116\u00CB\u1EBA\u011A\u0204\u0206\u1EB8\u1EC6\u0228\u1E1C\u0118\u1E18\u1E1A\u0190\u018E]/g }, { 'base': 'F', 'letters': /[\u0046\u24BB\uFF26\u1E1E\u0191\uA77B]/g }, { 'base': 'G', 'letters': /[\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E]/g }, { 'base': 'H', 'letters': /[\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D]/g }, { 'base': 'I', 'letters': /[\u0049\u24BE\uFF29\u00CC\u00CD\u00CE\u0128\u012A\u012C\u0130\u00CF\u1E2E\u1EC8\u01CF\u0208\u020A\u1ECA\u012E\u1E2C\u0197]/g }, { 'base': 'J', 'letters': /[\u004A\u24BF\uFF2A\u0134\u0248]/g }, { 'base': 'K', 'letters': /[\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2]/g }, { 'base': 'L', 'letters': /[\u004C\u24C1\uFF2C\u013F\u0139\u013D\u1E36\u1E38\u013B\u1E3C\u1E3A\u0141\u023D\u2C62\u2C60\uA748\uA746\uA780]/g }, { 'base': 'LJ', 'letters': /[\u01C7]/g }, { 'base': 'Lj', 'letters': /[\u01C8]/g }, { 'base': 'M', 'letters': /[\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C]/g }, { 'base': 'N', 'letters': /[\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4]/g }, { 'base': 'NJ', 'letters': /[\u01CA]/g }, { 'base': 'Nj', 'letters': /[\u01CB]/g }, { 'base': 'O', 'letters': /[\u004F\u24C4\uFF2F\u00D2\u00D3\u00D4\u1ED2\u1ED0\u1ED6\u1ED4\u00D5\u1E4C\u022C\u1E4E\u014C\u1E50\u1E52\u014E\u022E\u0230\u00D6\u022A\u1ECE\u0150\u01D1\u020C\u020E\u01A0\u1EDC\u1EDA\u1EE0\u1EDE\u1EE2\u1ECC\u1ED8\u01EA\u01EC\u00D8\u01FE\u0186\u019F\uA74A\uA74C]/g }, { 'base': 'OI', 'letters': /[\u01A2]/g }, { 'base': 'OO', 'letters': /[\uA74E]/g }, { 'base': 'OU', 'letters': /[\u0222]/g }, { 'base': 'P', 'letters': /[\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754]/g }, { 'base': 'Q', 'letters': /[\u0051\u24C6\uFF31\uA756\uA758\u024A]/g }, { 'base': 'R', 'letters': /[\u0052\u24C7\uFF32\u0154\u1E58\u0158\u0210\u0212\u1E5A\u1E5C\u0156\u1E5E\u024C\u2C64\uA75A\uA7A6\uA782]/g }, { 'base': 'S', 'letters': /[\u0053\u24C8\uFF33\u1E9E\u015A\u1E64\u015C\u1E60\u0160\u1E66\u1E62\u1E68\u0218\u015E\u2C7E\uA7A8\uA784]/g }, { 'base': 'T', 'letters': /[\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786]/g }, { 'base': 'TZ', 'letters': /[\uA728]/g }, { 'base': 'U', 'letters': /[\u0055\u24CA\uFF35\u00D9\u00DA\u00DB\u0168\u1E78\u016A\u1E7A\u016C\u00DC\u01DB\u01D7\u01D5\u01D9\u1EE6\u016E\u0170\u01D3\u0214\u0216\u01AF\u1EEA\u1EE8\u1EEE\u1EEC\u1EF0\u1EE4\u1E72\u0172\u1E76\u1E74\u0244]/g }, { 'base': 'V', 'letters': /[\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245]/g }, { 'base': 'VY', 'letters': /[\uA760]/g }, { 'base': 'W', 'letters': /[\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72]/g }, { 'base': 'X', 'letters': /[\u0058\u24CD\uFF38\u1E8A\u1E8C]/g }, { 'base': 'Y', 'letters': /[\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE]/g }, { 'base': 'Z', 'letters': /[\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762]/g }, { 'base': 'a', 'letters': /[\u0061\u24D0\uFF41\u1E9A\u00E0\u00E1\u00E2\u1EA7\u1EA5\u1EAB\u1EA9\u00E3\u0101\u0103\u1EB1\u1EAF\u1EB5\u1EB3\u0227\u01E1\u00E4\u01DF\u1EA3\u00E5\u01FB\u01CE\u0201\u0203\u1EA1\u1EAD\u1EB7\u1E01\u0105\u2C65\u0250]/g }, { 'base': 'aa', 'letters': /[\uA733]/g }, { 'base': 'ae', 'letters': /[\u00E6\u01FD\u01E3]/g }, { 'base': 'ao', 'letters': /[\uA735]/g }, { 'base': 'au', 'letters': /[\uA737]/g }, { 'base': 'av', 'letters': /[\uA739\uA73B]/g }, { 'base': 'ay', 'letters': /[\uA73D]/g }, { 'base': 'b', 'letters': /[\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253]/g }, { 'base': 'c', 'letters': /[\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184]/g }, { 'base': 'd', 'letters': /[\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A]/g }, { 'base': 'dz', 'letters': /[\u01F3\u01C6]/g }, { 'base': 'e', 'letters': /[\u0065\u24D4\uFF45\u00E8\u00E9\u00EA\u1EC1\u1EBF\u1EC5\u1EC3\u1EBD\u0113\u1E15\u1E17\u0115\u0117\u00EB\u1EBB\u011B\u0205\u0207\u1EB9\u1EC7\u0229\u1E1D\u0119\u1E19\u1E1B\u0247\u025B\u01DD]/g }, { 'base': 'f', 'letters': /[\u0066\u24D5\uFF46\u1E1F\u0192\uA77C]/g }, { 'base': 'g', 'letters': /[\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F]/g }, { 'base': 'h', 'letters': /[\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265]/g }, { 'base': 'hv', 'letters': /[\u0195]/g }, { 'base': 'i', 'letters': /[\u0069\u24D8\uFF49\u00EC\u00ED\u00EE\u0129\u012B\u012D\u00EF\u1E2F\u1EC9\u01D0\u0209\u020B\u1ECB\u012F\u1E2D\u0268\u0131]/g }, { 'base': 'j', 'letters': /[\u006A\u24D9\uFF4A\u0135\u01F0\u0249]/g }, { 'base': 'k', 'letters': /[\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3]/g }, { 'base': 'l', 'letters': /[\u006C\u24DB\uFF4C\u0140\u013A\u013E\u1E37\u1E39\u013C\u1E3D\u1E3B\u017F\u0142\u019A\u026B\u2C61\uA749\uA781\uA747]/g }, { 'base': 'lj', 'letters': /[\u01C9]/g }, { 'base': 'm', 'letters': /[\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F]/g }, { 'base': 'n', 'letters': /[\u006E\u24DD\uFF4E\u01F9\u0144\u00F1\u1E45\u0148\u1E47\u0146\u1E4B\u1E49\u019E\u0272\u0149\uA791\uA7A5]/g }, { 'base': 'nj', 'letters': /[\u01CC]/g }, { 'base': 'o', 'letters': /[\u006F\u24DE\uFF4F\u00F2\u00F3\u00F4\u1ED3\u1ED1\u1ED7\u1ED5\u00F5\u1E4D\u022D\u1E4F\u014D\u1E51\u1E53\u014F\u022F\u0231\u00F6\u022B\u1ECF\u0151\u01D2\u020D\u020F\u01A1\u1EDD\u1EDB\u1EE1\u1EDF\u1EE3\u1ECD\u1ED9\u01EB\u01ED\u00F8\u01FF\u0254\uA74B\uA74D\u0275]/g }, { 'base': 'oi', 'letters': /[\u01A3]/g }, { 'base': 'ou', 'letters': /[\u0223]/g }, { 'base': 'oo', 'letters': /[\uA74F]/g }, { 'base': 'p', 'letters': /[\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755]/g }, { 'base': 'q', 'letters': /[\u0071\u24E0\uFF51\u024B\uA757\uA759]/g }, { 'base': 'r', 'letters': /[\u0072\u24E1\uFF52\u0155\u1E59\u0159\u0211\u0213\u1E5B\u1E5D\u0157\u1E5F\u024D\u027D\uA75B\uA7A7\uA783]/g }, { 'base': 's', 'letters': /[\u0073\u24E2\uFF53\u00DF\u015B\u1E65\u015D\u1E61\u0161\u1E67\u1E63\u1E69\u0219\u015F\u023F\uA7A9\uA785\u1E9B]/g }, { 'base': 't', 'letters': /[\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787]/g }, { 'base': 'tz', 'letters': /[\uA729]/g }, { 'base': 'u', 'letters': /[\u0075\u24E4\uFF55\u00F9\u00FA\u00FB\u0169\u1E79\u016B\u1E7B\u016D\u00FC\u01DC\u01D8\u01D6\u01DA\u1EE7\u016F\u0171\u01D4\u0215\u0217\u01B0\u1EEB\u1EE9\u1EEF\u1EED\u1EF1\u1EE5\u1E73\u0173\u1E77\u1E75\u0289]/g }, { 'base': 'v', 'letters': /[\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C]/g }, { 'base': 'vy', 'letters': /[\uA761]/g }, { 'base': 'w', 'letters': /[\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73]/g }, { 'base': 'x', 'letters': /[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g }, { 'base': 'y', 'letters': /[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g }, { 'base': 'z', 'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g }];
-
-    for (var i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
-        str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
-    }
-
-    return str;
-}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
 
 /***/ }),
 /* 35 */
@@ -17904,7 +17904,7 @@ function removeDiacritics(str) {
 
 
 window._ = __webpack_require__(36);
-window.Popper = __webpack_require__(15).default;
+window.Popper = __webpack_require__(16).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -17913,7 +17913,7 @@ window.Popper = __webpack_require__(15).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(16);
+  window.$ = window.jQuery = __webpack_require__(17);
 
   __webpack_require__(37);
 } catch (e) {}
@@ -35072,14 +35072,14 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(14)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(15)(module)))
 
 /***/ }),
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
-	 true ? factory(__webpack_require__(16), __webpack_require__(15)) :
+	 true ? factory(__webpack_require__(17), __webpack_require__(16)) :
 	typeof define === 'function' && define.amd ? define(['jquery', 'popper.js'], factory) :
 	(factory(global.jQuery,global.Popper));
 }(this, (function ($,Popper$1) { 'use strict';
@@ -41631,9 +41631,9 @@ module.exports = __webpack_require__(39);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(17);
+var bind = __webpack_require__(18);
 var Axios = __webpack_require__(41);
-var defaults = __webpack_require__(9);
+var defaults = __webpack_require__(10);
 
 /**
  * Create an instance of Axios
@@ -41666,9 +41666,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(21);
+axios.Cancel = __webpack_require__(22);
 axios.CancelToken = __webpack_require__(55);
-axios.isCancel = __webpack_require__(20);
+axios.isCancel = __webpack_require__(21);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -41716,7 +41716,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(9);
+var defaults = __webpack_require__(10);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(50);
 var dispatchRequest = __webpack_require__(51);
@@ -41821,7 +41821,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(19);
+var createError = __webpack_require__(20);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -42254,8 +42254,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(52);
-var isCancel = __webpack_require__(20);
-var defaults = __webpack_require__(9);
+var isCancel = __webpack_require__(21);
+var defaults = __webpack_require__(10);
 var isAbsoluteURL = __webpack_require__(53);
 var combineURLs = __webpack_require__(54);
 
@@ -42414,7 +42414,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(21);
+var Cancel = __webpack_require__(22);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -54449,7 +54449,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(58).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(58).setImmediate))
 
 /***/ }),
 /* 58 */
@@ -54519,7 +54519,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 59 */
@@ -54712,7 +54712,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(5)))
 
 /***/ }),
 /* 60 */
@@ -54765,13 +54765,13 @@ exports.parseConstValue = parseConstValue;
 exports.parseTypeReference = parseTypeReference;
 exports.parseNamedType = parseNamedType;
 
-var _inspect = _interopRequireDefault(__webpack_require__(23));
+var _inspect = _interopRequireDefault(__webpack_require__(24));
 
-var _defineToJSON = _interopRequireDefault(__webpack_require__(25));
+var _defineToJSON = _interopRequireDefault(__webpack_require__(26));
 
 var _source = __webpack_require__(63);
 
-var _error = __webpack_require__(27);
+var _error = __webpack_require__(28);
 
 var _lexer = __webpack_require__(68);
 
@@ -56294,7 +56294,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Source = void 0;
 
-var _invariant = _interopRequireDefault(__webpack_require__(26));
+var _invariant = _interopRequireDefault(__webpack_require__(27));
 
 var _defineToStringTag = _interopRequireDefault(__webpack_require__(64));
 
@@ -56457,7 +56457,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatError = formatError;
 
-var _invariant = _interopRequireDefault(__webpack_require__(26));
+var _invariant = _interopRequireDefault(__webpack_require__(27));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56506,11 +56506,11 @@ exports.createLexer = createLexer;
 exports.getTokenDesc = getTokenDesc;
 exports.TokenKind = void 0;
 
-var _defineToJSON = _interopRequireDefault(__webpack_require__(25));
+var _defineToJSON = _interopRequireDefault(__webpack_require__(26));
 
-var _error = __webpack_require__(27);
+var _error = __webpack_require__(28);
 
-var _blockString = __webpack_require__(30);
+var _blockString = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57311,8 +57311,8 @@ exports.DirectiveLocation = DirectiveLocation;
 /* unused harmony export ApolloError */
 /* unused harmony export FetchType */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_utilities__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_link__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_utilities__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_link__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_symbol_observable__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ts_invariant__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_apollo_link_dedup__ = __webpack_require__(79);
@@ -60368,7 +60368,7 @@ var invariant$1 = invariant;
 /* unused harmony default export */ var _unused_webpack_default_export = (invariant$1);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
 /* 76 */
@@ -60396,7 +60396,7 @@ if (typeof self !== 'undefined') {
 var result = Object(__WEBPACK_IMPORTED_MODULE_0__ponyfill_js__["a" /* default */])(root);
 /* harmony default export */ __webpack_exports__["a"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2), __webpack_require__(77)(module)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3), __webpack_require__(77)(module)))
 
 /***/ }),
 /* 77 */
@@ -60460,7 +60460,7 @@ function symbolObservablePonyfill(root) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DedupLink; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link__ = __webpack_require__(9);
 
 
 
@@ -60536,7 +60536,7 @@ var DedupLink = (function (_super) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createHttpLink; });
 /* unused harmony export HttpLink */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_link_http_common__ = __webpack_require__(81);
 
 
@@ -60699,7 +60699,7 @@ var HttpLink = (function (_super) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return serializeFetchParameter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return selectURI; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ts_invariant__ = __webpack_require__(82);
 
@@ -60890,7 +60890,7 @@ var invariant$1 = invariant;
 /* unused harmony default export */ var _unused_webpack_default_export = (invariant$1);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
 /***/ }),
 /* 83 */
@@ -60910,7 +60910,7 @@ var invariant$1 = invariant;
 /* unused harmony export defaultNormalizedCacheFactory */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_cache__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_utilities__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_utilities__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_optimism__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_optimism___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_optimism__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ts_invariant__ = __webpack_require__(13);
@@ -61943,7 +61943,7 @@ var InMemoryCache = (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ApolloCache; });
 /* unused harmony export Cache */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_apollo_utilities__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_apollo_utilities__ = __webpack_require__(6);
 
 
 function queryFromPojo(obj) {
@@ -62131,7 +62131,7 @@ var Cache;
 var Cache = __webpack_require__(86).Cache;
 var tuple = __webpack_require__(87).tuple;
 var Entry = __webpack_require__(88).Entry;
-var getLocal = __webpack_require__(33).get;
+var getLocal = __webpack_require__(34).get;
 
 // Exported so that custom makeCacheKey functions can easily reuse the
 // default implementation (with different arguments).
@@ -62635,7 +62635,7 @@ tuple.prototype.concat = function () {
 "use strict";
 
 
-var getLocal = __webpack_require__(33).get;
+var getLocal = __webpack_require__(34).get;
 var UNKNOWN_VALUE = Object.create(null);
 var emptySetPool = [];
 var entryPool = [];
@@ -65032,10 +65032,56 @@ if (GlobalVue) {
 /* harmony default export */ __webpack_exports__["a"] = (ApolloProvider);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 90 */,
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(151)
+/* template */
+var __vue_template__ = __webpack_require__(152)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/ItemsComboBox.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-49b66d54", Component.options)
+  } else {
+    hotAPI.reload("data-v-49b66d54", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 91 */,
 /* 92 */,
 /* 93 */,
@@ -65063,7 +65109,8 @@ if (GlobalVue) {
 /* 115 */,
 /* 116 */,
 /* 117 */,
-/* 118 */
+/* 118 */,
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -65109,7 +65156,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(119);
+var	fixUrls = __webpack_require__(120);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -65422,7 +65469,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports) {
 
 
@@ -65517,15 +65564,15 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 120 */,
-/* 121 */
+/* 121 */,
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(122);
+module.exports = __webpack_require__(123);
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65533,15 +65580,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_apollo_client__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link_http__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_cache_inmemory__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_apollo_link__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_apollo_link__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_apollo__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_notification__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(173);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65555,7 +65602,7 @@ __webpack_require__(35);
 //  */
 // require('materialize-css');
 
-window.Vue = __webpack_require__(22);
+window.Vue = __webpack_require__(23);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -65563,14 +65610,14 @@ window.Vue = __webpack_require__(22);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('songs-list', __webpack_require__(178));
-Vue.component('externals-list', __webpack_require__(183));
-Vue.component('files-list', __webpack_require__(188));
-Vue.component('authors-list', __webpack_require__(193));
+Vue.component('songs-list', __webpack_require__(124));
+Vue.component('externals-list', __webpack_require__(129));
+Vue.component('files-list', __webpack_require__(134));
+Vue.component('authors-list', __webpack_require__(139));
 
-Vue.component('author-edit', __webpack_require__(143));
-Vue.component('external-edit', __webpack_require__(147));
-Vue.component('song-lyric-edit', __webpack_require__(163));
+Vue.component('author-edit', __webpack_require__(144));
+Vue.component('external-edit', __webpack_require__(148));
+Vue.component('song-lyric-edit', __webpack_require__(154));
 
 
 
@@ -65637,35 +65684,1435 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(125)
+}
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(144)
+var __vue_script__ = __webpack_require__(127)
 /* template */
-var __vue_template__ = __webpack_require__(146)
+var __vue_template__ = __webpack_require__(128)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/SongsList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1ed0150f", Component.options)
+  } else {
+    hotAPI.reload("data-v-1ed0150f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(126);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("57246a0e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ed0150f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SongsList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ed0150f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SongsList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 127 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'type' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+  apollo: {
+    song_lyrics: {
+      query: fetch_items,
+      variables: function variables() {
+        return {
+          has_lyrics: this.hasLyrics,
+          has_authors: this.hasAuthors,
+          has_chords: this.hasChords,
+          has_tags: this.hasTags
+        };
+      }
+    }
+  },
+
+  methods: {
+    askForm: function askForm(id) {
+      if (confirm('Opravdu chcete smazat daný záznam?')) {
+        this.deleteSong(id);
+      }
+    },
+    deleteSong: function deleteSong(id) {
+      this.$apollo.mutate({
+        mutation: delete_item,
+        variables: { id: id },
+        refetchQueries: [{
+          query: fetch_items
+        }]
+      }).then(function (result) {
+        console.log('uspesne vymazano');
+      }).catch(function (error) {
+        console.log('error');
+      });
+    },
+    formFilter: function formFilter(val, search) {
+      if (typeof val == 'string') {
+        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
+        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
+
+        return hay.indexOf(needle) >= 0;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  attrs: {
+                    xs5: "",
+                    "offset-xs7": "",
+                    md3: "",
+                    "offset-md9": ""
+                  }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Vyhledávání" },
+                    model: {
+                      value: _vm.search_string,
+                      callback: function($$v) {
+                        _vm.search_string = $$v
+                      },
+                      expression: "search_string"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-data-table", {
+                    staticClass: "users-list",
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.song_lyrics,
+                      search: _vm.search_string,
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "items",
+                        fn: function(props) {
+                          return [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "/admin/song/" + props.item.id
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.item.name))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              props.item.type === 0
+                                ? _c("span", [_vm._v("Originál")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.item.type === 1
+                                ? _c("span", [_vm._v("Překlad")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.item.type === 2
+                                ? _c("span", [_vm._v("Autorizovaný překlad")])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(props.item.updated_at))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              props.item.is_published
+                                ? _c("span", [_vm._v("Ano")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              !props.item.is_published
+                                ? _c("span", [_vm._v("Ne")])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              props.item.is_approved_by_author
+                                ? _c("span", [_vm._v("Ano")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              !props.item.is_approved_by_author
+                                ? _c("span", [_vm._v("Ne")])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.askForm(props.item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Vymazat")]
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1ed0150f", module.exports)
+  }
+}
+
+/***/ }),
+/* 129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(130)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(132)
+/* template */
+var __vue_template__ = __webpack_require__(133)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/ExternalsList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-38a804ce", Component.options)
+  } else {
+    hotAPI.reload("data-v-38a804ce", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(131);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("298c29ac", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38a804ce\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExternalsList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38a804ce\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExternalsList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['is-todo'],
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Název', value: 'public_name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+  apollo: {
+    externals: {
+      query: fetch_items,
+      variables: function variables() {
+        return {
+          is_todo: this.isTodo
+        };
+      }
+    }
+  },
+
+  methods: {
+    askForm: function askForm(id) {
+      if (confirm('Opravdu chcete smazat daný záznam?')) {
+        this.deleteExternal(id);
+      }
+    },
+    deleteExternal: function deleteExternal(id) {
+      this.$apollo.mutate({
+        mutation: delete_item,
+        variables: { id: id },
+        refetchQueries: [{
+          query: fetch_items
+        }]
+      }).then(function (result) {
+        console.log('uspesne vymazano');
+      }).catch(function (error) {
+        console.log('error');
+      });
+    },
+    formFilter: function formFilter(val, search) {
+      if (typeof val == 'string') {
+        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
+        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
+
+        return hay.indexOf(needle) >= 0;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  attrs: {
+                    xs5: "",
+                    "offset-xs7": "",
+                    md3: "",
+                    "offset-md9": ""
+                  }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Vyhledávání" },
+                    model: {
+                      value: _vm.search_string,
+                      callback: function($$v) {
+                        _vm.search_string = $$v
+                      },
+                      expression: "search_string"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-data-table", {
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.externals,
+                      search: _vm.search_string,
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "items",
+                        fn: function(props) {
+                          return [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/admin/external/" +
+                                      props.item.id +
+                                      "/edit"
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.item.public_name))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.askForm(props.item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Vymazat")]
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-38a804ce", module.exports)
+  }
+}
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(135)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(137)
+/* template */
+var __vue_template__ = __webpack_require__(138)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/FilesList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7cbacef0", Component.options)
+  } else {
+    hotAPI.reload("data-v-7cbacef0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(136);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("66621f3d", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cbacef0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilesList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cbacef0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilesList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string,\n                download_url\n            }\n        }'], ['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string,\n                download_url\n            }\n        }']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteFile ($id: ID!) {\n    delete_file(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteFile ($id: ID!) {\n    delete_file(id: $id) {\n      id\n    }\n  }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['is-todo'],
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Název', value: 'public_name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+  apollo: {
+    files: {
+      query: fetch_items,
+      variables: function variables() {
+        return {
+          is_todo: this.isTodo
+        };
+      }
+    }
+  },
+
+  methods: {
+    askForm: function askForm(id) {
+      if (confirm('Opravdu chcete smazat daný záznam?')) {
+        this.deleteFile(id);
+      }
+    },
+    deleteFile: function deleteFile(id) {
+      this.$apollo.mutate({
+        mutation: delete_item,
+        variables: { id: id },
+        refetchQueries: [{
+          query: fetch_items
+        }]
+      }).then(function (result) {
+        console.log('uspesne vymazano');
+      }).catch(function (error) {
+        console.log('error');
+      });
+    },
+    formFilter: function formFilter(val, search) {
+      if (typeof val == 'string') {
+        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
+        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
+
+        return hay.indexOf(needle) >= 0;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  attrs: {
+                    xs5: "",
+                    "offset-xs7": "",
+                    md3: "",
+                    "offset-md9": ""
+                  }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Vyhledávání" },
+                    model: {
+                      value: _vm.search_string,
+                      callback: function($$v) {
+                        _vm.search_string = $$v
+                      },
+                      expression: "search_string"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-data-table", {
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.files,
+                      search: _vm.search_string,
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "items",
+                        fn: function(props) {
+                          return [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/admin/file/" + props.item.id + "/edit"
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.item.public_name))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.askForm(props.item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Vymazat")]
+                              ),
+                              _vm._v("\n                 \n                "),
+                              _c(
+                                "a",
+                                { attrs: { href: props.item.download_url } },
+                                [_vm._v("Stáhnout")]
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7cbacef0", module.exports)
+  }
+}
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(140)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(142)
+/* template */
+var __vue_template__ = __webpack_require__(143)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/AuthorsList.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-59f84a99", Component.options)
+  } else {
+    hotAPI.reload("data-v-59f84a99", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(141);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("3f8d83ab", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-59f84a99\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AuthorsList.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-59f84a99\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AuthorsList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 142 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchAuthors {\n            authors {\n                id,\n                name,\n                type_string\n            }\n        }'], ['\n        query FetchAuthors {\n            authors {\n                id,\n                name,\n                type_string\n            }\n        }']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteAuthor ($id: ID!) {\n    delete_author(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteAuthor ($id: ID!) {\n    delete_author(id: $id) {\n      id\n    }\n  }']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['is-todo'],
+
+  data: function data() {
+    return {
+      headers: [{ text: 'Jméno', value: 'name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
+      search_string: ""
+    };
+  },
+
+
+  apollo: {
+    authors: {
+      query: fetch_items,
+      variables: function variables() {
+        return {
+          is_todo: this.isTodo
+        };
+      }
+    }
+  },
+
+  methods: {
+    askForm: function askForm(id) {
+      if (confirm('Opravdu chcete smazat daný záznam?')) {
+        this.deleteAuthor(id);
+      }
+    },
+    deleteAuthor: function deleteAuthor(id) {
+      this.$apollo.mutate({
+        mutation: delete_item,
+        variables: { id: id },
+        refetchQueries: [{
+          query: fetch_items
+        }]
+      }).then(function (result) {
+        console.log('uspesne vymazano');
+      }).catch(function (error) {
+        console.log('error');
+      });
+    },
+    formFilter: function formFilter(val, search) {
+      if (typeof val == 'string') {
+        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
+        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
+
+        return hay.indexOf(needle) >= 0;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  attrs: {
+                    xs5: "",
+                    "offset-xs7": "",
+                    md3: "",
+                    "offset-md9": ""
+                  }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Vyhledávání" },
+                    model: {
+                      value: _vm.search_string,
+                      callback: function($$v) {
+                        _vm.search_string = $$v
+                      },
+                      expression: "search_string"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "" } },
+                [
+                  _c("v-data-table", {
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.authors,
+                      search: _vm.search_string,
+                      filter: _vm.formFilter,
+                      "rows-per-page-items": [
+                        10,
+                        25,
+                        { text: "Vše", value: -1 }
+                      ]
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "items",
+                        fn: function(props) {
+                          return [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/admin/author/" + props.item.id + "/edit"
+                                  }
+                                },
+                                [_vm._v(_vm._s(props.item.name))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.askForm(props.item.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Vymazat")]
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-59f84a99", module.exports)
+  }
+}
+
+/***/ }),
+/* 144 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(145)
+/* template */
+var __vue_template__ = __webpack_require__(147)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65704,14 +67151,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__ = __webpack_require__(146);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -65954,7 +67401,7 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 });
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports) {
 
 
@@ -65984,7 +67431,7 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66094,13 +67541,13 @@ if (false) {
 }
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(148)
+var __vue_script__ = __webpack_require__(149)
 /* template */
 var __vue_template__ = __webpack_require__(153)
 /* template functional */
@@ -66141,16 +67588,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_external_fragment_graphql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -66453,7 +67900,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
 });
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports) {
 
 
@@ -66483,59 +67930,12 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_tem
 
 
 /***/ }),
-/* 150 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(151)
-/* template */
-var __vue_template__ = __webpack_require__(152)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/components/ItemsComboBox.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-49b66d54", Component.options)
-  } else {
-    hotAPI.reload("data-v-49b66d54", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
 /* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__ = __webpack_require__(14);
 //
 //
 //
@@ -66975,9 +68375,1629 @@ if (false) {
 /* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(155)
+/* template */
+var __vue_template__ = __webpack_require__(168)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/SongLyricEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-741f5d72", Component.options)
+  } else {
+    hotAPI.reload("data-v-741f5d72", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 155 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue__);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject6 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a);
+
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a);
+
+var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
+
+var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject4);
+
+var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject5);
+
+var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject6);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["preset-id", "csrf"],
+  components: {
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a,
+    SongLyricsGroup: __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default.a,
+    SelectSongGroupDialog: __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue___default.a
+  },
+
+  data: function data() {
+    return {
+      model: {
+        // here goes the definition of model attributes
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        name: undefined,
+        has_anonymous_author: undefined,
+        lang: undefined,
+        lyrics: undefined,
+        tags_unofficial: [],
+        tags_official: [],
+        authors: [],
+        externals: [],
+        files: [],
+        song: undefined
+      },
+      lang_values: []
+    };
+  },
+
+
+  apollo: {
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
+      variables: function variables() {
+        return {
+          id: this.model.id
+        };
+      },
+      result: function result(_result) {
+        var song_lyric = _result.data.model_database;
+        // load the requested fields to the vue data.model property
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var field = _step.value;
+
+            var clone = _.cloneDeep(song_lyric[field]);
+            Vue.set(this.model, field, clone);
+          }
+
+          // lang string values are an associative array passed as JSON object
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        var parsed_obj = JSON.parse(song_lyric.lang_string_values);
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = Object.entries(parsed_obj)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _ref = _step2.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            this.lang_values.push({ value: key, text: value });
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+      }
+    },
+    authors: {
+      query: FETCH_AUTHORS
+    },
+    tags_official: {
+      query: FETCH_TAGS_OFFICIAL
+    },
+    tags_unofficial: {
+      query: FETCH_TAGS_UNOFFICIAL
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = function (e) {
+      if (_this.isDirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+  },
+
+
+  computed: {
+    isDirty: function isDirty() {
+      if (!this.model_database) return false;
+
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var field = _step3.value;
+
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      return false;
+    }
+  },
+
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.$apollo.mutate({
+        mutation: MUTATE_MODEL_DATABASE,
+        variables: {
+          input: {
+            id: this.model.id,
+            name: this.model.name,
+            lang: this.model.lang,
+            has_anonymous_author: this.model.has_anonymous_author,
+            lyrics: this.model.lyrics,
+            song: this.model.song,
+            authors: {
+              create: this.getModelsToCreateBelongsToMany(this.model.authors),
+              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+            },
+            tags_unofficial: {
+              create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
+              sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
+            },
+            tags_official: {
+              // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
+              sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
+            }
+          }
+        }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
+          title: "Úspěšně uloženo :)",
+          text: "Píseň byla úspěšně uložena",
+          type: "success"
+        });
+      }).catch(function (error) {
+        if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
+          // unknown error happened
+          _this2.$notify({
+            title: "Chyba při ukládání",
+            text: "Píseň nebyla uložena",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this2.$validator.errors.clear();
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+          for (var _iterator4 = Object.entries(errorFields)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var _ref3 = _step4.value;
+
+            var _ref4 = _slicedToArray(_ref3, 2);
+
+            var key = _ref4[0];
+            var value = _ref4[1];
+
+            _this2.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+              _iterator4.return();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
+          }
+        }
+      });
+    },
+    reset: function reset() {
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = this.getFieldsFromFragment(false)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var field = _step5.value;
+
+          var clone = _.cloneDeep(this.model_database[field]);
+          Vue.set(this.model, field, clone);
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
+    },
+    show: function show() {
+      window.location.href = this.model_database.public_url;
+    },
+
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+      var fieldNames = fieldDefs.map(function (field) {
+        if (field.alias) return field.alias.value;
+        return field.name.value;
+      });
+
+      if (!includeId) fieldNames = fieldNames.filter(function (field) {
+        return field != "id";
+      });
+
+      return fieldNames;
+    },
+    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return false;
+        return true;
+      });
+    },
+    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return true;
+        return false;
+      }).map(function (model) {
+        return model.id;
+      });
+    },
+    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
+      var obj = {};
+
+      if (model) {
+        obj.update = {
+          id: model.id
+        };
+      } else {
+        obj.disconnect = true;
+      }
+
+      return obj;
+    },
+    handleOpensongFile: function handleOpensongFile(e) {
+      var _this3 = this;
+
+      var file = e.target.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        console.log("file loaded succesfully");
+
+        $.post("/api/parse/opensong", {
+          file_contents: e.target.result,
+          _token: _this3.csrf
+        }, function (data) {
+          _this3.model.lyrics = data;
+        });
+      };
+
+      reader.readAsText(file);
+    },
+    resetGroup: function resetGroup() {
+      var _this4 = this;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(function (song_lyric) {
+        return song_lyric.id === _this4.model.id;
+      });
+    },
+    addToGroup: function addToGroup(song) {
+      // check if there is original in the group and then
+      if (song.song_lyrics.filter(function (sl) {
+        return sl.type == 0;
+      }).length > 0) this.model.song.song_lyrics[0].type = 1;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
+    },
+    onNameChange: function onNameChange(name) {
+      // update the corresponding name in song.song_lyrics
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = this.model.song.song_lyrics[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var song_lyric = _step6.value;
+
+          if (song_lyric.id == this.model.id) {
+            Vue.set(song_lyric, "name", name);
+          }
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6.return) {
+            _iterator6.return();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"public_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thumbnail_url"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"download_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thumbnail_url"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":618}};
+    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    public_url\n    has_anonymous_author\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        id\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n    externals {\n        id\n        public_name\n        url\n        type\n        thumbnail_url\n    }\n    files {\n        id\n        public_name\n        download_url\n        type\n        thumbnail_url\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(158)
+/* template */
+var __vue_template__ = __webpack_require__(164)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/SongLyricsGroup.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-243145ef", Component.options)
+  } else {
+    hotAPI.reload("data-v-243145ef", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 158 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    ButtonColorToggle: __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default.a
+  },
+
+  props: ["value", "edit-id"],
+
+  data: function data() {
+    return {
+      colors_def: ["info lighten-1", "success lighten-1", "warning lighten-1"],
+      colors: ["info", "success", "warning"],
+      hoverTexts: ["Originál", "Překlad", "Autorizovaný překlad"]
+      // types - 0: original 1: translation 2: authorized translation
+    };
+  },
+
+
+  computed: {
+    orderedValues: function orderedValues() {
+      var _this = this;
+
+      // .slice() is to make .sort immutable 
+      // see https://stackoverflow.com/questions/30431304/functional-non-destructive-array-sort
+      return this.value.slice().sort(function (a, b) {
+        if (a.id == _this.editId) return -1;
+        if (b.id == _this.editId) return 1;
+        return a.name.localeCompare(b.name);
+      });
+    }
+  },
+
+  methods: {
+    updated: function updated(last) {
+      // check the consistency
+      if (last.type === 0) {
+        console.log("aj");
+        // allow only one original -> set other originals to translation
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var song_lyric = _step.value;
+
+            if (song_lyric.type == 0 && song_lyric.id !== last.id) {
+              Vue.set(song_lyric, "type", 1);
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(160)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(162)
+/* template */
+var __vue_template__ = __webpack_require__(163)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/ButtonColorToggle.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-305044c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-305044c4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(161);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("22428dc7", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-305044c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ButtonColorToggle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-305044c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ButtonColorToggle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.hover-container {\n  position: relative;\n}\n.hover-text {\n  position: absolute;\n  color: white;\n  right: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 162 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["colors", "value", "hover-texts"],
+
+  data: function data() {
+    return {
+      index: this.value ? this.value : 0
+    };
+  },
+
+
+  watch: {
+    value: function value(val, prev) {
+      this.index = this.value ? this.value : 0;
+    }
+  },
+
+  computed: {
+    internalIndex: {
+      get: function get() {
+        return this.index;
+      },
+      set: function set(i) {
+        this.index = i;
+        this.$emit("input", i);
+      }
+    }
+  },
+
+  methods: {
+    next: function next(e) {
+      this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
+      // this.$emit("click", e);
+    },
+    mod: function mod(n, m) {
+      return (n % m + m) % m;
+    }
+  }
+});
+
+/***/ }),
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("v-hover", {
+    scopedSlots: _vm._u(
+      [
+        {
+          key: "default",
+          fn: function(ref) {
+            var hover = ref.hover
+            return _c(
+              "div",
+              { staticClass: "hover-container" },
+              [
+                _c(
+                  "v-slide-x-reverse-transition",
+                  [
+                    hover
+                      ? _c(
+                          "v-chip",
+                          {
+                            staticClass: "hover-text",
+                            attrs: { color: _vm.colors[_vm.internalIndex] }
+                          },
+                          [_vm._v(_vm._s(_vm.hoverTexts[_vm.internalIndex]))]
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { color: _vm.colors[_vm.internalIndex] },
+                    on: { click: _vm.next }
+                  },
+                  [_vm._t("default")],
+                  2
+                )
+              ],
+              1
+            )
+          }
+        }
+      ],
+      null,
+      true
+    )
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-305044c4", module.exports)
+  }
+}
+
+/***/ }),
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(_vm.orderedValues, function(song_lyric) {
+      return _c(
+        "button-color-toggle",
+        {
+          key: song_lyric.id,
+          attrs: {
+            colors: _vm.editId == song_lyric.id ? _vm.colors : _vm.colors_def,
+            "hover-texts": _vm.hoverTexts
+          },
+          on: {
+            input: function($event) {
+              return _vm.updated(song_lyric)
+            }
+          },
+          model: {
+            value: song_lyric.type,
+            callback: function($$v) {
+              _vm.$set(song_lyric, "type", $$v)
+            },
+            expression: "song_lyric.type"
+          }
+        },
+        [_vm._v("\n        " + _vm._s(song_lyric.name) + "\n    ")]
+      )
+    }),
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-243145ef", module.exports)
+  }
+}
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(166)
+/* template */
+var __vue_template__ = __webpack_require__(167)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/SelectSongGroupDialog.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35675a4f", Component.options)
+  } else {
+    hotAPI.reload("data-v-35675a4f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 166 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+var _templateObject = _taggedTemplateLiteral(['\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n'], ['\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+var FETCH_SONGS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['outline'],
+
+  data: function data() {
+    return {
+      dialog: false,
+      song: undefined
+    };
+  },
+
+
+  apollo: {
+    songs: {
+      query: FETCH_SONGS
+    }
+  },
+
+  methods: {
+    getSongLyricNames: function getSongLyricNames(song) {
+      var name = "";
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = song.song_lyrics[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var sl = _step.value;
+
+          name += sl.name + ", ";
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return name.slice(0, name.length - 2);
+      // return song.song_lyrics[0].name;
+    },
+    onCancel: function onCancel() {
+      this.dialog = false;
+    },
+    onSubmit: function onSubmit() {
+      this.dialog = false;
+      this.$emit("submit", this.song);
+    },
+    filter: function filter(item, queryText, itemText) {
+      if (item.header) return false;
+
+      var hasValue = function hasValue(val) {
+        return val != null ? val : "";
+      };
+
+      var text = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(hasValue(itemText));
+      var query = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(hasValue(queryText));
+
+      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
+    }
+  }
+});
+
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { persistent: "", "max-width": "600px" },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  {
+                    attrs: { outline: _vm.outline, color: "primary", dark: "" }
+                  },
+                  on
+                ),
+                [_vm._v("Přidat k písni nebo skupině písní")]
+              )
+            ]
+          }
+        }
+      ]),
+      model: {
+        value: _vm.dialog,
+        callback: function($$v) {
+          _vm.dialog = $$v
+        },
+        expression: "dialog"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", { staticClass: "headline" }, [
+            _vm._v("Výběr\n    ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c("v-combobox", {
+                attrs: {
+                  items: _vm.songs,
+                  "item-value": "id",
+                  "item-text": _vm.getSongLyricNames,
+                  filter: _vm.filter,
+                  label: "Vyberte píseň resp. skupinu písní"
+                },
+                model: {
+                  value: _vm.song,
+                  callback: function($$v) {
+                    _vm.song = $$v
+                  },
+                  expression: "song"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "green darken-1", flat: "" },
+                  on: { click: _vm.onCancel }
+                },
+                [_vm._v("Zrušit")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    color: "green darken-1",
+                    disabled: _vm.song == undefined || _vm.song.id == undefined,
+                    flat: ""
+                  },
+                  on: { click: _vm.onSubmit }
+                },
+                [_vm._v("OK")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-35675a4f", module.exports)
+  }
+}
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c("notifications"),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-tabs",
+            { attrs: { color: "transparent" } },
+            [
+              _c("v-tab", [_vm._v("Údaje o písni")]),
+              _vm._v(" "),
+              _c("v-tab", [_vm._v("Text")]),
+              _vm._v(" "),
+              _c(
+                "v-tab-item",
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", "pt-2": "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        [
+                          _c(
+                            "v-form",
+                            { ref: "form" },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Název písně",
+                                  required: "",
+                                  "data-vv-name": "input.name",
+                                  "error-messages": _vm.errors.collect(
+                                    "input.name"
+                                  )
+                                },
+                                on: { input: _vm.onNameChange },
+                                model: {
+                                  value: _vm.model.name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "name", $$v)
+                                  },
+                                  expression: "model.name"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("items-combo-box", {
+                                attrs: {
+                                  "p-items": _vm.authors,
+                                  label: "Autoři",
+                                  "create-label":
+                                    "Vyberte autora z nabídky nebo vytvořte nového",
+                                  multiple: true
+                                },
+                                model: {
+                                  value: _vm.model.authors,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "authors", $$v)
+                                  },
+                                  expression: "model.authors"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-checkbox", {
+                                attrs: {
+                                  label: "Anonymní autor (nezobrazovat v to-do)"
+                                },
+                                model: {
+                                  value: _vm.model.has_anonymous_author,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.model,
+                                      "has_anonymous_author",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "model.has_anonymous_author"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.model.song && _vm.model_database.song
+                                ? _c(
+                                    "div",
+                                    { staticClass: "mb-3" },
+                                    [
+                                      _c("song-lyrics-group", {
+                                        attrs: { "edit-id": _vm.model.id },
+                                        model: {
+                                          value: _vm.model.song.song_lyrics,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.model.song,
+                                              "song_lyrics",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "model.song.song_lyrics"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.model.song.song_lyrics.length > 1
+                                        ? _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "error",
+                                                outline: ""
+                                              },
+                                              on: { click: _vm.resetGroup }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Odstranit píseň ze skupiny"
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.model_database.song.song_lyrics
+                                        .length == 1 &&
+                                      _vm.model.song.song_lyrics.length == 1
+                                        ? _c("select-song-group-dialog", {
+                                            attrs: { outline: "" },
+                                            on: { submit: _vm.addToGroup }
+                                          })
+                                        : _vm._e()
+                                    ],
+                                    1
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("items-combo-box", {
+                                attrs: {
+                                  "p-items": _vm.tags_unofficial,
+                                  label: "Štítky",
+                                  "create-label":
+                                    "Vyberte štítek z nabídky nebo vytvořte nový",
+                                  multiple: true
+                                },
+                                model: {
+                                  value: _vm.model.tags_unofficial,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "tags_unofficial", $$v)
+                                  },
+                                  expression: "model.tags_unofficial"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("items-combo-box", {
+                                attrs: {
+                                  "p-items": _vm.tags_official,
+                                  label: "Liturgie",
+                                  "create-label":
+                                    "Vyberte část liturgie z nabídky",
+                                  multiple: true
+                                },
+                                model: {
+                                  value: _vm.model.tags_official,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.model, "tags_official", $$v)
+                                  },
+                                  expression: "model.tags_official"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-flex", { attrs: { xs12: "", md6: "" } })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab-item",
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        [
+                          _c("v-select", {
+                            attrs: { items: _vm.lang_values, label: "Jazyk" },
+                            model: {
+                              value: _vm.model.lang,
+                              callback: function($$v) {
+                                _vm.$set(_vm.model, "lang", $$v)
+                              },
+                              expression: "model.lang"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { id: "file_select" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$refs.fileinput.click()
+                                }
+                              }
+                            },
+                            [_vm._v("Nahrát ze souboru OpenSong")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            ref: "fileinput",
+                            staticClass: "d-none",
+                            attrs: { type: "file" },
+                            on: { change: _vm.handleOpensongFile }
+                          }),
+                          _vm._v(" "),
+                          _c("v-textarea", {
+                            attrs: {
+                              "auto-grow": "",
+                              outline: "",
+                              name: "input-7-4",
+                              label: "Text"
+                            },
+                            model: {
+                              value: _vm.model.lyrics,
+                              callback: function($$v) {
+                                _vm.$set(_vm.model, "lyrics", $$v)
+                              },
+                              expression: "model.lyrics"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        _vm._l(_vm.model.externals, function(external) {
+                          return _c("img", {
+                            key: external.id,
+                            staticClass: "grey lighten-2",
+                            attrs: { src: external.thubmnail_url }
+                          })
+                        }),
+                        0
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.submit } },
+            [_vm._v("Uložit")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.reset } },
+            [_vm._v("Vrátit změny")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: _vm.isDirty }, on: { click: _vm.show } },
+            [_vm._v("Zobrazit ve zpěvníku")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-741f5d72", module.exports)
+  }
+}
+
+/***/ }),
+/* 169 */
+/***/ (function(module, exports, __webpack_require__) {
+
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(22));
+		module.exports = factory(__webpack_require__(23));
 	else if(typeof define === 'function' && define.amd)
 		define(["vue"], factory);
 	else if(typeof exports === 'object')
@@ -92951,13 +95971,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 //# sourceMappingURL=vuetify.js.map
 
 /***/ }),
-/* 155 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(156);
+var content = __webpack_require__(171);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -92965,7 +95985,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(118)(content, options);
+var update = __webpack_require__(119)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -92982,7 +96002,7 @@ if(false) {
 }
 
 /***/ }),
-/* 156 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -92996,12 +96016,12 @@ exports.push([module.i, "/*!\n* Vuetify v1.5.14\n* Forged by John Leider\n* Rele
 
 
 /***/ }),
-/* 157 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(22));
+		module.exports = factory(__webpack_require__(23));
 	else if(typeof define === 'function' && define.amd)
 		define(["vue"], factory);
 	else if(typeof exports === 'object')
@@ -94127,7 +97147,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 158 */
+/* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105165,3046 +108185,6 @@ VeeValidate$1.withValidation = withValidation;
 /* harmony default export */ __webpack_exports__["a"] = (VeeValidate$1);
 
 
-
-/***/ }),
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(164)
-/* template */
-var __vue_template__ = __webpack_require__(166)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/SongLyricEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-741f5d72", Component.options)
-  } else {
-    hotAPI.reload("data-v-741f5d72", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 164 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql__ = __webpack_require__(165);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue__ = __webpack_require__(173);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue__);
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject6 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a);
-
-var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a);
-
-var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject3);
-
-var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject4);
-
-var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject5);
-
-var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject6);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["preset-id", "csrf"],
-  components: {
-    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_2__components_ItemsComboBox_vue___default.a,
-    SongLyricsGroup: __WEBPACK_IMPORTED_MODULE_3__components_SongLyricsGroup_vue___default.a,
-    SelectSongGroupDialog: __WEBPACK_IMPORTED_MODULE_4__components_SelectSongGroupDialog_vue___default.a
-  },
-
-  data: function data() {
-    return {
-      model: {
-        // here goes the definition of model attributes
-        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
-        id: undefined,
-        name: undefined,
-        has_anonymous_author: undefined,
-        lang: undefined,
-        lyrics: undefined,
-        tags_unofficial: [],
-        tags_official: [],
-        authors: [],
-        externals: [],
-        files: [],
-        song: undefined
-      },
-      lang_values: []
-    };
-  },
-
-
-  apollo: {
-    model_database: {
-      query: FETCH_MODEL_DATABASE,
-      variables: function variables() {
-        return {
-          id: this.model.id
-        };
-      },
-      result: function result(_result) {
-        var song_lyric = _result.data.model_database;
-        // load the requested fields to the vue data.model property
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var field = _step.value;
-
-            var clone = _.cloneDeep(song_lyric[field]);
-            Vue.set(this.model, field, clone);
-          }
-
-          // lang string values are an associative array passed as JSON object
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        var parsed_obj = JSON.parse(song_lyric.lang_string_values);
-
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = Object.entries(parsed_obj)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var _ref = _step2.value;
-
-            var _ref2 = _slicedToArray(_ref, 2);
-
-            var key = _ref2[0];
-            var value = _ref2[1];
-
-            this.lang_values.push({ value: key, text: value });
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-              _iterator2.return();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-      }
-    },
-    authors: {
-      query: FETCH_AUTHORS
-    },
-    tags_official: {
-      query: FETCH_TAGS_OFFICIAL
-    },
-    tags_unofficial: {
-      query: FETCH_TAGS_UNOFFICIAL
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted: function mounted() {
-    var _this = this;
-
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = function (e) {
-      if (_this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-  },
-
-
-  computed: {
-    isDirty: function isDirty() {
-      if (!this.model_database) return false;
-
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
-
-      try {
-        for (var _iterator3 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var field = _step3.value;
-
-          if (!_.isEqual(this.model[field], this.model_database[field])) {
-            return true;
-          }
-        }
-      } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3.return) {
-            _iterator3.return();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
-      }
-
-      return false;
-    }
-  },
-
-  methods: {
-    submit: function submit() {
-      var _this2 = this;
-
-      this.$apollo.mutate({
-        mutation: MUTATE_MODEL_DATABASE,
-        variables: {
-          input: {
-            id: this.model.id,
-            name: this.model.name,
-            lang: this.model.lang,
-            has_anonymous_author: this.model.has_anonymous_author,
-            lyrics: this.model.lyrics,
-            song: this.model.song,
-            authors: {
-              create: this.getModelsToCreateBelongsToMany(this.model.authors),
-              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
-            },
-            tags_unofficial: {
-              create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
-              sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
-            },
-            tags_official: {
-              // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
-              sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
-            }
-          }
-        }
-      }).then(function (result) {
-        _this2.$validator.errors.clear();
-        _this2.$notify({
-          title: "Úspěšně uloženo :)",
-          text: "Píseň byla úspěšně uložena",
-          type: "success"
-        });
-      }).catch(function (error) {
-        if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
-          // unknown error happened
-          _this2.$notify({
-            title: "Chyba při ukládání",
-            text: "Píseň nebyla uložena",
-            type: "error"
-          });
-          return;
-        }
-
-        var errorFields = error.graphQLErrors[0].extensions.validation;
-
-        // clear the old errors and (add new ones if exist)
-        _this2.$validator.errors.clear();
-        var _iteratorNormalCompletion4 = true;
-        var _didIteratorError4 = false;
-        var _iteratorError4 = undefined;
-
-        try {
-          for (var _iterator4 = Object.entries(errorFields)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-            var _ref3 = _step4.value;
-
-            var _ref4 = _slicedToArray(_ref3, 2);
-
-            var key = _ref4[0];
-            var value = _ref4[1];
-
-            _this2.$validator.errors.add({ field: key, msg: value });
-          }
-        } catch (err) {
-          _didIteratorError4 = true;
-          _iteratorError4 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-              _iterator4.return();
-            }
-          } finally {
-            if (_didIteratorError4) {
-              throw _iteratorError4;
-            }
-          }
-        }
-      });
-    },
-    reset: function reset() {
-      var _iteratorNormalCompletion5 = true;
-      var _didIteratorError5 = false;
-      var _iteratorError5 = undefined;
-
-      try {
-        for (var _iterator5 = this.getFieldsFromFragment(false)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-          var field = _step5.value;
-
-          var clone = _.cloneDeep(this.model_database[field]);
-          Vue.set(this.model, field, clone);
-        }
-      } catch (err) {
-        _didIteratorError5 = true;
-        _iteratorError5 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion5 && _iterator5.return) {
-            _iterator5.return();
-          }
-        } finally {
-          if (_didIteratorError5) {
-            throw _iteratorError5;
-          }
-        }
-      }
-    },
-
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
-      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_song_lyric_fragment_graphql___default.a.definitions[0].selectionSet.selections;
-      var fieldNames = fieldDefs.map(function (field) {
-        if (field.alias) return field.alias.value;
-        return field.name.value;
-      });
-
-      if (!includeId) fieldNames = fieldNames.filter(function (field) {
-        return field != "id";
-      });
-
-      return fieldNames;
-    },
-    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return false;
-        return true;
-      });
-    },
-    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return true;
-        return false;
-      }).map(function (model) {
-        return model.id;
-      });
-    },
-    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
-      var obj = {};
-
-      if (model) {
-        obj.update = {
-          id: model.id
-        };
-      } else {
-        obj.disconnect = true;
-      }
-
-      return obj;
-    },
-    handleOpensongFile: function handleOpensongFile(e) {
-      var _this3 = this;
-
-      var file = e.target.files[0];
-
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        console.log("file loaded succesfully");
-
-        $.post("/api/parse/opensong", {
-          file_contents: e.target.result,
-          _token: _this3.csrf
-        }, function (data) {
-          _this3.model.lyrics = data;
-        });
-      };
-
-      reader.readAsText(file);
-    },
-    resetGroup: function resetGroup() {
-      var _this4 = this;
-
-      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(function (song_lyric) {
-        return song_lyric.id === _this4.model.id;
-      });
-    },
-    addToGroup: function addToGroup(song) {
-      // check if there is original in the group and then
-      if (song.song_lyrics.filter(function (sl) {
-        return sl.type == 0;
-      }).length > 0) this.model.song.song_lyrics[0].type = 1;
-
-      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
-    },
-    onNameChange: function onNameChange(name) {
-      // update the corresponding name in song.song_lyrics
-      var _iteratorNormalCompletion6 = true;
-      var _didIteratorError6 = false;
-      var _iteratorError6 = undefined;
-
-      try {
-        for (var _iterator6 = this.model.song.song_lyrics[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-          var song_lyric = _step6.value;
-
-          if (song_lyric.id == this.model.id) {
-            Vue.set(song_lyric, "name", name);
-          }
-        }
-      } catch (err) {
-        _didIteratorError6 = true;
-        _iteratorError6 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion6 && _iterator6.return) {
-            _iterator6.return();
-          }
-        } finally {
-          if (_didIteratorError6) {
-            throw _iteratorError6;
-          }
-        }
-      }
-    }
-  }
-});
-
-/***/ }),
-/* 165 */
-/***/ (function(module, exports) {
-
-
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SongLyricFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SongLyric"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"has_anonymous_author"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"lang"},"arguments":[],"directives":[]},{"kind":"Field","alias":{"kind":"Name","value":"tags_unofficial"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"0"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","alias":{"kind":"Name","value":"tags_official"},"name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"lyrics"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thumbnail_url"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"download_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thumbnail_url"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":603}};
-    doc.loc.source = {"body":"fragment SongLyricFillableFragment on SongLyric  {\n    id\n    name\n    authors {\n        id\n        name\n    }\n    has_anonymous_author\n    lang\n    tags_unofficial: tags(type: 0) {\n        id\n        name\n    }\n    tags_official: tags(type: 1) {\n        id\n        name\n    }\n    lyrics\n    song {\n        id\n        song_lyrics {\n            id\n            name\n            type\n        }\n    }\n    externals {\n        id\n        public_name\n        url\n        type\n        thumbnail_url\n    }\n    files {\n        id\n        public_name\n        download_url\n        type\n        thumbnail_url\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    var names = {};
-    function unique(defs) {
-      return defs.filter(
-        function(def) {
-          if (def.kind !== 'FragmentDefinition') return true;
-          var name = def.name.value
-          if (names[name]) {
-            return false;
-          } else {
-            names[name] = true;
-            return true;
-          }
-        }
-      )
-    }
-  
-
-      module.exports = doc;
-    
-
-
-/***/ }),
-/* 166 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c("notifications"),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-tabs",
-            { attrs: { color: "transparent" } },
-            [
-              _c("v-tab", [_vm._v("Údaje o písni")]),
-              _vm._v(" "),
-              _c("v-tab", [_vm._v("Text")]),
-              _vm._v(" "),
-              _c(
-                "v-tab-item",
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { row: "", "pt-2": "" } },
-                    [
-                      _c(
-                        "v-flex",
-                        { attrs: { xs12: "", md6: "" } },
-                        [
-                          _c(
-                            "v-form",
-                            { ref: "form" },
-                            [
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "Název písně",
-                                  required: "",
-                                  "data-vv-name": "input.name",
-                                  "error-messages": _vm.errors.collect(
-                                    "input.name"
-                                  )
-                                },
-                                on: { input: _vm.onNameChange },
-                                model: {
-                                  value: _vm.model.name,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.model, "name", $$v)
-                                  },
-                                  expression: "model.name"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("items-combo-box", {
-                                attrs: {
-                                  "p-items": _vm.authors,
-                                  label: "Autoři",
-                                  "create-label":
-                                    "Vyberte autora z nabídky nebo vytvořte nového",
-                                  multiple: true
-                                },
-                                model: {
-                                  value: _vm.model.authors,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.model, "authors", $$v)
-                                  },
-                                  expression: "model.authors"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("v-checkbox", {
-                                attrs: {
-                                  label: "Anonymní autor (nezobrazovat v to-do)"
-                                },
-                                model: {
-                                  value: _vm.model.has_anonymous_author,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.model,
-                                      "has_anonymous_author",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "model.has_anonymous_author"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.model.song && _vm.model_database.song
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mb-3" },
-                                    [
-                                      _c("song-lyrics-group", {
-                                        attrs: { "edit-id": _vm.model.id },
-                                        model: {
-                                          value: _vm.model.song.song_lyrics,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.model.song,
-                                              "song_lyrics",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "model.song.song_lyrics"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _vm.model.song.song_lyrics.length > 1
-                                        ? _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                color: "error",
-                                                outline: ""
-                                              },
-                                              on: { click: _vm.resetGroup }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "Odstranit píseň ze skupiny"
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _vm.model_database.song.song_lyrics
-                                        .length == 1 &&
-                                      _vm.model.song.song_lyrics.length == 1
-                                        ? _c("select-song-group-dialog", {
-                                            attrs: { outline: "" },
-                                            on: { submit: _vm.addToGroup }
-                                          })
-                                        : _vm._e()
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("items-combo-box", {
-                                attrs: {
-                                  "p-items": _vm.tags_unofficial,
-                                  label: "Štítky",
-                                  "create-label":
-                                    "Vyberte štítek z nabídky nebo vytvořte nový",
-                                  multiple: true
-                                },
-                                model: {
-                                  value: _vm.model.tags_unofficial,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.model, "tags_unofficial", $$v)
-                                  },
-                                  expression: "model.tags_unofficial"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("items-combo-box", {
-                                attrs: {
-                                  "p-items": _vm.tags_official,
-                                  label: "Liturgie",
-                                  "create-label":
-                                    "Vyberte část liturgie z nabídky",
-                                  multiple: true
-                                },
-                                model: {
-                                  value: _vm.model.tags_official,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.model, "tags_official", $$v)
-                                  },
-                                  expression: "model.tags_official"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-flex", { attrs: { xs12: "", md6: "" } })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-tab-item",
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { row: "" } },
-                    [
-                      _c(
-                        "v-flex",
-                        { attrs: { xs12: "", md6: "" } },
-                        [
-                          _c("v-select", {
-                            attrs: { items: _vm.lang_values, label: "Jazyk" },
-                            model: {
-                              value: _vm.model.lang,
-                              callback: function($$v) {
-                                _vm.$set(_vm.model, "lang", $$v)
-                              },
-                              expression: "model.lang"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { id: "file_select" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.$refs.fileinput.click()
-                                }
-                              }
-                            },
-                            [_vm._v("Nahrát ze souboru OpenSong")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            ref: "fileinput",
-                            staticClass: "d-none",
-                            attrs: { type: "file" },
-                            on: { change: _vm.handleOpensongFile }
-                          }),
-                          _vm._v(" "),
-                          _c("v-textarea", {
-                            attrs: {
-                              "auto-grow": "",
-                              outline: "",
-                              name: "input-7-4",
-                              label: "Text"
-                            },
-                            model: {
-                              value: _vm.model.lyrics,
-                              callback: function($$v) {
-                                _vm.$set(_vm.model, "lyrics", $$v)
-                              },
-                              expression: "model.lyrics"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        { attrs: { xs12: "", md6: "" } },
-                        _vm._l(_vm.model.externals, function(external) {
-                          return _c("v-img", {
-                            key: external.id,
-                            staticClass: "grey lighten-2",
-                            attrs: {
-                              src: external.thubmnail_url,
-                              "lazy-src": external.thubmnail_url,
-                              "aspect-ratio": "1"
-                            }
-                          })
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.submit } },
-            [_vm._v("Uložit")]
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.reset } },
-            [_vm._v("Vrátit změny")]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-741f5d72", module.exports)
-  }
-}
-
-/***/ }),
-/* 167 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(176)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(168)
-/* template */
-var __vue_template__ = __webpack_require__(169)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/components/ButtonColorToggle.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-305044c4", Component.options)
-  } else {
-    hotAPI.reload("data-v-305044c4", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 168 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["colors", "value", "hover-texts"],
-
-  data: function data() {
-    return {
-      index: this.value ? this.value : 0
-    };
-  },
-
-
-  watch: {
-    value: function value(val, prev) {
-      this.index = this.value ? this.value : 0;
-    }
-  },
-
-  computed: {
-    internalIndex: {
-      get: function get() {
-        return this.index;
-      },
-      set: function set(i) {
-        this.index = i;
-        this.$emit("input", i);
-      }
-    }
-  },
-
-  methods: {
-    next: function next(e) {
-      this.internalIndex = this.mod(this.internalIndex + 1, this.colors.length);
-      // this.$emit("click", e);
-    },
-    mod: function mod(n, m) {
-      return (n % m + m) % m;
-    }
-  }
-});
-
-/***/ }),
-/* 169 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("v-hover", {
-    scopedSlots: _vm._u(
-      [
-        {
-          key: "default",
-          fn: function(ref) {
-            var hover = ref.hover
-            return _c(
-              "div",
-              { staticClass: "hover-container" },
-              [
-                _c(
-                  "v-slide-x-reverse-transition",
-                  [
-                    hover
-                      ? _c(
-                          "v-chip",
-                          {
-                            staticClass: "hover-text",
-                            attrs: { color: _vm.colors[_vm.internalIndex] }
-                          },
-                          [_vm._v(_vm._s(_vm.hoverTexts[_vm.internalIndex]))]
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { color: _vm.colors[_vm.internalIndex] },
-                    on: { click: _vm.next }
-                  },
-                  [_vm._t("default")],
-                  2
-                )
-              ],
-              1
-            )
-          }
-        }
-      ],
-      null,
-      true
-    )
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-305044c4", module.exports)
-  }
-}
-
-/***/ }),
-/* 170 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(171)
-/* template */
-var __vue_template__ = __webpack_require__(172)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/components/SongLyricsGroup.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-243145ef", Component.options)
-  } else {
-    hotAPI.reload("data-v-243145ef", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 171 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue__ = __webpack_require__(167);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    ButtonColorToggle: __WEBPACK_IMPORTED_MODULE_0__components_ButtonColorToggle_vue___default.a
-  },
-
-  props: ["value", "edit-id"],
-
-  data: function data() {
-    return {
-      colors_def: ["info lighten-1", "success lighten-1", "warning lighten-1"],
-      colors: ["info", "success", "warning"],
-      hoverTexts: ["Originál", "Překlad", "Autorizovaný překlad"]
-      // types - 0: original 1: translation 2: authorized translation
-    };
-  },
-
-
-  computed: {
-    orderedValues: function orderedValues() {
-      var _this = this;
-
-      // .slice() is to make .sort immutable 
-      // see https://stackoverflow.com/questions/30431304/functional-non-destructive-array-sort
-      return this.value.slice().sort(function (a, b) {
-        if (a.id == _this.editId) return -1;
-        if (b.id == _this.editId) return 1;
-        return a.name.localeCompare(b.name);
-      });
-    }
-  },
-
-  methods: {
-    updated: function updated(last) {
-      // check the consistency
-      if (last.type === 0) {
-        console.log("aj");
-        // allow only one original -> set other originals to translation
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var song_lyric = _step.value;
-
-            if (song_lyric.type == 0 && song_lyric.id !== last.id) {
-              Vue.set(song_lyric, "type", 1);
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-      }
-    }
-  }
-});
-
-/***/ }),
-/* 172 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.orderedValues, function(song_lyric) {
-      return _c(
-        "button-color-toggle",
-        {
-          key: song_lyric.id,
-          attrs: {
-            colors: _vm.editId == song_lyric.id ? _vm.colors : _vm.colors_def,
-            "hover-texts": _vm.hoverTexts
-          },
-          on: {
-            input: function($event) {
-              return _vm.updated(song_lyric)
-            }
-          },
-          model: {
-            value: song_lyric.type,
-            callback: function($$v) {
-              _vm.$set(song_lyric, "type", $$v)
-            },
-            expression: "song_lyric.type"
-          }
-        },
-        [_vm._v("\n        " + _vm._s(song_lyric.name) + "\n    ")]
-      )
-    }),
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-243145ef", module.exports)
-  }
-}
-
-/***/ }),
-/* 173 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(174)
-/* template */
-var __vue_template__ = __webpack_require__(175)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/components/SelectSongGroupDialog.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-35675a4f", Component.options)
-  } else {
-    hotAPI.reload("data-v-35675a4f", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 174 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
-var _templateObject = _taggedTemplateLiteral(['\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n'], ['\n  query {\n    songs {\n      id\n      song_lyrics {\n        id\n        name\n        type\n      }\n    }\n  }\n']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-var FETCH_SONGS = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['outline'],
-
-  data: function data() {
-    return {
-      dialog: false,
-      song: undefined
-    };
-  },
-
-
-  apollo: {
-    songs: {
-      query: FETCH_SONGS
-    }
-  },
-
-  methods: {
-    getSongLyricNames: function getSongLyricNames(song) {
-      var name = "";
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = song.song_lyrics[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var sl = _step.value;
-
-          name += sl.name + ", ";
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      return name.slice(0, name.length - 2);
-      // return song.song_lyrics[0].name;
-    },
-    onCancel: function onCancel() {
-      this.dialog = false;
-    },
-    onSubmit: function onSubmit() {
-      this.dialog = false;
-      this.$emit("submit", this.song);
-    },
-    filter: function filter(item, queryText, itemText) {
-      if (item.header) return false;
-
-      var hasValue = function hasValue(val) {
-        return val != null ? val : "";
-      };
-
-      var text = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(hasValue(itemText));
-      var query = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(hasValue(queryText));
-
-      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
-    }
-  }
-});
-
-/***/ }),
-/* 175 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-dialog",
-    {
-      attrs: { persistent: "", "max-width": "600px" },
-      scopedSlots: _vm._u([
-        {
-          key: "activator",
-          fn: function(ref) {
-            var on = ref.on
-            return [
-              _c(
-                "v-btn",
-                _vm._g(
-                  {
-                    attrs: { outline: _vm.outline, color: "primary", dark: "" }
-                  },
-                  on
-                ),
-                [_vm._v("Přidat k písni nebo skupině písní")]
-              )
-            ]
-          }
-        }
-      ]),
-      model: {
-        value: _vm.dialog,
-        callback: function($$v) {
-          _vm.dialog = $$v
-        },
-        expression: "dialog"
-      }
-    },
-    [
-      _vm._v(" "),
-      _c(
-        "v-card",
-        [
-          _c("v-card-title", { staticClass: "headline" }, [
-            _vm._v("Výběr\n    ")
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-card-text",
-            [
-              _c("v-combobox", {
-                attrs: {
-                  items: _vm.songs,
-                  "item-value": "id",
-                  "item-text": _vm.getSongLyricNames,
-                  filter: _vm.filter,
-                  label: "Vyberte píseň resp. skupinu písní"
-                },
-                model: {
-                  value: _vm.song,
-                  callback: function($$v) {
-                    _vm.song = $$v
-                  },
-                  expression: "song"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            [
-              _c("v-spacer"),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "green darken-1", flat: "" },
-                  on: { click: _vm.onCancel }
-                },
-                [_vm._v("Zrušit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: {
-                    color: "green darken-1",
-                    disabled: _vm.song == undefined || _vm.song.id == undefined,
-                    flat: ""
-                  },
-                  on: { click: _vm.onSubmit }
-                },
-                [_vm._v("OK")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-35675a4f", module.exports)
-  }
-}
-
-/***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(177);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(10)("22428dc7", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-305044c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ButtonColorToggle.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-305044c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ButtonColorToggle.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 177 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.hover-container {\n  position: relative;\n}\n.hover-text {\n  position: absolute;\n  color: white;\n  right: 0;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 178 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(179)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(181)
-/* template */
-var __vue_template__ = __webpack_require__(182)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/SongsList.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1ed0150f", Component.options)
-  } else {
-    hotAPI.reload("data-v-1ed0150f", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 179 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(180);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(10)("57246a0e", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ed0150f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SongsList.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ed0150f\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SongsList.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 180 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 181 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
-
-var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
-
-  data: function data() {
-    return {
-      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'type' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
-      search_string: ""
-    };
-  },
-
-
-  apollo: {
-    song_lyrics: {
-      query: fetch_items,
-      variables: function variables() {
-        return {
-          has_lyrics: this.hasLyrics,
-          has_authors: this.hasAuthors,
-          has_chords: this.hasChords,
-          has_tags: this.hasTags
-        };
-      }
-    }
-  },
-
-  methods: {
-    askForm: function askForm(id) {
-      if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteSong(id);
-      }
-    },
-    deleteSong: function deleteSong(id) {
-      this.$apollo.mutate({
-        mutation: delete_item,
-        variables: { id: id },
-        refetchQueries: [{
-          query: fetch_items
-        }]
-      }).then(function (result) {
-        console.log('uspesne vymazano');
-      }).catch(function (error) {
-        console.log('error');
-      });
-    },
-    formFilter: function formFilter(val, search) {
-      if (typeof val == 'string') {
-        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
-        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
-
-        return hay.indexOf(needle) >= 0;
-      }
-
-      return false;
-    }
-  }
-});
-
-/***/ }),
-/* 182 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs5: "",
-                    "offset-xs7": "",
-                    md3: "",
-                    "offset-md9": ""
-                  }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Vyhledávání" },
-                    model: {
-                      value: _vm.search_string,
-                      callback: function($$v) {
-                        _vm.search_string = $$v
-                      },
-                      expression: "search_string"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "" } },
-                [
-                  _c("v-data-table", {
-                    staticClass: "users-list",
-                    attrs: {
-                      headers: _vm.headers,
-                      items: _vm.song_lyrics,
-                      search: _vm.search_string,
-                      filter: _vm.formFilter,
-                      "rows-per-page-items": [
-                        10,
-                        25,
-                        { text: "Vše", value: -1 }
-                      ]
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "items",
-                        fn: function(props) {
-                          return [
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "/admin/song/" + props.item.id
-                                  }
-                                },
-                                [_vm._v(_vm._s(props.item.name))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              props.item.type === 0
-                                ? _c("span", [_vm._v("Originál")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              props.item.type === 1
-                                ? _c("span", [_vm._v("Překlad")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              props.item.type === 2
-                                ? _c("span", [_vm._v("Autorizovaný překlad")])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(props.item.updated_at))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              props.item.is_published
-                                ? _c("span", [_vm._v("Ano")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !props.item.is_published
-                                ? _c("span", [_vm._v("Ne")])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              props.item.is_approved_by_author
-                                ? _c("span", [_vm._v("Ano")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !props.item.is_approved_by_author
-                                ? _c("span", [_vm._v("Ne")])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticStyle: { color: "red" },
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.askForm(props.item.id)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Vymazat")]
-                              )
-                            ])
-                          ]
-                        }
-                      }
-                    ])
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1ed0150f", module.exports)
-  }
-}
-
-/***/ }),
-/* 183 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(184)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(186)
-/* template */
-var __vue_template__ = __webpack_require__(187)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/ExternalsList.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-38a804ce", Component.options)
-  } else {
-    hotAPI.reload("data-v-38a804ce", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 184 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(185);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(10)("298c29ac", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38a804ce\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExternalsList.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38a804ce\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExternalsList.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 185 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 186 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
-
-var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['is-todo'],
-
-  data: function data() {
-    return {
-      headers: [{ text: 'Název', value: 'public_name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
-      search_string: ""
-    };
-  },
-
-
-  apollo: {
-    externals: {
-      query: fetch_items,
-      variables: function variables() {
-        return {
-          is_todo: this.isTodo
-        };
-      }
-    }
-  },
-
-  methods: {
-    askForm: function askForm(id) {
-      if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteExternal(id);
-      }
-    },
-    deleteExternal: function deleteExternal(id) {
-      this.$apollo.mutate({
-        mutation: delete_item,
-        variables: { id: id },
-        refetchQueries: [{
-          query: fetch_items
-        }]
-      }).then(function (result) {
-        console.log('uspesne vymazano');
-      }).catch(function (error) {
-        console.log('error');
-      });
-    },
-    formFilter: function formFilter(val, search) {
-      if (typeof val == 'string') {
-        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
-        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
-
-        return hay.indexOf(needle) >= 0;
-      }
-
-      return false;
-    }
-  }
-});
-
-/***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs5: "",
-                    "offset-xs7": "",
-                    md3: "",
-                    "offset-md9": ""
-                  }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Vyhledávání" },
-                    model: {
-                      value: _vm.search_string,
-                      callback: function($$v) {
-                        _vm.search_string = $$v
-                      },
-                      expression: "search_string"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "" } },
-                [
-                  _c("v-data-table", {
-                    attrs: {
-                      headers: _vm.headers,
-                      items: _vm.externals,
-                      search: _vm.search_string,
-                      filter: _vm.formFilter,
-                      "rows-per-page-items": [
-                        10,
-                        25,
-                        { text: "Vše", value: -1 }
-                      ]
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "items",
-                        fn: function(props) {
-                          return [
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href:
-                                      "/admin/external/" +
-                                      props.item.id +
-                                      "/edit"
-                                  }
-                                },
-                                [_vm._v(_vm._s(props.item.public_name))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticStyle: { color: "red" },
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.askForm(props.item.id)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Vymazat")]
-                              )
-                            ])
-                          ]
-                        }
-                      }
-                    ])
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-38a804ce", module.exports)
-  }
-}
-
-/***/ }),
-/* 188 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(189)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(191)
-/* template */
-var __vue_template__ = __webpack_require__(192)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/FilesList.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7cbacef0", Component.options)
-  } else {
-    hotAPI.reload("data-v-7cbacef0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 189 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(190);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(10)("66621f3d", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cbacef0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilesList.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cbacef0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilesList.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 191 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string,\n                download_url\n            }\n        }'], ['\n        query FetchFiles ($is_todo: Boolean) {\n            files(is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string,\n                download_url\n            }\n        }']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteFile ($id: ID!) {\n    delete_file(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteFile ($id: ID!) {\n    delete_file(id: $id) {\n      id\n    }\n  }']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
-
-var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['is-todo'],
-
-  data: function data() {
-    return {
-      headers: [{ text: 'Název', value: 'public_name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
-      search_string: ""
-    };
-  },
-
-
-  apollo: {
-    files: {
-      query: fetch_items,
-      variables: function variables() {
-        return {
-          is_todo: this.isTodo
-        };
-      }
-    }
-  },
-
-  methods: {
-    askForm: function askForm(id) {
-      if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteFile(id);
-      }
-    },
-    deleteFile: function deleteFile(id) {
-      this.$apollo.mutate({
-        mutation: delete_item,
-        variables: { id: id },
-        refetchQueries: [{
-          query: fetch_items
-        }]
-      }).then(function (result) {
-        console.log('uspesne vymazano');
-      }).catch(function (error) {
-        console.log('error');
-      });
-    },
-    formFilter: function formFilter(val, search) {
-      if (typeof val == 'string') {
-        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
-        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
-
-        return hay.indexOf(needle) >= 0;
-      }
-
-      return false;
-    }
-  }
-});
-
-/***/ }),
-/* 192 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs5: "",
-                    "offset-xs7": "",
-                    md3: "",
-                    "offset-md9": ""
-                  }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Vyhledávání" },
-                    model: {
-                      value: _vm.search_string,
-                      callback: function($$v) {
-                        _vm.search_string = $$v
-                      },
-                      expression: "search_string"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "" } },
-                [
-                  _c("v-data-table", {
-                    attrs: {
-                      headers: _vm.headers,
-                      items: _vm.files,
-                      search: _vm.search_string,
-                      filter: _vm.formFilter,
-                      "rows-per-page-items": [
-                        10,
-                        25,
-                        { text: "Vše", value: -1 }
-                      ]
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "items",
-                        fn: function(props) {
-                          return [
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href:
-                                      "/admin/file/" + props.item.id + "/edit"
-                                  }
-                                },
-                                [_vm._v(_vm._s(props.item.public_name))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticStyle: { color: "red" },
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.askForm(props.item.id)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Vymazat")]
-                              ),
-                              _vm._v("\n                 \n                "),
-                              _c(
-                                "a",
-                                { attrs: { href: props.item.download_url } },
-                                [_vm._v("Stáhnout")]
-                              )
-                            ])
-                          ]
-                        }
-                      }
-                    ])
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7cbacef0", module.exports)
-  }
-}
-
-/***/ }),
-/* 193 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(194)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(196)
-/* template */
-var __vue_template__ = __webpack_require__(197)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/AuthorsList.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-59f84a99", Component.options)
-  } else {
-    hotAPI.reload("data-v-59f84a99", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 194 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(195);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(10)("3f8d83ab", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-59f84a99\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AuthorsList.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-59f84a99\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AuthorsList.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 195 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 196 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(34);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchAuthors {\n            authors {\n                id,\n                name,\n                type_string\n            }\n        }'], ['\n        query FetchAuthors {\n            authors {\n                id,\n                name,\n                type_string\n            }\n        }']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteAuthor ($id: ID!) {\n    delete_author(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteAuthor ($id: ID!) {\n    delete_author(id: $id) {\n      id\n    }\n  }']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-var fetch_items = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
-
-var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['is-todo'],
-
-  data: function data() {
-    return {
-      headers: [{ text: 'Jméno', value: 'name' }, { text: 'Typ', value: 'type_string' }, { text: 'Akce', value: 'action' }],
-      search_string: ""
-    };
-  },
-
-
-  apollo: {
-    authors: {
-      query: fetch_items,
-      variables: function variables() {
-        return {
-          is_todo: this.isTodo
-        };
-      }
-    }
-  },
-
-  methods: {
-    askForm: function askForm(id) {
-      if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteAuthor(id);
-      }
-    },
-    deleteAuthor: function deleteAuthor(id) {
-      this.$apollo.mutate({
-        mutation: delete_item,
-        variables: { id: id },
-        refetchQueries: [{
-          query: fetch_items
-        }]
-      }).then(function (result) {
-        console.log('uspesne vymazano');
-      }).catch(function (error) {
-        console.log('error');
-      });
-    },
-    formFilter: function formFilter(val, search) {
-      if (typeof val == 'string') {
-        var hay = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(val).toLowerCase();
-        var needle = Object(__WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__["a" /* default */])(search).toLowerCase();
-
-        return hay.indexOf(needle) >= 0;
-      }
-
-      return false;
-    }
-  }
-});
-
-/***/ }),
-/* 197 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs5: "",
-                    "offset-xs7": "",
-                    md3: "",
-                    "offset-md9": ""
-                  }
-                },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Vyhledávání" },
-                    model: {
-                      value: _vm.search_string,
-                      callback: function($$v) {
-                        _vm.search_string = $$v
-                      },
-                      expression: "search_string"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "" } },
-                [
-                  _c("v-data-table", {
-                    attrs: {
-                      headers: _vm.headers,
-                      items: _vm.authors,
-                      search: _vm.search_string,
-                      filter: _vm.formFilter,
-                      "rows-per-page-items": [
-                        10,
-                        25,
-                        { text: "Vše", value: -1 }
-                      ]
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "items",
-                        fn: function(props) {
-                          return [
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href:
-                                      "/admin/author/" + props.item.id + "/edit"
-                                  }
-                                },
-                                [_vm._v(_vm._s(props.item.name))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(props.item.type_string))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticStyle: { color: "red" },
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.askForm(props.item.id)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Vymazat")]
-                              )
-                            ])
-                          ]
-                        }
-                      }
-                    ])
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-59f84a99", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

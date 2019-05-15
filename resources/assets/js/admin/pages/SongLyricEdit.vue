@@ -81,18 +81,17 @@
               <!-- externals and files view -->
               <!-- <p v-for="external in model.externals" v-bind:key="external.id">{{ external.public_name }}</p> -->
               <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
-              <v-img v-for="external in model.externals" v-bind:key="external.id"
-                  :src="external.thubmnail_url"
-                  :lazy-src="external.thubmnail_url"
-                  aspect-ratio="1"
+              <img v-for="external in model.externals" v-bind:key="external.id"
+                  v-bind:src="external.thubmnail_url"
                   class="grey lighten-2"
-                ></v-img>
+                />
             </v-flex>
           </v-layout>
         </v-tab-item>
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny</v-btn>
+      <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
     </v-container>
   </v-app>
 </template>
@@ -324,6 +323,10 @@ export default {
         let clone = _.cloneDeep(this.model_database[field]);
         Vue.set(this.model, field, clone);
       }
+    },
+
+    show() {
+      window.location.href = this.model_database.public_url;
     },
 
     // helper method to load field names defined in fragment graphql definition

@@ -5,6 +5,7 @@ fragment SongLyricFillableFragment on SongLyric  {
         id
         name
     }
+    public_url
     has_anonymous_author
     lang
     tags_unofficial: tags(type: 0) {
