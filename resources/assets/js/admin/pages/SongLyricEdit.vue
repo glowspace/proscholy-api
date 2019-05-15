@@ -5,6 +5,7 @@
       <v-tabs color="transparent" v-on:change="onTabChange">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
+        <v-tab>Materiály</v-tab>
         <v-tab-item>
           <v-layout row pt-2>
             <v-flex xs12 md6>
@@ -114,7 +115,6 @@
             </v-flex>
             <v-flex xs12 md6>
               <!-- externals and files view -->
-              <!-- <p v-for="external in model.externals" v-bind:key="external.id">{{ external.thumbnail_url }}</p> -->
               <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
               <template v-if="thumbnailables">
                 <v-select
@@ -127,6 +127,20 @@
 
                 <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img>
               </template>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row>
+            <v-flex xs12 md6>
+              <h5>Externí odkazy:</h5>
+              <v-btn v-for="external in model.externals" v-bind:key="external.id" class="text-none">{{ external.public_name }}</v-btn>
+              <v-btn color="info" outline>Přidat nový externí odkaz</v-btn>
+            </v-flex>
+            <v-flex xs12 md6>
+              <h5>Soubory:</h5>
+              <v-btn v-for="file in model.files" v-bind:key="file.id" class="text-none">{{ file.public_name }}</v-btn>
+              <v-btn color="info" outline>Přidat nový soubor</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>

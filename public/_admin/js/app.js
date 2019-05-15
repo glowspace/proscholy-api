@@ -68591,6 +68591,20 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69779,6 +69793,8 @@ var render = function() {
               _vm._v(" "),
               _c("v-tab", [_vm._v("Text")]),
               _vm._v(" "),
+              _c("v-tab", [_vm._v("Materiály")]),
+              _vm._v(" "),
               _c(
                 "v-tab-item",
                 [
@@ -70114,6 +70130,65 @@ var render = function() {
                                 })
                               ]
                             : _vm._e()
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab-item",
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        [
+                          _c("h5", [_vm._v("Externí odkazy:")]),
+                          _vm._v(" "),
+                          _vm._l(_vm.model.externals, function(external) {
+                            return _c(
+                              "v-btn",
+                              { key: external.id, staticClass: "text-none" },
+                              [_vm._v(_vm._s(external.public_name))]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { attrs: { color: "info", outline: "" } },
+                            [_vm._v("Přidat nový externí odkaz")]
+                          )
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", md6: "" } },
+                        [
+                          _c("h5", [_vm._v("Soubory:")]),
+                          _vm._v(" "),
+                          _vm._l(_vm.model.files, function(file) {
+                            return _c(
+                              "v-btn",
+                              { key: file.id, staticClass: "text-none" },
+                              [_vm._v(_vm._s(file.public_name))]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            { attrs: { color: "info", outline: "" } },
+                            [_vm._v("Přidat nový soubor")]
+                          )
                         ],
                         2
                       )
