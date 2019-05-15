@@ -68840,6 +68840,17 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
     show: function show() {
       window.location.href = this.model_database.public_url;
     },
+    onTabChange: function onTabChange() {
+      var _this3 = this;
+
+      // it is needed to refresh the textareas manually
+      if (this.$refs.textarea) {
+        // somehow it doesn"t work without settimeout, not even with Vue.nexttick
+        setTimeout(function () {
+          _this3.$refs.textarea.calculateInputHeight();
+        }, 1);
+      }
+    },
 
 
     // helper method to load field names defined in fragment graphql definition
@@ -68884,7 +68895,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
       return obj;
     },
     handleOpensongFile: function handleOpensongFile(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       var file = e.target.files[0];
 
@@ -68894,19 +68905,19 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_t
 
         $.post("/api/parse/opensong", {
           file_contents: e.target.result,
-          _token: _this3.csrf
+          _token: _this4.csrf
         }, function (data) {
-          _this3.model.lyrics = data;
+          _this4.model.lyrics = data;
         });
       };
 
       reader.readAsText(file);
     },
     resetGroup: function resetGroup() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.model.song.song_lyrics = this.model.song.song_lyrics.filter(function (song_lyric) {
-        return song_lyric.id === _this4.model.id;
+        return song_lyric.id === _this5.model.id;
       });
     },
     addToGroup: function addToGroup(song) {
@@ -69700,7 +69711,10 @@ var render = function() {
         [
           _c(
             "v-tabs",
-            { attrs: { color: "transparent" } },
+            {
+              attrs: { color: "transparent" },
+              on: { change: _vm.onTabChange }
+            },
             [
               _c("v-tab", [_vm._v("Údaje o písni")]),
               _vm._v(" "),
@@ -69917,6 +69931,7 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("v-textarea", {
+                            ref: "textarea",
                             attrs: {
                               "auto-grow": "",
                               outline: "",
@@ -69966,7 +69981,7 @@ var render = function() {
           _c(
             "v-btn",
             { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.reset } },
-            [_vm._v("Vrátit změny")]
+            [_vm._v("Vrátit změny do stavu před uložením")]
           ),
           _vm._v(" "),
           _c(

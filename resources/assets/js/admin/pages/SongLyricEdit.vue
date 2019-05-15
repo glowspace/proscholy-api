@@ -2,7 +2,7 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-      <v-tabs  color="transparent">
+      <v-tabs  color="transparent" v-on:change="onTabChange">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab-item>
@@ -75,7 +75,7 @@
                   v-on:click="$refs.fileinput.click()"
                 >Nahrát ze souboru OpenSong</a>
                 <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
-                <v-textarea auto-grow outline name="input-7-4" label="Text" v-model="model.lyrics"></v-textarea>
+                <v-textarea auto-grow outline name="input-7-4" label="Text" ref="textarea" v-model="model.lyrics"></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
               <!-- externals and files view -->
@@ -90,7 +90,7 @@
         </v-tab-item>
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny</v-btn>
+      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu před uložením</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
     </v-container>
   </v-app>
@@ -327,6 +327,17 @@ export default {
 
     show() {
       window.location.href = this.model_database.public_url;
+    },
+
+    onTabChange() {
+      // it is needed to refresh the textareas manually
+      if (this.$refs.textarea)
+      {
+        // somehow it doesn"t work without settimeout, not even with Vue.nexttick
+        setTimeout(() => {
+            this.$refs.textarea.calculateInputHeight();
+        }, 1);
+      }
     },
 
     // helper method to load field names defined in fragment graphql definition
