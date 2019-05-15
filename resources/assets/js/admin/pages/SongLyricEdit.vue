@@ -62,7 +62,23 @@
                 ></items-combo-box>
               </v-form>
             </v-flex>
-            <v-flex xs12 md6></v-flex>
+            <v-flex xs12 md5 offset-md1 class="edit-description">
+              <h5>Název (povinná položka)</h5>
+              <p>Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje
+                  více písní se stejným názvem.<br>
+                  Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
+              </p>
+
+              <h5>Autoři</h5>
+              <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                  tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
+                  <!-- @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
+                  a autor (autoři) se po uložení písně automaticky vytvoří.
+                  @else Je potřeba požádat administrátory o vytvoření nového autora @endcan -->
+                  <br>
+                  V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
+              </p>
+            </v-flex>
           </v-layout>
         </v-tab-item>
         <v-tab-item>
@@ -83,6 +99,14 @@
                 ref="textarea"
                 v-model="model.lyrics"
               ></v-textarea>
+              <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
+                    <br>Akordy pište českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
+                    <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
+                    <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
+                    <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
+                    <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
+                    <br>Coda velkým C, dvojtečkou a mezerou: C: Text cody
+                </p>
             </v-flex>
             <v-flex xs12 md6>
               <!-- externals and files view -->

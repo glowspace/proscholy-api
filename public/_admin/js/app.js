@@ -68557,6 +68557,30 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69906,7 +69930,39 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-flex", { attrs: { xs12: "", md6: "" } })
+                      _c(
+                        "v-flex",
+                        {
+                          staticClass: "edit-description",
+                          attrs: { xs12: "", md5: "", "offset-md1": "" }
+                        },
+                        [
+                          _c("h5", [_vm._v("Název (povinná položka)")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje\n                více písní se stejným názvem."
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.\n            "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("h5", [_vm._v("Autoři")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,\n                tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.\n                "
+                            ),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(
+                              "\n                V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.\n            "
+                            )
+                          ])
+                        ]
+                      )
                     ],
                     1
                   )
@@ -69972,7 +70028,45 @@ var render = function() {
                               },
                               expression: "model.lyrics"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. "
+                            ),
+                            _c("b", [
+                              _vm._v("[E], [C#m] nebo [Cism], [Fmaj7]")
+                            ]),
+                            _vm._v(" apod.\n                  "),
+                            _c("br"),
+                            _vm._v("Akordy pište českými značkami: H dur: "),
+                            _c("b", [_vm._v("[H]")]),
+                            _vm._v(", B dur: "),
+                            _c("b", [_vm._v("[B]")]),
+                            _vm._v(", B moll: "),
+                            _c("b", [_vm._v("[Bm]")]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(
+                              "Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky\n                  "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky\n                  "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)\n                  "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "Bridge velkým B, dvojtečkou a mezerou: B: Text bridge\n                  "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "Coda velkým C, dvojtečkou a mezerou: C: Text cody\n              "
+                            )
+                          ])
                         ],
                         1
                       ),
