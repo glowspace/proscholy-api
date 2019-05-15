@@ -21,8 +21,10 @@
                   v-bind:p-items="authors"
                   v-model="model.authors"
                   label="Autoři"
-                  create-label="Vyberte autora z nabídky nebo vytvořte nového"
+                  header-label="Vyberte autora z nabídky nebo vytvořte nového"
+                  create-label="Potvrďte enterem a vytvořte nového autora"
                   :multiple="true"
+                  :enable-custom="true"
                 ></items-combo-box>
                 <v-checkbox
                   v-model="model.has_anonymous_author"
@@ -50,14 +52,16 @@
                   v-bind:p-items="tags_unofficial"
                   v-model="model.tags_unofficial"
                   label="Štítky"
-                  create-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                  create-label="Potvrďte enterem a vytvořte nový štítek"
                   :multiple="true"
+                  :enable-custom="true"
                 ></items-combo-box>
                 <items-combo-box
                   v-bind:p-items="tags_official"
                   v-model="model.tags_official"
                   label="Liturgie"
-                  create-label="Vyberte část liturgie z nabídky"
+                  header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
                 ></items-combo-box>
               </v-form>

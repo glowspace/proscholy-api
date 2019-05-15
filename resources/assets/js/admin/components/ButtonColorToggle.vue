@@ -2,9 +2,7 @@
   <v-hover>
   <div class="hover-container" slot-scope="{ hover }">
     <v-slide-x-reverse-transition>
-      <!-- <div class="['hover-text']" v-if="hover"> -->
         <v-chip  class="hover-text" v-if="hover" :color="colors[internalIndex]">{{ hoverTexts[internalIndex] }}</v-chip>
-      <!-- </div> -->
     </v-slide-x-reverse-transition>
     <v-btn :color="colors[internalIndex]" @click="next">
       <slot></slot>

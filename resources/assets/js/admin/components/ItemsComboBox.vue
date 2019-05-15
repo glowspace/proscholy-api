@@ -13,7 +13,7 @@
   >
     <template v-slot:no-data v-if="enableCustom">
       <v-list-tile>
-        <span class="subheading">Create</span>
+        <span class="subheading">{{ createLabel }}</span>
         <v-chip :color="`green lighten-3`" label small>{{ search }}</v-chip>
       </v-list-tile>
     </template>
@@ -60,7 +60,7 @@ import removeDiacritics from '../helpers/removeDiacritics';
 
 export default {
   // todo: enable-custom set to false not working for multiple entry
-  props: ["p-items", "value", "label", "create-label", "multiple", "enable-custom"],
+  props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom"],
 
   data: () => ({
     colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
@@ -82,7 +82,7 @@ export default {
   },
 
   mounted(){
-    this.items[0].header = this.createLabel;
+    this.items[0].header = this.headerLabel;
   },
 
   watch: {

@@ -67645,6 +67645,9 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
 
 
 
@@ -67998,7 +68001,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // todo: enable-custom set to false not working for multiple entry
-  props: ["p-items", "value", "label", "create-label", "multiple", "enable-custom"],
+  props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom"],
 
   data: function data() {
     return {
@@ -68022,7 +68025,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   mounted: function mounted() {
-    this.items[0].header = this.createLabel;
+    this.items[0].header = this.headerLabel;
   },
 
 
@@ -68127,7 +68130,7 @@ var render = function() {
                     "v-list-tile",
                     [
                       _c("span", { staticClass: "subheading" }, [
-                        _vm._v("Create")
+                        _vm._v(_vm._s(_vm.createLabel))
                       ]),
                       _vm._v(" "),
                       _c(
@@ -68305,9 +68308,12 @@ var render = function() {
                         attrs: {
                           "p-items": _vm.authors,
                           label: "Autoři",
+                          "header-label":
+                            "Vyberte autora z nabídky nebo vytvořte nového",
                           "create-label":
-                            "Vyberte autora z nabídky nebo vytvořte novou",
-                          multiple: true
+                            "Potvrďte enterem a vytvořte nového autora",
+                          multiple: true,
+                          "enable-custom": true
                         },
                         model: {
                           value: _vm.model.authors,
@@ -68322,7 +68328,7 @@ var render = function() {
                         attrs: {
                           "p-items": _vm.song_lyrics,
                           label: "Píseň",
-                          "create-label": "Vyberte píseň",
+                          "header-label": "Vyberte píseň",
                           multiple: false,
                           "enable-custom": false
                         },
@@ -68445,6 +68451,10 @@ var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
+//
+//
 //
 //
 //
@@ -69305,8 +69315,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["colors", "value", "hover-texts"],
@@ -69809,9 +69817,12 @@ var render = function() {
                                 attrs: {
                                   "p-items": _vm.authors,
                                   label: "Autoři",
-                                  "create-label":
+                                  "header-label":
                                     "Vyberte autora z nabídky nebo vytvořte nového",
-                                  multiple: true
+                                  "create-label":
+                                    "Potvrďte enterem a vytvořte nového autora",
+                                  multiple: true,
+                                  "enable-custom": true
                                 },
                                 model: {
                                   value: _vm.model.authors,
@@ -69894,9 +69905,12 @@ var render = function() {
                                 attrs: {
                                   "p-items": _vm.tags_unofficial,
                                   label: "Štítky",
-                                  "create-label":
+                                  "header-label":
                                     "Vyberte štítek z nabídky nebo vytvořte nový",
-                                  multiple: true
+                                  "create-label":
+                                    "Potvrďte enterem a vytvořte nový štítek",
+                                  multiple: true,
+                                  "enable-custom": true
                                 },
                                 model: {
                                   value: _vm.model.tags_unofficial,
@@ -69911,7 +69925,7 @@ var render = function() {
                                 attrs: {
                                   "p-items": _vm.tags_official,
                                   label: "Liturgie",
-                                  "create-label":
+                                  "header-label":
                                     "Vyberte část liturgie z nabídky",
                                   multiple: true
                                 },

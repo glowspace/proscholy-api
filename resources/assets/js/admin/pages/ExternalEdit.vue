@@ -14,16 +14,19 @@
             ></v-text-field>
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
             <items-combo-box
-              v-bind:p-items="authors"
-              v-model="model.authors"
-              label="Autoři"
-              create-label="Vyberte autora z nabídky nebo vytvořte novou"
-              :multiple="true"></items-combo-box>
+                  v-bind:p-items="authors"
+                  v-model="model.authors"
+                  label="Autoři"
+                  header-label="Vyberte autora z nabídky nebo vytvořte nového"
+                  create-label="Potvrďte enterem a vytvořte nového autora"
+                  :multiple="true"
+                  :enable-custom="true"
+                ></items-combo-box>
             <items-combo-box
               v-bind:p-items="song_lyrics"
               v-model="model.song_lyric"
               label="Píseň"
-              create-label="Vyberte píseň"
+              header-label="Vyberte píseň"
               :multiple="false"
               :enable-custom="false"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
