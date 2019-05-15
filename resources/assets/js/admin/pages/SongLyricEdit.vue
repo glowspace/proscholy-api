@@ -79,12 +79,12 @@
             </v-flex>
             <v-flex xs12 md6>
               <!-- externals and files view -->
-              <!-- <p v-for="external in model.externals" v-bind:key="external.id">{{ external.public_name }}</p> -->
+              <!-- <p v-for="external in model.externals" v-bind:key="external.id">{{ external.thumbnail_url }}</p> -->
               <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
-              <img v-for="external in model.externals" v-bind:key="external.id"
-                  v-bind:src="external.thubmnail_url"
+              <v-img v-for="external in model.externals" v-bind:key="external.id"
+                  v-bind:src="external.thumbnail_url"
                   class="grey lighten-2"
-                />
+                ></v-img>
             </v-flex>
           </v-layout>
         </v-tab-item>

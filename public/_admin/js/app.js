@@ -69954,13 +69954,13 @@ var render = function() {
                         "v-flex",
                         { attrs: { xs12: "", md6: "" } },
                         _vm._l(_vm.model.externals, function(external) {
-                          return _c("img", {
+                          return _c("v-img", {
                             key: external.id,
                             staticClass: "grey lighten-2",
-                            attrs: { src: external.thubmnail_url }
+                            attrs: { src: external.thumbnail_url }
                           })
                         }),
-                        0
+                        1
                       )
                     ],
                     1
