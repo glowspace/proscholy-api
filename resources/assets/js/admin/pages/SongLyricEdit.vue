@@ -131,22 +131,26 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row>
+          <v-layout row mb-4>
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
-              <v-btn v-for="external in model.externals" v-bind:key="external.id" class="text-none">{{ external.public_name }}</v-btn>
-              <v-btn color="info" outline>Přidat nový externí odkaz</v-btn>
+              <v-btn v-for="external in model.externals" v-bind:key="external.id" class="text-none"
+              @click="goToAdminPage('external/' + external.id + '/edit')">{{ external.public_name }}</v-btn>
+              <v-btn color="info" outline
+              @click="goToAdminPage('external/new-for-song/' + model.id)">Přidat nový externí odkaz</v-btn>
             </v-flex>
             <v-flex xs12 md6>
               <h5>Soubory:</h5>
-              <v-btn v-for="file in model.files" v-bind:key="file.id" class="text-none">{{ file.public_name }}</v-btn>
-              <v-btn color="info" outline>Přidat nový soubor</v-btn>
+              <v-btn v-for="file in model.files" v-bind:key="file.id" class="text-none"
+              @click="goToAdminPage('file/' + file.id + '/edit')">{{ file.public_name }}</v-btn>
+              <v-btn color="info" outline
+              @click="goToAdminPage('file/new-for-song/' + model.id)">Přidat nový soubor</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu před uložením</v-btn>
+      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
     </v-container>
   </v-app>
@@ -325,7 +329,7 @@ export default {
 
   methods: {
     submit() {
-      this.$apollo
+      return this.$apollo
         .mutate({
           mutation: MUTATE_MODEL_DATABASE,
           variables: {
@@ -398,6 +402,16 @@ export default {
 
     show() {
       window.location.href = this.model_database.public_url;
+    },
+
+    async goToAdminPage(url) {
+      if (this.isDirty)
+        await this.submit();
+
+      setTimeout(() => {
+          var base_url = document.querySelector('#baseUrl').getAttribute('value');
+          window.location.href = base_url + '/admin/' + url;
+      }, 500);
     },
 
     onTabChange() {

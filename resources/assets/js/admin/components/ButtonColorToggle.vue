@@ -4,7 +4,9 @@
     <v-slide-x-reverse-transition>
         <v-chip  class="hover-text" v-if="hover" :color="colors[internalIndex]">{{ hoverTexts[internalIndex] }}</v-chip>
     </v-slide-x-reverse-transition>
-    <v-btn :color="colors[internalIndex]" @click="next">
+    <v-btn :color="colors[internalIndex]" @click="next" 
+            v-on:input="updated(song_lyric)"
+            class="text-none">
       <slot></slot>
     </v-btn>
   </div>
