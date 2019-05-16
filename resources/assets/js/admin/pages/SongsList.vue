@@ -25,7 +25,7 @@
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/song/' + props.item.id">{{ props.item.name }}</a>
+                <a :href="'/admin/song/' + props.item.id + '/edit'">{{ props.item.name }}</a>
               </td>
               <td>
                 <span v-if="props.item.type === 0">Originál</span>

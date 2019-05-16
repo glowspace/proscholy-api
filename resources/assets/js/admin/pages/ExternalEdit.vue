@@ -30,6 +30,9 @@
               :multiple="false"
               :enable-custom="false"></items-combo-box>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn v-if="model.song_lyric" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">
+              {{ isDirty ? 'Uložit a přejít na editaci písničky' : 'Přejít na editaci písničky'  }}
+            </v-btn>
           </v-form>
         </v-flex>
         <v-flex xs12 md6></v-flex>
@@ -149,6 +152,8 @@ export default {
     isDirty() {
       if (!this.model_database) return false;
 
+      if (!this.model.url) return true;
+
       for (let field of this.getFieldsFromFragment(this)) {
         if (!_.isEqual(this.model[field], this.model_database[field])){
           return true;
@@ -249,7 +254,20 @@ export default {
       }
       
       return obj;
-    }
+    },
+
+    async goToAdminPage(url) {
+      if (this.isDirty)
+          await this.submit();
+
+      setTimeout(() => {
+        // if there has been an error then this does not continue
+        if (!this.isDirty) {
+            var base_url = document.querySelector('#baseUrl').getAttribute('value');
+            window.location.href = base_url + '/admin/' + url;
+          }
+      }, 500);
+    },
   },
 };
 </script>

@@ -390,6 +390,12 @@ export default {
           for (const [key, value] of Object.entries(errorFields)) {
             this.$validator.errors.add({ field: key, msg: value });
           }
+
+          this.$notify({
+              title: "Chyba při ukládání",
+              text: "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
+              type: "error"
+            });
         });
     },
 
@@ -409,8 +415,10 @@ export default {
         await this.submit();
 
       setTimeout(() => {
+        if (!this.isDirty) {
           var base_url = document.querySelector('#baseUrl').getAttribute('value');
           window.location.href = base_url + '/admin/' + url;
+        }
       }, 500);
     },
 

@@ -72,7 +72,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/songs', 'SongController@index')->name('song.index');
         Route::get('/song/new', 'SongController@create')->name('song.create');
         Route::post('/song/new', 'SongController@store')->name('song.store');
-        Route::get('/song/{song_lyric}', 'SongController@edit')->name('song.edit');
+        Route::get('/song/{song_lyric}/edit', 'SongController@edit')->name('song.edit');
         Route::put('/song/{song_lyric}', 'SongController@update')->name('song.update');
         Route::delete('/song/{song_lyric}', 'SongController@destroy')->name('song.destroy');
         // todo
