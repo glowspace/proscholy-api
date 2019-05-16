@@ -260,11 +260,6 @@ class SongLyric extends Model
         return $this->name === $this->song->name;
     }
 
-    // todo: make obsolete
-    public function isDomesticOrphan()
-    {
-        return $this->isDomestic() && ! $this->hasSiblings();
-    }
 
     public function getSiblings()
     {
@@ -276,19 +271,6 @@ class SongLyric extends Model
         return $this->getSiblings()->count() > 0;
     }
 
-    // basically Cuckoo shouldn't be alone really
-    // todo: make obsolete
-    public function isCuckoo()
-    {
-        return ! $this->isDomestic();
-    }
-
-    // todo: make obsolete
-    public function isNew()
-    {
-        return $this->created_at->eq($this->updated_at);
-    }
-
     public function recache()
     {
         // this causes to fire update event that recaches formattedlyrics
@@ -296,30 +278,6 @@ class SongLyric extends Model
         $this->update([
             'formatted_lyrics' => NULL
         ]);
-    }
-
-    // todo: make obsolete
-    public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
-    {
-        if (is_numeric($identificator))
-        {
-            return SongLyric::find($identificator);
-        }
-        else
-        {
-            $double = SongLyric::where('name', $identificator)->first();
-            if ($uniqueName && $double != null) {
-                return $double;
-            }
-            
-            $song       = Song::create(['name' => $identificator]);
-            $song_lyric = SongLyric::create([
-                'name' => $identificator,
-                'song_id' => $song->id
-            ]);
-
-            return $song_lyric;
-        }
     }
 
     /**
