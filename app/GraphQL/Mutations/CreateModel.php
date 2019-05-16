@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use Illuminate\Support\Facades\Auth;
 
 use App\Author;
 use App\SongLyric;
@@ -47,7 +48,9 @@ class CreateModel
             $song       = Song::create(['name' => $input["required_attribute"]]);
             $song_lyric = SongLyric::create([
                 'name' => $input["required_attribute"],
-                'song_id' => $song->id
+                'song_id' => $song->id,
+                // 'is_published' => Auth::user()->can('publish songs'),
+                // 'user_creator_id' => Auth::user()->id
             ]);
 
             return [

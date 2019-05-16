@@ -7,7 +7,7 @@
       data-vv-name="input.attribute_value"
       :error-messages="errors.collect('input.attribute_value')"
     ></v-text-field>
-    <v-btn :disabled="attribute_value == ''" @click="submit(false)">Vytvořit</v-btn>
+    <v-btn v-if="!forceEdit" :disabled="attribute_value == ''" @click="submit(false)">Vytvořit</v-btn>
     <v-btn :disabled="attribute_value == ''" @click="submit(true)">Vytvořit a editovat</v-btn>
   </div>
 </template>
@@ -25,7 +25,7 @@ const CREATE_MODEL_MUTATION = gql`
 `;
 
 export default {
-  props: ["class-name", "label", "success-msg"],
+  props: ["class-name", "label", "success-msg", "force-edit"],
 
   data() {
     return {
@@ -55,8 +55,8 @@ export default {
           if (redir) {
             window.location.href = result.data.create_model.edit_url;
           } else {
-            this.attribute_value = "";
             this.$emit("saved");
+            this.attribute_value = "";
           }
         })
         .catch(error => {

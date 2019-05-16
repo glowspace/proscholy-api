@@ -3,6 +3,12 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
+      <create-model 
+        class-name="External"
+        label="Zadejte adresu nového externího odkazu"
+        success-msg="Externí odkaz úspěšně vytvořen"
+        @saved="$apollo.queries.externals.refetch()"
+        :force-edit="true"></create-model>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>
@@ -45,6 +51,7 @@
 import gql from 'graphql-tag';
 
 import removeDiacritics from '../helpers/removeDiacritics';
+import CreateModel from "../components/CreateModel.vue"
 
 const fetch_items = gql`
         query FetchExternals ($is_todo: Boolean) {
@@ -64,6 +71,10 @@ const delete_item = gql`
 
 export default {
   props: ['is-todo'],
+
+  components: {
+    CreateModel
+  },
 
   data() {
     return {

@@ -50,6 +50,10 @@ class External extends Model
             6 => 'youtube kanál'
         ];
 
+    protected $dispatchesEvents = [
+        'created' => \App\Events\ExternalCreated::class,
+    ];
+
     public function getTypeStringAttribute()
     {
         return $this->type_string_values[$this->type];

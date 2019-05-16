@@ -45,7 +45,7 @@ type Query {
     song_lyric(id: ID! @eq): SongLyric @find
 }
 
-type Mutation @group(middleware: []) {
+type Mutation @group(middleware: ["auth:api"]) {
     delete_author(id: ID!): Author @delete
     delete_external(id: ID!): External @delete
     delete_file(id: ID!): File @delete
@@ -55,9 +55,6 @@ type Mutation @group(middleware: []) {
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
     update_external(input: UpdateExternalInput!): External @update(flatten: true)
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric
-
-    # create_author(input: CreateAuthorInput!): Author @create(flatten: true)
-    # create_external(input: CreateExternalInput!): External @create(flatten: true)
-    # create_song_lyric(input: CreateSongLyricInput!): SongLyric @create(flatten: true)
+    
     create_model(input: CreateModelInput!): Model
 }

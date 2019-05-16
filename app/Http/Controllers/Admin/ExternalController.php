@@ -46,9 +46,9 @@ class ExternalController extends Controller
     {
         $external = External::create(['url' => $request->url]);
         // todo move to event
-        $external->update([
-            'type' => $external->guessType()
-        ]);
+        // $external->update([
+        //     'type' => $external->guessType()
+        // ]);
 
         $redirect_arr = [
             'edit'   => route('admin.external.edit', ['id' => $external->id]),

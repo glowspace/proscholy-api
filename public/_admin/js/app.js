@@ -65783,6 +65783,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__);
 var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
 
@@ -65843,6 +65845,12 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -65855,6 +65863,10 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+
+  components: {
+    CreateModel: __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default.a
+  },
 
   data: function data() {
     return {
@@ -65927,6 +65939,19 @@ var render = function() {
         "v-container",
         { attrs: { fluid: "", "grid-list-xs": "" } },
         [
+          _c("create-model", {
+            attrs: {
+              "class-name": "SongLyric",
+              label: "Zadejte jméno nové písně",
+              "success-msg": "Píseň úspěšně vytvořena"
+            },
+            on: {
+              saved: function($event) {
+                return _vm.$apollo.queries.song_lyrics.refetch()
+              }
+            }
+          }),
+          _vm._v(" "),
           _c(
             "v-layout",
             { attrs: { row: "" } },
@@ -66176,6 +66201,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__);
 var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }']);
 
@@ -66223,6 +66250,13 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -66235,6 +66269,10 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['is-todo'],
+
+  components: {
+    CreateModel: __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default.a
+  },
 
   data: function data() {
     return {
@@ -66304,6 +66342,20 @@ var render = function() {
         "v-container",
         { attrs: { fluid: "", "grid-list-xs": "" } },
         [
+          _c("create-model", {
+            attrs: {
+              "class-name": "External",
+              label: "Zadejte adresu nového externího odkazu",
+              "success-msg": "Externí odkaz úspěšně vytvořen",
+              "force-edit": true
+            },
+            on: {
+              saved: function($event) {
+                return _vm.$apollo.queries.externals.refetch()
+              }
+            }
+          }),
+          _vm._v(" "),
           _c(
             "v-layout",
             { attrs: { row: "" } },
@@ -67082,7 +67134,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var CREATE_MODEL_MUTATION = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["class-name", "label", "success-msg"],
+  props: ["class-name", "label", "success-msg", "force-edit"],
 
   data: function data() {
     return {
@@ -67113,8 +67165,8 @@ var CREATE_MODEL_MUTATION = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
         if (redir) {
           window.location.href = result.data.create_model.edit_url;
         } else {
-          _this.attribute_value = "";
           _this.$emit("saved");
+          _this.attribute_value = "";
         }
       }).catch(function (error) {
         if (!error.graphQLErrors || error.graphQLErrors.length == 0) {
@@ -67196,18 +67248,20 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          attrs: { disabled: _vm.attribute_value == "" },
-          on: {
-            click: function($event) {
-              return _vm.submit(false)
-            }
-          }
-        },
-        [_vm._v("Vytvořit")]
-      ),
+      !_vm.forceEdit
+        ? _c(
+            "v-btn",
+            {
+              attrs: { disabled: _vm.attribute_value == "" },
+              on: {
+                click: function($event) {
+                  return _vm.submit(false)
+                }
+              }
+            },
+            [_vm._v("Vytvořit")]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "v-btn",
