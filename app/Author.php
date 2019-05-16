@@ -64,10 +64,13 @@ class Author extends Model
     public function getSongLyricsInterpreted()
     {
         return SongLyric::whereHas('externals', function($q) {
-            // $q->whereIn('externals.id', );
-            $q->media()->where('author_id', $this->id);
+            $q->media()->whereHas('authors', function($a) {
+                $a->where('authors.id', $this->id);
+            });
         })->orWhereHas('files', function($q) {
-            $q->audio()->where('author_id', $this->id);
+            $q->audio()->whereHas('authors', function($a) {
+                $a->where('authors.id', $this->id);
+            });
         });
     }
 
