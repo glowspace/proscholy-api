@@ -16,7 +16,6 @@ class AuthorController extends Controller
         $originals = $author->songLyricsWithAssociatedAuthors()->originals()->get();
         $translations = $author->songLyricsWithAssociatedAuthors()->translations()->get();
 
-        $ids = $author->getAssociatedAuthorsIds();
         $interpreted = $author->getSongLyricsInterpreted()->get()->diff($originals->merge($translations));
 
         return view('client.author', [
