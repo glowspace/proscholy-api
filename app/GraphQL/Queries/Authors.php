@@ -15,6 +15,9 @@ class Authors
             
         if (isset($args['order_abc']))
             $query = $query->orderBy('name', 'asc');
+
+        if (isset($args['type']))
+            $query = $query->where('type', $args['type']);
 		
 		return $query->get();
     }

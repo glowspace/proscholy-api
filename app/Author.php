@@ -71,17 +71,25 @@ class Author extends Model
         });
     }
 
-    public function songOriginalLyrics()
-    {
-        return $this->song_lyrics()->where('song_lyrics.type', 0);
+    public function getAssociatedAuthorsIds(){
+        $authors = collect([$this]);
+
+        return $authors->merge($this->members()->get())->map(function($a) {
+            return $a["id"];
+        })->toArray();
     }
 
-    public function songNotOriginalLyrics()
+    public function songLyricsWithAssociatedAuthors()
     {
-        return $this->song_lyrics()->where('song_lyrics.type', '!=', 0);
+        Log::info($this->getAssociatedAuthorsIds());
+
+        $ids = $this->getAssociatedAuthorsIds();
+
+        return SongLyric::whereHas('authors', function($q) use ($ids) {
+            $q->whereIn('authors.id', $ids);
+        });
     }
 
-    // 
     public function scopeRestricted($query)
     {
         if (Auth::user()->hasRole('autor')) {

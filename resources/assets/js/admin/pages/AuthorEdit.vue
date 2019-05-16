@@ -13,6 +13,16 @@
               :error-messages="errors.collect('input.name')"
             ></v-text-field>
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
+            <items-combo-box
+                v-if="model.type !== 0"
+                v-bind:p-items="authors"
+                v-model="model.members"
+                label="Členové - autoři"
+                header-label="Vyberte autora z nabídky nebo vytvořte nového"
+                create-label="Potvrďte enterem a vytvořte nového autora"
+                :multiple="true"
+                :enable-custom="true"
+              ></items-combo-box>
             <v-textarea
               name="input-7-4"
               label="Popis autora"
@@ -56,6 +66,7 @@
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/author_fragment.graphql";
+import ItemsComboBox from "../components/ItemsComboBox.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -76,8 +87,22 @@ const MUTATE_MODEL_DATABASE = gql`
   ${fragment}
 `;
 
+const FETCH_AUTHORS = gql`
+  query { 
+    authors(type: 0) {
+      id
+      name
+    }
+  }
+`;
+
+
 export default {
   props: ["preset-id"],
+
+  components: {
+    ItemsComboBox
+  },
 
   data() {
     return {
@@ -90,7 +115,8 @@ export default {
         description: undefined,
         song_lyrics: [],
         externals: [],
-        files: []
+        files: [],
+        members: [],
       },
       type_values: []
     };
@@ -115,6 +141,9 @@ export default {
           return { value: index, text: val };
         });
       }
+    },
+    authors: {
+      query: FETCH_AUTHORS
     }
   },
 
@@ -158,7 +187,11 @@ export default {
               id: this.model.id,
               name: this.model.name,
               type: this.model.type,
-              description: this.model.description
+              description: this.model.description,
+              members: {
+                create: this.getModelsToCreateBelongsToMany(this.model.members),
+                sync: this.getModelsToSyncBelongsToMany(this.model.members)
+              }
             }
           }
         })
@@ -189,6 +222,22 @@ export default {
             this.$validator.errors.add({ field: key, msg: value });
           }
         });
+    },
+
+    getModelsToCreateBelongsToMany(models){
+      return models.filter(model => {
+        if(model.id) return false;
+        return true;
+      });
+    },
+
+    getModelsToSyncBelongsToMany(models){
+      return models.filter(model => {
+        if(model.id) return true;
+        return false;
+      }).map(model => {
+        return model.id
+      });
     },
 
     // helper method to load field names defined in fragment graphql definition

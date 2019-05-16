@@ -3,6 +3,10 @@ fragment AuthorFillableFragment on Author {
     name
     type
     description
+    members {
+      id
+      name
+    }
     song_lyrics {
         id
         name

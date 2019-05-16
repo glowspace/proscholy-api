@@ -5,6 +5,7 @@ input UpdateAuthorInput {
             min: "Jméno autora by mělo mít aspoň 2 znaky"})
     type: Int!
     description: String
+    members: SyncAuthorsRelation
 }
 
 input UpdateExternalInput {

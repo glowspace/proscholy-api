@@ -16,6 +16,7 @@ type Query {
     authors(
         search_string: String
         order_abc: Boolean
+        type: Int
     ): [Author!]!
     song_lyrics(
         only_apk: Boolean
