@@ -1,6 +1,7 @@
 <template>
 <!-- v-app must wrap all the components -->
   <v-app>
+    <notifications/>
     <v-container fluid grid-list-xs>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>

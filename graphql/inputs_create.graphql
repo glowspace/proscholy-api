@@ -1,0 +1,4 @@
+input CreateModelInput {
+    required_attribute: String!
+    class_name: String!
+}

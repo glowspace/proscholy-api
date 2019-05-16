@@ -79,3 +79,9 @@ type Tag {
     parent_tag: Tag @belongsTo
     child_tags: [Tag] @hasMany
 }
+
+type Model {
+    id: ID!
+    class_name: String!
+    edit_url: String
+}

@@ -116,10 +116,15 @@ class SongLyric extends Model
         return $str;
     }
 
-    // public function getLanguageName()
-    // {
-    //     return self::$lang_string_values[$this->lang];
-    // }
+    // TODO: implement
+    public function getIsEmptyAttribute()
+    {
+        // return $this->lyrics == null 
+        //     && $this->externals()->count() +
+        //     $this->files()->count() == 0
+        //     && 
+    }
+
 
     // ! deprecated soon
     public function getIsOriginalAttribute()
@@ -241,14 +246,6 @@ class SongLyric extends Model
         return $this->files()->where('type', 3);
     }
 
-    /*
-     * Merged multi type category-filtered external collections
-     */
-    // public function audioTracks()
-    // {
-    //     return $this->spotifyTracks->merge($this->soundcloudTracks);
-    // }
-
     public function scoresCount()
     {
         return $this->scoreExternals()->count() + $this->scoreFiles()->count();
@@ -257,12 +254,13 @@ class SongLyric extends Model
     // the reason for existence of the domestic characteristic
     // is the case when there are multiple SongLyrics under one Song and no original one
     // which is permitted when the original is unknown
-    // TODO: consider merging domestic/orignal in the future for simplicity (depending on practical usage)
+    // TODO: make obsolete
     public function isDomestic()
     {
         return $this->name === $this->song->name;
     }
 
+    // todo: make obsolete
     public function isDomesticOrphan()
     {
         return $this->isDomestic() && ! $this->hasSiblings();
@@ -279,11 +277,13 @@ class SongLyric extends Model
     }
 
     // basically Cuckoo shouldn't be alone really
+    // todo: make obsolete
     public function isCuckoo()
     {
         return ! $this->isDomestic();
     }
 
+    // todo: make obsolete
     public function isNew()
     {
         return $this->created_at->eq($this->updated_at);
@@ -298,6 +298,7 @@ class SongLyric extends Model
         ]);
     }
 
+    // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))

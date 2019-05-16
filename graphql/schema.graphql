@@ -7,7 +7,8 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 
 #import types.graphql
-#import inputs.graphql
+#import inputs_update.graphql
+#import inputs_create.graphql
 
 type Query {
     users: [User!]! @all
@@ -54,4 +55,9 @@ type Mutation @group(middleware: []) {
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
     update_external(input: UpdateExternalInput!): External @update(flatten: true)
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric
+
+    # create_author(input: CreateAuthorInput!): Author @create(flatten: true)
+    # create_external(input: CreateExternalInput!): External @create(flatten: true)
+    # create_song_lyric(input: CreateSongLyricInput!): SongLyric @create(flatten: true)
+    create_model(input: CreateModelInput!): Model
 }
