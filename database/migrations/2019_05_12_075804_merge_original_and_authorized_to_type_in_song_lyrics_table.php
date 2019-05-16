@@ -19,18 +19,15 @@ class MergeOriginalAndAuthorizedToTypeInSongLyricsTable extends Migration
             $table->unsignedInteger('type')->default(0)->after('description');
         });
 
-        foreach (SongLyric::select(['is_original', 'type', 'is_authorized', 'id'])->get() as $song_lyric) {
-            if ($song_lyric->is_original) {
-                $song_lyric->type = 0;
-            } else {
-                if ($song_lyric->is_authorized) {
-                    $song_lyric->type = 2;
-                } else {
-                    $song_lyric->type = 1;
-                }
-            }
-            $song_lyric->save();
-        }
+        DB::table('song_lyrics')
+            ->where('is_original', 0)
+            ->where('is_authorized', 0)
+            ->update(['type' => DB::raw(1)]);
+
+        DB::table('song_lyrics')
+            ->where('is_original', 0)
+            ->where('is_authorized', 1)
+            ->update(['type' => DB::raw(2)]);
 
         Schema::table('song_lyrics', function (Blueprint $table) {
             $table->dropColumn('is_original');
@@ -49,23 +46,25 @@ class MergeOriginalAndAuthorizedToTypeInSongLyricsTable extends Migration
             $table->boolean('is_authorized')->default(0)->after('type');
             $table->boolean('is_original')->default(1)->after('is_authorized');
         });
-        
-        foreach (SongLyric::select(['is_original', 'type', 'is_authorized', 'id'])->get() as $song_lyric) {
-            if ($song_lyric->type == 0) {
-                $song_lyric->is_original = true;
-                $song_lyric->is_authorized = false;
-            } else {
-                if ($song_lyric->type == 2) {
-                    $song_lyric->is_original = false;
-                    $song_lyric->is_authorized = true;
-                } else {
-                    $song_lyric->is_original = false;
-                    $song_lyric->is_authorized = false;
-                }
-            }
 
-            $song_lyric->save();
-        }
+        // this is the default behaviour
+        // DB::table('song_lyrics')
+        //     ->where('type', 0)
+        //     ->update([
+        //         'is_original' => DB::raw(1),
+        //         'is_authorized' => DB::raw(0));
+
+        DB::table('song_lyrics')
+            ->where('type', 1)
+            ->update([
+                'is_original' => DB::raw(0),
+                'is_authorized' => DB::raw(0)]);
+
+        DB::table('song_lyrics')
+            ->where('type', 2)
+            ->update([
+                'is_original' => DB::raw(0),
+                'is_authorized' => DB::raw(1)]);
         
     
         Schema::table('song_lyrics', function (Blueprint $table) {
