@@ -44,7 +44,7 @@
                 <input class="search-home"
                        name="query"
                        placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)"
-                       autofocus
+                       :autofocus="'autofocus'"
                        type="search">
                 <button type="submit"
                         class="search-submit">
