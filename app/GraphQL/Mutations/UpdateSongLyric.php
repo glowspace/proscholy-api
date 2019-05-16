@@ -8,7 +8,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Log;
 use App\SongLyric;
 use App\Song;
-use App\Author;
+use App\Tag;
 use function Safe\array_combine;
 
 class UpdateSongLyric
@@ -55,8 +55,17 @@ class UpdateSongLyric
         $tagsToSync = [];
 
         // HANDLE TAGS - sync
-        if (isset($input["tags_unofficial"]["sync"]))
+        if (isset($input["tags_unofficial"]["sync"])) {
             $tagsToSync = $input["tags_unofficial"]["sync"];
+            // unofficial tags can have parent tags, so add them as well
+
+            foreach($tagsToSync as $tag_id) {
+                $parent = Tag::find($tag_id)->parent_tag;
+                if ($parent != null && !in_array($parent->id, $tagsToSync)) {
+                    $tagsToSync[] = $parent->id;
+                }
+            }
+        }
         if (isset($input["tags_official"]["sync"]))
             $tagsToSync = array_merge($tagsToSync, $input["tags_official"]["sync"]);
 
