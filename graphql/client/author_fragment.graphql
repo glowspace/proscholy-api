@@ -3,4 +3,17 @@ fragment AuthorFillableFragment on Author {
     name
     type
     description
+    song_lyrics {
+        id
+        name
+      }
+      externals {
+        id
+        url
+        public_name
+      }
+      files {
+        id
+        public_name
+      }
 }

@@ -61,7 +61,7 @@ class DeleteDuplicateAuthors extends Migration
 
             Log::info("associated file: $model->id");
         }
-        foreach ($a_merge->songLyrics as $model) {
+        foreach ($a_merge->song_lyrics as $model) {
             $model->authors()->detach($a_merge);
             $model->authors()->attach($a_keep);
             $model->save();
@@ -70,7 +70,7 @@ class DeleteDuplicateAuthors extends Migration
         }
 
         // double check 
-        $count = $a_merge->externals()->count() + $a_merge->files()->count() + $a_merge->songLyrics()->count();
+        $count = $a_merge->externals()->count() + $a_merge->files()->count() + $a_merge->song_lyrics()->count();
 
         if ($count > 0) {
             Log::error($a_merge);

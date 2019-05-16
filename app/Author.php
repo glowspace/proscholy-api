@@ -58,12 +58,6 @@ class Author extends Model
             4 => 'sbor',
         ];
 
-
-    public function songLyrics()
-    {
-        return $this->belongsToMany(SongLyric::class);
-    }
-
     public function getSongLyricsInterpreted()
     {
         return SongLyric::whereHas('externals', function($q) {
@@ -79,12 +73,12 @@ class Author extends Model
 
     public function songOriginalLyrics()
     {
-        return $this->songLyrics()->where('song_lyrics.type', 0);
+        return $this->song_lyrics()->where('song_lyrics.type', 0);
     }
 
     public function songNotOriginalLyrics()
     {
-        return $this->songLyrics()->where('song_lyrics.type', '!=', 0);
+        return $this->song_lyrics()->where('song_lyrics.type', '!=', 0);
     }
 
     // 
@@ -111,6 +105,11 @@ class Author extends Model
             'author_membership',
             'author_id',
             'is_member_of');
+    }
+
+    public function song_lyrics() : BelongsToMany
+    {
+        return $this->belongsToMany(SongLyric::class);
     }
 
     public function externals() : BelongsToMany

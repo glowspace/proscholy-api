@@ -14,6 +14,7 @@ type Author {
     url: String
     visits: Int
     public_url: String
+    song_lyrics: [SongLyric] @belongsToMany
     externals: [External] @belongsToMany
     files: [File] @belongsToMany
 }

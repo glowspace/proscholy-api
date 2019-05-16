@@ -20,18 +20,41 @@
               data-vv-name="input.description"
               :error-messages="errors.collect('input.description')"
             ></v-textarea>
-
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
           </v-form>
         </v-flex>
-        <v-flex xs12 md6></v-flex>
+        <v-flex xs12 md6 class="edit-description">
+          <h5>Seznam autorských písní</h5>
+          <v-btn
+            v-for="song_lyric in model.song_lyrics"
+            v-bind:key="song_lyric.id"
+            class="text-none"
+            @click="goToAdminPage('song/' + song_lyric.id + '/edit')"
+          >{{ song_lyric.name }}</v-btn>
+
+          <p></p>
+          <h5>Seznam materiálů</h5>
+          <v-btn
+            v-for="external in model.externals"
+            v-bind:key="external.id"
+            class="text-none"
+            @click="goToAdminPage('external/' + external.id + '/edit')"
+          >{{ external.public_name }}</v-btn>
+          <v-btn
+            v-for="file in model.files"
+            v-bind:key="file.id"
+            class="text-none"
+            @click="goToAdminPage('file/' + file.id + '/edit')"
+          >{{ file.public_name }}</v-btn>
+        </v-flex>
       </v-layout>
     </v-container>
   </v-app>
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/author_fragment.graphql";
 
 const FETCH_MODEL_DATABASE = gql`
@@ -59,14 +82,17 @@ export default {
   data() {
     return {
       model: {
-        // here goes the definition of model attributes 
+        // here goes the definition of model attributes
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
         type: undefined,
-        description: undefined
+        description: undefined,
+        song_lyrics: [],
+        externals: [],
+        files: []
       },
-      type_values: [],
+      type_values: []
     };
   },
 
@@ -103,18 +129,17 @@ export default {
     window.onbeforeunload = e => {
       if (this.isDirty) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
   },
 
   computed: {
     isDirty() {
-      if (!this.model_database)
-        return false;
+      if (!this.model_database) return false;
 
       for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])){
+        if (!_.isEqual(this.model[field], this.model_database[field])) {
           return true;
         }
       }
@@ -128,7 +153,14 @@ export default {
       this.$apollo
         .mutate({
           mutation: MUTATE_MODEL_DATABASE,
-          variables: { input: this.model }
+          variables: {
+            input: {
+              id: this.model.id,
+              name: this.model.name,
+              type: this.model.type,
+              description: this.model.description
+            }
+          }
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -162,13 +194,37 @@ export default {
     // helper method to load field names defined in fragment graphql definition
     getFieldsFromFragment(includeId) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => { return field.name.value; });
+      let fieldNames = fieldDefs.map(field => {
+        if (field.alias) return field.alias.value;
+        return field.name.value;
+      });
 
       if (!includeId)
-        fieldNames = fieldNames.filter(field => {return field != "id"});
+        fieldNames = fieldNames.filter(field => {
+          return field != "id";
+        });
 
       return fieldNames;
     },
+
+    async goToAdminPage(url) {
+      if (this.isDirty) await this.submit();
+
+      setTimeout(() => {
+        // if there has been an error then this does not continue
+        if (!this.isDirty) {
+          var base_url = document
+            .querySelector("#baseUrl")
+            .getAttribute("value");
+          window.location.href = base_url + "/admin/" + url;
+        }
+      }, 500);
+    },
+
+    show() {
+      var base_url = document.querySelector("#baseUrl").getAttribute("value");
+      window.location.href = base_url + "/autor/" + this.model.id;
+    }
   }
 };
 </script>

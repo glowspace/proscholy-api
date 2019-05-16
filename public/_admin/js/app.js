@@ -67488,14 +67488,20 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql__);
+
+
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: author(id: $id) {\n      ...AuthorFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: author(id: $id) {\n      ...AuthorFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
     _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateAuthorInput!) {\n    update_author(input: $input) {\n      ...AuthorFillableFragment\n    }\n  }\n  ", "\n"]);
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -67531,13 +67537,36 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
-var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql___default.a);
 
-var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a);
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
@@ -67545,12 +67574,15 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
   data: function data() {
     return {
       model: {
-        // here goes the definition of model attributes 
+        // here goes the definition of model attributes
         // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         name: undefined,
         type: undefined,
-        description: undefined
+        description: undefined,
+        song_lyrics: [],
+        externals: [],
+        files: []
       },
       type_values: []
     };
@@ -67613,7 +67645,7 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
     window.onbeforeunload = function (e) {
       if (_this.isDirty) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
       }
     };
   },
@@ -67660,7 +67692,14 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 
       this.$apollo.mutate({
         mutation: MUTATE_MODEL_DATABASE,
-        variables: { input: this.model }
+        variables: {
+          input: {
+            id: this.model.id,
+            name: this.model.name,
+            type: this.model.type,
+            description: this.model.description
+          }
+        }
       }).then(function (result) {
         _this2.$validator.errors.clear();
         _this2.$notify({
@@ -67718,8 +67757,9 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 
     // helper method to load field names defined in fragment graphql definition
     getFieldsFromFragment: function getFieldsFromFragment(includeId) {
-      var fieldDefs = __WEBPACK_IMPORTED_MODULE_1__graphql_client_author_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql___default.a.definitions[0].selectionSet.selections;
       var fieldNames = fieldDefs.map(function (field) {
+        if (field.alias) return field.alias.value;
         return field.name.value;
       });
 
@@ -67728,6 +67768,50 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
       });
 
       return fieldNames;
+    },
+    goToAdminPage: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
+        var _this3 = this;
+
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.isDirty) {
+                  _context.next = 3;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.submit();
+
+              case 3:
+
+                setTimeout(function () {
+                  // if there has been an error then this does not continue
+                  if (!_this3.isDirty) {
+                    var base_url = document.querySelector("#baseUrl").getAttribute("value");
+                    window.location.href = base_url + "/admin/" + url;
+                  }
+                }, 500);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function goToAdminPage(_x) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return goToAdminPage;
+    }(),
+    show: function show() {
+      var base_url = document.querySelector("#baseUrl").getAttribute("value");
+      window.location.href = base_url + "/autor/" + this.model.id;
     }
   }
 });
@@ -67737,8 +67821,8 @@ var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}],"loc":{"start":0,"end":86}};
-    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":258}};
+    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n    song_lyrics {\n        id\n        name\n      }\n      externals {\n        id\n        url\n        public_name\n      }\n      files {\n        id\n        public_name\n      }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -67843,6 +67927,15 @@ var render = function() {
                           on: { click: _vm.submit }
                         },
                         [_vm._v("Uložit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: _vm.isDirty },
+                          on: { click: _vm.show }
+                        },
+                        [_vm._v("Zobrazit ve zpěvníku")]
                       )
                     ],
                     1
@@ -67851,7 +67944,75 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-flex", { attrs: { xs12: "", md6: "" } })
+              _c(
+                "v-flex",
+                {
+                  staticClass: "edit-description",
+                  attrs: { xs12: "", md6: "" }
+                },
+                [
+                  _c("h5", [_vm._v("Seznam autorských písní")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.model.song_lyrics, function(song_lyric) {
+                    return _c(
+                      "v-btn",
+                      {
+                        key: song_lyric.id,
+                        staticClass: "text-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.goToAdminPage(
+                              "song/" + song_lyric.id + "/edit"
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(song_lyric.name))]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("p"),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v("Seznam materiálů")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.model.externals, function(external) {
+                    return _c(
+                      "v-btn",
+                      {
+                        key: external.id,
+                        staticClass: "text-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.goToAdminPage(
+                              "external/" + external.id + "/edit"
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(external.public_name))]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.model.files, function(file) {
+                    return _c(
+                      "v-btn",
+                      {
+                        key: file.id,
+                        staticClass: "text-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.goToAdminPage(
+                              "file/" + file.id + "/edit"
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(file.public_name))]
+                    )
+                  })
+                ],
+                2
+              )
             ],
             1
           )
