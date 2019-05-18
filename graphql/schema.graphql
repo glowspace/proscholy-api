@@ -8,7 +8,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 
 #import types.graphql
 #import inputs_update.graphql
-#import inputs_create.graphql
+#import inputs_create_delete.graphql
 
 type Query {
     users: [User!]! @all
@@ -58,4 +58,5 @@ type Mutation @group(middleware: ["auth:api"]) {
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric
     
     create_model(input: CreateModelInput!): Model
+    delete_model(input: DeleteModelInput!): Model
 }

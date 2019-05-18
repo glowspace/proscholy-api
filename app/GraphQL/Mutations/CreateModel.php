@@ -5,6 +5,9 @@ namespace App\GraphQL\Mutations;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Illuminate\Support\Facades\Auth;
+// use Validator;
+use Validator;
+use Illuminate\Validation\ValidationException;
 
 use App\Author;
 use App\SongLyric;
@@ -25,9 +28,27 @@ class CreateModel
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $input = $args["input"];
+        $attr = $input["required_attribute"];
+
+        
+        // $validator = Validator::make([], []);
 
         if ($input["class_name"] == "Author") {
-            $author = Author::create(['name' => $input["required_attribute"]]);
+
+            // dynamically create the request object - needed for proper validation
+            // $request = new Request([
+            //     'name' => $input["required_attribute"]
+            // ]);
+
+            // todo: somehow add customAttributes attribute to make it GraphQL validated
+
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors']);
+            if ($validator->fails()) {
+                \Log::info(new ValidationException($validator));
+                throw new ValidationException($validator);
+            }
+
+            $author = Author::create(['name' => $attr]);
 
             return [
                 "id" => $author->id,
@@ -36,7 +57,7 @@ class CreateModel
             ];
 
         } elseif($input["class_name"] == "External") {
-            $external = External::create(['url' => $input["required_attribute"]]);
+            $external = External::create(['url' => $attr]);
 
             return [
                 "id" => $external->id,
@@ -45,9 +66,9 @@ class CreateModel
             ];
 
         } elseif ($input["class_name"] == "SongLyric") {
-            $song       = Song::create(['name' => $input["required_attribute"]]);
+            $song       = Song::create(['name' => $attr]);
             $song_lyric = SongLyric::create([
-                'name' => $input["required_attribute"],
+                'name' => $attr,
                 'song_id' => $song->id,
                 // 'is_published' => Auth::user()->can('publish songs'),
                 // 'user_creator_id' => Auth::user()->id

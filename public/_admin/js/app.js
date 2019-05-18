@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 122);
+/******/ 	return __webpack_require__(__webpack_require__.s = 124);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -375,6 +375,115 @@ module.exports = {
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -582,115 +691,6 @@ function __importStar(mod) {
 
 function __importDefault(mod) {
     return (mod && mod.__esModule) ? mod : { default: mod };
-}
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
 }
 
 
@@ -1159,7 +1159,7 @@ process.umask = function() { return 0; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_language_visitor__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_language_visitor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_language_visitor__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ts_invariant__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_fast_json_stable_stringify__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_fast_json_stable_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_fast_json_stable_stringify__);
 
@@ -2437,7 +2437,7 @@ function applyToTag (styleElement, obj) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__ = __webpack_require__(32);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0_zen_observable_ts__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ts_invariant__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_graphql_language_printer__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_apollo_utilities__ = __webpack_require__(6);
@@ -3355,7 +3355,7 @@ function getVisitFn(visitor, kind, isLeaving) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvariantError; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return invariant; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 
 
 var genericMessage = "Invariant Violation";
@@ -57310,7 +57310,7 @@ exports.DirectiveLocation = DirectiveLocation;
 /* unused harmony export isApolloError */
 /* unused harmony export ApolloError */
 /* unused harmony export FetchType */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_utilities__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_link__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_symbol_observable__ = __webpack_require__(76);
@@ -60315,7 +60315,7 @@ if (hasSymbols()) {
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvariantError; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return invariant; });
 /* unused harmony export process */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 
 
 var genericMessage = "Invariant Violation";
@@ -60459,7 +60459,7 @@ function symbolObservablePonyfill(root) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DedupLink; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link__ = __webpack_require__(9);
 
 
@@ -60535,7 +60535,7 @@ var DedupLink = (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createHttpLink; });
 /* unused harmony export HttpLink */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_link__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_link_http_common__ = __webpack_require__(81);
 
@@ -60698,7 +60698,7 @@ var HttpLink = (function (_super) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return selectHttpOptionsAndBody; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return serializeFetchParameter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return selectURI; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_language_printer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_language_printer__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ts_invariant__ = __webpack_require__(82);
@@ -60837,7 +60837,7 @@ var selectURI = function (operation, fallbackURI) {
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvariantError; });
 /* unused harmony export invariant */
 /* unused harmony export process */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 
 
 var genericMessage = "Invariant Violation";
@@ -60908,7 +60908,7 @@ var invariant$1 = invariant;
 /* unused harmony export IntrospectionFragmentMatcher */
 /* unused harmony export ObjectCache */
 /* unused harmony export defaultNormalizedCacheFactory */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_apollo_cache__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_utilities__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_optimism__ = __webpack_require__(85);
@@ -65039,11 +65039,65 @@ if (GlobalVue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(154)
+var __vue_script__ = __webpack_require__(130)
 /* template */
-var __vue_template__ = __webpack_require__(155)
+var __vue_template__ = __webpack_require__(131)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/CreateModel.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3d8c87e6", Component.options)
+  } else {
+    hotAPI.reload("data-v-3d8c87e6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(150);
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(153)
+/* template */
+var __vue_template__ = __webpack_require__(154)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65082,8 +65136,6 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 91 */,
-/* 92 */,
 /* 93 */,
 /* 94 */,
 /* 95 */,
@@ -65110,7 +65162,9 @@ module.exports = Component.exports
 /* 116 */,
 /* 117 */,
 /* 118 */,
-/* 119 */
+/* 119 */,
+/* 120 */,
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -65156,7 +65210,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(120);
+var	fixUrls = __webpack_require__(122);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -65469,7 +65523,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports) {
 
 
@@ -65564,15 +65618,15 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 121 */,
-/* 122 */
+/* 123 */,
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(123);
+module.exports = __webpack_require__(125);
 
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65582,13 +65636,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_apollo_cache_inmemory__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_apollo_link__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_apollo__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuetify_dist_vuetify_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_notification__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vee_validate__ = __webpack_require__(182);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65610,14 +65664,14 @@ window.Vue = __webpack_require__(23);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('songs-list', __webpack_require__(124));
-Vue.component('externals-list', __webpack_require__(129));
-Vue.component('files-list', __webpack_require__(134));
-Vue.component('authors-list', __webpack_require__(139));
+Vue.component('songs-list', __webpack_require__(126));
+Vue.component('externals-list', __webpack_require__(133));
+Vue.component('files-list', __webpack_require__(138));
+Vue.component('authors-list', __webpack_require__(143));
 
-Vue.component('author-edit', __webpack_require__(147));
-Vue.component('external-edit', __webpack_require__(151));
-Vue.component('song-lyric-edit', __webpack_require__(157));
+Vue.component('author-edit', __webpack_require__(148));
+Vue.component('external-edit', __webpack_require__(156));
+Vue.component('song-lyric-edit', __webpack_require__(160));
 
 
 
@@ -65684,19 +65738,19 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(125)
+  __webpack_require__(127)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(127)
+var __vue_script__ = __webpack_require__(129)
 /* template */
-var __vue_template__ = __webpack_require__(128)
+var __vue_template__ = __webpack_require__(132)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65735,13 +65789,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(126);
+var content = __webpack_require__(128);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -65761,7 +65815,7 @@ if(false) {
 }
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -65775,7 +65829,7 @@ exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
 
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65783,7 +65837,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__);
 var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
@@ -65923,7 +65977,196 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 });
 
 /***/ }),
-/* 128 */
+/* 130 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  mutation($input: CreateModelInput!) {\n    create_model(input: $input) {\n      id\n      edit_url\n    }\n  }\n"], ["\n  mutation($input: CreateModelInput!) {\n    create_model(input: $input) {\n      id\n      edit_url\n    }\n  }\n"]);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var CREATE_MODEL_MUTATION = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["class-name", "label", "success-msg", "force-edit"],
+
+  data: function data() {
+    return {
+      attribute_value: ""
+    };
+  },
+
+
+  methods: {
+    submit: function submit(redir) {
+      var _this = this;
+
+      this.$apollo.mutate({
+        mutation: CREATE_MODEL_MUTATION,
+        variables: {
+          input: {
+            required_attribute: this.attribute_value,
+            class_name: this.className
+          }
+        }
+      }).then(function (result) {
+        _this.$notify({
+          title: "Hotovo :)",
+          text: _this.successMsg,
+          type: "success"
+        });
+
+        if (redir) {
+          window.location.href = result.data.create_model.edit_url;
+        } else {
+          _this.$emit("saved");
+          _this.attribute_value = "";
+        }
+      }).catch(function (error) {
+        if (!error.graphQLErrors || error.graphQLErrors.length == 0) {
+          // unknown error happened
+          _this.$notify({
+            title: "Chyba při ukládání",
+            text: "Položka nebyla uložena (" + error + ")",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this.$validator.errors.clear();
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = Object.entries(errorFields)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _ref = _step.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            _this.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      });
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  }
+});
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("v-text-field", {
+        attrs: {
+          label: _vm.label,
+          required: "",
+          "data-vv-name": "input.attribute_value",
+          "error-messages": _vm.errors.collect("input.attribute_value")
+        },
+        model: {
+          value: _vm.attribute_value,
+          callback: function($$v) {
+            _vm.attribute_value = $$v
+          },
+          expression: "attribute_value"
+        }
+      }),
+      _vm._v(" "),
+      !_vm.forceEdit
+        ? _c(
+            "v-btn",
+            {
+              attrs: { disabled: _vm.attribute_value == "" },
+              on: {
+                click: function($event) {
+                  return _vm.submit(false)
+                }
+              }
+            },
+            [_vm._v("Vytvořit")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          attrs: { disabled: _vm.attribute_value == "" },
+          on: {
+            click: function($event) {
+              return _vm.submit(true)
+            }
+          }
+        },
+        [_vm._v("Vytvořit a editovat")]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3d8c87e6", module.exports)
+  }
+}
+
+/***/ }),
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66103,19 +66346,19 @@ if (false) {
 }
 
 /***/ }),
-/* 129 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(130)
+  __webpack_require__(134)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(132)
+var __vue_script__ = __webpack_require__(136)
 /* template */
-var __vue_template__ = __webpack_require__(133)
+var __vue_template__ = __webpack_require__(137)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -66154,13 +66397,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 130 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(131);
+var content = __webpack_require__(135);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66180,7 +66423,7 @@ if(false) {
 }
 
 /***/ }),
-/* 131 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -66194,7 +66437,7 @@ exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
 
 
 /***/ }),
-/* 132 */
+/* 136 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66202,7 +66445,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__);
 var _templateObject = _taggedTemplateLiteral(['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }'], ['\n        query FetchExternals ($is_todo: Boolean) {\n            externals (is_todo: $is_todo) {\n                id,\n                public_name,\n                type_string\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteExternal ($id: ID!) {\n    delete_external(id: $id) {\n      id\n    }\n  }']);
@@ -66327,7 +66570,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 });
 
 /***/ }),
-/* 133 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66475,19 +66718,19 @@ if (false) {
 }
 
 /***/ }),
-/* 134 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(135)
+  __webpack_require__(139)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(137)
+var __vue_script__ = __webpack_require__(141)
 /* template */
-var __vue_template__ = __webpack_require__(138)
+var __vue_template__ = __webpack_require__(142)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -66526,13 +66769,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 135 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(136);
+var content = __webpack_require__(140);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66552,7 +66795,7 @@ if(false) {
 }
 
 /***/ }),
-/* 136 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -66566,7 +66809,7 @@ exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
 
 
 /***/ }),
-/* 137 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66688,7 +66931,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 });
 
 /***/ }),
-/* 138 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66826,19 +67069,19 @@ if (false) {
 }
 
 /***/ }),
-/* 139 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(140)
+  __webpack_require__(144)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(142)
+var __vue_script__ = __webpack_require__(146)
 /* template */
-var __vue_template__ = __webpack_require__(146)
+var __vue_template__ = __webpack_require__(147)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -66877,13 +67120,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 140 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(141);
+var content = __webpack_require__(145);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66903,7 +67146,7 @@ if(false) {
 }
 
 /***/ }),
-/* 141 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -66917,7 +67160,7 @@ exports.push([module.i, "\ninput {\n  border: none;\n}\n", ""]);
 
 
 /***/ }),
-/* 142 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66925,7 +67168,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__);
 var _templateObject = _taggedTemplateLiteral(['\n        query FetchAuthors {\n            authors {\n                id,\n                name,\n                type_string\n            }\n        }'], ['\n        query FetchAuthors {\n            authors {\n                id,\n                name,\n                type_string\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteAuthor ($id: ID!) {\n    delete_author(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteAuthor ($id: ID!) {\n    delete_author(id: $id) {\n      id\n    }\n  }']);
@@ -67055,243 +67298,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 });
 
 /***/ }),
-/* 143 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(144)
-/* template */
-var __vue_template__ = __webpack_require__(145)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/components/CreateModel.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3d8c87e6", Component.options)
-  } else {
-    hotAPI.reload("data-v-3d8c87e6", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 144 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _templateObject = _taggedTemplateLiteral(["\n  mutation($input: CreateModelInput!) {\n    create_model(input: $input) {\n      id\n      edit_url\n    }\n  }\n"], ["\n  mutation($input: CreateModelInput!) {\n    create_model(input: $input) {\n      id\n      edit_url\n    }\n  }\n"]);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-var CREATE_MODEL_MUTATION = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["class-name", "label", "success-msg", "force-edit"],
-
-  data: function data() {
-    return {
-      attribute_value: ""
-    };
-  },
-
-
-  methods: {
-    submit: function submit(redir) {
-      var _this = this;
-
-      this.$apollo.mutate({
-        mutation: CREATE_MODEL_MUTATION,
-        variables: {
-          input: {
-            required_attribute: this.attribute_value,
-            class_name: this.className
-          }
-        }
-      }).then(function (result) {
-        _this.$notify({
-          title: "Hotovo :)",
-          text: _this.successMsg,
-          type: "success"
-        });
-
-        if (redir) {
-          window.location.href = result.data.create_model.edit_url;
-        } else {
-          _this.$emit("saved");
-          _this.attribute_value = "";
-        }
-      }).catch(function (error) {
-        if (!error.graphQLErrors || error.graphQLErrors.length == 0) {
-          // unknown error happened
-          _this.$notify({
-            title: "Chyba při ukládání",
-            text: "Položka nebyla uložena (" + error + ")",
-            type: "error"
-          });
-          return;
-        }
-
-        var errorFields = error.graphQLErrors[0].extensions.validation;
-
-        // clear the old errors and (add new ones if exist)
-        _this.$validator.errors.clear();
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = Object.entries(errorFields)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var _ref = _step.value;
-
-            var _ref2 = _slicedToArray(_ref, 2);
-
-            var key = _ref2[0];
-            var value = _ref2[1];
-
-            _this.$validator.errors.add({ field: key, msg: value });
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-      });
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  }
-});
-
-/***/ }),
-/* 145 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("v-text-field", {
-        attrs: {
-          label: _vm.label,
-          required: "",
-          "data-vv-name": "input.attribute_value",
-          "error-messages": _vm.errors.collect("input.attribute_value")
-        },
-        model: {
-          value: _vm.attribute_value,
-          callback: function($$v) {
-            _vm.attribute_value = $$v
-          },
-          expression: "attribute_value"
-        }
-      }),
-      _vm._v(" "),
-      !_vm.forceEdit
-        ? _c(
-            "v-btn",
-            {
-              attrs: { disabled: _vm.attribute_value == "" },
-              on: {
-                click: function($event) {
-                  return _vm.submit(false)
-                }
-              }
-            },
-            [_vm._v("Vytvořit")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          attrs: { disabled: _vm.attribute_value == "" },
-          on: {
-            click: function($event) {
-              return _vm.submit(true)
-            }
-          }
-        },
-        [_vm._v("Vytvořit a editovat")]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3d8c87e6", module.exports)
-  }
-}
-
-/***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -67436,15 +67443,15 @@ if (false) {
 }
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(148)
+var __vue_script__ = __webpack_require__(149)
 /* template */
-var __vue_template__ = __webpack_require__(150)
+var __vue_template__ = __webpack_require__(155)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -67483,18 +67490,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
 
 
@@ -67859,1880 +67866,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
 });
 
 /***/ }),
-/* 149 */
-/***/ (function(module, exports) {
-
-
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":298}};
-    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n    members {\n      id\n      name\n    }\n    song_lyrics {\n        id\n        name\n      }\n      externals {\n        id\n        url\n        public_name\n      }\n      files {\n        id\n        public_name\n      }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    var names = {};
-    function unique(defs) {
-      return defs.filter(
-        function(def) {
-          if (def.kind !== 'FragmentDefinition') return true;
-          var name = def.name.value
-          if (names[name]) {
-            return false;
-          } else {
-            names[name] = true;
-            return true;
-          }
-        }
-      )
-    }
-  
-
-      module.exports = doc;
-    
-
-
-/***/ }),
 /* 150 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c("notifications"),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "", md6: "" } },
-                [
-                  _c(
-                    "v-form",
-                    { ref: "form" },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Jméno autora",
-                          required: "",
-                          "data-vv-name": "input.name",
-                          "error-messages": _vm.errors.collect("input.name")
-                        },
-                        model: {
-                          value: _vm.model.name,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "name", $$v)
-                          },
-                          expression: "model.name"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { items: _vm.type_values, label: "Typ" },
-                        model: {
-                          value: _vm.model.type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "type", $$v)
-                          },
-                          expression: "model.type"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.model.type !== 0
-                        ? _c("items-combo-box", {
-                            attrs: {
-                              "p-items": _vm.authors,
-                              label: "Členové - autoři",
-                              "header-label":
-                                "Vyberte autora z nabídky nebo vytvořte nového",
-                              "create-label":
-                                "Potvrďte enterem a vytvořte nového autora",
-                              multiple: true,
-                              "enable-custom": true
-                            },
-                            model: {
-                              value: _vm.model.members,
-                              callback: function($$v) {
-                                _vm.$set(_vm.model, "members", $$v)
-                              },
-                              expression: "model.members"
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("v-textarea", {
-                        attrs: {
-                          name: "input-7-4",
-                          label: "Popis autora",
-                          "data-vv-name": "input.description",
-                          "error-messages": _vm.errors.collect(
-                            "input.description"
-                          )
-                        },
-                        model: {
-                          value: _vm.model.description,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "description", $$v)
-                          },
-                          expression: "model.description"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("Uložit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: _vm.isDirty },
-                          on: { click: _vm.show }
-                        },
-                        [_vm._v("Zobrazit ve zpěvníku")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                {
-                  staticClass: "edit-description",
-                  attrs: { xs12: "", md6: "" }
-                },
-                [
-                  _c("h5", [_vm._v("Seznam autorských písní")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.model.song_lyrics, function(song_lyric) {
-                    return _c(
-                      "v-btn",
-                      {
-                        key: song_lyric.id,
-                        staticClass: "text-none",
-                        on: {
-                          click: function($event) {
-                            return _vm.goToAdminPage(
-                              "song/" + song_lyric.id + "/edit"
-                            )
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(song_lyric.name))]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c("p"),
-                  _vm._v(" "),
-                  _c("h5", [_vm._v("Seznam materiálů")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.model.externals, function(external) {
-                    return _c(
-                      "v-btn",
-                      {
-                        key: external.id,
-                        staticClass: "text-none",
-                        on: {
-                          click: function($event) {
-                            return _vm.goToAdminPage(
-                              "external/" + external.id + "/edit"
-                            )
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(external.public_name))]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.model.files, function(file) {
-                    return _c(
-                      "v-btn",
-                      {
-                        key: file.id,
-                        staticClass: "text-none",
-                        on: {
-                          click: function($event) {
-                            return _vm.goToAdminPage(
-                              "file/" + file.id + "/edit"
-                            )
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(file.public_name))]
-                    )
-                  })
-                ],
-                2
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-beeb1e1c", module.exports)
-  }
-}
-
-/***/ }),
-/* 151 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(152)
-/* template */
-var __vue_template__ = __webpack_require__(156)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/ExternalEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-08145df2", Component.options)
-  } else {
-    hotAPI.reload("data-v-08145df2", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 152 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
-
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]);
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default.a);
-
-var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default.a);
-
-var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject3);
-
-var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject4);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["preset-id"],
-  components: {
-    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a
-  },
-
-  data: function data() {
-    return {
-      model: {
-        // here goes the definition of model attributes
-        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
-        id: undefined,
-        url: undefined,
-        type: undefined,
-        authors: [],
-        song_lyric: undefined
-      },
-      type_values: []
-    };
-  },
-
-
-  apollo: {
-    model_database: {
-      query: FETCH_MODEL_DATABASE,
-      variables: function variables() {
-        return {
-          id: this.model.id
-        };
-      },
-      result: function result(_result) {
-        var external = _result.data.model_database;
-        // load the requested fields to the vue data.model property
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var field = _step.value;
-
-            Vue.set(this.model, field, external[field]);
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        this.type_values = external.type_string_values.map(function (val, index) {
-          return { value: index, text: val };
-        });
-      }
-    },
-    authors: {
-      query: FETCH_AUTHORS
-    },
-    song_lyrics: {
-      query: FETCH_SONG_LYRICS
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted: function mounted() {
-    var _this = this;
-
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = function (e) {
-      if (_this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-  },
-
-
-  computed: {
-    isDirty: function isDirty() {
-      if (!this.model_database) return false;
-
-      if (!this.model.url) return true;
-
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var field = _step2.value;
-
-          if (!_.isEqual(this.model[field], this.model_database[field])) {
-            return true;
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      return false;
-    }
-  },
-
-  methods: {
-    submit: function submit() {
-      var _this2 = this;
-
-      this.$apollo.mutate({
-        mutation: MUTATE_MODEL_DATABASE,
-        variables: {
-          input: {
-            id: this.model.id,
-            url: this.model.url,
-            type: this.model.type,
-            song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
-            authors: {
-              create: this.getModelsToCreateBelongsToMany(this.model.authors),
-              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
-            }
-          }
-        }
-      }).then(function (result) {
-        _this2.$validator.errors.clear();
-        _this2.$notify({
-          title: "Úspěšně uloženo :)",
-          text: "Externí odkaz byl úspěšně uložen",
-          type: "success"
-        });
-      }).catch(function (error) {
-        if (error.graphQLErrors.length == 0) {
-          // unknown error happened
-          _this2.$notify({
-            title: "Chyba při ukládání",
-            text: "Externí odkaz nebyl uložen",
-            type: "error"
-          });
-          return;
-        }
-
-        var errorFields = error.graphQLErrors[0].extensions.validation;
-
-        // clear the old errors and (add new ones if exist)
-        _this2.$validator.errors.clear();
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
-
-        try {
-          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var _ref = _step3.value;
-
-            var _ref2 = _slicedToArray(_ref, 2);
-
-            var key = _ref2[0];
-            var value = _ref2[1];
-
-            _this2.$validator.errors.add({ field: key, msg: value });
-          }
-        } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-              _iterator3.return();
-            }
-          } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
-            }
-          }
-        }
-      });
-    },
-
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
-      var fieldDefs = __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default.a.definitions[0].selectionSet.selections;
-      var fieldNames = fieldDefs.map(function (field) {
-        return field.name.value;
-      });
-
-      if (!includeId) fieldNames = fieldNames.filter(function (field) {
-        return field != "id";
-      });
-
-      return fieldNames;
-    },
-    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return false;
-        return true;
-      });
-    },
-    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return true;
-        return false;
-      }).map(function (model) {
-        return model.id;
-      });
-    },
-    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
-      var obj = {};
-
-      if (model) {
-        obj.update = {
-          id: model.id
-        };
-      } else {
-        obj.disconnect = true;
-      }
-
-      return obj;
-    },
-    goToAdminPage: function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
-        var _this3 = this;
-
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!this.isDirty) {
-                  _context.next = 3;
-                  break;
-                }
-
-                _context.next = 3;
-                return this.submit();
-
-              case 3:
-
-                setTimeout(function () {
-                  // if there has been an error then this does not continue
-                  if (!_this3.isDirty) {
-                    var base_url = document.querySelector('#baseUrl').getAttribute('value');
-                    window.location.href = base_url + '/admin/' + url;
-                  }
-                }, 500);
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function goToAdminPage(_x) {
-        return _ref3.apply(this, arguments);
-      }
-
-      return goToAdminPage;
-    }()
-  }
-});
-
-/***/ }),
-/* 153 */
-/***/ (function(module, exports) {
-
-
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyric"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":165}};
-    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n    song_lyric {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
-  
-
-    var names = {};
-    function unique(defs) {
-      return defs.filter(
-        function(def) {
-          if (def.kind !== 'FragmentDefinition') return true;
-          var name = def.name.value
-          if (names[name]) {
-            return false;
-          } else {
-            names[name] = true;
-            return true;
-          }
-        }
-      )
-    }
-  
-
-      module.exports = doc;
-    
-
-
-/***/ }),
-/* 154 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__ = __webpack_require__(14);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  // todo: enable-custom set to false not working for multiple entry
-  props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom"],
-
-  data: function data() {
-    return {
-      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
-      editing: null,
-      index: -1,
-      search: null,
-      items: [{ header: "" }]
-    };
-  },
-
-  computed: {
-    internalValue: {
-      get: function get() {
-        return this.value;
-      },
-      set: function set(val) {
-        this.$emit("input", val);
-      }
-    }
-  },
-
-  mounted: function mounted() {
-    this.items[0].header = this.headerLabel;
-  },
-
-
-  watch: {
-    internalValue: function internalValue(val, prev) {
-      var _this = this;
-
-      if (!val) return;
-      if (!Array.isArray(val)) return;
-
-      if (val.length === prev.length) return;
-
-      // fix when the search string remained after selecting an item
-      this.search = null;
-
-      this.internalValue = val.map(function (v) {
-        if (typeof v === "string") {
-          v = {
-            name: v
-          };
-
-          _this.items.push(v);
-        }
-
-        return v;
-      });
-    },
-    pItems: function pItems(val, prev) {
-      console.log("updated " + this.pItems.length);
-      this.items = this.items.concat(this.pItems);
-    }
-  },
-
-  methods: {
-    edit: function edit(index, item) {
-      if (!this.editing) {
-        this.editing = item;
-        this.index = index;
-      } else {
-        this.editing = null;
-        this.index = -1;
-      }
-    },
-    filter: function filter(item, queryText, itemText) {
-      if (item.header) return false;
-
-      var hasValue = function hasValue(val) {
-        return val != null ? val : "";
-      };
-
-      var text = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__["a" /* default */])(hasValue(itemText));
-      var query = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__["a" /* default */])(hasValue(queryText));
-
-      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
-    },
-    getColor: function getColor(item) {
-      if (item.id) {
-        return "blue lighten-3";
-      } else {
-        return "green lighten-3";
-      }
-    }
-  }
-});
-
-/***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("v-combobox", {
-    attrs: {
-      filter: _vm.filter,
-      "hide-no-data": !_vm.search,
-      items: _vm.items,
-      "search-input": _vm.search,
-      "item-text": "name",
-      "hide-selected": "",
-      label: _vm.label,
-      multiple: _vm.multiple,
-      "small-chips": ""
-    },
-    on: {
-      "update:searchInput": function($event) {
-        _vm.search = $event
-      },
-      "update:search-input": function($event) {
-        _vm.search = $event
-      }
-    },
-    scopedSlots: _vm._u(
-      [
-        _vm.enableCustom
-          ? {
-              key: "no-data",
-              fn: function() {
-                return [
-                  _c(
-                    "v-list-tile",
-                    [
-                      _c("span", { staticClass: "subheading" }, [
-                        _vm._v(_vm._s(_vm.createLabel))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-chip",
-                        {
-                          attrs: {
-                            color: "green lighten-3",
-                            label: "",
-                            small: ""
-                          }
-                        },
-                        [_vm._v(_vm._s(_vm.search))]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              },
-              proxy: true
-            }
-          : null,
-        {
-          key: "selection",
-          fn: function(ref) {
-            var item = ref.item
-            var parent = ref.parent
-            var selected = ref.selected
-            return [
-              item === Object(item)
-                ? _c(
-                    "v-chip",
-                    {
-                      attrs: {
-                        color: _vm.getColor(item),
-                        selected: selected,
-                        label: "",
-                        small: ""
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "pr-2" }, [
-                        _vm._v(_vm._s(item.name))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-icon",
-                        {
-                          attrs: { small: "" },
-                          on: {
-                            click: function($event) {
-                              return parent.selectItem(item)
-                            }
-                          }
-                        },
-                        [_vm._v("close")]
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ]
-          }
-        },
-        {
-          key: "item",
-          fn: function(ref) {
-            var index = ref.index
-            var item = ref.item
-            return [
-              _c(
-                "v-list-tile-content",
-                [
-                  _vm.editing !== item
-                    ? _c(
-                        "v-chip",
-                        {
-                          attrs: {
-                            color: _vm.getColor(item),
-                            dark: "",
-                            label: "",
-                            small: ""
-                          }
-                        },
-                        [_vm._v(_vm._s(item.name))]
-                      )
-                    : _vm._e()
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-spacer")
-            ]
-          }
-        }
-      ],
-      null,
-      true
-    ),
-    model: {
-      value: _vm.internalValue,
-      callback: function($$v) {
-        _vm.internalValue = $$v
-      },
-      expression: "internalValue"
-    }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-49b66d54", module.exports)
-  }
-}
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c("notifications"),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xs": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "" } },
-            [
-              _c(
-                "v-flex",
-                { attrs: { xs12: "", md6: "" } },
-                [
-                  _c(
-                    "v-form",
-                    { ref: "form" },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Url odkaz",
-                          required: "",
-                          "data-vv-name": "input.url",
-                          "error-messages": _vm.errors.collect("input.url")
-                        },
-                        model: {
-                          value: _vm.model.url,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "url", $$v)
-                          },
-                          expression: "model.url"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { items: _vm.type_values, label: "Typ" },
-                        model: {
-                          value: _vm.model.type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "type", $$v)
-                          },
-                          expression: "model.type"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("items-combo-box", {
-                        attrs: {
-                          "p-items": _vm.authors,
-                          label: "Autoři",
-                          "header-label":
-                            "Vyberte autora z nabídky nebo vytvořte nového",
-                          "create-label":
-                            "Potvrďte enterem a vytvořte nového autora",
-                          multiple: true,
-                          "enable-custom": true
-                        },
-                        model: {
-                          value: _vm.model.authors,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "authors", $$v)
-                          },
-                          expression: "model.authors"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("items-combo-box", {
-                        attrs: {
-                          "p-items": _vm.song_lyrics,
-                          label: "Píseň",
-                          "header-label": "Vyberte píseň",
-                          multiple: false,
-                          "enable-custom": false
-                        },
-                        model: {
-                          value: _vm.model.song_lyric,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "song_lyric", $$v)
-                          },
-                          expression: "model.song_lyric"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("Uložit")]
-                      ),
-                      _vm._v(" "),
-                      _vm.model.song_lyric
-                        ? _c(
-                            "v-btn",
-                            {
-                              on: {
-                                click: function($event) {
-                                  return _vm.goToAdminPage(
-                                    "song/" + _vm.model.song_lyric.id + "/edit"
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(
-                                    _vm.isDirty
-                                      ? "Uložit a přejít na editaci písničky"
-                                      : "Přejít na editaci písničky"
-                                  ) +
-                                  "\n          "
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-flex", { attrs: { xs12: "", md6: "" } })
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-08145df2", module.exports)
-  }
-}
-
-/***/ }),
-/* 157 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(158)
-/* template */
-var __vue_template__ = __webpack_require__(174)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/admin/pages/SongLyricEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-741f5d72", Component.options)
-  } else {
-    hotAPI.reload("data-v-741f5d72", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 158 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue__);
-
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
-    _templateObject6 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default.a);
-
-var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default.a);
-
-var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject3);
-
-var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject4);
-
-var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject5);
-
-var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject6);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["preset-id", "csrf"],
-  components: {
-    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a,
-    SongLyricsGroup: __WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue___default.a,
-    SelectSongGroupDialog: __WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue___default.a
-  },
-
-  data: function data() {
-    return {
-      model: {
-        // here goes the definition of model attributes
-        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
-        id: undefined,
-        name: undefined,
-        has_anonymous_author: undefined,
-        lang: undefined,
-        lyrics: undefined,
-        tags_unofficial: [],
-        tags_official: [],
-        authors: [],
-        externals: [],
-        files: [],
-        song: undefined
-      },
-      lang_values: [],
-      selected_thumbnail_url: undefined
-    };
-  },
-
-
-  apollo: {
-    model_database: {
-      query: FETCH_MODEL_DATABASE,
-      variables: function variables() {
-        return {
-          id: this.model.id
-        };
-      },
-      result: function result(_result) {
-        var song_lyric = _result.data.model_database;
-        // load the requested fields to the vue data.model property
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var field = _step.value;
-
-            var clone = _.cloneDeep(song_lyric[field]);
-            Vue.set(this.model, field, clone);
-          }
-
-          // lang string values are an associative array passed as JSON object
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        var parsed_obj = JSON.parse(song_lyric.lang_string_values);
-
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = Object.entries(parsed_obj)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var _ref = _step2.value;
-
-            var _ref2 = _slicedToArray(_ref, 2);
-
-            var key = _ref2[0];
-            var value = _ref2[1];
-
-            this.lang_values.push({ value: key, text: value });
-          }
-
-          // if there are any thumbnailables, then select the first one
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-              _iterator2.return();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-
-        if (this.thumbnailables.length) {
-          this.selected_thumbnail_url = this.thumbnailables[0].thumbnail_url;
-        }
-      }
-    },
-    authors: {
-      query: FETCH_AUTHORS
-    },
-    tags_official: {
-      query: FETCH_TAGS_OFFICIAL
-    },
-    tags_unofficial: {
-      query: FETCH_TAGS_UNOFFICIAL
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted: function mounted() {
-    var _this = this;
-
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = function (e) {
-      if (_this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-  },
-
-
-  computed: {
-    isDirty: function isDirty() {
-      if (!this.model_database) return false;
-
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
-
-      try {
-        for (var _iterator3 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var field = _step3.value;
-
-          if (!_.isEqual(this.model[field], this.model_database[field])) {
-            return true;
-          }
-        }
-      } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3.return) {
-            _iterator3.return();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
-      }
-
-      return false;
-    },
-    thumbnailables: function thumbnailables() {
-      // mix the externals and files that can have thumbnail
-      return this.model.externals.concat(this.model.files).filter(function (thumbnailable) {
-        return thumbnailable.thumbnail_url ? true : false;
-      });
-    }
-  },
-
-  methods: {
-    submit: function submit() {
-      var _this2 = this;
-
-      return this.$apollo.mutate({
-        mutation: MUTATE_MODEL_DATABASE,
-        variables: {
-          input: {
-            id: this.model.id,
-            name: this.model.name,
-            lang: this.model.lang,
-            has_anonymous_author: this.model.has_anonymous_author,
-            lyrics: this.model.lyrics,
-            song: this.model.song,
-            authors: {
-              create: this.getModelsToCreateBelongsToMany(this.model.authors),
-              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
-            },
-            tags_unofficial: {
-              create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
-              sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
-            },
-            tags_official: {
-              // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
-              sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
-            }
-          }
-        }
-      }).then(function (result) {
-        _this2.$validator.errors.clear();
-        _this2.$notify({
-          title: "Úspěšně uloženo :)",
-          text: "Píseň byla úspěšně uložena",
-          type: "success"
-        });
-      }).catch(function (error) {
-        if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
-          // unknown error happened
-          _this2.$notify({
-            title: "Chyba při ukládání",
-            text: "Píseň nebyla uložena",
-            type: "error"
-          });
-          return;
-        }
-
-        var errorFields = error.graphQLErrors[0].extensions.validation;
-
-        // clear the old errors and (add new ones if exist)
-        _this2.$validator.errors.clear();
-        var _iteratorNormalCompletion4 = true;
-        var _didIteratorError4 = false;
-        var _iteratorError4 = undefined;
-
-        try {
-          for (var _iterator4 = Object.entries(errorFields)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-            var _ref3 = _step4.value;
-
-            var _ref4 = _slicedToArray(_ref3, 2);
-
-            var key = _ref4[0];
-            var value = _ref4[1];
-
-            _this2.$validator.errors.add({ field: key, msg: value });
-          }
-        } catch (err) {
-          _didIteratorError4 = true;
-          _iteratorError4 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-              _iterator4.return();
-            }
-          } finally {
-            if (_didIteratorError4) {
-              throw _iteratorError4;
-            }
-          }
-        }
-
-        _this2.$notify({
-          title: "Chyba při ukládání",
-          text: "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
-          type: "error"
-        });
-      });
-    },
-    reset: function reset() {
-      var _iteratorNormalCompletion5 = true;
-      var _didIteratorError5 = false;
-      var _iteratorError5 = undefined;
-
-      try {
-        for (var _iterator5 = this.getFieldsFromFragment(false)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-          var field = _step5.value;
-
-          var clone = _.cloneDeep(this.model_database[field]);
-          Vue.set(this.model, field, clone);
-        }
-      } catch (err) {
-        _didIteratorError5 = true;
-        _iteratorError5 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion5 && _iterator5.return) {
-            _iterator5.return();
-          }
-        } finally {
-          if (_didIteratorError5) {
-            throw _iteratorError5;
-          }
-        }
-      }
-    },
-    show: function show() {
-      window.location.href = this.model_database.public_url;
-    },
-    goToAdminPage: function () {
-      var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
-        var _this3 = this;
-
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!this.isDirty) {
-                  _context.next = 3;
-                  break;
-                }
-
-                _context.next = 3;
-                return this.submit();
-
-              case 3:
-
-                setTimeout(function () {
-                  if (!_this3.isDirty) {
-                    var base_url = document.querySelector('#baseUrl').getAttribute('value');
-                    window.location.href = base_url + '/admin/' + url;
-                  }
-                }, 500);
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function goToAdminPage(_x) {
-        return _ref5.apply(this, arguments);
-      }
-
-      return goToAdminPage;
-    }(),
-    onTabChange: function onTabChange() {
-      var _this4 = this;
-
-      // it is needed to refresh the textareas manually
-      if (this.$refs.textarea) {
-        // somehow it doesn"t work without settimeout, not even with Vue.nexttick
-        setTimeout(function () {
-          _this4.$refs.textarea.calculateInputHeight();
-        }, 1);
-      }
-    },
-
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
-      var fieldDefs = __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default.a.definitions[0].selectionSet.selections;
-      var fieldNames = fieldDefs.map(function (field) {
-        if (field.alias) return field.alias.value;
-        return field.name.value;
-      });
-
-      if (!includeId) fieldNames = fieldNames.filter(function (field) {
-        return field != "id";
-      });
-
-      return fieldNames;
-    },
-    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return false;
-        return true;
-      });
-    },
-    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return true;
-        return false;
-      }).map(function (model) {
-        return model.id;
-      });
-    },
-    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
-      var obj = {};
-
-      if (model) {
-        obj.update = {
-          id: model.id
-        };
-      } else {
-        obj.disconnect = true;
-      }
-
-      return obj;
-    },
-    handleOpensongFile: function handleOpensongFile(e) {
-      var _this5 = this;
-
-      var file = e.target.files[0];
-
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        console.log("file loaded succesfully");
-
-        $.post("/api/parse/opensong", {
-          file_contents: e.target.result,
-          _token: _this5.csrf
-        }, function (data) {
-          _this5.model.lyrics = data;
-        });
-      };
-
-      reader.readAsText(file);
-    },
-    resetGroup: function resetGroup() {
-      var _this6 = this;
-
-      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(function (song_lyric) {
-        return song_lyric.id === _this6.model.id;
-      });
-    },
-    addToGroup: function addToGroup(song) {
-      // check if there is original in the group and then
-      if (song.song_lyrics.filter(function (sl) {
-        return sl.type == 0;
-      }).length > 0) this.model.song.song_lyrics[0].type = 1;
-
-      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
-    },
-    onNameChange: function onNameChange(name) {
-      // update the corresponding name in song.song_lyrics
-      var _iteratorNormalCompletion6 = true;
-      var _didIteratorError6 = false;
-      var _iteratorError6 = undefined;
-
-      try {
-        for (var _iterator6 = this.model.song.song_lyrics[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-          var song_lyric = _step6.value;
-
-          if (song_lyric.id == this.model.id) {
-            Vue.set(song_lyric, "name", name);
-          }
-        }
-      } catch (err) {
-        _didIteratorError6 = true;
-        _iteratorError6 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion6 && _iterator6.return) {
-            _iterator6.return();
-          }
-        } finally {
-          if (_didIteratorError6) {
-            throw _iteratorError6;
-          }
-        }
-      }
-    }
-  }
-});
-
-/***/ }),
-/* 159 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(160);
-
-
-/***/ }),
-/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -69757,7 +67891,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(161);
+module.exports = __webpack_require__(151);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -69773,7 +67907,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 161 */
+/* 151 */
 /***/ (function(module, exports) {
 
 /**
@@ -70506,6 +68640,1895 @@ if (hadRuntime) {
 
 
 /***/ }),
+/* 152 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":298}};
+    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n    members {\n      id\n      name\n    }\n    song_lyrics {\n        id\n        name\n      }\n      externals {\n        id\n        url\n        public_name\n      }\n      files {\n        id\n        public_name\n      }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
+
+
+/***/ }),
+/* 153 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__ = __webpack_require__(14);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // todo: enable-custom set to false not working for multiple entry
+  props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom"],
+
+  data: function data() {
+    return {
+      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
+      editing: null,
+      index: -1,
+      search: null,
+      items: [{ header: "" }]
+    };
+  },
+
+  computed: {
+    internalValue: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(val) {
+        this.$emit("input", val);
+      }
+    }
+  },
+
+  mounted: function mounted() {
+    this.items[0].header = this.headerLabel;
+  },
+
+
+  watch: {
+    internalValue: function internalValue(val, prev) {
+      var _this = this;
+
+      if (!val) return;
+      if (!Array.isArray(val)) return;
+
+      if (val.length === prev.length) return;
+
+      // fix when the search string remained after selecting an item
+      this.search = null;
+
+      this.internalValue = val.map(function (v) {
+        if (typeof v === "string") {
+          v = {
+            name: v
+          };
+
+          _this.items.push(v);
+        }
+
+        return v;
+      });
+    },
+    pItems: function pItems(val, prev) {
+      console.log("updated " + this.pItems.length);
+      this.items = this.items.concat(this.pItems);
+    }
+  },
+
+  methods: {
+    edit: function edit(index, item) {
+      if (!this.editing) {
+        this.editing = item;
+        this.index = index;
+      } else {
+        this.editing = null;
+        this.index = -1;
+      }
+    },
+    filter: function filter(item, queryText, itemText) {
+      if (item.header) return false;
+
+      var hasValue = function hasValue(val) {
+        return val != null ? val : "";
+      };
+
+      var text = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__["a" /* default */])(hasValue(itemText));
+      var query = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_removeDiacritics__["a" /* default */])(hasValue(queryText));
+
+      return text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) > -1;
+    },
+    getColor: function getColor(item) {
+      if (item.id) {
+        return "blue lighten-3";
+      } else {
+        return "green lighten-3";
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 154 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("v-combobox", {
+    attrs: {
+      filter: _vm.filter,
+      "hide-no-data": !_vm.search,
+      items: _vm.items,
+      "search-input": _vm.search,
+      "item-text": "name",
+      "hide-selected": "",
+      label: _vm.label,
+      multiple: _vm.multiple,
+      "small-chips": ""
+    },
+    on: {
+      "update:searchInput": function($event) {
+        _vm.search = $event
+      },
+      "update:search-input": function($event) {
+        _vm.search = $event
+      }
+    },
+    scopedSlots: _vm._u(
+      [
+        _vm.enableCustom
+          ? {
+              key: "no-data",
+              fn: function() {
+                return [
+                  _c(
+                    "v-list-tile",
+                    [
+                      _c("span", { staticClass: "subheading" }, [
+                        _vm._v(_vm._s(_vm.createLabel))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-chip",
+                        {
+                          attrs: {
+                            color: "green lighten-3",
+                            label: "",
+                            small: ""
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.search))]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              },
+              proxy: true
+            }
+          : null,
+        {
+          key: "selection",
+          fn: function(ref) {
+            var item = ref.item
+            var parent = ref.parent
+            var selected = ref.selected
+            return [
+              item === Object(item)
+                ? _c(
+                    "v-chip",
+                    {
+                      attrs: {
+                        color: _vm.getColor(item),
+                        selected: selected,
+                        label: "",
+                        small: ""
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "pr-2" }, [
+                        _vm._v(_vm._s(item.name))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              return parent.selectItem(item)
+                            }
+                          }
+                        },
+                        [_vm._v("close")]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ]
+          }
+        },
+        {
+          key: "item",
+          fn: function(ref) {
+            var index = ref.index
+            var item = ref.item
+            return [
+              _c(
+                "v-list-tile-content",
+                [
+                  _vm.editing !== item
+                    ? _c(
+                        "v-chip",
+                        {
+                          attrs: {
+                            color: _vm.getColor(item),
+                            dark: "",
+                            label: "",
+                            small: ""
+                          }
+                        },
+                        [_vm._v(_vm._s(item.name))]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-spacer")
+            ]
+          }
+        }
+      ],
+      null,
+      true
+    ),
+    model: {
+      value: _vm.internalValue,
+      callback: function($$v) {
+        _vm.internalValue = $$v
+      },
+      expression: "internalValue"
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-49b66d54", module.exports)
+  }
+}
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c("notifications"),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "", md6: "" } },
+                [
+                  _c(
+                    "v-form",
+                    { ref: "form" },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Jméno autora",
+                          required: "",
+                          "data-vv-name": "input.name",
+                          "error-messages": _vm.errors.collect("input.name")
+                        },
+                        model: {
+                          value: _vm.model.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "name", $$v)
+                          },
+                          expression: "model.name"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { items: _vm.type_values, label: "Typ" },
+                        model: {
+                          value: _vm.model.type,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "type", $$v)
+                          },
+                          expression: "model.type"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.model.type !== 0
+                        ? _c("items-combo-box", {
+                            attrs: {
+                              "p-items": _vm.authors,
+                              label: "Členové - autoři",
+                              "header-label":
+                                "Vyberte autora z nabídky nebo vytvořte nového",
+                              "create-label":
+                                "Potvrďte enterem a vytvořte nového autora",
+                              multiple: true,
+                              "enable-custom": true
+                            },
+                            model: {
+                              value: _vm.model.members,
+                              callback: function($$v) {
+                                _vm.$set(_vm.model, "members", $$v)
+                              },
+                              expression: "model.members"
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("v-textarea", {
+                        attrs: {
+                          name: "input-7-4",
+                          label: "Popis autora",
+                          "data-vv-name": "input.description",
+                          "error-messages": _vm.errors.collect(
+                            "input.description"
+                          )
+                        },
+                        model: {
+                          value: _vm.model.description,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "description", $$v)
+                          },
+                          expression: "model.description"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: !_vm.isDirty },
+                          on: { click: _vm.submit }
+                        },
+                        [_vm._v("Uložit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: _vm.isDirty },
+                          on: { click: _vm.show }
+                        },
+                        [_vm._v("Zobrazit ve zpěvníku")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "edit-description",
+                  attrs: { xs12: "", md6: "" }
+                },
+                [
+                  _c("h5", [_vm._v("Seznam autorských písní")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.model.song_lyrics, function(song_lyric) {
+                    return _c(
+                      "v-btn",
+                      {
+                        key: song_lyric.id,
+                        staticClass: "text-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.goToAdminPage(
+                              "song/" + song_lyric.id + "/edit"
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(song_lyric.name))]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("p"),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v("Seznam materiálů")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.model.externals, function(external) {
+                    return _c(
+                      "v-btn",
+                      {
+                        key: external.id,
+                        staticClass: "text-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.goToAdminPage(
+                              "external/" + external.id + "/edit"
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(external.public_name))]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.model.files, function(file) {
+                    return _c(
+                      "v-btn",
+                      {
+                        key: file.id,
+                        staticClass: "text-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.goToAdminPage(
+                              "file/" + file.id + "/edit"
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(file.public_name))]
+                    )
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-beeb1e1c", module.exports)
+  }
+}
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(157)
+/* template */
+var __vue_template__ = __webpack_require__(159)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/ExternalEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-08145df2", Component.options)
+  } else {
+    hotAPI.reload("data-v-08145df2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
+
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: external(id: $id) {\n      ...ExternalFillableFragment\n      type_string_values\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateExternalInput!) {\n    update_external(input: $input) {\n      ...ExternalFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]);
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default.a);
+
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default.a);
+
+var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject3);
+
+var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject4);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["preset-id"],
+  components: {
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a
+  },
+
+  data: function data() {
+    return {
+      model: {
+        // here goes the definition of model attributes
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        url: undefined,
+        type: undefined,
+        authors: [],
+        song_lyric: undefined
+      },
+      type_values: []
+    };
+  },
+
+
+  apollo: {
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
+      variables: function variables() {
+        return {
+          id: this.model.id
+        };
+      },
+      result: function result(_result) {
+        var external = _result.data.model_database;
+        // load the requested fields to the vue data.model property
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var field = _step.value;
+
+            Vue.set(this.model, field, external[field]);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        this.type_values = external.type_string_values.map(function (val, index) {
+          return { value: index, text: val };
+        });
+      }
+    },
+    authors: {
+      query: FETCH_AUTHORS
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = function (e) {
+      if (_this.isDirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+  },
+
+
+  computed: {
+    isDirty: function isDirty() {
+      if (!this.model_database) return false;
+
+      if (!this.model.url) return true;
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var field = _step2.value;
+
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      return false;
+    }
+  },
+
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.$apollo.mutate({
+        mutation: MUTATE_MODEL_DATABASE,
+        variables: {
+          input: {
+            id: this.model.id,
+            url: this.model.url,
+            type: this.model.type,
+            song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
+            authors: {
+              create: this.getModelsToCreateBelongsToMany(this.model.authors),
+              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+            }
+          }
+        }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
+          title: "Úspěšně uloženo :)",
+          text: "Externí odkaz byl úspěšně uložen",
+          type: "success"
+        });
+      }).catch(function (error) {
+        if (error.graphQLErrors.length == 0) {
+          // unknown error happened
+          _this2.$notify({
+            title: "Chyba při ukládání",
+            text: "Externí odkaz nebyl uložen",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this2.$validator.errors.clear();
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+          for (var _iterator3 = Object.entries(errorFields)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var _ref = _step3.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            _this2.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
+          }
+        }
+      });
+    },
+
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+      var fieldNames = fieldDefs.map(function (field) {
+        return field.name.value;
+      });
+
+      if (!includeId) fieldNames = fieldNames.filter(function (field) {
+        return field != "id";
+      });
+
+      return fieldNames;
+    },
+    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return false;
+        return true;
+      });
+    },
+    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return true;
+        return false;
+      }).map(function (model) {
+        return model.id;
+      });
+    },
+    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
+      var obj = {};
+
+      if (model) {
+        obj.update = {
+          id: model.id
+        };
+      } else {
+        obj.disconnect = true;
+      }
+
+      return obj;
+    },
+    goToAdminPage: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
+        var _this3 = this;
+
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.isDirty) {
+                  _context.next = 3;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.submit();
+
+              case 3:
+
+                setTimeout(function () {
+                  // if there has been an error then this does not continue
+                  if (!_this3.isDirty) {
+                    var base_url = document.querySelector('#baseUrl').getAttribute('value');
+                    window.location.href = base_url + '/admin/' + url;
+                  }
+                }, 500);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function goToAdminPage(_x) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return goToAdminPage;
+    }()
+  }
+});
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports) {
+
+
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyric"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":165}};
+    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n    song_lyric {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+  
+
+    var names = {};
+    function unique(defs) {
+      return defs.filter(
+        function(def) {
+          if (def.kind !== 'FragmentDefinition') return true;
+          var name = def.name.value
+          if (names[name]) {
+            return false;
+          } else {
+            names[name] = true;
+            return true;
+          }
+        }
+      )
+    }
+  
+
+      module.exports = doc;
+    
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _c("notifications"),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { fluid: "", "grid-list-xs": "" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "" } },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "", md6: "" } },
+                [
+                  _c(
+                    "v-form",
+                    { ref: "form" },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Url odkaz",
+                          required: "",
+                          "data-vv-name": "input.url",
+                          "error-messages": _vm.errors.collect("input.url")
+                        },
+                        model: {
+                          value: _vm.model.url,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "url", $$v)
+                          },
+                          expression: "model.url"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { items: _vm.type_values, label: "Typ" },
+                        model: {
+                          value: _vm.model.type,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "type", $$v)
+                          },
+                          expression: "model.type"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.authors,
+                          label: "Autoři",
+                          "header-label":
+                            "Vyberte autora z nabídky nebo vytvořte nového",
+                          "create-label":
+                            "Potvrďte enterem a vytvořte nového autora",
+                          multiple: true,
+                          "enable-custom": true
+                        },
+                        model: {
+                          value: _vm.model.authors,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "authors", $$v)
+                          },
+                          expression: "model.authors"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("items-combo-box", {
+                        attrs: {
+                          "p-items": _vm.song_lyrics,
+                          label: "Píseň",
+                          "header-label": "Vyberte píseň",
+                          multiple: false,
+                          "enable-custom": false
+                        },
+                        model: {
+                          value: _vm.model.song_lyric,
+                          callback: function($$v) {
+                            _vm.$set(_vm.model, "song_lyric", $$v)
+                          },
+                          expression: "model.song_lyric"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { disabled: !_vm.isDirty },
+                          on: { click: _vm.submit }
+                        },
+                        [_vm._v("Uložit")]
+                      ),
+                      _vm._v(" "),
+                      _vm.model.song_lyric
+                        ? _c(
+                            "v-btn",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.goToAdminPage(
+                                    "song/" + _vm.model.song_lyric.id + "/edit"
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(
+                                    _vm.isDirty
+                                      ? "Uložit a přejít na editaci písničky"
+                                      : "Přejít na editaci písničky"
+                                  ) +
+                                  "\n          "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-flex", { attrs: { xs12: "", md6: "" } })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-08145df2", module.exports)
+  }
+}
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(161)
+/* template */
+var __vue_template__ = __webpack_require__(177)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/pages/SongLyricEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-741f5d72", Component.options)
+  } else {
+    hotAPI.reload("data-v-741f5d72", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_graphql_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_DeleteModelDialog_vue__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_DeleteModelDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_DeleteModelDialog_vue__);
+
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"], ["\n  query($id: ID!) {\n    model_database: song_lyric(id: $id) {\n      ...SongLyricFillableFragment\n      lang_string_values\n    }\n  }\n  ", "\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"], ["\n  mutation($input: UpdateSongLyricInput!) {\n    update_song_lyric(input: $input) {\n      ...SongLyricFillableFragment\n    }\n  }\n  ", "\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    authors {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject4 = _taggedTemplateLiteral(["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    song_lyrics {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject5 = _taggedTemplateLiteral(["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_unofficial: tags(type: 0) {\n      id\n      name\n    }\n  }\n"]),
+    _templateObject6 = _taggedTemplateLiteral(["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"], ["\n  query {\n    tags_official: tags(type: 1) {\n      id\n      name\n    }\n  }\n"]);
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+var FETCH_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject, __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default.a);
+
+var MUTATE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject2, __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default.a);
+
+var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject3);
+
+var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject4);
+
+var FETCH_TAGS_UNOFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject5);
+
+var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templateObject6);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["preset-id", "csrf"],
+  components: {
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a,
+    SongLyricsGroup: __WEBPACK_IMPORTED_MODULE_4__components_SongLyricsGroup_vue___default.a,
+    SelectSongGroupDialog: __WEBPACK_IMPORTED_MODULE_5__components_SelectSongGroupDialog_vue___default.a,
+    DeleteModelDialog: __WEBPACK_IMPORTED_MODULE_6__components_DeleteModelDialog_vue___default.a
+  },
+
+  data: function data() {
+    return {
+      model: {
+        // here goes the definition of model attributes
+        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
+        id: undefined,
+        name: undefined,
+        has_anonymous_author: undefined,
+        lang: undefined,
+        lyrics: undefined,
+        tags_unofficial: [],
+        tags_official: [],
+        authors: [],
+        externals: [],
+        files: [],
+        song: undefined
+      },
+      lang_values: [],
+      selected_thumbnail_url: undefined
+    };
+  },
+
+
+  apollo: {
+    model_database: {
+      query: FETCH_MODEL_DATABASE,
+      variables: function variables() {
+        return {
+          id: this.model.id
+        };
+      },
+      result: function result(_result) {
+        var song_lyric = _result.data.model_database;
+        // load the requested fields to the vue data.model property
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.getFieldsFromFragment(false)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var field = _step.value;
+
+            var clone = _.cloneDeep(song_lyric[field]);
+            Vue.set(this.model, field, clone);
+          }
+
+          // lang string values are an associative array passed as JSON object
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        var parsed_obj = JSON.parse(song_lyric.lang_string_values);
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = Object.entries(parsed_obj)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _ref = _step2.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var key = _ref2[0];
+            var value = _ref2[1];
+
+            this.lang_values.push({ value: key, text: value });
+          }
+
+          // if there are any thumbnailables, then select the first one
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+
+        if (this.thumbnailables.length) {
+          this.selected_thumbnail_url = this.thumbnailables[0].thumbnail_url;
+        }
+      }
+    },
+    authors: {
+      query: FETCH_AUTHORS
+    },
+    tags_official: {
+      query: FETCH_TAGS_OFFICIAL
+    },
+    tags_unofficial: {
+      query: FETCH_TAGS_UNOFFICIAL
+    }
+  },
+
+  $_veeValidate: {
+    validator: "new"
+  },
+
+  mounted: function mounted() {
+    var _this = this;
+
+    this.model.id = this.presetId;
+
+    // prevent user to leave the form if dirty
+    window.onbeforeunload = function (e) {
+      if (_this.isDirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+  },
+
+
+  computed: {
+    isDirty: function isDirty() {
+      if (!this.model_database) return false;
+
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = this.getFieldsFromFragment(this)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var field = _step3.value;
+
+          if (!_.isEqual(this.model[field], this.model_database[field])) {
+            return true;
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      return false;
+    },
+    thumbnailables: function thumbnailables() {
+      // mix the externals and files that can have thumbnail
+      return this.model.externals.concat(this.model.files).filter(function (thumbnailable) {
+        return thumbnailable.thumbnail_url ? true : false;
+      });
+    }
+  },
+
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      return this.$apollo.mutate({
+        mutation: MUTATE_MODEL_DATABASE,
+        variables: {
+          input: {
+            id: this.model.id,
+            name: this.model.name,
+            lang: this.model.lang,
+            has_anonymous_author: this.model.has_anonymous_author,
+            lyrics: this.model.lyrics,
+            song: this.model.song,
+            authors: {
+              create: this.getModelsToCreateBelongsToMany(this.model.authors),
+              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+            },
+            tags_unofficial: {
+              create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
+              sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
+            },
+            tags_official: {
+              // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
+              sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
+            }
+          }
+        }
+      }).then(function (result) {
+        _this2.$validator.errors.clear();
+        _this2.$notify({
+          title: "Úspěšně uloženo :)",
+          text: "Píseň byla úspěšně uložena",
+          type: "success"
+        });
+      }).catch(function (error) {
+        if (error.graphQLErrors.length == 0 || error.graphQLErrors[0].extensions.validation === undefined) {
+          // unknown error happened
+          _this2.$notify({
+            title: "Chyba při ukládání",
+            text: "Píseň nebyla uložena",
+            type: "error"
+          });
+          return;
+        }
+
+        var errorFields = error.graphQLErrors[0].extensions.validation;
+
+        // clear the old errors and (add new ones if exist)
+        _this2.$validator.errors.clear();
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+          for (var _iterator4 = Object.entries(errorFields)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var _ref3 = _step4.value;
+
+            var _ref4 = _slicedToArray(_ref3, 2);
+
+            var key = _ref4[0];
+            var value = _ref4[1];
+
+            _this2.$validator.errors.add({ field: key, msg: value });
+          }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+              _iterator4.return();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
+          }
+        }
+
+        _this2.$notify({
+          title: "Chyba při ukládání",
+          text: "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
+          type: "error"
+        });
+      });
+    },
+    reset: function reset() {
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = this.getFieldsFromFragment(false)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var field = _step5.value;
+
+          var clone = _.cloneDeep(this.model_database[field]);
+          Vue.set(this.model, field, clone);
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
+    },
+    show: function show() {
+      window.location.href = this.model_database.public_url;
+    },
+    askDelete: function askDelete() {},
+
+
+    // destroy() {
+    //   this.$apollo.mutate({
+    //     mutation: DELETE_MODEL_DATABASE,
+    //     variables: {
+    //       id: this.model.id
+    //     }
+    //   }).then(result => {
+
+    //   }).catch(error => {
+
+    //   });
+    // },
+
+    goToAdminPage: function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
+        var _this3 = this;
+
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.isDirty) {
+                  _context.next = 3;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.submit();
+
+              case 3:
+
+                setTimeout(function () {
+                  if (!_this3.isDirty) {
+                    var base_url = document.querySelector('#baseUrl').getAttribute('value');
+                    window.location.href = base_url + '/admin/' + url;
+                  }
+                }, 500);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function goToAdminPage(_x) {
+        return _ref5.apply(this, arguments);
+      }
+
+      return goToAdminPage;
+    }(),
+    onTabChange: function onTabChange() {
+      var _this4 = this;
+
+      // it is needed to refresh the textareas manually
+      if (this.$refs.textarea) {
+        // somehow it doesn"t work without settimeout, not even with Vue.nexttick
+        setTimeout(function () {
+          _this4.$refs.textarea.calculateInputHeight();
+        }, 1);
+      }
+    },
+
+
+    // helper method to load field names defined in fragment graphql definition
+    getFieldsFromFragment: function getFieldsFromFragment(includeId) {
+      var fieldDefs = __WEBPACK_IMPORTED_MODULE_2__graphql_client_song_lyric_fragment_graphql___default.a.definitions[0].selectionSet.selections;
+      var fieldNames = fieldDefs.map(function (field) {
+        if (field.alias) return field.alias.value;
+        return field.name.value;
+      });
+
+      if (!includeId) fieldNames = fieldNames.filter(function (field) {
+        return field != "id";
+      });
+
+      return fieldNames;
+    },
+    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return false;
+        return true;
+      });
+    },
+    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
+      return models.filter(function (model) {
+        if (model.id) return true;
+        return false;
+      }).map(function (model) {
+        return model.id;
+      });
+    },
+    getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
+      var obj = {};
+
+      if (model) {
+        obj.update = {
+          id: model.id
+        };
+      } else {
+        obj.disconnect = true;
+      }
+
+      return obj;
+    },
+    handleOpensongFile: function handleOpensongFile(e) {
+      var _this5 = this;
+
+      var file = e.target.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        console.log("file loaded succesfully");
+
+        $.post("/api/parse/opensong", {
+          file_contents: e.target.result,
+          _token: _this5.csrf
+        }, function (data) {
+          _this5.model.lyrics = data;
+        });
+      };
+
+      reader.readAsText(file);
+    },
+    resetGroup: function resetGroup() {
+      var _this6 = this;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.filter(function (song_lyric) {
+        return song_lyric.id === _this6.model.id;
+      });
+    },
+    addToGroup: function addToGroup(song) {
+      // check if there is original in the group and then
+      if (song.song_lyrics.filter(function (sl) {
+        return sl.type == 0;
+      }).length > 0) this.model.song.song_lyrics[0].type = 1;
+
+      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(song.song_lyrics);
+    },
+    onNameChange: function onNameChange(name) {
+      // update the corresponding name in song.song_lyrics
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = this.model.song.song_lyrics[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var song_lyric = _step6.value;
+
+          if (song_lyric.id == this.model.id) {
+            Vue.set(song_lyric, "name", name);
+          }
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6.return) {
+            _iterator6.return();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+    }
+  }
+});
+
+/***/ }),
 /* 162 */
 /***/ (function(module, exports) {
 
@@ -70540,7 +70563,7 @@ if (hadRuntime) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(164)
 /* template */
@@ -70685,7 +70708,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(166)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(168)
 /* template */
@@ -70966,7 +70989,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(172)
 /* template */
@@ -71245,6 +71268,224 @@ if (false) {
 
 /***/ }),
 /* 174 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(175)
+/* template */
+var __vue_template__ = __webpack_require__(176)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/admin/components/DeleteModelDialog.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5eac123f", Component.options)
+  } else {
+    hotAPI.reload("data-v-5eac123f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 175 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_graphql_tag__);
+var _templateObject = _taggedTemplateLiteral(["\n  mutation($input: DeleteModelInput!) {\n    delete_model(input: $input) {\n      id\n    }\n  }\n"], ["\n  mutation($input: DeleteModelInput!) {\n    delete_model(input: $input) {\n      id\n    }\n  }\n"]);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var DELETE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["class-name", "model-id"],
+
+  data: function data() {
+    return {
+      //   id: undefined,
+      dialog: false
+    };
+  },
+
+
+  methods: {
+    destroy: function destroy() {
+      var _this = this;
+
+      // mutate
+      this.$apollo.mutate({
+        mutation: DELETE_MODEL_DATABASE,
+        variables: {
+          input: {
+            class_name: this.className,
+            id: this.modelId
+          }
+        }
+      }).then(function (result) {
+        if (result.data.delete_model) {
+          _this.$emit("deleted", result.data.delete_model);
+        } else {
+          _this.$emit("error", "Daná položka už byla vymazána");
+        }
+      }).catch(function (error) {
+        // error
+        _this.$emit("error", error);
+      });
+    },
+    onCancel: function onCancel() {
+      this.dialog = false;
+      this.$emit("cancelled", this.modelId);
+    },
+    onConfirm: function onConfirm() {
+      this.dialog = false;
+      this.destroy();
+    }
+  }
+});
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { persistent: "", "max-width": "300px" },
+      scopedSlots: _vm._u(
+        [
+          {
+            key: "activator",
+            fn: function(ref) {
+              var on = ref.on
+              return [
+                _c(
+                  "v-btn",
+                  _vm._g({ attrs: { color: "error", dark: "" } }, on),
+                  [_vm._t("default")],
+                  2
+                )
+              ]
+            }
+          }
+        ],
+        null,
+        true
+      ),
+      model: {
+        value: _vm.dialog,
+        callback: function($$v) {
+          _vm.dialog = $$v
+        },
+        expression: "dialog"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", { staticClass: "headline" }, [
+            _vm._v("Vymazat ...")
+          ]),
+          _vm._v(" "),
+          _c("v-card-text", [_vm._v("Opravdu chcete vymazat ... ?")]),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  staticClass: "text-none",
+                  attrs: { outline: "" },
+                  on: { click: _vm.onCancel }
+                },
+                [_vm._v("Zrušit")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { staticClass: "error", on: { click: _vm.onConfirm } },
+                [_vm._v("Vymazat")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5eac123f", module.exports)
+  }
+}
+
+/***/ }),
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -71734,6 +71975,14 @@ var render = function() {
             "v-btn",
             { attrs: { disabled: _vm.isDirty }, on: { click: _vm.show } },
             [_vm._v("Zobrazit ve zpěvníku")]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "delete-model-dialog",
+            { attrs: { "class-name": "SongLyric", "model-id": _vm.model.id } },
+            [_vm._v("Vymazat")]
           )
         ],
         1
@@ -71753,7 +72002,7 @@ if (false) {
 }
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -97732,13 +97981,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 //# sourceMappingURL=vuetify.js.map
 
 /***/ }),
-/* 176 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(177);
+var content = __webpack_require__(180);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -97746,7 +97995,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(119)(content, options);
+var update = __webpack_require__(121)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -97763,7 +98012,7 @@ if(false) {
 }
 
 /***/ }),
-/* 177 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(false);
@@ -97777,7 +98026,7 @@ exports.push([module.i, "/*!\n* Vuetify v1.5.14\n* Forged by John Leider\n* Rele
 
 
 /***/ }),
-/* 178 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -98908,7 +99157,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 179 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

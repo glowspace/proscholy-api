@@ -152,6 +152,9 @@
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+      <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
+      <br>
+      <delete-model-dialog class-name="SongLyric" :model-id="model.id">Vymazat</delete-model-dialog>
     </v-container>
   </v-app>
 </template>
@@ -162,6 +165,7 @@ import fragment from "@/graphql/client/song_lyric_fragment.graphql";
 import ItemsComboBox from "../components/ItemsComboBox.vue";
 import SongLyricsGroup from "../components/SongLyricsGroup.vue";
 import SelectSongGroupDialog from "../components/SelectSongGroupDialog.vue";
+import DeleteModelDialog from "../components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -223,7 +227,8 @@ export default {
   components: {
     ItemsComboBox,
     SongLyricsGroup,
-    SelectSongGroupDialog
+    SelectSongGroupDialog,
+    DeleteModelDialog
   },
 
   data() {
@@ -409,6 +414,23 @@ export default {
     show() {
       window.location.href = this.model_database.public_url;
     },
+
+    askDelete() {
+
+    },
+
+    // destroy() {
+    //   this.$apollo.mutate({
+    //     mutation: DELETE_MODEL_DATABASE,
+    //     variables: {
+    //       id: this.model.id
+    //     }
+    //   }).then(result => {
+
+    //   }).catch(error => {
+
+    //   });
+    // },
 
     async goToAdminPage(url) {
       if (this.isDirty)
