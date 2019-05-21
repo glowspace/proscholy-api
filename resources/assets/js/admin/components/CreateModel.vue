@@ -4,8 +4,8 @@
       :label="label"
       required
       v-model="attribute_value"
-      data-vv-name="input.attribute_value"
-      :error-messages="errors.collect('input.attribute_value')"
+      data-vv-name="required_attribute"
+      :error-messages="errors.collect('required_attribute')"
     ></v-text-field>
     <v-btn v-if="!forceEdit" :disabled="attribute_value == ''" @click="submit(false)">Vytvořit</v-btn>
     <v-btn :disabled="attribute_value == ''" @click="submit(true)">Vytvořit a editovat</v-btn>

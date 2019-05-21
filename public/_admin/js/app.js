@@ -66112,8 +66112,8 @@ var render = function() {
         attrs: {
           label: _vm.label,
           required: "",
-          "data-vv-name": "input.attribute_value",
-          "error-messages": _vm.errors.collect("input.attribute_value")
+          "data-vv-name": "required_attribute",
+          "error-messages": _vm.errors.collect("required_attribute")
         },
         model: {
           value: _vm.attribute_value,

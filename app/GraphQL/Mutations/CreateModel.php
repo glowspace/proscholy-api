@@ -42,16 +42,16 @@ class CreateModel
         $validator;
 
         if ($input["class_name"] == "Author") {
-
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors'], [], $validatorCustomAttributes);
-            $author = Author::create(['name' => $attr]);
-
-            $returnValue = [
-                "id" => $author->id,
-                "class_name" => "Author",
-                "edit_url" => route("admin.author.edit", $author)
-            ];
-
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors'], ['unique' => 'Autor se stejným jménem již existuje'], $validatorCustomAttributes);
+            if (!$validator->fails()){
+                $author = Author::create(['name' => $attr]);
+    
+                $returnValue = [
+                    "id" => $author->id,
+                    "class_name" => "Author",
+                    "edit_url" => route("admin.author.edit", $author)
+                ];
+            }
         } elseif($input["class_name"] == "External") {
             $external = External::create(['url' => $attr]);
 
@@ -62,20 +62,22 @@ class CreateModel
             ];
 
         } elseif ($input["class_name"] == "SongLyric") {
-            $song       = Song::create(['name' => $attr]);
-            $song_lyric = SongLyric::create([
-                'name' => $attr,
-                'song_id' => $song->id,
-                // 'is_published' => Auth::user()->can('publish songs'),
-                // 'user_creator_id' => Auth::user()->id
-            ]);
-
-            $returnValue = [
-                "id" => $song_lyric->id,
-                "class_name" => "SongLyric",
-                "edit_url" => route("admin.song.edit", $song_lyric)
-            ];
-
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
+            if (!$validator->fails()){
+                $song       = Song::create(['name' => $attr]);
+                $song_lyric = SongLyric::create([
+                    'name' => $attr,
+                    'song_id' => $song->id,
+                    // 'is_published' => Auth::user()->can('publish songs'),
+                    // 'user_creator_id' => Auth::user()->id
+                ]);
+    
+                $returnValue = [
+                    "id" => $song_lyric->id,
+                    "class_name" => "SongLyric",
+                    "edit_url" => route("admin.song.edit", $song_lyric)
+                ];
+            }
         } else {
             // todo throw an error
             return;
@@ -86,7 +88,7 @@ class CreateModel
             if ($validator->fails()) {
                 foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
                     foreach ($errorMessages as $errorMessage) {
-                        $validationErrorBuffer->push($errorMessage, $key);
+                        $validationErrorBuffer->push($errorMessage, "required_attribute");
                     }
                 }
             }
