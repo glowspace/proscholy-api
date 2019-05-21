@@ -85,9 +85,13 @@ class CreateModel
 
         // perform the validation with the help of Nuawe validation error buffer
         if (isset($validator)) {
-            if ($validator->fails()) {
+            // validator has already been tested for fail, so here ->failed() is needed 
+            // in order not to perform the validation again
+            if ($validator->failed()) {
                 foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
                     foreach ($errorMessages as $errorMessage) {
+                        // we use only one attribute - required_attribute, for the sake of simplicity
+                        // every failure goes to required_attribute which is used then in generic view CreateModel.vue
                         $validationErrorBuffer->push($errorMessage, "required_attribute");
                     }
                 }
