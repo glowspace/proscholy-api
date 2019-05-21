@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 // use Validator;
 use Validator;
 use Illuminate\Validation\ValidationException;
+use Nuwave\Lighthouse\Execution\ErrorBuffer;
 
 use App\Author;
 use App\SongLyric;
@@ -30,27 +31,22 @@ class CreateModel
         $input = $args["input"];
         $attr = $input["required_attribute"];
 
-        
-        // $validator = Validator::make([], []);
+        // create a Nuawe custom-made validation error buffer 
+        // this is needed for proper returning of validation errors
+        // as for usage, see Nuwave\Lighthouse\Schema\Factories\FieldFactory
+        $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
+        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context,'root' => $rootValue];
+
+        // until we check the data with Validator, store the return data here
+        $returnValue;
+        $validator;
 
         if ($input["class_name"] == "Author") {
 
-            // dynamically create the request object - needed for proper validation
-            // $request = new Request([
-            //     'name' => $input["required_attribute"]
-            // ]);
-
-            // todo: somehow add customAttributes attribute to make it GraphQL validated
-
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors']);
-            if ($validator->fails()) {
-                \Log::info(new ValidationException($validator));
-                throw new ValidationException($validator);
-            }
-
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors'], [], $validatorCustomAttributes);
             $author = Author::create(['name' => $attr]);
 
-            return [
+            $returnValue = [
                 "id" => $author->id,
                 "class_name" => "Author",
                 "edit_url" => route("admin.author.edit", $author)
@@ -59,7 +55,7 @@ class CreateModel
         } elseif($input["class_name"] == "External") {
             $external = External::create(['url' => $attr]);
 
-            return [
+            $returnValue = [
                 "id" => $external->id,
                 "class_name" => "External",
                 "edit_url" => route("admin.external.edit", $external)
@@ -74,7 +70,7 @@ class CreateModel
                 // 'user_creator_id' => Auth::user()->id
             ]);
 
-            return [
+            $returnValue = [
                 "id" => $song_lyric->id,
                 "class_name" => "SongLyric",
                 "edit_url" => route("admin.song.edit", $song_lyric)
@@ -84,5 +80,23 @@ class CreateModel
             // todo throw an error
             return;
         }
+
+        // perform the validation with the help of Nuawe validation error buffer
+        if (isset($validator)) {
+            if ($validator->fails()) {
+                foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
+                    foreach ($errorMessages as $errorMessage) {
+                        $validationErrorBuffer->push($errorMessage, $key);
+                    }
+                }
+            }
+    
+            $path = implode('.', $resolveInfo->path);
+            $validationErrorBuffer->flush(
+                "Validation failed for the field [$path]."
+            );
+        }
+
+        return $returnValue;
     }
 }
