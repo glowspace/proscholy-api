@@ -67172,6 +67172,18 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -67204,7 +67216,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
         song_lyrics: [],
         externals: [],
         files: [],
-        members: []
+        members: [],
+        memberships: []
       },
       type_values: [],
       is_deleted: false
@@ -68244,8 +68257,8 @@ if (hadRuntime) {
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":298}};
-    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n    members {\n      id\n      name\n    }\n    song_lyrics {\n        id\n        name\n      }\n      externals {\n        id\n        url\n        public_name\n      }\n      files {\n        id\n        public_name\n      }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AuthorFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Author"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyrics"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"externals"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"files"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":342}};
+    doc.loc.source = {"body":"fragment AuthorFillableFragment on Author {\n    id\n    name\n    type\n    description\n    members {\n      id\n      name\n    }\n    memberships {\n      id\n      name\n    }\n    song_lyrics {\n        id\n        name\n      }\n      externals {\n        id\n        url\n        public_name\n      }\n      files {\n        id\n        public_name\n      }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -68801,15 +68814,65 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { items: _vm.type_values, label: "Typ" },
-                        model: {
-                          value: _vm.model.type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.model, "type", $$v)
-                          },
-                          expression: "model.type"
-                        }
+                      _c(
+                        "v-tooltip",
+                        {
+                          attrs: { right: "" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                return [
+                                  _c(
+                                    "div",
+                                    _vm._g({}, on),
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.type_values,
+                                          label: "Typ",
+                                          readonly:
+                                            _vm.model.memberships.length > 0
+                                        },
+                                        model: {
+                                          value: _vm.model.type,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.model, "type", $$v)
+                                          },
+                                          expression: "model.type"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ]
+                              }
+                            }
+                          ])
+                        },
+                        [
+                          _vm._v(" "),
+                          _c("span", [
+                            _vm._v(
+                              "Uvedli jste, že autor je členem nějaké skupiny, proto nelze měnit jeho typ."
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.model.memberships.length > 0
+                        ? _c("p", [
+                            _vm._v(
+                              "Tento autor má nastaveno členství v následujících uskupeních: "
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._l(_vm.model.memberships, function(group) {
+                        return _c("p", { key: group.id }, [
+                          _c("b", [_vm._v(_vm._s(group.name))])
+                        ])
                       }),
                       _vm._v(" "),
                       _vm.model.type !== 0
@@ -68836,6 +68899,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-textarea", {
                         attrs: {
+                          "auto-grow": "",
                           name: "input-7-4",
                           label: "Popis autora",
                           "data-vv-name": "input.description",
@@ -68852,7 +68916,7 @@ var render = function() {
                         }
                       })
                     ],
-                    1
+                    2
                   )
                 ],
                 1

@@ -7,6 +7,10 @@ fragment AuthorFillableFragment on Author {
       id
       name
     }
+    memberships {
+      id
+      name
+    }
     song_lyrics {
         id
         name

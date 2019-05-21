@@ -12,7 +12,18 @@
               data-vv-name="input.name"
               :error-messages="errors.collect('input.name')"
             ></v-text-field>
-            <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <div v-on="on">
+                  <v-select :items="type_values" v-model="model.type" label="Typ" :readonly="model.memberships.length > 0"></v-select>
+                </div>
+                <!-- <span v-on="on">ahoj</span> -->
+              </template>
+              <span>Uvedli jste, že autor je členem nějaké skupiny, proto nelze měnit jeho typ.</span>
+            </v-tooltip>
+
+            <p v-if="model.memberships.length > 0">Tento autor má nastaveno členství v následujících uskupeních: </p>
+            <p v-for="group in model.memberships" :key="group.id"><b>{{ group.name }}</b></p>
             <items-combo-box
                 v-if="model.type !== 0"
                 v-bind:p-items="authors"
@@ -24,6 +35,7 @@
                 :enable-custom="true"
               ></items-combo-box>
             <v-textarea
+              auto-grow
               name="input-7-4"
               label="Popis autora"
               v-model="model.description"
@@ -132,6 +144,7 @@ export default {
         externals: [],
         files: [],
         members: [],
+        memberships: []
       },
       type_values: [],
       is_deleted: false
