@@ -34,9 +34,9 @@
         <v-flex xs12 md6></v-flex>
       </v-layout>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-      <v-btn v-if="model.song_lyric" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">
-        {{ isDirty ? 'Uložit a přejít na editaci písničky' : 'Přejít na editaci písničky'  }}
+      <v-btn v-if="model.song_lyric" :disabled="isDirty" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">Přejít na editaci písničky
       </v-btn>
+      <v-btn v-if="model.song_lyric" :disabled="isDirty" @click="showSong()">Zobrazit píseň ve zpěvníku</v-btn>
       <br><br>
       <delete-model-dialog class-name="External" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tento externí odkaz?">Vymazat</delete-model-dialog>
       <!-- model deleted dialog -->
@@ -272,16 +272,24 @@ export default {
       return obj;
     },
 
-    async goToAdminPage(url, save=true) {
+    async goToPage(url, save=true) {
       if (this.isDirty && save)
         await this.submit();
 
       setTimeout(() => {
         if (!this.isDirty && save) {
           var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/admin/' + url;
+          window.location.href = base_url + '/' + url;
         }
       }, 500);
+    },
+
+    goToAdminPage(url, save=true) {
+      this.goToPage('/admin/' + url, save);
+    },
+
+    showSong() {
+      window.location.href = this.model_database.song_lyric.public_url;
     },
   },
 };

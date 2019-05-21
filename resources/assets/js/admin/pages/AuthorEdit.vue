@@ -272,16 +272,20 @@ export default {
       return fieldNames;
     },
 
-    async goToAdminPage(url, save=true) {
+    async goToPage(url, save=true) {
       if (this.isDirty && save)
         await this.submit();
 
       setTimeout(() => {
         if (!this.isDirty && save) {
           var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/admin/' + url;
+          window.location.href = base_url + '/' + url;
         }
       }, 500);
+    },
+
+    goToAdminPage(url, save=true) {
+      this.goToPage('/admin/' + url, save);
     },
 
     show() {

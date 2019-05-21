@@ -67413,7 +67413,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
 
       return fieldNames;
     },
-    goToAdminPage: function () {
+    goToPage: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
         var _this3 = this;
 
@@ -67435,7 +67435,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
                 setTimeout(function () {
                   if (!_this3.isDirty && save) {
                     var base_url = document.querySelector('#baseUrl').getAttribute('value');
-                    window.location.href = base_url + '/admin/' + url;
+                    window.location.href = base_url + '/' + url;
                   }
                 }, 500);
 
@@ -67447,12 +67447,17 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
         }, _callee, this);
       }));
 
-      function goToAdminPage(_x2) {
+      function goToPage(_x2) {
         return _ref3.apply(this, arguments);
       }
 
-      return goToAdminPage;
+      return goToPage;
     }(),
+    goToAdminPage: function goToAdminPage(url) {
+      var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      this.goToPage('/admin/' + url, save);
+    },
     show: function show() {
       var base_url = document.querySelector("#baseUrl").getAttribute("value");
       window.location.href = base_url + "/autor/" + this.model.id;
@@ -69415,7 +69420,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
 
       return obj;
     },
-    goToAdminPage: function () {
+    goToPage: function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
         var _this3 = this;
 
@@ -69437,7 +69442,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
                 setTimeout(function () {
                   if (!_this3.isDirty && save) {
                     var base_url = document.querySelector('#baseUrl').getAttribute('value');
-                    window.location.href = base_url + '/admin/' + url;
+                    window.location.href = base_url + '/' + url;
                   }
                 }, 500);
 
@@ -69449,12 +69454,20 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
         }, _callee, this);
       }));
 
-      function goToAdminPage(_x2) {
+      function goToPage(_x2) {
         return _ref3.apply(this, arguments);
       }
 
-      return goToAdminPage;
-    }()
+      return goToPage;
+    }(),
+    goToAdminPage: function goToAdminPage(url) {
+      var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      this.goToPage('/admin/' + url, save);
+    },
+    showSong: function showSong() {
+      window.location.href = this.model_database.song_lyric.public_url;
+    }
   }
 });
 
@@ -69463,8 +69476,8 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
 /***/ (function(module, exports) {
 
 
-    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyric"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":165}};
-    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n    song_lyric {\n        id\n        name\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
+    var doc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ExternalFillableFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"External"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"authors"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"song_lyric"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public_url"},"arguments":[],"directives":[]}]}}]}}],"loc":{"start":0,"end":184}};
+    doc.loc.source = {"body":"fragment ExternalFillableFragment on External  {\n    id\n    url\n    type\n    authors {\n        id\n        name\n    }\n    song_lyric {\n        id\n        name\n        public_url\n    }\n}","name":"GraphQL request","locationOffset":{"line":1,"column":1}};
   
 
     var names = {};
@@ -69602,6 +69615,7 @@ var render = function() {
             ? _c(
                 "v-btn",
                 {
+                  attrs: { disabled: _vm.isDirty },
                   on: {
                     click: function($event) {
                       return _vm.goToAdminPage(
@@ -69610,17 +69624,22 @@ var render = function() {
                     }
                   }
                 },
-                [
-                  _vm._v(
-                    "\n      " +
-                      _vm._s(
-                        _vm.isDirty
-                          ? "Uložit a přejít na editaci písničky"
-                          : "Přejít na editaci písničky"
-                      ) +
-                      "\n    "
-                  )
-                ]
+                [_vm._v("Přejít na editaci písničky\n    ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.model.song_lyric
+            ? _c(
+                "v-btn",
+                {
+                  attrs: { disabled: _vm.isDirty },
+                  on: {
+                    click: function($event) {
+                      return _vm.showSong()
+                    }
+                  }
+                },
+                [_vm._v("Zobrazit píseň ve zpěvníku")]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -69793,6 +69812,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+//
+//
 //
 //
 //
@@ -70301,7 +70322,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
     //   });
     // },
 
-    goToAdminPage: function () {
+    goToPage: function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
         var _this3 = this;
 
@@ -70323,7 +70344,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
                 setTimeout(function () {
                   if (!_this3.isDirty && save) {
                     var base_url = document.querySelector('#baseUrl').getAttribute('value');
-                    window.location.href = base_url + '/admin/' + url;
+                    window.location.href = base_url + '/' + url;
                   }
                 }, 500);
 
@@ -70335,12 +70356,17 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
         }, _callee, this);
       }));
 
-      function goToAdminPage(_x2) {
+      function goToPage(_x2) {
         return _ref5.apply(this, arguments);
       }
 
-      return goToAdminPage;
+      return goToPage;
     }(),
+    goToAdminPage: function goToAdminPage(url) {
+      var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      this.goToPage('/admin/' + url, save);
+    },
     onTabChange: function onTabChange() {
       var _this4 = this;
 
@@ -71605,6 +71631,8 @@ var render = function() {
                             )
                           }),
                           _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
                           _c(
                             "v-btn",
                             {
@@ -71646,6 +71674,8 @@ var render = function() {
                               [_vm._v(_vm._s(file.public_name))]
                             )
                           }),
+                          _vm._v(" "),
+                          _c("br"),
                           _vm._v(" "),
                           _c(
                             "v-btn",

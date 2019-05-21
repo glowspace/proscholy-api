@@ -136,6 +136,7 @@
               <h5>Externí odkazy:</h5>
               <v-btn v-for="external in model.externals" v-bind:key="external.id" class="text-none"
               @click="goToAdminPage('external/' + external.id + '/edit')">{{ external.public_name }}</v-btn>
+              <br>
               <v-btn color="info" outline
               @click="goToAdminPage('external/new-for-song/' + model.id)">Přidat nový externí odkaz</v-btn>
             </v-flex>
@@ -143,6 +144,7 @@
               <h5>Soubory:</h5>
               <v-btn v-for="file in model.files" v-bind:key="file.id" class="text-none"
               @click="goToAdminPage('file/' + file.id + '/edit')">{{ file.public_name }}</v-btn>
+              <br>
               <v-btn color="info" outline
               @click="goToAdminPage('file/new-for-song/' + model.id)">Přidat nový soubor</v-btn>
             </v-flex>
@@ -445,16 +447,20 @@ export default {
     //   });
     // },
 
-    async goToAdminPage(url, save=true) {
+    async goToPage(url, save=true) {
       if (this.isDirty && save)
         await this.submit();
 
       setTimeout(() => {
         if (!this.isDirty && save) {
           var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/admin/' + url;
+          window.location.href = base_url + '/' + url;
         }
       }, 500);
+    },
+
+    goToAdminPage(url, save=true) {
+      this.goToPage('/admin/' + url, save);
     },
 
     onTabChange() {
