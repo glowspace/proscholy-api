@@ -12,7 +12,7 @@
               data-vv-name="input.name"
               :error-messages="errors.collect('input.name')"
             ></v-text-field>
-            <v-tooltip right>
+            <v-tooltip right :disabled="model.memberships.length == 0">
               <template v-slot:activator="{ on }">
                 <div v-on="on">
                   <v-select :items="type_values" v-model="model.type" label="Typ" :readonly="model.memberships.length > 0"></v-select>
