@@ -65839,15 +65839,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_removeDiacritics__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_CreateModel_vue__);
-var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published,\n                is_approved_by_author\n            }\n        }']),
+var _templateObject = _taggedTemplateLiteral(['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published\n            }\n        }'], ['\n        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {\n            song_lyrics(\n              has_lyrics: $has_lyrics, \n              has_authors: $has_authors, \n              has_chords: $has_chords,\n              has_tags: $has_tags\n          ) {\n                id,\n                name,\n                updated_at,\n                type,\n                is_published\n            }\n        }']),
     _templateObject2 = _taggedTemplateLiteral(['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }'], ['\n  mutation DeleteSongLyric ($id: ID!) {\n    delete_song_lyric(id: $id) {\n      id\n    }\n  }']);
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-//
-//
-//
-//
 //
 //
 //
@@ -65924,7 +65920,7 @@ var delete_item = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateO
 
   data: function data() {
     return {
-      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'type' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Schváleno autorem', value: 'is_approved_by_author' }, { text: 'Akce', value: 'action' }],
+      headers: [{ text: 'Název písničky', value: 'name' }, { text: 'Typ', value: 'type' }, { text: 'Naposledy upraveno', value: 'updated_at' }, { text: 'Publikováno', value: 'is_published' }, { text: 'Akce', value: 'action' }],
       search_string: ""
     };
   },
@@ -66288,16 +66284,6 @@ var render = function() {
                                 : _vm._e(),
                               _vm._v(" "),
                               !props.item.is_published
-                                ? _c("span", [_vm._v("Ne")])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              props.item.is_approved_by_author
-                                ? _c("span", [_vm._v("Ano")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !props.item.is_approved_by_author
                                 ? _c("span", [_vm._v("Ne")])
                                 : _vm._e()
                             ]),
@@ -67503,6 +67489,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_author_fragment_graphql__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue__);
 
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -67580,6 +67568,20 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -67595,7 +67597,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
   props: ["preset-id"],
 
   components: {
-    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a,
+    DeleteModelDialog: __WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue___default.a
   },
 
   data: function data() {
@@ -67612,7 +67615,8 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
         files: [],
         members: []
       },
-      type_values: []
+      type_values: [],
+      is_deleted: false
     };
   },
 
@@ -67822,11 +67826,12 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
       var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
         var _this3 = this;
 
+        var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!this.isDirty) {
+                if (!(this.isDirty && save)) {
                   _context.next = 3;
                   break;
                 }
@@ -67837,10 +67842,9 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
               case 3:
 
                 setTimeout(function () {
-                  // if there has been an error then this does not continue
-                  if (!_this3.isDirty) {
-                    var base_url = document.querySelector("#baseUrl").getAttribute("value");
-                    window.location.href = base_url + "/admin/" + url;
+                  if (!_this3.isDirty && save) {
+                    var base_url = document.querySelector('#baseUrl').getAttribute('value');
+                    window.location.href = base_url + '/admin/' + url;
                   }
                 }, 500);
 
@@ -67852,7 +67856,7 @@ var FETCH_AUTHORS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_templat
         }, _callee, this);
       }));
 
-      function goToAdminPage(_x) {
+      function goToAdminPage(_x2) {
         return _ref3.apply(this, arguments);
       }
 
@@ -69079,25 +69083,7 @@ var render = function() {
                           },
                           expression: "model.description"
                         }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("Uložit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: _vm.isDirty },
-                          on: { click: _vm.show }
-                        },
-                        [_vm._v("Zobrazit ve zpěvníku")]
-                      )
+                      })
                     ],
                     1
                   )
@@ -69173,6 +69159,91 @@ var render = function() {
                   })
                 ],
                 2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.submit } },
+            [_vm._v("Uložit")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: _vm.isDirty }, on: { click: _vm.show } },
+            [_vm._v("Zobrazit ve zpěvníku")]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "delete-model-dialog",
+            {
+              attrs: {
+                "class-name": "Author",
+                "model-id": _vm.model.id,
+                "delete-msg": "Opravdu chcete vymazat tohoto autora?"
+              },
+              on: {
+                deleted: function($event) {
+                  _vm.is_deleted = true
+                }
+              }
+            },
+            [_vm._v("Vymazat")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "290" },
+              model: {
+                value: _vm.is_deleted,
+                callback: function($$v) {
+                  _vm.is_deleted = $$v
+                },
+                expression: "is_deleted"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", { staticClass: "headline" }, [
+                    _vm._v("Autor byl vymazán")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-card-text", [
+                    _vm._v(
+                      "Autor byl vymazán z databáze, jeho nahrávky, ext. odkazy, písně apod. zůstavají uložené, ale vymazali jsme propojení s tímto autorem."
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "green darken-1", flat: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.goToAdminPage("author")
+                            }
+                          }
+                        },
+                        [_vm._v("Přejít na seznam autorů")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
@@ -69255,6 +69326,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__graphql_client_external_fragment_graphql__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue__);
 
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -69311,6 +69384,20 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -69327,7 +69414,8 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["preset-id"],
   components: {
-    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a
+    ItemsComboBox: __WEBPACK_IMPORTED_MODULE_3__components_ItemsComboBox_vue___default.a,
+    DeleteModelDialog: __WEBPACK_IMPORTED_MODULE_4__components_DeleteModelDialog_vue___default.a
   },
 
   data: function data() {
@@ -69341,7 +69429,8 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
         authors: [],
         song_lyric: undefined
       },
-      type_values: []
+      type_values: [],
+      is_deleted: false
     };
   },
 
@@ -69568,11 +69657,12 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
       var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
         var _this3 = this;
 
+        var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!this.isDirty) {
+                if (!(this.isDirty && save)) {
                   _context.next = 3;
                   break;
                 }
@@ -69583,8 +69673,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
               case 3:
 
                 setTimeout(function () {
-                  // if there has been an error then this does not continue
-                  if (!_this3.isDirty) {
+                  if (!_this3.isDirty && save) {
                     var base_url = document.querySelector('#baseUrl').getAttribute('value');
                     window.location.href = base_url + '/admin/' + url;
                   }
@@ -69598,7 +69687,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
         }, _callee, this);
       }));
 
-      function goToAdminPage(_x) {
+      function goToAdminPage(_x2) {
         return _ref3.apply(this, arguments);
       }
 
@@ -69728,42 +69817,7 @@ var render = function() {
                           },
                           expression: "model.song_lyric"
                         }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { disabled: !_vm.isDirty },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("Uložit")]
-                      ),
-                      _vm._v(" "),
-                      _vm.model.song_lyric
-                        ? _c(
-                            "v-btn",
-                            {
-                              on: {
-                                click: function($event) {
-                                  return _vm.goToAdminPage(
-                                    "song/" + _vm.model.song_lyric.id + "/edit"
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(
-                                    _vm.isDirty
-                                      ? "Uložit a přejít na editaci písničky"
-                                      : "Přejít na editaci písničky"
-                                  ) +
-                                  "\n          "
-                              )
-                            ]
-                          )
-                        : _vm._e()
+                      })
                     ],
                     1
                   )
@@ -69772,6 +69826,109 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("v-flex", { attrs: { xs12: "", md6: "" } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { disabled: !_vm.isDirty }, on: { click: _vm.submit } },
+            [_vm._v("Uložit")]
+          ),
+          _vm._v(" "),
+          _vm.model.song_lyric
+            ? _c(
+                "v-btn",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.goToAdminPage(
+                        "song/" + _vm.model.song_lyric.id + "/edit"
+                      )
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n      " +
+                      _vm._s(
+                        _vm.isDirty
+                          ? "Uložit a přejít na editaci písničky"
+                          : "Přejít na editaci písničky"
+                      ) +
+                      "\n    "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "delete-model-dialog",
+            {
+              attrs: {
+                "class-name": "External",
+                "model-id": _vm.model.id,
+                "delete-msg": "Opravdu chcete vymazat tento externí odkaz?"
+              },
+              on: {
+                deleted: function($event) {
+                  _vm.is_deleted = true
+                }
+              }
+            },
+            [_vm._v("Vymazat")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "320" },
+              model: {
+                value: _vm.is_deleted,
+                callback: function($$v) {
+                  _vm.is_deleted = $$v
+                },
+                expression: "is_deleted"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", { staticClass: "headline" }, [
+                    _vm._v("Externí odkaz byl vymazán")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-card-text", [
+                    _vm._v("Externí odkaz byl vymazán z databáze.")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "green darken-1", flat: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.goToAdminPage("external")
+                            }
+                          }
+                        },
+                        [_vm._v("Přejít na seznam externích odkazů")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -70035,6 +70192,18 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70082,7 +70251,8 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
         song: undefined
       },
       lang_values: [],
-      selected_thumbnail_url: undefined
+      selected_thumbnail_url: undefined,
+      is_deleted: false
     };
   },
 
@@ -70373,11 +70543,12 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
       var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
         var _this3 = this;
 
+        var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!this.isDirty) {
+                if (!(this.isDirty && save)) {
                   _context.next = 3;
                   break;
                 }
@@ -70388,7 +70559,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
               case 3:
 
                 setTimeout(function () {
-                  if (!_this3.isDirty) {
+                  if (!_this3.isDirty && save) {
                     var base_url = document.querySelector('#baseUrl').getAttribute('value');
                     window.location.href = base_url + '/admin/' + url;
                   }
@@ -70402,7 +70573,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
         }, _callee, this);
       }));
 
-      function goToAdminPage(_x) {
+      function goToAdminPage(_x2) {
         return _ref5.apply(this, arguments);
       }
 
@@ -71348,7 +71519,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var DELETE_MODEL_DATABASE = __WEBPACK_IMPORTED_MODULE_0_graphql_tag___default()(_templateObject);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["class-name", "model-id"],
+  props: ["class-name", "model-id", "delete-msg"],
 
   data: function data() {
     return {
@@ -71439,10 +71610,10 @@ var render = function() {
         "v-card",
         [
           _c("v-card-title", { staticClass: "headline" }, [
-            _vm._v("Vymazat ...")
+            _vm._v("Vymazat položku")
           ]),
           _vm._v(" "),
-          _c("v-card-text", [_vm._v("Opravdu chcete vymazat ... ?")]),
+          _c("v-card-text", [_vm._v(_vm._s(_vm.deleteMsg))]),
           _vm._v(" "),
           _c(
             "v-card-actions",
@@ -71978,11 +72149,84 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("br"),
+          _c("br"),
           _vm._v(" "),
           _c(
             "delete-model-dialog",
-            { attrs: { "class-name": "SongLyric", "model-id": _vm.model.id } },
+            {
+              attrs: {
+                "class-name": "SongLyric",
+                "model-id": _vm.model.id,
+                "delete-msg": "Opravdu chcete vymazat tuto píseň?"
+              },
+              on: {
+                deleted: function($event) {
+                  _vm.is_deleted = true
+                }
+              }
+            },
             [_vm._v("Vymazat")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "290" },
+              model: {
+                value: _vm.is_deleted,
+                callback: function($$v) {
+                  _vm.is_deleted = $$v
+                },
+                expression: "is_deleted"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", { staticClass: "headline" }, [
+                    _vm._v("Píseň byla vymazána")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-card-text", [
+                    _vm._v(
+                      "Pokud se to náhodou stalo omylem, tak není třeba zoufat, píseň máme pouze v koši, takže je možné ji obnovit."
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      "\n        Stačí se obrátit na administrátory s identifikací písně ID " +
+                        _vm._s(_vm.model.id) +
+                        " popř. názvem (" +
+                        _vm._s(_vm.model.name) +
+                        ")"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "green darken-1", flat: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.goToAdminPage("songs")
+                            }
+                          }
+                        },
+                        [_vm._v("Přejít na seznam písní")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
           )
         ],
         1

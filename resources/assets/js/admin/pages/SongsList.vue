@@ -38,10 +38,6 @@
                 <span v-if="!props.item.is_published">Ne</span>
               </td>
               <td>
-                <span v-if="props.item.is_approved_by_author">Ano</span>
-                <span v-if="!props.item.is_approved_by_author">Ne</span>
-              </td>
-              <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
               </td>
             </template>
@@ -77,8 +73,7 @@ const fetch_items = gql`
                 name,
                 updated_at,
                 type,
-                is_published,
-                is_approved_by_author
+                is_published
             }
         }`;
 
@@ -103,7 +98,6 @@ export default {
         { text: 'Typ', value: 'type' },
         { text: 'Naposledy upraveno', value: 'updated_at' },
         { text: 'Publikováno', value: 'is_published' },
-        { text: 'Schváleno autorem', value: 'is_approved_by_author' },
         { text: 'Akce', value: 'action' },
       ],
       search_string: ""

@@ -4,8 +4,8 @@
       <v-btn color="error" dark v-on="on"><slot></slot></v-btn>
     </template>
     <v-card>
-      <v-card-title class="headline">Vymazat ...</v-card-title>
-      <v-card-text>Opravdu chcete vymazat ... ?</v-card-text>
+      <v-card-title class="headline">Vymazat položku</v-card-title>
+      <v-card-text>{{ deleteMsg }}</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn outline @click="onCancel" class="text-none">Zrušit</v-btn>
@@ -27,7 +27,7 @@ const DELETE_MODEL_DATABASE = gql`
 `;
 
 export default {
-  props: ["class-name", "model-id"],
+  props: ["class-name", "model-id", "delete-msg"],
 
   data() {
     return {

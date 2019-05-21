@@ -50,6 +50,7 @@ type SongLyric {
     song: Song! @belongsTo
     has_chords: Boolean!
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
+    trashed: Boolean @method(name: "trashed")
 }
 
 type External {

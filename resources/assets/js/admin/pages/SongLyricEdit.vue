@@ -153,8 +153,20 @@
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
       <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
-      <br>
-      <delete-model-dialog class-name="SongLyric" :model-id="model.id">Vymazat</delete-model-dialog>
+      <br><br>
+      <delete-model-dialog class-name="SongLyric" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tuto píseň?">Vymazat</delete-model-dialog>
+      <!-- model deleted dialog -->
+      <v-dialog v-model="is_deleted" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">Píseň byla vymazána</v-card-title>
+          <v-card-text>Pokud se to náhodou stalo omylem, tak není třeba zoufat, píseň máme pouze v koši, takže je možné ji obnovit.<br>
+          Stačí se obrátit na administrátory s identifikací písně ID {{ model.id }} popř. názvem ({{model.name}})</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click="goToAdminPage('songs')">Přejít na seznam písní</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </v-app>
 </template>
@@ -249,7 +261,8 @@ export default {
         song: undefined
       },
       lang_values: [],
-      selected_thumbnail_url: undefined
+      selected_thumbnail_url: undefined,
+      is_deleted: false
     };
   },
 
@@ -432,12 +445,12 @@ export default {
     //   });
     // },
 
-    async goToAdminPage(url) {
-      if (this.isDirty)
+    async goToAdminPage(url, save=true) {
+      if (this.isDirty && save)
         await this.submit();
 
       setTimeout(() => {
-        if (!this.isDirty) {
+        if (!this.isDirty && save) {
           var base_url = document.querySelector('#baseUrl').getAttribute('value');
           window.location.href = base_url + '/admin/' + url;
         }

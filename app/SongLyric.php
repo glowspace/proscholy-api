@@ -11,6 +11,7 @@ use App\Traits\Lockable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\SongLyric
@@ -52,7 +53,7 @@ class SongLyric extends Model
 {
     // Laravel Scout Trait used for full-text searching
     // Lockable Trait for enabling to "lock" the model while editing
-    use Searchable, Lockable;
+    use Searchable, Lockable, SoftDeletes;
 
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,

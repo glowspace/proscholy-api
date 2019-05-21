@@ -29,14 +29,27 @@
               header-label="Vyberte píseň"
               :multiple="false"
               :enable-custom="false"></items-combo-box>
-            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn v-if="model.song_lyric" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">
-              {{ isDirty ? 'Uložit a přejít na editaci písničky' : 'Přejít na editaci písničky'  }}
-            </v-btn>
           </v-form>
         </v-flex>
         <v-flex xs12 md6></v-flex>
       </v-layout>
+      <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+      <v-btn v-if="model.song_lyric" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">
+        {{ isDirty ? 'Uložit a přejít na editaci písničky' : 'Přejít na editaci písničky'  }}
+      </v-btn>
+      <br><br>
+      <delete-model-dialog class-name="External" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tento externí odkaz?">Vymazat</delete-model-dialog>
+      <!-- model deleted dialog -->
+      <v-dialog v-model="is_deleted" persistent max-width="320">
+        <v-card>
+          <v-card-title class="headline">Externí odkaz byl vymazán</v-card-title>
+          <v-card-text>Externí odkaz byl vymazán z databáze.</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click="goToAdminPage('external')">Přejít na seznam externích odkazů</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </v-app>
 </template>
@@ -44,7 +57,8 @@
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/external_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue"
+import ItemsComboBox from "../components/ItemsComboBox.vue";
+import DeleteModelDialog from "../components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -86,7 +100,8 @@ const FETCH_SONG_LYRICS= gql`
 export default {
   props: ["preset-id"],
   components: {
-    ItemsComboBox
+    ItemsComboBox,
+    DeleteModelDialog
   },
 
   data() {
@@ -101,6 +116,7 @@ export default {
         song_lyric: undefined
       },
       type_values: [],
+      is_deleted: false
     };
   },
 
@@ -256,16 +272,15 @@ export default {
       return obj;
     },
 
-    async goToAdminPage(url) {
-      if (this.isDirty)
-          await this.submit();
+    async goToAdminPage(url, save=true) {
+      if (this.isDirty && save)
+        await this.submit();
 
       setTimeout(() => {
-        // if there has been an error then this does not continue
-        if (!this.isDirty) {
-            var base_url = document.querySelector('#baseUrl').getAttribute('value');
-            window.location.href = base_url + '/admin/' + url;
-          }
+        if (!this.isDirty && save) {
+          var base_url = document.querySelector('#baseUrl').getAttribute('value');
+          window.location.href = base_url + '/admin/' + url;
+        }
       }, 500);
     },
   },

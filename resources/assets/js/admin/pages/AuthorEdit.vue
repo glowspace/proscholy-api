@@ -30,8 +30,6 @@
               data-vv-name="input.description"
               :error-messages="errors.collect('input.description')"
             ></v-textarea>
-            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
           </v-form>
         </v-flex>
         <v-flex xs12 md6 class="edit-description">
@@ -59,6 +57,21 @@
           >{{ file.public_name }}</v-btn>
         </v-flex>
       </v-layout>
+      <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+      <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+      <br><br>
+      <delete-model-dialog class-name="Author" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tohoto autora?">Vymazat</delete-model-dialog>
+      <!-- model deleted dialog -->
+      <v-dialog v-model="is_deleted" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">Autor byl vymazán</v-card-title>
+          <v-card-text>Autor byl vymazán z databáze, jeho nahrávky, ext. odkazy, písně apod. zůstavají uložené, ale vymazali jsme propojení s tímto autorem.</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click="goToAdminPage('author')">Přejít na seznam autorů</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </v-app>
 </template>
@@ -67,6 +80,7 @@
 import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/author_fragment.graphql";
 import ItemsComboBox from "../components/ItemsComboBox.vue";
+import DeleteModelDialog from "../components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -101,7 +115,8 @@ export default {
   props: ["preset-id"],
 
   components: {
-    ItemsComboBox
+    ItemsComboBox,
+    DeleteModelDialog
   },
 
   data() {
@@ -118,7 +133,8 @@ export default {
         files: [],
         members: [],
       },
-      type_values: []
+      type_values: [],
+      is_deleted: false
     };
   },
 
@@ -256,16 +272,14 @@ export default {
       return fieldNames;
     },
 
-    async goToAdminPage(url) {
-      if (this.isDirty) await this.submit();
+    async goToAdminPage(url, save=true) {
+      if (this.isDirty && save)
+        await this.submit();
 
       setTimeout(() => {
-        // if there has been an error then this does not continue
-        if (!this.isDirty) {
-          var base_url = document
-            .querySelector("#baseUrl")
-            .getAttribute("value");
-          window.location.href = base_url + "/admin/" + url;
+        if (!this.isDirty && save) {
+          var base_url = document.querySelector('#baseUrl').getAttribute('value');
+          window.location.href = base_url + '/admin/' + url;
         }
       }, 500);
     },
