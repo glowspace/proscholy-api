@@ -79,8 +79,6 @@ const apolloProvider = new VueApollo({
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
-import 'vuetify/dist/vuetify.min.css'
-
 
 import Notifications from 'vue-notification'
 Vue.use(Notifications)

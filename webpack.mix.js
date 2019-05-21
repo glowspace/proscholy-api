@@ -14,10 +14,10 @@ let mix = require('laravel-mix');
 mix.webpackConfig({
     module: {
         rules: [
-            {
-                test: /\.styl$/,
-                loader: ['style-loader', 'css-loader', 'stylus-loader']
-            },
+            // {
+            //     test: /\.styl$/,
+            //     loader: ['style-loader', 'css-loader', 'stylus-loader']
+            // },
             {
                 test: /\.(graphql|gql)$/,
                 loader: 'graphql-tag/loader'
@@ -29,13 +29,13 @@ mix.webpackConfig({
             '@': __dirname
         },
     }
-})
+});
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
+    .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
     .browserSync('localhost:8000');
-;
 
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/_admin/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js');
