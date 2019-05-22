@@ -69,19 +69,20 @@
             </v-flex>
             <v-flex xs12 md5 offset-md1 class="edit-description">
               <h5>Název (povinná položka)</h5>
-              <p>Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje
-                  více písní se stejným názvem.<br>
-                  Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
+              <p>
+                Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje
+                více písní se stejným názvem.
+                <br>Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
               </p>
 
               <h5>Autoři</h5>
-              <p>Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                  tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
-                  <!-- @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
+              <p>
+                Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
+                tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
+                <!-- @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
                   a autor (autoři) se po uložení písně automaticky vytvoří.
-                  @else Je potřeba požádat administrátory o vytvoření nového autora @endcan -->
-                  <br>
-                  V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
+                @else Je potřeba požádat administrátory o vytvoření nového autora @endcan-->
+                <br>V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
               </p>
             </v-flex>
           </v-layout>
@@ -104,14 +105,19 @@
                 ref="textarea"
                 v-model="model.lyrics"
               ></v-textarea>
-              <p>Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
-                    <br>Akordy pište českými značkami: H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b>
-                    <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
-                    <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
-                    <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
-                    <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
-                    <br>Coda velkým C, dvojtečkou a mezerou: C: Text cody
-                </p>
+              <p>
+                Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např.
+                <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
+                <br>Akordy pište českými značkami: H dur:
+                <b>[H]</b>, B dur:
+                <b>[B]</b>, B moll:
+                <b>[Bm]</b>
+                <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
+                <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
+                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
+                <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
+                <br>Coda velkým C, dvojtečkou a mezerou: C: Text cody
+              </p>
             </v-flex>
             <v-flex xs12 md6>
               <!-- externals and files view -->
@@ -119,13 +125,14 @@
               <template v-if="thumbnailables">
                 <v-select
                   :items="thumbnailables"
-                  item-value="thumbnail_url"
+                  item-value="url"
                   item-text="public_name"
                   label="Náhled not (volba souboru/externího odkazu)"
                   v-model="selected_thumbnail_url"
                 ></v-select>
 
-                <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img>
+                <!-- <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img> -->
+                <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe>
               </template>
             </v-flex>
           </v-layout>
@@ -134,19 +141,33 @@
           <v-layout row mb-4>
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
-              <v-btn v-for="external in model.externals" v-bind:key="external.id" class="text-none"
-              @click="goToAdminPage('external/' + external.id + '/edit')">{{ external.public_name }}</v-btn>
+              <v-btn
+                v-for="external in model.externals"
+                v-bind:key="external.id"
+                class="text-none"
+                @click="goToAdminPage('external/' + external.id + '/edit')"
+              >{{ external.public_name }}</v-btn>
               <br>
-              <v-btn color="info" outline
-              @click="goToAdminPage('external/new-for-song/' + model.id)">Přidat nový externí odkaz</v-btn>
+              <v-btn
+                color="info"
+                outline
+                @click="goToAdminPage('external/new-for-song/' + model.id)"
+              >Přidat nový externí odkaz</v-btn>
             </v-flex>
             <v-flex xs12 md6>
               <h5>Soubory:</h5>
-              <v-btn v-for="file in model.files" v-bind:key="file.id" class="text-none"
-              @click="goToAdminPage('file/' + file.id + '/edit')">{{ file.public_name }}</v-btn>
+              <v-btn
+                v-for="file in model.files"
+                v-bind:key="file.id"
+                class="text-none"
+                @click="goToAdminPage('file/' + file.id + '/edit')"
+              >{{ file.public_name }}</v-btn>
               <br>
-              <v-btn color="info" outline
-              @click="goToAdminPage('file/new-for-song/' + model.id)">Přidat nový soubor</v-btn>
+              <v-btn
+                color="info"
+                outline
+                @click="goToAdminPage('file/new-for-song/' + model.id)"
+              >Přidat nový soubor</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -155,17 +176,30 @@
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
       <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
-      <br><br>
-      <delete-model-dialog class-name="SongLyric" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tuto píseň?">Vymazat</delete-model-dialog>
+      <br>
+      <br>
+      <delete-model-dialog
+        class-name="SongLyric"
+        :model-id="model.id"
+        @deleted="is_deleted = true"
+        delete-msg="Opravdu chcete vymazat tuto píseň?"
+      >Vymazat</delete-model-dialog>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
         <v-card>
           <v-card-title class="headline">Píseň byla vymazána</v-card-title>
-          <v-card-text>Pokud se to náhodou stalo omylem, tak není třeba zoufat, píseň máme pouze v koši, takže je možné ji obnovit.<br>
-          Stačí se obrátit na administrátory s identifikací písně ID {{ model.id }} popř. názvem ({{model.name}})</v-card-text>
+          <v-card-text>
+            Pokud se to náhodou stalo omylem, tak není třeba zoufat, píseň máme pouze v koši, takže je možné ji obnovit.
+            <br>
+            Stačí se obrátit na administrátory s identifikací písně ID {{ model.id }} popř. názvem ({{model.name}})
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click="goToAdminPage('songs')">Přejít na seznam písní</v-btn>
+            <v-btn
+              color="green darken-1"
+              flat
+              @click="goToAdminPage('songs')"
+            >Přejít na seznam písní</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -293,7 +327,7 @@ export default {
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
-          this.selected_thumbnail_url = this.thumbnailables[0].thumbnail_url;
+          this.selected_thumbnail_url = this.thumbnailables[0].url;
         }
       }
     },
@@ -340,10 +374,13 @@ export default {
     thumbnailables() {
       // mix the externals and files that can have thumbnail
       return this.model.externals
-        .concat(this.model.files)
-        .filter(thumbnailable => {
-          return thumbnailable.thumbnail_url ? true : false;
-        });
+        .filter(ext => {
+          return [0, 4, 8, 9].includes(ext.type);
+        })
+        .concat(this.model.files
+        .filter(file => {
+          return [1, 2, 3].includes(file.type);
+        }));
     }
   },
 
@@ -412,10 +449,11 @@ export default {
           }
 
           this.$notify({
-              title: "Chyba při ukládání",
-              text: "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
-              type: "error"
-            });
+            title: "Chyba při ukládání",
+            text:
+              "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
+            type: "error"
+          });
         });
     },
 
@@ -430,9 +468,7 @@ export default {
       window.location.href = this.model_database.public_url;
     },
 
-    askDelete() {
-
-    },
+    askDelete() {},
 
     // destroy() {
     //   this.$apollo.mutate({
@@ -447,20 +483,21 @@ export default {
     //   });
     // },
 
-    async goToPage(url, save=true) {
-      if (this.isDirty && save)
-        await this.submit();
+    async goToPage(url, save = true) {
+      if (this.isDirty && save) await this.submit();
 
       setTimeout(() => {
         if (!this.isDirty && save) {
-          var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/' + url;
+          var base_url = document
+            .querySelector("#baseUrl")
+            .getAttribute("value");
+          window.location.href = base_url + "/" + url;
         }
       }, 500);
     },
 
-    goToAdminPage(url, save=true) {
-      this.goToPage('/admin/' + url, save);
+    goToAdminPage(url, save = true) {
+      this.goToPage("/admin/" + url, save);
     },
 
     onTabChange() {

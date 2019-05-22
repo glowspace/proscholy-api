@@ -62,12 +62,13 @@ type External {
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     url: String
-    thumbnail_url: String
+    media_id: String
 }
 
 type File {
     id: ID!
     public_name: String
+    url: String
     download_url: String
     type: Int
     type_string: String

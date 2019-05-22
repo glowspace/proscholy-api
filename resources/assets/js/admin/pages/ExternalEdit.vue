@@ -31,7 +31,14 @@
               :enable-custom="false"></items-combo-box>
           </v-form>
         </v-flex>
-        <v-flex xs12 md6></v-flex>
+        <v-flex xs12 md6>
+          <external-view v-if="model_database"
+            :url="model_database.url" 
+            :type="model_database.type" 
+            :thumbnail-url="model_database.thumbnail_url" 
+            :media-id="model_database.media_id">
+          </external-view>
+        </v-flex>
       </v-layout>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
       <v-btn v-if="model.song_lyric" :disabled="isDirty" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">Přejít na editaci písničky
@@ -47,6 +54,8 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="green darken-1" flat @click="goToAdminPage('external')">Přejít na seznam externích odkazů</v-btn>
+            <br>
+            <v-btn color="green darken-1" flat @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">Přejít na editaci písně</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -59,6 +68,7 @@ import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "@/graphql/client/external_fragment.graphql";
 import ItemsComboBox from "../components/ItemsComboBox.vue";
 import DeleteModelDialog from "../components/DeleteModelDialog.vue";
+import ExternalView from "../../components/ExternalView.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -101,7 +111,8 @@ export default {
   props: ["preset-id"],
   components: {
     ItemsComboBox,
-    DeleteModelDialog
+    DeleteModelDialog,
+    ExternalView
   },
 
   data() {

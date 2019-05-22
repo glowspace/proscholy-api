@@ -55,6 +55,7 @@ Auth::routes(['register' => false]);
 
 // Downloading
 Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
+Route::get('/preview/{file}/{filename?}', 'DownloadController@previewFile')->name('preview.file');
 // Thumbnails for pdf files
 Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExternal')->name('external.thumbnail');
 Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');

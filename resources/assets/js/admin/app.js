@@ -29,6 +29,9 @@ Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
 Vue.component('external-edit', require('./pages/ExternalEdit.vue'));
 Vue.component('song-lyric-edit', require('./pages/SongLyricEdit.vue'));
 
+Vue.component('external-view', require('../components/ExternalView.vue'));
+
+
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'

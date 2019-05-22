@@ -30,13 +30,11 @@ fragment SongLyricFillableFragment on SongLyric  {
         public_name
         url
         type
-        thumbnail_url
     }
     files {
         id
         public_name
-        download_url
+        url
         type
-        thumbnail_url
     }
 }

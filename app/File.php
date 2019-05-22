@@ -71,6 +71,14 @@ class File extends Model
         ]);
     }
 
+    public function getUrlAttribute()
+    {
+        return route('preview.file', [
+            'file' => $this->id,
+            'filename' => $this->filename
+        ]);
+    }
+
     public function getThumbnailUrlAttribute()
     {
         if (!$this->canHaveThumbnail())
@@ -146,6 +154,11 @@ class File extends Model
         }
     }
 
+    public function scopeScores($query) 
+    {
+        return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
+    }
+
     public function scopeAudio($query)
     {
         return $query->where('type', 4);
@@ -172,6 +185,27 @@ class File extends Model
         return $this->belongsTo(SongLyric::class);
     }
 
+    public function asExternal()
+    {
+        // convert type from file-type to external-type
+        $converter = [
+            0 => 0,
+            1 => 8,
+            2 => 9,
+            3 => 4,
+            4 => 7
+        ];
+
+        $obj = new \stdClass();
+        $obj->url = $this->url;
+        $obj->type = $converter[$this->type];
+        $obj->song_lyric = $this->song_lyric;
+        $obj->authors = $this->authors;
+
+        return $obj;
+    }
+
+    // just for fun
     public function getPdfText()
     {
         if (pathinfo($this->path, PATHINFO_EXTENSION) !== "pdf")

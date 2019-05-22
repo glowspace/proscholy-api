@@ -239,12 +239,12 @@ class SongLyric extends Model
 
     public function scoreExternals()
     {
-        return $this->externals()->where('type', 4)->orderBy('is_featured', 'desc');
+        return $this->externals()->scores()->orderBy('is_featured', 'desc')->orderBy('type', 'asc');
     }
     
     public function scoreFiles()
     {
-        return $this->files()->where('type', 3);
+        return $this->files()->scores()->orderBy('type', 'desc');
     }
 
     public function scoresCount()

@@ -47,7 +47,10 @@ class External extends Model
             3 => 'youtube',
             4 => 'noty',
             5 => 'webová stránka autora',
-            6 => 'youtube kanál'
+            6 => 'youtube kanál',
+            7 => 'audio soubor',
+            8 => 'text s akordy (pdf)',
+            9 => 'text (pdf)'
         ];
 
     protected $dispatchesEvents = [
@@ -66,7 +69,7 @@ class External extends Model
 
     public function scopeScores($query)
     {
-        return $query->where('type', 4);
+        return $query->where('type', 4)->orWhere('type', 8)->orWhere('type', 9);
     }
 
     public function scopeAudio($query)
@@ -150,57 +153,57 @@ class External extends Model
         return 0;
     }
 
-    protected static function getThubmnailsFolder()
-    {
-        $relative = '/public_files/thumbnails_externals';
+    // protected static function getThubmnailsFolder()
+    // {
+    //     $relative = '/public_files/thumbnails_externals';
 
-        // first create if doesn't exist
-        if (!file_exists(Storage::path($relative)))
-            mkdir(Storage::path($relative));
+    //     // first create if doesn't exist
+    //     if (!file_exists(Storage::path($relative)))
+    //         mkdir(Storage::path($relative));
 
-        return $relative;
-    }
+    //     return $relative;
+    // }
 
-    public function canHaveThumbnail()
-    {
-        return pathinfo($this->url, PATHINFO_EXTENSION) == "pdf";
-    }
+    // public function canHaveThumbnail()
+    // {
+    //     return pathinfo($this->url, PATHINFO_EXTENSION) == "pdf";
+    // }
 
-    public function getThumbnailPath()
-    {
-        if (!$this->canHaveThumbnail())
-            return;
+    // public function getThumbnailPath()
+    // {
+    //     if (!$this->canHaveThumbnail())
+    //         return;
 
-        // generate unique filename from the url
-        $hash_name = md5($this->url);
+    //     // generate unique filename from the url
+    //     $hash_name = md5($this->url);
 
-        // get the path of a thumbnail file
-        $relative = self::getThubmnailsFolder()."/$hash_name.jpg";
+    //     // get the path of a thumbnail file
+    //     $relative = self::getThubmnailsFolder()."/$hash_name.jpg";
 
-        // if already exists, do not create new one
-        if (file_exists(Storage::path($relative))) {
-            return $relative;
-        }
+    //     // if already exists, do not create new one
+    //     if (file_exists(Storage::path($relative))) {
+    //         return $relative;
+    //     }
         
-        // create a new thumbnail file
-        $pdf = new Pdf($this->url);
-        $pdf->setCompressionQuality(20)
-            ->saveImage(Storage::path($relative));
+    //     // create a new thumbnail file
+    //     $pdf = new Pdf($this->url);
+    //     $pdf->setCompressionQuality(20)
+    //         ->saveImage(Storage::path($relative));
 
-        \Log::info("thumbnail $relative created");
+    //     \Log::info("thumbnail $relative created");
 
-        return $relative;
-    }
+    //     return $relative;
+    // }
 
-    public function getThumbnailUrlAttribute()
-    {
-        if (!$this->canHaveThumbnail())
-            return;
+    // public function getThumbnailUrlAttribute()
+    // {
+    //     if (!$this->canHaveThumbnail())
+    //         return;
 
-        return route('external.thumbnail', [
-            'external' => $this->id,
-        ]);
-    }
+    //     return route('external.thumbnail', [
+    //         'external' => $this->id,
+    //     ]);
+    // }
 
     public function authors() : BelongsToMany
     {
