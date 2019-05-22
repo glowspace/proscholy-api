@@ -43,6 +43,7 @@ type Query {
 
     author(id: ID! @eq): Author @find
     external(id: ID! @eq): External @find
+    file(id: ID! @eq): File @find
     song_lyric(id: ID! @eq): SongLyric @find
 }
 
@@ -55,6 +56,7 @@ type Mutation @group(middleware: ["auth:api"]) {
 
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
     update_external(input: UpdateExternalInput!): External @update(flatten: true)
+    update_file(input: UpdateFileInput!): File @update(flatten: true)
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric
     
     create_model(input: CreateModelInput!): Model

@@ -72,9 +72,13 @@ type File {
     download_url: String
     type: Int
     type_string: String
+    type_string_values: [String]
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     thumbnail_url: String
+    description: String
+    name: String
+    filename: String
 }
 
 type Tag {

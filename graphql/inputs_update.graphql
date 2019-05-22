@@ -17,6 +17,17 @@ input UpdateExternalInput {
     song_lyric: SyncSongLyricRelation
 }
 
+input UpdateFileInput {
+    id: ID!
+    filename: String @rules(apply: ["required"], messages: { 
+            required: "Jméno souboru nesmí zůstat prázdné"})
+    name: String
+    description: String
+    type: Int!
+    authors: SyncAuthorsRelation
+    song_lyric: SyncSongLyricRelation
+}
+
 input SyncAuthorsRelation {
   create: [CreateAuthorInput!]
   sync: [ID!]

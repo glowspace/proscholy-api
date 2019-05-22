@@ -34,6 +34,10 @@ class DeleteModel
             $succ = External::destroy($id);
         } elseif ($input["class_name"] == "SongLyric") {
             $succ = SongLyric::destroy($id);
+        } elseif($input["class_name"] == "File") {
+            $succ = File::destroy($id);
+        } elseif($input["class_name"] == "Tag") {
+            $succ = Tag::destroy($id);
         } else {
             // todo throw an error
             return;

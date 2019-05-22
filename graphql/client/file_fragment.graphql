@@ -1,0 +1,16 @@
+fragment FileFillableFragment on File  {
+    id
+    url
+    type
+    filename
+    name
+    authors {
+        id
+        name
+    }
+    song_lyric {
+        id
+        name
+        public_url
+    }
+}

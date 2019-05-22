@@ -79,7 +79,7 @@ class CreateModel
                 ];
             }
         } else {
-            // todo throw an error
+            // todo throw an error?
             return;
         }
 

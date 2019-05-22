@@ -3,7 +3,9 @@
 @section('content')
     <div class="content-padding">
         <h2>Úprava nahraného souboru</h2>
-        <div class="row">
+        <file-edit preset-id="{{ $file->id }}"></file-edit>
+        
+        {{-- <div class="row">
             <div class="col-sm-6">
                 <form action="{{route('admin.file.update', ['file' => $file->id])}}" method="post">
                     @csrf
@@ -91,7 +93,7 @@
             </div>
             <div class="col-sm-6">
                 @component('client.components.thumbnail_preview', ['instance' => $file])@endcomponent
-            </div>
-        </div>
+            </div> --}}
+        {{-- </div> --}}
     </div>
 @endsection

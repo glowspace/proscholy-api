@@ -28,6 +28,7 @@ Vue.component('authors-list', require('./pages/AuthorsList.vue'));
 Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
 Vue.component('external-edit', require('./pages/ExternalEdit.vue'));
 Vue.component('song-lyric-edit', require('./pages/SongLyricEdit.vue'));
+Vue.component('file-edit', require('./pages/FileEdit.vue'));
 
 Vue.component('external-view', require('../components/ExternalView.vue'));
 
