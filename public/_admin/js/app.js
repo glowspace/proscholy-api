@@ -68582,7 +68582,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     pItems: function pItems(val, prev) {
-      console.log("updated " + this.pItems.length);
       this.items = this.items.concat(this.pItems);
     }
   },
@@ -69420,6 +69419,32 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69699,8 +69724,8 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
 
                 setTimeout(function () {
                   if (!_this3.isDirty && save) {
-                    var base_url = document.querySelector('#baseUrl').getAttribute('value');
-                    window.location.href = base_url + '/' + url;
+                    var base_url = document.querySelector("#baseUrl").getAttribute("value");
+                    window.location.href = base_url + "/" + url;
                   }
                 }, 500);
 
@@ -69721,7 +69746,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
     goToAdminPage: function goToAdminPage(url) {
       var save = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-      this.goToPage('/admin/' + url, save);
+      this.goToPage("/admin/" + url, save);
     },
     showSong: function showSong() {
       window.location.href = this.model_database.song_lyric.public_url;
@@ -69898,7 +69923,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Přejít na editaci písničky\n    ")]
+                [_vm._v("Přejít na editaci písničky")]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -69918,6 +69943,7 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _c("br"),
+          _vm._v(" "),
           _c("br"),
           _vm._v(" "),
           _c(
@@ -69925,7 +69951,7 @@ var render = function() {
             {
               attrs: {
                 "class-name": "External",
-                "model-id": _vm.model.id,
+                "model-id": _vm.model.id || null,
                 "delete-msg": "Opravdu chcete vymazat tento externí odkaz?"
               },
               on: {
@@ -69963,37 +69989,52 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-actions",
+                    { staticClass: "d-flex flex-column justify-content-end" },
                     [
                       _c("v-spacer"),
                       _vm._v(" "),
                       _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "green darken-1", flat: "" },
-                          on: {
-                            click: function($event) {
-                              return _vm.goToAdminPage("external")
-                            }
-                          }
-                        },
-                        [_vm._v("Přejít na seznam externích odkazů")]
+                        "div",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "green darken-1", flat: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.goToAdminPage("external")
+                                }
+                              }
+                            },
+                            [_vm._v("Přejít na seznam externích odkazů")]
+                          )
+                        ],
+                        1
                       ),
                       _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
                       _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "green darken-1", flat: "" },
-                          on: {
-                            click: function($event) {
-                              return _vm.goToAdminPage(
-                                "song/" + _vm.model.song_lyric.id + "/edit"
+                        "div",
+                        [
+                          _vm.model.song_lyric
+                            ? _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "green darken-1", flat: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.goToAdminPage(
+                                        "song/" +
+                                          _vm.model.song_lyric.id +
+                                          "/edit"
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Přejít na editaci písně")]
                               )
-                            }
-                          }
-                        },
-                        [_vm._v("Přejít na editaci písně")]
+                            : _vm._e()
+                        ],
+                        1
                       )
                     ],
                     1
@@ -70952,7 +70993,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updated: function updated(last) {
       // check the consistency
       if (last.type === 0) {
-        console.log("aj");
         // allow only one original -> set other originals to translation
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;

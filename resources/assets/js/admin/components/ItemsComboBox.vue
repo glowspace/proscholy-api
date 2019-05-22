@@ -109,7 +109,6 @@ export default {
     },
 
     pItems(val, prev) {
-        console.log("updated " + this.pItems.length);
         this.items = this.items.concat(this.pItems);
     }
   },

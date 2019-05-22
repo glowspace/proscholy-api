@@ -50,7 +50,6 @@ export default {
       updated(last) {
           // check the consistency
           if (last.type === 0) {
-              console.log("aj");
               // allow only one original -> set other originals to translation
               for (var song_lyric of this.value) {
                   if (song_lyric.type == 0 && song_lyric.id !== last.id) {
