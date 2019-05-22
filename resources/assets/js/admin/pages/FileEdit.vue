@@ -7,6 +7,7 @@
           <v-form ref="form">
             <v-text-field
               label="Zobrazovaný název"
+              :placeholder="'(stejný jako jméno souboru - ' + model.filename + ')'"
               required
               v-model="model.name"
               data-vv-name="input.name"

@@ -19,8 +19,9 @@ input UpdateExternalInput {
 
 input UpdateFileInput {
     id: ID!
-    filename: String @rules(apply: ["required"], messages: { 
-            required: "Jméno souboru nesmí zůstat prázdné"})
+    filename: String @rules(apply: ["required", "regex:/^([a-zA-Z0-9\\s_.\\-\\(\\):])+\\.[a-zA-Z0-9]+$/"], messages: { 
+            required: "Jméno souboru nesmí zůstat prázdné",
+            regex: "Neplatné jméno souboru, používejte prosím pouze znaky bez diakritiky a nezapomeňte na příponu souboru (např. .pdf, .jpg apod..)"})
     name: String
     description: String
     type: Int!

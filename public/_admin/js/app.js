@@ -110460,6 +110460,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 //
 //
 //
+//
 
 
 
@@ -110833,6 +110834,10 @@ var render = function() {
                       _c("v-text-field", {
                         attrs: {
                           label: "Zobrazovaný název",
+                          placeholder:
+                            "(stejný jako jméno souboru - " +
+                            _vm.model.filename +
+                            ")",
                           required: "",
                           "data-vv-name": "input.name",
                           "error-messages": _vm.errors.collect("input.name")
