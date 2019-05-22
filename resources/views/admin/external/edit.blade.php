@@ -3,7 +3,8 @@
 @section('content')
     <div class="content-padding">
         <h2>Úprava externího zdroje</h2>
-        <div class="row">
+        <external-edit preset-id="{{ $external->id }}"></external-edit>
+        {{-- <div class="row">
             <div class="col-sm-6">
                 @component('client.components.external_embed', ['external' => $external])@endcomponent
 
@@ -85,6 +86,6 @@
                     'redirect' => route('admin.external.index')
                 ])
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

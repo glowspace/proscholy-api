@@ -68,9 +68,10 @@
                 @endif
 
                 @if($song_l->scoreFiles()->count() > 0)
-                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent
+                    {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
+                    @component('client.components.external_embed', ['external' => $song_l->scoreFiles()->first()->asExternal()])@endcomponent
                 @elseif ($song_l->scoreExternals()->count() > 0)
-                    @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreExternals()->first()])@endcomponent
+                    @component('client.components.external_embed', ['external' => $song_l->scoreExternals()->first()])@endcomponent
                 @endif
 
                 @if($song_l->youtubeVideos()->count() > 0)
@@ -83,6 +84,10 @@
 
                 @if($song_l->soundcloudTracks()->count() > 0)
                     @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
+                @endif
+
+                @if($song_l->audioFiles()->count() > 0)
+                    @component('client.components.external_embed', ['external' => $song_l->audioFiles()->first()->asExternal()])@endcomponent
                 @endif
 
             </div>

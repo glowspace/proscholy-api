@@ -1,0 +1,87 @@
+input UpdateAuthorInput {
+    id: ID!
+    name: String @rules(apply: ["required", "min:2"], messages: { 
+            required: "Jméno autora nesmí zůstat prázdné", 
+            min: "Jméno autora by mělo mít aspoň 2 znaky"})
+    type: Int!
+    description: String
+    members: SyncAuthorsRelation
+}
+
+input UpdateExternalInput {
+    id: ID!
+    url: String @rules(apply: ["required"], messages: { 
+            required: "Url odkazu nesmí být prázdná"})
+    type: Int!
+    authors: SyncAuthorsRelation
+    song_lyric: SyncSongLyricRelation
+}
+
+input UpdateFileInput {
+    id: ID!
+    filename: String @rules(apply: ["required", "regex:/^([a-zA-Z0-9\\s_.\\-\\(\\):])+\\.[a-zA-Z0-9]+$/"], messages: { 
+            required: "Jméno souboru nesmí zůstat prázdné",
+            regex: "Neplatné jméno souboru, používejte prosím pouze znaky bez diakritiky a nezapomeňte na příponu souboru (např. .pdf, .jpg apod..)"})
+    name: String
+    description: String
+    type: Int!
+    authors: SyncAuthorsRelation
+    song_lyric: SyncSongLyricRelation
+}
+
+input SyncAuthorsRelation {
+  create: [CreateAuthorInput!]
+  sync: [ID!]
+}
+
+input CreateAuthorInput {
+  name: String!
+}
+
+input SyncSongLyricRelation {
+  update: UpdateSongLyricRelation
+  disconnect: Boolean
+}
+
+input UpdateSongLyricRelation {
+  id: ID
+}
+
+input UpdateSongLyricInput {
+    id: ID!
+    name: String @rules(apply: ["required"], messages: { 
+            required: "Jméno písně nesmí zůstat prázdné"})
+    has_anonymous_author: Boolean!
+    lang: String!
+    authors: SyncAuthorsRelation
+    tags_unofficial: SyncUnofficialTagsRelation
+    tags_official: SyncOfficialTagsRelation
+    lyrics: String
+    song: SongInput
+}
+
+input SongInput {
+  __typename: String
+  id: ID
+  song_lyrics: [SongLyricForSongInput]
+}
+
+input SongLyricForSongInput {
+  __typename: String
+  id: ID
+  name: String
+  type: Int
+}
+
+input SyncOfficialTagsRelation {
+  sync: [ID!]
+}
+
+input SyncUnofficialTagsRelation {
+  create: [CreateUnofficialTagInput!]
+  sync: [ID!]
+}
+
+input CreateUnofficialTagInput {
+  name: String!
+}

@@ -13,7 +13,7 @@
         @if($song_l_original !== null)
             <div class="card">
                 <div class="card-header">Původní originál @if ($song_l->lang !== "cs")
-                    ({{ $song_l->getLanguageName() }})
+                    ({{ $song_l->lang_string }})
                 @endif</div>
                 <div class="card-body">
                     <table class="table">

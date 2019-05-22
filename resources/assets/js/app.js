@@ -22,8 +22,10 @@ window.Vue = require('vue');
 Vue.component('chord', require('./components/Chord.vue'));
 Vue.component('transposition', require('./components/Transposition.vue'));
 Vue.component('font-sizer', require('./components/FontSizer.vue'));
+Vue.component('external-view', require('./components/ExternalView.vue'));
 
 Vue.component('search', require('./pages/Search.vue'));
+
 
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'

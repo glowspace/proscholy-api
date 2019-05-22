@@ -15,23 +15,6 @@ class AuthorController extends Controller
         return view('admin.author.index', compact('authors'));
     }
 
-    public function create()
-    {
-        return view('admin.author.create');
-    }
-
-    public function store(Request $request)
-    {
-        $author = Author::firstOrNew(['name' => $request->name]);
-
-        $redirect_arr = [
-            'edit' => route('admin.author.edit', ['author' => $author->id]),
-            'create' => route('admin.author.create')
-        ];
-
-        return redirect($redirect_arr[$request->redirect]);
-    }
-
     public function edit(Author $author)
     {
         // check if user has permission to edit this author
@@ -52,11 +35,5 @@ class AuthorController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    public function update(Request $request, Author $author)
-    {
-        $author->update($request->all());
-        return redirect()->route('admin.author.index');
     }
 }

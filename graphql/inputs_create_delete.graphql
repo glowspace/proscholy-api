@@ -1,0 +1,9 @@
+input CreateModelInput {
+    required_attribute: String!
+    class_name: String!
+}
+
+input DeleteModelInput {
+    id: ID!
+    class_name: String!
+}

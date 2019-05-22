@@ -8,6 +8,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Author
  *
@@ -55,12 +58,6 @@ class Author extends Model
             4 => 'sbor',
         ];
 
-
-    public function songLyrics()
-    {
-        return $this->belongsToMany(SongLyric::class);
-    }
-
     public function getSongLyricsInterpreted()
     {
         return SongLyric::whereHas('externals', function($q) {
@@ -74,17 +71,25 @@ class Author extends Model
         });
     }
 
-    public function songOriginalLyrics()
-    {
-        return $this->songLyrics()->where('is_original', true);
+    public function getAssociatedAuthorsIds(){
+        $authors = collect([$this]);
+
+        return $authors->merge($this->members()->get())->map(function($a) {
+            return $a["id"];
+        })->toArray();
     }
 
-    public function songNotOriginalLyrics()
+    public function songLyricsWithAssociatedAuthors()
     {
-        return $this->songLyrics()->where('is_original', false);
+        Log::info($this->getAssociatedAuthorsIds());
+
+        $ids = $this->getAssociatedAuthorsIds();
+
+        return SongLyric::whereHas('authors', function($q) use ($ids) {
+            $q->whereIn('authors.id', $ids);
+        });
     }
 
-    // 
     public function scopeRestricted($query)
     {
         if (Auth::user()->hasRole('autor')) {
@@ -94,7 +99,7 @@ class Author extends Model
         }
     }
 
-    public function members()
+    public function members() : BelongsToMany
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -102,7 +107,7 @@ class Author extends Model
             'author_id');
     }
 
-    public function memberships()
+    public function memberships() : BelongsToMany
     {
         return $this->belongsToMany(Author::class,
             'author_membership',
@@ -110,12 +115,17 @@ class Author extends Model
             'is_member_of');
     }
 
-    public function externals()
+    public function song_lyrics() : BelongsToMany
+    {
+        return $this->belongsToMany(SongLyric::class);
+    }
+
+    public function externals() : BelongsToMany
     {
         return $this->belongsToMany(External::class);
     }
 
-    public function files()
+    public function files() : BelongsToMany
     {
         return $this->belongsToMany(File::class);
     }

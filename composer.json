@@ -15,8 +15,9 @@
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",
+        "mll-lab/graphql-php-scalars": "^2.1",
         "mll-lab/laravel-graphql-playground": "^1.0",
-        "nuwave/lighthouse": "^3.5",
+        "nuwave/lighthouse": "dev-empty-syncing",
         "spatie/laravel-permission": "^2.33",
         "spatie/pdf-to-image": "^1.8",
         "spatie/pdf-to-text": "^1.1"
@@ -69,10 +70,10 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": {
-        "hooks": {
-            "type": "composer",
-            "url": "https://larapack.io"
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/thes01/lighthouse"
         }
-    }
+    ]
 }

@@ -4,12 +4,19 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 "A date string with format `Y-m-d`, e.g. `2011-05-23`."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
+scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
+
+#import types.graphql
+#import inputs_update.graphql
+#import inputs_create_delete.graphql
+
 type Query {
     users: [User!]! @all
     user(id: ID @eq): User @find
     authors(
         search_string: String
         order_abc: Boolean
+        type: Int
     ): [Author!]!
     song_lyrics(
         only_apk: Boolean
@@ -22,6 +29,7 @@ type Query {
         has_chords: Boolean
         order_abc: Boolean
     ): [SongLyric!]!
+    songs: [Song!]!
     externals (
         type: Int
         is_todo: Boolean
@@ -32,6 +40,11 @@ type Query {
     ): [File!]! @all
     tags(type: Int @eq): [Tag] @all
     me: User @auth
+
+    author(id: ID! @eq): Author @find
+    external(id: ID! @eq): External @find
+    file(id: ID! @eq): File @find
+    song_lyric(id: ID! @eq): SongLyric @find
 }
 
 type Mutation @group(middleware: ["auth:api"]) {
@@ -40,75 +53,12 @@ type Mutation @group(middleware: ["auth:api"]) {
     delete_file(id: ID!): File @delete
     delete_song_lyric(id: ID!): SongLyric @delete
     delete_tag(id: ID!): Tag @delete
-}
 
-type User {
-    id: ID!
-    name: String
-}
-
-type Author {
-    id: ID!
-    name: String!
-    description: String
-    type: Int
-    type_string: String
-    email: String
-    url: String
-    visits: Int
-    public_url: String
-    externals: [External] @belongsToMany
-    files: [File] @belongsToMany
-}
-
-type Song {
-    id: ID!
-    name: String
-    song_lyrics(is_original: Boolean @eq): [SongLyric] @hasMany
-}
-
-type SongLyric {
-    id: ID!
-    name: String
-    public_url: String
-    lyrics_no_chords: String
-    lyrics: String
-    is_original: Boolean!
-    is_approved_by_author: Boolean!
-    is_published: Boolean!
-    lang: String
-    updated_at: String
-    authors: [Author] @belongsToMany
-    externals(id: Int @eq, type: Int @eq): [External] @hasMany
-    files(id: Int @eq, type: Int @eq): [File] @hasMany
-    tags(type: Int @eq): [Tag] @belongsToMany
-    song: Song! @belongsTo
-    has_chords: Boolean!
-}
-
-type External {
-    id: ID!
-    public_name: String
-    type: Int
-    type_string: String
-    authors: [Author] @belongsToMany
-    song_lyric: SongLyric @belongsTo
-}
-
-type File {
-    id: ID!
-    public_name: String
-    download_url: String
-    type: Int
-    type_string: String
-    authors: [Author] @belongsToMany
-    song_lyric: SongLyric @belongsTo
-}
-
-type Tag {
-    id: ID!
-    name: String
-    type: Int
-    parent_tag: Tag @belongsTo
-    child_tags: [Tag] @hasMany
+    update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
+    update_external(input: UpdateExternalInput!): External @update(flatten: true)
+    update_file(input: UpdateFileInput!): File @update(flatten: true)
+    update_song_lyric(input: UpdateSongLyricInput!): SongLyric
+    
+    create_model(input: CreateModelInput!): Model
+    delete_model(input: DeleteModelInput!): Model
 }

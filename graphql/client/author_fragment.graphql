@@ -1,0 +1,27 @@
+fragment AuthorFillableFragment on Author {
+    id
+    name
+    type
+    description
+    members {
+      id
+      name
+    }
+    memberships {
+      id
+      name
+    }
+    song_lyrics {
+        id
+        name
+      }
+      externals {
+        id
+        url
+        public_name
+      }
+      files {
+        id
+        public_name
+      }
+}

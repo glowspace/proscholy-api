@@ -39,7 +39,7 @@
             </div>
         @endif
 
-        @if($author->members()->count() > 0)
+        {{-- @if($author->members()->count() > 0)
             Členové:<br>
             @foreach($author->members as $member)
                 <a href="{{route('author.single', ['id'=> $member->id])}}">{{$member->name}}</a><br>
@@ -53,11 +53,11 @@
                 <a href="{{route('author.single', ['id'=> $author->id])}}">{{$author->name}}</a><br>
             @endforeach
             <br>
-        @endif
+        @endif --}}
 
-        @if($author->songOriginalLyrics()->count() > 0)
+        @if($originals->count() > 0)
             <div class="card">
-                <div class="card-header">Písně</div>
+                <div class="card-header">Autorské písně</div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -68,7 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($author->songOriginalLyrics as $song_l)
+                        @foreach($originals as $song_l)
                             <tr>
                                 <td>
                                     <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
@@ -93,7 +93,7 @@
             </div>
         @endif
 
-        @if($author->songNotOriginalLyrics()->count() > 0)
+        @if($translations->count() > 0)
             <div class="card">
                 <div class="card-header">Překlady</div>
                 <div class="card-body">
@@ -106,7 +106,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($author->songNotOriginalLyrics as $song_l)
+                        @foreach($translations as $song_l)
                             <tr>
                                 <td>
                                     <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
@@ -127,7 +127,7 @@
             </div>
         @endif
 
-        @if($author->getSongLyricsInterpreted()->count() > 0)
+        @if($interpreted->count() > 0)
             <div class="card">
                 <div class="card-header">Interpretace písní</div>
                 <div class="card-body">
@@ -140,7 +140,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($author->getSongLyricsInterpreted()->get() as $song_l)
+                        @foreach($interpreted as $song_l)
                             <tr>
                                 <td>
                                     <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
