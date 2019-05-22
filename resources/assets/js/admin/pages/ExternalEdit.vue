@@ -14,48 +14,74 @@
             ></v-text-field>
             <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
             <items-combo-box
-                  v-bind:p-items="authors"
-                  v-model="model.authors"
-                  label="Autoři"
-                  header-label="Vyberte autora z nabídky nebo vytvořte nového"
-                  create-label="Potvrďte enterem a vytvořte nového autora"
-                  :multiple="true"
-                  :enable-custom="true"
-                ></items-combo-box>
+              v-bind:p-items="authors"
+              v-model="model.authors"
+              label="Autoři"
+              header-label="Vyberte autora z nabídky nebo vytvořte nového"
+              create-label="Potvrďte enterem a vytvořte nového autora"
+              :multiple="true"
+              :enable-custom="true"
+            ></items-combo-box>
             <items-combo-box
               v-bind:p-items="song_lyrics"
               v-model="model.song_lyric"
               label="Píseň"
               header-label="Vyberte píseň"
               :multiple="false"
-              :enable-custom="false"></items-combo-box>
+              :enable-custom="false"
+            ></items-combo-box>
           </v-form>
         </v-flex>
         <v-flex xs12 md6>
-          <external-view v-if="model_database"
-            :url="model_database.url" 
-            :type="model_database.type" 
-            :thumbnail-url="model_database.thumbnail_url" 
-            :media-id="model_database.media_id">
-          </external-view>
+          <external-view
+            v-if="model_database"
+            :url="model_database.url"
+            :type="model_database.type"
+            :thumbnail-url="model_database.thumbnail_url"
+            :media-id="model_database.media_id"
+          ></external-view>
         </v-flex>
       </v-layout>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-      <v-btn v-if="model.song_lyric" :disabled="isDirty" @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">Přejít na editaci písničky
-      </v-btn>
-      <v-btn v-if="model.song_lyric" :disabled="isDirty" @click="showSong()">Zobrazit píseň ve zpěvníku</v-btn>
-      <br><br>
-      <delete-model-dialog class-name="External" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tento externí odkaz?">Vymazat</delete-model-dialog>
+      <v-btn
+        v-if="model.song_lyric"
+        :disabled="isDirty"
+        @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')"
+      >Přejít na editaci písničky</v-btn>
+      <v-btn
+        v-if="model.song_lyric"
+        :disabled="isDirty"
+        @click="showSong()"
+      >Zobrazit píseň ve zpěvníku</v-btn>
+      <br>
+      <br>
+      <delete-model-dialog
+        class-name="External"
+        :model-id="model.id || null"
+        @deleted="is_deleted = true"
+        delete-msg="Opravdu chcete vymazat tento externí odkaz?"
+      >Vymazat</delete-model-dialog>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="320">
         <v-card>
           <v-card-title class="headline">Externí odkaz byl vymazán</v-card-title>
           <v-card-text>Externí odkaz byl vymazán z databáze.</v-card-text>
-          <v-card-actions>
+          <v-card-actions class="d-flex flex-column justify-content-end">
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click="goToAdminPage('external')">Přejít na seznam externích odkazů</v-btn>
-            <br>
-            <v-btn color="green darken-1" flat @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">Přejít na editaci písně</v-btn>
+            <div>
+              <v-btn
+                color="green darken-1"
+                flat
+                @click="goToAdminPage('external')"
+              >Přejít na seznam externích odkazů</v-btn>
+            </div>
+            <div>
+              <v-btn v-if="model.song_lyric"
+                color="green darken-1"
+                flat
+                @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')"
+              >Přejít na editaci písně</v-btn>
+            </div>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -98,7 +124,7 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
-const FETCH_SONG_LYRICS= gql`
+const FETCH_SONG_LYRICS = gql`
   query {
     song_lyrics {
       id
@@ -152,10 +178,10 @@ export default {
       }
     },
     authors: {
-      query: FETCH_AUTHORS,
+      query: FETCH_AUTHORS
     },
     song_lyrics: {
-      query: FETCH_SONG_LYRICS,
+      query: FETCH_SONG_LYRICS
     }
   },
 
@@ -182,7 +208,7 @@ export default {
       if (!this.model.url) return true;
 
       for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])){
+        if (!_.isEqual(this.model[field], this.model_database[field])) {
           return true;
         }
       }
@@ -196,7 +222,7 @@ export default {
       this.$apollo
         .mutate({
           mutation: MUTATE_MODEL_DATABASE,
-          variables: { 
+          variables: {
             input: {
               id: this.model.id,
               url: this.model.url,
@@ -253,20 +279,22 @@ export default {
       return fieldNames;
     },
 
-    getModelsToCreateBelongsToMany(models){
+    getModelsToCreateBelongsToMany(models) {
       return models.filter(model => {
-        if(model.id) return false;
+        if (model.id) return false;
         return true;
       });
     },
 
-    getModelsToSyncBelongsToMany(models){
-      return models.filter(model => {
-        if(model.id) return true;
-        return false;
-      }).map(model => {
-        return model.id
-      });
+    getModelsToSyncBelongsToMany(models) {
+      return models
+        .filter(model => {
+          if (model.id) return true;
+          return false;
+        })
+        .map(model => {
+          return model.id;
+        });
     },
 
     getModelToSyncBelongsTo(model) {
@@ -275,33 +303,34 @@ export default {
       if (model) {
         obj.update = {
           id: model.id
-        }
+        };
       } else {
         obj.disconnect = true;
       }
-      
+
       return obj;
     },
 
-    async goToPage(url, save=true) {
-      if (this.isDirty && save)
-        await this.submit();
+    async goToPage(url, save = true) {
+      if (this.isDirty && save) await this.submit();
 
       setTimeout(() => {
         if (!this.isDirty && save) {
-          var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/' + url;
+          var base_url = document
+            .querySelector("#baseUrl")
+            .getAttribute("value");
+          window.location.href = base_url + "/" + url;
         }
       }, 500);
     },
 
-    goToAdminPage(url, save=true) {
-      this.goToPage('/admin/' + url, save);
+    goToAdminPage(url, save = true) {
+      this.goToPage("/admin/" + url, save);
     },
 
     showSong() {
       window.location.href = this.model_database.song_lyric.public_url;
-    },
-  },
+    }
+  }
 };
 </script>
