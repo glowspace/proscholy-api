@@ -22,6 +22,16 @@
                     allowfullscreen></iframe>
         </div>
 
+        <!-- audio soubor -->
+        <!-- <iframe v-else-if="type == 7" :src="iframeSrc" frameborder="0" width="100%" height="80"></iframe> -->
+        <div v-else-if="type == 7" class="p-2">
+            <audio
+                controls
+                :src="iframeSrc">
+                    Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
+                </audio>
+        </div>
+
         <iframe v-else :src="iframeSrc" frameborder="0" width="100%" height="500"></iframe>
     </div>
 </template>

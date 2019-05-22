@@ -237,6 +237,11 @@ class SongLyric extends Model
         return $this->externals()->where('type', 3)->orderBy('is_featured', 'desc');
     }
 
+    public function audioFiles()
+    {
+        return $this->files()->audio();
+    }
+
     public function scoreExternals()
     {
         return $this->externals()->scores()->orderBy('is_featured', 'desc')->orderBy('type', 'asc');
@@ -246,6 +251,7 @@ class SongLyric extends Model
     {
         return $this->files()->scores()->orderBy('type', 'desc');
     }
+    
 
     public function scoresCount()
     {

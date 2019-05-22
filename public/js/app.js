@@ -54829,6 +54829,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // import VueFriendlyIframe from 'vue-friendly-iframe';
 
@@ -54902,6 +54912,14 @@ var render = function() {
           _c("iframe", {
             attrs: { src: _vm.iframeSrc, frameborder: "0", allowfullscreen: "" }
           })
+        ])
+      : _vm.type == 7
+      ? _c("div", { staticClass: "p-2" }, [
+          _c("audio", { attrs: { controls: "", src: _vm.iframeSrc } }, [
+            _vm._v(
+              "\n                Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.\n            "
+            )
+          ])
         ])
       : _c("iframe", {
           attrs: {

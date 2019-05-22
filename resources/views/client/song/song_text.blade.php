@@ -86,6 +86,10 @@
                     @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
                 @endif
 
+                @if($song_l->audioFiles()->count() > 0)
+                    @component('client.components.external_embed', ['external' => $song_l->audioFiles()->first()->asExternal()])@endcomponent
+                @endif
+
             </div>
         </div>
 
