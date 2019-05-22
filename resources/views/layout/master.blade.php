@@ -18,7 +18,7 @@
     <meta id="baseUrl" name="baseUrl" value="{{url('')}}">
     @if (Auth::check())
     {{-- warning - potentially dangerous, only provisional solution --}}
-        <meta id="userToken" name="userToken" value="{{ Auth::user()->api_token }}">
+        <meta id="userToken" name="userToken" value="{{ Auth::user()->getApiToken() }}">
     @endif
 
     <title>
