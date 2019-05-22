@@ -61,7 +61,7 @@
           <v-card-text>Soubor byl vymazán z databáze.</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click="goToAdminPage('file')">Přejít na seznam externích odkazů</v-btn>
+            <v-btn color="green darken-1" flat @click="goToAdminPage('file')">Přejít na seznam souborů</v-btn>
             <br>
             <v-btn color="green darken-1" flat @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')">Přejít na editaci písně</v-btn>
           </v-card-actions>
