@@ -3,7 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 /**
  * App\Song
@@ -24,6 +28,8 @@ use Log;
  */
 class Song extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['name'];
 
     public function authors()
@@ -35,14 +41,14 @@ class Song extends Model
     /**
      * Returns all SongLyrics instances
      */
-    public function song_lyrics()
+    public function song_lyrics() : HasMany
     {
         return $this->hasMany(SongLyric::class);
     }
 
     public function translations()
     {
-        return $this->song_lyrics()->where('is_original', 0);
+        return $this->song_lyrics()->where('type', '!=', 0);
     }
 
     public function getDomesticSongLyric($id_exclude)
@@ -52,6 +58,6 @@ class Song extends Model
 
     public function getOriginalSongLyric()
     {
-        return $this->song_lyrics()->where('is_original', 1)->get()->first();
+        return $this->song_lyrics()->where('type', 0)->get()->first();
     }
 }

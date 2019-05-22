@@ -33,7 +33,6 @@
                 if (this.transposition < 0) {
                     this.transposition = 12 + this.transposition;
                 }
-                console.log(val);
             },
 
             switchChordMode: function() {

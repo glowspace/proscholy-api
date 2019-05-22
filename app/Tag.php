@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+
 class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type', 'parent_tag_id'];
@@ -32,7 +37,7 @@ class Tag extends Model
         return $query->where('type', 0);
     }
 
-    public function song_lyrics()
+    public function song_lyrics() : BelongsToMany
     {
         return $this->belongsToMany(SongLyric::class);
     }
@@ -58,12 +63,12 @@ class Tag extends Model
         }
     }
 
-    public function child_tags()
+    public function child_tags() : HasMany
     {
         return $this->hasMany(Tag::class, 'parent_tag_id');
     }
 
-    public function parent_tag()
+    public function parent_tag() : BelongsTo
     {
         return $this->belongsTo(Tag::class, 'parent_tag_id');
     }

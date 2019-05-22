@@ -18,6 +18,12 @@ class DownloadController extends Controller
         return response()->download($fullPath, $file->filename);
     }
 
+    public function previewFile(File $file)
+    {
+        $fullPath = Storage::path($file->path);
+        return response()->file($fullPath);
+    }
+
     public function getThumbnailFile(File $file)
     {
         if (!$file->canHaveThumbnail()) {
@@ -28,13 +34,13 @@ class DownloadController extends Controller
         return response()->file($fullPath);
     }
 
-    public function getThumbnailExternal(External $external)
-    {
-        if (!$external->canHaveThumbnail()) {
-            return response('No thumbnail available', 404);
-        }
+    // public function getThumbnailExternal(External $external)
+    // {
+    //     if (!$external->canHaveThumbnail()) {
+    //         return response('No thumbnail available', 404);
+    //     }
 
-        $fullPath = Storage::path($external->getThumbnailPath());
-        return response()->file($fullPath);
-    }
+    //     $fullPath = Storage::path($external->getThumbnailPath());
+    //     return response()->file($fullPath);
+    // }
 }

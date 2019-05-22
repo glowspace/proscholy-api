@@ -1,0 +1,15 @@
+fragment ExternalFillableFragment on External  {
+    id
+    url
+    type
+    media_id
+    authors {
+        id
+        name
+    }
+    song_lyric {
+        id
+        name
+        public_url
+    }
+}

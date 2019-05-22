@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 /**
  * App\User
  *
@@ -56,7 +58,7 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token'
     ];
 
-    public function assigned_authors()
+    public function assigned_authors() : BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }

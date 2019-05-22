@@ -1,0 +1,40 @@
+fragment SongLyricFillableFragment on SongLyric  {
+    id
+    name
+    authors {
+        id
+        name
+    }
+    public_url
+    has_anonymous_author
+    lang
+    tags_unofficial: tags(type: 0) {
+        id
+        name
+    }
+    tags_official: tags(type: 1) {
+        id
+        name
+    }
+    lyrics
+    song {
+        id
+        song_lyrics {
+            id
+            name
+            type
+        }
+    }
+    externals {
+        id
+        public_name
+        url
+        type
+    }
+    files {
+        id
+        public_name
+        url
+        type
+    }
+}

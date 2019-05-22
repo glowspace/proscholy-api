@@ -3,7 +3,6 @@
 @section('content')
     <div class="content-padding">
         <h2>{{ $title ?? "Seznam písní"}}</h2>
-        <a class="btn btn-outline-primary" href="{{route('admin.song.create')}}">+ Nová píseň</a>
 
         @if ($type == "list-all")
             <songs-list></songs-list>

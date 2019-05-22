@@ -58,7 +58,7 @@
     ])
 @endcan
 
-<div class="navbar-label material-shadow text-danger">Kontrola obsahu</div>
+{{-- <div class="navbar-label material-shadow text-danger">Kontrola obsahu</div>
 
 @can('publish songs')
     @include('admin.components.menu-item', [
@@ -74,7 +74,7 @@
         'icon' => 'music',
         'text' => 'Písně k autorskému schválení'
     ])
-@endcan
+@endcan --}}
 
 <div class="navbar-label material-shadow text-primary">Úprava položek</div>
 

@@ -1,7 +1,13 @@
 <template>
 <!-- v-app must wrap all the components -->
   <v-app>
-    <v-container grid-list-xs>
+    <notifications/>
+    <v-container fluid grid-list-xs>
+    <create-model 
+        class-name="SongLyric"
+        label="Zadejte jméno nové písně"
+        success-msg="Píseň úspěšně vytvořena"
+        @saved="$apollo.queries.song_lyrics.refetch()"></create-model>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>
@@ -11,17 +17,26 @@
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="authors"
+            :items="song_lyrics"
             :search="search_string"
             :filter="formFilter"
             :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
-            >
+            class="users-list">
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/author/' + props.item.id + '/edit'">{{ props.item.name }}</a>
+                <a :href="'/admin/song/' + props.item.id + '/edit'">{{ props.item.name }}</a>
               </td>
-              <td>{{ props.item.type_string }}</td>
+              <td>
+                <span v-if="props.item.type === 0">Originál</span>
+                <span v-if="props.item.type === 1">Překlad</span>
+                <span v-if="props.item.type === 2">Autorizovaný překlad</span>
+              </td>
+              <td>{{ props.item.updated_at }}</td>
+              <td>
+                <span v-if="props.item.is_published">Ano</span>
+                <span v-if="!props.item.is_published">Ne</span>
+              </td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
               </td>
@@ -37,50 +52,67 @@
   input {
     border: none;
   }
-</style>fetch_items
+</style>
 
 <script>
 
 import gql from 'graphql-tag';
 
 import removeDiacritics from '../helpers/removeDiacritics';
+import CreateModel from '../components/CreateModel.vue';
 
 const fetch_items = gql`
-        query FetchAuthors {
-            authors {
+        query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {
+            song_lyrics(
+              has_lyrics: $has_lyrics, 
+              has_authors: $has_authors, 
+              has_chords: $has_chords,
+              has_tags: $has_tags
+          ) {
                 id,
                 name,
-                type_string
+                updated_at,
+                type,
+                is_published
             }
         }`;
 
 const delete_item = gql`
-  mutation DeleteAuthor ($id: ID!) {
-    delete_author(id: $id) {
+  mutation DeleteSongLyric ($id: ID!) {
+    delete_song_lyric(id: $id) {
       id
     }
   }`;
-
+  
 export default {
-  props: ['is-todo'],
+  props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
+
+  components: {
+    CreateModel
+  },
 
   data() {
     return {
       headers: [
-        { text: 'Jméno', value: 'name' },
-        { text: 'Typ', value: 'type_string' },
-        { text: 'Akce', value: 'action' }
+        { text: 'Název písničky', value: 'name' },
+        { text: 'Typ', value: 'type' },
+        { text: 'Naposledy upraveno', value: 'updated_at' },
+        { text: 'Publikováno', value: 'is_published' },
+        { text: 'Akce', value: 'action' },
       ],
       search_string: ""
     }
   },
 
   apollo: {
-    authors: { 
+    song_lyrics: { 
       query: fetch_items,
       variables() {
         return { 
-          is_todo: this.isTodo,
+          has_lyrics: this.hasLyrics,
+          has_authors: this.hasAuthors,
+          has_chords: this.hasChords,
+          has_tags: this.hasTags
         }
       }
     }
@@ -89,11 +121,11 @@ export default {
   methods: {
     askForm(id) {
       if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteAuthor(id);
+        this.deleteSong(id);
       }
     },
 
-    deleteAuthor(id) {
+    deleteSong(id) {
       this.$apollo.mutate({
         mutation: delete_item,
         variables: {id: id},

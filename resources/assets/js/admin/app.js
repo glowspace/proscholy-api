@@ -20,10 +20,18 @@ window.Vue = require('vue');
  */
 
 
-Vue.component('songs-list', require('./components/SongsList.vue'));
-Vue.component('externals-list', require('./components/ExternalsList.vue'));
-Vue.component('files-list', require('./components/FilesList.vue'));
-Vue.component('authors-list', require('./components/AuthorsList.vue'));
+Vue.component('songs-list', require('./pages/SongsList.vue'));
+Vue.component('externals-list', require('./pages/ExternalsList.vue'));
+Vue.component('files-list', require('./pages/FilesList.vue'));
+Vue.component('authors-list', require('./pages/AuthorsList.vue'));
+
+Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
+Vue.component('external-edit', require('./pages/ExternalEdit.vue'));
+Vue.component('song-lyric-edit', require('./pages/SongLyricEdit.vue'));
+Vue.component('file-edit', require('./pages/FileEdit.vue'));
+
+Vue.component('external-view', require('../components/ExternalView.vue'));
+
 
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
@@ -73,33 +81,15 @@ const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
 })
 
-import Vuetify, {
-  VApp, // required
-  VNavigationDrawer,
-  VDataTable,
-  VContainer,
-  VLayout,
-  VFlex,
-  VCard,
-  VCardText,
-  VTextField
-} from 'vuetify/lib'
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
 
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VNavigationDrawer,
-    VDataTable,
-    VContainer,
-    VLayout,
-    VFlex,
-    VCard,
-    VCardText,
-    VTextField
-  }
-})
+import Notifications from 'vue-notification'
+Vue.use(Notifications)
 
-// import 'vuetify/dist/vuetify.min.css'
+import VeeValidate from 'vee-validate'
+Vue.use(VeeValidate)
+
 
 const app = new Vue({
     el: '#app',

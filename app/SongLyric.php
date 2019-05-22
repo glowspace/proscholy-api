@@ -8,13 +8,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * App\SongLyric
  *
  * @property int                                                           $id
  * @property string|null                                                   $name
- * @property int|null                                                      $is_authorized
- * @property int|null                                                      $is_original
  * @property string|null                                                   $description
  * @property string|null                                                   $lyrics
  * @property int|null                                                      $is_opensong
@@ -50,7 +53,7 @@ class SongLyric extends Model
 {
     // Laravel Scout Trait used for full-text searching
     // Lockable Trait for enabling to "lock" the model while editing
-    use Searchable, Lockable;
+    use Searchable, Lockable, SoftDeletes;
 
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,
@@ -64,8 +67,9 @@ class SongLyric extends Model
             'song_id',
             'lyrics',
             'id',
-            'is_original',
-            'is_authorized',
+            // 'is_original',
+            // 'is_authorized',
+            'type',
             'lang',
             'creating_at',
             'has_anonymous_author',
@@ -77,7 +81,7 @@ class SongLyric extends Model
             'user_creator_id'
         ];
 
-    public static $lang_string = [
+    private static $lang_string_values = [
         'cs' => 'čeština',
         'sk' => 'slovenština',
         'en' => 'angličtina',
@@ -113,44 +117,71 @@ class SongLyric extends Model
         return $str;
     }
 
-    public function getLanguageName()
+    // TODO: implement
+    public function getIsEmptyAttribute()
     {
-        return self::$lang_string[$this->lang];
+        // return $this->lyrics == null 
+        //     && $this->externals()->count() +
+        //     $this->files()->count() == 0
+        //     && 
     }
 
-    public function song()
+
+    // ! deprecated soon
+    public function getIsOriginalAttribute()
+    {
+        return $this->type == 0;
+    }
+
+    // ! deprecated soon
+    public function getIsAuthorizedAttribute()
+    {
+        return $this->type == 2;
+    }
+
+    public function getLangStringAttribute()
+    {
+        return self::$lang_string_values[$this->lang];
+    }
+
+    public function getLangStringValuesAttribute()
+    {
+        return self::$lang_string_values;
+    }
+
+    public function song() : BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
 
-    public function authors()
+    public function authors() : BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function tags()
+    public function tags() : BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function externals()
+    public function externals() : HasMany
     {
         return $this->hasMany(External::class);
     }
 
-    public function files()
+    public function files() : HasMany
     {
         return $this->hasMany(File::class);
     }
 
     public function scopeTranslations($query)
     {
-        return $query->where('is_original', false);
+        return $query->where('type', '!=', 0);
     }
 
     public function scopeOriginals($query)
     {
-        return $query->where('is_original', true);
+        return $query->where('type', 0);
     }
 
     public function scopePublished($query)
@@ -206,23 +237,21 @@ class SongLyric extends Model
         return $this->externals()->where('type', 3)->orderBy('is_featured', 'desc');
     }
 
+    public function audioFiles()
+    {
+        return $this->files()->audio();
+    }
+
     public function scoreExternals()
     {
-        return $this->externals()->where('type', 4)->orderBy('is_featured', 'desc');
+        return $this->externals()->scores()->orderBy('is_featured', 'desc')->orderBy('type', 'asc');
     }
     
     public function scoreFiles()
     {
-        return $this->files()->where('type', 3);
+        return $this->files()->scores()->orderBy('type', 'desc');
     }
-
-    /*
-     * Merged multi type category-filtered external collections
-     */
-    // public function audioTracks()
-    // {
-    //     return $this->spotifyTracks->merge($this->soundcloudTracks);
-    // }
+    
 
     public function scoresCount()
     {
@@ -232,36 +261,21 @@ class SongLyric extends Model
     // the reason for existence of the domestic characteristic
     // is the case when there are multiple SongLyrics under one Song and no original one
     // which is permitted when the original is unknown
-    // TODO: consider merging domestic/orignal in the future for simplicity (depending on practical usage)
+    // TODO: make obsolete
     public function isDomestic()
     {
         return $this->name === $this->song->name;
     }
 
-    public function isDomesticOrphan()
-    {
-        return $this->isDomestic() && ! $this->hasSiblings();
-    }
 
     public function getSiblings()
     {
-        return $this->song->song_lyrics()->where('id', '!=', $this->id);
+        return $this->song->song_lyrics()->where('id', '!=', $this->id)->get();
     }
 
     public function hasSiblings()
     {
         return $this->getSiblings()->count() > 0;
-    }
-
-    // basically Cuckoo shouldn't be alone really
-    public function isCuckoo()
-    {
-        return ! $this->isDomestic();
-    }
-
-    public function isNew()
-    {
-        return $this->created_at->eq($this->updated_at);
     }
 
     public function recache()
@@ -273,6 +287,22 @@ class SongLyric extends Model
         ]);
     }
 
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Preserve only attributes that are meant to be searched in
+        $searchable = Arr::only($array, ['name', 'lyrics']);
+
+        return $searchable;
+    }
+
+    // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))
@@ -294,20 +324,5 @@ class SongLyric extends Model
 
             return $song_lyric;
         }
-    }
-
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        $array = $this->toArray();
-
-        // Preserve only attributes that are meant to be searched in
-        $searchable = Arr::only($array, ['name', 'lyrics']);
-
-        return $searchable;
     }
 }
