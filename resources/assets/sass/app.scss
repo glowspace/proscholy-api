@@ -486,7 +486,10 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 9em;
+
+      .card-title{
+        font-size: 1.3rem;
+      }
     }
   }
 }

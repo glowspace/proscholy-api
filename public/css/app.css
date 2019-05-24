@@ -21800,6 +21800,9 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  min-height: 9em;
+}
+
+.home-bottom .card .card-body .card-title {
+  font-size: 1.3rem;
 }
 
