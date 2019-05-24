@@ -14,6 +14,7 @@ use App\Author;
 use App\SongLyric;
 use App\Song;
 use App\External;
+use App\Songbook;
 
 class CreateModel
 {
@@ -60,6 +61,18 @@ class CreateModel
                 "class_name" => "External",
                 "edit_url" => route("admin.external.edit", $external)
             ];
+
+        } elseif($input["class_name"] == "Songbook") {
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:songbooks'], ['unique' => 'Zpěvník se stejným jménem již existuje'], $validatorCustomAttributes);
+            if (!$validator->fails()){
+                $songbook = Songbook::create(['name' => $attr]);
+    
+                $returnValue = [
+                    "id" => $songbook->id,
+                    "class_name" => "Songbook",
+                    "edit_url" => route("admin.songbook.edit", $songbook)
+                ];
+            }
 
         } elseif ($input["class_name"] == "SongLyric") {
             $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);

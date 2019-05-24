@@ -85,3 +85,27 @@ input SyncUnofficialTagsRelation {
 input CreateUnofficialTagInput {
   name: String!
 }
+
+
+
+input UpdateSongbookInput {
+    id: ID!
+    name: String
+    records: SyncSongbookRecordsRelation
+}
+
+input SyncSongbookRecordsRelation {
+  create: [CreateSongbookRecordInput!]
+  sync: [SyncSongbookRecordInput!]
+}
+
+input CreateSongbookRecordInput {
+  number: String
+  placeholder: String
+}
+
+input SyncSongbookRecordInput {
+  song_lyric_id: ID!
+  number: String
+  placeholder: String
+}

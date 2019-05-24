@@ -5,14 +5,9 @@ namespace App\GraphQL\Mutations;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-use App\SongLyric;
-use App\Author;
-use App\External;
-use App\File;
-use App\Tag;
 use App\Songbook;
 
-class DeleteModel
+class UpdateSongbook
 {
     /**
      * Return a value for the field.
@@ -26,32 +21,31 @@ class DeleteModel
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $input = $args["input"];
-        $id = $input["id"];
-        $succ = false;
+        $songbook = Songbook::find($input["id"]);
 
-        if ($input["class_name"] == "Author") {
-            $succ = Author::destroy($id);
-        } elseif ($input["class_name"] == "External") {
-            $succ = External::destroy($id);
-        } elseif ($input["class_name"] == "SongLyric") {
-            $succ = SongLyric::destroy($id);
-        } elseif ($input["class_name"] == "File") {
-            $succ = File::destroy($id);
-        } elseif ($input["class_name"] == "Tag") {
-            $succ = Tag::destroy($id);
-        } elseif ($input["class_name"] == "Songbook") {
-            $succ = Songbook::destroy($id);
-        } else {
-            // todo throw an error
-            return;
+        // update the fillable attributes
+        $songbook->update($input);
+
+        if (isset($input["records"]["sync"])) {
+            $syncModels = [];
+            foreach ($input["records"]["sync"] as $record) {
+                $syncModels[$record["song_lyric_id"]] = [
+                    'number' => $record["number"],
+                    'placeholder' => $record["placeholder"],
+                ];
+            }
+            $songbook->records()->sync($syncModels);
         }
-
-        if (!$succ) {
-            return;
+        if (isset($input["records"]["create"])) {
+            foreach ($input["records"]["create"] as $record) {
+                $songbook->records()->create([
+                    'number' => $record["number"],
+                    'placeholder' => $record["placeholder"],
+                ]);
+            }
         }
+        $songbook->save();
 
-        return [
-            "id" => $id,
-        ];
+        return Songbook::find($input["id"]);
     }
 }

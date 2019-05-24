@@ -125,6 +125,26 @@ class UpdateSongLyric
             }
         }
 
+        // HANDLE SONGBOOK RECORDS
+        if (isset($input["songbook_records"]["sync"])) {
+            $syncModels = [];
+            foreach ($input["songbook_records"]["sync"] as $record) {
+                $syncModels[$record["song_lyric_id"]] = [
+                    'number' => $record["number"],
+                    'placeholder' => $record["placeholder"],
+                ];
+            }
+            $song_lyric->songbook_records()->sync($syncModels);
+        }
+        if (isset($input["songbook_records"]["create"])) {
+            foreach ($input["songbook_records"]["create"] as $record) {
+                $song_lyric->records()->create([
+                    'number' => $record["number"],
+                    'placeholder' => $record["placeholder"],
+                ]);
+            }
+        }
+
         // reload from database
         return SongLyric::find($input["id"]);
     }
