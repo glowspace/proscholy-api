@@ -129,7 +129,7 @@ class UpdateSongLyric
         if (isset($input["songbook_records"]["sync"])) {
             $syncModels = [];
             foreach ($input["songbook_records"]["sync"] as $record) {
-                $syncModels[$record["song_lyric_id"]] = [
+                $syncModels[$record["songbook_id"]] = [
                     'number' => $record["number"],
                     'placeholder' => $record["placeholder"],
                 ];
@@ -138,7 +138,7 @@ class UpdateSongLyric
         }
         if (isset($input["songbook_records"]["create"])) {
             foreach ($input["songbook_records"]["create"] as $record) {
-                $song_lyric->records()->create([
+                $song_lyric->songbook_records()->create([
                     'number' => $record["number"],
                     'placeholder' => $record["placeholder"],
                 ]);

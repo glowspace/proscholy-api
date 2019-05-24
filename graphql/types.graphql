@@ -47,7 +47,7 @@ type SongLyric {
     externals(id: Int @eq, type: Int @eq): [External] @hasMany
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @belongsToMany
-    songbooks: [SongbookRecord] @belongsToMany
+    songbook_records: [SongbookRecord] @belongsToMany
     song: Song! @belongsTo
     has_chords: Boolean!
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
