@@ -475,8 +475,18 @@ body {
 .home-bottom {
   background: #292929;
   color: white;
-}
 
-.home-bottom .card {
-  background: #353232;
+  .card{
+    background: #353232;
+    height: 90%;
+    margin-bottom: 0;
+
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 9em;
+    }
+  }
 }
