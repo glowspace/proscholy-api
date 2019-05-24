@@ -21511,13 +21511,8 @@ Home page specific elements
   background-position-x: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: calc(100vh - 66px);
-}
-
-@media (max-width: 767.98px) {
-  .background-home {
-    background-position: -170.5px 0;
-  }
+  height: calc(100vh - 66px);
+  min-height: 450px;
 }
 
 .logo-wrapper {
