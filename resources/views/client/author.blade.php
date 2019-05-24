@@ -1,13 +1,13 @@
-@extends('layout.client')
+@extends('layout.client-sidepage')
 
-@section('navbar')
+{{-- @section('navbar')
     <a class="btn btn-secondary" href="{{route('client.home')}}">
         <i class="fas fa-search"></i> Nové vyhledávání
     </a>
-@endsection
+@endsection --}}
 
 @section('content')
-    <div class="content-padding">
+    <div class="container">
         <h2 style="margin-bottom: 0">{{$author->name}}</h2>
         @if($author->type == 0)
             <span style="color: dimgrey">autor</span>

@@ -1,9 +1,7 @@
-@extends('layout.client')
-
-@section('navbar')
-    @include('client.components.menu_main')
-@endsection
+@extends('layout.client-sidepage')
 
 @section('content')
-    <Search str-prefill="{{ $search_string }}"></Search>
+    <div class="container">
+        <Search str-prefill="{{ $search_string }}"></Search>
+    </div>
 @endsection

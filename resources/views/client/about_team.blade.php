@@ -1,11 +1,11 @@
-@extends('layout.client')
+@extends('layout.client-sidepage')
 
-@section('navbar')
+{{-- @section('navbar')
     @include('client.components.menu_main')
-@endsection
+@endsection --}}
 
 @section('content')
-    <div class="content-padding">
+    <div class="container">
         <h1>Redakce ProScholy.cz</h1>
 
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,

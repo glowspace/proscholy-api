@@ -1,13 +1,9 @@
-@extends('layout.client')
+@extends('layout.client-sidepage')
 
 @section('title', $song_l->name . ' - píseň ve zpěvníku ProScholy.cz')
 
-@section('navbar')
-    @include('client.components.menu_song')
-@endsection
-
 @section('content')
-    <div class="content-padding">
+    <div class="container">
         <h1>{{$song_l->name}}</h1>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
@@ -92,6 +88,5 @@
 
             </div>
         </div>
-
     </div>
 @endsection

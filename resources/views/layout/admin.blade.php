@@ -1,9 +1,42 @@
 @extends('layout.master')
 
-@section('navbar-brand_href', route('admin.dashboard'))
+{{-- @section('navbar-brand_href', route('admin.dashboard')) --}}
 
 @section('navbar')
-    @include('admin.components.menu')
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
+        <div class="container">
+        <a class="navbar-brand" href="#"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
+            Zpěvník pro scholy
+            <span style="color: #ffffff3d">- na pomoc všem, kteří se chtějí modlit hudbou</span>
+        </a>
+            {{-- <div>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i> Autoři písní</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Přidat píseň</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i> Tmavý mód</a>
+            </div> --}}
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a href="#" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="20"></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-search"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-info"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i></a>
+        </div>
+    </nav>
+@endsection
+
+@section('sidebar')
+    <div class="sidebar bg-dark material-shadow" id="navbarNav">
+        @include('admin.components.menu')
+    </div>
 @endsection
 
 @section('app-css')
@@ -14,3 +47,45 @@
 @section('app-js')
     <script type="text/javascript" src="{{ mix('_admin/js/app.js') }}"></script>
 @endsection
+
+@push('scripts')
+<script>
+        // Mobile viewport soft keyboard fix
+        setTimeout(function () {
+            var viewheight = $(window).height();
+            var viewwidth = $(window).width();
+            var viewport = $("meta[name=viewport]");
+            viewport.attr("content", "height=" + viewheight + "px, width=" +
+                viewwidth + "px, initial-scale=1.0");
+        }, 300);
+
+
+        // Navbar toggling
+        let navbarState = false;
+
+        function toggleNavbar() {
+            console.log(navbarState);
+
+            if (navbarState === false) {
+                showNavbar();
+            }
+            else {
+                hideNavbar();
+            }
+        }
+
+        function showNavbar() {
+            navbarState = true;
+
+            $('.sidebar')
+                .show()
+                .css({position: 'absolute'});
+        }
+
+        function hideNavbar() {
+            navbarState = false;
+
+            $('.sidebar').hide();
+        }
+    </script>
+@endpush

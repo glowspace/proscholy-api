@@ -1,5 +1,5 @@
 <template>
-    <div class="content-padding">
+    <div>
         <h1>Vyhledávání</h1>
 
         <input class="form-control search-basic mb-2"

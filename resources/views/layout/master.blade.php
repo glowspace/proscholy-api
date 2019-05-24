@@ -42,85 +42,42 @@
     @stack('head_links')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top">
-        <div>
+    @yield("navbar")
+
+    {{-- <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top"> --}}
+        
+        {{-- <div>
             <a class="navbar-brand" href="@yield('navbar-brand_href', '/')"><img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0;">
              Zpěvník pro scholy</a>
-        </div>
+        </div> --}}
 
-        @if (Auth::check())
+        {{-- @if (Auth::check())
                 <a class="navbar-text" href="{{route('admin.dashboard')}}">
                 Přihlášený uživatel: {{ Auth::user()->name }}
                 @if (Auth::user()->roles()->count() > 0)
                     ({{Auth::user()->roles()->first()->name}})
                 @endif
             </a>
-        @endif
+        @endif --}}
 
-        <button class="navbar-toggler" type="button"
+        {{-- <button class="navbar-toggler" type="button"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleNavbar()">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> --}}
 
-    </nav>
+    {{-- </nav> --}}
 
-    <div class="container-fluid" id="app">
-        <div class="row">
-            {{-- Side navbar --}}
-            <div class="sidebar bg-dark material-shadow" id="navbarNav">
-                @yield('navbar')
-            </div>
+    
 
-            {{-- Content --}}
-            <div class="content">
-                @yield('content')
-            </div>
-        </div>
+    <div id="app">
+        @yield('content')
+        {{-- Side navbar --}}
+        @yield('sidebar')
     </div>
 
     {{-- Main JS built with Laravel's mix --}}
     @yield('app-js')
     
-    <script>
-        // Mobile viewport soft keyboard fix
-        setTimeout(function () {
-            var viewheight = $(window).height();
-            var viewwidth = $(window).width();
-            var viewport = $("meta[name=viewport]");
-            viewport.attr("content", "height=" + viewheight + "px, width=" +
-                viewwidth + "px, initial-scale=1.0");
-        }, 300);
-
-
-        // Navbar toggling
-        let navbarState = false;
-
-        function toggleNavbar() {
-            console.log(navbarState);
-
-            if (navbarState === false) {
-                showNavbar();
-            }
-            else {
-                hideNavbar();
-            }
-        }
-
-        function showNavbar() {
-            navbarState = true;
-
-            $('.sidebar')
-                .show()
-                .css({position: 'absolute'});
-        }
-
-        function hideNavbar() {
-            navbarState = false;
-
-            $('.sidebar').hide();
-        }
-    </script>
-
     @stack('scripts')
 </body>
 </html>

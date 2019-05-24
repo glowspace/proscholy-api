@@ -1,6 +1,37 @@
 @extends('layout.client')
 
 @section('navbar')
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
+        <div class="container">
+        <a class="navbar-brand" href="#"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
+            Zpěvník pro scholy
+            <span style="color: #ffffff3d">- na pomoc všem, kteří se chtějí modlit hudbou</span>
+        </a>
+            {{-- <div>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i> Autoři písní</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Přidat píseň</a>
+                <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i> Tmavý mód</a>
+            </div> --}}
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a href="#" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="20"></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-search"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-info"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
+            <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i></a>
+        </div>
+    </nav>
+@endsection
+
+{{-- @section('navbar')
     @include('client.components.menu_main')
 
     <div class="alert alert-primary"
@@ -18,7 +49,7 @@
         <a class="btn btn-secondary" href="{{route('admin.dashboard')}}">
             <i class="fas fa-users"></i> Administrace
         </a>
-    @endauth
+    @endauth --}}
 
 
 
@@ -29,28 +60,30 @@
     {{--<i class="fas fa-music"></i>{{$song_l->name}}</a>--}}
     {{--@endforeach--}}
     {{--</div>--}}
-@endsection
+{{-- @endsection --}}
 
 @section('content')
     <div class="background-home">
-        <div class="logo-wrapper ">
-            <div class="logo"></div>
-            <span class="caption noselect">Zpěvník</span>
-        </div>
-        <div class="search-wrapper">
-            <form method="POST"
-                  action="{{route('client.search')}}">
-                @csrf
-                <input class="search-home"
-                       name="query"
-                       placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)"
-                       :autofocus="'autofocus'"
-                       type="search">
-                <button type="submit"
-                        class="search-submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </form>
+        <div class="container-fluid">
+            <div class="logo-wrapper ">
+                <div class="logo"></div>
+                <span class="caption noselect">Zpěvník</span>
+            </div>
+            <div class="search-wrapper">
+                <form method="POST"
+                      action="{{route('client.search')}}">
+                    @csrf
+                    <input class="search-home"
+                           name="query"
+                           placeholder="Zadejte název písně (třeba Ať požehnán je Bůh)"
+                           :autofocus="'autofocus'"
+                           type="search">
+                    <button type="submit"
+                            class="search-submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
