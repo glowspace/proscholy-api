@@ -6,6 +6,7 @@
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
+        <v-tab>Zpěvníky</v-tab>
         <v-tab-item>
           <v-layout row pt-2>
             <v-flex xs12 md6>
@@ -171,6 +172,36 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
+        <v-tab-item>
+            <v-layout row>
+              <v-flex xs12>
+                <h5>Přiřazené zpěvníky:</h5>
+              </v-flex>
+            </v-layout>
+
+            <v-layout row v-for="(record, i) in model.songbook_records || []" :key="i">
+              <v-flex xs4>
+                <v-combobox
+                  v-model="record.songbook"
+                  :items="songbooks"
+                  item-value="id"
+                  item-text="name"
+                  label="Název zpěvníku"
+                ></v-combobox>
+              </v-flex>
+              <v-flex xs2>
+                <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                <v-btn @click="removeSongbookRecord(i)">Odstranit</v-btn>
+              </v-flex>
+            </v-layout>
+
+            <v-btn @click="addSongbookRecord()">Přidat nový</v-btn>
+
+            <v-layout row mb4></v-layout>
+        </v-tab-item>
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
@@ -252,6 +283,16 @@ const FETCH_SONG_LYRICS = gql`
   }
 `;
 
+
+const FETCH_SONGBOOKS = gql`
+  query {
+    songbooks {
+      id
+      name
+    }
+  }
+`;
+
 const FETCH_TAGS_UNOFFICIAL = gql`
   query {
     tags_unofficial: tags(type: 0) {
@@ -294,6 +335,7 @@ export default {
         authors: [],
         externals: [],
         files: [],
+        songbook_records: [],
         song: undefined
       },
       lang_values: [],
@@ -339,6 +381,9 @@ export default {
     },
     tags_unofficial: {
       query: FETCH_TAGS_UNOFFICIAL
+    },
+    songbooks: {
+      query: FETCH_SONGBOOKS
     }
   },
 
@@ -377,10 +422,11 @@ export default {
         .filter(ext => {
           return [0, 4, 8, 9].includes(ext.type);
         })
-        .concat(this.model.files
-        .filter(file => {
-          return [1, 2, 3].includes(file.type);
-        }));
+        .concat(
+          this.model.files.filter(file => {
+            return [1, 2, 3].includes(file.type);
+          })
+        );
     }
   },
 
@@ -468,21 +514,6 @@ export default {
       window.location.href = this.model_database.public_url;
     },
 
-    askDelete() {},
-
-    // destroy() {
-    //   this.$apollo.mutate({
-    //     mutation: DELETE_MODEL_DATABASE,
-    //     variables: {
-    //       id: this.model.id
-    //     }
-    //   }).then(result => {
-
-    //   }).catch(error => {
-
-    //   });
-    // },
-
     async goToPage(url, save = true) {
       if (this.isDirty && save) await this.submit();
 
@@ -534,6 +565,17 @@ export default {
     },
 
     getModelsToSyncBelongsToMany(models) {
+      return models
+        .filter(model => {
+          if (model.id) return true;
+          return false;
+        })
+        .map(model => {
+          return model.id;
+        });
+    },
+
+    getModelsToSyncBelongsToManyWithPivot(models, attributes) {
       return models
         .filter(model => {
           if (model.id) return true;
@@ -609,6 +651,29 @@ export default {
           Vue.set(song_lyric, "name", name);
         }
       }
+    },
+
+    addSongbookRecord() {
+      this.model.songbook_records.push({
+        number: "",
+        songbook: {
+          id: null,
+          name: ""
+        }
+      });
+    },
+
+    removeSongbookRecord(i) {
+      let name = this.model.songbook_records[i].songbook.name;
+      if (name) {
+        // not empty
+
+        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "?")) {
+          return;
+        }
+      }
+
+      this.$delete(this.model.songbook_records, i);
     }
   }
 };

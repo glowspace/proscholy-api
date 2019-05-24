@@ -23,4 +23,9 @@ class SongbookRecordType
     {
         return $root->pivot->song_lyric;
     }
+
+    public function songbook($root)
+    {
+        return $root->pivot->songbook;
+    }
 }

@@ -107,4 +107,5 @@ type SongbookRecord {
     number: String @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@number")
     placeholder: String @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@placeholder")
     song_lyric: SongLyric @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@song_lyric")
+    songbook: SongLyric @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@songbook")
 }

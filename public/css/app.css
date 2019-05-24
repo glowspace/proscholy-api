@@ -21427,6 +21427,28 @@ body {
   overflow-x: visible;
 }
 
+input::-webkit-input-placeholder {
+  line-height: inherit;
+}
+
+input::-moz-placeholder {
+  line-height: inherit;
+}
+
+input::-ms-input-placeholder {
+  line-height: inherit;
+}
+
+input::placeholder {
+  line-height: inherit;
+}
+
+.search-home,
+.form-control,
+.custom-file-control {
+  line-height: calc((2.3775rem + 2px)/1.5);
+}
+
 .navbar {
   z-index: 200;
   background-color: #292929;
@@ -21639,7 +21661,7 @@ View: Search results
  */
 
 .search-basic {
-  width: 500px;
+  max-width: 500px;
   display: inline-block;
 }
 
