@@ -21783,3 +21783,12 @@ body {
   color: #aaa;
 }
 
+.home-bottom {
+  background: #292929;
+  color: white;
+}
+
+.home-bottom .card {
+  background: #353232;
+}
+
