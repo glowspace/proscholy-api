@@ -4,7 +4,7 @@
 
 @section('navbar')
     <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
-        <div class="container">
+        <div class="">
         <a class="navbar-brand" href="#"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
             Zpěvník pro scholy
             <span style="color: #ffffff3d">- na pomoc všem, kteří se chtějí modlit hudbou</span>
@@ -19,25 +19,28 @@
             </div> --}}
         </div>
     </nav>
-    
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a href="#" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="20"></a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-search"></i></a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i></a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-info"></i></a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i></a>
-        </div>
-    </nav>
 @endsection
 
-@section('sidebar')
+@section('content')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="sidebar bg-dark material-shadow" id="navbarNav">
+                    @include('admin.components.menu')
+                </div>
+            </div>
+            <div class="col-lg-10">
+                @yield("content-withmenu")
+            </div>
+        </div>
+    </div>
+@endsection
+
+{{-- @section('sidebar')
     <div class="sidebar bg-dark material-shadow" id="navbarNav">
         @include('admin.components.menu')
     </div>
-@endsection
+@endsection --}}
 
 @section('app-css')
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">

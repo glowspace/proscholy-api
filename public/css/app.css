@@ -21462,24 +21462,13 @@ input::placeholder {
 
 .sidebar {
   min-height: calc(100vh - 66px);
-  width: 300px;
-  padding: 5px 0 0;
-  z-index: 10;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
-  margin-top: 66px;
+  height: 100%;
+  margin-left: -15px;
 }
 
 @media (max-width: 991.98px) {
   .sidebar {
     display: none;
-  }
-}
-
-@media (min-width: 992px) {
-  .sidebar {
-    position: fixed !important;
-    display: inline-block !important;
   }
 }
 

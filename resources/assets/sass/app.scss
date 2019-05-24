@@ -83,13 +83,15 @@ $sidebar-width: 300px;
 
 .sidebar {
   min-height: calc(100vh - 66px);
-  width:      $sidebar-width;
-  padding:    5px 0 0;
-  z-index:    10;
+  height: 100%;
+  margin-left: -15px;
+  // width:      $sidebar-width;
+  // padding:    5px 0 0;
+  // z-index:    10;
   // display:    inline-block;
-  transition: 0.2s;
+  // transition: 0.2s;
 
-  margin-top: 66px;
+  // margin-top: 66px;
 
 
   @include media-breakpoint-down(md) {
@@ -98,9 +100,9 @@ $sidebar-width: 300px;
 
   @include media-breakpoint-up(lg) {
     // display: none;
-    position: fixed !important;
+    // position: fixed !important;
 
-    display:  inline-block !important;
+    // display:  inline-block !important;
   }
 
   a {
