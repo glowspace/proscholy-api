@@ -76,7 +76,7 @@ input::placeholder {
 }
 
 .navbar-brand {
-  padding: 0 !important;
+  padding: 0 0.5rem;
 }
 
 $sidebar-width: 300px;
@@ -439,13 +439,15 @@ body {
 
 .navbar.absolute-top {
   z-index: 201;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .navbar > div {
   width: 100%;
   /* max-width: 994px; */
   margin: 0 auto;
-  /* padding: 0 30px;  */
+  padding: 0;
 }
 
 .navbar .container {
