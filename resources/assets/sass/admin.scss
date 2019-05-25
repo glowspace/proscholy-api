@@ -12,3 +12,8 @@ textarea.form-control
     padding-bottom: 8px;
     border-bottom: 1px #bec0c1 solid;
 }
+
+// vuetify tabs height not updating bug fix
+.v-tabs .v-window__container {
+    height: auto !important;
+}

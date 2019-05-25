@@ -27,6 +27,10 @@ textarea.custom-file-control {
   border-bottom: 1px #bec0c1 solid;
 }
 
+.v-tabs .v-window__container {
+  height: auto !important;
+}
+
 .card {
   font-size: .875rem;
   font-weight: normal;
