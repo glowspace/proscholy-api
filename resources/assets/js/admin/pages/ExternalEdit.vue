@@ -72,14 +72,14 @@
               <v-btn
                 color="green darken-1"
                 flat
-                @click="goToAdminPage('external')"
+                @click="goToAdminPage('external', false)"
               >Přejít na seznam externích odkazů</v-btn>
             </div>
             <div>
               <v-btn v-if="model.song_lyric"
                 color="green darken-1"
                 flat
-                @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')"
+                @click="goToAdminPage('song/' + model.song_lyric.id + '/edit', false)"
               >Přejít na editaci písně</v-btn>
             </div>
           </v-card-actions>
@@ -203,8 +203,8 @@ export default {
 
   computed: {
     isDirty() {
+      if (this.is_deleted) return false;
       if (!this.model_database) return false;
-
       if (!this.model.url) return true;
 
       for (let field of this.getFieldsFromFragment(this)) {
@@ -315,7 +315,7 @@ export default {
       if (this.isDirty && save) await this.submit();
 
       setTimeout(() => {
-        if (!this.isDirty && save) {
+        if (!(this.isDirty && save)) {
           var base_url = document
             .querySelector("#baseUrl")
             .getAttribute("value");

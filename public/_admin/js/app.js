@@ -69573,8 +69573,8 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
 
   computed: {
     isDirty: function isDirty() {
+      if (this.is_deleted) return false;
       if (!this.model_database) return false;
-
       if (!this.model.url) return true;
 
       var _iteratorNormalCompletion2 = true;
@@ -69741,7 +69741,7 @@ var FETCH_SONG_LYRICS = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_tem
               case 3:
 
                 setTimeout(function () {
-                  if (!_this3.isDirty && save) {
+                  if (!(_this3.isDirty && save)) {
                     var base_url = document.querySelector("#baseUrl").getAttribute("value");
                     window.location.href = base_url + "/" + url;
                   }
@@ -70020,7 +70020,7 @@ var render = function() {
                               attrs: { color: "green darken-1", flat: "" },
                               on: {
                                 click: function($event) {
-                                  return _vm.goToAdminPage("external")
+                                  return _vm.goToAdminPage("external", false)
                                 }
                               }
                             },
@@ -70043,7 +70043,8 @@ var render = function() {
                                       return _vm.goToAdminPage(
                                         "song/" +
                                           _vm.model.song_lyric.id +
-                                          "/edit"
+                                          "/edit",
+                                        false
                                       )
                                     }
                                   }
