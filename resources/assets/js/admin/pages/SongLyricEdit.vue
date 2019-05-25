@@ -184,8 +184,8 @@
                 <v-select
                   v-model="record.songbook"
                   :items="songbooks"
-                  item-value="id"
                   item-text="name"
+                  return-object
                   label="Název zpěvníku"
                 ></v-select>
               </v-flex>
@@ -555,6 +555,10 @@ export default {
 
       return fieldNames;
     },
+
+    // loggg(a) {
+    //   console.log(a);
+    // },
 
     // hasIdFilter(model) {
     //   if (model.id) return true;

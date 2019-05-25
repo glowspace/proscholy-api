@@ -70828,6 +70828,10 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
     },
 
 
+    // loggg(a) {
+    //   console.log(a);
+    // },
+
     // hasIdFilter(model) {
     //   if (model.id) return true;
     //   return false;
@@ -72205,8 +72209,8 @@ var render = function() {
                             _c("v-select", {
                               attrs: {
                                 items: _vm.songbooks,
-                                "item-value": "id",
                                 "item-text": "name",
+                                "return-object": "",
                                 label: "Název zpěvníku"
                               },
                               model: {
