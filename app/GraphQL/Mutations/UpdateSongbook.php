@@ -4,8 +4,10 @@ namespace App\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use Nuwave\Lighthouse\Execution\ErrorBuffer;
 
 use App\Songbook;
+use App\SongLyric;
 
 class UpdateSongbook
 {
@@ -23,6 +25,9 @@ class UpdateSongbook
         $input = $args["input"];
         $songbook = Songbook::find($input["id"]);
 
+        $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
+        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context,'root' => $rootValue];
+
         // update the fillable attributes
         $songbook->update($input);
 
@@ -36,15 +41,45 @@ class UpdateSongbook
             }
             $songbook->records()->sync($syncModels);
         }
+        
         if (isset($input["records"]["create"])) {
             foreach ($input["records"]["create"] as $record) {
+                $validator = Validator::make(['name' => $record["song_lyric_name"]], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
+                
+                if (!$validator->fails()){
+                    $song       = Song::create(['name' => $record["song_lyric_name"]]);
+                    $song_lyric = SongLyric::create([
+                        'name' => $record["song_lyric_name"],
+                        'song_id' => $song->id,
+                    ]);
+                }
+
                 $songbook->records()->create([
+                    'song_lyric_id' => $song_lyric->id,
                     'number' => $record["number"],
                     'placeholder' => $record["placeholder"],
                 ]);
             }
         }
         $songbook->save();
+
+        // perform the validation with the help of Nuawe validation error buffer
+        if (isset($validator)) {
+            // validator has already been tested for fail, so here ->failed() is needed 
+            // in order not to perform the validation again
+            if ($validator->failed()) {
+                foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
+                    foreach ($errorMessages as $errorMessage) {
+                        $validationErrorBuffer->push($errorMessage, $key);
+                    }
+                }
+            }
+    
+            $path = implode('.', $resolveInfo->path);
+            $validationErrorBuffer->flush(
+                "Validation failed for the field [$path]."
+            );
+        }
 
         return Songbook::find($input["id"]);
     }

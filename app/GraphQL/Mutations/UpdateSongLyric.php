@@ -9,6 +9,7 @@ use Log;
 use App\SongLyric;
 use App\Song;
 use App\Tag;
+use App\Songbook;
 use function Safe\array_combine;
 
 class UpdateSongLyric
@@ -26,9 +27,9 @@ class UpdateSongLyric
     {
         Log::info($args["input"]);
         $input = $args["input"];
-        
+
         $song_lyric = SongLyric::find($input["id"]);
-        
+
         // TODO as an event
         if ($input["name"] !== $song_lyric->name) {
             // to be domestic means to have a same name as the parent song
@@ -59,7 +60,7 @@ class UpdateSongLyric
             $tagsToSync = $input["tags_unofficial"]["sync"];
             // unofficial tags can have parent tags, so add them as well
 
-            foreach($tagsToSync as $tag_id) {
+            foreach ($tagsToSync as $tag_id) {
                 $parent = Tag::find($tag_id)->parent_tag;
                 if ($parent != null && !in_array($parent->id, $tagsToSync)) {
                     $tagsToSync[] = $parent->id;
@@ -77,7 +78,7 @@ class UpdateSongLyric
                 $song_lyric->tags()->create(['name' => $author["name"]]);
             }
         }
-        $song_lyric->save();
+        // $song_lyric->save();
 
         // HANDLE ASSOCIATED SONG LYRICS
         if (isset($input["song"])) {
@@ -90,23 +91,23 @@ class UpdateSongLyric
                 Log::info("situation 1");
 
                 foreach ($sl_group as $sl_object) {
-                    $song_lyric = SongLyric::find($sl_object["id"]);
-                    $song_lyric->update([
+                    $new_sibling = SongLyric::find($sl_object["id"]);
+                    $new_sibling->update([
                         'song_id' => $input["song"]["id"],
                         'type' => $sl_object["type"]
                     ]);
                 }
-            } 
+            }
             // 2. case: song was in a group and now is alone
-            elseif($song_lyric->hasSiblings() && $sl_group->count() == 1) {
+            elseif ($song_lyric->hasSiblings() && $sl_group->count() == 1) {
                 // create new song and associate this song_lyric to that one
                 Log::info("situation 2");
 
                 $sl_object = $sl_group[0];
 
                 $new_song = Song::create(["name" => $sl_object["name"]]);
-                $song_lyric = SongLyric::find($sl_object["id"]);
-                $song_lyric->update([
+                $former_sibling = SongLyric::find($sl_object["id"]);
+                $former_sibling->update([
                     'song_id' => $new_song->id,
                     'type' => $sl_object["type"]
                 ]);
@@ -114,8 +115,8 @@ class UpdateSongLyric
             // 3. case: no insertions/deletions, just update the types
             elseif ($song_lyric->getSiblings()->count() + 1 == $sl_group->count()) {
                 foreach ($sl_group as $sl_object) {
-                    $song_lyric = SongLyric::find($sl_object["id"]);
-                    $song_lyric->update([
+                    $sibling = SongLyric::find($sl_object["id"]);
+                    $sibling->update([
                         'type' => $sl_object["type"]
                     ]);
                 }
@@ -130,20 +131,26 @@ class UpdateSongLyric
             $syncModels = [];
             foreach ($input["songbook_records"]["sync"] as $record) {
                 $syncModels[$record["songbook_id"]] = [
-                    'number' => $record["number"],
-                    'placeholder' => $record["placeholder"],
+                    'number' => $record["number"]
                 ];
             }
             $song_lyric->songbook_records()->sync($syncModels);
         }
         if (isset($input["songbook_records"]["create"])) {
             foreach ($input["songbook_records"]["create"] as $record) {
+                // $songbook = Songbook::create(["name" => $record["songbook"]]);
+
+                \Log::info($song_lyric);
+
                 $song_lyric->songbook_records()->create([
-                    'number' => $record["number"],
-                    'placeholder' => $record["placeholder"],
+                    'name' => $record["songbook"]
+                ], [
+                    'number' => $record["number"]
                 ]);
             }
         }
+
+        $song_lyric->save();
 
         // reload from database
         return SongLyric::find($input["id"]);

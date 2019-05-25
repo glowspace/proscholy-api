@@ -94,16 +94,23 @@ input UpdateSongbookInput {
 }
 
 input SyncSongbookRecordsForSongbookRelation {
-  create: [CreateSongbookRecordInput!]
+  create: [CreateSongbookRecordForSongbookInput!]
   sync: [SyncSongbookRecordForSongbookInput!]
 }
 
 input SyncSongbookRecordsForSongLyricRelation {
-  create: [CreateSongbookRecordInput!]
+  create: [CreateSongbookRecordForSongLyricInput!]
   sync: [SyncSongbookRecordForSongLyricInput!]
 }
 
-input CreateSongbookRecordInput {
+input CreateSongbookRecordForSongbookInput {
+  song_lyric_name: String!
+  number: String
+  placeholder: String
+}
+
+input CreateSongbookRecordForSongLyricInput {
+  songbook: String!
   number: String
   placeholder: String
 }

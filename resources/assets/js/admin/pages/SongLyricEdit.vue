@@ -181,13 +181,13 @@
 
             <v-layout row v-for="(record, i) in model.songbook_records || []" :key="i">
               <v-flex xs4>
-                <v-combobox
+                <v-select
                   v-model="record.songbook"
                   :items="songbooks"
                   item-value="id"
                   item-text="name"
                   label="Název zpěvníku"
-                ></v-combobox>
+                ></v-select>
               </v-flex>
               <v-flex xs2>
                 <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
@@ -444,22 +444,21 @@ export default {
               lyrics: this.model.lyrics,
               song: this.model.song,
               authors: {
-                create: this.getModelsToCreateBelongsToMany(this.model.authors),
-                sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+                create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.authors.filter(m => m.hasOwnProperty("id")).map(m => m.id)
               },
               tags_unofficial: {
-                create: this.getModelsToCreateBelongsToMany(
-                  this.model.tags_unofficial
-                ),
-                sync: this.getModelsToSyncBelongsToMany(
-                  this.model.tags_unofficial
-                )
+                create: this.model.tags_unofficial.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.tags_unofficial.filter(m => m.hasOwnProperty("id")).map(m => m.id)
               },
               tags_official: {
-                // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
-                sync: this.getModelsToSyncBelongsToMany(
-                  this.model.tags_official
-                )
+                // create: this.model.tags_official.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.tags_official.filter(m => m.hasOwnProperty("id")).map(m => m.id)
+              },
+              songbook_records: {
+                // was not working
+                // create: this.model.songbook_records.filter(m => typeof m.songbook === "string"),
+                sync: this.model.songbook_records.map(m => ({songbook_id: parseInt(m.songbook.id), number: m.number}))
               }
             }
           }
@@ -557,34 +556,35 @@ export default {
       return fieldNames;
     },
 
-    getModelsToCreateBelongsToMany(models) {
-      return models.filter(model => {
-        if (model.id) return false;
-        return true;
-      });
-    },
+    // hasIdFilter(model) {
+    //   if (model.id) return true;
+    //   return false;
+    // },
 
-    getModelsToSyncBelongsToMany(models) {
-      return models
-        .filter(model => {
-          if (model.id) return true;
-          return false;
-        })
-        .map(model => {
-          return model.id;
-        });
-    },
+    // hasNoIdFilter(model) {
+    //   return !this.hasIdFilter(model);
+    // },
 
-    getModelsToSyncBelongsToManyWithPivot(models, attributes) {
-      return models
-        .filter(model => {
-          if (model.id) return true;
-          return false;
-        })
-        .map(model => {
-          return model.id;
-        });
-    },
+    // getModelsToCreateBelongsToMany(models) {
+    //   return models.filter(this.hasNoIdFilter);
+    // },
+
+    // getModelsToSyncBelongsToMany(models) {
+    //   return models
+    //     .filter(this.hasIdFilter)
+    //     .map(model => model.id);
+    // },
+
+    // getModelsToSyncBelongsToMany_WithSongbookRecordPivot(models) {
+    //   return models
+    //     .filter(this.hasIdFilter)
+    //     .map(model => {
+    //       return {
+    //         id: model.id,
+    //         number: model.number
+    //       }
+    //     });
+    // },
 
     getModelToSyncBelongsTo(model) {
       let obj = {};
@@ -668,7 +668,7 @@ export default {
       if (name) {
         // not empty
 
-        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "?")) {
+        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "? (Změny se projeví až po uložení písničky)")) {
           return;
         }
       }

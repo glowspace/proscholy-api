@@ -70628,16 +70628,39 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
             lyrics: this.model.lyrics,
             song: this.model.song,
             authors: {
-              create: this.getModelsToCreateBelongsToMany(this.model.authors),
-              sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+              create: this.model.authors.filter(function (m) {
+                return !m.hasOwnProperty("id");
+              }),
+              sync: this.model.authors.filter(function (m) {
+                return m.hasOwnProperty("id");
+              }).map(function (m) {
+                return m.id;
+              })
             },
             tags_unofficial: {
-              create: this.getModelsToCreateBelongsToMany(this.model.tags_unofficial),
-              sync: this.getModelsToSyncBelongsToMany(this.model.tags_unofficial)
+              create: this.model.tags_unofficial.filter(function (m) {
+                return !m.hasOwnProperty("id");
+              }),
+              sync: this.model.tags_unofficial.filter(function (m) {
+                return m.hasOwnProperty("id");
+              }).map(function (m) {
+                return m.id;
+              })
             },
             tags_official: {
-              // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
-              sync: this.getModelsToSyncBelongsToMany(this.model.tags_official)
+              // create: this.model.tags_official.filter(m => !m.hasOwnProperty("id")),
+              sync: this.model.tags_official.filter(function (m) {
+                return m.hasOwnProperty("id");
+              }).map(function (m) {
+                return m.id;
+              })
+            },
+            songbook_records: {
+              // was not working
+              // create: this.model.songbook_records.filter(m => typeof m.songbook === "string"),
+              sync: this.model.songbook_records.map(function (m) {
+                return { songbook_id: parseInt(m.songbook.id), number: m.number };
+              })
             }
           }
         }
@@ -70802,28 +70825,38 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
 
       return fieldNames;
     },
-    getModelsToCreateBelongsToMany: function getModelsToCreateBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return false;
-        return true;
-      });
-    },
-    getModelsToSyncBelongsToMany: function getModelsToSyncBelongsToMany(models) {
-      return models.filter(function (model) {
-        if (model.id) return true;
-        return false;
-      }).map(function (model) {
-        return model.id;
-      });
-    },
-    getModelsToSyncBelongsToManyWithPivot: function getModelsToSyncBelongsToManyWithPivot(models, attributes) {
-      return models.filter(function (model) {
-        if (model.id) return true;
-        return false;
-      }).map(function (model) {
-        return model.id;
-      });
-    },
+
+
+    // hasIdFilter(model) {
+    //   if (model.id) return true;
+    //   return false;
+    // },
+
+    // hasNoIdFilter(model) {
+    //   return !this.hasIdFilter(model);
+    // },
+
+    // getModelsToCreateBelongsToMany(models) {
+    //   return models.filter(this.hasNoIdFilter);
+    // },
+
+    // getModelsToSyncBelongsToMany(models) {
+    //   return models
+    //     .filter(this.hasIdFilter)
+    //     .map(model => model.id);
+    // },
+
+    // getModelsToSyncBelongsToMany_WithSongbookRecordPivot(models) {
+    //   return models
+    //     .filter(this.hasIdFilter)
+    //     .map(model => {
+    //       return {
+    //         id: model.id,
+    //         number: model.number
+    //       }
+    //     });
+    // },
+
     getModelToSyncBelongsTo: function getModelToSyncBelongsTo(model) {
       var obj = {};
 
@@ -70914,7 +70947,7 @@ var FETCH_TAGS_OFFICIAL = __WEBPACK_IMPORTED_MODULE_1_graphql_tag___default()(_t
       if (name) {
         // not empty
 
-        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "?")) {
+        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "? (Změny se projeví až po uložení písničky)")) {
           return;
         }
       }
@@ -72168,7 +72201,7 @@ var render = function() {
                           "v-flex",
                           { attrs: { xs4: "" } },
                           [
-                            _c("v-combobox", {
+                            _c("v-select", {
                               attrs: {
                                 items: _vm.songbooks,
                                 "item-value": "id",
