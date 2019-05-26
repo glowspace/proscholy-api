@@ -136,19 +136,19 @@ class UpdateSongLyric
             }
             $song_lyric->songbook_records()->sync($syncModels);
         }
-        if (isset($input["songbook_records"]["create"])) {
-            foreach ($input["songbook_records"]["create"] as $record) {
-                // $songbook = Songbook::create(["name" => $record["songbook"]]);
+        // if (isset($input["songbook_records"]["create"])) {
+        //     foreach ($input["songbook_records"]["create"] as $record) {
+        //         // $songbook = Songbook::create(["name" => $record["songbook"]]);
 
-                \Log::info($song_lyric);
+        //         \Log::info($song_lyric);
 
-                $song_lyric->songbook_records()->create([
-                    'name' => $record["songbook"]
-                ], [
-                    'number' => $record["number"]
-                ]);
-            }
-        }
+        //         $song_lyric->songbook_records()->create([
+        //             'name' => $record["songbook"]
+        //         ], [
+        //             'number' => $record["number"]
+        //         ]);
+        //     }
+        // }
 
         $song_lyric->save();
 
