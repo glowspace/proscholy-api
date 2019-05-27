@@ -43,7 +43,7 @@
   input {
     border: none;
   }
-</style>fetch_items
+</style>
 
 <script>
 
