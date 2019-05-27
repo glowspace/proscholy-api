@@ -91,10 +91,10 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "@/graphql/client/external_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue";
-import DeleteModelDialog from "../components/DeleteModelDialog.vue";
-import ExternalView from "../../components/ExternalView.vue";
+import fragment from "Fragments/external_fragment.graphql";
+import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
+import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
+import ExternalView from "Public/components/ExternalView.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {

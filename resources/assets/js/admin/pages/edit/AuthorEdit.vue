@@ -90,9 +90,9 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "@/graphql/client/author_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue";
-import DeleteModelDialog from "../components/DeleteModelDialog.vue";
+import fragment from "Fragments/author_fragment.graphql";
+import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
+import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {

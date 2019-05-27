@@ -20,19 +20,21 @@ window.Vue = require('vue');
  */
 
 
-Vue.component('songs-list', require('./pages/SongsList.vue'));
-Vue.component('externals-list', require('./pages/ExternalsList.vue'));
-Vue.component('files-list', require('./pages/FilesList.vue'));
-Vue.component('authors-list', require('./pages/AuthorsList.vue'));
-Vue.component('songbooks-list', require('./pages/SongbooksList.vue'));
+// import SongsList from "Pages/list/SongsList";
 
-Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
-Vue.component('external-edit', require('./pages/ExternalEdit.vue'));
-Vue.component('song-lyric-edit', require('./pages/SongLyricEdit.vue'));
-Vue.component('file-edit', require('./pages/FileEdit.vue'));
-Vue.component('songbook-edit', require('./pages/SongbookEdit.vue'));
+Vue.component('songs-list', require('Admin/pages/list/SongsList.vue'));
+Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
+Vue.component('files-list', require('Admin/pages/list/FilesList.vue'));
+Vue.component('authors-list', require('Admin/pages/list/AuthorsList.vue'));
+Vue.component('songbooks-list', require('Admin/pages/list/SongbooksList.vue'));
 
-Vue.component('external-view', require('../components/ExternalView.vue'));
+Vue.component('author-edit', require('Admin/pages/edit/AuthorEdit.vue'));
+Vue.component('external-edit', require('Admin/pages/edit/ExternalEdit.vue'));
+Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
+Vue.component('file-edit', require('Admin/pages/edit/FileEdit.vue'));
+Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
+
+Vue.component('external-view', require('Public/components/ExternalView.vue'));
 
 
 import { ApolloClient } from 'apollo-client'

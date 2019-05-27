@@ -240,11 +240,11 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "@/graphql/client/song_lyric_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue";
-import SongLyricsGroup from "../components/SongLyricsGroup.vue";
-import SelectSongGroupDialog from "../components/SelectSongGroupDialog.vue";
-import DeleteModelDialog from "../components/DeleteModelDialog.vue";
+import fragment from "Fragments/song_lyric_fragment.graphql";
+import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
+import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
+import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
+import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {

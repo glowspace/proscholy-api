@@ -26,7 +26,10 @@ mix.webpackConfig({
     },
     resolve: {
         alias: {
-            '@': __dirname
+            '@': __dirname,
+            'Admin': path.resolve(__dirname, 'resources/assets/js/admin/'),
+            'Public': path.resolve(__dirname, 'resources/assets/js/'),
+            'Fragments': path.resolve(__dirname, 'graphql/client/'),
         },
     }
 });
