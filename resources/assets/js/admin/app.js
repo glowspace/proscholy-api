@@ -24,11 +24,13 @@ Vue.component('songs-list', require('./pages/SongsList.vue'));
 Vue.component('externals-list', require('./pages/ExternalsList.vue'));
 Vue.component('files-list', require('./pages/FilesList.vue'));
 Vue.component('authors-list', require('./pages/AuthorsList.vue'));
+Vue.component('songbooks-list', require('./pages/SongbooksList.vue'));
 
 Vue.component('author-edit', require('./pages/AuthorEdit.vue'));
 Vue.component('external-edit', require('./pages/ExternalEdit.vue'));
 Vue.component('song-lyric-edit', require('./pages/SongLyricEdit.vue'));
 Vue.component('file-edit', require('./pages/FileEdit.vue'));
+Vue.component('songbook-edit', require('./pages/SongbookEdit.vue'));
 
 Vue.component('external-view', require('../components/ExternalView.vue'));
 

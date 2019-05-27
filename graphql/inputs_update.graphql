@@ -90,6 +90,7 @@ input CreateUnofficialTagInput {
 input UpdateSongbookInput {
     id: ID!
     name: String
+    shortcut: String
     records: SyncSongbookRecordsForSongbookRelation
 }
 

@@ -1,0 +1,12 @@
+fragment SongbookFillableFragment on Songbook {
+    id
+    name
+    shortcut
+    records {
+        number
+        song_lyric {
+            id
+            name
+        }
+    }
+}

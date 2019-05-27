@@ -55,6 +55,7 @@ type Mutation @group(middleware: ["auth:api"]) {
     delete_file(id: ID!): File @delete
     delete_song_lyric(id: ID!): SongLyric @delete
     delete_tag(id: ID!): Tag @delete
+    delete_songbook(id: ID!): Songbook @delete
 
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
     update_external(input: UpdateExternalInput!): External @update(flatten: true)

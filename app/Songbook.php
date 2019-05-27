@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Songbook extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'shortcut'];
 
     public function records() : BelongsToMany
     {

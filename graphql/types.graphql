@@ -99,6 +99,7 @@ type Model {
 type Songbook {
     id: ID!
     name: String!
+    shortcut: String """ todo: max length 6 """
     records: [SongbookRecord] @belongsToMany
 }
 

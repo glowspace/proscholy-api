@@ -59,7 +59,7 @@
 import removeDiacritics from '../helpers/removeDiacritics';
 
 export default {
-  // todo: enable-custom set to false not working for multiple entry
+  // todo: 'enable-custom set to false' not working for multiple entry
   props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom"],
 
   data: () => ({
