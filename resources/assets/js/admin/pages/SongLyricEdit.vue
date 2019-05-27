@@ -198,12 +198,12 @@
               </v-flex>
             </v-layout>
 
-            <v-btn @click="addSongbookRecord()">Přidat nový</v-btn>
+            <v-btn @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
 
             <v-layout row mb4></v-layout>
         </v-tab-item>
       </v-tabs>
-      <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+      <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
       <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->

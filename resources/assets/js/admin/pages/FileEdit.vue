@@ -213,8 +213,8 @@ export default {
               type: this.model.type,
               song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
               authors: {
-                create: this.getModelsToCreateBelongsToMany(this.model.authors),
-                sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+                create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.authors.filter(m => m.hasOwnProperty("id")).map(m => m.id)
               }
             }
           }
@@ -263,21 +263,21 @@ export default {
       return fieldNames;
     },
 
-    getModelsToCreateBelongsToMany(models){
-      return models.filter(model => {
-        if(model.id) return false;
-        return true;
-      });
-    },
+    // getModelsToCreateBelongsToMany(models){
+    //   return models.filter(model => {
+    //     if(model.id) return false;
+    //     return true;
+    //   });
+    // },
 
-    getModelsToSyncBelongsToMany(models){
-      return models.filter(model => {
-        if(model.id) return true;
-        return false;
-      }).map(model => {
-        return model.id
-      });
-    },
+    // getModelsToSyncBelongsToMany(models){
+    //   return models.filter(model => {
+    //     if(model.id) return true;
+    //     return false;
+    //   }).map(model => {
+    //     return model.id
+    //   });
+    // },
 
     getModelToSyncBelongsTo(model) {
       let obj = {};
