@@ -198,9 +198,12 @@
               </v-flex>
             </v-layout>
 
-            <v-btn @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
+            <v-layout row>
+              <v-flex xs12 class="mb-5">
+                <v-btn @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
+              </v-flex>
+            </v-layout>
 
-            <v-layout row mb4></v-layout>
         </v-tab-item>
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>

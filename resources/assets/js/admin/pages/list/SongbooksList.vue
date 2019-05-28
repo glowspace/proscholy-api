@@ -7,7 +7,8 @@
         class-name="Songbook"
         label="Zadejte jméno nového zpěvníku"
         success-msg="Zpěvník úspěšně vytvořen"
-        @saved="$apollo.queries.songbooks.refetch()"></create-model>
+        @saved="$apollo.queries.songbooks.refetch()"
+        :force-edit="true"></create-model>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>
