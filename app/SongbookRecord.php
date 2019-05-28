@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * App\SongbookRecord
@@ -25,9 +25,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongbookRecord whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongbookRecord whereUpdatedAt($value)
  */
-class SongbookRecord extends Model
+class SongbookRecord extends Pivot
 {
-    public function songLyric()
+    protected $table = 'songbook_records';
+    protected $fillable = ["placeholder", "number", "song_lyric_id", "songbook_id"];
+    public $incrementing = true;
+    
+    public function song_lyric()
     {
         return $this->belongsTo(SongLyric::class);
     }
@@ -37,19 +41,19 @@ class SongbookRecord extends Model
         return $this->belongsTo(Songbook::class);
     }
 
-    public function generateTitle()
-    {
-        if (isset($this->song_lyric_id))
-        {
-            return $this->number . ': ' . $this->songLyric->name;
-        }
-        elseif (isset($this->placeholder))
-        {
-            return $this->number . ': ' . $this->placeholder;
-        }
-        else
-        {
-            return $this->songbook->name . ': ' . $this->number;
-        }
-    }
+    // public function generateTitle()
+    // {
+    //     if (isset($this->song_lyric_id))
+    //     {
+    //         return $this->number . ': ' . $this->songLyric->name;
+    //     }
+    //     elseif (isset($this->placeholder))
+    //     {
+    //         return $this->number . ': ' . $this->placeholder;
+    //     }
+    //     else
+    //     {
+    //         return $this->songbook->name . ': ' . $this->number;
+    //     }
+    // }
 }

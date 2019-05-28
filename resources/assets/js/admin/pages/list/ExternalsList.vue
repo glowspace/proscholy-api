@@ -3,16 +3,22 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
+      <create-model 
+        class-name="External"
+        label="Zadejte adresu nového externího odkazu"
+        success-msg="Externí odkaz úspěšně vytvořen"
+        @saved="$apollo.queries.externals.refetch()"
+        :force-edit="true"></create-model>
       <v-layout row>
         <v-flex xs5 offset-xs7 md3 offset-md9>
           <v-text-field v-model="search_string" label="Vyhledávání"></v-text-field>
         </v-flex>
       </v-layout>
-      <v-layout row>
+      <v-layout row> 
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="files"
+            :items="externals"
             :search="search_string"
             :filter="formFilter"
             :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
@@ -20,13 +26,11 @@
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/file/' + props.item.id + '/edit'">{{ props.item.public_name }}</a>
+                <a :href="'/admin/external/' + props.item.id + '/edit'">{{ props.item.public_name }}</a>
               </td>
               <td>{{ props.item.type_string }}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
-                &nbsp;
-                <a :href="props.item.download_url">Stáhnout</a>
               </td>
             </template>
           </v-data-table>
@@ -40,33 +44,37 @@
   input {
     border: none;
   }
-</style>fetch_items
+</style>
 
 <script>
 
 import gql from 'graphql-tag';
 
-import removeDiacritics from '../helpers/removeDiacritics';
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
+import CreateModel from "Admin/components/CreateModel.vue"
 
 const fetch_items = gql`
-        query FetchFiles ($is_todo: Boolean) {
-            files(is_todo: $is_todo) {
+        query FetchExternals ($is_todo: Boolean) {
+            externals (is_todo: $is_todo) {
                 id,
                 public_name,
-                type_string,
-                download_url
+                type_string
             }
         }`;
 
 const delete_item = gql`
-  mutation DeleteFile ($id: ID!) {
-    delete_file(id: $id) {
+  mutation DeleteExternal ($id: ID!) {
+    delete_external(id: $id) {
       id
     }
   }`;
 
 export default {
   props: ['is-todo'],
+
+  components: {
+    CreateModel
+  },
 
   data() {
     return {
@@ -80,7 +88,7 @@ export default {
   },
 
   apollo: {
-    files: { 
+    externals: { 
       query: fetch_items,
       variables() {
         return { 
@@ -93,11 +101,11 @@ export default {
   methods: {
     askForm(id) {
       if (confirm('Opravdu chcete smazat daný záznam?')) {
-        this.deleteFile(id);
+        this.deleteExternal(id);
       }
     },
 
-    deleteFile(id) {
+    deleteExternal(id) {
       this.$apollo.mutate({
         mutation: delete_item,
         variables: {id: id},

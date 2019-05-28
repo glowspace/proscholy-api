@@ -66,6 +66,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
         Route::resource('external', 'ExternalController')->except(['show', 'update', 'store', 'create']);
+        
+
         Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
         // todo
         Route::get('/externals/no-author', 'ExternalController@todoAuthors')->name('external.no-author');
@@ -90,6 +92,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/files/no-author', 'FileController@todoAuthors')->name('file.no-author');
 
         Route::resource('tag', 'TagController')->except(['show']);
+
+        Route::resource('songbook', 'SongbookController')->except(['show', 'update', 'store', 'create']);
 
         Route::group(['middleware' => ['permission:manage users']], function () {
             Route::resource('user', 'UserController')->except(['show']);

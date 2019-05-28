@@ -6,6 +6,7 @@
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
+        <v-tab>Zpěvníky</v-tab>
         <v-tab-item>
           <v-layout row pt-2>
             <v-flex xs12 md6>
@@ -171,8 +172,41 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
+        <v-tab-item>
+            <v-layout row>
+              <v-flex xs12>
+                <h5>Přiřazené zpěvníky:</h5>
+              </v-flex>
+            </v-layout>
+
+            <v-layout row v-for="(record, i) in model.songbook_records || []" :key="i">
+              <v-flex xs4>
+                <v-select
+                  v-model="record.songbook"
+                  :items="songbooks"
+                  item-text="name"
+                  return-object
+                  label="Název zpěvníku"
+                ></v-select>
+              </v-flex>
+              <v-flex xs2>
+                <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                <v-btn @click="removeSongbookRecord(i)">Odstranit</v-btn>
+              </v-flex>
+            </v-layout>
+
+            <v-layout row>
+              <v-flex xs12 class="mb-5">
+                <v-btn @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
+              </v-flex>
+            </v-layout>
+
+        </v-tab-item>
       </v-tabs>
-      <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+      <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
       <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
       <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
@@ -209,11 +243,11 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "@/graphql/client/song_lyric_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue";
-import SongLyricsGroup from "../components/SongLyricsGroup.vue";
-import SelectSongGroupDialog from "../components/SelectSongGroupDialog.vue";
-import DeleteModelDialog from "../components/DeleteModelDialog.vue";
+import fragment from "Fragments/song_lyric_fragment.graphql";
+import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
+import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
+import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
+import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -246,6 +280,16 @@ const FETCH_AUTHORS = gql`
 const FETCH_SONG_LYRICS = gql`
   query {
     song_lyrics {
+      id
+      name
+    }
+  }
+`;
+
+
+const FETCH_SONGBOOKS = gql`
+  query {
+    songbooks {
       id
       name
     }
@@ -294,6 +338,7 @@ export default {
         authors: [],
         externals: [],
         files: [],
+        songbook_records: [],
         song: undefined
       },
       lang_values: [],
@@ -339,6 +384,9 @@ export default {
     },
     tags_unofficial: {
       query: FETCH_TAGS_UNOFFICIAL
+    },
+    songbooks: {
+      query: FETCH_SONGBOOKS
     }
   },
 
@@ -377,10 +425,11 @@ export default {
         .filter(ext => {
           return [0, 4, 8, 9].includes(ext.type);
         })
-        .concat(this.model.files
-        .filter(file => {
-          return [1, 2, 3].includes(file.type);
-        }));
+        .concat(
+          this.model.files.filter(file => {
+            return [1, 2, 3].includes(file.type);
+          })
+        );
     }
   },
 
@@ -398,22 +447,21 @@ export default {
               lyrics: this.model.lyrics,
               song: this.model.song,
               authors: {
-                create: this.getModelsToCreateBelongsToMany(this.model.authors),
-                sync: this.getModelsToSyncBelongsToMany(this.model.authors)
+                create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.authors.filter(m => m.hasOwnProperty("id")).map(m => m.id)
               },
               tags_unofficial: {
-                create: this.getModelsToCreateBelongsToMany(
-                  this.model.tags_unofficial
-                ),
-                sync: this.getModelsToSyncBelongsToMany(
-                  this.model.tags_unofficial
-                )
+                create: this.model.tags_unofficial.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.tags_unofficial.filter(m => m.hasOwnProperty("id")).map(m => m.id)
               },
               tags_official: {
-                // create: this.getModelsToCreateBelongsToMany(this.model.tags_official),
-                sync: this.getModelsToSyncBelongsToMany(
-                  this.model.tags_official
-                )
+                // create: this.model.tags_official.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.tags_official.filter(m => m.hasOwnProperty("id")).map(m => m.id)
+              },
+              songbook_records: {
+                // was not working
+                // create: this.model.songbook_records.filter(m => typeof m.songbook === "string"),
+                sync: this.model.songbook_records.map(m => ({songbook_id: parseInt(m.songbook.id), number: m.number}))
               }
             }
           }
@@ -468,21 +516,6 @@ export default {
       window.location.href = this.model_database.public_url;
     },
 
-    askDelete() {},
-
-    // destroy() {
-    //   this.$apollo.mutate({
-    //     mutation: DELETE_MODEL_DATABASE,
-    //     variables: {
-    //       id: this.model.id
-    //     }
-    //   }).then(result => {
-
-    //   }).catch(error => {
-
-    //   });
-    // },
-
     async goToPage(url, save = true) {
       if (this.isDirty && save) await this.submit();
 
@@ -526,23 +559,39 @@ export default {
       return fieldNames;
     },
 
-    getModelsToCreateBelongsToMany(models) {
-      return models.filter(model => {
-        if (model.id) return false;
-        return true;
-      });
-    },
+    // loggg(a) {
+    //   console.log(a);
+    // },
 
-    getModelsToSyncBelongsToMany(models) {
-      return models
-        .filter(model => {
-          if (model.id) return true;
-          return false;
-        })
-        .map(model => {
-          return model.id;
-        });
-    },
+    // hasIdFilter(model) {
+    //   if (model.id) return true;
+    //   return false;
+    // },
+
+    // hasNoIdFilter(model) {
+    //   return !this.hasIdFilter(model);
+    // },
+
+    // getModelsToCreateBelongsToMany(models) {
+    //   return models.filter(this.hasNoIdFilter);
+    // },
+
+    // getModelsToSyncBelongsToMany(models) {
+    //   return models
+    //     .filter(this.hasIdFilter)
+    //     .map(model => model.id);
+    // },
+
+    // getModelsToSyncBelongsToMany_WithSongbookRecordPivot(models) {
+    //   return models
+    //     .filter(this.hasIdFilter)
+    //     .map(model => {
+    //       return {
+    //         id: model.id,
+    //         number: model.number
+    //       }
+    //     });
+    // },
 
     getModelToSyncBelongsTo(model) {
       let obj = {};
@@ -609,6 +658,29 @@ export default {
           Vue.set(song_lyric, "name", name);
         }
       }
+    },
+
+    addSongbookRecord() {
+      this.model.songbook_records.push({
+        number: "",
+        songbook: {
+          id: null,
+          name: ""
+        }
+      });
+    },
+
+    removeSongbookRecord(i) {
+      let name = this.model.songbook_records[i].songbook.name;
+      if (name) {
+        // not empty
+
+        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "? (Změny se projeví až po uložení písničky)")) {
+          return;
+        }
+      }
+
+      this.$delete(this.model.songbook_records, i);
     }
   }
 };

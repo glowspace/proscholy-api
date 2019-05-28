@@ -81,6 +81,8 @@ class SongLyric extends Model
             'user_creator_id'
         ];
 
+    protected $hidden = ["formatted_lyrics"];
+
     private static $lang_string_values = [
         'cs' => 'čeština',
         'sk' => 'slovenština',
@@ -172,6 +174,13 @@ class SongLyric extends Model
     public function files() : HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function songbook_records() : BelongsToMany
+    {
+        return $this->belongsToMany(Songbook::class, "songbook_records")
+                    ->withPivot('number', 'placeholder', 'id')
+                    ->using(SongbookRecord::class);
     }
 
     public function scopeTranslations($query)

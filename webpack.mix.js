@@ -26,7 +26,10 @@ mix.webpackConfig({
     },
     resolve: {
         alias: {
-            '@': __dirname
+            '@': __dirname,
+            'Admin': path.resolve(__dirname, 'resources/assets/js/admin/'),
+            'Public': path.resolve(__dirname, 'resources/assets/js/'),
+            'Fragments': path.resolve(__dirname, 'graphql/client/'),
         },
     }
 });
@@ -35,7 +38,19 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
-    .browserSync('localhost:8000');
+    .browserSync({
+        proxy: 'localhost:8000',
+        files: [
+            'public/css/app.css',
+            'public/js/app.js',
+            'public/_admin/js/app.js',
+            'public/_admin/css/admin.css',
+            'app/**/*',
+            'routes/**/*',
+            'resources/views/**/*',
+            'resources/lang/**/*'
+        ]
+    });;
 
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/_admin/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js');

@@ -5,6 +5,7 @@
 /public/storage
 /public/js
 /public/css
+/public/_admin
 /storage/*.key
 /vendor
 /.idea
