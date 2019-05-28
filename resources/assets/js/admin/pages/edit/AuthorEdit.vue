@@ -90,9 +90,9 @@
 
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "@/graphql/client/author_fragment.graphql";
-import ItemsComboBox from "../components/ItemsComboBox.vue";
-import DeleteModelDialog from "../components/DeleteModelDialog.vue";
+import fragment from "Fragments/author_fragment.graphql";
+import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
+import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -218,8 +218,8 @@ export default {
               type: this.model.type,
               description: this.model.description,
               members: {
-                create: this.getModelsToCreateBelongsToMany(this.model.members),
-                sync: this.getModelsToSyncBelongsToMany(this.model.members)
+                create: this.model.members.filter(m => !m.hasOwnProperty("id")),
+                sync: this.model.members.filter(m => m.hasOwnProperty("id")).map(m => m.id)
               }
             }
           }
@@ -253,21 +253,21 @@ export default {
         });
     },
 
-    getModelsToCreateBelongsToMany(models){
-      return models.filter(model => {
-        if(model.id) return false;
-        return true;
-      });
-    },
+    // getModelsToCreateBelongsToMany(models){
+    //   return models.filter(model => {
+    //     if(model.id) return false;
+    //     return true;
+    //   });
+    // },
 
-    getModelsToSyncBelongsToMany(models){
-      return models.filter(model => {
-        if(model.id) return true;
-        return false;
-      }).map(model => {
-        return model.id
-      });
-    },
+    // getModelsToSyncBelongsToMany(models){
+    //   return models.filter(model => {
+    //     if(model.id) return true;
+    //     return false;
+    //   }).map(model => {
+    //     return model.id
+    //   });
+    // },
 
     // helper method to load field names defined in fragment graphql definition
     getFieldsFromFragment(includeId) {

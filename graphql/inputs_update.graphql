@@ -51,11 +51,12 @@ input UpdateSongLyricInput {
     id: ID!
     name: String @rules(apply: ["required"], messages: { 
             required: "Jméno písně nesmí zůstat prázdné"})
-    has_anonymous_author: Boolean!
-    lang: String!
+    has_anonymous_author: Boolean
+    lang: String
     authors: SyncAuthorsRelation
     tags_unofficial: SyncUnofficialTagsRelation
     tags_official: SyncOfficialTagsRelation
+    songbook_records: SyncSongbookRecordsForSongLyricRelation
     lyrics: String
     song: SongInput
 }
@@ -84,4 +85,45 @@ input SyncUnofficialTagsRelation {
 
 input CreateUnofficialTagInput {
   name: String!
+}
+
+input UpdateSongbookInput {
+    id: ID!
+    name: String
+    shortcut: String
+    records: SyncSongbookRecordsForSongbookRelation
+}
+
+input SyncSongbookRecordsForSongbookRelation {
+  create: [CreateSongbookRecordForSongbookInput!]
+  sync: [SyncSongbookRecordForSongbookInput!]
+}
+
+input SyncSongbookRecordsForSongLyricRelation {
+  create: [CreateSongbookRecordForSongLyricInput!]
+  sync: [SyncSongbookRecordForSongLyricInput!]
+}
+
+input CreateSongbookRecordForSongbookInput {
+  song_lyric_name: String!
+  number: String
+  placeholder: String
+}
+
+input CreateSongbookRecordForSongLyricInput {
+  songbook: String!
+  number: String
+  placeholder: String
+}
+
+input SyncSongbookRecordForSongbookInput {
+  song_lyric_id: ID!
+  number: String
+  placeholder: String
+}
+
+input SyncSongbookRecordForSongLyricInput {
+  songbook_id: ID!
+  number: String
+  placeholder: String
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Songbook
@@ -20,8 +21,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Songbook extends Model
 {
-    public function songLyrics()
+    protected $fillable = ['name', 'shortcut'];
+
+    public function records() : BelongsToMany
     {
-        return $this->belongsToMany(SongLyric::class, 'songbook_records');
+        return $this->belongsToMany(SongLyric::class, "songbook_records")
+                    ->withPivot('number', 'placeholder', 'id')
+                    ->using(SongbookRecord::class);
     }
 }

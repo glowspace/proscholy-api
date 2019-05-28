@@ -10,6 +10,7 @@ use App\Author;
 use App\External;
 use App\File;
 use App\Tag;
+use App\Songbook;
 
 class DeleteModel
 {
@@ -30,14 +31,16 @@ class DeleteModel
 
         if ($input["class_name"] == "Author") {
             $succ = Author::destroy($id);
-        } elseif($input["class_name"] == "External") {
+        } elseif ($input["class_name"] == "External") {
             $succ = External::destroy($id);
         } elseif ($input["class_name"] == "SongLyric") {
             $succ = SongLyric::destroy($id);
-        } elseif($input["class_name"] == "File") {
+        } elseif ($input["class_name"] == "File") {
             $succ = File::destroy($id);
-        } elseif($input["class_name"] == "Tag") {
+        } elseif ($input["class_name"] == "Tag") {
             $succ = Tag::destroy($id);
+        } elseif ($input["class_name"] == "Songbook") {
+            $succ = Songbook::destroy($id);
         } else {
             // todo throw an error
             return;

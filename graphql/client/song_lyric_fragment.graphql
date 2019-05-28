@@ -37,4 +37,12 @@ fragment SongLyricFillableFragment on SongLyric  {
         url
         type
     }
+    songbook_records {
+        id
+        number
+        songbook {
+            id
+            name
+        }
+    }
 }

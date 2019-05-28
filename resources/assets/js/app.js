@@ -19,12 +19,12 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */ 
 
-Vue.component('chord', require('./components/Chord.vue'));
-Vue.component('transposition', require('./components/Transposition.vue'));
-Vue.component('font-sizer', require('./components/FontSizer.vue'));
-Vue.component('external-view', require('./components/ExternalView.vue'));
+Vue.component('chord', require('Public/components/Chord.vue'));
+Vue.component('transposition', require('Public/components/Transposition.vue'));
+Vue.component('font-sizer', require('Public/components/FontSizer.vue'));
+Vue.component('external-view', require('Public/components/ExternalView.vue'));
 
-Vue.component('search', require('./pages/Search.vue'));
+Vue.component('search', require('Public/pages/Search.vue'));
 
 
 import { ApolloClient } from 'apollo-client'

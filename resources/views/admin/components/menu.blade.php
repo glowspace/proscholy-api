@@ -108,6 +108,12 @@
     'text' => 'Štítky/Kategorie písniček'
 ])
 
+@include('admin.components.menu-item', [
+    'route' => 'admin.songbook.index',
+    'icon' => 'book',
+    'text' => 'Zpěvníky'
+])
+
 @can('manage users')
     @include('admin.components.menu-item', [
         'route' => 'admin.user.index',

@@ -39,12 +39,14 @@ type Query {
         is_todo: Boolean
     ): [File!]! @all
     tags(type: Int @eq): [Tag] @all
+    songbooks: [Songbook] @all
     me: User @auth
 
     author(id: ID! @eq): Author @find
     external(id: ID! @eq): External @find
     file(id: ID! @eq): File @find
     song_lyric(id: ID! @eq): SongLyric @find
+    songbook(id: ID! @eq): Songbook @find
 }
 
 type Mutation @group(middleware: ["auth:api"]) {
@@ -53,11 +55,13 @@ type Mutation @group(middleware: ["auth:api"]) {
     delete_file(id: ID!): File @delete
     delete_song_lyric(id: ID!): SongLyric @delete
     delete_tag(id: ID!): Tag @delete
+    delete_songbook(id: ID!): Songbook @delete
 
     update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
     update_external(input: UpdateExternalInput!): External @update(flatten: true)
     update_file(input: UpdateFileInput!): File @update(flatten: true)
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric
+    update_songbook(input: UpdateSongbookInput!): Songbook
     
     create_model(input: CreateModelInput!): Model
     delete_model(input: DeleteModelInput!): Model

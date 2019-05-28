@@ -58,8 +58,8 @@
 
 import gql from 'graphql-tag';
 
-import removeDiacritics from '../helpers/removeDiacritics';
-import CreateModel from '../components/CreateModel.vue';
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
+import CreateModel from 'Admin/components/CreateModel.vue';
 
 const fetch_items = gql`
         query FetchSongLyrics($has_lyrics: Boolean, $has_authors: Boolean, $has_chords: Boolean, $has_tags: Boolean) {
