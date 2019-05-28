@@ -2,6 +2,9 @@
 
 namespace App\GraphQL\Types;
 
+use App\Songbook;
+use App\SongLyric;
+
 class SongbookRecordType
 {
     public function id($root)
@@ -19,12 +22,12 @@ class SongbookRecordType
         return $root->pivot->placeholder;
     }
 
-    public function song_lyric($root)
+    public function song_lyric($root) : SongLyric
     {
         return $root->pivot->song_lyric;
     }
 
-    public function songbook($root)
+    public function songbook($root) : Songbook
     {
         return $root->pivot->songbook;
     }
