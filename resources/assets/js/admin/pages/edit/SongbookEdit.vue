@@ -2,7 +2,7 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-      <v-layout row>
+      <v-layout row wrap>
         <v-flex xs12 md6>
           <v-form ref="form">
             <v-text-field
@@ -45,7 +45,7 @@
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
       <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
       <br><br>
-      <delete-model-dialog class-name="Songbook" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tohoto autora?">Vymazat</delete-model-dialog>
+      <delete-model-dialog class-name="Songbook" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tento zpěvník?">Vymazat</delete-model-dialog>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
         <v-card>
@@ -53,7 +53,7 @@
           <v-card-text>Zpěvník byl vymazán z databáze.</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click="goToAdminPage('songbook')">Přejít na seznam autorů</v-btn>
+            <v-btn color="green darken-1" flat @click="goToAdminPage('songbook')">Přejít na seznam zpěvníků</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

@@ -8,6 +8,7 @@ fragment SongLyricFillableFragment on SongLyric  {
     public_url
     has_anonymous_author
     lang
+    only_regenschori
     tags_unofficial: tags(type: 0) {
         id
         name

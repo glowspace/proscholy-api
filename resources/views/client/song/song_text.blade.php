@@ -39,7 +39,7 @@
                             </div>
                             <div class="flex-grow-1">
                                 @if($song_l->lyrics)
-                                    {!! $song_l->formatted_lyrics !!}
+                                    {!! $song_l->getFormattedLyrics() !!}
                                 @else
                                     <p>Text písně připravujeme.</p>
                                     @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
@@ -69,29 +69,27 @@
 
                 @if($song_l->scoreFiles()->count() > 0)
                     {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
-                    @component('client.components.external_embed', ['external' => $song_l->scoreFiles()->first()->asExternal()])@endcomponent
+                    @component('client.components.media_widget', ['source' => $song_l->scoreFiles()->first()])@endcomponent
                 @elseif ($song_l->scoreExternals()->count() > 0)
-                    @component('client.components.external_embed', ['external' => $song_l->scoreExternals()->first()])@endcomponent
+                    @component('client.components.media_widget', ['source' => $song_l->scoreExternals()->first()])@endcomponent
                 @endif
 
                 @if($song_l->youtubeVideos()->count() > 0)
-                    @component('client.components.external_embed', ['external' => $song_l->youtubeVideos()->first()])@endcomponent
+                    @component('client.components.media_widget', ['source' => $song_l->youtubeVideos()->first()])@endcomponent
                 @endif
 
                 @if($song_l->spotifyTracks()->count() > 0)
-                    @component('client.components.external_embed', ['external' => $song_l->spotifyTracks()->first()])@endcomponent
+                    @component('client.components.media_widget', ['source' => $song_l->spotifyTracks()->first()])@endcomponent
                 @endif
 
                 @if($song_l->soundcloudTracks()->count() > 0)
-                    @component('client.components.external_embed', ['external' => $song_l->soundcloudTracks()->first()])@endcomponent
+                    @component('client.components.media_widget', ['source' => $song_l->soundcloudTracks()->first()])@endcomponent
                 @endif
 
                 @if($song_l->audioFiles()->count() > 0)
-                    @component('client.components.external_embed', ['external' => $song_l->audioFiles()->first()->asExternal()])@endcomponent
+                    @component('client.components.media_widget', ['source' => $song_l->audioFiles()->first()])@endcomponent
                 @endif
-
             </div>
         </div>
-
     </div>
 @endsection
