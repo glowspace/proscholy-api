@@ -54,7 +54,7 @@ class File extends Model implements ISource
             2 => 'text/akordy',
             3 => 'noty',
             4 => 'audio nahrávka',
-            4 => 'fotka',
+            5 => 'fotka',
         ];
 
     public function getPublicNameAttribute()
