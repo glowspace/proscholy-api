@@ -86,7 +86,19 @@ const apolloProvider = new VueApollo({
 })
 
 import Vuetify from 'vuetify'
-Vue.use(Vuetify)
+
+Vue.use(Vuetify, {
+  theme: 
+    {
+      primary: "#3f51b5",
+      secondary: "#00bcd4",
+      accent: "#3f51b5",
+      error: "#f44336",
+      warning: "#ff9800",
+      info: "#2196f3",
+      success: "#4caf50"
+      }
+})
 
 import Notifications from 'vue-notification'
 Vue.use(Notifications)
