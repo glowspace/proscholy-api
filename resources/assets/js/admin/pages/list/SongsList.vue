@@ -32,10 +32,15 @@
                 <span v-if="props.item.type === 1">Překlad</span>
                 <span v-if="props.item.type === 2">Autorizovaný překlad</span>
               </td>
+              <td>{{ props.item.authors.map(a => a.name).join(", ") || (props.item.has_anonymous_author ? "(anonymní)" : "-")}}</td>
               <td>{{ props.item.updated_at }}</td>
               <td>
                 <span v-if="props.item.is_published">Ano</span>
-                <span v-if="!props.item.is_published">Ne</span>
+                <span v-else>Ne</span>
+              </td>
+              <td>
+                <span v-if="props.item.only_regenschori">jen R</span>
+                <span v-else>R + PS</span>
               </td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
@@ -69,11 +74,16 @@ const fetch_items = gql`
               has_chords: $has_chords,
               has_tags: $has_tags
           ) {
-                id,
-                name,
-                updated_at,
-                type,
+                id
+                name
+                updated_at
+                type
                 is_published
+                authors {
+                  name
+                }
+                only_regenschori
+                has_anonymous_author
             }
         }`;
 
@@ -96,8 +106,10 @@ export default {
       headers: [
         { text: 'Název písničky', value: 'name' },
         { text: 'Typ', value: 'type' },
+        { text: 'Autoři', value: 'only_regenschori' },
         { text: 'Naposledy upraveno', value: 'updated_at' },
         { text: 'Publikováno', value: 'is_published' },
+        { text: 'Zveřejnění', value: 'only_regenschori' },
         { text: 'Akce', value: 'action' },
       ],
       search_string: ""

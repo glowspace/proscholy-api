@@ -26,9 +26,11 @@
             
             <template v-slot:items="props">
               <td>
-                <a :href="'/admin/external/' + props.item.id + '/edit'">{{ props.item.public_name }}</a>
+                <a :href="'/admin/external/' + props.item.id + '/edit'">{{ getShortUrl(props.item.url) }}</a>
               </td>
               <td>{{ props.item.type_string }}</td>
+              <td>{{ props.item.song_lyric ? props.item.song_lyric.name : "-" }}</td>
+              <td>{{ props.item.authors.map(a => a.name).join(", ") || "-"}}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
               </td>
@@ -56,9 +58,15 @@ import CreateModel from "Admin/components/CreateModel.vue"
 const fetch_items = gql`
         query FetchExternals ($is_todo: Boolean) {
             externals (is_todo: $is_todo) {
-                id,
-                public_name,
+                id
+                url
                 type_string
+                song_lyric {
+                  name
+                }
+                authors {
+                  name
+                }
             }
         }`;
 
@@ -79,8 +87,10 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'Název', value: 'public_name' },
+        { text: 'Adresa', value: 'url' },
         { text: 'Typ', value: 'type_string' },
+        { text: 'Píseň', value: 'song_lyric' },
+        { text: 'Autoři', value: 'authors' },
         { text: 'Akce', value: 'action' }
       ],
       search_string: ""
@@ -129,6 +139,19 @@ export default {
       }
 
       return false;
+    },
+
+    getShortUrl(url)
+    {
+      if (!url) return;
+
+      const bare = url.replace("http://", "").replace("https://", "").replace("www.", "");
+      if (bare.length < 50) return bare;
+
+      const head = bare.substring(0, 15);
+      const tail = bare.substring(bare.length - 15, bare.length);
+
+      return head + "..." + tail;
     }
   }
 }
