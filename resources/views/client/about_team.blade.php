@@ -23,7 +23,7 @@
         <h3>Náš tým</h3>
 
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Michael Dojčár</h5>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Miroslav Šerý</h5>
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Jana Stuchlíková</h5>
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Mgr. Ondřej Talaš</h5>
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Mag. art. Ondřej Múčka</h5>
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Matěj Kulišťák</h5>
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Barbora Kuchaříková</h5>
@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Terezie Kološová</h5>
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Zuzana Haikerová</h5>
@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Václav Šablatura</h5>
@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Benjamín Tichý</h5>
@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Petra Kalousková</h5>
@@ -131,7 +131,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Emma Kasanová</h5>
@@ -140,11 +140,20 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Josef Řídký</h5>
                         <p class="card-text">mobilní aplikace</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vít Kološ</h5>
+                        <p class="card-text">vývoj a návrh web. rozhraní</p>
                     </div>
                 </div>
             </div>
