@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <notifications/>
-    <v-container fluid grid-list-xs>
+    <!-- <v-fade-transition> -->
+    <v-container fluid grid-list-xs v-if="!$apollo.loading">
       <v-tabs color="transparent" v-on:change="onTabChange">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
@@ -268,6 +269,11 @@
         </v-card>
       </v-dialog>
     </v-container>
+
+    <v-container fluid v-else><v-progress-circular
+      indeterminate
+    ></v-progress-circular></v-container>
+    <!-- </v-fade-transition> -->
   </v-app>
 </template>
 
