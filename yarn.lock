@@ -1184,6 +1184,11 @@ bootstrap@4.2.1:
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.2.1.tgz#8f8bdca024dbf0e8644da32e918c8a03a90a5757"
   integrity sha512-tt/7vIv3Gm2mnd/WeDx36nfGGHleil0Wg8IeB7eMrVkY0fZ5iTaBisSh8oNANc2IBsCc6vCgCNTIM/IEN0+50Q==
 
+bowser@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.4.0.tgz#fcfbca3d7659ba88afabbb8a45b33d2e4876a90c"
+  integrity sha512-DA9Opnb8S8TBLPPszrHDtCCATbAMkrxF+AxPs/d95r99frBioGpNwL1cbG3AHeV3FnoZW655vEvEryBHFeGrMg==
+
 boxen@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-1.3.0.tgz#55c6c39a8ba58d9c61ad22cd877532deb665a20b"

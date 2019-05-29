@@ -59,6 +59,7 @@ input UpdateSongLyricInput {
     songbook_records: SyncSongbookRecordsForSongLyricRelation
     lyrics: String
     song: SongInput
+    only_regenschori: Boolean
 }
 
 input SongInput {

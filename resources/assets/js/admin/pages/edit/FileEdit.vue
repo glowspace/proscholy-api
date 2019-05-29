@@ -2,7 +2,7 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-      <v-layout row>
+      <v-layout row wrap>
         <v-flex xs12 md6>
           <v-form ref="form">
             <v-text-field
@@ -44,7 +44,7 @@
         <v-flex xs12 md6>
           <external-view v-if="model_database"
             :url="model_database.url" 
-            type="0">
+            :type="0">
           </external-view>
         </v-flex>
       </v-layout>
