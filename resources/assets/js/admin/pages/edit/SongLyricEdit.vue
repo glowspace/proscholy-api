@@ -19,6 +19,18 @@
                   :error-messages="errors.collect('input.name')"
                   v-on:input="onNameChange"
                 ></v-text-field>
+
+                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0">
+                  <v-radio
+                    label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
+                    :value="false"
+                  ></v-radio>
+                  <v-radio
+                    label="Píseň pouze pro Regenschori.cz"
+                    :value="true"
+                  ></v-radio>
+                </v-radio-group>
+
                 <items-combo-box
                   v-bind:p-items="authors"
                   v-model="model.authors"
@@ -29,26 +41,33 @@
                   :enable-custom="true"
                 ></items-combo-box>
                 <v-checkbox
+                  class="pt-0 mt-0"
                   v-model="model.has_anonymous_author"
                   label="Anonymní autor (nezobrazovat v to-do)"
                 ></v-checkbox>
 
-                <div v-if="model.song && model_database.song" class="mb-3">
-                  <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
+                <v-card v-if="model.song && model_database.song" class="mb-3">
+                  <v-card-title>Skupina písní</v-card-title>
 
-                  <v-btn
-                    color="error"
-                    outline
-                    @click="resetGroup"
-                    v-if="model.song.song_lyrics.length > 1"
-                  >Odstranit píseň ze skupiny</v-btn>
-                  <select-song-group-dialog
-                    outline
-                    v-if="model_database.song.song_lyrics.length == 1 &&
-                model.song.song_lyrics.length == 1"
-                    v-on:submit="addToGroup"
-                  ></select-song-group-dialog>
-                </div>
+                  <v-card-text>
+                  <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-btn
+                      color="error"
+                      outline
+                      @click="resetGroup"
+                      v-if="model.song.song_lyrics.length > 1"
+                    >Odstranit píseň ze skupiny</v-btn>
+                    <select-song-group-dialog
+                      outline
+                      v-if="model_database.song.song_lyrics.length == 1 &&
+                  model.song.song_lyrics.length == 1"
+                      v-on:submit="addToGroup"
+                    ></select-song-group-dialog>
+                  </v-card-actions>
+                </v-card>
 
                 <items-combo-box
                   v-bind:p-items="tags_unofficial"
@@ -173,37 +192,40 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-            <v-layout row wrap>
-              <v-flex xs12>
-                <h5>Přiřazené zpěvníky:</h5>
-              </v-flex>
-            </v-layout>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <h5>Přiřazené zpěvníky:</h5>
+            </v-flex>
+          </v-layout>
 
-            <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
-              <v-flex xs4>
-                <v-select
-                  v-model="record.songbook"
-                  :items="songbooks"
-                  item-text="name"
-                  return-object
-                  label="Název zpěvníku"
-                ></v-select>
-              </v-flex>
-              <v-flex xs2>
-                <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
-              </v-flex>
-              <v-flex xs2>
-                <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn>
-              </v-flex>
-            </v-layout>
+          <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
+            <v-flex xs4>
+              <v-select
+                v-model="record.songbook"
+                :items="songbooks"
+                item-text="name"
+                return-object
+                label="Název zpěvníku"
+              ></v-select>
+            </v-flex>
+            <v-flex xs2>
+              <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
+            </v-flex>
+            <v-flex xs2>
+              <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+              <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn>
+            </v-flex>
+          </v-layout>
 
-            <v-layout row wrap>
-              <v-flex xs12 class="mb-5">
-                <v-btn color="info" outline @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
-              </v-flex>
-            </v-layout>
-
+          <v-layout row wrap>
+            <v-flex xs12 class="mb-5">
+              <v-btn
+                color="info"
+                outline
+                @click="addSongbookRecord()"
+              >Přidat nový záznam ve zpěvníku</v-btn>
+            </v-flex>
+          </v-layout>
         </v-tab-item>
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
@@ -286,7 +308,6 @@ const FETCH_SONG_LYRICS = gql`
   }
 `;
 
-
 const FETCH_SONGBOOKS = gql`
   query {
     songbooks {
@@ -333,6 +354,7 @@ export default {
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
+        only_regenschori: undefined,
         tags_unofficial: [],
         tags_official: [],
         authors: [],
@@ -444,24 +466,36 @@ export default {
               name: this.model.name,
               lang: this.model.lang,
               has_anonymous_author: this.model.has_anonymous_author,
+              only_regenschori: this.model.only_regenschori,
               lyrics: this.model.lyrics,
               song: this.model.song,
               authors: {
                 create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.authors.filter(m => m.hasOwnProperty("id")).map(m => m.id)
+                sync: this.model.authors
+                  .filter(m => m.hasOwnProperty("id"))
+                  .map(m => m.id)
               },
               tags_unofficial: {
-                create: this.model.tags_unofficial.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.tags_unofficial.filter(m => m.hasOwnProperty("id")).map(m => m.id)
+                create: this.model.tags_unofficial.filter(
+                  m => !m.hasOwnProperty("id")
+                ),
+                sync: this.model.tags_unofficial
+                  .filter(m => m.hasOwnProperty("id"))
+                  .map(m => m.id)
               },
               tags_official: {
                 // create: this.model.tags_official.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.tags_official.filter(m => m.hasOwnProperty("id")).map(m => m.id)
+                sync: this.model.tags_official
+                  .filter(m => m.hasOwnProperty("id"))
+                  .map(m => m.id)
               },
               songbook_records: {
                 // was not working
                 // create: this.model.songbook_records.filter(m => typeof m.songbook === "string"),
-                sync: this.model.songbook_records.map(m => ({songbook_id: parseInt(m.songbook.id), number: m.number}))
+                sync: this.model.songbook_records.map(m => ({
+                  songbook_id: parseInt(m.songbook.id),
+                  number: m.number
+                }))
               }
             }
           }
@@ -675,7 +709,13 @@ export default {
       if (name) {
         // not empty
 
-        if (!confirm("Opravdu chcete smazat záznam písničky ze zpěvníku " + name + "? (Změny se projeví až po uložení písničky)")) {
+        if (
+          !confirm(
+            "Opravdu chcete smazat záznam písničky ze zpěvníku " +
+              name +
+              "? (Změny se projeví až po uložení písničky)"
+          )
+        ) {
           return;
         }
       }

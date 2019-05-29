@@ -81,7 +81,8 @@ class SongLyric extends Model
             'is_published',
             'is_approved_by_author',
             'user_creator_id',
-            'licence_type'
+            'licence_type',
+            'only_regenschori'
         ];
 
     private static $lang_string_values = [
