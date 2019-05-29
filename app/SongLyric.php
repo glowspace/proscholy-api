@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Helpers\Chord;
+use App\Helpers\ChordSign;
+use App\Helpers\ChordQueue;
+
 /**
  * App\SongLyric
  *
@@ -73,15 +77,12 @@ class SongLyric extends Model
             'lang',
             'creating_at',
             'has_anonymous_author',
-            // should not be edited from outside
-            'formatted_lyrics',
             'has_chords',
             'is_published',
             'is_approved_by_author',
-            'user_creator_id'
+            'user_creator_id',
+            'licence_type'
         ];
-
-    protected $hidden = ["formatted_lyrics"];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
@@ -287,15 +288,6 @@ class SongLyric extends Model
         return $this->getSiblings()->count() > 0;
     }
 
-    public function recache()
-    {
-        // this causes to fire update event that recaches formattedlyrics
-        // and haschords
-        $this->update([
-            'formatted_lyrics' => NULL
-        ]);
-    }
-
     /**
      * Get the indexable data array for the model.
      *
@@ -309,6 +301,50 @@ class SongLyric extends Model
         $searchable = Arr::only($array, ['name', 'lyrics']);
 
         return $searchable;
+    }
+
+    public function getFormattedLyrics()
+    {
+        $lines = explode("\n", $this->lyrics);
+
+        $output = "";
+        $chordQueue = new ChordQueue();
+
+        foreach ($lines as $line){
+            $output .= '<div class="song-line">'.$this->processLine($line, $chordQueue).'</div>';
+        }
+
+        return $output;
+    }
+
+    private function processLine($line, $chordQueue)
+    {
+        $chords = array();
+        $currentChordText = "";
+        $line = trim($line);
+        
+        // starting of a line, notify Chord "repeater" if we are in a verse
+        if (strlen($line) > 0 && is_numeric($line[0])) {
+            $chordQueue->notifyVerse($line[0]);
+        }
+
+        for ($i = 0; $i < strlen($line); $i++) {
+            if ($line[$i] == "["){
+                if ($currentChordText != "")
+                    $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
+                $currentChordText = "";
+            }
+
+            $currentChordText .= $line[$i];
+        }
+
+        $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
+
+        $string = "";
+        foreach ($chords as $chord) 
+            $string .= $chord->toHTML();
+
+        return $string;
     }
 
     // todo: make obsolete

@@ -39,7 +39,7 @@
                             </div>
                             <div class="flex-grow-1">
                                 @if($song_l->lyrics)
-                                    {!! $song_l->formatted_lyrics !!}
+                                    {!! $song_l->getFormattedLyrics() !!}
                                 @else
                                     <p>Text písně připravujeme.</p>
                                     @if ($song_l->scoreExternals()->count() + $song_l->scoreFiles()->count() > 0)
