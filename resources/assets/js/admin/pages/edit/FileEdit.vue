@@ -44,7 +44,7 @@
         <v-flex xs12 md6>
           <external-view v-if="model_database"
             :url="model_database.url" 
-            type="0">
+            :type="0">
           </external-view>
         </v-flex>
       </v-layout>

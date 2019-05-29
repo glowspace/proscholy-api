@@ -13,6 +13,8 @@ use Spatie\PdfToText\Pdf as PdfToText;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+use App\Interfaces\ISource;
+
 /**
  * App\File
  *
@@ -36,7 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\File whereId($value)
  */
-class File extends Model
+class File extends Model implements ISource
 {
     protected $fillable = ['filename', 'type', 'description', 'path', 'name', 'has_anonymous_author', 'downloads'];
 
@@ -185,9 +187,10 @@ class File extends Model
         return $this->belongsTo(SongLyric::class);
     }
 
-    public function asExternal()
+    // IMPLEMENTING INTERFACE ISOURCE
+
+    public function getSourceType() : int
     {
-        // convert type from file-type to external-type
         $converter = [
             0 => 0,
             1 => 8,
@@ -196,13 +199,17 @@ class File extends Model
             4 => 7
         ];
 
-        $obj = new \stdClass();
-        $obj->url = $this->url;
-        $obj->type = $converter[$this->type];
-        $obj->song_lyric = $this->song_lyric;
-        $obj->authors = $this->authors;
+        return $converter[$this->type];
+    }
 
-        return $obj;
+    public function getId() : int
+    {
+        return $this-id;
+    }
+
+    public function getMediaId()
+    {
+        return false;
     }
 
     // just for fun

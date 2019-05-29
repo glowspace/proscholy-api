@@ -1,12 +1,12 @@
 <template>
     <div>
-        <iframe v-if="type == 1"
-                :src="iframeSrc"
-                width="100%"
-                height="80"
-                frameborder="0"
-                allowtransparency="true"
-                allow="encrypted-media"></iframe>
+            <iframe v-if="type == 1"
+                    :src="iframeSrc"
+                    width="100%"
+                    height="80"
+                    frameborder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"></iframe>
 
         <iframe v-else-if="type == 2"
                         width="100%"
@@ -23,7 +23,6 @@
         </div>
 
         <!-- audio soubor -->
-        <!-- <iframe v-else-if="type == 7" :src="iframeSrc" frameborder="0" width="100%" height="80"></iframe> -->
         <div v-else-if="type == 7" class="p-2">
             <audio
                 controls
@@ -37,23 +36,39 @@
 </template>
 
 <script>
-// import VueFriendlyIframe from 'vue-friendly-iframe';
+import Bowser from "bowser"; 
 
 export default {
-    props: ['url', 'type', 'thumbnail-url', 'media-id'],
-
-    // components: {
-    //     VueFriendlyIframe
-    // },
+    props: {
+        url: String,
+        type: Number,
+        thumbnailUrl: String,
+        mediaId: String
+    },
 
     data() {
         return {
-            // colors: {
-            //     'spotify': '#262b2f',
-            //     'soundcloud': '#ff9500',
-            //     'youtube': '#db0e0e',
-            //     'pdf': '#db0e0e'
-            // }
+            types: {
+                0: "link",
+                1: "spotify",
+                2: "soundcloud",
+                3: "youtube",
+                4: "score",
+                5: "webpage",
+                6: "youtube_channel",
+                7: "audio",
+                8: "pdf/text_chords",
+                9: "pdf/text",
+            },
+            browser: Bowser.getParser(window.navigator.userAgent),
+            supportPdfIframesCondition: {
+                mobile: {
+                    chrome: '>1000',
+                },
+                desktop: {
+                    chrome: '>70'
+                }
+            }
         }
     },
 
@@ -66,9 +81,22 @@ export default {
                     "&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
             } else if (this.type == 3) {
                 return "https://www.youtube.com/embed/" + this.mediaId
+            } else if ([4,8,9].includes(this.type)) {
+                // pdf file
+                // decide if the browser can display that directly in iframe
+                if (this.browser.satisfies(this.supportPdfIframesCondition)) {
+                    return this.url;
+                } else {
+                    return "https://docs.google.com/viewer?url=" + this.url + "&embedded=true";
+                }
+
             } else {
                 return this.url;
             }
+        },
+
+        typeString() {
+            return this.types[this.type];
         }
     }
 }

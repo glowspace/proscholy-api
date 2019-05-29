@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf;
 use Hash;
+use App\Interfaces\ISource;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int                      $id
  * @property int|null                 $author_id
  * @property int|null                 $song_lyric_id
- * @property int|null                 $type
+ * @property int                     $type
  * @property \Carbon\Carbon|null      $created_at
  * @property \Carbon\Carbon|null      $updated_at
  * @property string|null              $url
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \App\SongLyric|null $songLyric
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereVisits($value)
  */
-class External extends Model
+class External extends Model implements ISource
 {
     protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author'];
 
@@ -151,6 +152,23 @@ class External extends Model
         if ($this->urlAsYoutube($this->url)) return 3;
 
         return 0;
+    }
+
+    // IMPLEMENTING INTERFACE ISOURCE
+
+    public function getSourceType() : int
+    {
+        return $this->type;
+    }
+
+    public function getId() : int
+    {
+        return $this-id;
+    }
+
+    public function getMediaId()
+    {
+        return $this->media_id;
     }
 
     // protected static function getThubmnailsFolder()
