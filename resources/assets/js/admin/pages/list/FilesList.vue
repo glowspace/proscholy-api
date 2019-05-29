@@ -23,6 +23,8 @@
                 <a :href="'/admin/file/' + props.item.id + '/edit'">{{ props.item.public_name }}</a>
               </td>
               <td>{{ props.item.type_string }}</td>
+              <td>{{ props.item.song_lyric ? props.item.song_lyric.name : "-" }}</td>
+              <td>{{ props.item.authors.map(a => a.name).join(", ") || "-"}}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
                 &nbsp;
@@ -51,10 +53,16 @@ import removeDiacritics from 'Admin/helpers/removeDiacritics';
 const fetch_items = gql`
         query FetchFiles ($is_todo: Boolean) {
             files(is_todo: $is_todo) {
-                id,
-                public_name,
-                type_string,
+                id
+                public_name
+                type_string
                 download_url
+                song_lyric {
+                  name
+                }
+                authors {
+                  name
+                }
             }
         }`;
 
@@ -73,6 +81,8 @@ export default {
       headers: [
         { text: 'Název', value: 'public_name' },
         { text: 'Typ', value: 'type_string' },
+        { text: 'Píseň', value: 'song_lyric' },
+        { text: 'Autoři', value: 'authors' },
         { text: 'Akce', value: 'action' }
       ],
       search_string: ""

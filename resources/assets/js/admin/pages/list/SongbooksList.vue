@@ -28,7 +28,8 @@
               <td>
                 <a :href="'/admin/songbook/' + props.item.id + '/edit'">{{ props.item.name }}</a>
               </td>
-              <!-- <td>{{ props.item.type_string }}</td> -->
+              <td>{{ props.item.shortcut }}</td>
+              <td>{{ props.item.records.length }}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
               </td>
@@ -56,8 +57,12 @@ import CreateModel from 'Admin/components/CreateModel.vue';
 const fetch_items = gql`
         query {
             songbooks {
-                id,
-                name,
+                id
+                name
+                shortcut
+                records {
+                  id
+                }
             }
         }`;
 
@@ -79,7 +84,8 @@ export default {
     return {
       headers: [
         { text: 'Jméno', value: 'name' },
-        // { text: 'Typ', value: 'type_string' },
+        { text: 'Zkratka', value: 'shortcut' },
+        { text: 'Počet záznamů', value: 'n_records' },
         { text: 'Akce', value: 'action' }
       ],
       search_string: ""
