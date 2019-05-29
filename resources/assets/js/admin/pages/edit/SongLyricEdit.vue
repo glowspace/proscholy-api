@@ -31,20 +31,28 @@
                   ></v-radio>
                 </v-radio-group>
 
-                <items-combo-box
-                  v-bind:p-items="authors"
-                  v-model="model.authors"
-                  label="Autoři"
-                  header-label="Vyberte autora z nabídky nebo vytvořte nového"
-                  create-label="Potvrďte enterem a vytvořte nového autora"
-                  :multiple="true"
-                  :enable-custom="true"
-                ></items-combo-box>
-                <v-checkbox
-                  class="pt-0 mt-0"
+                <v-layout row wrap>
+                  <v-flex xs12 lg8>
+                    <items-combo-box
+                      v-bind:p-items="authors"
+                      v-model="model.authors"
+                      label="Autoři"
+                      header-label="Vyberte autora z nabídky nebo vytvořte nového"
+                      create-label="Potvrďte enterem a vytvořte nového autora"
+                      :multiple="true"
+                      :enable-custom="true"
+                    ></items-combo-box>
+
+                  </v-flex>
+                  <v-flex xs12 lg4>
+                  <v-checkbox :disabled="model.authors.length > 0"
+                  class="mt-0"
                   v-model="model.has_anonymous_author"
                   label="Anonymní autor (nezobrazovat v to-do)"
                 ></v-checkbox>
+                  </v-flex>
+                </v-layout>
+                
 
                 <v-card v-if="model.song && model_database.song" class="mb-3">
                   <v-card-title>Skupina písní</v-card-title>
