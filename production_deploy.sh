@@ -5,8 +5,8 @@ git reset --hard
 git pull
 composer install --no-dev
 composer dump-auto
-npm install
-npm run production
+yarn install
+yarn run production
 php artisan config:cache
 php artisan cache:clear
 php artisan view:clear
