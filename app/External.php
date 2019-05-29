@@ -51,7 +51,11 @@ class External extends Model implements ISource
             6 => 'youtube kanál',
             7 => 'audio soubor',
             8 => 'text s akordy (pdf)',
-            9 => 'text (pdf)'
+            9 => 'text (pdf)',
+            10 => 'facebook',
+            11 => 'instagram',
+            12 => 'profilová fotka',
+            13 => 'fotka',
         ];
 
     protected $dispatchesEvents = [
