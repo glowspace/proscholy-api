@@ -15,17 +15,17 @@
             <a href="{{route('client.author', $author)}}">{{$author->name}}</a>@if (!$loop->last), @endif
         @endforeach
 
-        @if ($source->song_lyric()->get())
-        - <a href="{{ $source->song_lyric()->get()->public_url }}">{{$source->song_lyric()->get()->name}}</a>
+        @if ($source->song_lyric)
+        - <a href="{{ $source->song_lyric->public_url }}">{{$source->song_lyric->name}}</a>
         @endif
 
         @if (Auth::check() && !Request::is('admin/*'))
             @if ($source instanceof App\External)
-                <a href="{{ route('admin.external.edit', ['external' => $source->getId() ]) }}" class="text-warning text-uppercase"> - upravit</a>
+                <a href="{{ route('admin.external.edit', ['external' => $source->id ]) }}" class="text-warning text-uppercase"> - upravit</a>
             @endif
             
             @if ($source instanceof App\File)
-                <a href="{{ route('admin.file.edit', ['file' => $source->getId() ]) }}" class="text-warning text-uppercase"> - upravit</a>
+                <a href="{{ route('admin.file.edit', ['file' => $source->id ]) }}" class="text-warning text-uppercase"> - upravit</a>
             @endif
         @endif
     </div>

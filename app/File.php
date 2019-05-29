@@ -203,11 +203,6 @@ class File extends Model implements ISource
         return $converter[$this->type];
     }
 
-    public function getId() : int
-    {
-        return $this-id;
-    }
-
     public function getMediaId()
     {
         return false;

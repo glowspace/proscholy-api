@@ -10,6 +10,5 @@ interface ISource
     public function getSourceType() : int;
     public function authors() : BelongsToMany;
     public function song_lyric() : BelongsTo;
-    public function getId(): int;
     public function getMediaId();
 }

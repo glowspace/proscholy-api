@@ -165,11 +165,6 @@ class External extends Model implements ISource
         return $this->type;
     }
 
-    public function getId() : int
-    {
-        return $this-id;
-    }
-
     public function getMediaId()
     {
         return $this->media_id;
