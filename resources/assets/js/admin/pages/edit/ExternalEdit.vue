@@ -2,7 +2,7 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-      <v-layout row>
+      <v-layout row wrap>
         <v-flex xs12 md6>
           <v-form ref="form">
             <v-text-field

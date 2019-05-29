@@ -8,7 +8,7 @@
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
         <v-tab-item>
-          <v-layout row pt-2>
+          <v-layout row wrap pt-2>
             <v-flex xs12 md6>
               <v-form ref="form">
                 <v-text-field
@@ -89,7 +89,7 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row>
+          <v-layout row wrap>
             <v-flex xs12 md6>
               <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
               <a
@@ -139,7 +139,7 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row mb-4>
+          <v-layout row wrap mb-4>
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
@@ -173,13 +173,13 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-            <v-layout row>
+            <v-layout row wrap>
               <v-flex xs12>
                 <h5>Přiřazené zpěvníky:</h5>
               </v-flex>
             </v-layout>
 
-            <v-layout row v-for="(record, i) in model.songbook_records || []" :key="i">
+            <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
               <v-flex xs4>
                 <v-select
                   v-model="record.songbook"
@@ -194,13 +194,13 @@
               </v-flex>
               <v-flex xs2>
                 <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                <v-btn @click="removeSongbookRecord(i)">Odstranit</v-btn>
+                <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn>
               </v-flex>
             </v-layout>
 
-            <v-layout row>
+            <v-layout row wrap>
               <v-flex xs12 class="mb-5">
-                <v-btn @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
+                <v-btn color="info" outline @click="addSongbookRecord()">Přidat nový záznam ve zpěvníku</v-btn>
               </v-flex>
             </v-layout>
 
