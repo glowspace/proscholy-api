@@ -54,7 +54,7 @@ class File extends Model implements ISource
             2 => 'text/akordy',
             3 => 'noty',
             4 => 'audio nahrávka',
-            4 => 'fotka',
+            5 => 'fotka',
         ];
 
     public function getPublicNameAttribute()
@@ -201,11 +201,6 @@ class File extends Model implements ISource
         ];
 
         return $converter[$this->type];
-    }
-
-    public function getId() : int
-    {
-        return $this-id;
     }
 
     public function getMediaId()

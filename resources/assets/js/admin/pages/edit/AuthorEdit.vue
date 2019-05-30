@@ -17,7 +17,6 @@
                 <div v-on="on">
                   <v-select :items="type_values" v-model="model.type" label="Typ" :readonly="model.memberships.length > 0"></v-select>
                 </div>
-                <!-- <span v-on="on">ahoj</span> -->
               </template>
               <span>Uvedli jste, že autor je členem nějaké skupiny, proto nelze měnit jeho typ.</span>
             </v-tooltip>
