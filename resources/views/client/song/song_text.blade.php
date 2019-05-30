@@ -12,12 +12,6 @@
                         <div class="p-2">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
                         </div>
-                        <div class="d-flex flex-column p-2">
-                            @if ($song_l->lyrics)
-                                <transposition></transposition>
-                                <font-sizer></font-sizer>
-                            @endif
-                        </div>
                     </div>
                     <div class="card-body"  style="border-bottom: #7f97ab">
                         <div class="d-flex flex-column flex-sm-row-reverse mb-2">
@@ -44,6 +38,12 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
+					<div class="fixed-bottom position-sticky bg-light border-top">
+                            @if ($song_l->lyrics)
+							<transposition></transposition>
+							<font-sizer></font-sizer>
+                            @endif
                     </div>
 
 {{--                    <div class="card-text" style="border-bottom: 1px #d6d6d6 solid"></div>--}}
