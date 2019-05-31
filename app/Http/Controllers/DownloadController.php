@@ -15,12 +15,22 @@ class DownloadController extends Controller
         $file->save();
 
         $fullPath = Storage::path($file->path);
+
+        if (!file_exists($fullPath)) {
+            return response("Soubor nebyl nalezen", 404);
+        }
+
         return response()->download($fullPath, $file->filename);
     }
 
     public function previewFile(File $file)
     {
         $fullPath = Storage::path($file->path);
+
+        if (!file_exists($fullPath)) {
+            return response("Soubor nebyl nalezen", 404);
+        }
+
         return response()->file($fullPath);
     }
 
@@ -31,6 +41,10 @@ class DownloadController extends Controller
         }
 
         $fullPath = Storage::path($file->getThumbnailPath());
+
+        if (!file_exists($fullPath)) {
+            return response("Soubor nebyl nalezen", 404);
+        }
         return response()->file($fullPath);
     }
 
