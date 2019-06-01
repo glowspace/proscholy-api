@@ -17,6 +17,8 @@ use App\Helpers\Chord;
 use App\Helpers\ChordSign;
 use App\Helpers\ChordQueue;
 
+use Venturecraft\Revisionable\RevisionableTrait;
+
 /**
  * App\SongLyric
  *
@@ -57,7 +59,11 @@ class SongLyric extends Model
 {
     // Laravel Scout Trait used for full-text searching
     // Lockable Trait for enabling to "lock" the model while editing
-    use Searchable, Lockable, SoftDeletes;
+    use Searchable, Lockable, SoftDeletes, RevisionableTrait;
+    protected $revisionCleanup = true;
+    protected $historyLimit = 200;
+    protected $revisionCreationsEnabled = true;
+    protected $dontKeepRevisionOf = ['has_chords', 'creating_at'];
 
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,
