@@ -36,7 +36,7 @@
           >
             <template v-slot:items="props">
               <td>{{ props.item.number }}</td>
-              <td>{{ props.item.song_lyric.name }}</td>
+              <td><a href="#" @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')">{{ props.item.song_lyric.name }}</a></td>
             </template>
           </v-data-table>
 
