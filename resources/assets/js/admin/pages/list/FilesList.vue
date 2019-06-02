@@ -14,7 +14,7 @@
             :headers="headers"
             :items="files"
             :search="search_string"
-            :filter="formFilter"
+            :custom-filter="customFilter"
             :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
             >
             
@@ -42,8 +42,7 @@
   input {
     border: none;
   }
-</style>fetch_items
-
+</style>
 <script>
 
 import gql from 'graphql-tag';
@@ -96,6 +95,9 @@ export default {
         return { 
           is_todo: this.isTodo,
         }
+      },
+      result(result) {
+        this.buildSearchIndex();
       }
     }
   },
@@ -121,17 +123,20 @@ export default {
       });
     },
 
-    formFilter(val, search)
-    {
-      if (typeof(val) == 'string') {
-        let hay = removeDiacritics(val).toLowerCase();
-        let needle = removeDiacritics(search).toLowerCase();
+    buildSearchIndex() {
+      for (var item of this.files) {
+        const authors = item.authors.map(a => a.name).join(" ");
+        const str = removeDiacritics([item.public_name, authors, item.song_lyric ? item.song_lyric.name : "", item.type_string].join(" ")).toLowerCase();
 
-        return hay.indexOf(needle) >= 0;
+        this.$set(item, "search_index", str);
       }
+    },
 
-      return false;
-    }
+    customFilter(items, search) {
+      const needle = removeDiacritics(search).toLowerCase();
+
+      return items.filter(item => item.search_index.indexOf(needle) !== -1);
+    },
   }
 }
 </script>

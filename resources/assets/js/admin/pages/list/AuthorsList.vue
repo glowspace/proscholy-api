@@ -19,7 +19,7 @@
             :headers="headers"
             :items="authors"
             :search="search_string"
-            :filter="formFilter"
+            :custom-filter="customFilter"
             :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
             >
             
@@ -93,6 +93,9 @@ export default {
         return { 
           is_todo: this.isTodo,
         }
+      },
+      result(result) {
+        this.buildSearchIndex();
       }
     }
   },
@@ -122,17 +125,20 @@ export default {
       });
     },
 
-    formFilter(val, search)
-    {
-      if (typeof(val) == 'string') {
-        let hay = removeDiacritics(val).toLowerCase();
-        let needle = removeDiacritics(search).toLowerCase();
+    buildSearchIndex() {
+      for (var item of this.authors) {
+        // const authors = item.authors.map(a => a.name).join(" ") || (item.has_anonymous_author ? "anonymni" : "");
+        const str = removeDiacritics(item.name + " " + item.type_string).toLowerCase();
 
-        return hay.indexOf(needle) >= 0;
+        this.$set(item, "search_index", str);
       }
+    },
 
-      return false;
-    }
+    customFilter(items, search) {
+      const needle = removeDiacritics(search).toLowerCase();
+
+      return items.filter(item => item.search_index.indexOf(needle) !== -1);
+    },
   }
 }
 </script>
