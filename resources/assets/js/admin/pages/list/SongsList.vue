@@ -19,7 +19,7 @@
             :headers="headers"
             :items="song_lyrics"
             :search="search_string"
-            :filter="formFilter"
+            :custom-filter="customFilter"
             :rows-per-page-items='[10,25,{"text":"Vše","value":-1}]'
             class="users-list">
             
@@ -126,6 +126,9 @@ export default {
           has_chords: this.hasChords,
           has_tags: this.hasTags
         }
+      },
+      result(result) {
+        this.buildSearchIndex();
       }
     }
   },
@@ -151,17 +154,21 @@ export default {
       });
     },
 
-    formFilter(val, search)
-    {
-      if (typeof(val) == 'string') {
-        let hay = removeDiacritics(val).toLowerCase();
-        let needle = removeDiacritics(search).toLowerCase();
+    buildSearchIndex() {
+      for (var item of this.song_lyrics) {
+        const authors = item.authors.map(a => a.name).join(" ") || (item.has_anonymous_author ? "anonymni" : "");
+        const types = ["original", "preklad", "autorizovany preklad"];
+        const str = removeDiacritics([item.name, types[item.type], authors].join(" ")).toLowerCase();
 
-        return hay.indexOf(needle) >= 0;
+        this.$set(item, "search_index", str);
       }
+    },
 
-      return false;
-    }
+    customFilter(items, search) {
+      const needle = removeDiacritics(search).toLowerCase();
+
+      return items.filter(item => item.search_index.indexOf(needle) !== -1);
+    },
   }
 }
 </script>
