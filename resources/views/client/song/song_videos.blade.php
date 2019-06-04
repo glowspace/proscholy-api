@@ -27,7 +27,7 @@
                     @elseif($song_l->youtubeVideos->count() > 0)
                         @foreach($song_l->youtubeVideos as $external)
                             <div class="col-sm-4">
-                                @component('client.components.external_embed', ['external'=> $external])@endcomponent
+                                @component('client.components.media_widget', ['source'=> $external])@endcomponent
                             </div>
                         @endforeach
                     @endif
