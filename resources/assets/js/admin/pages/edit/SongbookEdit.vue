@@ -27,6 +27,11 @@
               data-vv-name="input.songs_count"
               :error-messages="errors.collect('input.songs_count')"
             ></v-text-field>
+
+            <p v-if="!model.songs_count">
+              Aby bylo možné zde editovat všechny záznamy, je třeba zadat celkový počet písní.<br>
+              Tento údaj zatím není třeba zadávat přesně.
+            </p>
           </v-form>
         </v-flex>
         <v-flex xs12 md6 class="edit-description">
@@ -35,12 +40,12 @@
                   class="mt-0"
                   v-model="hide_empty"
                   label="Skrýt prázdné záznamy"
+                  v-if="model.songs_count"
                 ></v-checkbox>
           <v-data-table :headers="records_headers" :items="recordsWithEmpty" class="mb-4">
             <template v-slot:items="props">
               <td>{{ props.item.number }}</td>
               <td>
-                <!-- <a href="#" @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')">{{ props.item.song_lyric.name }}</a> -->
                 <items-combo-box
                   v-bind:p-items="song_lyrics"
                   v-bind:value="props.item.song_lyric"
@@ -50,6 +55,9 @@
                   :multiple="false"
                   :enable-custom="false"
                 ></items-combo-box>
+              </td>
+              <td>
+                <a v-if="props.item.song_lyric" href="#" @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')">Upravit píseň</a>
               </td>
             </template>
           </v-data-table>
@@ -139,8 +147,8 @@ export default {
       is_deleted: false,
       records_headers: [
         { text: "Číslo", value: "number" },
-        // { text: 'Typ', value: 'type_string' },
-        { text: "Píseň", value: "name" }
+        { text: "Píseň", value: "name" },
+        { text: 'Akce', value: 'action' }
       ],
       hide_empty: false
     };
@@ -201,7 +209,7 @@ export default {
     },
 
     recordsWithEmpty() {
-      if (this.hide_empty) {
+      if (this.hide_empty || !this.model.songs_count) {
         return this.model.records.filter(r => r.song_lyric !== null);
       }
 
@@ -328,39 +336,7 @@ export default {
       } else {
         this.$set(record, "song_lyric", song_lyric);
       }
-
-      // this.$set(this.model.records[index], "song_lyric", val);
     },
-
-    // getRecordsWithEmpty(nonempty_records, songs_count) {
-    //   let result = [];
-
-    //   for (var i = 1; i <= songs_count; i++) {
-    //     let record = nonempty_records.filter(r => r.number == i)[0];
-
-    //     // if in the db there is already song under this number, then push that one
-    //     // otherwise get an empty one
-
-    //     if (record === undefined) {
-    //         result.push({
-    //           number: i,
-    //           song_lyric: null
-    //         });
-    //     } else {
-    //       result.push(record);
-    //     }
-    //   }
-
-    //   return result;
-    // },
-
-    // recordsTableFilter(val, search) {
-    //   return [];
-    //   // if (this.hide_empty && val.song_lyric == null)
-    //   //   return false;
-
-    //   // return true;
-    // }
   }
 };
 </script>
