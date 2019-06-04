@@ -9,4 +9,5 @@ fragment SongbookFillableFragment on Songbook {
             name
         }
     }
+    songs_count
 }

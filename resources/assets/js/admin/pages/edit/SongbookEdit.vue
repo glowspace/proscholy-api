@@ -20,32 +20,59 @@
               :error-messages="errors.collect('input.shortcut')"
             ></v-text-field>
 
+            <v-text-field
+              label="Počet písní"
+              required
+              v-model="model.songs_count"
+              data-vv-name="input.songs_count"
+              :error-messages="errors.collect('input.songs_count')"
+            ></v-text-field>
+
+            <p v-if="!model.songs_count">
+              Aby bylo možné zde editovat všechny záznamy, je třeba zadat celkový počet písní.<br>
+              Tento údaj zatím není třeba zadávat přesně.
+            </p>
           </v-form>
         </v-flex>
         <v-flex xs12 md6 class="edit-description">
           <h5>Seznam písní ve zpěvníku</h5>
-          <!-- <v-btn
-            v-for="(record, index) in model.records"
-            v-bind:key="index"
-            class="text-none"
-          >{{ record.song_lyric.name }}</v-btn> -->
-          <v-data-table
-            :headers="records_headers"
-            :items="model.records"
-            class=""
-          >
+          <v-checkbox
+                  class="mt-0"
+                  v-model="hide_empty"
+                  label="Skrýt prázdné záznamy"
+                  v-if="model.songs_count"
+                ></v-checkbox>
+          <v-data-table :headers="records_headers" :items="recordsWithEmpty" class="mb-4">
             <template v-slot:items="props">
               <td>{{ props.item.number }}</td>
-              <td>{{ props.item.song_lyric.name }}</td>
+              <td>
+                <items-combo-box
+                  v-bind:p-items="song_lyrics"
+                  v-bind:value="props.item.song_lyric"
+                  @input="(val) => { updateRecordItem(val, props.item.number) }"
+                  header-label="Vyberte píseň"
+                  label="Píseň"
+                  :multiple="false"
+                  :enable-custom="false"
+                ></items-combo-box>
+              </td>
+              <td>
+                <a v-if="props.item.song_lyric" href="#" @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')">Upravit píseň</a>
+              </td>
             </template>
           </v-data-table>
-
         </v-flex>
       </v-layout>
       <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
       <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
-      <br><br>
-      <delete-model-dialog class-name="Songbook" :model-id="model.id" @deleted="is_deleted = true" delete-msg="Opravdu chcete vymazat tento zpěvník?">Vymazat</delete-model-dialog>
+      <br>
+      <br>
+      <delete-model-dialog
+        class-name="Songbook"
+        :model-id="model.id"
+        @deleted="is_deleted = true"
+        delete-msg="Opravdu chcete vymazat tento zpěvník?"
+      >Vymazat</delete-model-dialog>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
         <v-card>
@@ -53,7 +80,11 @@
           <v-card-text>Zpěvník byl vymazán z databáze.</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click="goToAdminPage('songbook')">Přejít na seznam zpěvníků</v-btn>
+            <v-btn
+              color="green darken-1"
+              flat
+              @click="goToAdminPage('songbook')"
+            >Přejít na seznam zpěvníků</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -85,15 +116,14 @@ const MUTATE_MODEL_DATABASE = gql`
   ${fragment}
 `;
 
-// const FETCH_AUTHORS = gql`
-//   query { 
-//     songbooks(type: 0) {
-//       id
-//       name
-//     }
-//   }
-// `;
-
+const FETCH_SONG_LYRICS = gql`
+  query {
+    song_lyrics {
+      id
+      name
+    }
+  }
+`;
 
 export default {
   props: ["preset-id"],
@@ -111,14 +141,16 @@ export default {
         id: undefined,
         name: undefined,
         shortcut: undefined,
-        records: []
+        records: [],
+        songs_count: undefined
       },
       is_deleted: false,
       records_headers: [
-        { text: 'Číslo', value: 'number' },
-        // { text: 'Typ', value: 'type_string' },
-        { text: 'Jméno', value: 'name' }
+        { text: "Číslo", value: "number" },
+        { text: "Píseň", value: "name" },
+        { text: 'Akce', value: 'action' }
       ],
+      hide_empty: false
     };
   },
 
@@ -132,11 +164,18 @@ export default {
       },
       result(result) {
         let songbook = result.data.model_database;
+        
         // load the requested fields to the vue data.model property
+        // Vue.set(this.model, "records", this.getRecordsWithEmpty(songbook["records"], songbook["songs_count"]));
+
         for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, songbook[field]);
+          Vue.set(this.model, field, _.cloneDeep(songbook[field]));
         }
+
       }
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
     }
   },
 
@@ -167,7 +206,33 @@ export default {
       }
 
       return false;
-    }
+    },
+
+    recordsWithEmpty() {
+      if (this.hide_empty || !this.model.songs_count) {
+        return this.model.records.filter(r => r.song_lyric !== null);
+      }
+
+      let result = [];
+
+      for (var i = 1; i <= this.model.songs_count; i++) {
+        let record = this.model.records.filter(r => r.number == i)[0];
+
+        // if in the db there is already song under this number, then push that one
+        // otherwise get an empty one
+
+        if (record === undefined) {
+            result.push({
+              number: String(i),
+              song_lyric: null
+            });
+        } else {
+          result.push(record);
+        }
+      }
+
+      return result;
+    },
   },
 
   methods: {
@@ -179,7 +244,16 @@ export default {
             input: {
               id: this.model.id,
               name: this.model.name,
-              shortcut: this.model.shortcut
+              shortcut: this.model.shortcut,
+              songs_count: this.model.songs_count,
+              records: {
+                // first let's filter out records that had been assigned a song_lyric but
+                // it was then set to null
+                sync: this.model.records.filter(r => r.song_lyric !== null).map(m => ({
+                  song_lyric_id: parseInt(m.song_lyric.id),
+                  number: m.number
+                }))
+              },
             }
           }
         })
@@ -212,24 +286,8 @@ export default {
         });
     },
 
-    // getModelsToCreateBelongsToMany(models){
-    //   return models.filter(model => {
-    //     if(model.id) return false;
-    //     return true;
-    //   });
-    // },
-
-    // getModelsToSyncBelongsToMany(models){
-    //   return models.filter(model => {
-    //     if(model.id) return true;
-    //     return false;
-    //   }).map(model => {
-    //     return model.id
-    //   });
-    // },
-
     // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment(includeId) {
+    getFieldsFromFragment(includeId, excludeFields=[]) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
       let fieldNames = fieldDefs.map(field => {
         if (field.alias) return field.alias.value;
@@ -237,33 +295,48 @@ export default {
       });
 
       if (!includeId)
-        fieldNames = fieldNames.filter(field => {
-          return field != "id";
-        });
+        fieldNames = fieldNames.filter(field => field != "id");
+
+      fieldNames = fieldNames.filter(field => !excludeFields.includes(field));
 
       return fieldNames;
     },
 
-    async goToPage(url, save=true) {
-      if (this.isDirty && save)
-        await this.submit();
+    async goToPage(url, save = true) {
+      if (this.isDirty && save) await this.submit();
 
       setTimeout(() => {
         if (!this.isDirty && save) {
-          var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/' + url;
+          var base_url = document
+            .querySelector("#baseUrl")
+            .getAttribute("value");
+          window.location.href = base_url + "/" + url;
         }
       }, 500);
     },
 
-    goToAdminPage(url, save=true) {
-      this.goToPage('/admin/' + url, save);
+    goToAdminPage(url, save = true) {
+      this.goToPage("/admin/" + url, save);
     },
 
     show() {
       var base_url = document.querySelector("#baseUrl").getAttribute("value");
       window.location.href = base_url + "/autor/" + this.model.id;
-    }
+    },
+
+    updateRecordItem(song_lyric, number)
+    {
+      let record = this.model.records.filter(r => r.number == number)[0];
+
+      if (record === undefined) {
+        this.model.records.push({
+          number: number,
+          song_lyric: song_lyric
+        });
+      } else {
+        this.$set(record, "song_lyric", song_lyric);
+      }
+    },
   }
 };
 </script>
