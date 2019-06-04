@@ -26,7 +26,7 @@
         small
       >
         <span class="pr-2">{{ item.name }}</span>
-        <v-icon small @click="removeItem(item)">close</v-icon>
+        <v-icon small @click="removeItem(item, parent)">close</v-icon>
       </v-chip>
     </template>
     <template v-slot:item="{ index, item }">
@@ -139,9 +139,10 @@ export default {
         }
     },
 
-    removeItem(item) {
-      if (this.multiple)
+    removeItem(item, parent) {
+      if (this.multiple) {
         parent.selectItem(item);
+      }
       else {
         this.internalValue = null;
       }
