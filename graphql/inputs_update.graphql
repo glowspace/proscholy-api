@@ -93,6 +93,7 @@ input UpdateSongbookInput {
     name: String
     shortcut: String
     records: SyncSongbookRecordsForSongbookRelation
+    songs_count: Int
 }
 
 input SyncSongbookRecordsForSongbookRelation {
