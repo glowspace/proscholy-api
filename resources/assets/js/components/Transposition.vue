@@ -3,7 +3,7 @@
         <span v-if="chordMode !== 0">
             <a class="btn btn-secondary" v-on:click="transposition = 0">Transpozice<sup>{{ transposition }}</sup></a>
             <a class="btn btn-secondary" v-on:click="transpose(-1)">-1</a>
-            <a class="btn btn-secondary" v-on:click="transpose(1)">+1</a>
+            <a class="btn btn-secondary" v-on:click="transpose(1)">+1</a><br>
             <a class="btn btn-secondary" style="font-size: 16px" v-on:click="useFlatScale = !useFlatScale">{{ useFlatScale ? '#' : '♭' }}</a>
         </span>
         <span v-if="nChordModes > 1">

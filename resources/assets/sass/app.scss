@@ -374,6 +374,24 @@ View: Search results
 /**
 ChordPro view
  */
+.controls {
+	z-index: 199;
+
+	.btn {
+		margin-bottom: 0;
+	}
+}
+
+.tools-wrapper {
+	margin: 5px;
+}
+
+.show-button {
+	// width: 3em;
+	margin-bottom: 0;
+	flex: none;
+}
+
 .transpose-control-wrapper {
   .btn {
     margin-bottom: 0;

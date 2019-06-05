@@ -7,5 +7,7 @@ export const store = {
     chordMode_text: [
         'POUZE TEXT', 'TEXT S AKORDY', 'VŠECHNY AKORDY'
     ],
-    fontSizePercent: 100
+	fontSizePercent: 100,
+	toolsDisplay: false,
+	controlsDisplay: true
 };

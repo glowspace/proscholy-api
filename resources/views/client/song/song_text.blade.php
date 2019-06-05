@@ -39,12 +39,9 @@
                             </div>
                         </div>
                     </div>
-					<div class="fixed-bottom position-sticky bg-light border-top">
-                            @if ($song_l->lyrics)
-							<transposition></transposition>
-							<font-sizer></font-sizer>
-                            @endif
-                    </div>
+					@if ($song_l->lyrics)
+						<controls></controls>
+					@endif
 
 {{--                    <div class="card-text" style="border-bottom: 1px #d6d6d6 solid"></div>--}}
 

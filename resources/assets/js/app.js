@@ -23,6 +23,9 @@ Vue.component('chord', require('Public/components/Chord.vue'));
 Vue.component('transposition', require('Public/components/Transposition.vue'));
 Vue.component('font-sizer', require('Public/components/FontSizer.vue'));
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
+Vue.component('tools', require('Public/components/Tools.vue'));
+Vue.component('control-buttons', require('Public/components/ControlButtons.vue'));
+Vue.component('controls', require('Public/components/Controls.vue'));
 
 Vue.component('search', require('Public/pages/Search.vue'));
 
