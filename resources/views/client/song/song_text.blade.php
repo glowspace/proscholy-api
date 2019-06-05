@@ -54,15 +54,6 @@
                 </div>
             </div>
             <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-4" }}">
-                @if($song_l->description)
-                    <div class="card">
-                        <div class="card-header">Informace o písni</div>
-                        <div class="card-body">
-                            <b>Autor</b>
-                        </div>
-                    </div>
-                @endif
-
                 @if($song_l->scoreFiles()->count() > 0)
                     {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
                     @component('client.components.media_widget', ['source' => $song_l->scoreFiles()->first()])@endcomponent
