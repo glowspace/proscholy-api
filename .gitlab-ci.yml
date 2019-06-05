@@ -1,4 +1,4 @@
-image: registry.gitlab.com/thes01/proscholy.cz:latest
+image: registry.gitlab.com/mdojcar/proscholy.cz:latest
 
 services:
   - mysql:5.7
