@@ -19,7 +19,7 @@
     [ -d {{ $releases_dir }} ] || mkdir {{ $releases_dir }}
     git clone --depth 1 {{ $repository }} {{ $new_release_dir }}
     cd {{ $new_release_dir }}
-    git reset --hard {{ $commit }}
+    git reset --hard master
 @endtask
 
 @task('run_composer')
@@ -40,10 +40,8 @@
     ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 @endtask
 
-
-
-@task('list', ['on' => 'web'])
+{{-- @task('list', ['on' => 'web'])
     cd /var/www
     ls -l
-@endtask
+@endtask --}}
 
