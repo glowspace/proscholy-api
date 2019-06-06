@@ -1,13 +1,16 @@
 export const store = {
-    transposition: 0,
+	transposition: 0,
+	displayTransp: 0,
     useFlatScale: false,
     useFlatScale_notified: false,
     chordMode: 0,
     nChordModes: 1,
     chordMode_text: [
-        'POUZE TEXT', 'TEXT S AKORDY', 'VŠECHNY AKORDY'
+        'skrýt', 'zobrazit', 'všude'
     ],
 	fontSizePercent: 100,
 	toolsDisplay: false,
-	controlsDisplay: true
+	controlsDisplay: true,
+	mediaDisplay: false,
+	autoscroll: false
 };

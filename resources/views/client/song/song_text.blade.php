@@ -6,8 +6,8 @@
     <div class="container">
         <h1>{{$song_l->name}}</h1>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
-            <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-8" }}">
-                <div class="card" id="cardLyrics">
+            <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
+                <div class="card {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
                     <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
                         <div class="p-2">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-4" }}">
+            <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-4 d-none" }}">
                 @if($song_l->scoreFiles()->count() > 0)
                     {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
                     @component('client.components.media_widget', ['source' => $song_l->scoreFiles()->first()])@endcomponent

@@ -380,10 +380,27 @@ ChordPro view
 	.btn {
 		margin-bottom: 0;
 	}
+
+	.card {
+		box-shadow: none;
+		border: 1px solid rgba(0, 0, 0, 0.12);
+	}
+
+	.border {
+		border-color: rgba(0, 0, 0, 0.12);
+	}
+
+	.btn.btn-secondary.transpose-window {
+		width: 4em;
+  }
+  
+  a span {
+    padding-left: 5px;
+  }
 }
 
-.tools-wrapper {
-	margin: 5px;
+.chosen .btn, .btn.chosen {
+	background-color: #ddd;
 }
 
 .show-button {
@@ -457,8 +474,10 @@ body {
 
 .navbar.absolute-top {
   z-index: 201;
-  padding-left: 0;
-  padding-right: 0;
+}
+
+.navbar {
+  padding: 0.5rem 0;
 }
 
 .navbar > div {
@@ -484,7 +503,7 @@ body {
   min-height: auto;
 }
 
-.navbar.fixed-top a {
+.navbar a {
   margin-bottom: 0;
 }
 

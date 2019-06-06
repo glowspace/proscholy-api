@@ -1,11 +1,14 @@
 <template>
-    <div class="transpose-control-wrapper">
-        <span>
-            <a class="btn btn-secondary" v-on:click="fontSizePercent = 100">Velikost písma<sup>{{ (fontSizePercent - 100)/10 }}</sup></a>
-            <a class="btn btn-secondary font-weight-bold" v-on:click="resize(-10)">-</a>
-            <a class="btn btn-secondary font-weight-bold" v-on:click="resize(10)">+</a>
-        </span>
-    </div>
+    <span>
+        <div class="d-inline-block m-1 py-1 px-2 border rounded text-center">
+            <div>Velikost písma</div>
+            <div class="btn-group m-0" role="group">
+                <a class="btn btn-secondary" v-on:click="resize(-10)">-</a>
+                <a class="btn btn-secondary bg-light transpose-window" v-on:click="fontSizePercent = 100">{{ (fontSizePercent - 100)/10 }}</a>
+                <a class="btn btn-secondary" v-on:click="resize(10)">+</a>
+            </div>
+        </div>
+    </span>
 </template>
 
 <script>
