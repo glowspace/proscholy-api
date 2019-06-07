@@ -8,8 +8,8 @@
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
                 <div class="card {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
-                    <div class="card-header d-flex flex-row justify-content-between flex-wrap" style="padding: 8px;">
-                        <div class="p-2">
+                    <div class="card-header d-flex flex-row justify-content-between flex-wrap px-3 py-2">
+                        <div>
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
                         </div>
                         <div class="song-tags d-flex flex-row align-items-start">
@@ -25,14 +25,14 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="card-body"  style="border-bottom: #7f97ab">
+                    <div class="card-body p-0"  style="border-bottom: #7f97ab">
                         <div class="d-flex flex-column flex-row-reverse mb-2">
-                            <div class="d-flex flex-column">
+                            <div class="d-flex flex-column p-1">
                                 <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
                             </div>
-                            <div class="flex-grow-1">
+                            <div class="flex-grow-1 px-3 py-2">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}
                                 @else
