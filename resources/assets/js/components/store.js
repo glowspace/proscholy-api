@@ -5,9 +5,6 @@ export const store = {
     useFlatScale_notified: false,
     chordMode: 0,
     nChordModes: 1,
-    chordMode_text: [
-        'skrýt', 'zobrazit', 'všude'
-    ],
 	fontSizePercent: 100,
 	toolsDisplay: false,
 	controlsDisplay: true,

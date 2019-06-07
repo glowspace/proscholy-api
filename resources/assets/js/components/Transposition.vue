@@ -24,11 +24,11 @@
 				<div>Akordy</div>
 				<div class="btn-group m-0 bg-light" role="group">
 					<a class="btn btn-secondary" v-bind:class="{'chosen': chordMode == 0}"
-					v-on:click="chordMode = 0">{{ chordMode_text[0] }}</a>
+					v-on:click="chordMode = 0"><i class="far fa-eye-slash"></i></a>
 					<a class="btn btn-secondary" v-bind:class="{'chosen': chordMode == 1}"
-					v-on:click="chordMode = 1">{{ chordMode_text[1] }}</a>
+					v-on:click="chordMode = 1"><i class="far fa-eye"></i></a>
 					<a class="btn btn-secondary" v-bind:class="{'chosen': chordMode == 2}"
-					v-on:click="chordMode = 2">{{ chordMode_text[2] }}</a>
+					v-on:click="chordMode = 2"><i class="fas fa-eye"></i></a>
 				</div>
 			</div>
         </span>
