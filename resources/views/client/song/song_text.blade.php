@@ -26,11 +26,11 @@
                         </div>
                     </div>
                     <div class="card-header p-1 song-links">
-                        <a class="btn btn-secondary"><i class="fas fa-file-alt"></i> Noty</a>
-                        {{-- <a class="btn btn-secondary"><i class="fas fa-file"></i> Další soubory</a> --}}
-                        <a class="btn btn-secondary"><i class="fas fa-language"></i> Překlady</a>
-                        <a class="btn btn-secondary"><i class="fas fa-file-pdf"></i> Stáhnout</a>
-                        <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle p-0"></i></a>
+                        <a class="btn btn-secondary"><i class="fas fa-file-alt"></i> <span class="d-none d-sm-inline">Noty</span></a>
+                        {{-- <a class="btn btn-secondary"><i class="fas fa-file"></i> <span class="d-none d-sm-inline">Další soubory</span></a> --}}
+                        <a class="btn btn-secondary"><i class="fas fa-language"></i> <span class="d-none d-sm-inline">Překlady</span></a>
+                        <a class="btn btn-secondary"><i class="fas fa-file-pdf"></i> <span class="d-none d-sm-inline">Export</span></a>
+                        <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle"></i></a>
                     </div>
                     <div class="card-body py-2"  style="border-bottom: #7f97ab">
                         <div class="d-flex flex-column flex-row-reverse">
