@@ -27,7 +27,7 @@
 					v-on:click="chordMode = 0"><i class="far fa-eye-slash"></i></a>
 					<a class="btn btn-secondary" v-bind:class="{'chosen': chordMode == 1}"
 					v-on:click="chordMode = 1"><i class="far fa-eye"></i></a>
-					<a class="btn btn-secondary" v-bind:class="{'chosen': chordMode == 2}"
+					<a class="btn btn-secondary" v-if="nChordModes > 2" v-bind:class="{'chosen': chordMode == 2}"
 					v-on:click="chordMode = 2"><i class="fas fa-eye"></i></a>
 				</div>
 			</div>
