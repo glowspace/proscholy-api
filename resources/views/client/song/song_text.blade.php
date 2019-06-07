@@ -12,21 +12,21 @@
                         <div class="p-2">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
                         </div>
+                        <div class="song-tags d-flex flex-row align-items-start">
+                            @foreach ($tags_officials as $tag)
+                                <a class="tag tag-blue">{{ $tag->name }}</a>
+                            @endforeach
+                            @foreach ($tags_unofficials as $tag)
+                                @if ($tag->parent_tag == null)
+                                    <a class="tag tag-green">{{ $tag->name }}</a>
+                                @else
+                                    <a class="tag tag-yellow">{{ $tag->name }}</a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     <div class="card-body"  style="border-bottom: #7f97ab">
                         <div class="d-flex flex-column flex-sm-row-reverse mb-2">
-                            <div class="song-tags d-flex flex-sm-column align-items-sm-end mb-2">
-                                @foreach ($tags_officials as $tag)
-                                    <a class="tag tag-blue">{{ $tag->name }}</a>
-                                @endforeach
-                                @foreach ($tags_unofficials as $tag)
-                                    @if ($tag->parent_tag == null)
-                                        <a class="tag tag-green">{{ $tag->name }}</a>
-                                    @else
-                                        <a class="tag tag-yellow">{{ $tag->name }}</a>
-                                    @endif
-                                @endforeach
-                            </div>
                             <div class="flex-grow-1">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}
