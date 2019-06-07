@@ -25,6 +25,13 @@
                             @endforeach
                         </div>
                     </div>
+                    <div class="card-header p-1 song-links">
+                        <a class="btn btn-secondary"><i class="fas fa-file-alt"></i> Noty</a>
+                        {{-- <a class="btn btn-secondary"><i class="fas fa-file"></i> Další soubory</a> --}}
+                        <a class="btn btn-secondary"><i class="fas fa-language"></i> Překlady</a>
+                        <a class="btn btn-secondary"><i class="fas fa-file-pdf"></i> Stáhnout</a>
+                        <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle p-0"></i></a>
+                    </div>
                     <div class="card-body p-0"  style="border-bottom: #7f97ab">
                         <div class="d-flex flex-column flex-row-reverse mb-2">
                             <div class="d-flex flex-column p-1">

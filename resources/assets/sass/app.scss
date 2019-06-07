@@ -365,15 +365,19 @@ View: Search results
   color: #efefef;
 }
 
-
 .no-left-padding {
   padding-left: 2px !important;
 }
 
+.song-links {
+  a {
+    margin-bottom: 0;
+    i {
+      padding-right: 5px;
+    }
+  }
+}
 
-/**
-ChordPro view
- */
 .controls {
 	z-index: 199;
 
@@ -403,21 +407,9 @@ ChordPro view
 	background-color: #ddd;
 }
 
-.show-button {
-	// width: 3em;
-	margin-bottom: 0;
-	flex: none;
-}
-
-.transpose-control-wrapper {
-  .btn {
-    margin-bottom: 0;
-  }
-  sup {
-	  min-width: 1.5em;
-	  display: inline-block;
-  }
-}
+/**
+ChordPro view
+ */
 
 .song-tags {
 
