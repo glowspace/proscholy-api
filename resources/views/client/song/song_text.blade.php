@@ -26,7 +26,12 @@
                         </div>
                     </div>
                     <div class="card-body"  style="border-bottom: #7f97ab">
-                        <div class="d-flex flex-column flex-sm-row-reverse mb-2">
+                        <div class="d-flex flex-column flex-row-reverse mb-2">
+                            <div class="d-flex flex-column">
+                                <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
+                                <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
+                                <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
+                            </div>
                             <div class="flex-grow-1">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}

@@ -3,9 +3,6 @@
 		<a class="btn btn-secondary float-right" v-on:click="toolsDisplay=false"><i class="fas fa-times pr-0"></i></a>
 		<transposition></transposition>
 		<font-sizer></font-sizer><br>
-        <a class="btn btn-secondary"><i class="far fa-square"></i> <span>Na celou obrazovku</span></a>
-        <a class="btn btn-secondary"><i class="far fa-square"></i> <span>Zobrazit ve sloupcích</span></a>
-        <a class="btn btn-secondary"><i class="far fa-square"></i> <span>Udržovat displej rozsvícený</span></a>
     </div>
 </template>
 
