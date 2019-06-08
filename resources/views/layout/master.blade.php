@@ -41,8 +41,8 @@
 
     @stack('head_links')
 </head>
-<body class="@yield('body-classes', 'page')">
-    <div id="app">
+<body>
+    <div id="app" class="@yield('wrapper-classes', 'page')">
         @yield("navbar")
 
         @yield('content')

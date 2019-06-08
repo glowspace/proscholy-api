@@ -177,14 +177,10 @@ $sidebar-width: 300px;
 Home page specific elements
  */
 
-.home {
+.home > div {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
-  #app {
-    flex: 1;
-  }
 }
 
 .background-home {
@@ -192,7 +188,7 @@ Home page specific elements
   background-position-x: center;
   background-size:       cover;
   background-repeat:     no-repeat;
-  height: 100%;
+  flex: 1;
   // min-height: 450px;
 
   @include media-breakpoint-down(sm) {
@@ -515,8 +511,4 @@ body {
 
 body.dark {
   background-color: #111;
-
-  #app {
-    filter: invert(1);
-  }
 }
