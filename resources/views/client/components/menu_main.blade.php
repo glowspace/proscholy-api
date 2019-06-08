@@ -2,7 +2,7 @@
     <div class="container">
     <a class="navbar-brand" href="{{url("")}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">Zpěvník pro scholy</a>
     @if (Auth::check())
-            <a class="navbar-text" href="{{route('admin.dashboard')}}">
+            <a class="navbar-text px-3" href="{{route('admin.dashboard')}}">
             Přihlášený uživatel: {{ Auth::user()->name }}
             @if (Auth::user()->roles()->count() > 0)
                 ({{Auth::user()->roles()->first()->name}})
