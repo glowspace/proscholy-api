@@ -42,9 +42,9 @@
     @stack('head_links')
 </head>
 <body class="@yield('body-classes', 'page')">
-    @yield("navbar")
-
     <div id="app">
+        @yield("navbar")
+
         @yield('content')
         {{-- Side navbar --}}
         @yield('sidebar')
