@@ -33,13 +33,13 @@
                         <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle"></i></a>
                     </div>
                     <div class="card-body py-2"  style="border-bottom: #7f97ab">
-                        <div class="d-flex flex-column flex-row-reverse">
+                        <div class="d-flex flex-row-reverse justify-content-between">
                             <div class="d-flex flex-column mr-n3">
                                 <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
                             </div>
-                            <div class="flex-grow-1">
+                            <div class="">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}
                                 @else
