@@ -361,9 +361,13 @@ View: Search results
   }
 }
 
-#cardLyrics {
+.card-lyrics {
   .card-header, .card-footer, .bg-custom-blue {
     background-color: #f1f4f9;
+  }
+
+  .card-body {
+    border-bottom: #7f97ab;
   }
 }
 
@@ -511,4 +515,14 @@ body {
 
 body.dark {
   background-color: #111;
+
+  .card-body, .chord-text {
+    background-color: black;
+    color: #ccc;
+  }
+
+  .card-header, .card-footer, .bg-custom-blue {
+    background-color: #222;
+    color: #ccc;
+  }
 }

@@ -7,7 +7,7 @@
         <h1>{{$song_l->name}}</h1>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
-                <div class="card {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
+                <div class="card card-lyrics {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
                     <div class="card-header d-flex flex-row justify-content-between flex-wrap py-2">
                         <div class="px-1">
                             @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
@@ -32,7 +32,7 @@
                         <a class="btn btn-secondary"><i class="fas fa-file-pdf"></i> <span class="d-none d-sm-inline">Export</span></a>
                         <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle"></i></a>
                     </div>
-                    <div class="card-body py-2"  style="border-bottom: #7f97ab">
+                    <div class="card-body py-2">
                         <div class="d-flex flex-column flex-row-reverse">
                             <div class="d-flex flex-column mr-n3">
                                 <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
