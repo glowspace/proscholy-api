@@ -41,7 +41,7 @@
 
     @stack('head_links')
 </head>
-<body>
+<body class="@yield('body-classes', 'page')">
     @yield("navbar")
 
     {{-- <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top"> --}}

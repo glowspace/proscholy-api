@@ -1,5 +1,7 @@
 @extends('layout.client')
 
+@section('body-classes', 'home')
+
 @section('navbar')
     @include('client.components.menu_main')
 @endsection
