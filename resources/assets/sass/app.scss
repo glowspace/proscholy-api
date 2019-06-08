@@ -362,7 +362,7 @@ View: Search results
 }
 
 .card-lyrics {
-  .card-header, .card-footer, .bg-custom-blue {
+  .card-header, .card-footer {
     background-color: #f1f4f9;
   }
 
@@ -400,10 +400,6 @@ View: Search results
 		border: 1px solid rgba(0, 0, 0, 0.12);
 	}
 
-	.border {
-		border-color: rgba(0, 0, 0, 0.12);
-	}
-
 	.btn.btn-secondary.transpose-window {
 		width: 4em;
   }
@@ -414,7 +410,7 @@ View: Search results
 }
 
 .chosen .btn, .btn.chosen {
-	background-color: #ddd;
+	background-color: rgba(0, 0, 0, 0.133);
 }
 
 /**
@@ -516,13 +512,29 @@ body {
 body.dark {
   background-color: #111;
 
-  .card-body, .chord-text {
+  h1 {
+    color: white;
+  }
+
+  .container {
+    color: #ccc;
+  }
+
+  .card-body, .chord-text, .card {
     background-color: black;
     color: #ccc;
   }
 
-  .card-header, .card-footer, .bg-custom-blue {
-    background-color: #222;
+  .card-header, .card-footer, .bg-light, .tag {
+    background-color: #222 !important;
     color: #ccc;
+  }
+
+  .border {
+    border-color: #222 !important;
+  }
+
+  .background-home {
+    filter: brightness(50%);
   }
 }
