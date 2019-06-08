@@ -3,7 +3,7 @@
     v-model="internalValue"
     :filter="filter"
     :hide-no-data="!search"
-    :items="items"
+    :items="pItems"
     :search-input.sync="search"
     item-text="name"
     hide-selected
@@ -26,7 +26,7 @@
         small
       >
         <span class="pr-2">{{ item.name }}</span>
-        <v-icon small @click="parent.selectItem(item)">close</v-icon>
+        <v-icon small @click="removeItem(item, parent)">close</v-icon>
       </v-chip>
     </template>
     <template v-slot:item="{ index, item }">
@@ -67,7 +67,7 @@ export default {
     editing: null,
     index: -1,
     search: null,
-    items: [{ header: "" }]
+    // items: []
   }),
 
   computed: {
@@ -79,10 +79,6 @@ export default {
         this.$emit("input", val);
       }
     }
-  },
-
-  mounted(){
-    this.items[0].header = this.headerLabel;
   },
 
   watch: {
@@ -107,10 +103,6 @@ export default {
         return v;
       });
     },
-
-    pItems(val, prev) {
-        this.items = this.items.concat(this.pItems);
-    }
   },
 
   methods: {
@@ -145,6 +137,15 @@ export default {
         } else {
             return `green lighten-3`;
         }
+    },
+
+    removeItem(item, parent) {
+      if (this.multiple) {
+        parent.selectItem(item);
+      }
+      else {
+        this.internalValue = null;
+      }
     }
   }
 };

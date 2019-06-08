@@ -102,6 +102,7 @@ type Songbook {
     name: String!
     shortcut: String """ todo: max length 6 """
     records: [SongbookRecord] @belongsToMany
+    songs_count: Int
 }
 
 type SongbookRecord {

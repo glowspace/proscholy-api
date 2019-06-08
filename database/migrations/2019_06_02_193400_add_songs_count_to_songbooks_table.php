@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-use App\SongLyric;
-
-class ForceRecachingOfSongLyrics extends Migration
+class AddSongsCountToSongbooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +13,9 @@ class ForceRecachingOfSongLyrics extends Migration
      */
     public function up()
     {
-        foreach (SongLyric::all() as $song_l) {
-            $song_l->update([
-                'formatted_lyrics' => NULL
-            ]);
-        }
+        Schema::table('songbooks', function (Blueprint $table) {
+            $table->unsignedInteger("songs_count")->nullable();
+        });
     }
 
     /**
@@ -29,6 +25,8 @@ class ForceRecachingOfSongLyrics extends Migration
      */
     public function down()
     {
-
+        Schema::table('songbooks', function (Blueprint $table) {
+            $table->dropColumn("songs_count");
+        });
     }
 }

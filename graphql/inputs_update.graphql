@@ -93,6 +93,9 @@ input UpdateSongbookInput {
     name: String
     shortcut: String
     records: SyncSongbookRecordsForSongbookRelation
+    """ this is string because of the validation message """
+    songs_count: String @rules(apply: ["integer"], messages: { 
+            integer: "Zadejte číselnou hodnotu"})
 }
 
 input SyncSongbookRecordsForSongbookRelation {
