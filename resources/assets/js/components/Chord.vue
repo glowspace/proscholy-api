@@ -9,7 +9,7 @@
             <span class="chord-bass" v-if="bass.length!==0">/{{bassNote}}</span>
             <span class="chord-right-bracket" v-if="isOptional">)</span>
         </span>
-        <span class="chord-text">
+        <span :class="['chord-text', isDivided == 0 ? 'chord-text-spaced' : '']">
             <slot></slot>
         </span>
         <span class="chord-line" v-if="isDivided == 1">
@@ -67,11 +67,15 @@
             z-index: 2;
         }
 
+        &-text-spaced{
+            margin-right: 0.1em;
+        }
+
         &-line {
             display: block;
             position: relative;
             width: calc(100% - 0.6em);
-            height: 0.1em;
+            height: 1.1px;
             background: #b9b9b9;
             top: -0.5em;
             right: -0.5em;
