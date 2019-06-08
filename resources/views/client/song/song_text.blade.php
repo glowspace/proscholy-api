@@ -39,7 +39,7 @@
                                 <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
                             </div>
-                            <div class="">
+                            <div id="song-lyrics" style="overflow: hidden">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}
                                 @else
