@@ -22,7 +22,7 @@
     @endif
 
     <title>
-        @yield('title', 'ProScholy.cz - chytrý křesťanský zpěvník')
+        @yield('title', 'ProScholy.cz – chytrý křesťanský zpěvník')
     </title>
 
     <!-- Fonts -->
