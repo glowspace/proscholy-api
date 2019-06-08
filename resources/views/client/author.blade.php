@@ -1,11 +1,5 @@
 @extends('layout.client-sidepage')
 
-{{-- @section('navbar')
-    <a class="btn btn-secondary" href="{{route('client.home')}}">
-        <i class="fas fa-search"></i> Nové vyhledávání
-    </a>
-@endsection --}}
-
 @section('content')
     <div class="container">
         <h2 style="margin-bottom: 0">{{$author->name}}</h2>

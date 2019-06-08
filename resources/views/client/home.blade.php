@@ -6,37 +6,6 @@
     @include('client.components.menu_main')
 @endsection
 
-{{-- @section('navbar')
-    @include('client.components.menu_main')
-
-    <div class="alert alert-primary"
-         role="alert"
-         style="margin: 12px; border-radius: 5px">
-        <p>Vítejte v digitálním zpěvníku <b>ProScholy.cz</b>, který přichází na pomoc všem scholám, křesťanským kapelám,
-            společenstvím a
-            všem, kdo se chtějí modlit hudbou!</p>
-        <hr>
-        <p class="mb-0">Naše redakce teď pro vás připravuje první písně. Aktuálně je přidáno <b>{{$song_count}}</b>
-            písní.</p>
-    </div>
-
-    @auth
-        <a class="btn btn-secondary" href="{{route('admin.dashboard')}}">
-            <i class="fas fa-users"></i> Administrace
-        </a>
-    @endauth --}}
-
-
-
-    {{--<div style="margin-top: 20px">--}}
-    {{--<div class="navbar-label material-shadow text-warning">Nejnavštěvovanější písně</div>--}}
-    {{--@foreach($top_songs as $song_l)--}}
-    {{--<a class="btn btn-secondary" href="{{route('client.song.text', $song_l)}}">--}}
-    {{--<i class="fas fa-music"></i>{{$song_l->name}}</a>--}}
-    {{--@endforeach--}}
-    {{--</div>--}}
-{{-- @endsection --}}
-
 @section('content')
     <div class="background-home">
         <div class="container-fluid">
