@@ -44,31 +44,6 @@
 <body class="@yield('body-classes', 'page')">
     @yield("navbar")
 
-    {{-- <nav class="navbar navbar-expand-lg navbar-dark static-top justify-content-between fixed-top"> --}}
-        
-        {{-- <div>
-            <a class="navbar-brand" href="@yield('navbar-brand_href', '/')"><img src="{{asset('img/logo_v2.png')}}" width="60" style="padding: 0 10px 0 0;">
-             Zpěvník pro scholy</a>
-        </div> --}}
-
-        {{-- @if (Auth::check())
-                <a class="navbar-text" href="{{route('admin.dashboard')}}">
-                Přihlášený uživatel: {{ Auth::user()->name }}
-                @if (Auth::user()->roles()->count() > 0)
-                    ({{Auth::user()->roles()->first()->name}})
-                @endif
-            </a>
-        @endif --}}
-
-        {{-- <button class="navbar-toggler" type="button"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleNavbar()">
-            <span class="navbar-toggler-icon"></span>
-        </button> --}}
-
-    {{-- </nav> --}}
-
-    
-
     <div id="app">
         @yield('content')
         {{-- Side navbar --}}
