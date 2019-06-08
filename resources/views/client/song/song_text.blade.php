@@ -1,6 +1,6 @@
 @extends('layout.client-sidepage')
 
-@section('title', $song_l->name . ' - píseň ve zpěvníku ProScholy.cz')
+@section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
 
 @section('content')
     <div class="container">

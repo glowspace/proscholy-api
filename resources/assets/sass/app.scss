@@ -513,24 +513,10 @@ body {
   color: #aaa;
 }
 
-.home-bottom {
-  background: #292929;
-  color: white;
+body.dark {
+  background-color: #111;
 
-  .card{
-    background: #353232;
-    height: 90%;
-    margin-bottom: 0;
-
-
-    .card-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      .card-title{
-        font-size: 1.3rem;
-      }
-    }
+  #app {
+    filter: invert(1);
   }
 }

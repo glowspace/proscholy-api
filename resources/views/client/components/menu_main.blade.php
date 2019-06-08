@@ -15,7 +15,7 @@
             <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i> Autoři písní</a>
             <a href="{{route("client.team")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Přidat píseň</a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i> Tmavý mód</a>
+            <a tabindex="0" onclick="document.getElementsByTagName('body')[0].classList.toggle('dark');" class="btn btn-secondary"><i class="fas fa-moon"></i> Tmavý mód</a>
         </div>
     </div>
 </nav>
@@ -28,6 +28,6 @@
         <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i></a>
         <a href="{{route("client.team")}}" class="btn btn-secondary"><i class="fas fa-info"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
-        <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i></a>
+        <a tabindex="0" onclick="document.getElementsByTagName('body')[0].classList.toggle('dark');" class="btn btn-secondary"><i class="fas fa-moon"></i></a>
     </div>
 </nav>
