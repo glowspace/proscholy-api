@@ -55,7 +55,7 @@
 						<controls></controls>
 					@endif
 
-                    <div class="card-footer" style="background-color: #3961ad12">
+                    <div class="card-footer">
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>

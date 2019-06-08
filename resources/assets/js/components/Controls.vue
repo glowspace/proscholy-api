@@ -1,5 +1,5 @@
 <template>
-		<div class="controls fixed-bottom position-sticky p-1" v-bind:class="{'bg-light border-top': controlsDisplay}">
+		<div class="controls fixed-bottom position-sticky p-1" v-bind:class="{'bg-custom-blue border-top': controlsDisplay}">
 			<tools v-if="toolsDisplay && controlsDisplay"></tools>
 			<media v-bind:class="[(mediaDisplay && controlsDisplay)?'d-block':'d-none']"></media>
 			<control-buttons v-if="controlsDisplay"></control-buttons>
