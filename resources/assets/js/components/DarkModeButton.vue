@@ -1,5 +1,5 @@
 <template>
-	<a tabindex="0" class="btn btn-secondary"><i class="fas fa-moon"></i>{{ text }}</a>
+	<a tabindex="0" v-on:click="darkModeToggle" class="btn btn-secondary"><i class="fas fa-moon"></i>{{ text }}</a>
 </template>
 
 <script>
@@ -13,9 +13,8 @@
         },
 
         methods:{
-            controlsToggle: function() {
-				this.controlsDisplay = !(this.controlsDisplay);
-				document.querySelector(".navbar.fixed-top").classList.toggle("d-none");
+            darkModeToggle: function() {
+				document.getElementsByTagName("body")[0].classList.toggle("dark");
             }
         }
     }
