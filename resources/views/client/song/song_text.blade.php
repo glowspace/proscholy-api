@@ -1,6 +1,6 @@
 @extends('layout.client-sidepage')
 
-@section('title', $song_l->name . ' - píseň ve zpěvníku ProScholy.cz')
+@section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
 
 @section('content')
     <div class="container">
@@ -40,13 +40,17 @@
                         <a class="btn btn-secondary"><i class="fas fa-file-pdf"></i> <span class="d-none d-sm-inline">Export</span></a>
                         <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle"></i></a>
                     </div>
-                    <div class="card-body py-2"  style="border-bottom: #7f97ab">
+                    {{-- <div class="card-body py-2"  style="border-bottom: #7f97ab">
                         <div class="d-flex flex-row-reverse justify-content-between">
                             <div class="d-flex flex-column mr-n3">
                                 <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
                                 <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
                             </div>
+                            <div id="song-lyrics" style="overflow: hidden"> --}}
+                    <div class="card-body py-2">
+                        <div class="d-flex flex-row-reverse justify-content-between">
+                            <right-controls></right-controls>
                             <div id="song-lyrics" style="overflow: hidden">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}
@@ -63,9 +67,7 @@
 						<controls></controls>
 					@endif
 
-{{--                    <div class="card-text" style="border-bottom: 1px #d6d6d6 solid"></div>--}}
-
-                    <div class="card-footer" style="background-color: #3961ad12">
+                    <div class="card-footer">
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>

@@ -1,22 +1,12 @@
 @extends('layout.master')
 
-{{-- @section('navbar-brand_href', route('admin.dashboard')) --}}
-
 @section('navbar')
     <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
-        <div class="">
-        <a class="navbar-brand" href="#"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
-            Zpěvník pro scholy
-            <span style="color: #ffffff3d">- na pomoc všem, kteří se chtějí modlit hudbou</span>
-        </a>
-            {{-- <div>
-                <a href="#" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
-                <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a>
-                <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i> Autoři písní</a>
-                <a href="#" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
-                <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Přidat píseň</a>
-                <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i> Tmavý mód</a>
-            </div> --}}
+        <div>
+            <a class="navbar-brand" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
+                Zpěvník pro scholy
+                <span style="color: #ffffff3d">– po ruce všem, kteří se chtějí modlit hudbou</span>
+            </a>
         </div>
     </nav>
 @endsection
@@ -35,12 +25,6 @@
         </div>
     </div>
 @endsection
-
-{{-- @section('sidebar')
-    <div class="sidebar bg-dark material-shadow" id="navbarNav">
-        @include('admin.components.menu')
-    </div>
-@endsection --}}
 
 @section('app-css')
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">

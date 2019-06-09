@@ -2,7 +2,7 @@
     <div class="container">
     <a class="navbar-brand" href="{{url("")}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">Zpěvník pro scholy</a>
     @if (Auth::check())
-            <a class="navbar-text" href="{{route('admin.dashboard')}}">
+            <a class="navbar-text px-3" href="{{route('admin.dashboard')}}">
             Přihlášený uživatel: {{ Auth::user()->name }}
             @if (Auth::user()->roles()->count() > 0)
                 ({{Auth::user()->roles()->first()->name}})
@@ -15,7 +15,7 @@
             <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i> Autoři písní</a>
             <a href="{{route("client.team")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Přidat píseň</a>
-            <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i> Tmavý mód</a>
+            <dark-mode-button text=" Tmavý mód"></dark-mode-button>
         </div>
     </div>
 </nav>
@@ -28,6 +28,6 @@
         <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i></a>
         <a href="{{route("client.team")}}" class="btn btn-secondary"><i class="fas fa-info"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
-        <a href="#" class="btn btn-secondary"><i class="fas fa-moon"></i></a>
+        <dark-mode-button></dark-mode-button>
     </div>
 </nav>

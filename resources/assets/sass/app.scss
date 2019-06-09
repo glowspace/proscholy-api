@@ -177,13 +177,19 @@ $sidebar-width: 300px;
 Home page specific elements
  */
 
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .background-home {
   background-image:      url('/img/bg_center.svg');
   background-position-x: center;
   background-size:       cover;
   background-repeat:     no-repeat;
-  height: calc(100vh - 66px);
-  min-height: 450px;
+  flex: 1;
+  // min-height: 450px;
 
   @include media-breakpoint-down(sm) {
     // background-position: -170.5px 0;
@@ -192,7 +198,7 @@ Home page specific elements
 
 .logo-wrapper {
   text-align:  center;
-  padding-top: 160px;
+  padding-top: 130px;
 
   @include media-breakpoint-down(sm) {
     padding-top: 110px;
@@ -355,9 +361,13 @@ View: Search results
   }
 }
 
-#cardLyrics {
-  .card-header {
+.card-lyrics {
+  .card-header, .card-footer {
     background-color: #f1f4f9;
+  }
+
+  .card-body {
+    border-bottom: #7f97ab;
   }
 }
 
@@ -390,10 +400,6 @@ View: Search results
 		border: 1px solid rgba(0, 0, 0, 0.12);
 	}
 
-	.border {
-		border-color: rgba(0, 0, 0, 0.12);
-	}
-
 	.btn.btn-secondary.transpose-window {
 		width: 4em;
   }
@@ -403,8 +409,8 @@ View: Search results
   }
 }
 
-.chosen .btn, .btn.chosen {
-	background-color: #ddd;
+.chosen .btn, .btn.chosen, .dark .dark-mode-button {
+	background-color: rgba(0, 0, 0, 0.133);
 }
 
 /**
@@ -503,24 +509,36 @@ body {
   color: #aaa;
 }
 
-.home-bottom {
-  background: #292929;
-  color: white;
+body.dark {
+  background-color: #111;
 
-  .card{
-    background: #353232;
-    height: 90%;
-    margin-bottom: 0;
+  h1 {
+    color: white;
+  }
 
+  .container {
+    color: #ccc;
+  }
 
-    .card-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+  .card-body, .chord-text, .card {
+    background-color: black;
+    color: #ccc;
+  }
 
-      .card-title{
-        font-size: 1.3rem;
-      }
-    }
+  .card-header, .card-footer, .bg-light, .tag {
+    background-color: #222 !important;
+    color: #ccc;
+  }
+
+  .border {
+    border-color: #222 !important;
+  }
+
+  .background-home {
+    filter: brightness(50%);
+  }
+
+  .text-very-muted {
+    color: #222;
   }
 }

@@ -1,9 +1,5 @@
 @extends('layout.client-sidepage')
 
-{{-- @section('navbar')
-    @include('client.components.menu_main')
-@endsection --}}
-
 @section('content')
     <div class="container">
         <h1>Redakce ProScholy.cz</h1>
