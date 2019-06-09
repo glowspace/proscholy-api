@@ -24,7 +24,7 @@
         </div>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
-                <div class="card {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
+                <div class="card card-lyrics {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
                     {{-- <div class="card-header d-flex flex-row justify-content-between flex-wrap py-2">
                         
                     </div> --}}
