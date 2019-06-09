@@ -4,29 +4,24 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md">
-                <h1 class="mb-0 pb-0">{{$song_l->name}}</h1>
+        <div class="d-flex flex-md-row justify-content-between flex-wrap mt-4">
+            <div>
+                <h1 class="m-0 pb-0">{{$song_l->name}}</h1>
                 <p class="song-author"> @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
             </div>
-            <div class="col-md">
-                <div class="song-tags d-flex flex-row flex-wrap justify-content-end  mb-3 mt-md-4">
-                    @foreach ($tags_officials as $tag)
-                        <a class="tag tag-blue">{{ $tag->name }}</a>
-                    @endforeach
-                    @foreach ($tags_unofficials as $tag)
-                        @if ($tag->parent_tag == null)
-                            <a class="tag tag-green">{{ $tag->name }}</a>
-                        @else
-                            <a class="tag tag-yellow">{{ $tag->name }}</a>
-                        @endif
-                    @endforeach
-                </div>
+            <div class="song-tags d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
+                @foreach ($tags_officials as $tag)
+                    <a class="tag tag-blue">{{ $tag->name }}</a>
+                @endforeach
+                @foreach ($tags_unofficials as $tag)
+                    @if ($tag->parent_tag == null)
+                        <a class="tag tag-green">{{ $tag->name }}</a>
+                    @else
+                        <a class="tag tag-yellow">{{ $tag->name }}</a>
+                    @endif
+                @endforeach
             </div>
         </div>
-
-
-
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
                 <div class="card {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
