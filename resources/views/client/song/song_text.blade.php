@@ -25,9 +25,6 @@
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
             <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
                 <div class="card card-lyrics {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
-                    {{-- <div class="card-header d-flex flex-row justify-content-between flex-wrap py-2">
-                        
-                    </div> --}}
                     <div class="card-header p-1 song-links">
                         <a class="btn btn-secondary"><i class="fas fa-file-alt"></i> <span class="d-none d-sm-inline">Noty</span></a>
                         {{-- <a class="btn btn-secondary"><i class="fas fa-file"></i> <span class="d-none d-sm-inline">Další soubory</span></a> --}}
@@ -35,14 +32,6 @@
                         <a class="btn btn-secondary"><i class="fas fa-file-pdf"></i> <span class="d-none d-sm-inline">Export</span></a>
                         <a class="btn btn-secondary float-right"><i class="fas fa-exclamation-triangle"></i></a>
                     </div>
-                    {{-- <div class="card-body py-2"  style="border-bottom: #7f97ab">
-                        <div class="d-flex flex-row-reverse justify-content-between">
-                            <div class="d-flex flex-column mr-n3">
-                                <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
-                                <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
-                                <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
-                            </div>
-                            <div id="song-lyrics" style="overflow: hidden"> --}}
                     <div class="card-body py-2">
                         <div class="d-flex flex-row-reverse justify-content-between">
                             <right-controls></right-controls>
