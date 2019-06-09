@@ -34,11 +34,7 @@
                     </div>
                     <div class="card-body py-2">
                         <div class="d-flex flex-column flex-row-reverse">
-                            <div class="d-flex flex-column mr-n3">
-                                <a class="btn btn-secondary m-0"><i class="fas fa-expand"></i></a>
-                                <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
-                                <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
-                            </div>
+                            <right-controls></right-controls>
                             <div class="flex-grow-1">
                                 @if($song_l->lyrics)
                                     {!! $song_l->getFormattedLyrics() !!}

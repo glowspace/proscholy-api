@@ -1,5 +1,5 @@
 <template>
-	<a tabindex="0" v-on:click="darkModeToggle" class="btn btn-secondary"><i class="fas fa-moon"></i>{{ text }}</a>
+	<a tabindex="0" v-on:click="darkModeToggle" class="btn btn-secondary dark-mode-button"><i class="fas fa-moon"></i>{{ text }}</a>
 </template>
 
 <script>

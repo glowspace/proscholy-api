@@ -9,5 +9,6 @@ export const store = {
 	toolsDisplay: false,
 	controlsDisplay: true,
 	mediaDisplay: false,
-	autoscroll: false
+	autoscroll: false, 
+	fullscreen: false
 };

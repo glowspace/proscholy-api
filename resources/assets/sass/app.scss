@@ -409,7 +409,7 @@ View: Search results
   }
 }
 
-.chosen .btn, .btn.chosen {
+.chosen .btn, .btn.chosen, .dark .dark-mode-button {
 	background-color: rgba(0, 0, 0, 0.133);
 }
 
@@ -536,5 +536,9 @@ body.dark {
 
   .background-home {
     filter: brightness(50%);
+  }
+
+  .text-very-muted {
+    color: #222;
   }
 }
