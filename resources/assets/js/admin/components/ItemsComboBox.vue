@@ -3,7 +3,7 @@
     v-model="internalValue"
     :filter="filter"
     :hide-no-data="!search"
-    :items="pItems"
+    :items="allItems"
     :search-input.sync="search"
     item-text="name"
     hide-selected
@@ -67,8 +67,12 @@ export default {
     editing: null,
     index: -1,
     search: null,
-    // items: []
+    createdItems: []
   }),
+
+  // mounted() {
+  //   this.items = [...this.pItems];
+  // },
 
   computed: {
     internalValue: {
@@ -78,6 +82,13 @@ export default {
       set(val) {
         this.$emit("input", val);
       }
+    },
+
+    allItems() {
+      if (this.pItems)
+        return this.pItems.concat(this.createdItems);
+
+      return [];
     }
   },
 
@@ -97,12 +108,12 @@ export default {
             name: v
           };
 
-          this.items.push(v);
+          this.createdItems.push(v);
         }
 
         return v;
       });
-    },
+    }
   },
 
   methods: {
