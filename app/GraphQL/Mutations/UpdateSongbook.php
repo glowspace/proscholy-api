@@ -6,8 +6,10 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Nuwave\Lighthouse\Execution\ErrorBuffer;
 
+use Validator;
 use App\Songbook;
 use App\SongLyric;
+use App\Song;
 
 class UpdateSongbook
 {
@@ -41,24 +43,25 @@ class UpdateSongbook
             $songbook->records()->sync($syncModels);
         }
         
-        // if (isset($input["records"]["create"])) {
-        //     foreach ($input["records"]["create"] as $record) {
-        //         $validator = Validator::make(['name' => $record["song_lyric_name"]], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
+        if (isset($input["records"]["create"])) {
+            foreach ($input["records"]["create"] as $record) {
+                $validator = Validator::make(['name' => $record["song_lyric_name"]], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
                 
-        //         if (!$validator->fails()){
-        //             $song       = Song::create(['name' => $record["song_lyric_name"]]);
-        //             $song_lyric = SongLyric::create([
-        //                 'name' => $record["song_lyric_name"],
-        //                 'song_id' => $song->id,
-        //             ]);
-        //         }
+                // \Log::info($record);
 
-        //         $songbook->records()->create([
-        //             'song_lyric_id' => $song_lyric->id,
-        //             'number' => $record["number"],
-        //         ]);
-        //     }
-        // }
+                if (!$validator->fails()){
+                    $song       = Song::create(['name' => $record["song_lyric_name"]]);
+                    $song_lyric = SongLyric::create([
+                        'name' => $record["song_lyric_name"],
+                        'song_id' => $song->id,
+                    ]);
+
+                    $songbook->records()->attach([$song_lyric->id => [
+                        'number' => $record["number"],
+                    ]]);
+                }
+            }
+        }
         $songbook->save();
 
         // perform the validation with the help of Nuawe validation error buffer

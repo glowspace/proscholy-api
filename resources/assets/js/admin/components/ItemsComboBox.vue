@@ -3,7 +3,7 @@
     v-model="internalValue"
     :filter="filter"
     :hide-no-data="!search"
-    :items="pItems"
+    :items="allItems"
     :search-input.sync="search"
     item-text="name"
     hide-selected
@@ -67,9 +67,9 @@ export default {
     editing: null,
     index: -1,
     search: null,
-    // items: []
+    createdItems: []
   }),
-
+  
   computed: {
     internalValue: {
       get() {
@@ -78,31 +78,54 @@ export default {
       set(val) {
         this.$emit("input", val);
       }
+    },
+
+    allItems() {
+      if (this.pItems)
+        return this.pItems.concat(this.createdItems);
+
+      return [];
     }
   },
 
   watch: {
     internalValue(val, prev) {
       if (!val) return;
-      if(!Array.isArray(val)) return;
 
-      if (val.length === prev.length) return;
-
-      // fix when the search string remained after selecting an item
-      this.search = null;
-
-      this.internalValue = val.map(v => {
-        if (typeof v === "string") {
-          v = {
-            name: v
+      const handleNewItem = (item) => {
+        if (typeof item === "string") {
+          item = {
+            name: item
           };
 
-          this.items.push(v);
+          this.createdItems.push(item);
         }
 
-        return v;
-      });
-    },
+        return item;
+      }
+
+      if (Array.isArray(val)) {
+        if (val.length === prev.length) return;
+        // fix when the search string remained after selecting an item
+        this.search = null;
+
+        this.internalValue = val.map(handleNewItem);
+      } else {
+        this.internalValue = handleNewItem(val);
+      }
+
+      // this.internalValue = val.map(v => {
+      //   if (typeof v === "string") {
+      //     v = {
+      //       name: v
+      //     };
+
+      //     this.createdItems.push(v);
+      //   }
+
+      //   return v;
+      // });
+    }
   },
 
   methods: {

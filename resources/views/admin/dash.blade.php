@@ -7,13 +7,13 @@
         <div class="row">
             <div class="col-sm-5">
                 <table class="table table-bordered">
-                    <tr>
+                    {{-- <tr>
                         <td>Verze zpěvníku</td>
                         <td><b>Generace #1 - v0.56 (22.3.2019)</b></td>
-                    </tr>
-                    <tr>
-                        <td>Autor</td>
-                        <td>Miroslav Šerý, Michael Dojčár</td>
+                    </tr> --}}
+                    {{-- <tr>
+                        <td>Programátoři</td>
+                        <td>Miroslav Šerý, Michael Dojčár, Vít Kološ</td>
                     </tr>
                     <tr>
                         <td>Redakce</td>
@@ -22,7 +22,7 @@
                     <tr>
                         <td>Propagace</td>
                         <td>Emma, Peťa, Ben</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>Krizový telefon <br>(urgent. dotazy, závady)</td>
                         <td class="text-danger">+420 734 791 909</td>
@@ -56,6 +56,13 @@
                     <div class="card-header">Hlavní komunikační kanál</div>
                     <div class="card-body">Slack <a href="https://proscholy.slack.com">proscholy.slack.com</a> - lepší
                         je stáhnout si app (mobil/PC)
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Instruktážní videa od Janey</div>
+                    <div class="card-body">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLXLfC_XTiu7qWXgsf-18mPu-IWFZ5o2xn" frameborder="0" allow=encrypted-media" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>

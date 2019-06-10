@@ -28,6 +28,7 @@ type Query {
         has_tags: Boolean
         has_chords: Boolean
         order_abc: Boolean
+        updated_after: DateTime
     ): [SongLyric!]!
     songs: [Song!]!
     externals (
