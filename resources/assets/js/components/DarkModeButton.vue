@@ -3,14 +3,8 @@
 </template>
 
 <script>
-    import { store } from "Public/components/store.js";
-
     export default {
         props: ["text"],
-
-        data() {
-            return store;
-        },
 
         methods:{
             darkModeToggle: function() {

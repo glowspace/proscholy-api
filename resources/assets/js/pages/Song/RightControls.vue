@@ -7,13 +7,7 @@
 </template>
 
 <script>
-    import { store } from "Public/components/store.js";
-
     export default {
-        data() {
-            return store;
-        },
-
         methods:{
             toggleFullscreen: function() {
                 var element = document.documentElement;

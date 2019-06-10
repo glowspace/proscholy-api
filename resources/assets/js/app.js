@@ -19,20 +19,21 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */ 
 
-Vue.component('chord', require('Public/components/Chord.vue'));
-Vue.component('external-view', require('Public/components/ExternalView.vue'));
+Vue.component('chord', require('Public/pages/Song/Chord.vue'));
+// Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
-Vue.component('right-controls', require('Public/components/RightControls.vue'));
-Vue.component('media-opener', require('Public/components/MediaOpener.vue'));
+// Vue.component('right-controls', require('Public/components/RightControls.vue'));
+// Vue.component('media-opener', require('Public/components/MediaOpener.vue'));
 
-Vue.component('controls', require('Public/components/SongBottomControls/Controls.vue'));
-Vue.component('control-buttons', require('Public/components/SongBottomControls/ControlButtons.vue'));
-Vue.component('tools', require('Public/components/SongBottomControls/Tools.vue'));
-Vue.component('transposition', require('Public/components/SongBottomControls/Transposition.vue'));
-Vue.component('font-sizer', require('Public/components/SongBottomControls/FontSizer.vue'));
-Vue.component('media', require('Public/components/SongBottomControls/Media.vue'));
+// Vue.component('controls', require('Public/pages/Song/SongBottomControls/Controls.vue'));
+// Vue.component('control-buttons', require('Public/pages/Song/SongBottomControls/ControlButtons.vue'));
+// Vue.component('tools', require('Public/pages/Song/SongBottomControls/Tools.vue'));
+// Vue.component('transposition', require('Public/pages/Song/SongBottomControls/Transposition.vue'));
+// Vue.component('font-sizer', require('Public/pages/Song/SongBottomControls/FontSizer.vue'));
+// Vue.component('media', require('Public/pages/Song/SongBottomControls/Media.vue'));
 
 Vue.component('search', require('Public/pages/Search.vue'));
+Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
 
 
 import { ApolloClient } from 'apollo-client'

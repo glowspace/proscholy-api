@@ -41,9 +41,9 @@
 
 <script>
 
-import AuthorsList from "Public/components/Search/AuthorsList";
-import SongsList from "Public/components/Search/SongsList";
-import Tags from "Public/components/Search/Tags";
+import AuthorsList from "./AuthorsList";
+import SongsList from "./SongsList";
+import Tags from "./Tags";
 
 export default {
     props: {
