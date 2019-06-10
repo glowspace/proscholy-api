@@ -29,20 +29,46 @@
             ></v-text-field>
 
             <p v-if="!model.songs_count">
-              Aby bylo možné zde editovat všechny záznamy, je třeba zadat celkový počet písní.<br>
-              Tento údaj zatím není třeba zadávat přesně.
+              Aby bylo možné zde editovat všechny záznamy, je třeba zadat celkový počet písní.
+              <br>Tento údaj zatím není třeba zadávat přesně.
             </p>
+
+            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+            <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
+            <br>
+            <br>
+            <delete-model-dialog
+              class-name="Songbook"
+              :model-id="model.id"
+              @deleted="is_deleted = true"
+              delete-msg="Opravdu chcete vymazat tento zpěvník?"
+            >Vymazat</delete-model-dialog>
           </v-form>
         </v-flex>
         <v-flex xs12 md6 class="edit-description">
           <h5>Seznam písní ve zpěvníku</h5>
-          <v-checkbox
-                  class="mt-0"
-                  v-model="hide_empty"
-                  label="Skrýt prázdné záznamy"
-                  v-if="model.songs_count"
-                ></v-checkbox>
-          <v-data-table :headers="records_headers" :items="recordsWithEmpty" class="mb-4">
+          <!-- <v-checkbox
+            class="mt-0"
+            v-model="hide_empty"
+            label="Skrýt prázdné záznamy"
+            v-if="model.songs_count"
+          ></v-checkbox> -->
+          <v-radio-group v-if="model.songs_count" v-model="hide_empty">
+            <v-radio
+              label="Zobrazení přiřazených písní (vč. písní bez čísla)"
+              :value="true"
+            ></v-radio>
+            <v-radio
+              label="Zobrazení podle čísel"
+              :value="false"
+            ></v-radio>
+          </v-radio-group>
+          <v-data-table
+            :headers="records_headers"
+            :items="recordsWithEmpty"
+            class="mb-4"
+            :rows-per-page-items='[20,40,{"text":"Vše","value":-1}]'
+          >
             <template v-slot:items="props">
               <td>{{ props.item.number }}</td>
               <td>
@@ -57,22 +83,16 @@
                 ></items-combo-box>
               </td>
               <td>
-                <a v-if="props.item.song_lyric" href="#" @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')">Upravit píseň</a>
+                <a
+                  v-if="props.item.song_lyric"
+                  href="#"
+                  @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
+                >Upravit píseň</a>
               </td>
             </template>
           </v-data-table>
         </v-flex>
       </v-layout>
-      <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-      <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
-      <br>
-      <br>
-      <delete-model-dialog
-        class-name="Songbook"
-        :model-id="model.id"
-        @deleted="is_deleted = true"
-        delete-msg="Opravdu chcete vymazat tento zpěvník?"
-      >Vymazat</delete-model-dialog>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
         <v-card>
@@ -148,7 +168,7 @@ export default {
       records_headers: [
         { text: "Číslo", value: "number" },
         { text: "Píseň", value: "name" },
-        { text: 'Akce', value: 'action' }
+        { text: "Akce", value: "action" }
       ],
       hide_empty: false
     };
@@ -164,14 +184,13 @@ export default {
       },
       result(result) {
         let songbook = result.data.model_database;
-        
+
         // load the requested fields to the vue data.model property
         // Vue.set(this.model, "records", this.getRecordsWithEmpty(songbook["records"], songbook["songs_count"]));
 
         for (let field of this.getFieldsFromFragment(false)) {
           Vue.set(this.model, field, _.cloneDeep(songbook[field]));
         }
-
       }
     },
     song_lyrics: {
@@ -222,17 +241,17 @@ export default {
         // otherwise get an empty one
 
         if (record === undefined) {
-            result.push({
-              number: String(i),
-              song_lyric: null
-            });
+          result.push({
+            number: String(i),
+            song_lyric: null
+          });
         } else {
           result.push(record);
         }
       }
 
       return result;
-    },
+    }
   },
 
   methods: {
@@ -249,11 +268,13 @@ export default {
               records: {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null
-                sync: this.model.records.filter(r => r.song_lyric !== null).map(m => ({
-                  song_lyric_id: parseInt(m.song_lyric.id),
-                  number: m.number
-                }))
-              },
+                sync: this.model.records
+                  .filter(r => r.song_lyric !== null)
+                  .map(m => ({
+                    song_lyric_id: parseInt(m.song_lyric.id),
+                    number: m.number
+                  }))
+              }
             }
           }
         })
@@ -287,15 +308,14 @@ export default {
     },
 
     // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment(includeId, excludeFields=[]) {
+    getFieldsFromFragment(includeId, excludeFields = []) {
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
       let fieldNames = fieldDefs.map(field => {
         if (field.alias) return field.alias.value;
         return field.name.value;
       });
 
-      if (!includeId)
-        fieldNames = fieldNames.filter(field => field != "id");
+      if (!includeId) fieldNames = fieldNames.filter(field => field != "id");
 
       fieldNames = fieldNames.filter(field => !excludeFields.includes(field));
 
@@ -324,8 +344,7 @@ export default {
       window.location.href = base_url + "/autor/" + this.model.id;
     },
 
-    updateRecordItem(song_lyric, number)
-    {
+    updateRecordItem(song_lyric, number) {
       let record = this.model.records.filter(r => r.number == number)[0];
 
       if (record === undefined) {
@@ -336,7 +355,7 @@ export default {
       } else {
         this.$set(record, "song_lyric", song_lyric);
       }
-    },
+    }
   }
 };
 </script>
