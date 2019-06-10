@@ -42,7 +42,10 @@ class SongLyrics
 			$query = $query->where('is_approved_by_author', 1)->where('is_published', 1)->where('lyrics', '!=', '');
 
 		if (isset($args['order_abc']))
-            $query = $query->orderBy('name', 'asc');
+			$query = $query->orderBy('name', 'asc');
+			
+		if (isset($args['updated_after']))
+			$query = $query->where('updated_at', '>', $args['updated_after']);
 
         Log::info($query->toSql());
 
