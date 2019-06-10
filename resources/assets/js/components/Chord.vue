@@ -94,7 +94,7 @@
 </style>
 
 <script>
-    import { store } from "./store.js";
+    import { store } from "Public/components/store.js";
     
     export default {
         props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],

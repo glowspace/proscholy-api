@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import { store } from "./store.js";
+    import { store } from "Public/components/store.js";
 
     export default {
         props: ["text"],
