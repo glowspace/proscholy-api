@@ -79,12 +79,13 @@
                   header-label="Vyberte píseň"
                   label="Píseň"
                   :multiple="false"
-                  :enable-custom="false"
+                  :enable-custom="true"
+                  create-label="Potvrďte enterem a vytvořte novou píseň"
                 ></items-combo-box>
               </td>
               <td>
                 <a
-                  v-if="props.item.song_lyric"
+                  v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
                   href="#"
                   @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
                 >Upravit píseň</a>
@@ -269,9 +270,15 @@ export default {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null
                 sync: this.model.records
-                  .filter(r => r.song_lyric !== null)
+                  .filter(r => r.song_lyric !== null && r.song_lyric.hasOwnProperty("id"))
                   .map(m => ({
-                    song_lyric_id: parseInt(m.song_lyric.id),
+                    song_lyric_id: parseInt(m.song_lyric.id), 
+                    number: m.number
+                  })),
+                create: this.model.records
+                  .filter(r => r.song_lyric !== null && !r.song_lyric.hasOwnProperty("id"))
+                  .map(m => ({
+                    song_lyric_name: m.song_lyric.name,
                     number: m.number
                   }))
               }

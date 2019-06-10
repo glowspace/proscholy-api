@@ -111,23 +111,19 @@ input SyncSongbookRecordsForSongLyricRelation {
 input CreateSongbookRecordForSongbookInput {
   song_lyric_name: String!
   number: String
-  placeholder: String
 }
 
 input CreateSongbookRecordForSongLyricInput {
   songbook: String!
   number: String
-  placeholder: String
 }
 
 input SyncSongbookRecordForSongbookInput {
   song_lyric_id: ID!
   number: String
-  placeholder: String
 }
 
 input SyncSongbookRecordForSongLyricInput {
   songbook_id: ID!
   number: String
-  placeholder: String
 }

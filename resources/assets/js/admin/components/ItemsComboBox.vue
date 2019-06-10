@@ -69,11 +69,7 @@ export default {
     search: null,
     createdItems: []
   }),
-
-  // mounted() {
-  //   this.items = [...this.pItems];
-  // },
-
+  
   computed: {
     internalValue: {
       get() {
@@ -95,24 +91,40 @@ export default {
   watch: {
     internalValue(val, prev) {
       if (!val) return;
-      if(!Array.isArray(val)) return;
 
-      if (val.length === prev.length) return;
-
-      // fix when the search string remained after selecting an item
-      this.search = null;
-
-      this.internalValue = val.map(v => {
-        if (typeof v === "string") {
-          v = {
-            name: v
+      const handleNewItem = (item) => {
+        if (typeof item === "string") {
+          item = {
+            name: item
           };
 
-          this.createdItems.push(v);
+          this.createdItems.push(item);
         }
 
-        return v;
-      });
+        return item;
+      }
+
+      if (Array.isArray(val)) {
+        if (val.length === prev.length) return;
+        // fix when the search string remained after selecting an item
+        this.search = null;
+
+        this.internalValue = val.map(handleNewItem);
+      } else {
+        this.internalValue = handleNewItem(val);
+      }
+
+      // this.internalValue = val.map(v => {
+      //   if (typeof v === "string") {
+      //     v = {
+      //       name: v
+      //     };
+
+      //     this.createdItems.push(v);
+      //   }
+
+      //   return v;
+      // });
     }
   },
 
