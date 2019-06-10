@@ -413,6 +413,18 @@ View: Search results
 	background-color: rgba(0, 0, 0, 0.133);
 }
 
+.media-card {
+  max-height: 50vh;
+}
+
+.media-opener {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  i {
+    padding-right: 5px;
+  }
+}
+
 /**
 ChordPro view
  */
@@ -490,7 +502,7 @@ body {
   display: block;
 }
 
-.navbar.absolute-top a i {
+.navbar.absolute-top a i, .card-header i {
   padding-right: 5px;
 }
 

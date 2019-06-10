@@ -23,6 +23,7 @@ Vue.component('chord', require('Public/components/Chord.vue'));
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
 Vue.component('right-controls', require('Public/components/RightControls.vue'));
+Vue.component('media-opener', require('Public/components/MediaOpener.vue'));
 
 Vue.component('controls', require('Public/components/SongBottomControls/Controls.vue'));
 Vue.component('control-buttons', require('Public/components/SongBottomControls/ControlButtons.vue'));

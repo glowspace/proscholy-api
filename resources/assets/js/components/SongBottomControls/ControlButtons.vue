@@ -4,7 +4,7 @@
 		v-on:click="toolsDisplay=!toolsDisplay; mediaDisplay=false">
 			<i class="fas fa-sliders-h"></i> <span class="d-none d-sm-inline">Nástroje</span>
 		</a>
-		<a class="btn btn-secondary" v-bind:class="{ 'chosen': mediaDisplay }"
+		<a class="btn btn-secondary" v-if="hasmediaslot" v-bind:class="{ 'chosen': mediaDisplay }"
 		v-on:click="mediaDisplay=!mediaDisplay; toolsDisplay=false">
 			<i class="fas fa-music"></i> <span class="d-none d-sm-inline">Nahrávky</span>
 		</a>
@@ -20,6 +20,7 @@
     import { store } from "Public/components/store.js";
 
     export default {
+		props: ["hasmediaslot"],
         data() {
             return store;
         }

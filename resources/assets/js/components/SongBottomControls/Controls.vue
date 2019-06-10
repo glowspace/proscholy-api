@@ -1,8 +1,8 @@
 <template>
 		<div class="controls fixed-bottom position-sticky p-1" v-bind:class="{'card-footer': controlsDisplay}">
 			<tools v-if="toolsDisplay && controlsDisplay"></tools>
-			<media v-bind:class="[(mediaDisplay && controlsDisplay)?'d-block':'d-none']"></media>
-			<control-buttons v-if="controlsDisplay"></control-buttons>
+			<media v-bind:class="[(mediaDisplay && controlsDisplay)?'d-block':'d-none']"><slot name="media"></slot></media>
+			<control-buttons v-if="controlsDisplay" :hasmediaslot="hasMediaSlot"></control-buttons>
 			<a class="btn btn-secondary float-right" v-on:click="controlsToggle"><i class="fas pr-0" v-bind:class="[controlsDisplay?'fa-chevron-right':'fa-chevron-left']"></i></a>
 		</div>
 </template>
@@ -14,7 +14,11 @@
         data() {
             return store;
         },
-
+        computed: {
+            hasMediaSlot () {
+                return !!this.$slots['media']
+            }
+        },
         methods:{
             controlsToggle: function() {
 				this.controlsDisplay = !(this.controlsDisplay);

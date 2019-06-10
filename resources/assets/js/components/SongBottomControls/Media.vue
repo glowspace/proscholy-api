@@ -1,7 +1,7 @@
 <template>
-    <div class="card mb-1 overflow-auto">
-		<a class="btn btn-secondary float-right" v-on:click="mediaDisplay=false"><i class="fas fa-times pr-0"></i></a>
-		Tady patří veškerá multimédia (videa z YouTube i ostatní nahrávky) ve formě karet.
+    <div class="card mb-1 overflow-auto media-card">
+		<a class="btn btn-secondary float-right fixed-top position-sticky" v-on:click="mediaDisplay=false"><i class="fas fa-times pr-0"></i></a>
+		<slot></slot>
     </div>
 </template>
 

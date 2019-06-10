@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="row {{ $reversed_columns ? "flex-row-reverse" : ""}}">
-            <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-12 px-0" }}">
+            <div class="{{ $reversed_columns ? "col-lg-5 " : "col-lg-9" }}">
                 <div class="card card-lyrics {{ $reversed_columns ? "" : "mb-0 mb-sm-4" }}" id="cardLyrics">
                     <div class="card-header p-1 song-links">
                         <a class="btn btn-secondary"><i class="fas fa-file-alt"></i> <span class="d-none d-sm-inline">Noty</span></a>
@@ -47,16 +47,52 @@
                             </div>
                         </div>
                     </div>
-					@if ($song_l->lyrics)
-						<controls></controls>
-					@endif
+                    <controls>
+                        <template v-slot:media>
+                            @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
+                                <div class="row pt-2">
+                                @if($song_l->spotifyTracks()->count() > 0)
+                                    @foreach($song_l->spotifyTracks as $external)
+                                    <div class="col-md-6">
+                                        @component('client.components.media_widget', ['source' => $external])@endcomponent
+                                    </div>
+                                    @endforeach
+                                @endif
+
+                                @if($song_l->soundcloudTracks()->count() > 0)
+                                    @foreach($song_l->soundcloudTracks as $external)
+                                    <div class="col-md-6">
+                                        @component('client.components.media_widget', ['source' => $external])@endcomponent
+                                    </div>
+                                    @endforeach
+                                @endif
+
+                                @if($song_l->audioFiles()->count() > 0)
+                                    @foreach($song_l->audioFiles as $external)
+                                    <div class="col-md-6">
+                                        @component('client.components.media_widget', ['source' => $external])@endcomponent
+                                    </div>
+                                    @endforeach
+                                @endif
+
+                                @if($song_l->youtubeVideos()->count() > 0)
+                                    @foreach($song_l->youtubeVideos as $external)
+                                    <div class="col-md-6">
+                                        @component('client.components.media_widget', ['source' => $external])@endcomponent
+                                    </div>
+                                    @endforeach
+                                @endif
+                                </div>
+                            @endif
+                        </template>
+                    </controls>
 
                     <div class="card-footer">
                         Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px"> {{date('Y')}}
                     </div>
                 </div>
             </div>
-            <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-4 d-none" }}">
+            <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-3" }}">
                 @if($song_l->scoreFiles()->count() > 0)
                     {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
                     @component('client.components.media_widget', ['source' => $song_l->scoreFiles()->first()])@endcomponent
@@ -64,20 +100,24 @@
                     @component('client.components.media_widget', ['source' => $song_l->scoreExternals()->first()])@endcomponent
                 @endif
 
-                @if($song_l->youtubeVideos()->count() > 0)
-                    @component('client.components.media_widget', ['source' => $song_l->youtubeVideos()->first()])@endcomponent
-                @endif
+                @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
+                    <media-opener>
+                    @if($song_l->spotifyTracks()->count() > 0)
+                    <div class="media-opener"><i class="fab fa-spotify text-success"></i> Spotify</div>
+                    @endif
 
-                @if($song_l->spotifyTracks()->count() > 0)
-                    @component('client.components.media_widget', ['source' => $song_l->spotifyTracks()->first()])@endcomponent
-                @endif
+                    @if($song_l->soundcloudTracks()->count() > 0)
+                    <div class="media-opener"><i class="fab fa-soundcloud" style="color: orangered;"></i> SoundCloud</div>
+                    @endif
 
-                @if($song_l->soundcloudTracks()->count() > 0)
-                    @component('client.components.media_widget', ['source' => $song_l->soundcloudTracks()->first()])@endcomponent
-                @endif
+                    @if($song_l->audioFiles()->count() > 0)
+                    <div class="media-opener"><i class="fas fa-music"></i> MP3</div>
+                    @endif
 
-                @if($song_l->audioFiles()->count() > 0)
-                    @component('client.components.media_widget', ['source' => $song_l->audioFiles()->first()])@endcomponent
+                    @if($song_l->youtubeVideos()->count() > 0)
+                    <div class="media-opener"><i class="fab fa-youtube text-danger"></i> YouTube</div>
+                    @endif
+                    </media-opener>
                 @endif
             </div>
         </div>
