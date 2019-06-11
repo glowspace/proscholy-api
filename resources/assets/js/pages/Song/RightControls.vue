@@ -8,6 +8,12 @@
 
 <script>
     export default {
+        data() {
+            return {
+                fullscreen: false
+            }
+        },
+
         methods:{
             toggleFullscreen: function() {
                 var element = document.documentElement;

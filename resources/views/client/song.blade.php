@@ -23,8 +23,9 @@
                 </div>
             </div>
 
-            <song-view>
+            <song-view song-id="{{$song_l->id}}">
                 {!! $song_l->getFormattedLyrics() !!}
+
                 <template v-slot:media>
                         @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
                             <div class="row pt-2">

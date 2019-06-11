@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="controls fixed-bottom position-sticky p-1" v-bind:class="{'card-footer': controlsDisplay}">
-                    <div v-bind:class="[(toolsDisplay && controlsDisplay)?'d-block':'d-none']">
+                    <div v-show="toolsDisplay && controlsDisplay">
                         <div class="card mb-1 p-1 overflow-auto">
                             <a class="btn btn-secondary float-right" v-on:click="toolsDisplay=false"><i class="fas fa-times pr-0"></i></a>
                             <transposition v-model="transposition"></transposition>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <!-- media -->
-                    <div :class="[(mediaDisplay && controlsDisplay)?'d-block':'d-none']">
+                    <div v-show="mediaDisplay && controlsDisplay">
                         <div class="card mb-1 overflow-auto media-card">
                             <a class="btn btn-secondary float-right fixed-top position-sticky" v-on:click="mediaDisplay=false"><i class="fas fa-times pr-0"></i></a>
                             <slot name="media"></slot>
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+
 import { store } from "./store.js";
 
 import FontSizer from './FontSizer';
@@ -99,13 +100,37 @@ import RightControls from './RightControls';
 import Transposition from './Transposition';
 import ExternalView from 'Public/components/ExternalView.vue';
 
+import gql, { disableFragmentWarnings } from "graphql-tag";
+
+const FETCH_SONG_LYRIC = gql`
+  query($id: ID!) {
+    song_lyric(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
 export default {
-    components: [
-        FontSizer, ChordMode, ChordSharpFlat, ExternalView, MediaOpener, RightControls, Transposition
-    ],
+    props: ["song-id"],
+
+    components: {
+        FontSizer, ChordMode, ChordSharpFlat, ExternalView, RightControls, Transposition
+    },
     
     data() {
         return store;
+    },
+
+    apollo: {
+        song_lyric: {
+            query: FETCH_SONG_LYRIC,
+            variables() {
+                return {
+                    id: this.songId
+                }
+            }
+        }
     },
 
     methods:{
