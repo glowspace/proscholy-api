@@ -3,25 +3,38 @@
     <div class="col-lg-9">
       <div class="card card-lyrics" id="cardLyrics">
         <div class="card-header p-1 song-links">
-          <a class="btn btn-secondary" @click="displayMode = 0">
-            <i class="fas fa-align-left"></i>
-            <span class="d-none d-sm-inline">Text</span>
+          <a class="btn btn-secondary" v-if="displayMode == 1" @click="displayMode = 0">
+            <i class="fas fa-arrow-left"></i>
+            <span>Zpět na text</span>
           </a>
-          <a class="btn btn-secondary" @click="displayMode = 1">
+          <a class="btn btn-secondary" v-if="displayMode == 0" @click="displayMode = 1">
             <i class="fas fa-file-alt"></i>
             <span class="d-none d-sm-inline">Noty</span>
           </a>
-          <a class="btn btn-secondary" @click="displayMode = 2">
+          <a class="btn btn-secondary" v-if="displayMode == 0" :class="{'chosen': translationsDisplay}"
+          @click="translationsDisplay=!translationsDisplay">
             <i class="fas fa-language"></i>
             <span class="d-none d-sm-inline">Překlady</span>
           </a>
-          <a class="btn btn-secondary">
+          <a class="btn btn-secondary" v-if="displayMode == 0">
             <i class="fas fa-file-pdf"></i>
             <span class="d-none d-sm-inline">Export</span>
           </a>
           <a class="btn btn-secondary float-right">
-            <i class="fas fa-exclamation-triangle"></i>
+            <i class="fas fa-exclamation-triangle p-0"></i>
           </a>
+          <!-- translations -->
+          <div v-show="translationsDisplay">
+            <div class="overflow-auto toolbox toolbox-u">
+              <a
+                class="btn btn-secondary float-right fixed-top position-sticky"
+                v-on:click="translationsDisplay=false"
+              >
+                <i class="fas fa-times pr-0"></i>
+              </a>
+              překlady goes here
+            </div>
+          </div>
         </div>
         <div class="card-body py-2">
           <div class="d-flex justify-content-between">
@@ -46,8 +59,6 @@
             </template>
 
             <template v-if="displayMode === 1">noty goes here</template>
-
-            <template v-if="displayMode === 2">translations goes here</template>
           </div>
         </div>
         <div
@@ -64,7 +75,7 @@
               </div>
 
               <div class="toolbox-item">
-                <chord-mode v-model="chordMode" :nChordModes="nChordModes"></chord-mode>
+                <chord-mode v-model="chordMode"></chord-mode>
               </div>
 
               <div class="toolbox-item">
@@ -118,11 +129,9 @@
                   v-bind:class="[autoscroll?'pr-0 fa-stop-circle':'fa-arrow-circle-down']"
                 ></i>
                 <span class="d-none d-sm-inline" v-if="!autoscroll">Rolovat</span>
-              </a>
-              <span v-if="autoscroll">
-                <a class="btn btn-secondary font-weight-bold" v-on:click="resize(-10)">-</a>
-                <a class="btn btn-secondary font-weight-bold" v-on:click="resize(10)">+</a>
-              </span>
+              </a><a
+              class="btn btn-secondary" v-if="autoscroll">-</a><a
+              class="btn btn-secondary" v-if="autoscroll">+</a>
             </div>
           </span>
           <a class="btn btn-secondary float-right" v-on:click="controlsToggle">
@@ -135,7 +144,7 @@
         <div class="card-footer">
           <!-- todo: asset img -->
           Zpěvník ProScholy.cz
-          <img src="img/logo_v2.png" width="20px">
+          <img src="/img/logo_v2.png" width="20px">
           {{ new Date().getFullYear() }}
         </div>
       </div>
@@ -176,6 +185,11 @@
   background: white;
   padding: 0.25rem !important;
   margin-bottom: 0.25rem !important;
+
+  &.toolbox-u {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0 !important;
+  }
 
   .toolbox-item {
     text-align: center;

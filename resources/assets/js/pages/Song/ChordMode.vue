@@ -13,13 +13,13 @@
 </template>
 
 <script>
+import { store } from "./store.js";
+
 export default {
-    props: ["value", "n-chord-modes"],
+    props: ["value"],
 
     data() {
-        return {
-            chordMode: 0
-        }
+        return store;
     },
 
     methods: {

@@ -27,41 +27,41 @@
                 {!! $song_l->getFormattedLyrics() !!}
 
                 <template v-slot:media>
-                        @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
-                            <div class="row pt-2">
-                            @if($song_l->spotifyTracks()->count() > 0)
-                                @foreach($song_l->spotifyTracks as $external)
-                                <div class="col-md-6">
-                                    @component('client.components.media_widget', ['source' => $external])@endcomponent
-                                </div>
-                                @endforeach
-                            @endif
-
-                            @if($song_l->soundcloudTracks()->count() > 0)
-                                @foreach($song_l->soundcloudTracks as $external)
-                                <div class="col-md-6">
-                                    @component('client.components.media_widget', ['source' => $external])@endcomponent
-                                </div>
-                                @endforeach
-                            @endif
-
-                            @if($song_l->audioFiles()->count() > 0)
-                                @foreach($song_l->audioFiles as $external)
-                                <div class="col-md-6">
-                                    @component('client.components.media_widget', ['source' => $external])@endcomponent
-                                </div>
-                                @endforeach
-                            @endif
-
-                            @if($song_l->youtubeVideos()->count() > 0)
-                                @foreach($song_l->youtubeVideos as $external)
-                                <div class="col-md-6">
-                                    @component('client.components.media_widget', ['source' => $external])@endcomponent
-                                </div>
-                                @endforeach
-                            @endif
+                    @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
+                        <div class="row pt-2">
+                        @if($song_l->spotifyTracks()->count() > 0)
+                            @foreach($song_l->spotifyTracks as $external)
+                            <div class="col-md-6">
+                                @component('client.components.media_widget', ['source' => $external])@endcomponent
                             </div>
+                            @endforeach
                         @endif
-                    </template>
+
+                        @if($song_l->soundcloudTracks()->count() > 0)
+                            @foreach($song_l->soundcloudTracks as $external)
+                            <div class="col-md-6">
+                                @component('client.components.media_widget', ['source' => $external])@endcomponent
+                            </div>
+                            @endforeach
+                        @endif
+
+                        @if($song_l->audioFiles()->count() > 0)
+                            @foreach($song_l->audioFiles as $external)
+                            <div class="col-md-6">
+                                @component('client.components.media_widget', ['source' => $external])@endcomponent
+                            </div>
+                            @endforeach
+                        @endif
+
+                        @if($song_l->youtubeVideos()->count() > 0)
+                            @foreach($song_l->youtubeVideos as $external)
+                            <div class="col-md-6">
+                                @component('client.components.media_widget', ['source' => $external])@endcomponent
+                            </div>
+                            @endforeach
+                        @endif
+                        </div>
+                    @endif
+                </template>
             </song-view>
 @endsection
