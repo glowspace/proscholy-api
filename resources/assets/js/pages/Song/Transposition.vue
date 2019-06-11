@@ -1,14 +1,12 @@
 <template>
-    <span>
-		<div class="d-inline-block m-1 py-1 px-2 border rounded text-center">
-			<div>Transpozice</div>
-			<div class="btn-group m-0" role="group">
-				<a class="btn btn-secondary" v-on:click="transpose(-1)">-</a>
-				<a class="btn btn-secondary bg-light transpose-window" v-on:click="reset()">{{ transposition }}</a>
-				<a class="btn btn-secondary" v-on:click="transpose(1)">+</a>
-			</div>
+	<div>
+		<div>Transpozice</div>
+		<div class="btn-group m-0" role="group">
+			<a class="btn btn-secondary" v-on:click="transpose(-1)">-</a>
+			<a class="btn btn-secondary bg-light transpose-window" v-on:click="reset()">{{ transposition }}</a>
+			<a class="btn btn-secondary" v-on:click="transpose(1)">+</a>
 		</div>
-    </span>
+	</div>
 </template>
 
 <script>

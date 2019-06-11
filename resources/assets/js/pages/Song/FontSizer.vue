@@ -1,14 +1,12 @@
 <template>
-    <span>
-        <div class="d-inline-block m-1 py-1 px-2 border rounded text-center">
-            <div>Velikost písma</div>
-            <div class="btn-group m-0" role="group">
-                <a class="btn btn-secondary" @click="setFontSizePercent(fontSizePercent - 10)">-</a>
-                <a class="btn btn-secondary bg-light transpose-window" @click="setFontSizePercent(100)">{{ (fontSizePercent - 100)/10 }}</a>
-                <a class="btn btn-secondary" @click="setFontSizePercent(fontSizePercent + 10)">+</a>
-            </div>
+    <div>
+        <div>Velikost písma</div>
+        <div class="btn-group m-0" role="group">
+            <a class="btn btn-secondary" @click="setFontSizePercent(fontSizePercent - 10)">-</a>
+            <a class="btn btn-secondary bg-light transpose-window" @click="setFontSizePercent(100)">{{ (fontSizePercent - 100)/10 }}</a>
+            <a class="btn btn-secondary" @click="setFontSizePercent(fontSizePercent + 10)">+</a>
         </div>
-    </span>
+    </div>
 </template>
 
 <script>

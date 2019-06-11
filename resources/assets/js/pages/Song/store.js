@@ -10,5 +10,6 @@ export const store = {
 	controlsDisplay: true,
 	mediaDisplay: false,
 	autoscroll: false, 
-	fullscreen: false
+	fullscreen: false,
+	displayMode: 0 // 0: text, 1: sheet music, 2: translations
 };
