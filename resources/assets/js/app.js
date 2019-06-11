@@ -32,7 +32,7 @@ Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'
 // Vue.component('font-sizer', require('Public/pages/Song/SongBottomControls/FontSizer.vue'));
 // Vue.component('media', require('Public/pages/Song/SongBottomControls/Media.vue'));
 
-Vue.component('search', require('Public/pages/Search.vue'));
+Vue.component('search', require('Public/pages/Search/Search.vue'));
 Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
 
 

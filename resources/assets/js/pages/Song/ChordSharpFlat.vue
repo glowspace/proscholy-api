@@ -16,7 +16,7 @@ export default {
 
     data() {
         return {
-            useFlatScale = false
+            useFlatScale: false
         }
     },
 

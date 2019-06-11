@@ -52,7 +52,8 @@
                     <a class="btn btn-secondary float-right" v-on:click="controlsToggle"><i class="fas pr-0" v-bind:class="[controlsDisplay?'fa-chevron-right':'fa-chevron-left']"></i></a>
                 </div>
                 <div class="card-footer">
-                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20px">---- rok ----
+                    <!-- todo: asset img -->
+                    Zpěvník ProScholy.cz <img src="img/logo_v2.png" width="20px">---- rok ----
                 </div>
             </div>
         </div>
@@ -90,7 +91,19 @@
 <script>
 import { store } from "./store.js";
 
+import FontSizer from './FontSizer';
+import ChordMode from './ChordMode';
+import ChordSharpFlat from './ChordSharpFlat';
+// import MediaOpener from './MediaOpener';
+import RightControls from './RightControls';
+import Transposition from './Transposition';
+import ExternalView from 'Public/components/ExternalView.vue';
+
 export default {
+    components: [
+        FontSizer, ChordMode, ChordSharpFlat, ExternalView, MediaOpener, RightControls, Transposition
+    ],
+    
     data() {
         return store;
     },
