@@ -64,4 +64,5 @@
                     @endif
                 </template>
             </song-view>
+    </div>
 @endsection
