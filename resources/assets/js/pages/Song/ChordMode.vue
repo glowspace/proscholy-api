@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import { store } from "./store.js";
-
 export default {
     props: ["value", "n-chord-modes"],
 
