@@ -182,9 +182,13 @@
 
 <style lang="scss">
 .toolbox {
-  background: white;
   padding: 0.25rem !important;
   margin-bottom: 0.25rem !important;
+
+  background: white;
+  .dark & {
+    background: black;
+  }
 
   &.toolbox-u {
     margin-top: 0.25rem !important;
@@ -200,7 +204,11 @@
     margin: 0.25rem;
     display: inline-block;
     border-radius: 0.125rem;
+    
     border: 1px solid #dee2e6;
+    .dark & {
+      border-color: #211d19;
+    }
   }
 }
 </style>
