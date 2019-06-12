@@ -16,25 +16,11 @@
 export default {
     props: ["value", "n-chord-modes"],
 
-    data() {
-        return {
-            internalValue: 0
-        }
-    },
-
     computed: {
         chordMode: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.internalValue = val;
-                this.$emit("input", val);
-            }
+            get() { return this.value; },
+            set(val) { this.$emit("input", val) }
         }
-    },
-
-    methods: {
     }
 }
 </script>

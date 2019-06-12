@@ -14,23 +14,12 @@
 export default {
     props: ["value"],
 
-    data() {
-        return {
-            internalValue: false
-        }
-    },
-
     computed: {
         useFlatScale: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.internalValue = val;
-                this.$emit("input", val);
-            }
+            get() { return this.value; },
+            set(val) { this.$emit("input", val) }
         }
-    },
+    }
 }
 </script>
 
