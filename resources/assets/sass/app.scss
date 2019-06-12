@@ -406,7 +406,7 @@ View: Search results
   }
 }
 
-.chosen .btn, .btn.chosen, .dark .dark-mode-button {
+.chosen .btn, .btn.chosen {
 	background-color: rgba(0, 0, 0, 0.133);
 }
 
@@ -553,5 +553,9 @@ body.dark {
 
   .chord-sign {
     color: #4dc0b5;
+  }
+
+  .chosen .btn, .btn.chosen, .dark-mode-button {
+    background-color: rgba(0, 0, 0, 0.3);
   }
 }

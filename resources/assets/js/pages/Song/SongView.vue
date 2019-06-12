@@ -24,7 +24,7 @@
             <i class="fas fa-exclamation-triangle p-0"></i>
           </a>
           <!-- translations -->
-          <div v-show="translationsDisplay">
+          <div v-show="translationsDisplay && displayMode == 0">
             <div class="overflow-auto toolbox toolbox-u">
               <a
                 class="btn btn-secondary float-right fixed-top position-sticky"
