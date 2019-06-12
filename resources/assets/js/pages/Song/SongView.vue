@@ -75,7 +75,7 @@
               </div>
 
               <div class="toolbox-item">
-                <chord-mode v-model="chordMode"></chord-mode>
+                <chord-mode v-model="chordMode" :n-chord-modes="nChordModes"></chord-mode>
               </div>
 
               <div class="toolbox-item">
@@ -254,6 +254,8 @@ export default {
   },
 
   data() {
+    // use this only in SongView and Chord component
+    // use v-model to bind data from every other component
     return store;
   },
 
