@@ -84,10 +84,10 @@
                 ></items-combo-box>
               </td>
               <td>
-                <a
+                <a href="#"
                   v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
-                  href="#"
-                  @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
+                  @click.middle="goToAdminPage('song/' + props.item.song_lyric.id + '/edit', true, true)"
+                  @click.left="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
                 >Upravit píseň</a>
               </td>
             </template>
@@ -329,21 +329,25 @@ export default {
       return fieldNames;
     },
 
-    async goToPage(url, save = true) {
+    async goToPage(url, save = true, blank = false) {
       if (this.isDirty && save) await this.submit();
 
-      setTimeout(() => {
-        if (!this.isDirty && save) {
-          var base_url = document
-            .querySelector("#baseUrl")
-            .getAttribute("value");
-          window.location.href = base_url + "/" + url;
-        }
-      }, 500);
+      if (blank) {
+        window.open(url, "_blank");
+      } else {
+        setTimeout(() => {
+          if (!this.isDirty && save) {
+            var base_url = document
+              .querySelector("#baseUrl")
+              .getAttribute("value");
+            window.location.href = base_url + "/" + url;
+          }
+        }, 500);
+      }
     },
 
-    goToAdminPage(url, save = true) {
-      this.goToPage("/admin/" + url, save);
+    goToAdminPage(url, save = true, blank = false) {
+      this.goToPage("/admin/" + url, save, blank);
     },
 
     show() {
