@@ -15,7 +15,7 @@
  * Public routes.
  */
 Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
-Route::get('/o-tymu', 'Client\HomeController@renderAboutTeam')->name('client.team');
+Route::get('/o-zpevniku', 'Client\HomeController@renderAboutSongbook')->name('client.about');
 
 
 // Redirects to real search route.

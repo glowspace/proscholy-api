@@ -13,7 +13,7 @@
             <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i> Autoři písní</a>
-            <a href="{{route("client.team")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
+            <a href="{{route("client.about")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O zpěvníku</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i> Přidat píseň</a>
             <dark-mode-button text=" Tmavý mód"></dark-mode-button>
         </div>
@@ -26,7 +26,7 @@
         <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-user"></i></a>
-        <a href="{{route("client.team")}}" class="btn btn-secondary"><i class="fas fa-info"></i></a>
+        <a href="{{route("client.about")}}" class="btn btn-secondary"><i class="fas fa-info"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
         <dark-mode-button></dark-mode-button>
     </div>
