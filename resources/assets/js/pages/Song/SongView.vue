@@ -96,7 +96,19 @@
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <slot name="media"></slot>
+              <div class="row pt-2" v-if="song_lyric && song_lyric.externals && song_lyric.externals.length && !$apollo.loading">
+                <div class="col-md-6" v-for="external in song_lyric.externals" v-bind:key="external.id">
+                  <external-view :url="external.url" :media-id="external.media_id" :type="external.type" :authors="external.authors"></external-view>
+                </div>
+              </div>
+              <div v-else>
+                <span v-if="$apollo.loading">
+                  <i>Načítám...</i>
+                </span>
+                <span v-else>
+                  <i>Žádná nahrávka nebyla nalezena.</i>
+                </span>
+              </div>
             </div>
           </div>
           <!-- control buttons -->
@@ -238,12 +250,23 @@ const FETCH_SONG_LYRIC = gql`
         public_name
         url
         type
+        media_id
+        authors {
+          id
+          name
+          public_url
+        }
       }
       files {
         id
         public_name
         url
         type
+        authors {
+          id
+          name
+          public_url
+        }
       }
     }
   }
@@ -282,6 +305,7 @@ export default {
     controlsToggle: function() {
       this.controlsDisplay = !this.controlsDisplay;
       document.querySelector(".navbar.fixed-top").classList.toggle("d-none");
+      console.log(this.song_lyric);
     }
   }
 };
