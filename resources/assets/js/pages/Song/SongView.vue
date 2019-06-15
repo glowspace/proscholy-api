@@ -96,9 +96,14 @@
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="row pt-2" v-if="song_lyric && song_lyric.externals && song_lyric.externals.length && !$apollo.loading">
-                <div class="col-md-6" v-for="external in song_lyric.externals" v-bind:key="external.id">
+              <div class="row pt-2" v-if="song_lyric
+              && (song_lyric.externals || song_lyric.files)
+              && (song_lyric.externals.length || song_lyric.files.length) && !$apollo.loading">
+                <div class="col-md-6" v-for="external in song_lyric.externals" v-bind:key="external.id" v-if="[1, 2, 3, 7].includes(external.type)">
                   <external-view :url="external.url" :media-id="external.media_id" :type="external.type" :authors="external.authors"></external-view>
+                </div>
+                <div class="col-md-6" v-for="file in song_lyric.files" v-bind:key="file.id" v-if="[1, 2, 3, 7].includes(fileTypeConvert(file.type))">
+                  <external-view :url="file.url" :media-id="file.media_id" :type="fileTypeConvert(file.type)" :authors="file.authors"></external-view>
                 </div>
               </div>
               <div v-else>
@@ -123,7 +128,7 @@
             </a>
             <a
               class="btn btn-secondary"
-              v-if="!!this.$slots['media']"
+              v-if="renderMedia"
               v-bind:class="{ 'chosen': mediaDisplay }"
               v-on:click="mediaDisplay=!mediaDisplay; toolsDisplay=false"
             >
@@ -273,7 +278,7 @@ const FETCH_SONG_LYRIC = gql`
 `;
 
 export default {
-  props: ["song-id"],
+  props: ["song-id", "render-media"],
 
   components: {
     FontSizer,
@@ -306,6 +311,30 @@ export default {
       this.controlsDisplay = !this.controlsDisplay;
       document.querySelector(".navbar.fixed-top").classList.toggle("d-none");
       console.log(this.song_lyric);
+    },
+
+    fileTypeConvert: function(type) {
+      switch (type) {
+        case 1:
+          return 8;
+          break;
+
+        case 2:
+          return 9;
+          break;
+
+        case 3:
+          return 4;
+          break;
+
+        case 4:
+          return 7;
+          break;
+    
+        default:
+          return type;
+          break;
+      }
     }
   }
 };

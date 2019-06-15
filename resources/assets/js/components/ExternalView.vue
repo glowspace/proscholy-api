@@ -1,44 +1,39 @@
 <template>
     <div class="card card-green" style="margin-bottom: 1em;">
         <div class="card-header py-2">
-            <i :class="typeClass"></i>
+            <a :href="mediaLink" target="_blank" title="Otevřít v novém okně"><i :class="typeClass"></i></a>
             <span v-for="(author, index) in authors" v-bind:key="author.id"><span v-if="index">,</span>
                 <a :href="author.public_url">{{ author.name }}</a>
             </span>
-            <a :href="mediaLink" target="_blank" class="float-right"><i class="fas fa-external-link-alt"></i></a>
         </div>
-        <div>
-            <iframe v-if="type == 1"
-                    :src="iframeSrc"
-                    width="100%"
-                    height="80"
+        <iframe v-if="type == 1"
+                :src="iframeSrc"
+                width="100%"
+                height="80"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"></iframe>
+
+        <iframe v-else-if="type == 2"
+                width="100%"
+                height="120"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                :src="iframeSrc"></iframe>
+
+        <div class="embed-responsive embed-responsive-16by9" v-else-if="type == 3">
+            <iframe :src="iframeSrc"
                     frameborder="0"
-                    allowtransparency="true"
-                    allow="encrypted-media"></iframe>
-
-            <iframe v-else-if="type == 2"
-                    width="100%"
-                    height="166"
-                    scrolling="no"
-                    frameborder="no"
-                    allow="autoplay"
-                    :src="iframeSrc"></iframe>
-
-            <div class="embed-responsive embed-responsive-16by9" v-else-if="type == 3">
-                <iframe :src="iframeSrc"
-                        frameborder="0"
-                        allowfullscreen></iframe>
-            </div>
-
-            <!-- audio soubor -->
-            <div v-else-if="type == 7" class="p-2">
-                <audio controls :src="iframeSrc">
-                    Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
-                </audio>
-            </div>
-
-            <iframe v-else :src="iframeSrc" frameborder="0" width="100%" height="500"></iframe>
+                    allowfullscreen></iframe>
         </div>
+
+        <!-- audio soubor -->
+        <audio controls :src="iframeSrc" v-else-if="type == 7">
+            Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
+        </audio>
+
+        <iframe v-else :src="iframeSrc" frameborder="0" width="100%" height="300"></iframe>
     </div>
 </template>
 
@@ -134,6 +129,7 @@ export default {
                     break;
             
                 default:
+                    return "fas fa-play-circle";
                     break;
             }
         }
