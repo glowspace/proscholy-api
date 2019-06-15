@@ -79,37 +79,39 @@ input::placeholder {
   padding: 0 0.5rem;
 }
 
-$sidebar-width: 300px;
+.navbar-admin {
+  @include media-breakpoint-down(md) {
+    padding: 0 !important;
+    min-height: 0;
 
+    span {
+      display: none;
+    }
+  }
+}
+
+// admin sidebar
 .sidebar {
-  min-height: calc(100vh - 66px);
+  @include media-breakpoint-up(lg) {
+    min-height: calc(100vh - 66px);
+  }
+  
+  @include media-breakpoint-down(md) {
+    margin-right: -15px;
+  }
+
   height: 100%;
   margin-left: -15px;
-  // width:      $sidebar-width;
-  // padding:    5px 0 0;
-  // z-index:    10;
-  // display:    inline-block;
-  // transition: 0.2s;
-
-  // margin-top: 66px;
-
-
-  @include media-breakpoint-down(md) {
-    display: none;
-  }
-
-  @include media-breakpoint-up(lg) {
-    // display: none;
-    // position: fixed !important;
-
-    // display:  inline-block !important;
-  }
 
   a {
-    width:      100%;
+    padding: 0.4rem 0.8rem;
+
+    @include media-breakpoint-up(lg) {
+      width:    100%;
+      padding:    0.66875rem 1rem;
+    }
 
     margin:     0;
-    padding:    0.66875rem 1rem;
 
     color:      white !important;
     text-align: left;
