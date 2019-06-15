@@ -233,7 +233,7 @@ const FETCH_SONG_LYRIC = gql`
   query($id: ID!) {
     song_lyric(id: $id) {
       id
-      externals {
+      externals (orderBy: { field: "type", order: ASC }) {
         id
         public_name
         url

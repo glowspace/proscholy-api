@@ -33,6 +33,7 @@ type Query {
     externals (
         type: Int
         is_todo: Boolean
+        orderBy: [OrderByClause!] @orderBy
     ): [External!]! @all
     files (
         type: Int
