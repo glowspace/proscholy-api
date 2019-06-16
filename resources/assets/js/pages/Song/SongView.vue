@@ -70,16 +70,16 @@
               <a class="btn btn-secondary float-right" v-on:click="toolsDisplay=false">
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="toolbox-item">
+              <div class="toolbox-item" v-if="chordMode != 0">
                 <transposition v-model="transposition"></transposition>
               </div>
 
-              <div class="toolbox-item">
-                <chord-mode v-model="chordMode" :n-chord-modes="nChordModes"></chord-mode>
+              <div class="toolbox-item" v-if="chordMode != 0">
+                <chord-sharp-flat v-model="useFlatScale"></chord-sharp-flat>
               </div>
 
-              <div class="toolbox-item">
-                <chord-sharp-flat v-model="useFlatScale"></chord-sharp-flat>
+              <div class="toolbox-item" v-if="nChordModes != 1">
+                <chord-mode v-model="chordMode" :n-chord-modes="nChordModes"></chord-mode>
               </div>
 
               <div class="toolbox-item">
