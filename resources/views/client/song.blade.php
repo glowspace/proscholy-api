@@ -26,5 +26,31 @@
         <song-view song-id="{{$song_l->id}}" render-media="{{ ($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)?true:false }}">
             {!! $song_l->getFormattedLyrics() !!}
         </song-view>
+
+        <div class="row" id="preloadPlaceholder">
+            <div class="col-lg-9">
+                <div class="card card-lyrics">
+                <div class="card-header p-1 song-links">
+                    <a class="btn btn-secondary">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="d-none d-sm-inline">Noty</span>
+                    </a>
+                    <a class="btn btn-secondary">
+                        <i class="fas fa-language"></i>
+                        <span class="d-none d-sm-inline">Překlady</span>
+                    </a>
+                    <a class="btn btn-secondary">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="d-none d-sm-inline">Export</span>
+                    </a>
+                </div>
+                <div class="card-body py-2">
+                    {!! $song_l->getFormattedLyrics() !!}
+                </div>
+                <div class="controls p-1">
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

@@ -564,3 +564,17 @@ body.dark {
     background-color: rgba(0, 0, 0, 0.3);
   }
 }
+
+// better preload song
+
+.row ~ #preloadPlaceholder {
+  display: none;
+}
+
+.song-line {
+  display: none;
+}
+
+.card-lyrics .song-line {
+  display: block;
+}
