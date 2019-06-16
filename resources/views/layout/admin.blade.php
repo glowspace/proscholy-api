@@ -45,34 +45,4 @@
             viewport.attr("content", "height=" + viewheight + "px, width=" +
                 viewwidth + "px, initial-scale=1.0");
         }, 300);
-
-
-        // Navbar toggling
-        let navbarState = false;
-
-        function toggleNavbar() {
-            console.log(navbarState);
-
-            if (navbarState === false) {
-                showNavbar();
-            }
-            else {
-                hideNavbar();
-            }
-        }
-
-        function showNavbar() {
-            navbarState = true;
-
-            $('.sidebar')
-                .show()
-                .css({position: 'absolute'});
-        }
-
-        function hideNavbar() {
-            navbarState = false;
-
-            $('.sidebar').hide();
-        }
-    </script>
 @endpush
