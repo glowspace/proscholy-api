@@ -58,7 +58,12 @@
               </div>-->
             </template>
 
-            <template v-if="displayMode === 1">noty goes here</template>
+            <template v-if="displayMode === 1">
+              <div class="col-md-6" v-for="score in scores" v-bind:key="score.id">
+                <!-- todo: have a selectbox to choose which sheet music will be shown -->
+                <external-view :url="score.url" :media-id="score.media_id" :type="score.type" :authors="score.authors"></external-view>
+              </div>
+            </template>
           </div>
         </div>
         <div
@@ -323,7 +328,23 @@ export default {
       get() {
         return this.song_lyric.files.filter(file => [1, 2, 3, 7].includes(this.fileTypeConvert(file.type)));
       }
-    }
+    },
+
+    scores: {
+      get() {
+        // File => File with unified type
+        const mapFile = (file) => {
+          const copy = _.clone(file);
+          copy.type = this.fileTypeConvert(copy.type);
+          return copy;
+        };
+
+        const filteredExternals = this.song_lyric.externals.filter(ext => [4, 8, 9].includes(ext.type));
+        const filteredFiles = this.song_lyric.files.map(mapFile).filter(file => [4, 8, 9].includes(file.type));
+
+        return [...filteredExternals, ...filteredFiles];
+      }
+    },
   },
 
   methods: {
@@ -334,27 +355,14 @@ export default {
     },
 
     fileTypeConvert: function(type) {
-      switch (type) {
-        case 1:
-          return 8;
-          break;
+      const mapping = {
+        1: 8,
+        2: 9,
+        3: 4,
+        4: 7
+      };
 
-        case 2:
-          return 9;
-          break;
-
-        case 3:
-          return 4;
-          break;
-
-        case 4:
-          return 7;
-          break;
-    
-        default:
-          return type;
-          break;
-      }
+      return mapping[type] || type;
     }
   }
 };
