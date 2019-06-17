@@ -11,8 +11,12 @@
             <i class="fas fa-file-alt"></i>
             <span class="d-none d-sm-inline">Noty</span>
           </a>
-          <a class="btn btn-secondary" v-if="displayMode == 0" :class="{'chosen': translationsDisplay}"
-          @click="translationsDisplay=!translationsDisplay">
+          <a
+            class="btn btn-secondary"
+            v-if="displayMode == 0"
+            :class="{'chosen': translationsDisplay}"
+            @click="translationsDisplay=!translationsDisplay"
+          >
             <i class="fas fa-language"></i>
             <span class="d-none d-sm-inline">Překlady</span>
           </a>
@@ -36,9 +40,9 @@
             </div>
           </div>
         </div>
-        <div class="card-body py-2">
+
+        <div class="card-body py-w" v-if="displayMode === 0">
           <div class="d-flex justify-content-between">
-            <template v-if="displayMode === 0">
               <div id="song-lyrics" style="overflow: hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
                 <slot></slot>
@@ -56,16 +60,32 @@
                                     </div>
                                 </div>
               </div>-->
-            </template>
-
-            <template v-if="displayMode === 1">
-              <div class="col-md-6" v-for="score in scores" v-bind:key="score.id">
-                <!-- todo: have a selectbox to choose which sheet music will be shown -->
-                <external-view :url="score.url" :media-id="score.media_id" :type="score.type" :authors="score.authors"></external-view>
-              </div>
-            </template>
           </div>
         </div>
+
+        <div v-if="displayMode === 1">
+              <div class="card-body mb-2">
+                <div class="row">
+                  <div class="col-md-4 text-right">
+                    <p>Vyberte noty:</p>
+                  </div>
+                  <div class="col-md-8">
+                    <select v-model="selectedScoreIndex" class="select-themed">
+                      <option v-for="(score, index) in scores" v-bind:key="index" :value="index">{{ score.public_name }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+             <external-view v-if="scores"
+                :url="scores[selectedScoreIndex].url"
+                :media-id="scores[selectedScoreIndex].media_id"
+                :type="scores[selectedScoreIndex].type"
+                :authors="scores[selectedScoreIndex].authors"
+                :height="500"
+              ></external-view>
+          </div>
+        
         <div
           class="controls fixed-bottom position-sticky p-1"
           v-bind:class="{'card-footer': controlsDisplay}"
@@ -103,10 +123,20 @@
               </a>
               <div class="row pt-2" v-if="hasExternalsOrFiles && !$apollo.loading">
                 <div class="col-md-6" v-for="external in mediaExternals" v-bind:key="external.id">
-                  <external-view :url="external.url" :media-id="external.media_id" :type="external.type" :authors="external.authors"></external-view>
+                  <external-view
+                    :url="external.url"
+                    :media-id="external.media_id"
+                    :type="external.type"
+                    :authors="external.authors"
+                  ></external-view>
                 </div>
                 <div class="col-md-6" v-for="file in mediaFiles" v-bind:key="file.id">
-                  <external-view :url="file.url" :media-id="file.media_id" :type="fileTypeConvert(file.type)" :authors="file.authors"></external-view>
+                  <external-view
+                    :url="file.url"
+                    :media-id="file.media_id"
+                    :type="fileTypeConvert(file.type)"
+                    :authors="file.authors"
+                  ></external-view>
                 </div>
               </div>
               <div v-else>
@@ -149,9 +179,9 @@
                   v-bind:class="[autoscroll?'pr-0 fa-stop-circle':'fa-arrow-circle-down']"
                 ></i>
                 <span class="d-none d-sm-inline" v-if="!autoscroll">Rolovat</span>
-              </a><a
-              class="btn btn-secondary" v-if="autoscroll">-</a><a
-              class="btn btn-secondary" v-if="autoscroll">+</a>
+              </a>
+              <a class="btn btn-secondary" v-if="autoscroll">-</a>
+              <a class="btn btn-secondary" v-if="autoscroll">+</a>
             </div>
           </span>
           <a class="btn btn-secondary float-right" v-on:click="controlsToggle">
@@ -224,13 +254,19 @@
     margin: 0.25rem;
     display: inline-block;
     border-radius: 0.125rem;
-    
+
     border: 1px solid #dee2e6;
     .dark & {
       border-color: #211d19;
     }
   }
 }
+
+ .select-themed {
+    background-color: white;
+    padding: 0.5em;
+    width: 100%;
+  }
 </style>
 
 
@@ -253,7 +289,7 @@ const FETCH_SONG_LYRIC = gql`
   query($id: ID!) {
     song_lyric(id: $id) {
       id
-      externals (orderBy: { field: "type", order: ASC }) {
+      externals(orderBy: { field: "type", order: ASC }) {
         id
         public_name
         url
@@ -312,39 +348,53 @@ export default {
   computed: {
     hasExternalsOrFiles: {
       get() {
-        return this.song_lyric
-              && (this.song_lyric.externals || this.song_lyric.files)
-              && (this.song_lyric.externals.length || this.song_lyric.files.length);
+        return (
+          this.song_lyric &&
+          (this.song_lyric.externals || this.song_lyric.files) &&
+          (this.song_lyric.externals.length || this.song_lyric.files.length)
+        );
       }
     },
 
     mediaExternals: {
       get() {
-        return this.song_lyric.externals.filter(ext => [1, 2, 3, 7].includes(ext.type));
+        if (!this.hasExternalsOrFiles) return [];
+
+        return this.song_lyric.externals.filter(ext =>
+          [1, 2, 3, 7].includes(ext.type)
+        );
       }
     },
 
     mediaFiles: {
       get() {
-        return this.song_lyric.files.filter(file => [1, 2, 3, 7].includes(this.fileTypeConvert(file.type)));
+        if (!this.hasExternalsOrFiles) return [];
+
+        return this.song_lyric.files.filter(file =>
+          [1, 2, 3, 7].includes(this.fileTypeConvert(file.type))
+        );
       }
     },
 
     scores: {
       get() {
         // File => File with unified type
-        const mapFile = (file) => {
+        const mapFile = file => {
           const copy = _.clone(file);
           copy.type = this.fileTypeConvert(copy.type);
           return copy;
         };
 
-        const filteredExternals = this.song_lyric.externals.filter(ext => [4, 8, 9].includes(ext.type));
-        const filteredFiles = this.song_lyric.files.map(mapFile).filter(file => [4, 8, 9].includes(file.type));
+        const filteredExternals = this.song_lyric.externals.filter(ext =>
+          [4, 8, 9].includes(ext.type)
+        );
+        const filteredFiles = this.song_lyric.files
+          .map(mapFile)
+          .filter(file => [4, 8, 9].includes(file.type));
 
         return [...filteredExternals, ...filteredFiles];
       }
-    },
+    }
   },
 
   methods: {
@@ -363,7 +413,7 @@ export default {
       };
 
       return mapping[type] || type;
-    }
+    },
   }
 };
 </script>

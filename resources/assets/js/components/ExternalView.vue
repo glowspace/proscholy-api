@@ -33,7 +33,7 @@
             Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
         </audio>
 
-        <iframe v-else :src="iframeSrc" frameborder="0" width="100%" height="300"></iframe>
+        <iframe v-else :src="iframeSrc" frameborder="0" width="100%" :height="height || 300"></iframe>
     </div>
 </template>
 
@@ -46,7 +46,8 @@ export default {
         type: Number,
         thumbnailUrl: String,
         mediaId: String,
-        authors: Array
+        authors: Array,
+        height: Number
     },
 
     data() {

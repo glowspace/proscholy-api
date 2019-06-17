@@ -12,5 +12,6 @@ export const store = {
 	translationsDisplay: false,
 	autoscroll: false, 
 	fullscreen: false,
-	displayMode: 0 // 0: text, 1: sheet music, 2: translations
+	displayMode: 0, // 0: text, 1: sheet music, 2: translations
+	selectedScoreIndex: 0
 };
