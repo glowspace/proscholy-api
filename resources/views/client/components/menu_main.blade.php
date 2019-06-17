@@ -22,7 +22,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-        <a href="{{url("")}}" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="20"></a>
+        <a href="{{url("")}}" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="24"></a>
         <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a>
         <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i></a>
