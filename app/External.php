@@ -259,11 +259,7 @@ class External extends Model implements ISource
             $info .= " | ";
         }
 
-        foreach ($this->authors as $author) {
-            $info .= $author->name;
-            if (next($this->authors) !== false)
-                $info .= ", ";
-        }
+        $info .= $this->authors->implode('name',', ');
 
         if ($info !== "") {
             $info = "($info)";
