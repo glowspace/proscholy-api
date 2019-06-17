@@ -9,7 +9,7 @@
             @endif
         </a>
     @endif
-        <div>
+        <div class="d-inline-block">
             <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a>
             <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i> Oblíbené</a>
