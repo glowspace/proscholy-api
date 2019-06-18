@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <div class="card-body py-w" v-if="displayMode === 0">
+        <div class="card-body py-2" v-if="displayMode === 0">
           <div class="d-flex justify-content-between">
               <div id="song-lyrics" style="overflow: hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
