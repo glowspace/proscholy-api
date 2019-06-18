@@ -191,11 +191,16 @@
             ></i>
           </a>
         </div>
-        <div class="card-footer">
+        <div class="card-footer p-1 song-links">
           <!-- todo: asset img -->
-          Zpěvník ProScholy.cz
-          <img src="/img/logo_v2.png" width="20px">
-          {{ new Date().getFullYear() }}
+          <div class="px-3 py-2 d-inline-block">
+            Zpěvník ProScholy.cz
+            <img src="/img/logo_v2.png" width="20px">
+            {{ new Date().getFullYear() }}
+          </div>
+          <a class="btn btn-secondary float-right">
+            Nahlásit
+          </a>
         </div>
       </div>
     </div>
