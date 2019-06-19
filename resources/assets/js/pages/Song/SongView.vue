@@ -95,20 +95,20 @@
               <a class="btn btn-secondary float-right" v-on:click="toolsDisplay=false">
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="toolbox-item" v-if="chordMode != 0">
+              <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
                 <transposition v-model="transposition"></transposition>
               </div>
 
-              <div class="toolbox-item" v-if="chordMode != 0">
-                <chord-sharp-flat v-model="useFlatScale"></chord-sharp-flat>
+              <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
+                <chord-sharp-flat v-model="chordSharedStore.useFlatScale"></chord-sharp-flat>
               </div>
 
-              <div class="toolbox-item" v-if="nChordModes != 1">
-                <chord-mode v-model="chordMode" :n-chord-modes="nChordModes"></chord-mode>
+              <div class="toolbox-item" v-if="chordSharedStore.nChordModes != 1">
+                <chord-mode v-model="chordSharedStore.chordMode" :n-chord-modes="chordSharedStore.nChordModes"></chord-mode>
               </div>
 
               <div class="toolbox-item">
-                <font-sizer v-model="fontSizePercent"></font-sizer>
+                <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
               </div>
             </div>
           </div>
@@ -336,7 +336,20 @@ export default {
   data() {
     // use this only in SongView and Chord component
     // use v-model to bind data from every other component
-    return store;
+    return {
+      transposition: 0,
+      displayTransp: 0,
+      toolsDisplay: false,
+      controlsDisplay: true,
+      mediaDisplay: false,
+      translationsDisplay: false,
+      autoscroll: false, 
+      fullscreen: false,
+      displayMode: 0, // 0: text, 1: sheet music, 2: translations
+      selectedScoreIndex: 0,
+
+      chordSharedStore: store
+    }
   },
 
   apollo: {
@@ -419,7 +432,7 @@ export default {
 
       return mapping[type] || type;
     },
-  }
+  },
 };
 </script>
 

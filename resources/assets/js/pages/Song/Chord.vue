@@ -1,5 +1,5 @@
 <template>
-    <span class="chord" v-bind:style="{ fontSize: fontSizePercent + '%' }">
+    <span class="chord" v-bind:style="{ fontSize: chordSharedStore.fontSizePercent + '%' }">
         <!-- the if condition syntax is weird but necessary here -->
         <span class="chord-sign" v-if="displayChordSign">
             <span v-if="isOptional">(</span>
@@ -16,6 +16,88 @@
         </span>
     </span>
 </template>
+
+<script>
+    import { store } from "./store.js";
+    
+    export default {
+        props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
+
+        data() {
+            return {
+                chordSharedStore: store
+            }
+        },
+
+        created() {
+            // each chords notifies its state to the global store.js file
+
+            // I'm a chord that has a chord sign -> allow to display chords
+            if (this.base != "" && this.chordSharedStore.nChordModes == 1) {
+                this.chordSharedStore.nChordModes = 2;
+                this.chordSharedStore.chordMode = 1;
+            }
+
+            // I'm a chord that is a substitute -> allow switching to extended chord mode
+            if (this.isSubstitute  && this.chordSharedStore.nChordModes == 2) {
+                this.chordSharedStore.nChordModes = 3;
+            }
+
+            // After being decided between #/b, do not use later chords
+            // (there can be some transposition later in the song)
+            if (this.chordSharedStore.useFlatScale_notified) {
+                return;
+            }
+
+            // I'm a B-flat chord -> set flats as default
+            if (this.base === "B" || 
+                (this.base.length > 1 && this.base[1] === "b")) {
+                this.chordSharedStore.useFlatScale = true;
+                this.chordSharedStore.useFlatScale_notified = true;
+            }
+        },
+
+        computed: {
+            baseNote() {
+                if (this.base == "") { return ""; }
+
+                return this.transposeChordBy(this.base, this.transposition, this.chordSharedStore.useFlatScale);
+            },
+
+            bassNote() {
+                if (this.bass == "") { return ""; }
+
+                return this.transposeChordBy(this.bass, this.transposition, this.chordSharedStore.useFlatScale);
+            },
+
+            displayChordSign() {
+                if (this.chordSharedStore.chordMode === 0) return false;
+                if (this.chordSharedStore.chordMode === 1) return !(this.isSubstitute);
+                if (this.chordSharedStore.chordMode === 2) return true;
+            }
+        },
+
+        methods:{
+            transposeChordBy(chord, semitones, useFlatScale) {
+                // Chromatic scale starting from C using flats only.
+                const FLAT_SCALE = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "Cb"];
+
+                // Chromatic scale starting from C using sharps only.
+                const SHARP_SCALE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
+
+                let scale = useFlatScale ? FLAT_SCALE : SHARP_SCALE;
+                let chord_i = FLAT_SCALE.indexOf(chord);
+                if (chord_i === -1) {
+                    chord_i = SHARP_SCALE.indexOf(chord);
+                }
+
+                let new_i = (chord_i + semitones) % 12;
+
+                return scale[new_i];
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
     .chord{
@@ -92,83 +174,3 @@
         }
     }
 </style>
-
-<script>
-    import { store } from "./store.js";
-    
-    export default {
-        props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
-
-        data() {
-            return store;
-        },
-
-        created() {
-            // each chords notifies its state to the global store.js file
-
-            // I'm a chord that has a chord sign -> allow to display chords
-            if (this.base != "" && this.nChordModes == 1) {
-                this.nChordModes = 2;
-                this.chordMode = 1;
-            }
-
-            // I'm a chord that is a substitute -> allow switching to extended chord mode
-            if (this.isSubstitute  && this.nChordModes == 2) {
-                this.nChordModes = 3;
-            }
-
-            // After being decided between #/b, do not use later chords
-            // (there can be some transposition later in the song)
-            if (this.useFlatScale_notified) {
-                return;
-            }
-
-            // I'm a B-flat chord -> set flats as default
-            if (this.base === "B" || 
-                (this.base.length > 1 && this.base[1] === "b")) {
-                this.useFlatScale = true;
-                this.useFlatScale_notified = true;
-            }
-        },
-
-        computed: {
-            baseNote() {
-                if (this.base == "") { return ""; }
-
-                return this.transposeChordBy(this.base, this.transposition, this.useFlatScale);
-            },
-
-            bassNote() {
-                if (this.bass == "") { return ""; }
-
-                return this.transposeChordBy(this.bass, this.transposition, this.useFlatScale);
-            },
-
-            displayChordSign() {
-                if (this.chordMode === 0) return false;
-                if (this.chordMode === 1) return !(this.isSubstitute);
-                if (this.chordMode === 2) return true;
-            }
-        },
-
-        methods:{
-            transposeChordBy(chord, semitones, useFlatScale) {
-                // Chromatic scale starting from C using flats only.
-                const FLAT_SCALE = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "Cb"];
-
-                // Chromatic scale starting from C using sharps only.
-                const SHARP_SCALE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
-
-                let scale = useFlatScale ? FLAT_SCALE : SHARP_SCALE;
-                let chord_i = FLAT_SCALE.indexOf(chord);
-                if (chord_i === -1) {
-                    chord_i = SHARP_SCALE.indexOf(chord);
-                }
-
-                let new_i = (chord_i + semitones) % 12;
-
-                return scale[new_i];
-            }
-        }
-    }
-</script>
