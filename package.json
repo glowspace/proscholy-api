@@ -34,6 +34,7 @@
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "materialize-css": "^1.0.0-rc.2",
+    "nosleep.js": "^0.9.0",
     "npm": "^6.4.0",
     "vee-validate": "^2.2.7",
     "vue-apollo": "^3.0.0-beta.28",

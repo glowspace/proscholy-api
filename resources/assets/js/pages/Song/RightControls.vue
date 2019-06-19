@@ -2,20 +2,26 @@
 		<div class="d-flex flex-column mr-n3">
 			<a class="btn btn-secondary m-0" v-on:click="toggleFullscreen"><i class="fas" v-bind:class="[fullscreen?'fa-compress':'fa-expand']"></i></a>
             <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
-            <a class="btn btn-secondary m-0"><i class="fas fa-sun"></i></a>
+            <a class="btn btn-secondary m-0" v-on:click="toggleNosleep"><i class="fas fa-sun"></i></a>
 		</div>
 </template>
 
 <script>
+
+import NoSleep from 'nosleep.js';
+
     export default {
         data() {
             return {
-                fullscreen: false
+                fullscreen: false,
+                nosleep: false,
+
+                noSleeper: new NoSleep()
             }
         },
 
         methods:{
-            toggleFullscreen: function() {
+            toggleFullscreen() {
                 var element = document.documentElement;
                 var isFullscreen = document.webkitIsFullScreen || document.mozFullScreen || false;
                 element.requestFullScreen = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || function () { return false; };
@@ -26,7 +32,19 @@
                     element.requestFullScreen();
                 }
             },
-            fullscreenChanged: function() {
+
+            toggleNosleep() {
+                this.nosleep = !this.nosleep;
+
+                if (this.nosleep) {
+                    this.noSleeper.enable();
+                    console.log("no sleeping here");
+                } else {
+                    this.noSleeper.disable();
+                }
+            },
+
+            fullscreenChanged() {
                 this.fullscreen = !(this.fullscreen);
             }
         },
