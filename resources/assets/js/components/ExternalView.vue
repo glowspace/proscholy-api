@@ -70,7 +70,8 @@ export default {
                     chrome: '>1000',
                 },
                 desktop: {
-                    chrome: '>70'
+                    chrome: '>70',
+                    firefox: ">60",
                 }
             }
         }
