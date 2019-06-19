@@ -69,6 +69,11 @@ class SongController extends Controller
     
     public function edit(SongLyric $song_lyric)
     {
+        if ($song_lyric->isLocked()) {
+            return view('admin.lockerror', compact('song_lyric'));
+        }
+
+        $song_lyric->lock();
         return view('admin.song.edit', compact('song_lyric'));
     }
 
@@ -84,11 +89,5 @@ class SongController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    public function refresh_updating(SongLyric $song_lyric)
-    {
-        $song_lyric->lock(true);
-        return response('OK', 200);
     }
 }

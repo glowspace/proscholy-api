@@ -213,6 +213,11 @@ export default {
         e.returnValue = "";
       }
     };
+
+    // send blocking info 
+    setInterval(() => {
+        $.get( "/refresh-updating/songbook/" + this.presetId );
+    }, 1000);
   },
 
   computed: {

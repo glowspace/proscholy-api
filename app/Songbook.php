@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Traits\Lockable;
 
 /**
  * App\Songbook
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Songbook extends Model
 {
+    use Lockable;
+    
     protected $fillable = ['name', 'shortcut', 'songs_count'];
 
     public function records() : BelongsToMany

@@ -440,6 +440,11 @@ export default {
         e.returnValue = "";
       }
     };
+
+    // send blocking info 
+    setInterval(() => {
+        $.get( "/refresh-updating/song-lyric/" + this.presetId );
+    }, 1000);
   },
 
   computed: {
@@ -606,40 +611,6 @@ export default {
 
       return fieldNames;
     },
-
-    // loggg(a) {
-    //   console.log(a);
-    // },
-
-    // hasIdFilter(model) {
-    //   if (model.id) return true;
-    //   return false;
-    // },
-
-    // hasNoIdFilter(model) {
-    //   return !this.hasIdFilter(model);
-    // },
-
-    // getModelsToCreateBelongsToMany(models) {
-    //   return models.filter(this.hasNoIdFilter);
-    // },
-
-    // getModelsToSyncBelongsToMany(models) {
-    //   return models
-    //     .filter(this.hasIdFilter)
-    //     .map(model => model.id);
-    // },
-
-    // getModelsToSyncBelongsToMany_WithSongbookRecordPivot(models) {
-    //   return models
-    //     .filter(this.hasIdFilter)
-    //     .map(model => {
-    //       return {
-    //         id: model.id,
-    //         number: model.number
-    //       }
-    //     });
-    // },
 
     getModelToSyncBelongsTo(model) {
       let obj = {};

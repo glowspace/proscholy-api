@@ -17,6 +17,11 @@ class SongbookController extends Controller
 
     public function edit(Songbook $songbook)
     {
+        if ($songbook->isLocked()) {
+            return view('admin.lockerror', compact('songbook'));
+        }
+
+        $songbook->lock();
         return view('admin.songbook.edit', compact('songbook'));
     }
 }
