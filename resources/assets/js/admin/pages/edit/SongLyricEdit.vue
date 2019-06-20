@@ -120,6 +120,24 @@
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
+              <number-input 
+                label="Kapodastr"
+                v-model="model.capo"
+                vv-name="input.capo"
+                :min-value="0"
+                :max-value="11"
+                >
+              </number-input>
+              <!-- <v-text-field
+                label="Kapodastr"
+                required
+                type="number"
+                append-outer-icon="add" @click:append-outer="model.capo = parseInt(model.capo,10) + 1" 
+                prepend-icon="remove" @click:prepend="model.capo = parseInt(model.capo,10) - 1"
+                v-model="model.capo"
+                data-vv-name="input.capo"
+                :error-messages="errors.collect('input.capo')"
+              ></v-text-field> -->
               <a
                 id="file_select"
                 class="btn btn-primary"
@@ -284,6 +302,7 @@ import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
 import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
+import NumberInput from "Admin/components/NumberInput.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -355,7 +374,8 @@ export default {
     ItemsComboBox,
     SongLyricsGroup,
     SelectSongGroupDialog,
-    DeleteModelDialog
+    DeleteModelDialog,
+    NumberInput
   },
 
   data() {
@@ -375,7 +395,8 @@ export default {
         externals: [],
         files: [],
         songbook_records: [],
-        song: undefined
+        song: undefined,
+        capo: undefined
       },
       lang_values: [],
       selected_thumbnail_url: undefined,

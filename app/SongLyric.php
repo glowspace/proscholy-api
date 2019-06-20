@@ -57,9 +57,12 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class SongLyric extends Model
 {
-    // Laravel Scout Trait used for full-text searching
+    // Laravel Scout Searchable Trait used for full-text searching
+    use Searchable, 
     // Lockable Trait for enabling to "lock" the model while editing
-    use Searchable, Lockable, SoftDeletes, RevisionableTrait;
+        Lockable, 
+        SoftDeletes, 
+        RevisionableTrait;
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
@@ -88,7 +91,8 @@ class SongLyric extends Model
             'is_approved_by_author',
             'user_creator_id',
             'licence_type',
-            'only_regenschori'
+            'only_regenschori',
+            'capo'
         ];
 
     private static $lang_string_values = [

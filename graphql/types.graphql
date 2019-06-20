@@ -53,6 +53,7 @@ type SongLyric {
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
+    capo: Int
 }
 
 type External {
