@@ -60,6 +60,7 @@ input UpdateSongLyricInput {
     lyrics: String
     song: SongInput
     only_regenschori: Boolean
+    capo: Int
 }
 
 input SongInput {
