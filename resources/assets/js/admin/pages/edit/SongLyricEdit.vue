@@ -504,6 +504,7 @@ export default {
               only_regenschori: this.model.only_regenschori,
               lyrics: this.model.lyrics,
               song: this.model.song,
+              capo: this.model.capo,
               authors: {
                 create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
                 sync: this.model.authors
