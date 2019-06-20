@@ -19,14 +19,13 @@
               data-vv-name="input.shortcut"
               :error-messages="errors.collect('input.shortcut')"
             ></v-text-field>
-
-            <v-text-field
+            
+            <number-input
               label="Počet písní"
-              required
               v-model="model.songs_count"
-              data-vv-name="input.songs_count"
-              :error-messages="errors.collect('input.songs_count')"
-            ></v-text-field>
+              vv-name="input.songs_count"
+              :min-value="0">
+            </number-input>
 
             <p v-if="!model.songs_count">
               Aby bylo možné zde editovat všechny záznamy, je třeba zadat celkový počet písní.
@@ -118,6 +117,7 @@ import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "Fragments/songbook_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
+import NumberInput from "Admin/components/NumberInput.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -151,7 +151,8 @@ export default {
 
   components: {
     ItemsComboBox,
-    DeleteModelDialog
+    DeleteModelDialog,
+    NumberInput
   },
 
   data() {
