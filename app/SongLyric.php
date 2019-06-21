@@ -164,19 +164,6 @@ class SongLyric extends Model
         return self::$lang_string_values;
     }
 
-    public function getSongbookNumbersAttribute()
-    {
-        $arr = [];
-
-        array_push($arr, 'Zp'.$this->id);
-
-        foreach ($this->songbook_records()->public()->get() as $record) {
-            array_push($arr, $record->shortcut.$record->pivot->number);
-        }
-
-        return $arr;
-    }
-
     public function song() : BelongsTo
     {
         return $this->belongsTo(Song::class);

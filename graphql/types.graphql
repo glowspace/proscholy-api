@@ -54,7 +54,6 @@ type SongLyric {
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
     capo: Int
-    songbook_numbers: [String]
     visits: Int
 }
 
