@@ -179,9 +179,7 @@
                   v-bind:class="[autoscroll?'pr-0 fa-stop-circle':'fa-arrow-circle-down']"
                 ></i>
                 <span class="d-none d-sm-inline" v-if="!autoscroll">Rolovat</span>
-              </a>
-              <a class="btn btn-secondary" v-if="autoscroll">-</a>
-              <a class="btn btn-secondary" v-if="autoscroll">+</a>
+              </a><a class="btn btn-secondary" v-if="autoscroll">-</a><a class="btn btn-secondary" v-if="autoscroll">+</a>
             </div>
           </span>
           <a class="btn btn-secondary float-right" v-on:click="controlsToggle">
