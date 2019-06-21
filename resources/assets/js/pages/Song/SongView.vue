@@ -96,7 +96,7 @@
                 <i class="fas fa-times pr-0"></i>
               </a>
               <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
-                <transposition v-model="transposition"></transposition>
+                <transposition v-model="chordSharedStore.transposition"></transposition>
               </div>
 
               <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
@@ -337,7 +337,6 @@ export default {
     // use this only in SongView and Chord component
     // use v-model to bind data from every other component
     return {
-      transposition: 0,
       displayTransp: 0,
       toolsDisplay: false,
       controlsDisplay: true,
