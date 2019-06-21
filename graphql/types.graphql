@@ -54,6 +54,8 @@ type SongLyric {
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
     capo: Int
+    songbook_numbers: [String]
+    visits: Int
 }
 
 type External {
@@ -104,6 +106,7 @@ type Songbook {
     shortcut: String """ todo: max length 6 """
     records: [SongbookRecord] @belongsToMany
     songs_count: Int
+    is_private: Boolean
 }
 
 type SongbookRecord {

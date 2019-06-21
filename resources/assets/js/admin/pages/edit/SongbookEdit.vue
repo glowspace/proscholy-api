@@ -19,6 +19,12 @@
               data-vv-name="input.shortcut"
               :error-messages="errors.collect('input.shortcut')"
             ></v-text-field>
+
+            <v-checkbox
+                class="mt-0"
+                v-model="model.is_private"
+                label="Neveřejný zpěvník (pouze pro interní použití)"
+              ></v-checkbox>
             
             <number-input
               label="Počet písní"
@@ -164,7 +170,8 @@ export default {
         name: undefined,
         shortcut: undefined,
         records: [],
-        songs_count: undefined
+        songs_count: undefined,
+        is_private: undefined
       },
       is_deleted: false,
       records_headers: [
@@ -272,6 +279,7 @@ export default {
               name: this.model.name,
               shortcut: this.model.shortcut,
               songs_count: this.model.songs_count,
+              is_private: this.model.is_private,
               records: {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null

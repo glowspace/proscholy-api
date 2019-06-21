@@ -92,7 +92,8 @@ class SongLyric extends Model
             'user_creator_id',
             'licence_type',
             'only_regenschori',
-            'capo'
+            'capo',
+            'visits'
         ];
 
     private static $lang_string_values = [
@@ -161,6 +162,19 @@ class SongLyric extends Model
     public function getLangStringValuesAttribute()
     {
         return self::$lang_string_values;
+    }
+
+    public function getSongbookNumbersAttribute()
+    {
+        $arr = [];
+
+        array_push($arr, 'Zp'.$this->id);
+
+        foreach ($this->songbook_records()->public()->get() as $record) {
+            array_push($arr, $record->shortcut.$record->pivot->number);
+        }
+
+        return $arr;
     }
 
     public function song() : BelongsTo

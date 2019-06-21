@@ -40,20 +40,4 @@ class SongbookRecord extends Pivot
     {
         return $this->belongsTo(Songbook::class);
     }
-
-    // public function generateTitle()
-    // {
-    //     if (isset($this->song_lyric_id))
-    //     {
-    //         return $this->number . ': ' . $this->songLyric->name;
-    //     }
-    //     elseif (isset($this->placeholder))
-    //     {
-    //         return $this->number . ': ' . $this->placeholder;
-    //     }
-    //     else
-    //     {
-    //         return $this->songbook->name . ': ' . $this->number;
-    //     }
-    // }
 }

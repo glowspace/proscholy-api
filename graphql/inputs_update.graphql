@@ -97,6 +97,7 @@ input UpdateSongbookInput {
     """ this is string because of the validation message """
     songs_count: String @rules(apply: ["integer"], messages: { 
             integer: "Zadejte číselnou hodnotu"})
+    is_private: Boolean
 }
 
 input SyncSongbookRecordsForSongbookRelation {

@@ -29,6 +29,7 @@
                 <a :href="'/admin/songbook/' + props.item.id + '/edit'">{{ props.item.name }}</a>
               </td>
               <td>{{ props.item.shortcut }}</td>
+              <td>{{ props.item.is_private ? 'interní' : 'veřejný' }}</td>
               <td>{{ props.item.records.length }}</td>
               <td>
                 <a href="#" style="color:red" v-on:click="askForm(props.item.id)">Vymazat</a>
@@ -63,6 +64,7 @@ const fetch_items = gql`
                 records {
                   id
                 }
+                is_private
             }
         }`;
 
@@ -85,6 +87,7 @@ export default {
       headers: [
         { text: 'Jméno', value: 'name' },
         { text: 'Zkratka', value: 'shortcut' },
+        { text: 'Typ', value: 'is_private' },
         { text: 'Počet záznamů', value: 'n_records' },
         { text: 'Akce', value: 'action' }
       ],
