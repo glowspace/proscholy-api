@@ -92,7 +92,7 @@
                 }
 
                 let new_i = (chord_i + semitones) % 12;
-                console.log(semitones);
+                
                 return scale[new_i];
             }
         }
