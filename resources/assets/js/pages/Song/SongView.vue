@@ -3,32 +3,60 @@
     <div class="col-lg-9">
       <div class="card card-lyrics" id="cardLyrics">
         <div class="card-header p-1 song-links">
-          <a class="btn btn-secondary" v-if="displayMode == 1" @click="displayMode = 0">
-            <i class="fas fa-arrow-left"></i>
-            <span>Zpět na text</span>
-          </a>
-          <a class="btn btn-secondary" v-if="displayMode == 0" @click="displayMode = 1">
+          <a
+            class="btn btn-secondary"
+            :class="{'chosen': scoresDisplay}"
+            @click="scoresDisplay=!scoresDisplay; translationsDisplay=false"
+          >
             <i class="fas fa-file-alt"></i>
             <span class="d-none d-sm-inline">Noty</span>
           </a>
           <a
             class="btn btn-secondary"
-            v-if="displayMode == 0"
             :class="{'chosen': translationsDisplay}"
-            @click="translationsDisplay=!translationsDisplay"
+            @click="translationsDisplay=!translationsDisplay; scoresDisplay=false"
           >
             <i class="fas fa-language"></i>
             <span class="d-none d-sm-inline">Překlady</span>
           </a>
-          <a class="btn btn-secondary" v-if="displayMode == 0">
+          <a class="btn btn-secondary">
             <i class="fas fa-file-pdf"></i>
             <span class="d-none d-sm-inline">Export</span>
           </a>
           <a class="btn btn-secondary float-right">
             <i class="fas fa-exclamation-triangle p-0"></i>
           </a>
+          <!-- scores -->
+          <div v-show="scoresDisplay">
+            <div class="overflow-auto toolbox toolbox-u">
+              <a
+                class="btn btn-secondary float-right fixed-top position-sticky"
+                v-on:click="scoresDisplay=false"
+              >
+                <i class="fas fa-times pr-0"></i>
+              </a>
+              <table class="table" v-if="!$apollo.loading">
+                <tr v-for="score in scores"><td>{{ score.public_name }}</td></tr>
+              </table>
+              <div v-else>
+                <span v-if="$apollo.loading">
+                  <i>Načítám...</i>
+                </span>
+                <span v-else>
+                  <i>Žádné noty nebyly nalezeny.</i>
+                </span>
+              </div>
+             <!-- <external-view v-if="scores"
+                :url="scores[selectedScoreIndex].url"
+                :media-id="scores[selectedScoreIndex].media_id"
+                :type="scores[selectedScoreIndex].type"
+                :authors="scores[selectedScoreIndex].authors"
+                :height="500"
+              ></external-view> -->
+            </div>
+          </div>
           <!-- translations -->
-          <div v-show="translationsDisplay && displayMode == 0">
+          <div v-show="translationsDisplay">
             <div class="overflow-auto toolbox toolbox-u">
               <a
                 class="btn btn-secondary float-right fixed-top position-sticky"
@@ -41,7 +69,7 @@
           </div>
         </div>
 
-        <div class="card-body py-2" v-if="displayMode === 0">
+        <div class="card-body py-2">
           <div class="d-flex justify-content-between">
               <div id="song-lyrics" style="overflow: hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
@@ -62,29 +90,6 @@
               </div>-->
           </div>
         </div>
-
-        <div v-if="displayMode === 1">
-              <div class="card-body mb-2">
-                <div class="row">
-                  <div class="col-md-4 text-right">
-                    <p>Vyberte noty:</p>
-                  </div>
-                  <div class="col-md-8">
-                    <select v-model="selectedScoreIndex" class="select-themed">
-                      <option v-for="(score, index) in scores" v-bind:key="index" :value="index">{{ score.public_name }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-             <external-view v-if="scores"
-                :url="scores[selectedScoreIndex].url"
-                :media-id="scores[selectedScoreIndex].media_id"
-                :type="scores[selectedScoreIndex].type"
-                :authors="scores[selectedScoreIndex].authors"
-                :height="500"
-              ></external-view>
-          </div>
         
         <div
           class="controls fixed-bottom position-sticky p-1"
@@ -339,10 +344,10 @@ export default {
       toolsDisplay: false,
       controlsDisplay: true,
       mediaDisplay: false,
+      scoresDisplay: false,
       translationsDisplay: false,
       autoscroll: false, 
       fullscreen: false,
-      displayMode: 0, // 0: text, 1: sheet music, 2: translations
       selectedScoreIndex: 0,
 
       chordSharedStore: store
