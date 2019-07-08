@@ -338,7 +338,7 @@ View: Search results
 
     border-radius:    3px 3px 0 0;
 
-    a {
+    a, a:hover {
       color: white;
     }
   }
@@ -562,6 +562,14 @@ body.dark {
 
   .chosen .btn, .btn.chosen, .dark-mode-button {
     background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  a {
+    color: #4dc0b5;
+
+    &:hover {
+      color: #328e85;
+    }
   }
 }
 

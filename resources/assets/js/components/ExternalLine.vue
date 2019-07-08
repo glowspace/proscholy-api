@@ -1,12 +1,17 @@
 <template>
     <tr>
-        <td :class="[{'border-top-0': !key}, 'p-0 align-middle']">
-            <a class="p-2 w-100 d-inline-block" :href="url" target="_blank">
-                <i :class="[typeClass, 'pl-1 pr-2']"></i>{{ name }}
+        <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
+            <a class="p-2 w-100 d-inline-block" :href="viewLink" title="Zobrazit náhled" target="_blank">
+                <i :class="[typeClass, 'pl-1 pr-3']"></i>{{ name }}<i class="far fa-eye pl-3 pr-0"></i>
             </a>
         </td>
-        <td :class="[{'border-top-0': !key}, 'p-2']">
-            <span v-for="(author, authorKey) in authors"><span v-if="authorKey">,</span>
+        <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
+            <a class="p-2" :href="downloadLink" title="Stáhnout">
+                <i class="fas fa-download p-0"></i>
+            </a>
+        </td>
+        <td :class="[{'border-top-0': !index}, 'p-2 pl-md-5']">
+            <span v-for="(author, authorIndex) in authors"><span v-if="authorIndex">,</span>
                 <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
             </span>
         </td>
@@ -18,7 +23,7 @@ import Bowser from "bowser";
 
 export default {
     props: {
-        key: Number,
+        index: Number,
         url: String,
         name: String,
         type: Number,

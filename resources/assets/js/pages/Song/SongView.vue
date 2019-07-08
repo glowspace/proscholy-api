@@ -30,15 +30,16 @@
           <div v-show="scoresDisplay">
             <div class="overflow-auto toolbox toolbox-u">
               <a
-                class="btn btn-secondary float-right fixed-top position-sticky"
+                class="btn btn-secondary float-right fixed-top position-sticky cross"
                 v-on:click="scoresDisplay=false"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="row" v-if="!$apollo.loading">
-                <table class="table m-0">
+              <div class="row ml-0" v-if="!$apollo.loading">
+                <table class="table m-0 w-auto">
                   <external-line v-for="(score, index) in scores"
-                  :key="index"
+                  v-bind:key="index"
+                  :index="index"
                   :url="score.url"
                   :name="score.public_name"
                   :type="score.type"
@@ -54,20 +55,13 @@
                   <i>Žádné noty nebyly nalezeny.</i>
                 </span>
               </div>
-             <!-- <external-view v-if="scores"
-                :url="scores[selectedScoreIndex].url"
-                :media-id="scores[selectedScoreIndex].media_id"
-                :type="scores[selectedScoreIndex].type"
-                :authors="scores[selectedScoreIndex].authors"
-                :height="500"
-              ></external-view> -->
             </div>
           </div>
           <!-- translations -->
           <div v-show="translationsDisplay">
             <div class="overflow-auto toolbox toolbox-u">
               <a
-                class="btn btn-secondary float-right fixed-top position-sticky"
+                class="btn btn-secondary float-right fixed-top position-sticky cross"
                 v-on:click="translationsDisplay=false"
               >
                 <i class="fas fa-times pr-0"></i>
@@ -129,12 +123,12 @@
           <div v-show="mediaDisplay && controlsDisplay">
             <div class="overflow-auto media-card toolbox">
               <a
-                class="btn btn-secondary float-right fixed-top position-sticky"
+                class="btn btn-secondary float-right fixed-top position-sticky cross"
                 v-on:click="mediaDisplay=false"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="row pt-2" v-if="hasExternalsOrFiles && !$apollo.loading">
+              <div class="row ml-0 pt-2" v-if="hasExternalsOrFiles && !$apollo.loading">
                 <div class="col-md-6" v-for="external in mediaExternals" v-bind:key="external.id">
                   <external-view
                     :url="external.url"
@@ -247,6 +241,10 @@
 </template>
 
 <style lang="scss">
+.cross {
+  z-index: 5;
+}
+
 .toolbox {
   padding: 0.25rem !important;
   margin-bottom: 0.25rem !important;
