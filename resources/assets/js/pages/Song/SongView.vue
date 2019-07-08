@@ -37,19 +37,13 @@
               </a>
               <div class="row" v-if="!$apollo.loading">
                 <table class="table m-0">
-                  <tr v-for="(score, index) in scores" v-bind:key="index">
-                    <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
-                      <a class="p-2" :href="score.url" target="_blank"><i class="fas fa-file-pdf p-0"></i></a>
-                    </td>
-                    <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
-                      <a class="py-2 pr-2 w-100 d-inline-block" :href="score.url" target="_blank">{{ score.public_name }}</a>
-                    </td>
-                    <td :class="[{'border-top-0': !index}, 'p-2']">
-                      <span v-for="(author, indexA) in score.authors" v-bind:key="author.id"><span v-if="indexA">,</span>
-                        <a :href="author.public_url">{{ author.name }}</a>
-                      </span>
-                    </td>
-                  </tr>
+                  <external-line v-for="(score, index) in scores"
+                  :key="index"
+                  :url="score.url"
+                  :name="score.public_name"
+                  :type="score.type"
+                  :authors="score.authors"
+                  ></external-line>
                 </table>
               </div>
               <div class="row" v-else>
@@ -302,6 +296,7 @@ import ChordSharpFlat from "./ChordSharpFlat";
 import RightControls from "./RightControls";
 import Transposition from "./Transposition";
 import ExternalView from "Public/components/ExternalView.vue";
+import ExternalLine from "Public/components/ExternalLine.vue";
 
 // base_url = document.querySelector('#baseUrl').getAttribute('value');
 
@@ -346,6 +341,7 @@ export default {
     ChordMode,
     ChordSharpFlat,
     ExternalView,
+    ExternalLine,
     RightControls,
     Transposition
   },

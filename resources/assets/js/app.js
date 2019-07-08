@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('chord', require('Public/pages/Song/Chord.vue'));
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
+Vue.component('external-line', require('Public/components/ExternalLine.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
 // Vue.component('right-controls', require('Public/components/RightControls.vue'));
 // Vue.component('media-opener', require('Public/components/MediaOpener.vue'));
