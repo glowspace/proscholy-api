@@ -6,8 +6,8 @@
           <a
             v-if="renderScores"
             class="btn btn-secondary"
-            :class="{'chosen': scoresDisplay}"
-            @click="scoresDisplay=!scoresDisplay; translationsDisplay=false"
+            :class="{'chosen': (topMode == 1)}"
+            @click="topMode=(topMode==1)?0:1"
           >
             <i class="fas fa-file-alt"></i>
             <span class="d-none d-sm-inline">Noty</span>
@@ -15,8 +15,8 @@
           <a
             v-if="renderTranslations"
             class="btn btn-secondary"
-            :class="{'chosen': translationsDisplay}"
-            @click="translationsDisplay=!translationsDisplay; scoresDisplay=false"
+            :class="{'chosen': (topMode == 2)}"
+            @click="topMode=(topMode==2)?0:2"
           >
             <i class="fas fa-language"></i>
             <span class="d-none d-sm-inline">Překlady</span>
@@ -29,11 +29,11 @@
             <i class="fas fa-exclamation-triangle p-0"></i>
           </a>
           <!-- scores -->
-          <div v-show="scoresDisplay">
+          <div v-show="topMode==1">
             <div class="overflow-auto toolbox toolbox-u">
               <a
                 class="btn btn-secondary float-right fixed-top position-sticky cross"
-                v-on:click="scoresDisplay=false"
+                v-on:click="topMode=0"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
@@ -60,11 +60,11 @@
             </div>
           </div>
           <!-- translations -->
-          <div v-show="translationsDisplay">
+          <div v-show="topMode==2">
             <div class="overflow-auto toolbox toolbox-u">
               <a
                 class="btn btn-secondary float-right fixed-top position-sticky cross"
-                v-on:click="translationsDisplay=false"
+                v-on:click="topMode=0"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
@@ -99,9 +99,9 @@
           class="controls fixed-bottom position-sticky p-1"
           v-bind:class="{'card-footer': controlsDisplay}"
         >
-          <div v-show="toolsDisplay && controlsDisplay">
+          <div v-show="bottomMode==1 && controlsDisplay">
             <div class="overflow-auto toolbox">
-              <a class="btn btn-secondary float-right" v-on:click="toolsDisplay=false">
+              <a class="btn btn-secondary float-right" v-on:click="bottomMode=0">
                 <i class="fas fa-times pr-0"></i>
               </a>
               <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
@@ -122,11 +122,11 @@
             </div>
           </div>
           <!-- media -->
-          <div v-show="mediaDisplay && controlsDisplay">
+          <div v-show="bottomMode==2 && controlsDisplay">
             <div class="overflow-auto media-card toolbox">
               <a
                 class="btn btn-secondary float-right fixed-top position-sticky cross"
-                v-on:click="mediaDisplay=false"
+                v-on:click="bottomMode=0"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
@@ -162,8 +162,8 @@
           <span v-show="controlsDisplay">
             <a
               class="btn btn-secondary"
-              v-bind:class="{ 'chosen': toolsDisplay }"
-              v-on:click="toolsDisplay=!toolsDisplay; mediaDisplay=false"
+              v-bind:class="{ 'chosen': bottomMode==1 }"
+              v-on:click="bottomMode=(bottomMode==1)?0:1"
             >
               <i class="fas fa-sliders-h"></i>
               <span class="d-none d-sm-inline">Nástroje</span>
@@ -171,8 +171,8 @@
             <a
               class="btn btn-secondary"
               v-if="renderMedia"
-              v-bind:class="{ 'chosen': mediaDisplay }"
-              v-on:click="mediaDisplay=!mediaDisplay; toolsDisplay=false"
+              v-bind:class="{ 'chosen': bottomMode==2 }"
+              v-on:click="bottomMode=(bottomMode==2)?0:2"
             >
               <i class="fas fa-music"></i>
               <span class="d-none d-sm-inline">Nahrávky</span>
@@ -351,11 +351,9 @@ export default {
     // use v-model to bind data from every other component
     return {
       displayTransp: 0,
-      toolsDisplay: false,
       controlsDisplay: true,
-      mediaDisplay: false,
-      scoresDisplay: false,
-      translationsDisplay: false,
+      bottomMode: 0,
+      topMode: 0,
       autoscroll: false, 
       fullscreen: false,
       selectedScoreIndex: 0,
