@@ -4,6 +4,7 @@
       <div class="card card-lyrics" id="cardLyrics">
         <div class="card-header p-1 song-links">
           <a
+            v-if="renderScores"
             class="btn btn-secondary"
             :class="{'chosen': scoresDisplay}"
             @click="scoresDisplay=!scoresDisplay; translationsDisplay=false"
@@ -12,6 +13,7 @@
             <span class="d-none d-sm-inline">Noty</span>
           </a>
           <a
+            v-if="renderTranslations"
             class="btn btn-secondary"
             :class="{'chosen': translationsDisplay}"
             @click="translationsDisplay=!translationsDisplay; scoresDisplay=false"
@@ -332,7 +334,7 @@ const FETCH_SONG_LYRIC = gql`
 `;
 
 export default {
-  props: ["song-id", "render-media"],
+  props: ["song-id", "render-media", "render-scores", "render-translations"],
 
   components: {
     FontSizer,

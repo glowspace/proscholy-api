@@ -23,7 +23,12 @@
             </div>
         </div>
 
-        <song-view song-id="{{$song_l->id}}" render-media="{{ ($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)?true:false }}">
+        <song-view
+            song-id="{{$song_l->id}}"
+            render-media="{{ ($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())?true:false }}"
+            render-scores="{{ ($song_l->scoresCount())?true:false }}"
+            render-translations="{{ ($song_l->song->song_lyrics()->count() > 1)?true:false }}"
+            >
             {!! $song_l->getFormattedLyrics() !!}
         </song-view>
 
