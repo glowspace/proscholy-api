@@ -71,9 +71,9 @@
           </div>
         </div>
 
-        <div class="card-body py-2">
+        <div class="card-body py-2 pl-3">
           <div class="d-flex justify-content-between">
-              <div id="song-lyrics" style="overflow-y: hidden;">
+              <div id="song-lyrics" class="px-1 overflow-hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
                 <slot></slot>
               </div>
