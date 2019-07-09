@@ -497,6 +497,13 @@ export default {
       return mapping[type] || type;
     },
   },
+
+  mounted() {
+    if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "" && this.renderMedia) {
+      document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
+      this.bottomMode = 2;
+    }
+  }
 };
 </script>
 
