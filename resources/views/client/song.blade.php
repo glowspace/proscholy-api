@@ -59,7 +59,7 @@
         </div>
 
         @if (Auth::check())
-        <div class="admin-controls">
+        <div class="admin-controls d-none d-sm-block">
             <a class="btn btn-secondary" href="{{route('admin.dashboard')}}">
                 <i class="fas fa-columns"></i>
             </a>
