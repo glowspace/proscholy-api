@@ -79,14 +79,26 @@ input::placeholder {
   padding: 0 0.5rem;
 }
 
-.navbar-admin {
-  @include media-breakpoint-down(md) {
-    padding: 0 !important;
-    min-height: 0;
-
-    span {
-      display: none;
+.admin-controls {
+  position: fixed;
+  top: 30vh;
+  left: 0.3125rem;
+  z-index: 20;
+  a:nth-of-type(odd) {
+    i {
+      width: 16px;
     }
+  }
+  a:nth-of-type(odd) + a {
+    padding-left: 5px;
+    padding-right: 10px;
+    display: none;
+    background: rgba(248, 250, 252, 0.8);
+    border-radius: 10px;
+  }
+
+  a:nth-of-type(odd):hover + a {
+    display: inline-block;
   }
 }
 

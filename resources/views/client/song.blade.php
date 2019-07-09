@@ -57,5 +57,35 @@
                 </div>
             </div>
         </div>
+
+        @if (Auth::check())
+        <div class="admin-controls">
+            <a class="btn btn-secondary" href="{{route('admin.dashboard')}}">
+                <i class="fas fa-columns"></i>
+            </a>
+            <a class="btn btn-secondary" href="#">Nástěnka</a>
+            <br>
+
+            @if (App\SongLyric::restricted()->where('id', $song_l->id)->count() > 0)
+                <a class="btn btn-secondary" href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-secondary" href="#">Upravit písničku</a>
+                <br>
+
+                <a class="btn btn-secondary" href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
+                    <i class="fas fa-link"></i>
+                </a>
+                <a class="btn btn-secondary" href="#">Přidat odkaz</a>
+                <br>
+
+                <a class="btn btn-secondary" href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
+                    <i class="fas fa-file"></i>
+                </a>
+                <a class="btn btn-secondary" href="#">Nahrát soubor</a>
+            </div>
+            @endif
+        </div>
+        @endif
     </div>
 @endsection
