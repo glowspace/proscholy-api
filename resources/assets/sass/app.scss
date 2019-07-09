@@ -95,6 +95,9 @@ input::placeholder {
     display: none;
     background: rgba(248, 250, 252, 0.8);
     border-radius: 10px;
+    .dark & {
+      background: rgba(17, 17, 17, 0.8);
+    }
   }
 
   a:nth-of-type(odd):hover + a {
