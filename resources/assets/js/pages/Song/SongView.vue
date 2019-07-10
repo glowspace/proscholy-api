@@ -77,7 +77,7 @@
                   <tr><th class="border-top-0">Název</th><th class="border-top-0">Typ</th><th class="border-top-0">Autor (překladu)</th></tr>
                   <tr v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 0)" >
                     <td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == song_lyric.name)}">{{ translation.name }}</a></td>
-                    <td>originál</td>
+                    <td><span class="d-none d-sm-inline">originál</span><span class="d-sm-none">O</span></td>
                     <td>
                       <span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
@@ -86,7 +86,7 @@
                   </tr>
                   <tr v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 2)" >
                     <td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == song_lyric.name)}">{{ translation.name }}</a></td>
-                    <td>autorizovaný překlad</td>
+                    <td><span class="d-none d-sm-inline">autorizovaný překlad</span><span class="d-sm-none">AP</span></td>
                     <td>
                       <span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
@@ -95,7 +95,7 @@
                   </tr>
                   <tr v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 1)" >
                     <td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == song_lyric.name)}">{{ translation.name }}</a></td>
-                    <td>překlad</td>
+                    <td><span class="d-none d-sm-inline">překlad</span><span class="d-sm-none">P</span></td>
                     <td>
                       <span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
@@ -255,10 +255,10 @@
       </div>
     </div>
     <div class="col-lg-3" v-if="renderMedia || renderScores">
-      <div class="card card-blue mb-3" v-on:click="topMode=1" v-if="renderScores">
+      <div class="card card-blue mb-3 d-none d-lg-flex" v-on:click="topMode=1" v-if="renderScores">
         <slot name="score"></slot>
       </div>
-      <div class="card card-green mb-3" v-on:click="bottomMode=2" v-if="renderMedia">
+      <div class="card card-green mb-3 d-none d-lg-flex" v-on:click="bottomMode=2" v-if="renderMedia">
         <slot name="media"></slot>
       </div>
     </div>
