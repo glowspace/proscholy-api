@@ -231,7 +231,7 @@
                   v-bind:class="[autoscroll?'pr-0 fa-stop-circle':'fa-arrow-circle-down']"
                 ></i>
                 <span class="d-none d-sm-inline" v-if="!autoscroll">Rolovat</span>
-              </a><a class="btn btn-secondary" v-if="autoscroll">-</a><a class="btn btn-secondary" v-if="autoscroll">+</a>
+              </a><a class="btn btn-secondary" v-if="autoscroll" @click="autoscrollNum--" :class="{ 'disabled': autoscrollNum==1 }">-</a><a class="btn btn-secondary" v-if="autoscroll" @click="autoscrollNum++" :class="{ 'disabled': autoscrollNum==20 }">+</a>
             </div>
           </span>
           <a class="btn btn-secondary float-right" v-on:click="controlsToggle">
@@ -392,12 +392,23 @@ export default {
       controlsDisplay: true,
       bottomMode: 0,
       topMode: 0,
-      autoscroll: false, 
+      autoscroll: false,
+      autoscrollNum: 10,
+      scrolldelay: null,
       fullscreen: false,
       selectedScoreIndex: 0,
 
       chordSharedStore: store
     }
+  },
+
+  watch: {
+    autoscroll: function () {
+      this.setScroll(this.autoscrollNum, this.autoscroll);
+    },
+    autoscrollNum: function () {
+      this.setScroll(this.autoscrollNum, this.autoscroll);
+    },
   },
 
   apollo: {
@@ -479,6 +490,13 @@ export default {
       };
 
       return mapping[type] || type;
+    },
+
+    setScroll: function(num, condition) {
+      clearInterval(this.scrolldelay);
+      if(num > 0 && num < 21 && condition) {
+        this.scrolldelay = setInterval(function() {window.scrollBy(0, 1);}, (21-num)*10);
+      }
     },
   },
 
