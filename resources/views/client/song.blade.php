@@ -30,6 +30,37 @@
             render-translations="{{ ($song_l->song->song_lyrics()->count() > 1)?true:false }}"
             >
             {!! $song_l->getFormattedLyrics() !!}
+            <template v-slot:score>
+                @if($song_l->scoreFiles()->count() + $song_l->scoreExternals()->count())
+                <div class="card-header media-opener py-2 rounded">
+                    <i class="fas fa-file-alt"></i>
+                    Zobrazit notové zápisy
+                </div>
+                @endif
+            </template>
+            <template v-slot:media>
+                @if($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())
+                    <div class="card-header media-opener py-2">
+                        <i class="fas fa-music"></i>
+                        Dostupné nahrávky a videa
+                    </div>
+                    @if($song_l->spotifyTracks()->count() > 0)
+                    <div class="media-opener"><i class="fab fa-spotify text-success"></i> Spotify</div>
+                    @endif
+
+                    @if($song_l->soundcloudTracks()->count() > 0)
+                    <div class="media-opener"><i class="fab fa-soundcloud" style="color: orangered;"></i> SoundCloud</div>
+                    @endif
+
+                    @if($song_l->audioFiles()->count() > 0)
+                    <div class="media-opener"><i class="fas fa-music"></i> MP3</div>
+                    @endif
+
+                    @if($song_l->youtubeVideos()->count() > 0)
+                    <div class="media-opener"><i class="fab fa-youtube text-danger"></i> YouTube</div>
+                    @endif
+                @endif
+            </template>
         </song-view>
 
         <div class="row" id="preloadPlaceholder">

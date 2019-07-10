@@ -22,8 +22,12 @@
             <span class="d-none d-sm-inline">Překlady</span>
           </a>
           <a class="btn btn-secondary">
-            <i class="fas fa-file-pdf"></i>
+            <i class="fas fa-file-export"></i>
             <span class="d-none d-sm-inline">Export</span>
+          </a>
+          <a class="btn btn-secondary">
+            <i class="far fa-star"></i>
+            <span class="d-none d-sm-inline">Hvězdička</span>
           </a>
           <a class="btn btn-secondary float-right">
             <i class="fas fa-exclamation-triangle p-0"></i>
@@ -250,34 +254,14 @@
         </div>
       </div>
     </div>
-    <!-- <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-3" }}">
-                @if($song_l->scoreFiles()->count() > 0)
-                    {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
-                    @component('client.components.media_widget', ['source' => $song_l->scoreFiles()->first()])@endcomponent
-                @elseif ($song_l->scoreExternals()->count() > 0)
-                    @component('client.components.media_widget', ['source' => $song_l->scoreExternals()->first()])@endcomponent
-                @endif
-
-                @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
-                    <media-opener>
-                    @if($song_l->spotifyTracks()->count() > 0)
-                    <div class="media-opener"><i class="fab fa-spotify text-success"></i> Spotify</div>
-                    @endif
-
-                    @if($song_l->soundcloudTracks()->count() > 0)
-                    <div class="media-opener"><i class="fab fa-soundcloud" style="color: orangered;"></i> SoundCloud</div>
-                    @endif
-
-                    @if($song_l->audioFiles()->count() > 0)
-                    <div class="media-opener"><i class="fas fa-music"></i> MP3</div>
-                    @endif
-
-                    @if($song_l->youtubeVideos()->count() > 0)
-                    <div class="media-opener"><i class="fab fa-youtube text-danger"></i> YouTube</div>
-                    @endif
-                    </media-opener>
-                @endif
-    </div>-->
+    <div class="col-lg-3" v-if="renderMedia || renderScores">
+      <div class="card card-blue mb-3" v-on:click="topMode=1" v-if="renderScores">
+        <slot name="score"></slot>
+      </div>
+      <div class="card card-green mb-3" v-on:click="bottomMode=2" v-if="renderMedia">
+        <slot name="media"></slot>
+      </div>
+    </div>
   </div>
 </template>
 
