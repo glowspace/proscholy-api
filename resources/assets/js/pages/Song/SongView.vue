@@ -501,9 +501,11 @@ export default {
   },
 
   mounted() {
-    if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "" && this.renderMedia) {
+    if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "") {
       document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
-      this.bottomMode = 2;
+      if(this.renderMedia) {
+        this.bottomMode = 2;
+      }
     }
   }
 };
