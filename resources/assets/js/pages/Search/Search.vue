@@ -9,31 +9,18 @@
 
         <div class="row">
             <div class="col-sm-8">
-                <div class="card card-blue">
-                    <div class="card-header">Písně</div>
-                    <div class="card-body">
+                <div class="card">
+                    <div class="card-body p-0">
                         <SongsList 
                             v-bind:search-string="search_string"
                             v-bind:selected-tags="selected_tags"
                         ></SongsList>
                     </div>
                 </div>
-
-                <div class="card card-green">
-                    <div class="card-header">Autoři</div>
-                    <div class="card-body">
-                        <AuthorsList v-bind:search-string="search_string"></AuthorsList>
-                    </div>
-                </div>
+                <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
-
             <div class="col-sm-4">
-                <div class="card card-red">
-                    <div class="card-header">Možnosti vyhledávání</div>
-                    <div class="card-body">
-                        <Tags v-model="selected_tags"></Tags>
-                    </div>
-                </div>
+                <Tags v-model="selected_tags"></Tags>
             </div>
         </div>
     </div>
