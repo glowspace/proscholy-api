@@ -10,7 +10,7 @@
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
                     </span>
                 </td>
-                <td class="no-left-padding text-right text-uppercase small" :class="{'border-top-0': !index}">
+                <td class="no-left-padding text-right text-uppercase small align-middle" :class="{'border-top-0': !index}">
                     <span :class="{'text-very-muted': !song_lyric.lyrics}" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang }}</span>
                 </td>
                 <td style="width: 10px;"
