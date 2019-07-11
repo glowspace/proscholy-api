@@ -74,34 +74,25 @@
               </a>
               <div class="row ml-0" v-if="!$apollo.loading">
                 <table class="table m-0 w-auto">
-                  <tr><th class="border-top-0">Název</th><th class="border-top-0">Typ</th><th class="border-top-0">Autor (překladu)</th></tr>
-                  <tr v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 0)" >
-                    <td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == song_lyric.name)}">{{ translation.name }}</a></td>
-                    <td><span class="d-none d-sm-inline">originál</span><span class="d-sm-none">O</span></td>
-                    <td>
-                      <span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
-                        <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 2)" >
-                    <td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == song_lyric.name)}">{{ translation.name }}</a></td>
-                    <td><span class="d-none d-sm-inline">autorizovaný překlad</span><span class="d-sm-none">AP</span></td>
-                    <td>
-                      <span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
-                        <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 1)" >
-                    <td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == song_lyric.name)}">{{ translation.name }}</a></td>
-                    <td><span class="d-none d-sm-inline">překlad</span><span class="d-sm-none">P</span></td>
-                    <td>
-                      <span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
-                        <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
-                      </span>
-                    </td>
-                  </tr>
+                  <tr><th class="border-top-0"></th><th class="border-top-0">Název</th><th class="border-top-0">Typ</th><th class="border-top-0">Autor (překladu)</th></tr>
+                  <translation-line
+                  v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 0)"
+                  :translation="translation"
+                  :original_name="song_lyric.name"
+                  >
+                  </translation-line>
+                  <translation-line
+                  v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 2)"
+                  :translation="translation"
+                  :original_name="song_lyric.name"
+                  >
+                  </translation-line>
+                  <translation-line
+                  v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 1)"
+                  :translation="translation"
+                  :original_name="song_lyric.name"
+                  >
+                  </translation-line>
                 </table>
               </div>
               <div class="row" v-else>
@@ -318,6 +309,7 @@ import ChordSharpFlat from "./ChordSharpFlat";
 // import MediaOpener from './MediaOpener';
 import RightControls from "./RightControls";
 import Transposition from "./Transposition";
+import TranslationLine from "./TranslationLine.vue";
 import ExternalView from "Public/components/ExternalView.vue";
 import ExternalLine from "Public/components/ExternalLine.vue";
 
@@ -365,6 +357,7 @@ const FETCH_SONG_LYRIC = gql`
             public_url
           }
           lang
+          lang_string
         }
       }
     }
@@ -381,7 +374,8 @@ export default {
     ExternalView,
     ExternalLine,
     RightControls,
-    Transposition
+    Transposition,
+    TranslationLine
   },
 
   data() {

@@ -10,8 +10,16 @@
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
                     </span>
                 </td>
-                <td class="no-left-padding text-right" :class="{'border-top-0': !index}">
-                    <span :class="{'text-very-muted': !song_lyric.lyrics}">{{ song_lyric.lang }}</span>
+                <td class="no-left-padding text-right text-uppercase small" :class="{'border-top-0': !index}">
+                    <span :class="{'text-very-muted': !song_lyric.lyrics}" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang }}</span>
+                </td>
+                <td style="width: 10px;"
+                    class="no-left-padding" :class="{'border-top-0': !index}">
+                    <i v-if="song_lyric.lyrics"
+                       class="fas fa-align-left text-secondary"
+                       title="U této písně je zaznamenán text."></i>
+                    <i v-else
+                       class="fas fa-align-left text-very-muted"></i>
                 </td>
                 <td style="width: 10px;"
                     class="no-left-padding" :class="{'border-top-0': !index}">
@@ -61,6 +69,7 @@
                 name,
                 public_url,
                 lang,
+                lang_string,
                 scoreExternals: externals(type: 4){id},
                 scoreFiles: files(type: 3){id},
                 youtubeVideos: externals(type: 3){id},
