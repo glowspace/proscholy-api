@@ -1,4 +1,4 @@
-@extends('layout.client-sidepage')
+@extends('layout.client')
 
 @section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
 
