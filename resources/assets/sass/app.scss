@@ -198,13 +198,23 @@ Home page specific elements
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  .card {
+    opacity: 0.9;
+  }
+}
+
+.home .home-init {
+  .col-sm-4 {
+    display: none;
+  }
 }
 
 .background-home {
   background-image:      url('/img/bg_center.svg');
-  background-position-x: center;
-  background-size:       cover;
   background-repeat:     no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   flex: 1;
   // min-height: 450px;
 
@@ -257,60 +267,38 @@ Home page specific elements
   }
 }
 
+$search-wrapper-height: 47px;
+
 .search-wrapper {
-  text-align: center;
+  border-radius: 8px;
+}
 
-  position:   relative;
-  margin-top: 1px;
+.search-home {
+  display:          inline-block;
+  padding:          10px 20px;
+  font-size:        16px;
+  height:           $search-wrapper-height;
+  width:            calc(100% - 70px);
+  border:           none;
+  background-color: white;
+  border-radius:    8px 0 0 8px;
 
-  $search-wrapper-height: 47px;
-  height:     $search-wrapper-height;
-
-  .search-home {
-    display:          inline-block;
-
-    width:            518px;
-
-    padding:          10px 20px;
-    margin-right:     7px;
-    margin-left:      18px;
-
-    border:           none;
-
-    background-color: white;
-    border-radius:    8px;
-    font-size:        16px;
-
-    &:focus {
-      outline: none;
-    }
-
-    @include media-breakpoint-down(md) {
-      width:  calc(100% - 30px);
-
-      margin: 15px;
-    }
+  &:focus {
+    outline: none;
   }
+}
 
-  .search-submit {
-    width:            70px;
-    height:           $search-wrapper-height;
+.search-submit {
+  cursor:           pointer;
+  transition:       0.3s;
+  height:           $search-wrapper-height;
+  width:            70px;
+  border:           none;
+  background-color: white;
+  border-radius:    0 8px 8px 0;
 
-    background-color: white;
-    border-radius:    8px;
-    border:           none;
-
-    cursor:           pointer;
-
-    transition:       0.3s;
-
-    &:hover {
-      background-color: #d4d4d4;
-    }
-
-    @include media-breakpoint-down(md) {
-      display: none;
-    }
+  &:hover {
+    background-color: #d4d4d4;
   }
 }
 

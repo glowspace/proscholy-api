@@ -2,14 +2,10 @@
 
 @section('wrapper-classes', 'home')
 
-@section('navbar')
-    @include('client.components.menu_main')
-@endsection
-
 @section('content')
     <div class="background-home">
         <div class="container-fluid">
-            <div class="logo-wrapper ">
+            <div class="logo-wrapper">
                 <div class="logo"></div>
                 <span class="caption noselect">Zpěvník</span>
             </div>

@@ -1,16 +1,26 @@
 <template>
-    <div>
-        <h1>Vyhledávání</h1>
-
-        <input class="form-control search-basic mb-2"
-                placeholder="Zadejte název písně, část textu nebo jméno autora"
-                v-model="search_string"
-                autofocus>
-
+    <div :class="{'home-init': init}">
+        <!-- <div class="logo-wrapper">
+            <div class="logo"></div>
+            <span class="caption noselect">Zpěvník</span>
+        </div> -->
+        <div class="row fixed-top position-sticky mt-n4">
+            <div class="col-sm-8 pt-5 pb-3">
+                <div class="search-wrapper shadow">
+                    <input class="search-home"
+                        placeholder="Zadejte název písně, část textu nebo jméno autora"
+                        v-model="search_string"
+                        autofocus><button type="button"
+                            class="search-submit" @click="init=false">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-8">
                 <div class="card">
-                    <div class="card-body p-0">
+                    <div class="card-body p-0" v-if="!init">
                         <SongsList 
                             v-bind:search-string="search_string"
                             v-bind:selected-tags="selected_tags"
@@ -40,7 +50,8 @@ export default {
     data() {
         return {
             search_string: "",
-            selected_tags: {}
+            selected_tags: {},
+            init: true
         }
     },
 
