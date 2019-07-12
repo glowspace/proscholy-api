@@ -204,6 +204,13 @@ Home page specific elements
   }
 }
 
+.home .home-init {
+  .search-balance {
+    max-width: 0;
+    padding: 0;
+  }
+}
+
 .home .home-afterinit {
   .logo-wrapper {
     opacity: 0;
@@ -215,6 +222,7 @@ Home page specific elements
 
 .background-home {
   background-image:      url('/img/bg_center.svg');
+  background-color: #da3926;
   background-repeat:     no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -279,6 +287,10 @@ $search-wrapper-height: 47px;
 
 .search-wrapper {
   border-radius: 8px;
+}
+
+.search-balance, .search-column {
+  transition: 0.4s;
 }
 
 .search-home {

@@ -5,7 +5,7 @@
             <span class="caption noselect">Zpěvník</span>
         </div>
         <div class="row fixed-top position-sticky mt-n4 justify-content-center">
-            <div class="col-md-8 px-1 pt-5 pb-3">
+            <div :class="[{'col-lg-6': init}, 'col-md-8 px-1 pt-5 pb-3 search-column']">
                 <div class="search-wrapper shadow">
                     <input class="search-home"
                         placeholder="Zadejte název písně, část textu nebo jméno autora"
@@ -19,7 +19,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-4" v-bind:style="{ maxWidth: (init?0:''), transition: '0.4s' }"></div>
+            <div class="col-md-4 search-balance"></div>
         </div>
         <div class="row" v-if="!init">
             <div class="col-md-8">
