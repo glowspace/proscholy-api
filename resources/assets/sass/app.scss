@@ -79,14 +79,29 @@ input::placeholder {
   padding: 0 0.5rem;
 }
 
-.navbar-admin {
-  @include media-breakpoint-down(md) {
-    padding: 0 !important;
-    min-height: 0;
-
-    span {
-      display: none;
+.admin-controls {
+  position: fixed;
+  top: 30vh;
+  left: 0.3125rem;
+  z-index: 20;
+  a:nth-of-type(odd) {
+    i {
+      width: 16px;
     }
+  }
+  a:nth-of-type(odd) + a {
+    padding-left: 5px;
+    padding-right: 10px;
+    display: none;
+    background: rgba(248, 250, 252, 0.8);
+    border-radius: 10px;
+    .dark & {
+      background: rgba(17, 17, 17, 0.8);
+    }
+  }
+
+  a:nth-of-type(odd):hover + a {
+    display: inline-block;
   }
 }
 
@@ -183,13 +198,26 @@ Home page specific elements
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  .card {
+    opacity: 0.9;
+  }
+}
+
+.home .home-afterinit {
+  .logo-wrapper {
+    opacity: 0;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .background-home {
   background-image:      url('/img/bg_center.svg');
-  background-position-x: center;
-  background-size:       cover;
   background-repeat:     no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   flex: 1;
   // min-height: 450px;
 
@@ -200,10 +228,15 @@ Home page specific elements
 
 .logo-wrapper {
   text-align:  center;
-  padding-top: 130px;
+  margin-top: 130px;
+  transition: 0.5s;
+  height: 160px;
+  min-width: 350px;
 
   @include media-breakpoint-down(sm) {
-    padding-top: 110px;
+    margin-top: 110px;
+    margin-bottom: -50px;
+    height: 90px;
   }
 
   .logo {
@@ -242,60 +275,42 @@ Home page specific elements
   }
 }
 
+$search-wrapper-height: 47px;
+
 .search-wrapper {
-  text-align: center;
+  border-radius: 8px;
+}
 
-  position:   relative;
-  margin-top: 1px;
+.search-home {
+  display:          inline-block;
+  padding:          10px 20px;
+  font-size:        16px;
+  height:           $search-wrapper-height;
+  width:            calc(100% - 70px);
+  border:           none;
+  background-color: white;
+  border-radius:    8px 0 0 8px;
+  border: 1px #ccc solid;
+  border-right: 0;
 
-  $search-wrapper-height: 47px;
-  height:     $search-wrapper-height;
-
-  .search-home {
-    display:          inline-block;
-
-    width:            518px;
-
-    padding:          10px 20px;
-    margin-right:     7px;
-    margin-left:      18px;
-
-    border:           none;
-
-    background-color: white;
-    border-radius:    8px;
-    font-size:        16px;
-
-    &:focus {
-      outline: none;
-    }
-
-    @include media-breakpoint-down(md) {
-      width:  calc(100% - 30px);
-
-      margin: 15px;
-    }
+  &:focus {
+    outline: none;
   }
+}
 
-  .search-submit {
-    width:            70px;
-    height:           $search-wrapper-height;
+.search-submit {
+  cursor:           pointer;
+  transition:       0.3s;
+  height:           $search-wrapper-height;
+  width:            70px;
+  border:           none;
+  background-color: white;
+  border-radius:    0 8px 8px 0;
+  border: 1px #ccc solid;
+  border-left: 0;
 
-    background-color: white;
-    border-radius:    8px;
-    border:           none;
-
-    cursor:           pointer;
-
-    transition:       0.3s;
-
-    &:hover {
-      background-color: #d4d4d4;
-    }
-
-    @include media-breakpoint-down(md) {
-      display: none;
-    }
+  &:hover {
+    background-color: #d4d4d4;
   }
 }
 
@@ -338,7 +353,7 @@ View: Search results
 
     border-radius:    3px 3px 0 0;
 
-    a {
+    a, a:hover {
       color: white;
     }
   }
@@ -549,7 +564,21 @@ body.dark {
   }
 
   .background-home {
-    filter: brightness(50%);
+    background: transparent;
+  }
+
+  .search-home {
+    background-color: black;
+    color: white;
+    border: 1px #333 solid;
+    border-right: 0;
+  }
+  
+  .search-submit {
+    background-color: black;
+    color: white;
+    border: 1px #333 solid;
+    border-left: 0;
   }
 
   .text-very-muted {
@@ -562,6 +591,14 @@ body.dark {
 
   .chosen .btn, .btn.chosen, .dark-mode-button {
     background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  a {
+    color: #4dc0b5;
+
+    &:hover {
+      color: #328e85;
+    }
   }
 }
 

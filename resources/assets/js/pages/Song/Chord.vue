@@ -61,13 +61,13 @@
             baseNote() {
                 if (this.base == "") { return ""; }
 
-                return this.transposeChordBy(this.base, this.transposition, this.chordSharedStore.useFlatScale);
+                return this.transposeChordBy(this.base, this.chordSharedStore.transposition, this.chordSharedStore.useFlatScale);
             },
 
             bassNote() {
                 if (this.bass == "") { return ""; }
 
-                return this.transposeChordBy(this.bass, this.transposition, this.chordSharedStore.useFlatScale);
+                return this.transposeChordBy(this.bass, this.chordSharedStore.transposition, this.chordSharedStore.useFlatScale);
             },
 
             displayChordSign() {
@@ -92,7 +92,7 @@
                 }
 
                 let new_i = (chord_i + semitones) % 12;
-
+                
                 return scale[new_i];
             }
         }

@@ -1,5 +1,9 @@
 @extends('layout.master')
 
+@section('navbar')
+    @include('client.components.menu_main')
+@endsection
+
 @section('google-analytics')
      <!-- Google Analytics -->
      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>

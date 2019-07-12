@@ -3,47 +3,113 @@
     <div class="col-lg-9">
       <div class="card card-lyrics" id="cardLyrics">
         <div class="card-header p-1 song-links">
-          <a class="btn btn-secondary" v-if="displayMode == 1" @click="displayMode = 0">
-            <i class="fas fa-arrow-left"></i>
-            <span>Zpět na text</span>
-          </a>
-          <a class="btn btn-secondary" v-if="displayMode == 0" @click="displayMode = 1">
+          <a
+            v-if="renderScores"
+            class="btn btn-secondary"
+            :class="{'chosen': (topMode == 1)}"
+            @click="topMode=(topMode==1)?0:1"
+          >
             <i class="fas fa-file-alt"></i>
             <span class="d-none d-sm-inline">Noty</span>
           </a>
           <a
+            v-if="renderTranslations"
             class="btn btn-secondary"
-            v-if="displayMode == 0"
-            :class="{'chosen': translationsDisplay}"
-            @click="translationsDisplay=!translationsDisplay"
+            :class="{'chosen': (topMode == 2)}"
+            @click="topMode=(topMode==2)?0:2"
           >
             <i class="fas fa-language"></i>
             <span class="d-none d-sm-inline">Překlady</span>
           </a>
-          <a class="btn btn-secondary" v-if="displayMode == 0">
-            <i class="fas fa-file-pdf"></i>
+          <a class="btn btn-secondary">
+            <i class="fas fa-file-export"></i>
             <span class="d-none d-sm-inline">Export</span>
+          </a>
+          <a class="btn btn-secondary">
+            <i class="far fa-star"></i>
+            <span class="d-none d-sm-inline">Hvězdička</span>
           </a>
           <a class="btn btn-secondary float-right">
             <i class="fas fa-exclamation-triangle p-0"></i>
           </a>
-          <!-- translations -->
-          <div v-show="translationsDisplay && displayMode == 0">
+          <!-- scores -->
+          <div v-show="topMode==1">
             <div class="overflow-auto toolbox toolbox-u">
               <a
-                class="btn btn-secondary float-right fixed-top position-sticky"
-                v-on:click="translationsDisplay=false"
+                class="btn btn-secondary float-right fixed-top position-sticky cross"
+                v-on:click="topMode=0"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
-              překlady goes here
+              <div class="row ml-0" v-if="!$apollo.loading">
+                <table class="table m-0 w-auto">
+                  <external-line v-for="(score, index) in scores"
+                  v-bind:key="index"
+                  :index="index"
+                  :url="score.url"
+                  :name="score.public_name"
+                  :type="score.type"
+                  :authors="score.authors"
+                  ></external-line>
+                </table>
+              </div>
+              <div class="row" v-else>
+                <span v-if="$apollo.loading">
+                  <i>Načítám...</i>
+                </span>
+                <span v-else>
+                  <i>Žádné noty nebyly nalezeny.</i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- translations -->
+          <div v-show="topMode==2">
+            <div class="overflow-auto toolbox toolbox-u">
+              <a
+                class="btn btn-secondary float-right fixed-top position-sticky cross"
+                v-on:click="topMode=0"
+              >
+                <i class="fas fa-times pr-0"></i>
+              </a>
+              <div class="row ml-0" v-if="!$apollo.loading">
+                <table class="table m-0 w-auto">
+                  <tr><th class="border-top-0"></th><th class="border-top-0">Název</th><th class="border-top-0">Typ</th><th class="border-top-0">Autor (překladu)</th></tr>
+                  <translation-line
+                  v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 0)"
+                  :translation="translation"
+                  :original_name="song_lyric.name"
+                  >
+                  </translation-line>
+                  <translation-line
+                  v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 2)"
+                  :translation="translation"
+                  :original_name="song_lyric.name"
+                  >
+                  </translation-line>
+                  <translation-line
+                  v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 1)"
+                  :translation="translation"
+                  :original_name="song_lyric.name"
+                  >
+                  </translation-line>
+                </table>
+              </div>
+              <div class="row" v-else>
+                <span v-if="$apollo.loading">
+                  <i>Načítám...</i>
+                </span>
+                <span v-else>
+                  <i>Žádné překlady nebyly nalezeny.</i>
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="card-body py-2" v-if="displayMode === 0">
+        <div class="card-body py-2 pl-3">
           <div class="d-flex justify-content-between">
-              <div id="song-lyrics" style="overflow: hidden">
+              <div id="song-lyrics" class="p-1 overflow-hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
                 <slot></slot>
               </div>
@@ -62,41 +128,18 @@
               </div>-->
           </div>
         </div>
-
-        <div v-if="displayMode === 1">
-              <div class="card-body mb-2">
-                <div class="row">
-                  <div class="col-md-4 text-right">
-                    <p>Vyberte noty:</p>
-                  </div>
-                  <div class="col-md-8">
-                    <select v-model="selectedScoreIndex" class="select-themed">
-                      <option v-for="(score, index) in scores" v-bind:key="index" :value="index">{{ score.public_name }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-             <external-view v-if="scores"
-                :url="scores[selectedScoreIndex].url"
-                :media-id="scores[selectedScoreIndex].media_id"
-                :type="scores[selectedScoreIndex].type"
-                :authors="scores[selectedScoreIndex].authors"
-                :height="500"
-              ></external-view>
-          </div>
         
         <div
           class="controls fixed-bottom position-sticky p-1"
           v-bind:class="{'card-footer': controlsDisplay}"
         >
-          <div v-show="toolsDisplay && controlsDisplay">
+          <div v-show="bottomMode==1 && controlsDisplay">
             <div class="overflow-auto toolbox">
-              <a class="btn btn-secondary float-right" v-on:click="toolsDisplay=false">
+              <a class="btn btn-secondary float-right" v-on:click="bottomMode=0">
                 <i class="fas fa-times pr-0"></i>
               </a>
               <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
-                <transposition v-model="transposition"></transposition>
+                <transposition v-model="chordSharedStore.transposition"></transposition>
               </div>
 
               <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
@@ -113,15 +156,15 @@
             </div>
           </div>
           <!-- media -->
-          <div v-show="mediaDisplay && controlsDisplay">
+          <div v-show="bottomMode==2 && controlsDisplay">
             <div class="overflow-auto media-card toolbox">
               <a
-                class="btn btn-secondary float-right fixed-top position-sticky"
-                v-on:click="mediaDisplay=false"
+                class="btn btn-secondary float-right fixed-top position-sticky cross"
+                v-on:click="bottomMode=0"
               >
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="row pt-2" v-if="hasExternalsOrFiles && !$apollo.loading">
+              <div class="row ml-0 pt-2" v-if="hasExternalsOrFiles && !$apollo.loading">
                 <div class="col-md-6" v-for="external in mediaExternals" v-bind:key="external.id">
                   <external-view
                     :url="external.url"
@@ -153,8 +196,8 @@
           <span v-show="controlsDisplay">
             <a
               class="btn btn-secondary"
-              v-bind:class="{ 'chosen': toolsDisplay }"
-              v-on:click="toolsDisplay=!toolsDisplay; mediaDisplay=false"
+              v-bind:class="{ 'chosen': bottomMode==1 }"
+              v-on:click="bottomMode=(bottomMode==1)?0:1"
             >
               <i class="fas fa-sliders-h"></i>
               <span class="d-none d-sm-inline">Nástroje</span>
@@ -162,8 +205,8 @@
             <a
               class="btn btn-secondary"
               v-if="renderMedia"
-              v-bind:class="{ 'chosen': mediaDisplay }"
-              v-on:click="mediaDisplay=!mediaDisplay; toolsDisplay=false"
+              v-bind:class="{ 'chosen': bottomMode==2 }"
+              v-on:click="bottomMode=(bottomMode==2)?0:2"
             >
               <i class="fas fa-music"></i>
               <span class="d-none d-sm-inline">Nahrávky</span>
@@ -179,9 +222,7 @@
                   v-bind:class="[autoscroll?'pr-0 fa-stop-circle':'fa-arrow-circle-down']"
                 ></i>
                 <span class="d-none d-sm-inline" v-if="!autoscroll">Rolovat</span>
-              </a>
-              <a class="btn btn-secondary" v-if="autoscroll">-</a>
-              <a class="btn btn-secondary" v-if="autoscroll">+</a>
+              </a><a class="btn btn-secondary" v-if="autoscroll" @click="autoscrollNum--" :class="{ 'disabled': autoscrollNum==1 }">-</a><a class="btn btn-secondary" v-if="autoscroll" @click="autoscrollNum++" :class="{ 'disabled': autoscrollNum==20 }">+</a>
             </div>
           </span>
           <a class="btn btn-secondary float-right" v-on:click="controlsToggle">
@@ -204,38 +245,22 @@
         </div>
       </div>
     </div>
-    <!-- <div class="{{ $reversed_columns ? "col-lg-7" : "col-lg-3" }}">
-                @if($song_l->scoreFiles()->count() > 0)
-                    {{-- @component('client.components.thumbnail_preview', ['instance' => $song_l->scoreFiles()->first()])@endcomponent --}}
-                    @component('client.components.media_widget', ['source' => $song_l->scoreFiles()->first()])@endcomponent
-                @elseif ($song_l->scoreExternals()->count() > 0)
-                    @component('client.components.media_widget', ['source' => $song_l->scoreExternals()->first()])@endcomponent
-                @endif
-
-                @if($song_l->youtubeVideos()->count() > 0 || $song_l->spotifyTracks()->count() > 0 || $song_l->soundcloudTracks()->count() > 0 || $song_l->audioFiles()->count() > 0)
-                    <media-opener>
-                    @if($song_l->spotifyTracks()->count() > 0)
-                    <div class="media-opener"><i class="fab fa-spotify text-success"></i> Spotify</div>
-                    @endif
-
-                    @if($song_l->soundcloudTracks()->count() > 0)
-                    <div class="media-opener"><i class="fab fa-soundcloud" style="color: orangered;"></i> SoundCloud</div>
-                    @endif
-
-                    @if($song_l->audioFiles()->count() > 0)
-                    <div class="media-opener"><i class="fas fa-music"></i> MP3</div>
-                    @endif
-
-                    @if($song_l->youtubeVideos()->count() > 0)
-                    <div class="media-opener"><i class="fab fa-youtube text-danger"></i> YouTube</div>
-                    @endif
-                    </media-opener>
-                @endif
-    </div>-->
+    <div class="col-lg-3" v-if="renderMedia || renderScores">
+      <div class="card card-blue mb-3 d-none d-lg-flex" v-on:click="topMode=1" v-if="renderScores">
+        <slot name="score"></slot>
+      </div>
+      <div class="card card-green mb-3 d-none d-lg-flex" v-on:click="bottomMode=2" v-if="renderMedia">
+        <slot name="media"></slot>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
+.cross {
+  z-index: 5;
+}
+
 .toolbox {
   padding: 0.25rem !important;
   margin-bottom: 0.25rem !important;
@@ -284,7 +309,9 @@ import ChordSharpFlat from "./ChordSharpFlat";
 // import MediaOpener from './MediaOpener';
 import RightControls from "./RightControls";
 import Transposition from "./Transposition";
+import TranslationLine from "./TranslationLine.vue";
 import ExternalView from "Public/components/ExternalView.vue";
+import ExternalLine from "Public/components/ExternalLine.vue";
 
 // base_url = document.querySelector('#baseUrl').getAttribute('value');
 
@@ -294,6 +321,7 @@ const FETCH_SONG_LYRIC = gql`
   query($id: ID!) {
     song_lyric(id: $id) {
       id
+      name
       externals(orderBy: { field: "type", order: ASC }) {
         id
         public_name
@@ -317,39 +345,64 @@ const FETCH_SONG_LYRIC = gql`
           public_url
         }
       }
+      song {
+        song_lyrics {
+          id
+          name
+          public_url
+          type
+          authors {
+            id
+            name
+            public_url
+          }
+          lang
+          lang_string
+        }
+      }
     }
   }
 `;
 
 export default {
-  props: ["song-id", "render-media"],
+  props: ["song-id", "render-media", "render-scores", "render-translations"],
 
   components: {
     FontSizer,
     ChordMode,
     ChordSharpFlat,
     ExternalView,
+    ExternalLine,
     RightControls,
-    Transposition
+    Transposition,
+    TranslationLine
   },
 
   data() {
     // use this only in SongView and Chord component
     // use v-model to bind data from every other component
     return {
-      transposition: 0,
       displayTransp: 0,
-      toolsDisplay: false,
       controlsDisplay: true,
-      mediaDisplay: false,
-      translationsDisplay: false,
-      autoscroll: false, 
+      bottomMode: 0,
+      topMode: 0,
+      autoscroll: false,
+      autoscrollNum: 10,
+      scrolldelay: null,
       fullscreen: false,
-      displayMode: 0, // 0: text, 1: sheet music, 2: translations
       selectedScoreIndex: 0,
 
       chordSharedStore: store
     }
+  },
+
+  watch: {
+    autoscroll: function () {
+      this.setScroll(this.autoscrollNum, this.autoscroll);
+    },
+    autoscrollNum: function () {
+      this.setScroll(this.autoscrollNum, this.autoscroll);
+    },
   },
 
   apollo: {
@@ -432,7 +485,23 @@ export default {
 
       return mapping[type] || type;
     },
+
+    setScroll: function(num, condition) {
+      clearInterval(this.scrolldelay);
+      if(num > 0 && num < 21 && condition) {
+        this.scrolldelay = setInterval(function() {window.scrollBy(0, 1);}, (21-num)*10);
+      }
+    },
   },
+
+  mounted() {
+    if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "") {
+      document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
+      if(this.renderMedia) {
+        this.bottomMode = 2;
+      }
+    }
+  }
 };
 </script>
 

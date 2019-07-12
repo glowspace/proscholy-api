@@ -1,8 +1,8 @@
 <template>
 		<div class="d-flex flex-column mr-n3">
-			<a class="btn btn-secondary m-0" v-on:click="toggleFullscreen"><i class="fas" v-bind:class="[fullscreen?'fa-compress':'fa-expand']"></i></a>
+			<a class="btn btn-secondary m-0" v-on:click="toggleFullscreen"><i class="fas" :class="[fullscreen?'fa-compress':'fa-expand']"></i></a>
             <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a>
-            <a class="btn btn-secondary m-0" v-on:click="toggleNosleep"><i class="fas fa-sun"></i></a>
+            <a class="btn btn-secondary m-0" v-on:click="toggleNosleep"><i class="fa-sun" :class="[nosleep?'far':'fas']"></i></a>
 		</div>
 </template>
 
@@ -38,7 +38,6 @@ import NoSleep from 'nosleep.js';
 
                 if (this.nosleep) {
                     this.noSleeper.enable();
-                    console.log("no sleeping here");
                 } else {
                     this.noSleeper.disable();
                 }

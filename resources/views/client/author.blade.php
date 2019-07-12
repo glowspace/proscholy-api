@@ -1,4 +1,4 @@
-@extends('layout.client-sidepage')
+@extends('layout.client')
 
 @section('content')
     <div class="container">
