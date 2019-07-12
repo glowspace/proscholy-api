@@ -204,9 +204,12 @@ Home page specific elements
   }
 }
 
-.home .home-init {
-  .col-sm-4 {
-    display: none;
+.home .home-afterinit {
+  .logo-wrapper {
+    opacity: 0;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
@@ -225,10 +228,15 @@ Home page specific elements
 
 .logo-wrapper {
   text-align:  center;
-  padding-top: 130px;
+  margin-top: 130px;
+  transition: 0.5s;
+  height: 160px;
+  min-width: 350px;
 
   @include media-breakpoint-down(sm) {
-    padding-top: 110px;
+    margin-top: 110px;
+    margin-bottom: -50px;
+    height: 90px;
   }
 
   .logo {
@@ -282,6 +290,8 @@ $search-wrapper-height: 47px;
   border:           none;
   background-color: white;
   border-radius:    8px 0 0 8px;
+  border: 1px #ccc solid;
+  border-right: 0;
 
   &:focus {
     outline: none;
@@ -296,6 +306,8 @@ $search-wrapper-height: 47px;
   border:           none;
   background-color: white;
   border-radius:    0 8px 8px 0;
+  border: 1px #ccc solid;
+  border-left: 0;
 
   &:hover {
     background-color: #d4d4d4;
@@ -552,7 +564,21 @@ body.dark {
   }
 
   .background-home {
-    filter: brightness(50%);
+    background: transparent;
+  }
+
+  .search-home {
+    background-color: black;
+    color: white;
+    border: 1px #333 solid;
+    border-right: 0;
+  }
+  
+  .search-submit {
+    background-color: black;
+    color: white;
+    border: 1px #333 solid;
+    border-left: 0;
   }
 
   .text-very-muted {

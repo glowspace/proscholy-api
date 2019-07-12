@@ -1,26 +1,30 @@
 <template>
-    <div :class="{'home-init': init}">
-        <!-- <div class="logo-wrapper">
+    <div :class="[init?'home-init':'home-afterinit']">
+        <div class="logo-wrapper">
             <div class="logo"></div>
             <span class="caption noselect">Zpěvník</span>
-        </div> -->
-        <div class="row fixed-top position-sticky mt-n4">
-            <div class="col-sm-8 pt-5 pb-3">
+        </div>
+        <div class="row fixed-top position-sticky mt-n4 justify-content-center">
+            <div class="col-md-8 px-1 pt-5 pb-3">
                 <div class="search-wrapper shadow">
                     <input class="search-home"
                         placeholder="Zadejte název písně, část textu nebo jméno autora"
                         v-model="search_string"
-                        autofocus><button type="button"
+                        autofocus
+                        @keydown="init=false"
+                        @click="init=false"
+                        ><button type="button"
                             class="search-submit" @click="init=false">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
+            <div class="col-md-4" v-bind:style="{ maxWidth: (init?0:''), transition: '0.4s' }"></div>
         </div>
-        <div class="row">
-            <div class="col-sm-8">
+        <div class="row" v-if="!init">
+            <div class="col-md-8">
                 <div class="card">
-                    <div class="card-body p-0" v-if="!init">
+                    <div class="card-body p-0">
                         <SongsList 
                             v-bind:search-string="search_string"
                             v-bind:selected-tags="selected_tags"
@@ -29,7 +33,7 @@
                 </div>
                 <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <Tags v-model="selected_tags"></Tags>
             </div>
         </div>

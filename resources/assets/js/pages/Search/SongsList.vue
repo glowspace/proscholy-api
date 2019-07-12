@@ -3,18 +3,19 @@
         <template v-if="song_lyrics_results && song_lyrics_results.length && !$apollo.loading">
             <tr v-for="(song_lyric, index) in song_lyrics_results"
                 v-bind:key="song_lyric.id">
-                <td :class="{'border-top-0': !index}">
-                    <a :href="song_lyric.public_url">{{ song_lyric.name }}</a>
-                    <span v-if="song_lyric.authors.length > 0">–</span>
+                <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
+                    <a class="p-2 pl-3 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
+                </td>
+                <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
                     <span v-for="(author, authorIndex) in song_lyric.authors"><span v-if="authorIndex">,</span>
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
                     </span>
                 </td>
-                <td class="no-left-padding text-right text-uppercase small align-middle" :class="{'border-top-0': !index}">
-                    <span :class="{'text-very-muted': !song_lyric.lyrics}" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang }}</span>
+                <td class="no-left-padding text-right text-uppercase small align-middle pr-3" :class="{'border-top-0': !index}">
+                    <span :class="[{'text-very-muted': !song_lyric.lyrics}, 'pr-sm-0 pr-1']" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang }}</span>
                 </td>
                 <td style="width: 10px;"
-                    class="no-left-padding" :class="{'border-top-0': !index}">
+                    class="no-left-padding align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
                     <i v-if="song_lyric.lyrics"
                        class="fas fa-align-left text-secondary"
                        title="U této písně je zaznamenán text."></i>
@@ -22,7 +23,7 @@
                        class="fas fa-align-left text-very-muted"></i>
                 </td>
                 <td style="width: 10px;"
-                    class="no-left-padding" :class="{'border-top-0': !index}">
+                    class="no-left-padding align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
                     <i v-if="song_lyric.has_chords"
                        class="fas fa-guitar text-primary"
                        title="Tato píseň má přidané akordy."></i>
@@ -30,7 +31,7 @@
                        class="fas fa-guitar text-very-muted"></i>
                 </td>
                 <td style="width: 10px;"
-                    class="no-left-padding" :class="{'border-top-0': !index}">
+                    class="no-left-padding align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
                     <i v-if="song_lyric.scoreFiles.length > 0"
                        class="fa fa-file-alt text-danger"
                        title="K této písni jsou k dispozici noty."></i>
@@ -38,7 +39,7 @@
                        class="fa fa-file-alt text-very-muted"></i>
                 </td>
                 <td style="width: 10px;"
-                    class="no-left-padding" :class="{'border-top-0': !index}">
+                    class="no-left-padding pr-4 align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
                     <i v-if="(song_lyric.spotifyTracks.length + song_lyric.soundcloudTracks.length + song_lyric.youtubeVideos.length + song_lyric.audioFiles.length)"
                        class="fas fa-music text-success"
                        title="U této písně je k dispozici nahrávka."></i>
@@ -48,11 +49,11 @@
             </tr>
         </template>
         <tr v-else>
-            <td v-if="$apollo.loading" class="border-top-0">
-                <i>Načítám...</i>
+            <td v-if="$apollo.loading" class="border-top-0 p-1">
+                <i class="px-3 py-2 d-block">Načítám...</i>
             </td>
-            <td v-else class="border-top-0">
-                <i>Žádná píseň s tímto názvem nebyla nalezena.</i>
+            <td v-else class="border-top-0 p-1">
+                <i class="px-3 py-2 d-block">Žádná píseň s tímto názvem nebyla nalezena.</i>
             </td>
         </tr>
     </table>
