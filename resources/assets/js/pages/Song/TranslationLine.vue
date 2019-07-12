@@ -4,7 +4,7 @@
 		<td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == original_name)}">{{ translation.name }}</a></td>
 		<td><span class="d-none d-sm-inline">{{ typeString }}</span><span class="d-sm-none">{{ typeChar }}</span></td>
 		<td>
-			<span v-for="(author, authorIndex) in translation.authors"><span v-if="authorIndex">,</span>
+			<span v-for="(author, authorIndex) in translation.authors" :key="authorIndex"><span v-if="authorIndex">,</span>
 			<a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
 			</span>
 		</td>
