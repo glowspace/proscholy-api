@@ -239,12 +239,19 @@ Home page specific elements
   margin-top: 130px;
   transition: 0.5s;
   height: 160px;
-  min-width: 350px;
+  margin-right: -15px;
+  margin-left: -15px;
 
   @include media-breakpoint-down(sm) {
     margin-top: 110px;
     margin-bottom: -50px;
     height: 90px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    margin-top: 90px;
+    margin-bottom: -70px;
+    height: 70x;
   }
 
   .logo {
@@ -266,6 +273,14 @@ Home page specific elements
 
       margin-right: 6px;
     }
+
+    @include media-breakpoint-down(xs) {
+      top:          0;
+      height:       30px;
+      width:        30px;
+
+      margin-right: 3px;
+    }
   }
 
   .caption {
@@ -279,6 +294,11 @@ Home page specific elements
     @include media-breakpoint-down(sm) {
       font-size:   60px;
       line-height: 60px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size:   40px;
+      line-height: 40px;
     }
   }
 }
