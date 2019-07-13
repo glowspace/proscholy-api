@@ -7,7 +7,7 @@
                     <a class="p-2 pl-3 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
                 </td>
                 <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
-                    <span v-for="(author, authorIndex) in song_lyric.authors"><span v-if="authorIndex">,</span>
+                    <span v-for="(author, authorIndex) in song_lyric.authors" :key="authorIndex"><span v-if="authorIndex">,</span>
                         <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
                     </span>
                 </td>
