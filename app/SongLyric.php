@@ -3,10 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
+use ScoutElastic\Searchable;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -57,7 +57,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class SongLyric extends Model
 {
-    // Laravel Scout Searchable Trait used for full-text searching
+    // ElasticSearch Searchable Trait used for full-text searching
     use Searchable, 
     // Lockable Trait for enabling to "lock" the model while editing
         Lockable, 
@@ -67,6 +67,20 @@ class SongLyric extends Model
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['has_chords', 'creating_at'];
+
+    protected $indexConfigurator = MyIndexConfigurator::class;
+
+    // Here you can specify a mapping for model fields
+    protected $mapping = [
+        'properties' => [
+            'name' => [
+                'type' => 'text'
+            ],
+            'lyrics' => [
+                'type' => 'text',
+            ],
+        ]
+    ];
 
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,
