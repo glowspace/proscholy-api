@@ -359,6 +359,21 @@ $search-wrapper-height: 47px;
   }
 }
 
+.filter-active {
+  background-color: #bbb;
+  color: white;
+}
+
+.filter-open {
+  background-color: #ddd;
+  color: black;
+}
+
+.filter-panel {
+  max-height: calc(100vh - 47px - 3rem);
+  overflow: auto;
+}
+
 /**
 View: Search results
  */

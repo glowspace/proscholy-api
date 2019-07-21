@@ -17,12 +17,19 @@
                             class="search-submit" v-if="init" @click="init=false">
                         <i class="fa fa-search d-none d-sm-inline"></i>
                     </button><button type="button"
-                            class="search-submit d-none d-md-inline" v-if="!init" @click="init=false">
+                            class="search-submit d-none d-md-inline" v-if="!init">
                         <i class="fa fa-search"></i>
                     </button><button type="button"
-                            class="search-submit d-md-none" v-if="!init" @click="init=false">
+                            class="search-submit d-md-none" v-if="!init" :class="{'filter-active': (Object.keys(selected_tags).length !== 0), 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
                         <i class="fa fa-filter"></i>
                     </button>
+                </div>
+                <div class="card mb-0 mx-3 p-2 d-block d-md-none filter-panel" v-if="!init && displayFilter">
+                    <a class="btn btn-secondary float-right fixed-top position-sticky"
+                        v-on:click="displayFilter=false">
+                        <i class="fas fa-times pr-0"></i>
+                    </a>
+                    <Tags v-model="selected_tags"></Tags>
                 </div>
             </div>
             <div class="col-md-4 search-balance"></div>
@@ -39,7 +46,7 @@
                 </div>
                 <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 d-none d-md-block">
                 <Tags v-model="selected_tags"></Tags>
             </div>
         </div>
@@ -61,7 +68,8 @@ export default {
         return {
             search_string: "",
             selected_tags: {},
-            init: true
+            init: true,
+            displayFilter: false
         }
     },
 
