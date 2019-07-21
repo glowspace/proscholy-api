@@ -319,12 +319,18 @@ $search-wrapper-height: 47px;
   padding:          10px 20px;
   font-size:        16px;
   height:           $search-wrapper-height;
-  width:            calc(100% - 70px);
   border:           none;
   background-color: white;
   border-radius:    8px 0 0 8px;
   border: 1px #ccc solid;
   border-right: 0;
+  width: calc(100% - 70px);
+  
+  @include media-breakpoint-down(xs) {
+    .home-init & {
+      width: calc(100% - 20px);
+    }
+  }
 
   &:focus {
     outline: none;
@@ -335,15 +341,21 @@ $search-wrapper-height: 47px;
   cursor:           pointer;
   transition:       0.3s;
   height:           $search-wrapper-height;
-  width:            70px;
   border:           none;
   background-color: white;
   border-radius:    0 8px 8px 0;
   border: 1px #ccc solid;
   border-left: 0;
+  width: 70px;
+
+  @include media-breakpoint-down(xs) {
+    .home-init & {
+      width: 20px;
+    }
+  }
 
   &:hover {
-    background-color: #d4d4d4;
+    background-color: #eee;
   }
 }
 

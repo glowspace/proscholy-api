@@ -14,8 +14,14 @@
                         @keydown="init=false"
                         @click="init=false"
                         ><button type="button"
-                            class="search-submit" @click="init=false">
+                            class="search-submit" v-if="init" @click="init=false">
+                        <i class="fa fa-search d-none d-sm-inline"></i>
+                    </button><button type="button"
+                            class="search-submit d-none d-md-inline" v-if="!init" @click="init=false">
                         <i class="fa fa-search"></i>
+                    </button><button type="button"
+                            class="search-submit d-md-none" v-if="!init" @click="init=false">
+                        <i class="fa fa-filter"></i>
                     </button>
                 </div>
             </div>

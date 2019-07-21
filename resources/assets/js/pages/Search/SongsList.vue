@@ -12,7 +12,7 @@
                     </span>
                 </td>
                 <td class="no-left-padding text-right text-uppercase small align-middle pr-3" :class="{'border-top-0': !index}">
-                    <span :class="[{'text-very-muted': !song_lyric.lyrics}, 'pr-sm-0 pr-1']" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang }}</span>
+                    <span :class="[{'text-very-muted': !song_lyric.lyrics}, 'pr-sm-0 pr-1']" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang.substring(0, 3) }}</span>
                 </td>
                 <td style="width: 10px;"
                     class="no-left-padding align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">

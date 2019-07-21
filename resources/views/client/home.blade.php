@@ -1,6 +1,6 @@
 @extends('layout.client')
 
-@section('wrapper-classes', 'home home-init')
+@section('wrapper-classes', 'home')
 
 @section('content')
     <div class="background-home">
