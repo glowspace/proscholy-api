@@ -641,6 +641,14 @@ body.dark {
     border-left: 0;
   }
 
+  .filter-active {
+    background-color: #666;
+  }
+
+  .filter-open {
+    background-color: #333;
+  }
+
   .text-very-muted {
     color: #222;
   }
