@@ -79,21 +79,21 @@
                   v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 0)"
                   :translation="translation"
                   :original_name="song_lyric.name"
-                  :key="index"
+                  :key="index+'0'"
                   >
                   </translation-line>
                   <translation-line
                   v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 2)"
                   :translation="translation"
                   :original_name="song_lyric.name"
-                  :key="index"
+                  :key="index+'1'"
                   >
                   </translation-line>
                   <translation-line
                   v-for="(translation, index) in song_lyric.song.song_lyrics.filter(lyric => lyric.type == 1)"
                   :translation="translation"
                   :original_name="song_lyric.name"
-                  :key="index"
+                  :key="index+'2'"
                   >
                   </translation-line>
                 </table>
