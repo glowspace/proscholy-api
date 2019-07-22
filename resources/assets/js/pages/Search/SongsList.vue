@@ -53,7 +53,7 @@
                 <i class="px-3 py-2 d-block">Načítám...</i>
             </td>
             <td v-else class="border-top-0 p-1">
-                <i class="px-3 py-2 d-block">Žádná píseň s tímto názvem nebyla nalezena.</i>
+                <i class="px-3 py-2 d-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</i>
             </td>
         </tr>
     </table>
