@@ -359,6 +359,14 @@ $search-wrapper-height: 47px;
   }
 }
 
+.btn.btn-outline-light.display-all-songs {
+  border-radius: 8px;
+  background-color: rgba(218, 57, 38, 0.5);
+  &:hover {
+    background-color: rgba(218, 57, 38, 0.6);
+  }
+}
+
 .filter-active {
   background-color: #bbb;
   color: white;

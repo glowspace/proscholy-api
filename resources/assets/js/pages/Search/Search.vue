@@ -24,6 +24,7 @@
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
+                <div v-if="init" @click="init=false" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
                 <div class="card mb-0 mx-3 p-2 d-block d-md-none filter-panel" v-if="!init && displayFilter">
                     <a class="btn btn-secondary float-right fixed-top position-sticky"
                         v-on:click="displayFilter=false">
