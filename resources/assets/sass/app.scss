@@ -289,7 +289,7 @@ Home page specific elements
 
     line-height: 160px;
 
-    font-family: 'Cocogoose', cursive;
+    font-family: 'Cocogoose', 'Arial Black', sans-serif;
 
     @include media-breakpoint-down(sm) {
       font-size:   60px;
