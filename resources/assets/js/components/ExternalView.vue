@@ -131,7 +131,7 @@ export default {
                     break;
             
                 default:
-                    return "fas fa-play-circle";
+                    return "fas fa-music";
                     break;
             }
         }
