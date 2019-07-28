@@ -6,7 +6,7 @@
 		</a>
 		<a class="btn btn-secondary" v-if="hasmediaslot" v-bind:class="{ 'chosen': mediaDisplay }"
 		v-on:click="mediaDisplay=!mediaDisplay; toolsDisplay=false">
-			<i class="fas fa-music"></i> <span class="d-none d-sm-inline">Nahrávky</span>
+			<i class="fas fa-headphones"></i> <span class="d-none d-sm-inline">Nahrávky</span>
 		</a>
 		<div class="d-inline-block btn-group m-0" role="group" v-bind:class="{ 'chosen': autoscroll }">
 			<a class="btn btn-secondary" v-on:click="autoscroll=!autoscroll">

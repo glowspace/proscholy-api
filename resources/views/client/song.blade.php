@@ -41,7 +41,7 @@
             <template v-slot:media>
                 @if($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())
                     <div class="card-header media-opener py-2">
-                        <i class="fas fa-music"></i>
+                        <i class="fas fa-headphones"></i>
                         Dostupné nahrávky a videa
                     </div>
                     @if($song_l->spotifyTracks()->count() > 0)

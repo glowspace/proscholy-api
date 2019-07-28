@@ -44,10 +44,10 @@
                 <td style="width: 10px;"
                     class="no-left-padding pr-4 align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
                     <i v-if="(song_lyric.spotifyTracks.length + song_lyric.soundcloudTracks.length + song_lyric.youtubeVideos.length + song_lyric.audioFiles.length)"
-                       class="fas fa-music text-success"
+                       class="fas fa-headphones text-success"
                        title="U této písně je k dispozici nahrávka."></i>
                     <i v-else
-                       class="fas fa-music text-very-muted"></i>
+                       class="fas fa-headphones text-very-muted"></i>
                 </td>
             </tr>
         </template>

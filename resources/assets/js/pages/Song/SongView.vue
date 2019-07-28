@@ -211,7 +211,7 @@
               v-bind:class="{ 'chosen': bottomMode==2 }"
               v-on:click="bottomMode=(bottomMode==2)?0:2"
             >
-              <i class="fas fa-music"></i>
+              <i class="fas fa-headphones"></i>
               <span class="d-none d-sm-inline">Nahrávky</span>
             </a>
             <div
