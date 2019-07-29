@@ -8,12 +8,9 @@
             <span class="chord-extension">{{extension}}</span>
             <span class="chord-bass" v-if="bass.length!==0">/{{bassNote}}</span>
             <span class="chord-right-bracket" v-if="isOptional">)</span>
-        </span>
-        <span :class="['chord-text', isDivided == 0 ? 'chord-text-spaced' : '']">
+        </span><span :class="['chord-text', isDivided == 0 ? 'chord-text-spaced' : '']">
             <slot></slot>
-        </span>
-        <span class="chord-line" v-if="isDivided == 1">
-        </span>
+        </span><span class="chord-line" v-if="isDivided == 1"></span>
     </span>
 </template>
 
