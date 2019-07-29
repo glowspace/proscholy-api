@@ -4,7 +4,7 @@
             <tr v-for="(song_lyric, index) in song_lyrics_results"
                 v-bind:key="song_lyric.id">
                 <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
-                    <a class="p-2 pl-3 w-100 d-inline-block" :class="[song_lyric.songbook_records[0]?'text-secondary':'text-really-muted']" :href="song_lyric.public_url">{{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):("Zp"+song_lyric.id) }}</a>
+                    <a class="p-2 pl-3 w-100 d-inline-block text-secondary" :href="song_lyric.public_url">{{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):"" }}</a>
                 </td>
                 <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
                     <a class="p-2 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
