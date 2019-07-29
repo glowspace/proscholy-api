@@ -4,7 +4,7 @@
             <div class="logo"></div>
             <span class="caption noselect">Zpěvník</span>
         </div>
-        <div class="row fixed-top position-sticky mt-n4 justify-content-center">
+        <div class="row fixed-top position-sticky mt-n4 justify-content-center zindex-lower">
             <div :class="[{'col-lg-6': init}, 'col-md-8 px-1 pt-5 pb-3 search-column']">
                 <div class="search-wrapper shadow">
                     <input class="search-home"
