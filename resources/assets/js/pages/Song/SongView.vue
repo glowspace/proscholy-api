@@ -21,7 +21,7 @@
             <i class="fas fa-language"></i>
             <span class="d-none d-sm-inline">Překlady</span>
           </a>
-          <a class="btn btn-secondary">
+          <!-- <a class="btn btn-secondary">
             <i class="fas fa-file-export"></i>
             <span class="d-none d-sm-inline">Export</span>
           </a>
@@ -31,7 +31,7 @@
           </a>
           <a class="btn btn-secondary float-right">
             <i class="fas fa-exclamation-triangle p-0"></i>
-          </a>
+          </a> -->
           <!-- scores -->
           <div v-show="topMode==1">
             <div class="overflow-auto toolbox toolbox-u">
@@ -242,9 +242,9 @@
             <img src="/img/logo_v2.png" width="20px">
             {{ new Date().getFullYear() }}
           </div>
-          <a class="btn btn-secondary float-right">
+          <!-- <a class="btn btn-secondary float-right">
             Nahlásit
-          </a>
+          </a> -->
         </div>
       </div>
     </div>
