@@ -28,10 +28,10 @@
           <a class="btn btn-secondary">
             <i class="far fa-star"></i>
             <span class="d-none d-sm-inline">Hvězdička</span>
-          </a>
-          <a class="btn btn-secondary float-right">
-            <i class="fas fa-exclamation-triangle p-0"></i>
           </a> -->
+          <a class="btn float-right" target="_blank" :href="[song_lyric?'https://docs.google.com/forms/d/e/1FAIpQLSdTaOCzzlfZmyoCB0I_S2kSPiSZVGwDhDovyxkWB7w2LfH0IA/viewform?entry.2038741493=' + encodeURI(song_lyric.name):'']">
+            <i class="fas fa-exclamation-triangle p-0"></i>
+          </a>
           <!-- scores -->
           <div v-show="topMode==1">
             <div class="overflow-auto toolbox toolbox-u">
@@ -242,9 +242,9 @@
             <img src="/img/logo_v2.png" width="20px">
             {{ new Date().getFullYear() }}
           </div>
-          <!-- <a class="btn btn-secondary float-right">
+          <a class="btn btn-secondary float-right" target="_blank" :href="[song_lyric?'https://docs.google.com/forms/d/e/1FAIpQLSdTaOCzzlfZmyoCB0I_S2kSPiSZVGwDhDovyxkWB7w2LfH0IA/viewform?entry.1714245491=' + song_lyric.id + '&entry.2038741493=' + encodeURI(song_lyric.name):'']">
             Nahlásit
-          </a> -->
+          </a>
         </div>
       </div>
     </div>
