@@ -28,9 +28,10 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                 'rebuilt_czech' => [
                     'tokenizer' => 'standard',
                     'filter' => [
+                        'czech_stemmer',
+                        'asciifolding',
                         'lowercase',
                         'czech_stop',
-                        'czech_stemmer'
                     ]
                 ]
             ]
