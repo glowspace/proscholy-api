@@ -44,7 +44,11 @@ type SongLyric {
     lang_string_values: JSON
     updated_at: String
     authors: [Author] @belongsToMany
-    externals(id: Int @eq, type: Int @eq): [External] @hasMany
+    externals(
+        id: Int @eq,
+        type: Int @eq
+        orderBy: [OrderByClause!] @orderBy
+        ): [External] @hasMany
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @belongsToMany
     songbook_records: [SongbookRecord] @belongsToMany

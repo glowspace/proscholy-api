@@ -1,9 +1,11 @@
 @extends('layout.client')
 
-@section('navbar')
-    @include('client.components.menu_main')
-@endsection
+@section('wrapper-classes', 'home')
 
 @section('content')
-    <Search str-prefill="{{ $search_string }}"></Search>
+    <div class="background-home">
+        <div class="container">
+            <Search str-prefill="{{ $search_string }}"></Search>
+        </div>
+    </div>
 @endsection

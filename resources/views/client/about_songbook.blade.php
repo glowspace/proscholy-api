@@ -1,12 +1,10 @@
 @extends('layout.client')
 
-@section('navbar')
-    @include('client.components.menu_main')
-@endsection
-
 @section('content')
-    <div class="content-padding">
-        <h1>Redakce ProScholy.cz</h1>
+    <div class="container">
+        <h1>O zpěvníku ProScholy.cz</h1>
+
+        <h2>Kdo za projektem stojí?</h2>
 
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
             kteří pracují s českou nebo slovenskou křesťanskou tvorbou.
@@ -17,8 +15,9 @@
 
         <p>
             Chcete se podílet na tvorbě zpěvníku?
-            Máte tipy na nové funkce nebo nový repertoár?
-            Můžete nám napsat na email <a href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a> nebo se na nás obrátit telefonicky na <b>734 791 909</b>.</p>
+            Máte tipy na nové funkce nebo nový repertoár?<br>
+            Můžete nám napsat na email <a href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a> nebo se na nás obrátit telefonicky na <a href="tel:+420734791909">734 791 909</a>.
+        </p>
 
         <h3>Náš tým</h3>
 
