@@ -68,7 +68,7 @@ class SongLyric extends Model
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['has_chords', 'creating_at'];
 
-    protected $indexConfigurator = MyIndexConfigurator::class;
+    protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
     // Here you can specify a mapping for model fields
     protected $mapping = [
