@@ -29,7 +29,7 @@
             <i class="far fa-star"></i>
             <span class="d-none d-sm-inline">Hvězdička</span>
           </a> -->
-          <a class="btn float-right" target="_blank" :href="[song_lyric?'https://docs.google.com/forms/d/e/1FAIpQLSdTaOCzzlfZmyoCB0I_S2kSPiSZVGwDhDovyxkWB7w2LfH0IA/viewform?entry.2038741493=' + encodeURI(song_lyric.name):'']">
+          <a class="btn float-right" title="Nahlásit" target="_blank" :href="[song_lyric?'https://docs.google.com/forms/d/e/1FAIpQLSdTaOCzzlfZmyoCB0I_S2kSPiSZVGwDhDovyxkWB7w2LfH0IA/viewform?entry.2038741493=' + encodeURI(song_lyric.name):'']">
             <i class="fas fa-exclamation-triangle p-0"></i>
           </a>
           <!-- scores -->
@@ -228,7 +228,7 @@
               </a><a class="btn btn-secondary" v-if="autoscroll" @click="autoscrollNum--" :class="{ 'disabled': autoscrollNum==1 }">-</a><a class="btn btn-secondary" v-if="autoscroll" @click="autoscrollNum++" :class="{ 'disabled': autoscrollNum==20 }">+</a>
             </div>
           </span>
-          <a class="btn btn-secondary float-right" v-on:click="controlsToggle">
+          <a class="btn btn-secondary float-right" :title="[controlsDisplay?'Skrýt lišty':'Zobrazit lišty']" v-on:click="controlsToggle">
             <i
               class="fas pr-0"
               v-bind:class="[controlsDisplay?'fa-chevron-right':'fa-chevron-left']"

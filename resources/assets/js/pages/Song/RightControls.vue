@@ -1,8 +1,8 @@
 <template>
 		<div class="d-flex flex-column mr-n3">
-			<a class="btn btn-secondary m-0" v-on:click="toggleFullscreen"><i class="fas" :class="[fullscreen?'fa-compress':'fa-expand']"></i></a>
+			<a class="btn btn-secondary m-0" :title="[!fullscreen?'Zobrazit na celou obrazovku':'Zrušit zobrazení na celou obrazovku']" v-on:click="toggleFullscreen"><i class="fas" :class="[fullscreen?'fa-compress':'fa-expand']"></i></a>
             <!-- <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a> -->
-            <a class="btn btn-secondary m-0" v-on:click="toggleNosleep"><i class="fa-sun" :class="[nosleep?'far':'fas']"></i></a>
+            <a class="btn btn-secondary m-0" :title="[!nosleep?'Blokovat zhasínání displeje':'Přestat blokovat zhasínání displeje']" v-on:click="toggleNosleep"><i class="fa-sun" :class="[nosleep?'far':'fas']"></i></a>
 		</div>
 </template>
 
