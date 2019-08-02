@@ -83,7 +83,14 @@
                 <div class="card-body py-2">
                     {!! $song_l->getFormattedLyrics() !!}
                 </div>
-                <div class="controls p-1">
+                <div class="controls p-1"></div>
+                <div class="card-footer p-1 song-links">
+                    <!-- todo: asset img -->
+                    <div class="px-3 py-2 d-inline-block">
+                        Zpěvník ProScholy.cz
+                        <img src="/img/logo_v2.png" width="20px">
+                        {{ now()->year }}
+                    </div>
                 </div>
                 </div>
             </div>
