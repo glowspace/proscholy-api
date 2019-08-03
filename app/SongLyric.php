@@ -74,11 +74,22 @@ class SongLyric extends Model
     protected $mapping = [
         'properties' => [
             'name' => [
-                'type' => 'text'
+                'type' => 'text',
+                'analyzer' => 'rebuilt_czech',
+                "boost" => 2
             ],
             'lyrics' => [
                 'type' => 'text',
+                'analyzer' => 'rebuilt_czech'
             ],
+            'authors' => [
+                'type' => 'text',
+                'analyzer' => 'rebuilt_czech'
+            ],
+            'songooks' => [
+                'type' => 'text',
+                // 'analyzer' => 'standard
+            ]
         ]
     ];
 
@@ -321,12 +332,21 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $array = $this->toArray();
+        $arr = [
+            'name' => $this->name,
+            'lyrics' => $this->lyrics_no_chords,
+            'authors' => $this->authors()->get()->implode("name", ", "),
+            'songbooks' => $this->songbook_records()->get()->map(function($sb) {
+                return $sb->shortcut . $sb->pivot->number;
+            })->implode(" ")
+        ];
 
-        // Preserve only attributes that are meant to be searched in
-        $searchable = Arr::only($array, ['name', 'lyrics']);
+        // $array = $this->toArray();
 
-        return $searchable;
+        // // Preserve only attributes that are meant to be searched in
+        // $searchable = Arr::only($array, ['name', 'lyrics']);
+
+        return $arr;
     }
 
     public function getFormattedLyrics()
