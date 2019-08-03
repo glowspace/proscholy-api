@@ -21,7 +21,25 @@
 @endsection
 
 @section('app-css')
+    
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
+
+    <script type="text/javascript">
+        // fix of flash of white background in Google Chrome when Dark mode is on... 
+        
+        var dom_observer = new MutationObserver(function(mutation) {
+            // this runs (multiple times but most importantly), before the body is rendered
+            if (window.localStorage) {
+                if (localStorage.getItem("dark") === "true") {
+                    document.getElementsByTagName("body")[0].className = "dark";
+                    console.log("baab");
+                }
+            }
+        });
+        var container = document.documentElement || document.body;
+        var config = { attributes: true, childList: true, characterData: true };
+        dom_observer.observe(container, config);
+    </script>
 @endsection
 
 @section('app-js')
