@@ -79,7 +79,7 @@ export default {
     },
 
     mounted() {
-        this.search_string = isset(this.strPrefill) ? this.strPrefill : "";
+        this.search_string = this.strPrefill ? this.strPrefill : "";
     },
 
     components: {

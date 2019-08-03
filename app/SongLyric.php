@@ -166,6 +166,25 @@ class SongLyric extends Model
         //     && 
     }
 
+    public function getHasLyricsAttribute() : bool
+    {
+        return !empty($this->lyrics);
+    }
+
+    // public function getHasMediaAttribute() : bool
+    // {
+    //     return 
+    //         $this->externals()->media()->exists() || 
+    //         $this->files()->audio()->exists();
+    // }
+
+    // public function getHasSheetMusicAttribute() : bool
+    // {
+    //     return 
+    //         $this->externals()->scores()->exists() ||
+    //         $this->files()->scores()->exists();
+    // }
+
 
     // ! deprecated soon
     public function getIsOriginalAttribute()

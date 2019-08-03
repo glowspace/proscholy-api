@@ -59,6 +59,9 @@ type SongLyric {
     only_regenschori: Boolean
     capo: Int
     visits: Int
+    has_lyrics: Boolean
+    # has_sheet_music: Boolean @with(relation: "externals")
+    # has_media: Boolean @with(relation: "files")
 }
 
 type External {
