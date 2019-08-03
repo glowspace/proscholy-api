@@ -76,6 +76,7 @@
           <i v-else class="fas fa-headphones text-very-muted"></i>
         </td>
       </tr>
+      <scroll-trigger @triggerIntersected="loadMore"/>
     </template>
     <tr v-else>
       <td v-if="$apollo.loading" class="border-top-0 p-1">
@@ -90,6 +91,7 @@
 
 <script>
     import gql from 'graphql-tag';
+    import ScrollTrigger from './ScrollTrigger';
 
     // Query
     const fetch_items = gql`
@@ -116,6 +118,8 @@
 
     export default {
         props: ['search-string', 'selected-tags'],
+
+        components: { ScrollTrigger },
 
         data() {
             return {
@@ -152,15 +156,10 @@
         },
 
         methods: {
-            onScroll ({ target: { scrollTop, clientHeight, scrollHeight }}) {
-                if (scrollTop + clientHeight >= scrollHeight) {
-                    alert("scrolled " + scrollTop + clientHeight + scrollHeight);
-                }
+            loadMore() {
+                if (this.results_limit < this.song_lyrics.length)
+                    this.results_limit += 20;
             }
-        },
-
-        mounted() {
-            document.addEventListener('scroll', this.onScroll)
         },
 
         // GraphQL client
