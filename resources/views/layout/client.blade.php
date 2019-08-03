@@ -32,7 +32,6 @@
             if (window.localStorage) {
                 if (localStorage.getItem("dark") === "true") {
                     document.getElementsByTagName("body")[0].className = "dark";
-                    console.log("baab");
                 }
             }
         });
