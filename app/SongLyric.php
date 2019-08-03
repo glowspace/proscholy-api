@@ -86,7 +86,7 @@ class SongLyric extends Model
                 'type' => 'text',
                 'analyzer' => 'rebuilt_czech'
             ],
-            'songooks' => [
+            'songook_records' => [
                 'type' => 'text',
                 // 'analyzer' => 'standard
             ]
@@ -336,7 +336,7 @@ class SongLyric extends Model
             'name' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $this->authors()->get()->implode("name", ", "),
-            'songbooks' => $this->songbook_records()->get()->map(function($sb) {
+            'songbook_records' => $this->songbook_records()->get()->map(function($sb) {
                 return $sb->shortcut . $sb->pivot->number;
             })->implode(" ")
         ];
