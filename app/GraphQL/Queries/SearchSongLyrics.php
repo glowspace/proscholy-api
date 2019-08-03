@@ -8,7 +8,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\SongLyric;
 use App\Author;
 
-class Search
+class SearchSongLyrics
 {
     /**
      * Return a value for the field.
@@ -21,26 +21,14 @@ class Search
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $song_lyrics_query = SongLyric::search($args['search_string']);
+        if ($args["search_string"] == "") {
+            return SongLyric::orderBy("name", "asc")->get();
+        }
 
-        $song_lyrics_query->with('songbook_records');
+        $query = SongLyric::search($args['search_string']);
 
-        // $query = File::query();
+        $query->with('songbook_records');
 
-		if (isset($args['filter_languages']) && is_array($args['filter_languages']))
-            $song_lyrics_query = $song_lyrics_query->whereIn('language' , $args['filter_languages']);
-            
-        if (isset($args['filter_songbooks']) && is_array($args['filter_songbooks']))
-            $song_lyrics_query = $song_lyrics_query->whereIn('')
-
-		// if (isset($args['type']))
-		// 	$query = $query->where('type', $args['type']);
-
-		// if (isset($args['is_todo']) && $args['is_todo'])
-		// 	$query = $query->todo();
-
-        // return $query->get();
-        
-
+        return $query->get();
     }
 }

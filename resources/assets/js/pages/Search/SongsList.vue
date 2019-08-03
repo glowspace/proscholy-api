@@ -15,15 +15,15 @@
                     </span>
                 </td>
                 <td class="no-left-padding text-right text-uppercase small align-middle pr-3" :class="{'border-top-0': !index}">
-                    <span :class="[{'text-very-muted': !song_lyric.lyrics}, 'pr-sm-0 pr-1']" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang.substring(0, 3) }}</span>
+                    <!-- <span :class="[{'text-very-muted': !song_lyric.lyrics}, 'pr-sm-0 pr-1']" v-if="song_lyric.lang != 'cs'" :title="song_lyric.lang_string">{{ song_lyric.lang.substring(0, 3) }}</span> -->
                 </td>
                 <td style="width: 10px;"
                     class="no-left-padding align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
-                    <i v-if="song_lyric.lyrics"
+                    <!-- <i v-if="song_lyric.lyrics"
                        class="fas fa-align-left text-secondary"
                        title="U této písně je zaznamenán text."></i>
                     <i v-else
-                       class="fas fa-align-left text-very-muted"></i>
+                       class="fas fa-align-left text-very-muted"></i> -->
                 </td>
                 <td style="width: 10px;"
                     class="no-left-padding align-middle d-none d-sm-table-cell" :class="{'border-top-0': !index}">
@@ -68,7 +68,7 @@
     // Query
     const fetch_items = gql`
         query FetchSongLyrics($search_str: String) {
-            song_lyrics(search_string: $search_str, order_abc: true) {
+            song_lyrics: search_song_lyrics(search_string: $search_str) {
                 id,
                 name,
                 public_url,
@@ -83,7 +83,7 @@
                 authors{id, name, public_url}
                 tags{id},
                 has_chords,
-                lyrics,
+                # lyrics,
                 songbook_records{number, songbook{name, shortcut}}
             }
         }`;
@@ -100,17 +100,25 @@
              * Filtered lyrics.
              */
             song_lyrics_results() {
-                if (Object.keys(this.selectedTags).length === 0) {
-                    return this.song_lyrics;
+                if (!this.song_lyrics) {
+                    return [];
                 }
 
-                return this.song_lyrics.filter(song_lyric => {
-                    for (var tag of song_lyric.tags) {
-                        if (this.selectedTags[tag.id]) {
-                            return true;
+                let res = this.song_lyrics;
+
+                if (Object.keys(this.selectedTags).length > 0) {
+                    res =  this.song_lyrics.filter(song_lyric => { 
+                        for (var tag of song_lyric.tags) {
+                            if (this.selectedTags[tag.id]) {
+                                return true;
+                            }
                         }
-                    }
-                })
+                    });
+                }
+
+                res = res.slice(0, 10);
+
+                return res;
             }
 
         },

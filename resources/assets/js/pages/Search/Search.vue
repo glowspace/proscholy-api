@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-4 search-balance"></div>
         </div>
-        <div class="row" v-if="!init">
+        <div class="row" v-show="!init">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body p-0">
@@ -79,7 +79,7 @@ export default {
     },
 
     mounted() {
-        this.search_string = this.strPrefill;
+        this.search_string = isset(this.strPrefill) ? this.strPrefill : "";
     },
 
     components: {
