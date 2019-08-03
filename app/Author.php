@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
+use ScoutElastic\Searchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Log;
@@ -60,6 +60,18 @@ class Author extends Model
             3 => 'kapela',
             4 => 'sbor',
         ];
+
+    protected $indexConfigurator = AuthorIndexConfigurator::class;
+
+    // Here you can specify a mapping for model fields
+    protected $mapping = [
+        'properties' => [
+            'name' => [
+                'type' => 'text',
+                'analyzer' => 'rebuilt_czech',
+            ]
+        ]
+    ];
 
     public function getSongLyricsInterpreted()
     {
@@ -143,6 +155,7 @@ class Author extends Model
         return $this->type_string_values;
     }
 
+    // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
         if (is_numeric($identificator))
