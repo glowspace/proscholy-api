@@ -75,16 +75,16 @@ class SongLyric extends Model
         'properties' => [
             'name' => [
                 'type' => 'text',
-                'analyzer' => 'rebuilt_czech',
+                'analyzer' => 'name_analyzer',
                 "boost" => 2
             ],
             'lyrics' => [
                 'type' => 'text',
-                'analyzer' => 'rebuilt_czech'
+                'analyzer' => 'czech_analyzer'
             ],
             'authors' => [
                 'type' => 'text',
-                'analyzer' => 'rebuilt_czech'
+                'analyzer' => 'name_analyzer'
             ],
             'songook_records' => [
                 'type' => 'text',

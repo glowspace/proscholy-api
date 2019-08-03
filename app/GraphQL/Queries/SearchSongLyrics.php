@@ -26,9 +26,9 @@ class SearchSongLyrics
         }
 
         // one letter => show only songs starting with this letter
-        if(strlen($args["search_string"]) == 1 || $args["search_string"] == "ch" || $args["search_string"] == "Ch") {
-            return SongLyric::where('name', 'like', $args["search_string"].'%')->orderBy("name", "asc")->get();
-        }
+        // if(strlen($args["search_string"]) == 1 || $args["search_string"] == "ch" || $args["search_string"] == "Ch") {
+        //     return SongLyric::where('name', 'like', $args["search_string"].'%')->orderBy("name", "asc")->get();
+        // }
 
         $query = SongLyric::search($args['search_string']);
 
