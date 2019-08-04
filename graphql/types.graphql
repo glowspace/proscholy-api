@@ -106,6 +106,7 @@ type Songbook {
     records: [SongbookRecord] @belongsToMany
     songs_count: Int
     is_private: Boolean
+    color: String
 }
 
 type SongbookRecord {

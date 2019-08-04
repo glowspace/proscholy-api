@@ -11,4 +11,5 @@ fragment SongbookFillableFragment on Songbook {
     }
     songs_count
     is_private
+    color
 }

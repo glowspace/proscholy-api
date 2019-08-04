@@ -98,6 +98,8 @@ input UpdateSongbookInput {
     songs_count: String @rules(apply: ["integer"], messages: { 
             integer: "Zadejte číselnou hodnotu"})
     is_private: Boolean
+    color: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: { 
+            regex: "Zadejte barvu v hexadecimálním formátu"})
 }
 
 input SyncSongbookRecordsForSongbookRelation {

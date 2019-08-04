@@ -38,6 +38,13 @@
               <br>Tento údaj zatím není třeba zadávat přesně.
             </p>
 
+            <v-text-field
+              label="Barva"
+              v-model="model.color"
+              data-vv-name="input.color"
+              :error-messages="errors.collect('input.color')"
+            ></v-text-field>
+
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
             <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
             <br>
@@ -171,7 +178,8 @@ export default {
         shortcut: undefined,
         records: [],
         songs_count: undefined,
-        is_private: undefined
+        is_private: undefined,
+        color: undefined
       },
       is_deleted: false,
       records_headers: [
@@ -225,7 +233,7 @@ export default {
     // send blocking info 
     setInterval(() => {
         $.get( "/refresh-updating/songbook/" + this.presetId );
-    }, 1000);
+    }, 20000);
   },
 
   computed: {
@@ -280,6 +288,7 @@ export default {
               shortcut: this.model.shortcut,
               songs_count: this.model.songs_count,
               is_private: this.model.is_private,
+              color: this.model.color,
               records: {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null
