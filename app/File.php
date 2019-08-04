@@ -174,7 +174,7 @@ class File extends Model implements ISource
 
     public function scopeTodo($query)
     {
-        return $query->where('author_id', null)->where('has_anonymous_author', 0)
+        return $query->whereDoesntHave('authors')->where('has_anonymous_author', 0)
             ->orWhere('song_lyric_id', null);
     }
 

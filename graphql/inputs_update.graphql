@@ -60,6 +60,7 @@ input UpdateSongLyricInput {
     lyrics: String
     song: SongInput
     only_regenschori: Boolean
+    capo: Int
 }
 
 input SongInput {
@@ -96,6 +97,9 @@ input UpdateSongbookInput {
     """ this is string because of the validation message """
     songs_count: String @rules(apply: ["integer"], messages: { 
             integer: "Zadejte číselnou hodnotu"})
+    is_private: Boolean
+    color: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: { 
+            regex: "Zadejte barvu v hexadecimálním formátu"})
 }
 
 input SyncSongbookRecordsForSongbookRelation {

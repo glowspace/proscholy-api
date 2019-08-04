@@ -34,13 +34,15 @@ type Query {
     externals (
         type: Int
         is_todo: Boolean
-    ): [External!]! @all
+    ): [External!]!
     files (
         type: Int
         is_todo: Boolean
-    ): [File!]! @all
+    ): [File!]!
     tags(type: Int @eq): [Tag] @all
-    songbooks: [Songbook] @all
+    songbooks (
+        is_private: Boolean @eq
+    ): [Songbook] @all
     me: User @auth
 
     author(id: ID! @eq): Author @find

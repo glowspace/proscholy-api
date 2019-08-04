@@ -20,18 +20,30 @@
               :error-messages="errors.collect('input.shortcut')"
             ></v-text-field>
 
-            <v-text-field
+            <v-checkbox
+                class="mt-0"
+                v-model="model.is_private"
+                label="Neveřejný zpěvník (pouze pro interní použití)"
+              ></v-checkbox>
+            
+            <number-input
               label="Počet písní"
-              required
               v-model="model.songs_count"
-              data-vv-name="input.songs_count"
-              :error-messages="errors.collect('input.songs_count')"
-            ></v-text-field>
+              vv-name="input.songs_count"
+              :min-value="0">
+            </number-input>
 
             <p v-if="!model.songs_count">
               Aby bylo možné zde editovat všechny záznamy, je třeba zadat celkový počet písní.
               <br>Tento údaj zatím není třeba zadávat přesně.
             </p>
+
+            <v-text-field
+              label="Barva"
+              v-model="model.color"
+              data-vv-name="input.color"
+              :error-messages="errors.collect('input.color')"
+            ></v-text-field>
 
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
             <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
@@ -84,10 +96,10 @@
                 ></items-combo-box>
               </td>
               <td>
-                <a
+                <a href="#"
                   v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
-                  href="#"
-                  @click="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
+                  @click.middle="goToAdminPage('song/' + props.item.song_lyric.id + '/edit', true, true)"
+                  @click.left="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
                 >Upravit píseň</a>
               </td>
             </template>
@@ -118,6 +130,7 @@ import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "Fragments/songbook_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
+import NumberInput from "Admin/components/NumberInput.vue";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -151,7 +164,8 @@ export default {
 
   components: {
     ItemsComboBox,
-    DeleteModelDialog
+    DeleteModelDialog,
+    NumberInput
   },
 
   data() {
@@ -163,7 +177,9 @@ export default {
         name: undefined,
         shortcut: undefined,
         records: [],
-        songs_count: undefined
+        songs_count: undefined,
+        is_private: undefined,
+        color: undefined
       },
       is_deleted: false,
       records_headers: [
@@ -213,6 +229,11 @@ export default {
         e.returnValue = "";
       }
     };
+
+    // send blocking info 
+    setInterval(() => {
+        $.get( "/refresh-updating/songbook/" + this.presetId );
+    }, 20000);
   },
 
   computed: {
@@ -266,6 +287,8 @@ export default {
               name: this.model.name,
               shortcut: this.model.shortcut,
               songs_count: this.model.songs_count,
+              is_private: this.model.is_private,
+              color: this.model.color,
               records: {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null
@@ -329,21 +352,25 @@ export default {
       return fieldNames;
     },
 
-    async goToPage(url, save = true) {
+    async goToPage(url, save = true, blank = false) {
       if (this.isDirty && save) await this.submit();
 
-      setTimeout(() => {
-        if (!this.isDirty && save) {
-          var base_url = document
-            .querySelector("#baseUrl")
-            .getAttribute("value");
-          window.location.href = base_url + "/" + url;
-        }
-      }, 500);
+      if (blank) {
+        window.open(url, "_blank");
+      } else {
+        setTimeout(() => {
+          if (!this.isDirty && save) {
+            var base_url = document
+              .querySelector("#baseUrl")
+              .getAttribute("value");
+            window.location.href = base_url + "/" + url;
+          }
+        }, 500);
+      }
     },
 
-    goToAdminPage(url, save = true) {
-      this.goToPage("/admin/" + url, save);
+    goToAdminPage(url, save = true, blank = false) {
+      this.goToPage("/admin/" + url, save, blank);
     },
 
     show() {

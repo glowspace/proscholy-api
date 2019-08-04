@@ -53,6 +53,8 @@ type SongLyric {
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
+    capo: Int
+    visits: Int
 }
 
 type External {
@@ -103,6 +105,8 @@ type Songbook {
     shortcut: String """ todo: max length 6 """
     records: [SongbookRecord] @belongsToMany
     songs_count: Int
+    is_private: Boolean
+    color: String
 }
 
 type SongbookRecord {

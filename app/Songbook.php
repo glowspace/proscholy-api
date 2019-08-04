@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Traits\Lockable;
 
 /**
  * App\Songbook
@@ -21,12 +22,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Songbook extends Model
 {
-    protected $fillable = ['name', 'shortcut', 'songs_count'];
+    use Lockable;
+    
+    protected $fillable = ['name', 'shortcut', 'songs_count', 'is_private', 'color'];
 
     public function records() : BelongsToMany
     {
         return $this->belongsToMany(SongLyric::class, "songbook_records")
                     ->withPivot('number', 'placeholder', 'id')
                     ->using(SongbookRecord::class);
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('is_private', false);
     }
 }

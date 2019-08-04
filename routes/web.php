@@ -81,8 +81,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/songs/no-tag', 'SongController@todoTags')->name('song.no-tag');
         Route::get('/songs/to-publish', 'SongController@todoPublish')->name('song.to-publish');
         Route::get('/songs/to-approve', 'SongController@todoApprove')->name('song.to-approve');
-        // refreshing
-        Route::get('/songs/{song_lyric}/refresh-updating', 'SongController@refresh_updating')->name('song.refresh_updating');
 
         Route::resource('author', 'AuthorController')->except(['show', 'update', 'store', 'create']);
 
@@ -100,3 +98,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         });
     });
 });
+
+// refreshing
+Route::get('/refresh-updating/song-lyric/{song_lyric}', 'Api\LockController@refresh_updating_song_lyric');
+Route::get('/refresh-updating/songbook/{songbook}', 'Api\LockController@refresh_updating_songbook');
