@@ -117,7 +117,7 @@
         }`;
 
     export default {
-        props: ['search-string', 'selected-tags'],
+        props: ['search-string', 'filters'],
 
         components: { ScrollTrigger },
 
@@ -138,15 +138,17 @@
 
                 let res = this.song_lyrics;
 
-                if (Object.keys(this.selectedTags).length > 0) {
-                    res =  this.song_lyrics.filter(song_lyric => { 
-                        for (var tag of song_lyric.tags) {
-                            if (this.selectedTags[tag.id]) {
-                                return true;
-                            }
-                        }
-                    });
-                }
+                // if (Object.keys(this.selectedTags).length > 0) {
+                //     res =  this.song_lyrics.filter(song_lyric => { 
+                //         for (var tag of song_lyric.tags) {
+                //             if (this.selectedTags[tag.id]) {
+                //                 return true;
+                //             }
+                //         }
+                //     });
+                // }
+
+                
 
                 res = res.slice(0, this.results_limit);
 

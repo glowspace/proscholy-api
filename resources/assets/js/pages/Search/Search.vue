@@ -20,7 +20,7 @@
                             class="search-submit d-none d-md-inline" v-if="!init">
                         <i class="fa fa-search"></i>
                     </button><button type="button"
-                            class="search-submit d-md-none" v-if="!init" :class="{'filter-active': (Object.keys(selected_tags).length !== 0), 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
+                            class="search-submit d-md-none" v-if="!init" :class="{'filter-active': (Object.keys(filters).length !== 0), 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
@@ -30,7 +30,8 @@
                         v-on:click="displayFilter=false">
                         <i class="fas fa-times pr-0"></i>
                     </a>
-                    <Tags v-model="selected_tags"></Tags>
+                    <!-- <Tags v-model="selected_tags"></Tags> -->
+                    <Filters v-model="filters"></Filters>
                 </div>
             </div>
             <div class="col-md-4 search-balance"></div>
@@ -41,14 +42,14 @@
                     <div class="card-body p-0">
                         <SongsList 
                             v-bind:search-string="search_string"
-                            v-bind:selected-tags="selected_tags"
+                            v-bind:filters="filters"
                         ></SongsList>
                     </div>
                 </div>
                 <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
             <div class="col-md-4 d-none d-md-block">
-                <Tags v-model="selected_tags"></Tags>
+                <Filters v-model="filters"></Filters>
             </div>
         </div>
     </div>
@@ -58,7 +59,7 @@
 
 import AuthorsList from "./AuthorsList";
 import SongsList from "./SongsList";
-import Tags from "./Tags";
+import Filters from "./Filters";
 
 export default {
     props: {
@@ -68,7 +69,7 @@ export default {
     data() {
         return {
             search_string: "",
-            selected_tags: {},
+            filters: {},
             init: true,
             displayFilter: false
         }
@@ -85,7 +86,7 @@ export default {
     components: {
         AuthorsList,
         SongsList,
-        Tags
+        Filters
     }
 }
 </script>
