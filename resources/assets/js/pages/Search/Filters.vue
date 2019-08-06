@@ -4,7 +4,7 @@
 
             <h3>Liturgie - mše svatá</h3>
 
-            <a v-bind:class="['tag', 'tag-blue']"
+            <a v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
                v-for="tag in tags_official"
                v-bind:key="tag.id"
                v-on:click="selectTag(tag)">
@@ -14,9 +14,9 @@
 
             <div v-for="tag in parent_tags_unofficial"
                   v-bind:key="tag.id">
-                <h3>{{ tag.name }}</h3>
+                <h3>{{ tag.description }}</h3>
 
-                <a v-bind:class="['tag', 'tag-yellow']"
+                <a v-bind:class="['tag', 'tag-green', isSelectedTag(child_tag) ? 'tag-selected' : '']"
                    v-for="child_tag in tag.child_tags"
                    v-bind:key="child_tag.id"
                    v-on:click="selectTag(child_tag)">
@@ -27,9 +27,10 @@
 
             <h3>Zpěvníky</h3>
 
-            <a v-bind:class="['tag', 'tag-blue']"
+            <a v-bind:class="['tag', 'tag-yellow', isSelectedSongbook(songbook) ? 'tag-selected' : '']"
                v-for="songbook in songbooks"
                v-bind:key="songbook.id"
+               v-on:click="selectSongbook(songbook)"
                >
                 {{ songbook.name }}
             </a>
@@ -66,12 +67,11 @@ const fetch_songbooks = gql`
 
 
 export default {
-    props: ['value'],
+    props: ['selected-tags', 'selected-songbooks'],
 
     data() {
         return {
-            selected_tags_official: {},
-            selected_tags_unofficial_categories: {},
+            selected_tags: {},
             selected_songbooks: {}
         }
     },
@@ -104,45 +104,52 @@ export default {
     },
 
     methods: {
-        selectTag(tag, category) {
-            var group = this.getCategoryObject(category);
-
-            if (!this.isSelected(tag))
+        selectTag(tag) {
+            if (!this.selected_tags[tag.id])
             {
-                Vue.set(group, tag.id, true);
+                Vue.set(this.selected_tags, tag.id, true);
             }
             else 
             {
-                Vue.delete(this.selectedTags, tag.id);
+                Vue.delete(this.selected_tags, tag.id);
             }
 
             // notify the parent that sth has changed
-            // works with v-model
-
-            // ok now we need to transform the data a bit
-
-            var selected_tags = {}
-
-            this.$emit('input');
+            this.$emit('update:selected-tags', this.selected_tags);
         },
 
-        isSelected(tag, category) {
-            return this.getCategoryObject(category)[tag.id];
-        },
-
-        getCategoryObject(category) {
-            if (category === 'official') {
-                return this.selected_tags_official;
-                // Vue.set(this.selected_tags_official, tag.id, true);
-            } else if (category === 'songbook') {
-                return this.selected_songbooks;
-            } else {
-                // unofficials
-                // category is the id of parent tag
-                return this.selected_tags_unofficial_categories[category];
+        selectSongbook(songbook) {
+            if (!this.selected_songbooks[songbook.id])
+            {
+                Vue.set(this.selected_songbooks, songbook.id, true);
             }
-        }
-    }
+            else 
+            {
+                Vue.delete(this.selected_songbooks, songbook.id);
+            }
+
+            // notify the parent that sth has changed
+            this.$emit('update:selected-songbooks', this.selected_songbooks);
+        },
+
+        isSelectedTag(tag) {
+            return this.selected_tags[tag.id];
+        },
+
+        isSelectedSongbook(songbook) {
+            return this.selected_songbooks[songbook.id];
+        },
+    },
+
+    // watch: {
+    //     selectedTags(val, prev) {
+
+    //     },
+
+    //     selectedSongbooks(val, prev) {
+
+    //     },
+    // }
 }
 </script>
 

@@ -112,12 +112,12 @@
                 tags{id},
                 has_chords,
                 has_lyrics,
-                songbook_records{number, songbook{name, shortcut}}
+                songbook_records{number, songbook{id, name, shortcut}}
             }
         }`;
 
     export default {
-        props: ['search-string', 'filters'],
+        props: ['search-string', 'selected-tags', 'selected-songbooks'],
 
         components: { ScrollTrigger },
 
@@ -138,18 +138,26 @@
 
                 let res = this.song_lyrics;
 
-                // if (Object.keys(this.selectedTags).length > 0) {
-                //     res =  this.song_lyrics.filter(song_lyric => { 
-                //         for (var tag of song_lyric.tags) {
-                //             if (this.selectedTags[tag.id]) {
-                //                 return true;
-                //             }
-                //         }
-                //     });
-                // }
+                if (Object.keys(this.selectedTags).length > 0) {
+                    // res =  this.song_lyrics.filter(song_lyric => { 
+                    //     for (var tag of song_lyric.tags) {
+                    //         if (this.selectedTags[tag.id]) {
+                    //             return true;
+                    //         }
+                    //     }
+                    // });
+                }
 
+                if (Object.keys(this.selectedSongbooks).length > 0) {
+                    res =  res.filter(song_lyric => { 
+                        for (var record of song_lyric.songbook_records) {
+                            if (this.selectedSongbooks[record.songbook.id]) {
+                                return true;
+                            }
+                        }
+                    });
+                }
                 
-
                 res = res.slice(0, this.results_limit);
 
                 return res;

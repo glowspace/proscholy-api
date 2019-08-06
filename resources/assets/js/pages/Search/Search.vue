@@ -19,8 +19,9 @@
                     </button><button type="button"
                             class="search-submit d-none d-md-inline" v-if="!init">
                         <i class="fa fa-search"></i>
-                    </button><button type="button"
-                            class="search-submit d-md-none" v-if="!init" :class="{'filter-active': (Object.keys(filters).length !== 0), 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
+                    </button>
+                    <button type="button"
+                            class="search-submit d-md-none" v-if="!init" :class="{'filter-active': filters_active, 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
@@ -31,7 +32,10 @@
                         <i class="fas fa-times pr-0"></i>
                     </a>
                     <!-- <Tags v-model="selected_tags"></Tags> -->
-                    <Filters v-model="filters"></Filters>
+                    <Filters 
+                        v-bind:selected-songbooks.sync="selected_songbooks"
+                        v-bind:selected-tags.sync="selected_tags"
+                    ></Filters>
                 </div>
             </div>
             <div class="col-md-4 search-balance"></div>
@@ -42,14 +46,18 @@
                     <div class="card-body p-0">
                         <SongsList 
                             v-bind:search-string="search_string"
-                            v-bind:filters="filters"
+                            v-bind:selected-tags="selected_tags"
+                            v-bind:selected-songbooks="selected_songbooks"
                         ></SongsList>
                     </div>
                 </div>
                 <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
             <div class="col-md-4 d-none d-md-block">
-                <Filters v-model="filters"></Filters>
+                <Filters 
+                    v-bind:selected-songbooks.sync="selected_songbooks"
+                    v-bind:selected-tags.sync="selected_tags"
+                ></Filters>
             </div>
         </div>
     </div>
@@ -69,7 +77,8 @@ export default {
     data() {
         return {
             search_string: "",
-            filters: {},
+            selected_songbooks: {},
+            selected_tags: {},
             init: true,
             displayFilter: false
         }
@@ -87,6 +96,12 @@ export default {
         AuthorsList,
         SongsList,
         Filters
+    },
+
+    computed: {
+        filters_active() {
+            return Object.keys(this.selected_songbooks).length + Object.keys(this.selected_tags).length > 0;
+        }
     }
 }
 </script>
