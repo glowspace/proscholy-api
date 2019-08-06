@@ -31,7 +31,7 @@
                         v-on:click="displayFilter=false">
                         <i class="fas fa-times pr-0"></i>
                     </a>
-                    <!-- <Tags v-model="selected_tags"></Tags> -->
+                    <!-- filters shown only for mobile -->
                     <Filters 
                         v-bind:selected-songbooks.sync="selected_songbooks"
                         v-bind:selected-tags.sync="selected_tags"
@@ -58,6 +58,7 @@
                 <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
             <div class="col-md-4 d-none d-md-block">
+                <!-- filters shown only for desktop -->
                 <Filters 
                     v-bind:selected-songbooks.sync="selected_songbooks"
                     v-bind:selected-tags.sync="selected_tags"
@@ -86,6 +87,7 @@ export default {
             selected_songbooks: {},
             selected_languages: {},
             selected_tags: {},
+            // dcnf - disjunctive canonical normal form :)
             selected_tags_dcnf: {},
             init: true,
             displayFilter: false
@@ -110,7 +112,11 @@ export default {
 
     computed: {
         filters_active() {
-            return Object.keys(this.selected_songbooks).length + Object.keys(this.selected_tags).length > 0;
+            return 
+                Object.keys(this.selected_songbooks).length + 
+                Object.keys(this.selected_tags).length + 
+                Object.keys(this.selected_languages).length
+                 > 0;
         }
     }
 }
