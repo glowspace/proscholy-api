@@ -116,6 +116,7 @@ export default {
 
             // notify the parent that sth has changed
             this.$emit('update:selected-tags', this.selected_tags);
+            this.$emit('update:selected-tags-dcnf', this.getSelectedTagsDcnf());
         },
 
         selectSongbook(songbook) {
@@ -138,7 +139,19 @@ export default {
 
         isSelectedSongbook(songbook) {
             return this.selected_songbooks[songbook.id];
-        },
+        }, 
+
+        getSelectedTagsDcnf() {
+            let res = {};
+
+            res['officials'] = this.tags_official.filter(tag => this.isSelectedTag(tag)).map(tag => tag.id);
+
+            for(parent of this.parent_tags_unofficial) {
+                res[parent.id] = parent.child_tags.filter(tag => this.isSelectedTag(tag)).map(tag => tag.id);
+            }
+
+            return res;
+        }
     },
 
     // watch: {

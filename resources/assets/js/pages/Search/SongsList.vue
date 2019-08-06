@@ -117,7 +117,7 @@
         }`;
 
     export default {
-        props: ['search-string', 'selected-tags', 'selected-songbooks'],
+        props: ['search-string', 'selected-tags-dcnf', 'selected-songbooks', 'selected-tags'],
 
         components: { ScrollTrigger },
 
@@ -136,18 +136,44 @@
                     return [];
                 }
 
+                console.log(this.selectedTags);
+
                 let res = this.song_lyrics;
 
-                if (Object.keys(this.selectedTags).length > 0) {
-                    // res =  this.song_lyrics.filter(song_lyric => { 
-                    //     for (var tag of song_lyric.tags) {
-                    //         if (this.selectedTags[tag.id]) {
-                    //             return true;
-                    //         }
-                    //     }
-                    // });
+                let categories = Object.values(this.selectedTagsDcnf);
+
+                for (let category_tags of categories) {
+                  let arr = Object.values(category_tags);
+
+                  if (arr.length > 0) {
+                      res = res.filter(song_lyric => {
+                        for (var tag of song_lyric.tags) { 
+                          if (arr.includes(tag.id)) {
+                            return true;
+                          }
+                        }
+                      });
+                  }
                 }
 
+                // apply the tags filter
+                // if (categories.length > 0) {
+                //     // inbetween categories, apply the filter consequentially to make the AND func
+                //     for (var category_tags of categories) {
+                //         console.log(Object.keys(category_tags));
+
+                //         res = res.filter(song_lyric => { 
+                //             for (var tag of Object.keys(category_tags)) {
+                //                 // and OR inside the category
+                //                 if (this.selectedTags[tag.id]) {
+                //                     return true;
+                //                 }
+                //             }
+                //         });
+                //     }
+                // }
+
+                // apply the songbooks filter
                 if (Object.keys(this.selectedSongbooks).length > 0) {
                     res =  res.filter(song_lyric => { 
                         for (var record of song_lyric.songbook_records) {

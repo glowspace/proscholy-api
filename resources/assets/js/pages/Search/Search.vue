@@ -35,6 +35,7 @@
                     <Filters 
                         v-bind:selected-songbooks.sync="selected_songbooks"
                         v-bind:selected-tags.sync="selected_tags"
+                        v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
                     ></Filters>
                 </div>
             </div>
@@ -46,6 +47,7 @@
                     <div class="card-body p-0">
                         <SongsList 
                             v-bind:search-string="search_string"
+                            v-bind:selected-tags-dcnf="selected_tags_dcnf"
                             v-bind:selected-tags="selected_tags"
                             v-bind:selected-songbooks="selected_songbooks"
                         ></SongsList>
@@ -57,6 +59,7 @@
                 <Filters 
                     v-bind:selected-songbooks.sync="selected_songbooks"
                     v-bind:selected-tags.sync="selected_tags"
+                    v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
                 ></Filters>
             </div>
         </div>
@@ -79,13 +82,16 @@ export default {
             search_string: "",
             selected_songbooks: {},
             selected_tags: {},
+            selected_tags_dcnf: {},
             init: true,
             displayFilter: false
         }
     },
 
     methods: {
-
+        updateSelectedTagsDcnf(event) {
+            this.selected_tags_dcnf = event;
+        }
     },
 
     mounted() {
