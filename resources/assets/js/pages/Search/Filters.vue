@@ -185,6 +185,21 @@ export default {
 
             return res;
         }
+    },
+
+    watch: {
+        // watch props for changes
+        selectedTags(val, prev) {
+            this.selected_tags = val;
+        },
+
+        selectedSongbooks(val, prev) {
+            this.selected_songbooks = val;
+        },
+
+        selectedLanguages(val, prev) {
+            this.selected_languages = val;
+        }
     }
 };
 </script>
