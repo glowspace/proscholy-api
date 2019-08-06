@@ -134,6 +134,7 @@ export default {
             // notify the parent that sth has changed
             this.$emit("update:selected-tags", this.selected_tags);
             this.$emit("update:selected-tags-dcnf", this.getSelectedTagsDcnf());
+            this.$emit("change", null);
         },
 
         selectSongbook(songbook) {
@@ -145,6 +146,7 @@ export default {
 
             // notify the parent that sth has changed
             this.$emit("update:selected-songbooks", this.selected_songbooks);
+            this.$emit("change", null);
         },
 
         selectLanguage(language) {
@@ -156,6 +158,7 @@ export default {
 
             // notify the parent that sth has changed
             this.$emit("update:selected-languages", this.selected_languages);
+            this.$emit("change", null);
         },
 
         isSelectedTag(tag) {
@@ -184,7 +187,7 @@ export default {
             }
 
             return res;
-        }
+        },
     },
 
     watch: {

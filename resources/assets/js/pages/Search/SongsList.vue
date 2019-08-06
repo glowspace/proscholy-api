@@ -198,7 +198,10 @@
                     }
                 },
                 // debounce waits 200ms for query refetching
-                debounce: 200
+                debounce: 200,
+                result() {
+                  this.$emit("query-loaded", null);
+                }
             }
         },
     }

@@ -37,6 +37,7 @@
                         v-bind:selected-tags.sync="selected_tags"
                         v-bind:selected-languages.sync="selected_languages"
                         v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
+                        v-on:change="updateHistoryState"
                     ></Filters>
                 </div>
             </div>
@@ -52,6 +53,7 @@
                             v-bind:selected-tags="selected_tags"
                             v-bind:selected-songbooks="selected_songbooks"
                             v-bind:selected-languages="selected_languages"
+                            v-on:query-loaded="updateHistoryState"
                         ></SongsList>
                     </div>
                 </div>
@@ -64,6 +66,7 @@
                     v-bind:selected-tags.sync="selected_tags"
                     v-bind:selected-languages.sync="selected_languages"
                     v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
+                    v-on:change="updateHistoryState"
                 ></Filters>
             </div>
         </div>
@@ -97,11 +100,77 @@ export default {
     methods: {
         updateSelectedTagsDcnf(event) {
             this.selected_tags_dcnf = event;
+        },
+
+        updateHistoryState() {
+            let url = "/search?";
+            let params = []
+
+            if (this.search_string !== "") {
+                params.push("searchString=" + this.search_string);
+            }
+
+            if (Object.keys(this.selected_tags).length > 0) {
+                params.push("tags=" + Object.keys(this.selected_tags));
+            }
+
+            if (Object.keys(this.selected_languages).length > 0) {
+                params.push("langs=" + Object.keys(this.selected_languages));
+            }
+
+            if (Object.keys(this.selected_songbooks).length > 0) {
+                params.push("songbooks=" + Object.keys(this.selected_songbooks));
+            }
+
+            history.pushState(null, "", url + params.join("&"));
+        },
+
+        applyStateChange(event) {
+            let fragments = window.location.href.split('?');
+            if (fragments.length > 1) {
+                let params = fragments[1].split('&');
+
+                console.log(params);
+
+                for (let param of params) {
+                    if (param.substring(0, 13) === "searchString=") {
+                        this.search_string = param.substring(14);
+                    }
+                    if (param.substring(0, 5) === "tags=") {
+                        let obj = {};
+                        
+                        for (let id of param.substring(6).split(',')) {
+                            obj[id] = true;
+                        }
+
+                        this.selected_tags = obj;
+                    }
+                    if (param.substring(0, 6) === "langs=") {
+                        let obj = {};
+                        
+                        for (let lang of param.substring(7).split(',')) {
+                            obj[lang] = true;
+                        }
+
+                        this.selected_languages = obj;
+                    }
+                    if (param.substring(0, 10) === "songbooks=") {
+                        let obj = {};
+                        
+                        for (let id of param.substring(11).split(',')) {
+                            obj[id] = true;
+                        }
+
+                        this.selected_songbooks = obj;
+                    }
+                }
+            }
         }
     },
 
     mounted() {
         this.search_string = this.strPrefill ? this.strPrefill : "";
+        window.onpopstate = this.applyStateChange;
     },
 
     components: {
@@ -118,6 +187,20 @@ export default {
                 Object.keys(this.selected_languages).length
                  > 0;
         }
+    },
+
+    watch: {
+        // selected_tags(val, prev) {
+        //     this.updateHistoryState();
+        // },
+
+        // selected_languages(val, prev) {
+        //     this.updateHistoryState();
+        // },
+
+        // selected_songbooks(val, prev) {
+        //     this.updateHistoryState();
+        // }
     }
 }
 </script>
