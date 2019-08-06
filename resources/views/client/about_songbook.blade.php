@@ -143,7 +143,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Josef Řídký</h5>
-                        <p class="card-text">mobilní aplikace</p>
+                        <p class="card-text">mobilní aplikace Android</p>
                     </div>
                 </div>
             </div>
@@ -153,6 +153,15 @@
                     <div class="card-body">
                         <h5 class="card-title">Vít Kološ</h5>
                         <p class="card-text">vývoj a návrh web. rozhraní</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Patrik Dobiáš</h5>
+                        <p class="card-text">mobilní aplikace iPhone</p>
                     </div>
                 </div>
             </div>
