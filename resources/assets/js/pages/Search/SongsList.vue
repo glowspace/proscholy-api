@@ -117,7 +117,7 @@
         }`;
 
     export default {
-        props: ['search-string', 'selected-tags-dcnf', 'selected-songbooks', 'selected-tags'],
+        props: ['search-string', 'selected-tags-dcnf', 'selected-songbooks', 'selected-tags', 'selected-languages'],
 
         components: { ScrollTrigger },
 
@@ -135,8 +135,6 @@
                 if (!this.song_lyrics) {
                     return [];
                 }
-
-                console.log(this.selectedTags);
 
                 let res = this.song_lyrics;
 
@@ -156,23 +154,6 @@
                   }
                 }
 
-                // apply the tags filter
-                // if (categories.length > 0) {
-                //     // inbetween categories, apply the filter consequentially to make the AND func
-                //     for (var category_tags of categories) {
-                //         console.log(Object.keys(category_tags));
-
-                //         res = res.filter(song_lyric => { 
-                //             for (var tag of Object.keys(category_tags)) {
-                //                 // and OR inside the category
-                //                 if (this.selectedTags[tag.id]) {
-                //                     return true;
-                //                 }
-                //             }
-                //         });
-                //     }
-                // }
-
                 // apply the songbooks filter
                 if (Object.keys(this.selectedSongbooks).length > 0) {
                     res =  res.filter(song_lyric => { 
@@ -180,6 +161,15 @@
                             if (this.selectedSongbooks[record.songbook.id]) {
                                 return true;
                             }
+                        }
+                    });
+                }
+
+                // apply the languages filter
+                if (Object.keys(this.selectedLanguages).length > 0) {
+                    res =  res.filter(song_lyric => { 
+                        if (this.selectedLanguages[song_lyric.lang]) {
+                            return true;
                         }
                     });
                 }

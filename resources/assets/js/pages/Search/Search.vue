@@ -35,6 +35,7 @@
                     <Filters 
                         v-bind:selected-songbooks.sync="selected_songbooks"
                         v-bind:selected-tags.sync="selected_tags"
+                        v-bind:selected-languages.sync="selected_languages"
                         v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
                     ></Filters>
                 </div>
@@ -50,6 +51,7 @@
                             v-bind:selected-tags-dcnf="selected_tags_dcnf"
                             v-bind:selected-tags="selected_tags"
                             v-bind:selected-songbooks="selected_songbooks"
+                            v-bind:selected-languages="selected_languages"
                         ></SongsList>
                     </div>
                 </div>
@@ -59,6 +61,7 @@
                 <Filters 
                     v-bind:selected-songbooks.sync="selected_songbooks"
                     v-bind:selected-tags.sync="selected_tags"
+                    v-bind:selected-languages.sync="selected_languages"
                     v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
                 ></Filters>
             </div>
@@ -81,6 +84,7 @@ export default {
         return {
             search_string: "",
             selected_songbooks: {},
+            selected_languages: {},
             selected_tags: {},
             selected_tags_dcnf: {},
             init: true,

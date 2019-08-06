@@ -1,7 +1,6 @@
 <template>
     <div>
         <div v-bind:class="['song-tags']">
-
             <h3>Liturgie - mše svatá</h3>
 
             <a v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
@@ -33,6 +32,16 @@
                v-on:click="selectSongbook(songbook)"
                >
                 {{ songbook.name }}
+            </a>
+
+            <h3>Jazyky</h3>
+
+            <a v-bind:class="['tag', 'tag-yellow', isSelectedLanguage(lang_code) ? 'tag-selected' : '']"
+               v-for="(lang_name, lang_code) in all_languages"
+               v-bind:key="lang_code"
+               v-on:click="selectLanguage(lang_code)"
+               >
+                {{ lang_name }}
             </a>
         </div>
     </div>
@@ -67,12 +76,28 @@ const fetch_songbooks = gql`
 
 
 export default {
-    props: ['selected-tags', 'selected-songbooks'],
+    props: ['selected-tags', 'selected-songbooks', 'selected-languages'],
 
     data() {
         return {
             selected_tags: {},
-            selected_songbooks: {}
+            selected_songbooks: {},
+            selected_languages: {},
+            all_languages: {
+                'cs': 'čeština',
+                'sk': 'slovenština',
+                'en': 'angličtina',
+                'la': 'latina',
+                'pl': 'polština',
+                'de': 'němčina',
+                'fr': 'francouzština',
+                'es': 'španělština',
+                'it': 'italština',
+                'sv': 'svahilština',
+                'he': 'hebrejština',
+                'cu': 'staroslověnština',
+                'mixed': 'vícejazyčná píseň'
+            }
         }
     },
 
@@ -105,7 +130,7 @@ export default {
 
     methods: {
         selectTag(tag) {
-            if (!this.selected_tags[tag.id])
+            if (!this.isSelectedTag(tag))
             {
                 Vue.set(this.selected_tags, tag.id, true);
             }
@@ -120,7 +145,7 @@ export default {
         },
 
         selectSongbook(songbook) {
-            if (!this.selected_songbooks[songbook.id])
+            if (!this.isSelectedSongbook(songbook))
             {
                 Vue.set(this.selected_songbooks, songbook.id, true);
             }
@@ -133,12 +158,30 @@ export default {
             this.$emit('update:selected-songbooks', this.selected_songbooks);
         },
 
+        selectLanguage(language) {
+            if (!this.isSelectedLanguage(language))
+            {
+                Vue.set(this.selected_languages, language, true);
+            }
+            else 
+            {
+                Vue.delete(this.selected_languages, language);
+            }
+
+            // notify the parent that sth has changed
+            this.$emit('update:selected-languages', this.selected_languages);
+        },
+
         isSelectedTag(tag) {
             return this.selected_tags[tag.id];
         },
 
         isSelectedSongbook(songbook) {
             return this.selected_songbooks[songbook.id];
+        }, 
+
+        isSelectedLanguage(language) {
+            return this.selected_languages[language];
         }, 
 
         getSelectedTagsDcnf() {
@@ -153,16 +196,6 @@ export default {
             return res;
         }
     },
-
-    // watch: {
-    //     selectedTags(val, prev) {
-
-    //     },
-
-    //     selectedSongbooks(val, prev) {
-
-    //     },
-    // }
 }
 </script>
 
