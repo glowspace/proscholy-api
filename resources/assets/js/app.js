@@ -22,24 +22,15 @@ window.Vue = require('vue');
 Vue.component('chord', require('Public/pages/Song/Chord.vue'));
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
-// Vue.component('external-line', require('Public/components/ExternalLine.vue'));
-// Vue.component('right-controls', require('Public/components/RightControls.vue'));
-// Vue.component('media-opener', require('Public/pages/Song/MediaOpener.vue'));
-
-// Vue.component('controls', require('Public/pages/Song/SongBottomControls/Controls.vue'));
-// Vue.component('control-buttons', require('Public/pages/Song/SongBottomControls/ControlButtons.vue'));
-// Vue.component('tools', require('Public/pages/Song/SongBottomControls/Tools.vue'));
-// Vue.component('transposition', require('Public/pages/Song/SongBottomControls/Transposition.vue'));
-// Vue.component('font-sizer', require('Public/pages/Song/SongBottomControls/FontSizer.vue'));
-// Vue.component('media', require('Public/pages/Song/SongBottomControls/Media.vue'));
-
 Vue.component('search', require('Public/pages/Search/Search.vue'));
 Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
 
 
-import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { persistCache } from 'apollo-cache-persist';
+import VueApollo from 'vue-apollo';
 
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
 
@@ -49,48 +40,30 @@ const httpLink = createHttpLink({
   uri: base_url + '/graphql',
 })
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
-// Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-})
+// // Set up cache persistence.
+// persistCache({
+//   cache,
+//   storage: window.localStorage,
+// }).then(function() {
 
-import VueApollo from 'vue-apollo'
-Vue.use(VueApollo)
 
-const apolloProvider = new VueApollo({
-    defaultClient: apolloClient,
-})
+// });
 
-// import Vuetify, {
-//   VApp, // required
-// //   VNavigationDrawer,
-// //   VDataTable,
-//   VContainer,
-//   VLayout,
-//   VFlex,
-//   VCard,
-//   VCardText,
-// //   VTextField
-// } from 'vuetify/lib'
+  // Create the apollo client
+  const apolloClient = new ApolloClient({
+    link: httpLink,
+    cache,
+  })
+  
+  Vue.use(VueApollo)
 
-// Vue.use(Vuetify, {
-//   components: {
-//     VApp,
-//     // VNavigationDrawer,
-//     // VDataTable,
-//     VContainer,
-//     VLayout,
-//     VFlex,
-//     VCard,
-//     VCardText,
-//     // VTextField
-//   }
-// })
+  const apolloProvider = new VueApollo({
+      defaultClient: apolloClient,
+  })
 
-const app = new Vue({
+  const app = new Vue({
     el: '#app',
     apolloProvider
-});
+  });
