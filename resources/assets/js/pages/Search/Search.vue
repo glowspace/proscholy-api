@@ -52,7 +52,8 @@
                             v-bind:selected-tags="selected_tags"
                             v-bind:selected-songbooks="selected_songbooks"
                             v-bind:selected-languages="selected_languages"
-                            v-on:query-loaded="updateHistoryState"
+                            v-bind:init="init"
+                            v-on:query-loaded="autoInit(); updateHistoryState();"
                         ></SongsList>
                     </div>
                 </div>
@@ -93,7 +94,8 @@ export default {
             // dcnf - disjunctive canonical normal form :)
             selected_tags_dcnf: {},
             init: true,
-            displayFilter: false
+            displayFilter: false,
+            numberDisplayMode: 0,
         }
     },
 
@@ -103,6 +105,9 @@ export default {
         },
 
         updateHistoryState() {
+            if (this.init)
+                return;
+
             let url = "/search?";
             let params = []
 
@@ -172,6 +177,12 @@ export default {
 
             if (update_url) {
                 this.updateHistoryState();
+            }
+        },
+
+        autoInit() {
+            if (this.init && this.search_string !== "") {
+                this.init = false;
             }
         }
     },

@@ -6,7 +6,10 @@
           <a
             class="p-2 pl-3 w-100 d-inline-block text-secondary"
             :href="song_lyric.public_url"
-          >{{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):"" }}</a>
+          >
+            <!-- {{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):"" }} -->
+            {{ song_lyric.id }}
+          </a>
         </td>
         <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
           <a class="p-2 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
@@ -117,7 +120,7 @@
         }`;
 
     export default {
-        props: ['search-string', 'selected-tags-dcnf', 'selected-songbooks', 'selected-tags', 'selected-languages'],
+        props: ['search-string', 'selected-tags-dcnf', 'selected-songbooks', 'selected-tags', 'selected-languages', 'init'],
 
         components: { ScrollTrigger },
 
@@ -206,14 +209,18 @@
 
                   // console.log(window.cachePersistor);
                   console.log(await window.cachePersistor.getSize());
-                }
+                },
             }
         },
 
         watch: {
           searchString() {
             this.results_loaded = false;
-          }
+          },
+
+          // init() {
+          //   this.$apollo.queries.song_lyrics.skip = false;
+          // }
         }
     }
 </script>
