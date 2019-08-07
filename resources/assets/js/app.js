@@ -1,16 +1,4 @@
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-require('./bootstrap');
-
-// /**
-//  * Materialise.css
-//  */
-// require('materialize-css');
-
 window.Vue = require('vue');
 
 /**
@@ -42,28 +30,27 @@ const httpLink = createHttpLink({
 
 const cache = new InMemoryCache();
 
-// // Set up cache persistence.
-// persistCache({
-//   cache,
-//   storage: window.localStorage,
-// }).then(function() {
-
-
-// });
-
-  // Create the apollo client
-  const apolloClient = new ApolloClient({
-    link: httpLink,
-    cache,
-  })
+// Set up cache persistence.
+persistCache({
+  cache,
+  storage: window.localStorage,
+}).then(function() {
   
-  Vue.use(VueApollo)
+    // Create the apollo client
+    const apolloClient = new ApolloClient({
+      link: httpLink,
+      cache,
+    })
+    
+    Vue.use(VueApollo)
+  
+    const apolloProvider = new VueApollo({
+        defaultClient: apolloClient,
+    })
+  
+    const app = new Vue({
+      el: '#app',
+      apolloProvider
+    });
 
-  const apolloProvider = new VueApollo({
-      defaultClient: apolloClient,
-  })
-
-  const app = new Vue({
-    el: '#app',
-    apolloProvider
-  });
+});
