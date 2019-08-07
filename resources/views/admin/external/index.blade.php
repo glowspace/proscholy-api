@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2>{{ $title ?? "Seznam externích zdrojů"}}</h2>
         @if ($type == "show-all")
             <externals-list></externals-list>

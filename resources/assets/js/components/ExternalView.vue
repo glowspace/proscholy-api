@@ -1,20 +1,26 @@
 <template>
-    <div>
-            <iframe v-if="type == 1"
-                    :src="iframeSrc"
-                    width="100%"
-                    height="80"
-                    frameborder="0"
-                    allowtransparency="true"
-                    allow="encrypted-media"></iframe>
+    <div class="card card-green" style="margin-bottom: 1em;">
+        <div class="card-header py-2" v-if="!([4,8,9].includes(this.type))">
+            <a :href="mediaLink" target="_blank" title="Otevřít v novém okně"><i :class="typeClass"></i></a>
+            <span v-for="(author, index) in authors" v-bind:key="author.id"><span v-if="index">,</span>
+                <a :href="author.public_url">{{ author.name }}</a>
+            </span>
+        </div>
+        <iframe v-if="type == 1"
+                :src="iframeSrc"
+                width="100%"
+                height="80"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"></iframe>
 
         <iframe v-else-if="type == 2"
-                        width="100%"
-                        height="166"
-                        scrolling="no"
-                        frameborder="no"
-                        allow="autoplay"
-                        :src="iframeSrc"></iframe>
+                width="100%"
+                height="120"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                :src="iframeSrc"></iframe>
 
         <div class="embed-responsive embed-responsive-16by9" v-else-if="type == 3">
             <iframe :src="iframeSrc"
@@ -23,15 +29,11 @@
         </div>
 
         <!-- audio soubor -->
-        <div v-else-if="type == 7" class="p-2">
-            <audio
-                controls
-                :src="iframeSrc">
-                    Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
-                </audio>
-        </div>
+        <audio controls :src="iframeSrc" v-else-if="type == 7">
+            Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
+        </audio>
 
-        <iframe v-else :src="iframeSrc" frameborder="0" width="100%" height="500"></iframe>
+        <iframe v-else :src="iframeSrc" frameborder="0" width="100%" :height="height || 300"></iframe>
     </div>
 </template>
 
@@ -43,7 +45,9 @@ export default {
         url: String,
         type: Number,
         thumbnailUrl: String,
-        mediaId: String
+        mediaId: String,
+        authors: Array,
+        height: Number
     },
 
     data() {
@@ -66,7 +70,8 @@ export default {
                     chrome: '>1000',
                 },
                 desktop: {
-                    chrome: '>70'
+                    chrome: '>70',
+                    firefox: ">60",
                 }
             }
         }
@@ -95,8 +100,40 @@ export default {
             }
         },
 
+        mediaLink() {
+            if (this.type == 1) {
+                return "https://open.spotify.com/track/" + this.mediaId;
+            } else {
+                return this.url;
+            }
+        },
+
         typeString() {
             return this.types[this.type];
+        },
+
+        typeClass() {
+            switch (this.type) {
+                case 1:
+                    return "fab fa-spotify";
+                    break;
+
+                case 2:
+                    return "fab fa-soundcloud";
+                    break;
+
+                case 3:
+                    return "fab fa-youtube";
+                    break;
+
+                case 4:
+                    return "fas fa-file-pdf";
+                    break;
+            
+                default:
+                    return "fas fa-music";
+                    break;
+            }
         }
     }
 }

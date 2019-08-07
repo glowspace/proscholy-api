@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2>Úprava externího zdroje</h2>
         <external-edit preset-id="{{ $external->id }}"></external-edit>
         {{-- <div class="row">

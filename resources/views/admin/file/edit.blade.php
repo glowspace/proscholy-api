@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2>Úprava nahraného souboru</h2>
         <file-edit preset-id="{{ $file->id }}"></file-edit>
         

@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2>Nový uživatel</h2>
         <div class="row">
             <div class="col-sm-12">

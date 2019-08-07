@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2></h2>
         @can('manage tags')
             <a class="btn btn-outline-primary" href="{{route('admin.tag.create')}}">+ Nový štítek</a>
