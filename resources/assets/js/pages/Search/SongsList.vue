@@ -79,7 +79,7 @@
       <scroll-trigger @triggerIntersected="loadMore"/>
     </template>
     <tr v-else>
-      <td v-if="$apollo.loading" class="border-top-0 p-1">
+      <td v-if="!results_loaded" class="border-top-0 p-1">
         <i class="px-3 py-2 d-block">Načítám...</i>
       </td>
       <td v-else class="border-top-0 p-1">
@@ -124,6 +124,7 @@
         data() {
             return {
                 results_limit: 20,
+                results_loaded: false
             }
         },
 
@@ -201,11 +202,18 @@
                 debounce: 200,
                 async result() {
                   this.$emit("query-loaded", null);
+                  this.results_loaded = true;
 
                   // console.log(window.cachePersistor);
                   console.log(await window.cachePersistor.getSize());
                 }
             }
         },
+
+        watch: {
+          searchString() {
+            this.results_loaded = false;
+          }
+        }
     }
 </script>
