@@ -221,7 +221,7 @@ export default {
 }
 
 .song-tags .tag.tag-selected {
-    font-weight: bold;
+    /* font-weight: bold; */
     opacity: 1 !important;
 }
 

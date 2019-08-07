@@ -520,6 +520,10 @@ View: Search results
 ChordPro view
  */
 
+body.dark .tag-selected {
+  border: none;
+}
+
 .song-tags {
 
   .tag {
@@ -546,7 +550,7 @@ ChordPro view
     }
 
     &.tag-selected {
-      background-color: $main-blue;
+      background-color: $main-blue !important;
       color: white !important;
     }
   }
@@ -557,7 +561,7 @@ ChordPro view
     }
 
     &.tag-selected {
-      background-color: $main-green;
+      background-color: $main-green !important;
       color: white !important;
     }
   }
@@ -568,7 +572,7 @@ ChordPro view
     }
 
     &.tag-selected {
-      background-color: $main-yellow;
+      background-color: $main-yellow !important;
       color: black !important;
     }
   }
@@ -579,7 +583,7 @@ ChordPro view
     }
 
     &.tag-selected {
-      background-color: $main-red;
+      background-color: $main-red !important;
       color: white !important;
     }
   }

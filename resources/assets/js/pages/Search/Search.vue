@@ -10,9 +10,8 @@
                     <input class="search-home"
                         placeholder="Zadejte název písně, část textu nebo jméno autora"
                         v-model="search_string"
+                        v-on:keyup.enter="init=false"
                         autofocus
-                        @keydown="init=false"
-                        @click="init=false"
                         ><button type="button"
                             class="search-submit" v-if="init" @click="init=false">
                         <i class="fa fa-search d-none d-sm-inline"></i>
@@ -25,7 +24,7 @@
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
-                <div v-if="init" @click="init=false" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
+                <div v-if="init" @click="resetState(true); init=false;" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
                 <div class="mx-3 d-md-none filter-panel" v-show="!init && displayFilter">
                     <a class="btn btn-secondary float-right fixed-top position-sticky"
                         v-on:click="displayFilter=false">
@@ -119,11 +118,7 @@ export default {
             let fragments = window.location.href.split('?');
 
             if (fragments.length === 1) {
-                this.search_string = "";
-                this.selected_tags = {};
-                this.selected_languages = {};
-                this.selected_songbooks = {};
-
+                this.resetState(false);
                 return;
             }
 
@@ -167,6 +162,17 @@ export default {
 
         getSplittedParam(param) {
             return param.split(',').filter(str => str.length > 0)
+        },
+
+        resetState(update_url) {
+            this.search_string = "";
+            this.selected_tags = {};
+            this.selected_languages = {};
+            this.selected_songbooks = {};
+
+            if (update_url) {
+                this.updateHistoryState();
+            }
         }
     },
 
