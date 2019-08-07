@@ -31,30 +31,47 @@ const httpLink = createHttpLink({
 const cache = new InMemoryCache();
 
 // Set up cache persistence.
-window.cachePersistor = new CachePersistor({
-  cache,
-  storage: window.sessionStorage,
-});
+// window.cachePersistor = new CachePersistor({
+//   cache,
+//   storage: window.sessionStorage,
+// });
 
-persistCache({
-  cache,
-  storage: window.sessionStorage
-}).then(function() {
+// persistCache({
+//   cache,
+//   storage: window.sessionStorage
+// }).then(function() {
   
-    // Create the apollo client
-    const apolloClient = new ApolloClient({
-      link: httpLink,
-      cache,
-    })
+//     // Create the apollo client
+//     const apolloClient = new ApolloClient({
+//       link: httpLink,
+//       cache,
+//     })
     
-    Vue.use(VueApollo)
+//     Vue.use(VueApollo)
   
-    const apolloProvider = new VueApollo({
-        defaultClient: apolloClient,
-    })
+//     const apolloProvider = new VueApollo({
+//         defaultClient: apolloClient,
+//     })
   
-    const app = new Vue({
-      el: '#app',
-      apolloProvider
-    });
+//     const app = new Vue({
+//       el: '#app',
+//       apolloProvider
+//     });
+// });
+
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+})
+
+Vue.use(VueApollo)
+
+const apolloProvider = new VueApollo({
+    defaultClient: apolloClient,
+})
+
+const app = new Vue({
+  el: '#app',
+  apolloProvider
 });
