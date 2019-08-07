@@ -89,6 +89,10 @@ class SongLyric extends Model
             'songook_records' => [
                 'type' => 'text',
                 // 'analyzer' => 'standard
+            ],
+            'id' => [
+                'type' => 'keyword',
+                'boost' => 100
             ]
         ]
     ];
@@ -351,19 +355,17 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
+        $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
+            return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
+        })->implode(" ");
+
         $arr = [
             'name' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $this->authors()->get()->implode("name", ", "),
-            'songbook_records' => $this->songbook_records()->get()->map(function($sb) {
-                return $sb->shortcut . $sb->pivot->number;
-            })->implode(" ")
+            'songbook_records' => $songbook_numbers,
+            'id' => $this->id
         ];
-
-        // $array = $this->toArray();
-
-        // // Preserve only attributes that are meant to be searched in
-        // $searchable = Arr::only($array, ['name', 'lyrics']);
 
         return $arr;
     }
