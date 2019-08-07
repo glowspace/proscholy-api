@@ -133,8 +133,7 @@ export default {
 
             // notify the parent that sth has changed
             this.$emit("update:selected-tags", this.selected_tags);
-            this.$emit("update:selected-tags-dcnf", this.getSelectedTagsDcnf());
-            this.$emit("change", null);
+            this.$emit("input", null);
         },
 
         selectSongbook(songbook) {
@@ -146,7 +145,7 @@ export default {
 
             // notify the parent that sth has changed
             this.$emit("update:selected-songbooks", this.selected_songbooks);
-            this.$emit("change", null);
+            this.$emit("input", null);
         },
 
         selectLanguage(language) {
@@ -158,7 +157,7 @@ export default {
 
             // notify the parent that sth has changed
             this.$emit("update:selected-languages", this.selected_languages);
-            this.$emit("change", null);
+            this.$emit("input", null);
         },
 
         isSelectedTag(tag) {
@@ -194,6 +193,10 @@ export default {
         // watch props for changes
         selectedTags(val, prev) {
             this.selected_tags = val;
+
+            // ok this needs to be here because otherwise the applyStateChange method on Search.vue
+            // doesn't work properly when updating only the selectedTags property
+            this.$emit("update:selected-tags-dcnf", this.getSelectedTagsDcnf());
         },
 
         selectedSongbooks(val, prev) {

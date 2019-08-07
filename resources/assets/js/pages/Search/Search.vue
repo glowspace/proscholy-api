@@ -37,7 +37,7 @@
                         v-bind:selected-tags.sync="selected_tags"
                         v-bind:selected-languages.sync="selected_languages"
                         v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
-                        v-on:change="updateHistoryState"
+                        v-on:input="updateHistoryState"
                     ></Filters>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     v-bind:selected-tags.sync="selected_tags"
                     v-bind:selected-languages.sync="selected_languages"
                     v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
-                    v-on:change="updateHistoryState"
+                    v-on:input="updateHistoryState"
                 ></Filters>
             </div>
         </div>
@@ -106,65 +106,66 @@ export default {
             let url = "/search?";
             let params = []
 
-            if (this.search_string !== "") {
-                params.push("searchString=" + this.search_string);
-            }
-
-            if (Object.keys(this.selected_tags).length > 0) {
-                params.push("tags=" + Object.keys(this.selected_tags));
-            }
-
-            if (Object.keys(this.selected_languages).length > 0) {
-                params.push("langs=" + Object.keys(this.selected_languages));
-            }
-
-            if (Object.keys(this.selected_songbooks).length > 0) {
-                params.push("songbooks=" + Object.keys(this.selected_songbooks));
-            }
+            params.push("searchString=" + this.search_string);
+            params.push("tags=" + Object.keys(this.selected_tags));
+            params.push("langs=" + Object.keys(this.selected_languages));
+            params.push("songbooks=" + Object.keys(this.selected_songbooks));
 
             history.pushState(null, "", url + params.join("&"));
         },
 
         applyStateChange(event) {
             let fragments = window.location.href.split('?');
-            if (fragments.length > 1) {
-                let params = fragments[1].split('&');
 
-                console.log(params);
+            if (fragments.length === 1) {
+                this.search_string = "";
+                this.selected_tags = {};
+                this.selected_languages = {};
+                this.selected_songbooks = {};
 
-                for (let param of params) {
-                    if (param.substring(0, 13) === "searchString=") {
-                        this.search_string = param.substring(14);
+                return;
+            }
+
+            let params = fragments[1].split('&');
+
+            for (let param of params) {
+                let param_fragments = param.split('=');
+
+                if (param_fragments[0] === "searchString") {
+                    this.search_string = param_fragments[1];
+                }
+                if (param_fragments[0] === "tags") {
+                    let obj = {};
+                    
+                    for (let id of this.getSplittedParam(param_fragments[1])) {
+                        obj[id] = true;
                     }
-                    if (param.substring(0, 5) === "tags=") {
-                        let obj = {};
-                        
-                        for (let id of param.substring(6).split(',')) {
-                            obj[id] = true;
-                        }
 
-                        this.selected_tags = obj;
-                    }
-                    if (param.substring(0, 6) === "langs=") {
-                        let obj = {};
-                        
-                        for (let lang of param.substring(7).split(',')) {
-                            obj[lang] = true;
-                        }
+                    this.selected_tags = obj;
+                }
+                if (param_fragments[0] === "langs") {
+                    let obj = {};
 
-                        this.selected_languages = obj;
+                    for (let lang of this.getSplittedParam(param_fragments[1])) {
+                        obj[lang] = true;
                     }
-                    if (param.substring(0, 10) === "songbooks=") {
-                        let obj = {};
-                        
-                        for (let id of param.substring(11).split(',')) {
-                            obj[id] = true;
-                        }
 
-                        this.selected_songbooks = obj;
+                    this.selected_languages = obj;
+                }
+                if (param_fragments[0] === "songbooks") {
+                    let obj = {};
+                    
+                    for (let id of this.getSplittedParam(param_fragments[1])) {
+                        obj[id] = true;
                     }
+
+                    this.selected_songbooks = obj;
                 }
             }
+        },
+
+        getSplittedParam(param) {
+            return param.split(',').filter(str => str.length > 0)
         }
     },
 
@@ -187,20 +188,6 @@ export default {
                 Object.keys(this.selected_languages).length
                  > 0;
         }
-    },
-
-    watch: {
-        // selected_tags(val, prev) {
-        //     this.updateHistoryState();
-        // },
-
-        // selected_languages(val, prev) {
-        //     this.updateHistoryState();
-        // },
-
-        // selected_songbooks(val, prev) {
-        //     this.updateHistoryState();
-        // }
     }
 }
 </script>
