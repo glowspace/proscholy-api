@@ -12,6 +12,7 @@
   "devDependencies": {
     "axios": "^0.18",
     "bootstrap": "4.2.1",
+    "brotli-gzip-webpack-plugin": "^0.5.0",
     "browser-sync": "^2.26.3",
     "browser-sync-webpack-plugin": "^2.0.1",
     "cross-env": "^5.1",
