@@ -199,8 +199,11 @@
                 },
                 // debounce waits 200ms for query refetching
                 debounce: 200,
-                result() {
+                async result() {
                   this.$emit("query-loaded", null);
+
+                  // console.log(window.cachePersistor);
+                  console.log(await window.cachePersistor.getSize());
                 }
             }
         },

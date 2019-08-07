@@ -17,7 +17,7 @@ Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { persistCache } from 'apollo-cache-persist';
+import { persistCache, CachePersistor } from 'apollo-cache-persist';
 import VueApollo from 'vue-apollo';
 
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
@@ -31,9 +31,14 @@ const httpLink = createHttpLink({
 const cache = new InMemoryCache();
 
 // Set up cache persistence.
+window.cachePersistor = new CachePersistor({
+  cache,
+  storage: window.sessionStorage,
+});
+
 persistCache({
   cache,
-  storage: window.localStorage,
+  storage: window.sessionStorage
 }).then(function() {
   
     // Create the apollo client
@@ -52,5 +57,4 @@ persistCache({
       el: '#app',
       apolloProvider
     });
-
 });
