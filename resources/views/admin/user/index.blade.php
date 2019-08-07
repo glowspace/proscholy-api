@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2>Seznam uživatelů</h2>
         <a class="btn btn-outline-primary" href="{{route('admin.user.create')}}">+ Nový uživatel</a>
         <div class="row">

@@ -23,8 +23,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function renderAboutTeam()
+    public function renderAboutSongbook()
     {
-        return view('client.about_team');
+        return view('client.about_songbook');
     }
 }

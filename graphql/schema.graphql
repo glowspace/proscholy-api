@@ -10,6 +10,14 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 #import inputs_update.graphql
 #import inputs_create_delete.graphql
 
+
+union SearchResult = SongLyric | Author
+
+type FilterTagCategory {
+    name: String
+    selected_tags: [Tag!]!
+}
+
 type Query {
     users: [User!]! @all
     user(id: ID @eq): User @find
@@ -34,7 +42,8 @@ type Query {
     externals (
         type: Int
         is_todo: Boolean
-    ): [External!]!
+        orderBy: [OrderByClause!] @orderBy
+    ): [External!]! @all
     files (
         type: Int
         is_todo: Boolean
@@ -44,6 +53,10 @@ type Query {
         is_private: Boolean @eq
     ): [Songbook] @all
     me: User @auth
+
+    search_song_lyrics(
+        search_string: String
+    ): [SongLyric!]!
 
     author(id: ID! @eq): Author @find
     external(id: ID! @eq): External @find

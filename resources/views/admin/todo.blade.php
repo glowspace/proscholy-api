@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
-@section('content')
-    <div class="content-padding">
+@section('content-withmenu')
+    <div class="__container-fluid">
         <h2>Materiály k doplnění</h2>
         {{--<a class="btn btn-info" href="{{route('admin.todo.random')}}">Zapnout režim doplňování</a>--}}
 

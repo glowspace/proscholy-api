@@ -3,10 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
+use ScoutElastic\Searchable;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -57,7 +57,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class SongLyric extends Model
 {
-    // Laravel Scout Searchable Trait used for full-text searching
+    // ElasticSearch Searchable Trait used for full-text searching
     use Searchable, 
     // Lockable Trait for enabling to "lock" the model while editing
         Lockable, 
@@ -66,7 +66,36 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['has_chords', 'creating_at'];
+    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'visits'];
+
+    protected $indexConfigurator = SongLyricIndexConfigurator::class;
+
+    // Here you can specify a mapping for model fields
+    protected $mapping = [
+        'properties' => [
+            'name' => [
+                'type' => 'text',
+                'analyzer' => 'name_analyzer',
+                "boost" => 2
+            ],
+            'lyrics' => [
+                'type' => 'text',
+                'analyzer' => 'czech_analyzer'
+            ],
+            'authors' => [
+                'type' => 'text',
+                'analyzer' => 'name_analyzer'
+            ],
+            'songook_records' => [
+                'type' => 'text',
+                // 'analyzer' => 'standard
+            ],
+            'id' => [
+                'type' => 'keyword',
+                'boost' => 100
+            ]
+        ]
+    ];
 
     protected $dispatchesEvents = [
         'saved' => \App\Events\SongLyricSaved::class,
@@ -93,7 +122,7 @@ class SongLyric extends Model
             'licence_type',
             'only_regenschori',
             'capo',
-            'visits'
+            'visits' 
         ];
 
     private static $lang_string_values = [
@@ -140,6 +169,25 @@ class SongLyric extends Model
         //     $this->files()->count() == 0
         //     && 
     }
+
+    public function getHasLyricsAttribute() : bool
+    {
+        return !empty($this->lyrics);
+    }
+
+    // public function getHasMediaAttribute() : bool
+    // {
+    //     return 
+    //         $this->externals()->media()->exists() || 
+    //         $this->files()->audio()->exists();
+    // }
+
+    // public function getHasSheetMusicAttribute() : bool
+    // {
+    //     return 
+    //         $this->externals()->scores()->exists() ||
+    //         $this->files()->scores()->exists();
+    // }
 
 
     // ! deprecated soon
@@ -307,12 +355,19 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $array = $this->toArray();
+        $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
+            return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
+        })->implode(" ");
 
-        // Preserve only attributes that are meant to be searched in
-        $searchable = Arr::only($array, ['name', 'lyrics']);
+        $arr = [
+            'name' => $this->name,
+            'lyrics' => $this->lyrics_no_chords,
+            'authors' => $this->authors()->get()->implode("name", ", "),
+            'songbook_records' => $songbook_numbers,
+            'id' => $this->id
+        ];
 
-        return $searchable;
+        return $arr;
     }
 
     public function getFormattedLyrics()

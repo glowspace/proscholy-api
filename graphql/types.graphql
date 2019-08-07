@@ -44,7 +44,11 @@ type SongLyric {
     lang_string_values: JSON
     updated_at: String
     authors: [Author] @belongsToMany
-    externals(id: Int @eq, type: Int @eq): [External] @hasMany
+    externals(
+        id: Int @eq,
+        type: Int @eq
+        orderBy: [OrderByClause!] @orderBy
+        ): [External] @hasMany
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @belongsToMany
     songbook_records: [SongbookRecord] @belongsToMany
@@ -55,6 +59,9 @@ type SongLyric {
     only_regenschori: Boolean
     capo: Int
     visits: Int
+    has_lyrics: Boolean
+    # has_sheet_music: Boolean @with(relation: "externals")
+    # has_media: Boolean @with(relation: "files")
 }
 
 type External {
@@ -91,6 +98,7 @@ type Tag {
     type: Int
     parent_tag: Tag @belongsTo
     child_tags: [Tag] @hasMany
+    description: String
 }
 
 type Model {
