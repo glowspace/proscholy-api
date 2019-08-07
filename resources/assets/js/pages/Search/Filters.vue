@@ -99,7 +99,10 @@ export default {
 
     apollo: {
         tags: {
-            query: fetch_items
+            query: fetch_items,
+            result() {
+                this.$emit('tags-loaded', null);
+            }
         },
 
         songbooks: {

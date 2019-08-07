@@ -67,6 +67,7 @@
                     v-bind:selected-languages.sync="selected_languages"
                     v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
                     v-on:input="updateHistoryState"
+                    v-on:tags-loaded="applyStateChange"
                 ></Filters>
             </div>
         </div>
@@ -172,6 +173,11 @@ export default {
     mounted() {
         this.search_string = this.strPrefill ? this.strPrefill : "";
         window.onpopstate = this.applyStateChange;
+
+        if (window.location.href.indexOf('?search') > 0) {
+            // this.applyStateChange();
+            this.init = false;
+        }
     },
 
     components: {
