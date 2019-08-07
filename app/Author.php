@@ -49,6 +49,7 @@ class Author extends Model
     // Laravel Scout Trait used for full-text searching
     use Searchable, RevisionableTrait;
     protected $revisionCreationsEnabled = true;
+    protected $dontKeepRevisionOf = ['visits'];
     
     protected $fillable = ['name', 'description', 'email', 'url', 'type'];
 
