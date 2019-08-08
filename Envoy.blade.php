@@ -61,18 +61,6 @@
     ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 @endtask
 
-@task('update_symlinks')
-    echo "Linking storage directory"
-    rm -rf {{ $new_release_dir }}/storage
-    ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-
-    echo 'Linking .env file'
-    ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
-
-    echo 'Linking current release'
-    ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
-@endtask
-
 @task('give_permissions')
     echo "Giving permissions for apache to access the storage and vendor folders"
     chown -R www-data:www-data {{ $new_release_dir }}/storage {{ $new_release_dir }}/vendor
