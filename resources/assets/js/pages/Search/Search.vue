@@ -94,8 +94,7 @@ export default {
             // dcnf - disjunctive canonical normal form :)
             selected_tags_dcnf: {},
             init: true,
-            displayFilter: false,
-            numberDisplayMode: 0,
+            displayFilter: false
         }
     },
 
