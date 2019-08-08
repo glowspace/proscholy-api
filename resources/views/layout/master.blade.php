@@ -20,6 +20,7 @@
     {{-- warning - potentially dangerous, only provisional solution --}}
         <meta id="userToken" name="userToken" value="{{ Auth::user()->getApiToken() }}">
     @endif
+    @stack('meta_tags')
 
     <title>
         @yield('title', 'ProScholy.cz – chytrý křesťanský zpěvník')

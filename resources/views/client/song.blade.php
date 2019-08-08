@@ -1,6 +1,9 @@
 @extends('layout.client')
 
 @section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
+@push('meta_tags')
+<meta name="description" content="Píseň {{ $song_l->name }}, autoři: {{ $song_l->authors->implode(', ') }}">
+@endpush
 
 @section('content')
     <div class="container">
@@ -84,10 +87,12 @@
                         <i class="fas fa-language"></i>
                         <span class="d-none d-sm-inline">Překlady</span>
                     </a>
+                    <!--googleoff: all-->
                     <a class="btn btn-secondary">
                         <i class="fas fa-file-pdf"></i>
                         <span class="d-none d-sm-inline">Export</span>
                     </a>
+                    <!--googleon: all-->
                 </div>
                 <div class="card-body py-2">
                     {!! $song_l->getFormattedLyrics() !!}
