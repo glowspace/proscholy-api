@@ -203,6 +203,7 @@ export default {
         },
 
         selectedSongbooks(val, prev) {
+            console.log("ahoj");
             this.selected_songbooks = val;
         },
 
