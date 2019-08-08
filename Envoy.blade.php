@@ -1,9 +1,9 @@
-@servers(['web' => 'deployer@176.97.241.234 -p 2222'])
+@servers(['web' => 'msery@176.97.241.234 -p 2222'])
 
 @setup
     $repository = 'git@gitlab.com:mdojcar/proscholy.cz.git';
-    $releases_dir = '/var/www/proscholy.cz/releases';
-    $app_dir = '/var/www/proscholy.cz';
+    $releases_dir = '/var/www/html/releases';
+    $app_dir = '/var/www/html';
     $release = date('YmdHis');
     $new_release_dir = $releases_dir .'/'. $release;
 @endsetup
