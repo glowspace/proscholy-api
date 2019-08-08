@@ -2,7 +2,7 @@
   <table class="table m-0">
     <template v-if="song_lyrics_results && song_lyrics_results.length && !$apollo.loading">
       <tr v-for="(song_lyric, index) in song_lyrics_results" v-bind:key="song_lyric.id">
-        <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
+        <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right']">
           <a
             class="p-2 pl-3 w-100 d-inline-block text-secondary"
             :href="song_lyric.public_url"
@@ -99,7 +99,7 @@
     // Query
     const fetch_items = gql`
         # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
-        query FetchSongLyrics($search_str: String) {
+        query FetchSongLyrics_cached($search_str: String) {
             song_lyrics: search_song_lyrics(search_string: $search_str) {
                 id,
                 name,
