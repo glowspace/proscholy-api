@@ -120,14 +120,6 @@
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
-              <number-input 
-                label="Kapodastr"
-                v-model="model.capo"
-                vv-name="input.capo"
-                :min-value="0"
-                :max-value="11"
-                >
-              </number-input>
               <!-- <v-text-field
                 label="Kapodastr"
                 required
@@ -152,6 +144,14 @@
                 ref="textarea"
                 v-model="model.lyrics"
               ></v-textarea>
+              <number-input 
+                label="Kapodastr"
+                v-model="model.capo"
+                vv-name="input.capo"
+                :min-value="0"
+                :max-value="11"
+                >
+              </number-input>
               <p>
                 Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např.
                 <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
