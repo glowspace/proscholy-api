@@ -1,5 +1,5 @@
 <template>
-    <div class="song-tags card">
+    <div class="song-tags card pt-1">
         <h4>Liturgie - mše svatá</h4>
 
         <a

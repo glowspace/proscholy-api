@@ -359,6 +359,14 @@ $search-wrapper-height: 47px;
   }
 }
 
+body.dark .btn.display-all-songs {
+  background-color: rgba(255, 255, 255, 0.15);
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+}
+
 .btn.btn-outline-light.display-all-songs {
   border-radius: 8px;
   background-color: rgba(218, 57, 38, 0.5);
@@ -521,7 +529,7 @@ ChordPro view
  */
 
 body.dark .tag-selected {
-  border: none;
+  border-color: black;
 }
 
 .song-tags {
