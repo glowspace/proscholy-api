@@ -672,7 +672,7 @@ body {
 }
 
 body.dark {
-  background-color: #111;
+  background-color: #000;
 
   h1 {
     color: white;
@@ -683,7 +683,7 @@ body.dark {
   }
 
   .card-body, .chord-text, .card {
-    background-color: black;
+    background-color: #111;
     color: #ccc;
   }
 
