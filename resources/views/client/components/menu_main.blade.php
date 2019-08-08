@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
     <div class="container">
-    <a class="navbar-brand" href="{{url("")}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">Zpěvník pro scholy</a>
+    <a class="navbar-brand" href="{{url("")}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60" alt="logo">Zpěvník pro scholy</a>
     @if (Auth::check())
             <a class="navbar-text px-3" href="{{route('admin.dashboard')}}">
             Přihlášený uživatel: {{ Auth::user()->name }}
@@ -22,7 +22,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-        <a href="{{url("")}}" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="24"></a>
+        <a href="{{url("")}}" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="24" alt="logo"></a>
         <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i></a>
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a> --}}
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i></a> --}}
