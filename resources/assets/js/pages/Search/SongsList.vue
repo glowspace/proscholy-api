@@ -98,6 +98,7 @@
 
     // Query
     const fetch_items = gql`
+        # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
         query FetchSongLyrics($search_str: String) {
             song_lyrics: search_song_lyrics(search_string: $search_str) {
                 id,
@@ -208,7 +209,7 @@
                   this.results_loaded = true;
 
                   // console.log(window.cachePersistor);
-                  console.log(await window.cachePersistor.getSize());
+                  // console.log(await window.cachePersistor.getSize());
                 },
             }
         },
