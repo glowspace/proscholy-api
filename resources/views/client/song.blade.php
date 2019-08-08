@@ -6,7 +6,8 @@
     <div class="container">
         <div class="d-flex flex-column flex-lg-row flex-wrap flex-lg-nowrap mt-4">
             <div class="flex-grow-1">
-                <h1 class="m-0 pb-0">{{$song_l->name}}</h1>
+                <h1 class="song-title">{{$song_l->name}}</h1>
+                <h4 class="song-number">{{ $song_l->id }}</h4>
                 <p class="song-author"> @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
             </div>
             <div class="song-tags align-self-end" style="flex: 4;">
@@ -18,13 +19,14 @@
                         @if ($tag->parent_tag == null)
                             <a class="tag tag-green">{{ $tag->name }}</a>
                         @else
+                            {{-- do not display the parent tag as for now --}}
                             {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
                         @endif
                     @endforeach
                 </div>
                 <div class="d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
                     @foreach ($songbook_records as $record)
-                        <a class="tag tag-yellow">{{ $record->shortcut . " " . $record->pivot->number }}</a>
+                        <a class="tag tag-yellow">{{ $record->name . " " . $record->pivot->number }}</a>
                     @endforeach
                 </div>
             </div>

@@ -528,8 +528,20 @@ View: Search results
 ChordPro view
  */
 
+
 body.dark .tag-selected {
   border-color: black;
+}
+
+.song-title {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.song-number {
+  color: #9a9a9a;
+  margin-bottom: 0.25rem;
+  margin-top: 0;
 }
 
 .song-tags {
