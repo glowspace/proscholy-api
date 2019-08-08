@@ -1,11 +1,11 @@
 <template>
-	<a tabindex="0" v-on:click="darkModeToggle" class="btn btn-secondary dark-mode-button"><i class="fas fa-moon"></i>{{ text }}</a>
+	<a tabindex="0" v-on:click="darkModeToggle" class="btn btn-secondary dark-mode-button animate-fadein"><i class="fas fa-moon"></i>
+        <slot></slot>
+    </a>
 </template>
 
 <script>
     export default {
-        props: ["text"],
-
         methods:{
             darkModeToggle: function() {
 				document.getElementsByTagName("body")[0].classList.toggle("dark");
