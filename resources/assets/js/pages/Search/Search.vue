@@ -120,7 +120,7 @@ export default {
         },
 
         applyStateChange(event) {
-            let fragments = window.location.href.split('?');
+            let fragments = decodeURIComponent(window.location.href).split('?');
 
             if (fragments.length === 1) {
                 this.resetState(false);
