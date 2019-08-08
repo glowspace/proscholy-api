@@ -1,11 +1,11 @@
 <template>
-    <div class="song-tags card">
+    <div class="song-tags card pt-1">
         <h4>Liturgie - mše svatá</h4>
 
         <a
             v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
             v-for="tag in tags_official"
-            v-bind:key="tag.id"
+            v-bind:key="'tag-'+tag.id"
             v-on:click="selectTag(tag)"
         >{{ tag.name }}</a>
 
@@ -15,7 +15,7 @@
             <a
                 v-bind:class="['tag', 'tag-green', isSelectedTag(child_tag) ? 'tag-selected' : '']"
                 v-for="child_tag in tag.child_tags"
-                v-bind:key="child_tag.id"
+                v-bind:key="'tag-'+child_tag.id"
                 v-on:click="selectTag(child_tag)"
             >{{ child_tag.name }}</a>
         </div>
@@ -25,7 +25,7 @@
         <a
             v-bind:class="['tag', 'tag-yellow', isSelectedSongbook(songbook) ? 'tag-selected' : '']"
             v-for="songbook in songbooks"
-            v-bind:key="songbook.id"
+            v-bind:key="'songbook-'+songbook.id"
             v-on:click="selectSongbook(songbook)"
         >{{ songbook.name }}</a>
 
@@ -34,7 +34,7 @@
         <a
             v-bind:class="['tag', 'tag-red', isSelectedLanguage(lang_code) ? 'tag-selected' : '']"
             v-for="(lang_name, lang_code) in all_languages"
-            v-bind:key="lang_code"
+            v-bind:key="'lang-'+lang_code"
             v-on:click="selectLanguage(lang_code)"
         >{{ lang_name }}</a>
     </div>

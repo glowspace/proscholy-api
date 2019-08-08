@@ -8,7 +8,7 @@
             :href="song_lyric.public_url"
           >
             <!-- {{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):"" }} -->
-            {{ song_lyric.id }}
+            {{ getSongNumber(song_lyric) }}
           </a>
         </td>
         <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
@@ -98,6 +98,7 @@
 
     // Query
     const fetch_items = gql`
+        # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
         query FetchSongLyrics($search_str: String) {
             song_lyrics: search_song_lyrics(search_string: $search_str) {
                 id,
@@ -127,7 +128,8 @@
         data() {
             return {
                 results_limit: 20,
-                results_loaded: false
+                results_loaded: false,
+                preferred_songbook_id: null
             }
         },
 
@@ -189,6 +191,16 @@
             loadMore() {
                 if (this.results_limit < this.song_lyrics.length)
                     this.results_limit += 20;
+            },
+
+            getSongNumber(song_lyric) {
+              if (this.preferred_songbook_id === null) {
+                return song_lyric.id;
+              }
+
+              let rec = song_lyric.songbook_records.filter(record => record.songbook.id === this.preferred_songbook_id)[0];
+
+              return rec.songbook.shortcut + rec.number;
             }
         },
 
@@ -208,7 +220,7 @@
                   this.results_loaded = true;
 
                   // console.log(window.cachePersistor);
-                  console.log(await window.cachePersistor.getSize());
+                  // console.log(await window.cachePersistor.getSize());
                 },
             }
         },
@@ -221,6 +233,15 @@
           // init() {
           //   this.$apollo.queries.song_lyrics.skip = false;
           // }
+
+          selectedSongbooks(val) {
+              let arr = Object.keys(val);
+              if (arr.length == 1) {
+                  this.preferred_songbook_id = arr[0];
+              } else {
+                  this.preferred_songbook_id = null;
+              }
+          }
         }
     }
 </script>

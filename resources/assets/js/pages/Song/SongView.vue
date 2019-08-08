@@ -367,6 +367,8 @@ const FETCH_SONG_LYRIC = gql`
   }
 `;
 
+import { clone } from 'lodash';
+
 export default {
   props: ["song-id", "render-media", "render-scores", "render-translations"],
 
@@ -454,7 +456,7 @@ export default {
       get() {
         // File => File with unified type
         const mapFile = file => {
-          const copy = _.clone(file);
+          const copy = clone(file);
           copy.type = this.fileTypeConvert(copy.type);
           return copy;
         };
@@ -463,7 +465,7 @@ export default {
           [4, 8, 9].includes(ext.type)
         );
         const filteredFiles = this.song_lyric.files
-          .map(mapFile)
+          .map(mapFile) 
           .filter(file => [4, 8, 9].includes(file.type));
 
         return [...filteredExternals, ...filteredFiles];

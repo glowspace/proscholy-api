@@ -94,8 +94,7 @@ export default {
             // dcnf - disjunctive canonical normal form :)
             selected_tags_dcnf: {},
             init: true,
-            displayFilter: false,
-            numberDisplayMode: 0,
+            displayFilter: false
         }
     },
 
@@ -120,7 +119,7 @@ export default {
         },
 
         applyStateChange(event) {
-            let fragments = window.location.href.split('?');
+            let fragments = decodeURIComponent(window.location.href).split('?');
 
             if (fragments.length === 1) {
                 this.resetState(false);

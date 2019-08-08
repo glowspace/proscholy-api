@@ -21,7 +21,7 @@ class CachedGrapqhl
         if ($request->get("operationName") == "FetchSongLyrics"
             && $request->get("variables")["search_str"] == null) {
 
-            $result = Cache::remember('cached_song_lyrics', 10, function () use ($next, $request) {
+            $result = Cache::remember('cached_song_lyrics', 1, function () use ($next, $request) {
                 return $next($request);
             });
 
