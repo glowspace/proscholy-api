@@ -229,7 +229,7 @@
             <v-flex xs4>
               <v-select
                 v-model="record.songbook"
-                :items="songbooks"
+                :items="[...songbooks].sort((one, two) => one.name.localeCompare(two.name))"
                 item-text="name"
                 return-object
                 label="Název zpěvníku"
