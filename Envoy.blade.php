@@ -104,7 +104,7 @@
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
 
     {{-- Rename .env --}}
-    mv {{ $app_dir }}/.env.production {{ $app_dir }}/.env
+    mv {{ $new_release_dir }}/.env.production {{ $new_release_dir }}/.env
 
 
     {{-- run composer --}}
@@ -123,9 +123,9 @@
     php artisan route:cache
     php artisan cache:clear
     php artisan view:clear
-
+    {{-- 
     if php artisan migrate:check; then 
-        {{-- no migration available --}}
+        no migration available
         echo 'No migration available, performing only mapping update for elasticsearch'
         php artisan elastic:update-mapping "App\SongLyric"
         php artisan elastic:update-mapping "App\Author"
@@ -136,7 +136,20 @@
         NEW_UUID=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 4 | head -n 1)
         php artisan elastic:migrate "App\SongLyric" song_lyric_${NEW_UUID}
         php artisan elastic:migrate "App\Author" author_${NEW_UUID}
-    fi
+    fi --}}
+    php artisan migrate --force
+
+    php artisan elastic:drop-index "App\SongLyricIndexConfigurator"
+    php artisan elastic:drop-index "App\AuthorIndexConfigurator"
+
+    php artisan elastic:create-index "App\SongLyricIndexConfigurator"
+    php artisan elastic:create-index "App\AuthorIndexConfigurator"
+
+    php artisan elastic:update-mapping "App\SongLyric"
+    php artisan elastic:update-mapping "App\Author"
+
+    php artisan scout:import "App\SongLyric"
+    php artisan scout:import "App\Author"
 
     php artisan up
 

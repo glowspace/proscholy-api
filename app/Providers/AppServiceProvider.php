@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Blade;
 use Validator;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        if(config('url.redirect_https'))
+        {
+            URL::forceScheme('https');
+        }
 
         Blade::directive('pushonce', function ($expression) {
             $domain = explode(':', trim(substr($expression, 1, -1)));
