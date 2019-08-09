@@ -102,8 +102,9 @@
     echo "Linking storage directory"
     rm -rf {{ $new_release_dir }}/storage
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-    echo 'Linking .env file'
-    ln -nfs {{ $app_dir }}/.env {{ $app_dir }}/.env.production
+
+    {{-- Rename .env --}}
+    mv {{ $app_dir }}/.env.production {{ $app_dir }}/.env
 
 
     {{-- run composer --}}
@@ -113,7 +114,7 @@
 
     {{-- run yarn --}}
     yarn install
-    yarn run dev
+    yarn run production
 
     rm -rf node_modules
 

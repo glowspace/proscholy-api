@@ -31,6 +31,7 @@ class SearchSongLyrics
         // }
 
         $query = SongLyric::search($args['search_string']);
+        $query->limit = 50;
 
         $query->with('songbook_records');
 
