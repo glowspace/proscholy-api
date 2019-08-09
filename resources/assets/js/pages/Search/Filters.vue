@@ -213,20 +213,3 @@ export default {
     }
 };
 </script>
-
-
-<style>
-.song-tags {
-    padding: 1em;
-    display: block;
-}
-
-.song-tags .tag.tag-selected {
-    /* font-weight: bold; */
-    opacity: 1 !important;
-}
-
-a.tag {
-    cursor: pointer;
-}
-</style>

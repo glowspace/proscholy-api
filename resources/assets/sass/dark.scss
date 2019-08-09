@@ -1,0 +1,99 @@
+body.dark {
+  background-color: #000;
+
+  h1 {
+    color: white;
+  }
+
+  .container {
+    color: #ccc;
+  }
+
+  .card-body,
+  .chord-text,
+  .card {
+    background-color: #111;
+    color: #ccc;
+  }
+
+  .card-header,
+  .card-footer,
+  .bg-light,
+  .tag {
+    background-color: #222 !important;
+    color: #ccc;
+  }
+
+  .border {
+    border-color: #222 !important;
+  }
+
+  .background-home {
+    background: transparent;
+  }
+
+  .search-home {
+    background-color: black;
+    color: white;
+    border: 1px #333 solid;
+    border-right: 0;
+  }
+
+  .search-submit {
+    background-color: black;
+    color: white;
+    border: 1px #333 solid;
+    border-left: 0;
+  }
+
+  .filter-active {
+    background-color: #666;
+  }
+
+  .filter-open {
+    background-color: #333;
+  }
+
+  .text-very-muted {
+    color: #222;
+  }
+
+  .chord-sign {
+    color: #4dc0b5;
+  }
+
+  .chosen .btn,
+  .btn.chosen,
+  .dark-mode-button {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  a {
+    color: #4dc0b5;
+
+    &:hover {
+      color: #328e85;
+    }
+  }
+
+  .tag-selected {
+    border-color: black;
+  }
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+
+  @include media-breakpoint-down(sm) {
+    position: relative;
+    height: auto;
+    padding-top: 1rem;
+    width: 100%;
+  }
+}
