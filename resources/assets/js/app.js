@@ -12,6 +12,7 @@ Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
 Vue.component('search', require('Public/pages/Search/Search.vue'));
 Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
+Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
 
 
 import { ApolloClient } from 'apollo-client';
@@ -28,7 +29,7 @@ const httpLink = createHttpLink({
   uri: base_url + '/graphql',
 })
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache(); 
 
 // Set up cache persistence.
 window.cachePersistor = new CachePersistor({

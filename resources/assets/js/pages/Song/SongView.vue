@@ -363,6 +363,7 @@ const FETCH_SONG_LYRIC = gql`
           lang_string
         }
       }
+      # songbook_records{number, songbook{id, name, shortcut}}
     }
   }
 `;

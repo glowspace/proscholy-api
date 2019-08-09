@@ -1,34 +1,44 @@
 /**
 Imports
  */
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 @font-face {
   font-family: "Luckiest Guy";
-  src:         url('/fonts/luckiest-guy.regular.ttf');
+  src: url("/fonts/luckiest-guy.regular.ttf");
 }
 
 @font-face {
   font-family: "Cocogoose";
-  src:         url('/fonts/cocogoose-pro-regular.ttf');
+  src: url("/fonts/cocogoose-pro-regular.ttf");
 }
 
-@import 'variables';
-@import 'admin';
-@import '~bootstrap-material-design/scss/bootstrap-material-design'; // Materialize.css
-
+@import "variables";
 $main-red: #d83027;
 $main-blue: #3961ad;
 $main-green: #098845;
-$main-yellow: #FAA61B;
+$main-yellow: #faa61b;
 
-h1, h2, h3, h4 {
+// @import 'admin';
+@import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
+@import "admin";
+@import "dark";
+@import "navbar";
+@import "print";
+@import "search";
+@import "song";
+
+
+h1,
+h2,
+h3,
+h4 {
   margin: 0.7em 0;
 }
 
 .material-shadow {
   -webkit-box-shadow: #1a1f21c2 2px 2px 6px;
-  box-shadow:         #1a1f21c2 2px 2px 6px;
+  box-shadow: #1a1f21c2 2px 2px 6px;
 }
 
 .material-shadow-text {
@@ -37,11 +47,11 @@ h1, h2, h3, h4 {
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select:   none; /* Safari */
-  -khtml-user-select:    none; /* Konqueror HTML */
-  -moz-user-select:      none; /* Firefox */
-  -ms-user-select:       none; /* Internet Explorer/Edge */
-  user-select:           none;
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
   /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
@@ -53,8 +63,9 @@ h1, h2, h3, h4 {
 Layout
  */
 
-html, body {
-  height:     100%;
+html,
+body {
+  height: 100%;
   overflow-x: visible;
 }
 
@@ -62,104 +73,39 @@ input::placeholder {
   line-height: inherit;
 }
 
-.search-home, .form-control {
-  line-height: calc((2.3775rem + 2px)/1.5);
+[v-cloak] {
+  display: none;
+}
+
+.search-home,
+.form-control {
+  line-height: calc((2.3775rem + 2px) / 1.5);
 }
 
 .navbar {
-  z-index:          200;
+  z-index: 200;
   background-color: #292929;
 
   min-height: 66px;
 
-  font-family:      "Nunito", sans-serif;
+  font-family: "Nunito", sans-serif;
+
+  @include media-breakpoint-down(sm) {
+  }
 }
 
 .navbar-brand {
   padding: 0 0.5rem;
 }
 
-.admin-controls {
-  position: fixed;
-  top: 30vh;
-  left: 0.3125rem;
-  z-index: 20;
-  a:nth-of-type(odd) {
-    i {
-      width: 16px;
-    }
-  }
-  a:nth-of-type(odd) + a {
-    padding-left: 5px;
-    padding-right: 10px;
-    display: none;
-    background: rgba(248, 250, 252, 0.8);
-    border-radius: 10px;
-    .dark & {
-      background: rgba(17, 17, 17, 0.8);
-    }
-  }
+.navbar-label {
+  padding: 3px 10px;
 
-  a:nth-of-type(odd):hover + a {
-    display: inline-block;
-  }
+  background-color: #292929;
+  color: white;
 }
 
-// admin sidebar
-.sidebar {
-  @include media-breakpoint-up(lg) {
-    min-height: calc(100vh - 66px);
-  }
-  
-  @include media-breakpoint-down(md) {
-    margin-right: -15px;
-  }
-
-  height: 100%;
-  margin-left: -15px;
-
-  a {
-    padding: 0.4rem 0.8rem;
-
-    @include media-breakpoint-up(lg) {
-      width:    100%;
-      padding:    0.66875rem 1rem;
-    }
-
-    margin:     0;
-
-    color:      white !important;
-    text-align: left;
-
-    &:hover {
-      color: white;
-    }
-
-    // Fontawesome icon
-    i {
-      width: 20px;
-    }
-
-    .badge {
-      float:            right;
-
-      position:         relative;
-      top:              3px;
-
-      background-color: #36c374;
-      color:            black;
-    }
-  }
-
-  .navbar-label {
-    padding:          3px 10px;
-
-    background-color: #292929;
-    color:            white;
-  }
-}
-
-.content {
+// .content {
   // height:     calc(100% - 66px);
   // width:      calc(100% - #{$sidebar-width});
 
@@ -168,7 +114,6 @@ input::placeholder {
   // @include media-breakpoint-up(lg) {
   //   margin-left: 300px;
   // }
-
 
   // // On md and above navbar is hidden
   // @include media-breakpoint-down(md) {
@@ -180,7 +125,7 @@ input::placeholder {
   // padding:    0;
 
   // overflow-x: hidden;
-}
+// }
 
 // .content-padding {
 //   padding: 0 30px 20px;
@@ -221,9 +166,9 @@ Home page specific elements
 }
 
 .background-home {
-  background-image:      url('/img/bg_center.svg');
+  background-image: url("/img/bg_center.svg");
   background-color: #da3926;
-  background-repeat:     no-repeat;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   flex: 1;
@@ -235,7 +180,7 @@ Home page specific elements
 }
 
 .logo-wrapper {
-  text-align:  center;
+  text-align: center;
   margin-top: 130px;
   transition: 0.5s;
   height: 160px;
@@ -255,163 +200,64 @@ Home page specific elements
   }
 
   .logo {
-    height:              130px;
-    width:               130px;
+    height: 130px;
+    width: 130px;
 
-    display:             inline-block;
-    position:            relative;
-    top:                 27px;
+    display: inline-block;
+    position: relative;
+    top: 27px;
 
-    background-image:    url(/img/logo_bubble.svg);
+    background-image: url(/img/logo_bubble.svg);
     background-position: center;
-    background-size:     149%;
+    background-size: 149%;
 
     @include media-breakpoint-down(sm) {
-      top:          2px;
-      height:       50px;
-      width:        50px;
+      top: 2px;
+      height: 50px;
+      width: 50px;
 
       margin-right: 6px;
     }
 
     @include media-breakpoint-down(xs) {
-      top:          0;
-      height:       30px;
-      width:        30px;
+      top: 0;
+      height: 30px;
+      width: 30px;
 
       margin-right: 3px;
     }
   }
 
   .caption {
-    font-size:   118px;
-    color:       white;
+    font-size: 118px;
+    color: white;
 
     line-height: 160px;
 
-    font-family: 'Cocogoose', 'Arial Black', sans-serif;
+    font-family: "Cocogoose", "Arial Black", sans-serif;
 
     @include media-breakpoint-down(sm) {
-      font-size:   60px;
+      font-size: 60px;
       line-height: 60px;
     }
 
     @include media-breakpoint-down(xs) {
-      font-size:   40px;
+      font-size: 40px;
       line-height: 40px;
     }
   }
 }
 
-$search-wrapper-height: 47px;
-
-.search-wrapper {
-  border-radius: 8px;
-  display: flex;
-}
-
-.search-balance, .search-column {
-  transition: 0.4s;
-}
-
-.search-home {
-  display:          inline-block;
-  padding:          10px 20px;
-  font-size:        16px;
-  height:           $search-wrapper-height;
-  border:           none;
-  background-color: white;
-  border-radius:    8px 0 0 8px;
-  border: 1px #ccc solid;
-  border-right: 0;
-  width: calc(100% - 70px);
-  
-  @include media-breakpoint-down(xs) {
-    .home-init & {
-      width: calc(100% - 20px);
-    }
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.search-submit {
-  cursor:           pointer;
-  transition:       0.3s;
-  height:           $search-wrapper-height;
-  border:           none;
-  background-color: white;
-  border-radius:    0 8px 8px 0;
-  border: 1px #ccc solid;
-  border-left: 0;
-  width: 70px;
-
-  @include media-breakpoint-down(xs) {
-    .home-init & {
-      width: 20px;
-    }
-  }
-
-  &:hover {
-    background-color: #eee;
-  }
-}
-
-body.dark .btn.display-all-songs {
-  background-color: rgba(255, 255, 255, 0.15);
-  &:hover {
-    background-color: white;
-    color: black;
-  }
-}
-
-.btn.btn-outline-light.display-all-songs {
-  border-radius: 8px;
-  background-color: rgba(218, 57, 38, 0.5);
-  &:hover {
-    background-color: rgba(218, 57, 38, 0.6);
-  }
-}
-
-.filter-active {
-  background-color: #bbb;
-  color: white;
-}
-
-.filter-open {
-  background-color: #ddd;
-  color: black;
-}
-
-.filter-panel {
-  max-height: calc(100vh - 47px - 3rem);
-  overflow: auto;
-}
-
-/**
-View: Search results
- */
-.search-basic {
-  max-width:   500px;
-  display: inline-block;
-}
-
-.result-table {
-  width: auto;
-}
-
 .card-blue {
   border-radius: 3px;
   .card-header {
-    color:            white;
+    color: white;
     background-color: $main-blue !important;
 
-    border-radius:    3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
 
     a {
-      color:       white;
+      color: white;
       font-weight: bold;
     }
   }
@@ -424,12 +270,13 @@ View: Search results
 .card-green {
   border-radius: 3px;
   .card-header {
-    color:            white;
+    color: white;
     background-color: $main-green !important;
 
-    border-radius:    3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
 
-    a, a:hover {
+    a,
+    a:hover {
       color: white;
     }
   }
@@ -442,10 +289,10 @@ View: Search results
 .card-red {
   border-radius: 3px;
   .card-header {
-    color:            white;
+    color: white;
     background-color: $main-red !important;
 
-    border-radius:    3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
 
     a {
       color: white;
@@ -457,16 +304,6 @@ View: Search results
   }
 }
 
-.card-lyrics {
-  .card-header, .card-footer {
-    background-color: #f1f4f9;
-  }
-
-  .card-body {
-    border-bottom: #7f97ab;
-  }
-}
-
 .text-very-muted {
   color: #efefef;
 }
@@ -475,335 +312,6 @@ View: Search results
   padding-left: 2px !important;
 }
 
-.song-links {
-  a {
-    margin-bottom: 0;
-  }
-}
-
-.controls {
-	z-index: 199;
-
-	.btn {
-		margin-bottom: 0;
-	}
-
-	.card {
-		box-shadow: none;
-		border: 1px solid rgba(0, 0, 0, 0.12);
-	}
-
-	.btn.btn-secondary.transpose-window {
-		width: 4em;
-  }
-  
-  a span {
-    padding-left: 5px;
-  }
-}
-
-.zindex-lower {
-  z-index: 199;
-}
-
-.chosen .btn, .btn.chosen {
-	background-color: rgba(0, 0, 0, 0.133);
-}
-
-.media-card {
-  max-height: 50vh;
-}
-
-.media-opener {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  i {
-    padding-right: 5px;
-    width: 20px;
-    text-align: center;
-  }
-}
-
-/**
-ChordPro view
- */
-
-body.dark .tag-selected {
-  border-color: black;
-}
-
-.song-tags {
-
-  .tag {
-    padding:       0.1em 0.7em;
-    margin-bottom: 0.3em;
-    margin-right:  7px;
-    border-radius: 1em;
-    color:         #907753;
-    text-align:    center;
-    display:       inline-block;
-    transition:    0.2s;
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    border: #bfbfbf 1px solid;
-    background-color: #ffffff;
-  }
-
-  .tag-blue {
-    &:hover { 
-      background-color: lighten($main-blue, 40%);
-    }
-
-    &.tag-selected {
-      background-color: $main-blue !important;
-      color: white !important;
-    }
-  }
-
-  .tag-green {
-    &:hover { 
-      background-color: lighten($main-green, 60%);
-    }
-
-    &.tag-selected {
-      background-color: $main-green !important;
-      color: white !important;
-    }
-  }
-
-  .tag-yellow {
-    &:hover { 
-      background-color: lighten($main-yellow, 20%);
-    }
-
-    &.tag-selected {
-      background-color: $main-yellow !important;
-      color: black !important;
-    }
-  }
-
-  .tag-red {
-    &:hover { 
-      background-color: lighten($main-red, 20%);
-    }
-
-    &.tag-selected {
-      background-color: $main-red !important;
-      color: white !important;
-    }
-  }
-
-  // .tag-blue {
-  //   border:           $main-blue 0.15em solid;
-  //   background-color: lighten($main-blue, 40%);
-
-  //   &:hover {
-  //     border-color:     darken($main-blue, 20%);
-  //     background-color: lighten($main-blue, 30%);
-  //   }
-  // }
-
-  // .tag-green {
-  //   border:           $main-green 0.15em solid;
-  //   background-color: lighten($main-green, 70%);
-
-  //   &:hover {
-  //     border-color:     darken($main-green, 20%);
-  //     background-color: lighten($main-green, 60%);
-  //   }
-  // }
-
-  // .tag-yellow {
-  //   border:           $main-yellow 0.15em solid;
-  //   background-color: lighten($main-yellow, 40%);
-
-  //   &:hover {
-  //     border-color:     darken($main-yellow, 20%);
-  //     background-color: lighten($main-yellow, 30%);
-  //   }
-  // }
-}
-
-
 body {
   height: auto;
-}
-
-.navbar.absolute-top {
-  z-index: 201;
-}
-
-.navbar {
-  padding: 0.5rem 0;
-}
-
-.navbar > div {
-  width: 100%;
-  /* max-width: 994px; */
-  margin: 0 auto;
-  padding: 0;
-}
-
-.navbar .container {
-  // override bootstrap flex behaviour
-  display: block;
-}
-
-.navbar.absolute-top a i, .card-header i {
-  padding-right: 5px;
-}
-
-.navbar.fixed-top {
-  padding-top: 0;
-  padding-bottom: 0;
-  line-height: initial;
-  min-height: auto;
-}
-
-.navbar a {
-  margin-bottom: 0;
-}
-
-.navbar .btn.btn-secondary {
-  color: #aaa;
-}
-
-body.dark {
-  background-color: #000;
-
-  h1 {
-    color: white;
-  }
-
-  .container {
-    color: #ccc;
-  }
-
-  .card-body, .chord-text, .card {
-    background-color: #111;
-    color: #ccc;
-  }
-
-  .card-header, .card-footer, .bg-light, .tag {
-    background-color: #222 !important;
-    color: #ccc;
-  }
-
-  .border {
-    border-color: #222 !important;
-  }
-
-  .background-home {
-    background: transparent;
-  }
-
-  .search-home {
-    background-color: black;
-    color: white;
-    border: 1px #333 solid;
-    border-right: 0;
-  }
-  
-  .search-submit {
-    background-color: black;
-    color: white;
-    border: 1px #333 solid;
-    border-left: 0;
-  }
-
-  .filter-active {
-    background-color: #666;
-  }
-
-  .filter-open {
-    background-color: #333;
-  }
-
-  .text-very-muted {
-    color: #222;
-  }
-
-  .chord-sign {
-    color: #4dc0b5;
-  }
-
-  .chosen .btn, .btn.chosen, .dark-mode-button {
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-
-  a {
-    color: #4dc0b5;
-
-    &:hover {
-      color: #328e85;
-    }
-  }
-}
-
-// better preload song
-
-.row ~ #preloadPlaceholder {
-  display: none;
-}
-
-.song-line {
-  display: none;
-}
-
-.card-lyrics .song-line {
-  display: block;
-}
-
-// print
-
-@media print {
-  @page {
-    margin: 2cm;
-  }
-
-  .container, .col-lg-9 {
-    max-width: 100%;
-    flex: none;
-  }
-  
-  .container, .col-lg-9, .card-body, .p-1.overflow-hidden, .card-footer, .px-3.py-2.d-inline-block {
-    padding: 0 !important;
-  }
-
-  .card-footer {
-    padding-top: 10px !important;
-    margin-top: 10px;
-  }
-
-  .row {
-    margin: 0 !important;
-  }
-
-  .card-header, .position-sticky, .btn, .col-lg-3 {
-    display: none;
-  }
-
-  body, .card-footer, .tag, .container {
-    background-color: #fff !important;
-    min-width: initial !important;
-  }
-
-  .card.card-lyrics, .col-lg-9, #preloadPlaceholder {
-    display: block !important;
-  }
-
-  .row {
-    display: none;
-  }
-
-  .flex-md-row {
-    flex-direction: column !important;
-  }
-
-  .justify-content-md-end {
-    justify-content: flex-start !important;
-  }
 }

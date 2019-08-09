@@ -21,20 +21,84 @@
     clone_repository
 @endstory
 
+@task('testing')
+    cd {{ $base_dir }}
+    docker-compose exec -T php bash
+
+    {{-- get the current working directory name --}}
+    LAST=`readlink -f current` 
+    LAST=${LAST##*/}
+
+    cd releases
+    echo 'Removing old releases but one last for backup'
+    ls | grep -v ${LAST} | xargs rm -rfv
+@endtask
+
+@task('rollback')
+    cd {{ $base_dir }}
+    docker-compose exec -T php bash
+
+    {{-- get the current working directory name --}}
+    CURRENT=`readlink -f current` 
+    CURRENT=${CURRENT##*/}
+
+    cd releases
+    LAST=`ls | grep -v ${CURRENT} | sort`
+    echo ${LAST}
+
+    {{-- php artisan migrate:rollback --force --}}
+    ln -nfs ${LAST} {{ $app_dir }}/current
+@endtask
+
+@task('try_migration')
+    {{-- login to the docker --}}
+    cd {{ $base_dir }}
+    docker-compose exec -T php bash
+
+    php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
+    php artisan config:cache
+    php artisan route:cache
+    php artisan cache:clear
+    php artisan view:clear
+
+    if php artisan migrate:check; then 
+        {{-- no migration available --}}
+        echo 'No migration available, performing only mapping update for elasticsearch'
+        php artisan elastic:update-mapping "App\SongLyric"
+        php artisan elastic:update-mapping "App\Author"
+    else
+        echo 'Migrations available, migrating database and elasticsearch'
+        php artisan migrate --force
+
+        NEW_UUID=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 4 | head -n 1)
+        php artisan elastic:migrate "App\SongLyric" song_lyric_${NEW_UUID}
+        php artisan elastic:migrate "App\Author" author_${NEW_UUID}
+    fi
+ 
+    php artisan up
+@endtask
+
 @task('clone_repository')
     {{-- login to the docker --}}
     cd {{ $base_dir }}
     docker-compose exec -T php bash
 
-    {{-- clone git repositiory int oa new folder --}}
+    {{-- get the current working directory name --}}
+    LAST=`readlink -f current` 
+    LAST=${LAST##*/}
+
+    cd releases
+    echo 'Removing old releases but one last for backup'
+    ls | grep -v ${LAST} | xargs rm -rfv
+
+    {{-- clone git repositiory into a new folder --}}
     git clone --depth 1 {{ $repository }} {{ $new_release_dir }}
     cd {{ $new_release_dir }}
-    echo $PWD
     git reset --hard master
 
     {{-- link node_modueles, storage, .env from the main directory--}}
-    echo 'Linking node_modules directory'
-    ln -nfs {{ $app_dir }}/node_modules {{ $new_release_dir }}/node_modules
+    {{-- echo 'Linking node_modules directory'
+    ln -nfs {{ $app_dir }}/node_modules {{ $new_release_dir }}/node_modules --}}
     echo "Linking storage directory"
     rm -rf {{ $new_release_dir }}/storage
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
@@ -49,26 +113,33 @@
 
     {{-- run yarn --}}
     yarn install
-    yarn run production
+    yarn run dev
 
+    rm -rf node_modules
+
+    php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
     php artisan config:cache
     php artisan route:cache
     php artisan cache:clear
     php artisan view:clear
 
+    if php artisan migrate:check; then 
+        {{-- no migration available --}}
+        echo 'No migration available, performing only mapping update for elasticsearch'
+        php artisan elastic:update-mapping "App\SongLyric"
+        php artisan elastic:update-mapping "App\Author"
+    else
+        echo 'Migrations available, migrating database and elasticsearch'
+        php artisan migrate --force
+
+        NEW_UUID=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 4 | head -n 1)
+        php artisan elastic:migrate "App\SongLyric" song_lyric_${NEW_UUID}
+        php artisan elastic:migrate "App\Author" author_${NEW_UUID}
+    fi
+
+    php artisan up
+
     {{-- the end --}}
-    echo 'Linking current release'
-    ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
-@endtask
-
-@task('update_symlinks')
-    echo "Linking storage directory"
-    rm -rf {{ $new_release_dir }}/storage
-    ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-
-    echo 'Linking .env file'
-    ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
-
     echo 'Linking current release'
     ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 @endtask

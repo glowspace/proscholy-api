@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a17e18ce87c5241daa70ab301c20dbc",
+    "content-hash": "5e31711795d73ee71d58dee626dada4f",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -692,6 +692,65 @@
                 "search"
             ],
             "time": "2019-07-12T14:27:10+00:00"
+        },
+        {
+            "name": "erjanmx/laravel-migrate-check",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erjanmx/laravel-migrate-check.git",
+                "reference": "f4cb3a9851772fa8d6ba44c6ebc3243b15ad135d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erjanmx/laravel-migrate-check/zipball/f4cb3a9851772fa8d6ba44c6ebc3243b15ad135d",
+                "reference": "f4cb3a9851772fa8d6ba44c6ebc3243b15ad135d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^5.5.17",
+                "illuminate/events": "^5.5.17",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Erjanmx\\MigrateCheck\\MigrateCheckServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Erjanmx\\MigrateCheck\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erjan",
+                    "role": "Developer",
+                    "email": "erjanmx@gmail.com"
+                }
+            ],
+            "description": "A command to check for pending migrations. Exits with non-zero code if there are any",
+            "homepage": "https://github.com/erjanmx/laravel-migrate-check",
+            "keywords": [
+                "check",
+                "database",
+                "eloquent",
+                "laravel-migrate-check",
+                "migrate"
+            ],
+            "time": "2018-09-28T19:30:35+00:00"
         },
         {
             "name": "erusev/parsedown",

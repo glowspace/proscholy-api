@@ -19,7 +19,7 @@
                     @include('admin.components.menu')
                 </div>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-10" style="position: static">
                 @yield("content-withmenu")
             </div>
         </div>

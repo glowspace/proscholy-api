@@ -1,25 +1,37 @@
 @extends('layout.client')
 
 @section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
+@push('meta_tags')
+<meta name="description" content="Píseň {{ $song_l->name }}, autoři: {{ $song_l->authors->implode(', ') }}">
+@endpush
 
 @section('content')
     <div class="container">
-        <div class="d-flex flex-md-row justify-content-between flex-wrap mt-4">
-            <div>
-                <h1 class="m-0 pb-0">{{$song_l->name}}</h1>
+        <div class="d-flex flex-column flex-lg-row flex-wrap flex-lg-nowrap mt-4">
+            <div class="flex-grow-1">
+                <h1 class="song-title">{{$song_l->name}}</h1>
+                <h4 class="song-number">{{ $song_l->id }}</h4>
                 <p class="song-author"> @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
             </div>
-            <div class="song-tags d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
-                @foreach ($tags_officials as $tag)
-                    <a class="tag tag-blue">{{ $tag->name }}</a>
-                @endforeach
-                @foreach ($tags_unofficials as $tag)
-                    @if ($tag->parent_tag == null)
-                        <a class="tag tag-green">{{ $tag->name }}</a>
-                    @else
-                        <a class="tag tag-yellow">{{ $tag->name }}</a>
-                    @endif
-                @endforeach
+            <div class="song-tags align-self-end" style="flex: 4;">
+                <div class="d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
+                    @foreach ($tags_officials as $tag)
+                        <a class="tag tag-blue">{{ $tag->name }}</a>
+                    @endforeach
+                    @foreach ($tags_unofficials as $tag)
+                        @if ($tag->parent_tag == null)
+                            <a class="tag tag-green">{{ $tag->name }}</a>
+                        @else
+                            {{-- do not display the parent tag as for now --}}
+                            {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
+                        @endif
+                    @endforeach
+                </div>
+                <div class="d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
+                    @foreach ($songbook_records as $record)
+                        <a class="tag tag-yellow">{{ $record->name . " " . $record->pivot->number }}</a>
+                    @endforeach
+                </div>
             </div>
         </div>
 
@@ -75,10 +87,12 @@
                         <i class="fas fa-language"></i>
                         <span class="d-none d-sm-inline">Překlady</span>
                     </a>
+                    <!--googleoff: all-->
                     <a class="btn btn-secondary">
                         <i class="fas fa-file-pdf"></i>
                         <span class="d-none d-sm-inline">Export</span>
                     </a>
+                    <!--googleon: all-->
                 </div>
                 <div class="card-body py-2">
                     {!! $song_l->getFormattedLyrics() !!}
