@@ -74,7 +74,7 @@
         php artisan elastic:migrate "App\SongLyric" song_lyric_${NEW_UUID}
         php artisan elastic:migrate "App\Author" author_${NEW_UUID}
     fi
-
+ 
     php artisan up
 @endtask
 
