@@ -13,14 +13,15 @@ Imports
   src: url("/fonts/cocogoose-pro-regular.ttf");
 }
 
+@import "variables";
 $main-red: #d83027;
 $main-blue: #3961ad;
 $main-green: #098845;
 $main-yellow: #faa61b;
 
-@import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
-@import "variables";
 // @import 'admin';
+@import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
+@import "admin";
 @import "dark";
 @import "navbar";
 @import "print";
