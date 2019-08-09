@@ -103,7 +103,7 @@
     rm -rf {{ $new_release_dir }}/storage
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
     echo 'Linking .env file'
-    ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
+    ln -nfs {{ $app_dir }}/.env {{ $app_dir }}/.env.production
 
 
     {{-- run composer --}}
