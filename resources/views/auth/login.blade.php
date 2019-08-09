@@ -1,14 +1,16 @@
 @extends('layout.client')
 
+@push('head_links')
+    {{-- <script src="https://www.google.com/recaptcha/api.js?render=6LdKJrIUAAAAAALighiAy62sGoZjIFEm8Qy5Cdcf"></script> --}}
+@endpush
+
 @section('content')
     <div class="center-container">
         <div class="card" style="max-width: 500px;width: 100%;">
             <div class="card-header">{{ __('Login') }}</div>
-
             <div class="card-body">
-                <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" id="loginForm">
                     @csrf
-
                     <div class="form-group row">
                         <label for="email" class="col-sm-4 col-form-label text-md-right">E-mail:</label>
 
@@ -60,6 +62,8 @@
                             </a>
                         </div>
                     </div>
+
+                    <recaptcha site-key="{{ config('recaptcha.key') }}"></recaptcha>
                 </form>
             </div>
         </div>
