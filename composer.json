@@ -12,6 +12,7 @@
         "algolia/algoliasearch-client-php": "^2.2",
         "babenkoivan/scout-elasticsearch-driver": "^4.0",
         "doctrine/dbal": "^2.9",
+        "erjanmx/laravel-migrate-check": "^1.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",

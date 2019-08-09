@@ -50,6 +50,34 @@
     ln -nfs ${LAST} {{ $app_dir }}/current
 @endtask
 
+@task('try_migration')
+    {{-- login to the docker --}}
+    cd {{ $base_dir }}
+    docker-compose exec -T php bash
+
+    php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
+    php artisan config:cache
+    php artisan route:cache
+    php artisan cache:clear
+    php artisan view:clear
+
+    if php artisan migrate:check; then 
+        {{-- no migration available --}}
+        echo 'No migration available, performing only mapping update for elasticsearch'
+        php artisan elastic:update-mapping "App\SongLyric"
+        php artisan elastic:update-mapping "App\Author"
+    else
+        echo 'Migrations available, migrating database and elasticsearch'
+        php artisan migrate --force
+
+        NEW_UUID=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 4 | head -n 1)
+        php artisan elastic:migrate "App\SongLyric" song_lyric_${NEW_UUID}
+        php artisan elastic:migrate "App\Author" author_${NEW_UUID}
+    fi
+
+    php artisan up
+@endtask
+
 @task('clone_repository')
     {{-- login to the docker --}}
     cd {{ $base_dir }}
@@ -94,7 +122,21 @@
     php artisan route:cache
     php artisan cache:clear
     php artisan view:clear
-    php artisan migrate --force
+
+    if php artisan migrate:check; then 
+        {{-- no migration available --}}
+        echo 'No migration available, performing only mapping update for elasticsearch'
+        php artisan elastic:update-mapping "App\SongLyric"
+        php artisan elastic:update-mapping "App\Author"
+    else
+        echo 'Migrations available, migrating database and elasticsearch'
+        php artisan migrate --force
+
+        NEW_UUID=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 4 | head -n 1)
+        php artisan elastic:migrate "App\SongLyric" song_lyric_${NEW_UUID}
+        php artisan elastic:migrate "App\Author" author_${NEW_UUID}
+    fi
+
     php artisan up
 
     {{-- the end --}}
