@@ -18,7 +18,7 @@
 
         @if(isset($author->description))
             <div class="card">
-                <div class="card-header">O @if($author->type == 0)
+                <div class="card-header p-1"><div class="px-3 py-2 d-inline-block">O @if($author->type == 0)
                         autorovi
                     @elseif($author->type == 1)
                         uskupení
@@ -28,7 +28,7 @@
                         kapele
                     @elseif($author->type == 4)
                         sboru
-                    @endif</div>
+                    @endif</div></div>
                 <div class="card-body">{{$author->description}}</div>
             </div>
         @endif
@@ -51,106 +51,75 @@
 
         @if($originals->count() > 0)
             <div class="card">
-                <div class="card-header">Autorské písně</div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
+                <div class="card-header p-1"><div class="px-3 py-2 d-inline-block">Autorské písně</div></div>
+                <div class="card-body p-0">
+                    <table class="table m-0">
+                        @foreach($originals as $key => $song_l)
                         <tr>
-                            <th scope="col">Píseň</th>
-                            <th scope="col">Autor</th>
-                            <th scope="col">Zobrazeno</th>
+                            <td class="p-1 align-middle {{ $key ? '' : 'border-top-0' }}">
+                                <a class="px-3 py-2 w-100 d-inline-block" href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
+                            </td>
+                            <td class="px-1 py-2 align-middle {{ $key ? '' : 'border-top-0' }}">
+                                @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($originals as $song_l)
-                            <tr>
-                                <td>
-                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
-                                </td>
-                                <td>
-                                    @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
-                                </td>
-                                <td>{{$song_l->visits}} x</td>
-                            </tr>
                         @endforeach
-
-                        </tbody>
                     </table>
-
-                    <div class="row">
-
+                </div>
+                <div class="card-footer p-1">
+                    <div class="px-3 py-2 d-inline-block">
+                        Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
                     </div>
-
-                    <hr>
-                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
                 </div>
             </div>
         @endif
 
         @if($translations->count() > 0)
             <div class="card">
-                <div class="card-header">Překlady</div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
+                <div class="card-header p-1"><div class="px-3 py-2 d-inline-block">Překlady</div></div>
+                <div class="card-body p-0">
+                    <table class="table m-0">
+                        @foreach($translations as $key => $song_l)
                         <tr>
-                            <th scope="col">Píseň</th>
-                            <th scope="col">Autor</th>
-                            <th scope="col">Zobrazeno</th>
+                            <td class="p-1 align-middle {{ $key ? '' : 'border-top-0' }}">
+                                <a class="px-3 py-2 w-100 d-inline-block" href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
+                            </td>
+                            <td class="px-1 py-2 align-middle {{ $key ? '' : 'border-top-0' }}">
+                                @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($translations as $song_l)
-                            <tr>
-                                <td>
-                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
-                                </td>
-                                <td>
-                                    @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
-                                </td>
-                                <td>{{$song_l->visits}} x</td>
-                            </tr>
                         @endforeach
-
-                        </tbody>
                     </table>
-
-                    <hr>
-                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                </div>
+                <div class="card-footer p-1">
+                    <div class="px-3 py-2 d-inline-block">
+                        Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                    </div>
                 </div>
             </div>
         @endif
 
         @if($interpreted->count() > 0)
             <div class="card">
-                <div class="card-header">Interpretace písní</div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
+                <div class="card-header p-1"><div class="px-3 py-2 d-inline-block">Interpretace písní</div></div>
+                <div class="card-body p-0">
+                    <table class="table m-0">
+                        @foreach($interpreted as $key => $song_l)
                         <tr>
-                            <th scope="col">Píseň</th>
-                            <th scope="col">Autor</th>
-                            <th scope="col">Zobrazeno</th>
+                            <td class="p-1 align-middle {{ $key ? '' : 'border-top-0' }}">
+                                <a class="px-3 py-2 w-100 d-inline-block" href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
+                            </td>
+                            <td class="px-1 py-2 align-middle {{ $key ? '' : 'border-top-0' }}">
+                                @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($interpreted as $song_l)
-                            <tr>
-                                <td>
-                                    <a href="{{ $song_l->public_url }}">{{$song_l->name}}</a>
-                                </td>
-                                <td>
-                                    @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent
-                                </td>
-                                <td>{{$song_l->visits}} x</td>
-                            </tr>
                         @endforeach
-
-                        </tbody>
                     </table>
-
-                    <hr>
-                    Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                </div>
+                <div class="card-footer p-1">
+                    <div class="px-3 py-2 d-inline-block">
+                        Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}" width="20"> {{date('Y')}}
+                    </div>
                 </div>
             </div>
         @endif
