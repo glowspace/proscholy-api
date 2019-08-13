@@ -2,7 +2,7 @@
 
 @section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
 @push('meta_tags')
-<meta name="description" content="Píseň {{ $song_l->name }}, autoři: {{ $song_l->authors->implode(', ') }}">
+<meta name="description" content="@component('client.components.song_description', ['song_l' => $song_l])@endcomponent">
 @endpush
 
 @section('content')
