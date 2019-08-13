@@ -204,11 +204,7 @@ export default {
 
     computed: {
         filters_active() {
-            return 
-                Object.keys(this.selected_songbooks).length + 
-                Object.keys(this.selected_tags).length + 
-                Object.keys(this.selected_languages).length
-                 > 0;
+            return (Object.keys(this.selected_songbooks).length + Object.keys(this.selected_tags).length + Object.keys(this.selected_languages).length) > 0;
         }
     }
 }
