@@ -25,7 +25,7 @@
                     </button>
                 </div>
                 <div v-if="init" @click="resetState(true); init=false;" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
-                <div class="mx-3 d-md-none filter-panel" v-show="!init && displayFilter">
+                <div class="mx-2 d-md-none filter-panel position-absolute" v-show="!init && displayFilter">
                     <a class="btn btn-secondary float-right fixed-top position-sticky"
                         v-on:click="displayFilter=false">
                         <i class="fas fa-times pr-0"></i>
@@ -213,5 +213,12 @@ export default {
 <style>
 .filter-panel {
     display: block;
+}
+body {
+    background-image: url("/img/bg_center.svg");
+    background-color: #da3926;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 </style>
