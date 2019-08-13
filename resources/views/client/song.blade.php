@@ -7,31 +7,37 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex flex-column flex-lg-row flex-wrap flex-lg-nowrap mt-4">
-            <div class="flex-grow-1">
+        <div class="d-flex flex-column flex-lg-row flex-wrap flex-lg-nowrap mt-4 mb-3 justify-content-between">
+            <div class="flex-grow-3">
                 <h1 class="song-title">{{$song_l->name}}</h1>
-                <h4 class="song-number">{{ $song_l->id }}</h4>
-                <p class="song-author"> @component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
+                <div class="d-flex align-items-center mt-1">
+                    <h4 class="song-number m-0">{{ $song_l->id }}</h4>
+                    <p class="song-author ml-3 mb-0">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
+                </div>
             </div>
-            <div class="song-tags align-self-end" style="flex: 4;">
-                <div class="d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
-                    @foreach ($tags_officials as $tag)
-                        <a class="tag tag-blue">{{ $tag->name }}</a>
-                    @endforeach
-                    @foreach ($tags_unofficials as $tag)
-                        @if ($tag->parent_tag == null)
-                            <a class="tag tag-green">{{ $tag->name }}</a>
-                        @else
-                            {{-- do not display the parent tag as for now --}}
-                            {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
-                        @endif
-                    @endforeach
-                </div>
-                <div class="d-flex flex-row flex-wrap align-items-start justify-content-md-end mb-3">
-                    @foreach ($songbook_records as $record)
-                        <a class="tag tag-yellow">{{ $record->name . " " . $record->pivot->number }}</a>
-                    @endforeach
-                </div>
+            <div class="song-tags p-0 pt-lg-2 pt-3">
+                @if (count($tags_officials) + count($tags_unofficials))
+                    <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
+                        @foreach ($tags_officials as $tag)
+                            <a class="tag tag-blue text-dark" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
+                        @endforeach
+                        @foreach ($tags_unofficials as $tag)
+                            @if ($tag->parent_tag == null)
+                                <a class="tag tag-green text-dark" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
+                            @else
+                                {{-- do not display the parent tag as for now --}}
+                                {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
+                @if (count($songbook_records))
+                    <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
+                        @foreach ($songbook_records as $record)
+                            <a class="tag tag-yellow text-dark" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->shortcut . $record->pivot->number }}</a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
 
