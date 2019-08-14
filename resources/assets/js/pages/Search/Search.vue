@@ -204,7 +204,13 @@ export default {
 
     computed: {
         filters_active() {
-            return (Object.keys(this.selected_songbooks).length + Object.keys(this.selected_tags).length + Object.keys(this.selected_languages).length) > 0;
+            // note that there has to be sth together at the line with return,
+            // otherwise js will see only return; and don't give a f*ck about the things below
+            return (
+                Object.keys(this.selected_songbooks).length + 
+                Object.keys(this.selected_tags).length + 
+                Object.keys(this.selected_languages).length) 
+                    > 0;
         }
     }
 }
