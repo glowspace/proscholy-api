@@ -20,6 +20,8 @@
     </div>
 </nav>
 
+<a class="invisible btn btn-secondary mobile-padding-button"><i class="fas fa-search"></i></a>
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a href="{{url("")}}" class="btn"><img src="{{asset('img/logo_v2.png')}}" height="24" alt="logo"></a>
