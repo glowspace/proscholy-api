@@ -141,11 +141,11 @@
               <a class="btn btn-secondary float-right" v-on:click="bottomMode=0">
                 <i class="fas fa-times pr-0"></i>
               </a>
-              <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
+              <div class="toolbox-item" v-if="chordSharedStore.nChordModes != 1" :class="{ 'hidden-toolbox-item': (chordSharedStore.chordMode == 0) }">
                 <transposition v-model="chordSharedStore.transposition"></transposition>
               </div>
 
-              <div class="toolbox-item" v-if="chordSharedStore.chordMode != 0">
+              <div class="toolbox-item" v-if="chordSharedStore.nChordModes != 1" :class="{ 'hidden-toolbox-item': (chordSharedStore.chordMode == 0) }">
                 <chord-sharp-flat v-model="chordSharedStore.useFlatScale"></chord-sharp-flat>
               </div>
 
@@ -260,40 +260,45 @@
 </template>
 
 <style lang="scss">
-.cross {
-  z-index: 5;
-}
-
-.toolbox {
-  padding: 0.25rem !important;
-  margin-bottom: 0.25rem !important;
-
-  background: white;
-  .dark & {
-    background: black;
+  .cross {
+    z-index: 5;
   }
 
-  &.toolbox-u {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0 !important;
-  }
+  .toolbox {
+    padding: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
 
-  .toolbox-item {
-    text-align: center;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-bottom: 0.25rem;
-    padding-top: 0.25rem;
-    margin: 0.25rem;
-    display: inline-block;
-    border-radius: 0.125rem;
-
-    border: 1px solid #dee2e6;
+    background: white;
     .dark & {
-      border-color: #211d19;
+      background: black;
+    }
+
+    &.toolbox-u {
+      margin-top: 0.25rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    .toolbox-item {
+      text-align: center;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      padding-bottom: 0.25rem;
+      padding-top: 0.25rem;
+      margin: 0.25rem;
+      display: inline-block;
+      border-radius: 0.125rem;
+      border: 1px solid #dee2e6;
+
+      &.hidden-toolbox-item {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .dark & {
+        border-color: #211d19;
+      }
     }
   }
-}
 
  .select-themed {
     background-color: white;
