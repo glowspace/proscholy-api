@@ -1,9 +1,9 @@
 @extends('errors::layout')
 
-@section('code', '404')
-@section('title', 'Stránka nenalezena – Zpěvník ProScholy.cz')
+@section('code', '500')
+@section('title', 'Chyba serveru – Zpěvník ProScholy.cz')
 @section('error-description')
-	<p>Stránka nebyla nalezena.<br> Zkuste použít vyhledávání.</p>
+	<p>Ajajaj, na našem serveru se někde stala chyba.<br> Zkuste použít vyhledávání.</p>
 	<div class="text-center text-white">
 		<a href="/" class="btn btn-outline-light display-all-songs font-weight-bold">
 			<i class="fas fa-search pr-1"></i> VYHLEDÁVÁNÍ
