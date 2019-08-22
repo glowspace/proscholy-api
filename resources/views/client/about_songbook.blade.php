@@ -4,6 +4,19 @@
     <div class="container">
         <h1>O zpěvníku ProScholy.cz</h1>
 
+        <div class="row">
+            <div class="card col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                <div class="card-body">
+                    <h5 class="card-title">Zpětná vazba</h5>
+                    <p class="card-text">
+                        Pokud se vám podaří najít si 54 sekund k&nbsp;vyplnění našeho formuláře zpětné vazby, budeme jen rádi.<br>
+                        Názor uživatelů je pro nás velmi důležitý a v&nbsp;určitých věcech opravdu směrodatný.
+                    </p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfI0143gkLBtMbWQnSa9nzpOoBNMokZrOIS5mUreSR41E_B7A/viewform?usp=pp_url&entry.791243479=ano" class="btn btn-primary btn-outline stretched-link">Vyplnit formulář</a>
+                </div>
+            </div>
+        </div>
+
         <h2>Kdo za projektem stojí?</h2>
 
         <p>Jsme skupina lidí, kteří chtějí usnadnit práci všem,
