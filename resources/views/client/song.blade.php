@@ -23,10 +23,10 @@
                         @endforeach
                         @foreach ($tags_unofficials as $tag)
                             @if ($tag->parent_tag == null)
-                                <a class="tag tag-green text-dark" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
-                            @else
                                 {{-- do not display the parent tag as for now --}}
                                 {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
+                            @else
+                                <a class="tag tag-green text-dark" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
                             @endif
                         @endforeach
                     </div>
