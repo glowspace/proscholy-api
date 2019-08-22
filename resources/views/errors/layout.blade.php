@@ -17,6 +17,7 @@
                 @yield('error-description')
                 <div class="text-center text-white pt-5">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfry7CQD0vPpuC_VB7xGR6NUF2WdPUytQwX8KipKoZcIYxbdA/viewform?usp=pp_url&entry.1025781741={{ urlencode(url()->full()) }}&entry.456507920=@yield('code')"
+                        target="_blank"
                         class="btn btn-outline-light display-all-songs font-weight-bold">
                         <i class="fas fa-exclamation-triangle pr-1"></i> NAHLÁSIT
                     </a>
