@@ -71,11 +71,53 @@
                 ></Filters>
             </div>
         </div>
+        <div v-if="init" class="pt-5 pb-3 h2 mb-0 invisible">
+            <i class="fab fa-android"></i>
+            <i class="fab fa-apple"></i>
+        </div>
+        <div v-if="init" class="text-center pt-5 text-white app-download pb-3 h2 mb-0">
+            <a href="http://play.google.com/store/apps/details?id=jozkar.mladez"><i class="fab fa-android"></i></a>
+            <a class="btn px-2 font-weight-bold">APLIKACE</a>
+            <a href="http://itunes.apple.com/app/zpěvník-pro-scholy/id1475375453"><i class="fab fa-apple"></i></a>
+        </div>
     </div>
 </template>
 
-<script>
+<style>
+body {
+    background-image: url("/img/bg_center.svg");
+    background-color: #da3926;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
 
+.filter-panel {
+    display: block;
+}
+
+.app-download {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-download a {
+    color: white !important;
+}
+
+.app-download .btn:nth-of-type(2) {
+    background-color: transparent;
+    cursor: initial;
+}
+</style>
+
+<script>
 import AuthorsList from "./AuthorsList";
 import SongsList from "./SongsList";
 import Filters from "./Filters";
@@ -215,16 +257,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.filter-panel {
-    display: block;
-}
-body {
-    background-image: url("/img/bg_center.svg");
-    background-color: #da3926;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-}
-</style>
