@@ -20,7 +20,7 @@
     </div>
 </nav>
 
-<a class="invisible btn btn-secondary mobile-padding-button"><i class="fas fa-search"></i></a>
+<a class="invisible btn btn-secondary mobile-padding-button mb-0"><i class="fas fa-search"></i></a>
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">

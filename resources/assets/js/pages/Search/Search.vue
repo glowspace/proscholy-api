@@ -80,6 +80,10 @@
             <a class="btn px-2 font-weight-bold">APLIKACE</a>
             <a href="http://itunes.apple.com/app/zpěvník-pro-scholy/id1475375453"><i class="fab fa-apple"></i></a>
         </div>
+        <a class="btn btn-secondary mb-0 search-report bg-transparent" target="_blank" title="Nahlásit"
+        :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
+            <i class="fas fa-exclamation-triangle p-0"></i>
+        </a>
     </div>
 </template>
 
@@ -114,6 +118,20 @@ body {
 .app-download .btn:nth-of-type(2) {
     background-color: transparent;
     cursor: initial;
+}
+
+.btn.search-report {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    color: #292929;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.btn.search-report:hover {
+    color: #292929;
+    opacity: 1;
 }
 </style>
 
@@ -225,6 +243,10 @@ export default {
             if (this.init && this.search_string !== "") {
                 this.init = false;
             }
+        },
+        
+        currentUrl() {
+            return encodeURIComponent(window.location.href);
         }
     },
 
