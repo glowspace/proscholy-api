@@ -350,3 +350,19 @@ body {
   content: "";
   background-color: rgba(0,0,0,0);
 }
+
+.our-team {
+  h4 {
+    transition: 0.2s;
+  }
+
+  &:hover h4 {
+    padding-left: 0.5rem;
+  }
+
+  .card-columns {
+    @include media-breakpoint-between(sm, md) {
+      column-count: 2;
+    }
+  }
+}
