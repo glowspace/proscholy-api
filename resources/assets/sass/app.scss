@@ -351,6 +351,23 @@ body {
   background-color: rgba(0,0,0,0);
 }
 
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+
+  @include media-breakpoint-down(sm) {
+    position: relative;
+    height: auto;
+    padding-top: 1rem;
+    width: 100%;
+  }
+}
+
 .our-team {
   h4 {
     transition: 0.2s;

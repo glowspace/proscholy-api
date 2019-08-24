@@ -19,14 +19,14 @@
                 @if (count($tags_officials) + count($tags_unofficials))
                     <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
                         @foreach ($tags_officials as $tag)
-                            <a class="tag tag-blue text-dark" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
+                            <a class="tag tag-blue" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
                         @endforeach
                         @foreach ($tags_unofficials as $tag)
                             @if ($tag->parent_tag == null)
                                 {{-- do not display the parent tag as for now --}}
                                 {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
                             @else
-                                <a class="tag tag-green text-dark" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
+                                <a class="tag tag-green" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
                             @endif
                         @endforeach
                     </div>
@@ -34,7 +34,7 @@
                 @if (count($songbook_records))
                     <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
                         @foreach ($songbook_records as $record)
-                            <a class="tag tag-yellow text-dark" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->shortcut . $record->pivot->number }}</a>
+                            <a class="tag tag-yellow" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->shortcut . $record->pivot->number }}</a>
                         @endforeach
                     </div>
                 @endif

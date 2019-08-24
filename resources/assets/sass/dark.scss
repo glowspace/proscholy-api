@@ -84,21 +84,8 @@ body.dark {
   .tag-selected {
     border-color: black;
   }
-}
 
-.center-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-
-  @include media-breakpoint-down(sm) {
-    position: relative;
-    height: auto;
-    padding-top: 1rem;
-    width: 100%;
+  .tag:hover {
+    color: white;
   }
 }
