@@ -73,7 +73,7 @@ body.dark {
     background-color: rgba(0, 0, 0, 0.3);
   }
 
-  a {
+  a, .btn.btn-primary, .btn-primary.custom-file-control::before {
     color: #4dc0b5;
 
     &:hover {
