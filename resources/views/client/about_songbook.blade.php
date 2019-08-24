@@ -32,8 +32,6 @@
             Můžete nám napsat na email <a href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a> nebo se na nás obrátit telefonicky na <a href="tel:+420734791909">734 791 909</a>.
         </p>
 
-        <h3>Náš tým</h3>
-
         @php
             $our_team = array(
                 array('name' => 'Michael Dojčár', 'team1' => 'organizace', 'team2' => 'organizace, vývoj', 'info' => 'celková koordinace projektu, IT'),
@@ -41,23 +39,23 @@
                 array('name' => 'Jana Stuchlíková', 'team1' => 'organizace', 'team2' => 'redakce', 'info' => 'vedoucí redakce'),
                 array('name' => 'Ondřej Talaš', 'team1' => 'organizace', 'team2' => 'public relations', 'info' => 'koordinace, duchovní podpora'),
                 array('name' => 'Ondřej Múčka', 'team1' => 'organizace', 'team2' => 'redakce', 'info' => 'Musica Sacra'),
-
+                
                 array('name' => 'Miroslav Šerý',    'team1' => 'vývoj', 'team2' => 'organizace', 'info' => 'vedoucí vývojář, vývoj webu'),
                 array('name' => 'Michael Dojčár', 'team1' => 'vývoj', 'team2' => '', 'info' => 'celková koordinace projektu, IT'),
                 array('name' => 'Vít Kološ', 'team1' => 'vývoj', 'team2' => '', 'info' => 'vývoj webu, návrh rozhraní'),
                 array('name' => 'Josef Řídký', 'team1' => 'vývoj', 'team2' => '', 'info' => 'mobilní aplikace pro Android'),
                 array('name' => 'Patrik Dobiáš', 'team1' => 'vývoj', 'team2' => '', 'info' => 'mobilní aplikace pro iOS'),
                 array('name' => 'Benjamín Tichý', 'team1' => 'vývoj', 'team2' => 'grafika', 'info' => 'logo, vizuální styl, návrh rozhraní'),
-
+                
                 array('name' => 'Ondřej Talaš', 'team1' => 'public relations', 'team2' => 'organizace', 'info' => 'koordinace, duchovní podpora'),
                 array('name' => 'Emma Kasanová', 'team1' => 'public relations', 'team2' => '', 'info' => ''),
                 array('name' => 'Martin Tůma', 'team1' => 'public relations', 'team2' => '', 'info' => ''),
                 array('name' => 'Petra Kalousková', 'team1' => 'public relations', 'team2' => '', 'info' => ''),
                 array('name' => 'Zuzana Haikerová', 'team1' => 'public relations', 'team2' => 'redakce', 'info' => ''),
-
+                
                 array('name' => 'o. Jan Šlégr', 'team1' => 'zástupci z institucí', 'team2' => '', 'info' => 'Liturgická komise ČBK'),
                 array('name' => 'Veronika Lehrlová', 'team1' => 'zástupci z institucí', 'team2' => '', 'info' => 'Sekce pro mládež ČBK'),
-
+                
                 array('name' => 'Jana Stuchlíková', 'team1' => 'redakce', 'team2' => 'organizace', 'info' => 'vedoucí redakce'),
                 array('name' => 'Ondřej Múčka', 'team1' => 'redakce', 'team2' => 'organizace', 'info' => 'Musica Sacra'),
                 array('name' => 'Václav Šablatura', 'team1' => 'redakce', 'team2' => '', 'info' => 'odborný konzultant'),
@@ -78,18 +76,21 @@
                 array('name' => 'Zuzana Haikerová', 'team1' => 'redakce', 'team2' => 'public relations', 'info' => ''),
             );
             $teams = array('organizace', 'vývoj', 'public relations', 'zástupci z institucí', 'redakce');
-        @endphp
+            $number_of_members = count(array_unique(array_column($our_team, 'name')));
+            @endphp
 
-        @foreach ($teams as $team)
-        <div class="our-team">
-            <h4>{{ ucfirst($team) }}</h4>
-            @php
+            <h3>Náš {{ $number_of_members }}členný tým</h3>
+
+            @foreach ($teams as $team)
+            <div class="our-team">
+                <h4>{{ ucfirst($team) }}</h4>
+                @php
                 $team_members = array_filter($our_team, function ($var) use ($team) {
                     return ($var['team1'] == $team);
                 });
-            @endphp
+                @endphp
             <div class="card-columns">
-            @foreach ($team_members as $member)
+                @foreach ($team_members as $member)
                 <div>
                     <div class="card">
                         <div class="card-body">
