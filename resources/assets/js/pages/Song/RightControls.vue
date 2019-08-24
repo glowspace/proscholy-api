@@ -1,14 +1,37 @@
 <template>
-		<div class="d-flex flex-column mr-n3">
+		<div class="d-flex flex-column mr-n3 position-relative">
 			<a class="btn btn-secondary m-0" :title="[!fullscreen?'Zobrazit na celou obrazovku':'Zrušit zobrazení na celou obrazovku']" v-on:click="toggleFullscreen"><i class="fas" :class="[fullscreen?'fa-compress':'fa-expand']"></i></a>
             <!-- <a class="btn btn-secondary m-0"><i class="fas fa-columns"></i></a> -->
-            <a class="btn btn-secondary m-0" :title="[!nosleep?'Blokovat zhasínání displeje':'Přestat blokovat zhasínání displeje']" v-on:click="toggleNosleep"><i class="fa-sun" :class="[nosleep?'far':'fas']"></i></a>
+            <a class="btn btn-secondary m-0 nosleep" :title="[!nosleep?'Blokovat zhasínání displeje':'Přestat blokovat zhasínání displeje']" v-on:click="toggleNosleep"><i class="fa-sun" :class="[nosleep?'far':'fas']"></i></a>
+            <a class="btn btn-secondary nosleep-caption">{{ !nosleep?'zhasínání&nbsp;displeje není&nbsp;blokováno':'zhasínání&nbsp;displeje je&nbsp;blokováno' }}</a>
 		</div>
 </template>
 
-<script>
+<style>
+    .nosleep-caption {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-right: calc(2.875rem);
+        margin-bottom: -0.46875rem;
+        padding: 0.46875rem 10px;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        border-radius: 10px;
+        z-index: 4;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 600ms, visibility 600ms;
+        pointer-events: none;
+    }
 
-import NoSleep from 'nosleep.js';
+    .nosleep:hover + .nosleep-caption {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    import NoSleep from 'nosleep.js';
 
     export default {
         data() {
