@@ -370,16 +370,31 @@ body {
 
 .our-team {
   h4 {
-    transition: 0.2s;
+    transition: padding 0.2s;
   }
 
   &:hover h4 {
     padding-left: 0.5rem;
   }
 
-  .card-columns {
-    @include media-breakpoint-between(sm, md) {
-      column-count: 2;
+  .flex-wrap {
+    margin: 0 -10px;
+
+    .card {
+      flex: 0 0 calc(100% / 3 - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
+      @include media-breakpoint-between(sm, md) {
+        flex: 0 0 calc(100% / 2 - 20px);
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-bottom: 15px;
+
+        .card-body {
+          padding: 1rem;
+        }
+      }
     }
   }
 }

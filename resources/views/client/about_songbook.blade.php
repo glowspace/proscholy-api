@@ -88,14 +88,12 @@
                     return ($var['team'] == $team);
                 });
                 @endphp
-            <div class="card-columns">
+            <div class="d-block d-sm-flex flex-wrap">
                 @foreach ($team_members as $key => $member)
-                <div>
-                    <div class="card{{ (array_search($member['name'], array_column($our_team, 'name')) < $key)?' bg-transparent':'' }}">
-                        <div class="card-body">
-                            <h5 class="card-title {{ ($member['info']=='')?'mb-0':'' }}">{{ $member['name'] }}</h5>
-                            <p class="card-text">{{ $member['info'] }}</p>
-                        </div>
+                <div class="card{{ (array_search($member['name'], array_column($our_team, 'name')) < $key)?' bg-transparent':'' }}">
+                    <div class="card-body">
+                        <h5 class="card-title {{ ($member['info']=='')?'mb-0':'' }}">{{ $member['name'] }}</h5>
+                        <p class="card-text">{{ $member['info'] }}</p>
                     </div>
                 </div>
             @endforeach
