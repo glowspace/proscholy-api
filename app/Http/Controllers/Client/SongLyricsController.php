@@ -35,4 +35,29 @@ class SongLyricsController extends Controller
 
         return view('client.song', compact('song_l', 'tags_officials', 'tags_unofficials', 'songbook_records'));
     }
+
+    private function getDescription($song_l)
+    {
+        // TODO: finish this function and implement instead of blade component
+        $authors_count = $song_l->authors()->count();
+        $original_lyric = $song_l->song->getOriginalSongLyric();
+        if($original_lyric !== NULL) {
+            $original_authors_count = $original_lyric->authors()->count();
+        }
+
+        $desc = "Píseň $song_l->name,";
+
+        if ($song_l->type === 0) {
+            if ($authors_count === 0) {
+                $desc.= " autor neznámý";
+                return $desc;
+            }
+
+            if ($authors_count === 1) {
+                $desc.= " autor: ";
+            } else {
+                $desc.= " autoři: ";
+            }
+        }
+    }
 }

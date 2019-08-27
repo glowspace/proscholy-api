@@ -85,13 +85,8 @@ input::placeholder {
 .navbar {
   z-index: 200;
   background-color: #292929;
-
   min-height: 66px;
-
   font-family: "Nunito", sans-serif;
-
-  @include media-breakpoint-down(sm) {
-  }
 }
 
 .navbar-brand {
@@ -314,4 +309,92 @@ Home page specific elements
 
 body {
   height: auto;
+}
+
+.author-secondary-links a {
+  color: #6c757d !important;
+}
+
+.error {
+  color: white;
+  text-align: center;
+
+  h1 {
+    font-size: calc(4vw + 50px);
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: calc(2vw + 10px);
+  }
+
+  .display-all-songs {
+    font-size: calc(1vw + 10px);
+  }
+}
+
+.stretched-link {
+  position: static;
+  will-change: initial;
+}
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: "";
+  background-color: rgba(0,0,0,0);
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+
+  @include media-breakpoint-down(sm) {
+    position: relative;
+    height: auto;
+    padding-top: 1rem;
+    width: 100%;
+  }
+}
+
+.our-team {
+  h4 {
+    transition: padding 0.2s;
+  }
+
+  &:hover h4 {
+    padding-left: 0.5rem;
+  }
+
+  .flex-wrap {
+    margin: 0 -10px;
+
+    .card {
+      flex: 0 0 calc(100% / 3 - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
+      @include media-breakpoint-between(sm, md) {
+        flex: 0 0 calc(100% / 2 - 20px);
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-bottom: 15px;
+
+        .card-body {
+          padding: 1rem;
+        }
+      }
+    }
+  }
 }

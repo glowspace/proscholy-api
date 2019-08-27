@@ -99,7 +99,6 @@
 <style lang="scss">
     .chord{
         position: relative;
-        // transition: 100ms;
         display: inline-block;
 
         &-sign{
@@ -158,16 +157,6 @@
             background: #b9b9b9;
             top: -0.5em;
             right: -0.5em;
-        }
-
-        &:hover{
-            .chord-text{
-                // background: #d0e6f9;
-            }
-
-            .chord-bass{
-                color: #1d6dab;
-            }
         }
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="song-tags card pt-1">
-        <h4>Liturgie - mše svatá</h4>
+        <h4>Liturgie – mše svatá</h4>
 
         <a
             v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"

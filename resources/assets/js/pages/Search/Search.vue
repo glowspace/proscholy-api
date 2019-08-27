@@ -25,7 +25,7 @@
                     </button>
                 </div>
                 <div v-if="init" @click="resetState(true); init=false;" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
-                <div class="mx-3 d-md-none filter-panel" v-show="!init && displayFilter">
+                <div class="mx-2 d-md-none filter-panel position-absolute" v-show="!init && displayFilter">
                     <a class="btn btn-secondary float-right fixed-top position-sticky"
                         v-on:click="displayFilter=false">
                         <i class="fas fa-times pr-0"></i>
@@ -71,11 +71,71 @@
                 ></Filters>
             </div>
         </div>
+        <div v-if="init" class="pt-5 pb-3 h2 mb-0 invisible">
+            <i class="fab fa-android"></i>
+            <i class="fab fa-apple"></i>
+        </div>
+        <div v-if="init" class="text-center pt-5 text-white app-download pb-3 h2 mb-0">
+            <a href="http://play.google.com/store/apps/details?id=jozkar.mladez"><i class="fab fa-android"></i></a>
+            <a class="btn px-2 font-weight-bold">APLIKACE</a>
+            <a href="http://itunes.apple.com/app/zpěvník-pro-scholy/id1475375453"><i class="fab fa-apple"></i></a>
+        </div>
+        <a class="btn btn-secondary mb-0 search-report bg-transparent" target="_blank" title="Nahlásit"
+        :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
+            <i class="fas fa-exclamation-triangle p-0"></i>
+        </a>
     </div>
 </template>
 
-<script>
+<style>
+body {
+    background-image: url("/img/bg_center.svg");
+    background-color: #da3926;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
 
+.filter-panel {
+    display: block;
+}
+
+.app-download {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-download a {
+    color: white !important;
+}
+
+.app-download .btn:nth-of-type(2) {
+    background-color: transparent;
+    cursor: initial;
+}
+
+.btn.search-report {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    color: #292929;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.btn.search-report:hover {
+    color: #292929;
+    opacity: 1;
+}
+</style>
+
+<script>
 import AuthorsList from "./AuthorsList";
 import SongsList from "./SongsList";
 import Filters from "./Filters";
@@ -183,6 +243,10 @@ export default {
             if (this.init && this.search_string !== "") {
                 this.init = false;
             }
+        },
+        
+        currentUrl() {
+            return encodeURIComponent(window.location.href);
         }
     },
 
@@ -204,18 +268,14 @@ export default {
 
     computed: {
         filters_active() {
-            return 
+            // note that there has to be sth together at the line with return,
+            // otherwise js will see only return; and don't give a f*ck about the things below
+            return (
                 Object.keys(this.selected_songbooks).length + 
                 Object.keys(this.selected_tags).length + 
-                Object.keys(this.selected_languages).length
-                 > 0;
+                Object.keys(this.selected_languages).length) 
+                    > 0;
         }
     }
 }
 </script>
-
-<style>
-.filter-panel {
-    display: block;
-}
-</style>

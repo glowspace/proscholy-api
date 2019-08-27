@@ -6,10 +6,10 @@
 
 @section('content')
     <div class="center-container">
-        <div class="card" style="max-width: 500px;width: 100%;">
-            <div class="card-header">{{ __('Login') }}</div>
+        <div class="card" style="max-width: 500px; width: 100%;">
+            <div class="card-header">Přihlašovací formulář</div>
             <div class="card-body">
-                <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" id="loginForm">
+                <form method="POST" action="{{ route('login') }}" aria-label="Přihlašovací formulář" id="loginForm">
                     @csrf
                     <div class="form-group row">
                         <label for="email" class="col-sm-4 col-form-label text-md-right">E-mail:</label>

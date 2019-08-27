@@ -29,20 +29,21 @@ body.dark {
   }
 
   .background-home {
-    background: transparent;
+    background-image: url("/img/bg_center_dark.svg");
+    background-color: transparent;
   }
 
   .search-home {
     background-color: black;
     color: white;
-    border: 1px #333 solid;
+    border: 1px #999 solid;
     border-right: 0;
   }
 
   .search-submit {
     background-color: black;
     color: white;
-    border: 1px #333 solid;
+    border: 1px #999 solid;
     border-left: 0;
   }
 
@@ -62,13 +63,17 @@ body.dark {
     color: #4dc0b5;
   }
 
+  .chord-bass {
+    color: #45a99f;
+  }
+
   .chosen .btn,
   .btn.chosen,
   .dark-mode-button {
     background-color: rgba(0, 0, 0, 0.3);
   }
 
-  a {
+  a, .btn.btn-primary, .btn-primary.custom-file-control::before {
     color: #4dc0b5;
 
     &:hover {
@@ -79,21 +84,8 @@ body.dark {
   .tag-selected {
     border-color: black;
   }
-}
 
-.center-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-
-  @include media-breakpoint-down(sm) {
-    position: relative;
-    height: auto;
-    padding-top: 1rem;
-    width: 100%;
+  .tag:hover {
+    color: white;
   }
 }

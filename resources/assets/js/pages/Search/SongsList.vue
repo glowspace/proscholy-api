@@ -83,10 +83,18 @@
     </template>
     <tr v-else>
       <td v-if="!results_loaded" class="border-top-0 p-1">
-        <i class="px-3 py-2 d-block">Načítám...</i>
+        <i class="px-3 py-2 d-inline-block">Načítám...</i>
+        <a class="btn btn-secondary float-right m-0" target="_blank"
+        :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
+          Nahlásit
+        </a>
       </td>
       <td v-else class="border-top-0 p-1">
-        <i class="px-3 py-2 d-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</i>
+        <i class="px-3 py-2 d-inline-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</i>
+        <a class="btn btn-secondary float-right m-0" target="_blank"
+        :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
+          Nahlásit
+        </a>
       </td>
     </tr>
   </table>
@@ -201,6 +209,10 @@
               let rec = song_lyric.songbook_records.filter(record => record.songbook.id === this.preferred_songbook_id)[0];
 
               return rec.songbook.shortcut + rec.number;
+            },
+
+            currentUrl() {
+              return encodeURIComponent(window.location.href);
             }
         },
 
