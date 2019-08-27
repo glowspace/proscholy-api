@@ -10,22 +10,17 @@ Píseň {{ $song_l->name }},
     @if($original_lyric !== NULL) originál: {{ $original_lyric->name }},
         @if($original_authors_count == 0) autor: neznámý,
         @else
-            @if($original_authors_count == 1) autor: @else autoři: @endif
-            @foreach($original_lyric->authors as $author) {{$author->name}},
-            @endforeach
+            @if($original_authors_count == 1) autor: @else autoři: @endif{{ $original_lyric->authors->implode('name', ', ') }}, 
         @endif
     @endif
     @if($authors_count == 0) autor překladu: neznámý
     @else
-        @if($authors_count == 1) autor @else autoři @endif překladu:
-        @foreach($song_l->authors as $author) {{$author->name}}@if (!$loop->last), @endif
-        @endforeach
+        @if($authors_count == 1) autor překladu: @else autoři překladu: @endif{{ $song_l->authors->implode('name', ', ') }}
     @endif
 @else {{-- original --}}
     @if($authors_count == 0) autor: neznámý
     @else
-        @if($authors_count == 1) autor: @else autoři: @endif
-        @foreach($song_l->authors as $author) {{$author->name}}@if (!$loop->last), @endif
-        @endforeach
+        @if($authors_count == 1) autor: @else autoři: @endif{{ $song_l->authors->implode('name', ', ') }}
     @endif
 @endif
+
