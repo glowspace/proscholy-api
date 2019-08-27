@@ -34,7 +34,7 @@
                 @if (count($songbook_records))
                     <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
                         @foreach ($songbook_records as $record)
-                            <a class="tag tag-yellow" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->shortcut . $record->pivot->number }}</a>
+                            <a class="tag tag-yellow" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->shortcut . ' ' . $record->pivot->number }}</a>
                         @endforeach
                     </div>
                 @endif
