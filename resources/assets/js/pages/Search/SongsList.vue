@@ -2,13 +2,14 @@
   <table class="table m-0">
     <template v-if="song_lyrics_results && song_lyrics_results.length && !$apollo.loading">
       <tr v-for="(song_lyric, index) in song_lyrics_results" v-bind:key="song_lyric.id">
-        <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right']">
+        <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right w-min']">
           <a
-            class="p-2 pl-3 w-100 d-inline-block text-secondary"
+            class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
             :href="song_lyric.public_url"
           >
             <!-- {{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):"" }} -->
-            {{ getSongNumber(song_lyric) }}
+            <span>{{ getSongNumber(song_lyric, true) }}</span>
+            <span>{{ getSongNumber(song_lyric, false) }}</span>
           </a>
         </td>
         <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
@@ -201,14 +202,21 @@
                     this.results_limit += 20;
             },
 
-            getSongNumber(song_lyric) {
+            getSongNumber(song_lyric, getfirstPart) {
               if (this.preferred_songbook_id === null) {
-                return song_lyric.id;
+                if(getfirstPart) {
+                  return "";
+                } else {
+                  return song_lyric.id;
+                }
+              } else {
+                let rec = song_lyric.songbook_records.filter(record => record.songbook.id === this.preferred_songbook_id)[0];
+                if(getfirstPart) {
+                  return rec.songbook.shortcut + " ";
+                } else {
+                  return rec.number;
+                }
               }
-
-              let rec = song_lyric.songbook_records.filter(record => record.songbook.id === this.preferred_songbook_id)[0];
-
-              return rec.songbook.shortcut + rec.number;
             },
 
             currentUrl() {

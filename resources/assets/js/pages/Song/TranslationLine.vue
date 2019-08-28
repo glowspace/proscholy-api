@@ -1,6 +1,6 @@
 <template>
 	<tr>
-		<td :class="[(translation.lang=='cs')?'invisible':'text-secondary', 'text-right text-uppercase small align-middle pr-0']" title="translation.lang_string">{{ translation.lang }}</td>
+		<td :class="[(translation.lang=='cs')?'invisible':'text-secondary', 'text-right text-uppercase small align-middle pr-0']" :title="translation.lang_string">{{ translation.lang }}</td>
 		<td><a :href="translation.public_url" :class="{'font-weight-bolder': (translation.name == original_name)}">{{ translation.name }}</a></td>
 		<td><span class="d-none d-sm-inline">{{ typeString }}</span><span class="d-sm-none">{{ typeChar }}</span></td>
 		<td>

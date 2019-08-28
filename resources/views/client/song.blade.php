@@ -8,14 +8,14 @@
 @section('content')
     <div class="container">
         <div class="d-flex flex-column flex-lg-row flex-wrap flex-lg-nowrap mt-4 mb-3 justify-content-between">
-            <div class="flex-grow-3">
+            <div class="minw-45">
                 <h1 class="song-title">{{$song_l->name}}</h1>
                 <div class="d-flex align-items-center mt-1">
                     <h4 class="song-number m-0">{{ $song_l->id }}</h4>
                     <p class="song-author ml-3 mb-0">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
                 </div>
             </div>
-            <div class="song-tags p-0 pt-lg-2 pt-3">
+            <div class="song-tags p-0 pt-lg-2 pt-3 pl-lg-2">
                 @if (count($tags_officials) + count($tags_unofficials))
                     <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
                         @foreach ($tags_officials as $tag)
@@ -34,7 +34,8 @@
                 @if (count($songbook_records))
                     <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
                         @foreach ($songbook_records as $record)
-                            <a class="tag tag-yellow" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->shortcut . ' ' . $record->pivot->number }}</a>
+                            {{-- <a class="tag tag-yellow" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->name . ' ' . $record->pivot->number }}</a> --}}
+                            <a class="tag tag-yellow songbook-tag" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}"><span class="songbook-name">{{ $record->name }}</span><span class="songbook-number">{{ $record->pivot->number }}</span></a>
                         @endforeach
                     </div>
                 @endif
