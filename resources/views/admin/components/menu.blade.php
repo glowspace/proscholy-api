@@ -1,5 +1,3 @@
-<div class="navbar-label material-shadow text-warning">Administrace</div>
-
 @include('admin.components.menu-item', [
     'route' => 'admin.dashboard',
     'icon' => 'home',
@@ -76,7 +74,7 @@
     ])
 @endcan --}}
 
-<div class="navbar-label material-shadow text-primary">Úprava položek</div>
+<div class="navbar-label material-shadow text-success">Úprava položek</div>
 
 @include('admin.components.menu-item', [
     'route' => 'admin.song.index',
