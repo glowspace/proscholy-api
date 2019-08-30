@@ -19,6 +19,16 @@ class AdminController extends Controller
         return view('admin.dash', [
             'songs_count'        => SongLyric::count(),
             'songs_w_text_count' => SongLyric::where('lyrics', '!=', '')->count(),
+            'songs_w_all_count' => SongLyric::where('lyrics', '!=', '', 'and')
+                ->where('has_chords', '=', true, 'and')
+                ->whereHas('authors', null, 'and')
+                ->whereHas('tags')->count(),
+            'songs_w_just_title_count' => SongLyric::whereNull('lyrics', 'and')
+                ->whereDoesntHave('authors', null, 'and')
+                ->whereDoesntHave('tags', null, 'and')
+                ->whereDoesntHave('songbook_records', null, 'and')
+                ->whereDoesntHave('files', null, 'and')
+                ->whereDoesntHave('externals')->count(),
             'authors_count'      => Author::count(),
             'externals_count'    => External::count(),
         ]);

@@ -77,12 +77,20 @@
                     <div class="card-body">
                         <table class="table table-bordered mb-0">
                             <tr>
-                                <td>Písně s textem</td>
+                                <td>Písně s&nbsp;textem</td>
                                 <td><b>{{$songs_w_text_count}}</b></td>
                             </tr>
                             <tr>
+                                <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
+                                <td><b class="text-success">{{$songs_w_all_count}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Písně pouze s&nbsp;názvem</td>
+                                <td><b class="text-warning">{{$songs_w_just_title_count}}</b></td>
+                            </tr>
+                            <tr>
                                 <td>Písně celkem</td>
-                                <td><b>{{$songs_count}}</b></td>
+                                <td><b class="text-primary">{{$songs_count}}</b></td>
                             </tr>
                             <tr>
                                 <td>Autoři</td>
