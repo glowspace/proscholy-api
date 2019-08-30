@@ -116,16 +116,15 @@ textarea.form-control
 		margin-right: 10px;
     margin-bottom: 20px;
 
-    @include media-breakpoint-between(sm, lg) {
+    @include media-breakpoint-between(md, lg) {
       flex: 0 0 calc(100% / 2 - 20px) !important;
     }
 
-    @include media-breakpoint-down(xs) {
-      flex: 0 0 100% !important;
+    @include media-breakpoint-between(xs, sm) {
+      flex: 0 0 calc(100% - 20px) !important;
     }
 
     img, .img-icon {
-      height: 16px;
       transition: opacity 0.2s;
     }
     
@@ -133,7 +132,8 @@ textarea.form-control
       text-decoration: none;
 
       img, .img-icon {
-        opacity: 0.5;
+        color: #1d6dab;
+        opacity: 0.75;
       }
     }
 
@@ -145,7 +145,7 @@ textarea.form-control
       img, .img-icon {
         height: auto;
         text-align: center;
-        font-size: calc(60px - 1rem);
+        font-size: calc(60px - 1.5rem);
         line-height: 1;
         width: 60px;
         margin: auto 0;
