@@ -17,7 +17,7 @@
                 </a>
                 <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CGHL024DD" target="_blank">
                     <div class="card">
-                        <i class="fas fa-question-circle"></i>
+                        <span class="img-icon"><i class="fas fa-question-circle"></i></span>
                         <div class="card-body">
                             <h5 class="card-title">Technická podpora</h5>
                             <p class="card-text text-muted">kanál na Slacku</p>
@@ -26,11 +26,10 @@
                 </a>
                 <a href="tel:+420734791909">
                     <div class="card">
-                        <i class="fas fa-phone-square"></i>
+                        <span class="img-icon"><i class="fas fa-phone-square"></i></span>
                         <div class="card-body">
                             <h5 class="card-title">Krizový telefon</h5>
-                            <h5 class="card-title"><b>+420 734 791 909</b></h5>
-                            <p class="card-text text-muted">urgentní dotazy, závady</p>
+                            <h5 class="card-title"><b>734 791 909</b></h5>
                         </div>
                     </div>
                 </a>
@@ -64,7 +63,7 @@
 
                 <div class="card">
                     <div class="card-header">Instruktážní videa od Janey</div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLXLfC_XTiu7qWXgsf-18mPu-IWFZ5o2xn" frameborder="0" allow=encrypted-media" allowfullscreen></iframe>
                         </div>
@@ -76,7 +75,7 @@
                 <div class="card">
                     <div class="card-header">Statistika</div>
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered mb-0">
                             <tr>
                                 <td>Písně s textem</td>
                                 <td><b>{{$songs_w_text_count}}</b></td>

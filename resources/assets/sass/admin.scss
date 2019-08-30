@@ -116,7 +116,15 @@ textarea.form-control
 		margin-right: 10px;
     margin-bottom: 20px;
 
-    img, i {
+    @include media-breakpoint-between(sm, lg) {
+      flex: 0 0 calc(100% / 2 - 20px) !important;
+    }
+
+    @include media-breakpoint-down(xs) {
+      flex: 0 0 100% !important;
+    }
+
+    img, .img-icon {
       height: 16px;
       transition: opacity 0.2s;
     }
@@ -124,7 +132,7 @@ textarea.form-control
     &:hover {
       text-decoration: none;
 
-      img, i {
+      img, .img-icon {
         opacity: 0.5;
       }
     }
@@ -134,18 +142,18 @@ textarea.form-control
       flex-direction: row;
       transition: border 0.2s;
       
-      img, i {
+      img, .img-icon {
         height: auto;
-        font-size: 300%;
         text-align: center;
-        width: 25%;
+        font-size: calc(60px - 1rem);
+        line-height: 1;
+        width: 60px;
         margin: auto 0;
-        padding: 1rem 0.5rem 1rem 1.25rem;
+        padding: 1rem 0 1rem 1.5rem;
       }
 
       .fa-phone-square {
         transform: scaleX(-1);
-        padding: 1rem 1.25rem 1rem 0.5rem;
       }
   
       .card-body {
