@@ -61,7 +61,7 @@
                 @if($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())
                     <div class="card-header media-opener py-2">
                         <i class="fas fa-headphones"></i>
-                        Dostupné nahrávky a videa
+                        Dostupné nahrávky<span class="d-none d-xl-inline"> a videa</span>
                     </div>
                     @if($song_l->spotifyTracks()->count() > 0)
                     <div class="media-opener"><i class="fab fa-spotify text-success"></i> Spotify</div>
