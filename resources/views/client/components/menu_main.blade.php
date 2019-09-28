@@ -2,21 +2,21 @@
     <div class="container">
     <a class="navbar-brand" href="{{url("") }}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60" alt="logo">Zpěvník pro scholy</a>
     @if (Auth::check())
-            <a class="navbar-text px-3" href="{{route('admin.dashboard')}}">
-            Přihlášený uživatel: {{ Auth::user()->name }}
-            @if (Auth::user()->roles()->count() > 0)
-                ({{Auth::user()->roles()->first()->name}})
-            @endif
+        <a class="navbar-text px-3 user-logged-in-btn" href="{{route('admin.dashboard')}}">
+            <i class="fas fa-user"></i> {{ Auth::user()->name }}
+        @if (Auth::user()->roles()->count() > 0)
+            ({{Auth::user()->roles()->first()->name}})
+        @endif
         </a>
     @endif
-        <div class="d-inline-flex">
-            <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
-            {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a> --}}
-            {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i> Oblíbené</a> --}}
-            <a href="{{route("client.about")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O&nbsp;zpěvníku</a>
-            {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-cog"></i> Nastavení</a> --}}
-            <dark-mode-button v-cloak> Tmavý&nbsp;mód</dark-mode-button>
-        </div>
+    <div class="d-inline-flex">
+        <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
+        {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a> --}}
+        {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i> Oblíbené</a> --}}
+        <a href="{{route("client.about")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O&nbsp;zpěvníku</a>
+        {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-cog"></i> Nastavení</a> --}}
+        <dark-mode-button v-cloak> Tmavý&nbsp;mód</dark-mode-button>
+    </div>
     </div>
 </nav>
 
@@ -31,5 +31,8 @@
         <a href="{{route("client.about")}}" class="btn btn-secondary"><i class="fas fa-info"></i></a>
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-cog"></i></a> --}}
         <dark-mode-button></dark-mode-button>
+        @if (Auth::check())
+            <a href="{{route('admin.dashboard')}}" class="btn btn-secondary"><i class="fas fa-user"></i></a>
+        @endif
     </div>
 </nav>
