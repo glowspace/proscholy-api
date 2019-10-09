@@ -7,7 +7,6 @@
             class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
             :href="song_lyric.public_url"
           >
-            <!-- {{ (song_lyric.songbook_records[0])?(song_lyric.songbook_records[0].songbook.shortcut + song_lyric.songbook_records[0].number):"" }} -->
             <span>{{ getSongNumber(song_lyric, true) }}</span>
             <span>{{ getSongNumber(song_lyric, false) }}</span>
           </a>
