@@ -32,6 +32,8 @@
             if (window.localStorage) {
                 if (localStorage.getItem("dark") === "true") {
                     document.getElementsByTagName("body")[0].className = "dark";
+                } else if (localStorage.getItem("dark") === "false" && window.matchMedia('(prefers-color-scheme: dark)')) {
+                    document.getElementsByTagName("body")[0].className = "dark";
                 }
             }
         });

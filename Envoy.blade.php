@@ -34,7 +34,7 @@
     ls | grep -v ${LAST} | xargs rm -rfv
 @endtask
 
-@task('rollback')
+@task('rollback') 
     cd {{ $base_dir }}
     docker-compose exec -T php bash
 
