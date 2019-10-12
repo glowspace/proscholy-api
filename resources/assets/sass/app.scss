@@ -315,6 +315,14 @@ body {
   color: #6c757d !important;
 }
 
+.navbar-dark .navbar-text.user-logged-in-btn {
+  color: #aaa;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .error {
   color: white;
   text-align: center;
@@ -366,6 +374,14 @@ body {
     padding-top: 1rem;
     width: 100%;
   }
+}
+
+.minw-45 {
+  min-width: 45%;
+}
+
+.w-min {
+  width: 1%;
 }
 
 .our-team {

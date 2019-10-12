@@ -24,6 +24,9 @@
             </div>
         </div>
     </div>
+    <a class="btn btn-secondary mb-0 admin-report bg-transparent" target="_blank" title="Nahlásit chybu" href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CGHL024DD">
+        <i class="fas fa-exclamation-triangle p-0"></i>
+    </a>
 @endsection
 
 @section('app-css')

@@ -24,74 +24,158 @@ textarea.form-control
 
 
 .admin-controls {
-    position: fixed;
-    top: 30vh;
-    left: 0.3125rem;
-    z-index: 20;
-    a:nth-of-type(odd) {
-      i {
-        width: 16px;
-      }
-    }
-    a:nth-of-type(odd) + a {
-      padding-left: 5px;
-      padding-right: 10px;
-      display: none;
-      background: rgba(248, 250, 252, 0.8);
-      border-radius: 10px;
-      .dark & {
-        background: rgba(0, 0, 0, 0.8);
-      }
-    }
-  
-    a:nth-of-type(odd):hover + a {
-      display: inline-block;
+  position: fixed;
+  top: 30vh;
+  left: 0.3125rem;
+  z-index: 20;
+  a:nth-of-type(odd) {
+    i {
+      width: 16px;
     }
   }
+  a:nth-of-type(odd) + a {
+    padding-left: 5px;
+    padding-right: 10px;
+    display: none;
+    background: rgba(248, 250, 252, 0.8);
+    border-radius: 10px;
+    .dark & {
+      background: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  a:nth-of-type(odd):hover + a {
+    display: inline-block;
+  }
+}
+
+// admin sidebar
+.sidebar {
+  @include media-breakpoint-up(lg) {
+    min-height: calc(100vh - 66px);
+  }
   
-  // admin sidebar
-  .sidebar {
+  @include media-breakpoint-down(md) {
+    margin-right: -15px;
+  }
+
+  height: 100%;
+  margin-left: -15px;
+
+  a {
+    padding: 0.4rem 0.8rem;
+
     @include media-breakpoint-up(lg) {
-      min-height: calc(100vh - 66px);
+      width:    100%;
+      padding:    0.66875rem 1rem;
+    }
+
+    margin:     0;
+
+    color:      white !important;
+    text-align: left;
+
+    &:hover {
+      color: white;
+    }
+
+    // Fontawesome icon
+    i {
+      width: 20px;
+    }
+
+    .badge {
+      float:            right;
+
+      position:         relative;
+      top:              3px;
+
+      background-color: #36c374;
+      color:            black;
+    }
+  }
+}
+
+.dash {
+  padding-right: 5px;
+  padding-left: 5px;
+
+  h5.card-title {
+		font-size: 1.1rem;
+		margin-bottom: 0.25rem;
+  }
+  
+  & > .card {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+	a {
+		flex: 0 0 calc(100% / 3 - 20px) !important;
+		margin-left: 10px;
+		margin-right: 10px;
+    margin-bottom: 20px;
+
+    @include media-breakpoint-between(md, lg) {
+      flex: 0 0 calc(100% / 2 - 20px) !important;
+    }
+
+    @include media-breakpoint-between(xs, sm) {
+      flex: 0 0 calc(100% - 20px) !important;
+    }
+
+    img, .img-icon {
+      transition: opacity 0.2s;
     }
     
-    @include media-breakpoint-down(md) {
-      margin-right: -15px;
-    }
-  
-    height: 100%;
-    margin-left: -15px;
-  
-    a {
-      padding: 0.4rem 0.8rem;
-  
-      @include media-breakpoint-up(lg) {
-        width:    100%;
-        padding:    0.66875rem 1rem;
-      }
-  
-      margin:     0;
-  
-      color:      white !important;
-      text-align: left;
-  
-      &:hover {
-        color: white;
-      }
-  
-      // Fontawesome icon
-      i {
-        width: 20px;
-      }
-  
-      .badge {
-        float:            right;
-  
-        position:         relative;
-        top:              3px;
-  
-        background-color: #36c374;
-        color:            black;
+    &:hover {
+      text-decoration: none;
+
+      img, .img-icon {
+        color: #1d6dab;
+        opacity: 0.75;
       }
     }
-  }
+
+    .card {
+      height: 100%;
+      flex-direction: row;
+      transition: border 0.2s;
+      
+      img, .img-icon {
+        height: auto;
+        text-align: center;
+        font-size: calc(60px - 1.5rem);
+        line-height: 1;
+        width: 60px;
+        margin: auto 0;
+        padding: 1rem 0 1rem 1.5rem;
+      }
+
+      .fa-phone-square {
+        transform: scaleX(-1);
+      }
+  
+      .card-body {
+        flex: 1;
+        margin: auto 0;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+	} 
+}
+
+.btn.admin-report {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: #292929;
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.btn.admin-report:hover {
+  color: #292929;
+  opacity: 1;
+}

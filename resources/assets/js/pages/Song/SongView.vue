@@ -248,12 +248,22 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-3" v-if="renderMedia || renderScores">
+    <div class="col-lg-3">
       <div class="card card-blue mb-3 d-none d-lg-flex" v-on:click="topMode=1" v-if="renderScores">
         <slot name="score"></slot>
       </div>
       <div class="card card-green mb-3 d-none d-lg-flex" v-on:click="bottomMode=2" v-if="renderMedia">
         <slot name="media"></slot>
+      </div>
+      <div class="card mb-3 d-none d-lg-flex" v-on:click="bottomMode=1">
+        <div class="card-header media-opener py-2 rounded bg-secondary text-white">
+            <i class="fas fa-sliders-h"></i>
+            Nastavit zobrazení
+        </div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
+        <div class="media-opener"><i class="fas fa-chevron-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
       </div>
     </div>
   </div>

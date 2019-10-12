@@ -30,6 +30,10 @@
         var dom_observer = new MutationObserver(function(mutation) {
             // this runs (multiple times but most importantly), before the body is rendered
             if (window.localStorage) {
+                if (window.matchMedia('(prefers-color-scheme: dark)') && localStorage.getItem("dark") === undefined) {
+                    localStorage.setItem("dark", true);
+                }
+
                 if (localStorage.getItem("dark") === "true") {
                     document.getElementsByTagName("body")[0].className = "dark";
                 }

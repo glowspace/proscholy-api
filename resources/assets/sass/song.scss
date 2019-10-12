@@ -52,8 +52,12 @@
 }
 
 .media-opener {
+  border-top: 1px #eee solid;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  &:first-of-type, &:nth-of-type(2) {
+    border-top: none;
+  }
   i {
     padding-right: 5px;
     width: 20px;
@@ -155,4 +159,22 @@
       color: white !important;
     }
   }
+
+  .songbook-tag {
+    padding: 0;
+    display: flex;
+    
+    .songbook-name {
+      padding: 0.1em 0.7em;
+      padding-right: 0.6em;
+    }
+
+    .songbook-number {
+      padding: 0.1em 0.7em;
+      padding-left: 0.6em;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 0 1em 1em 0;
+    }
+  }
 }
+

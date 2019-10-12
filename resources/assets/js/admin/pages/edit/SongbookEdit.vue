@@ -96,7 +96,7 @@
                 ></items-combo-box>
               </td>
               <td>
-                <a href="#"
+                <a class="as-link"
                   v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
                   @click.middle="goToAdminPage('song/' + props.item.song_lyric.id + '/edit', true, true)"
                   @click.left="goToAdminPage('song/' + props.item.song_lyric.id + '/edit')"
@@ -393,3 +393,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  a.as-link {
+    color: #3f51b5 !important;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+</style>

@@ -62,7 +62,6 @@
                 array('name' => 'Anna Berková', 'team' => 'redakce', 'info' => ''),
                 array('name' => 'Barbora Kuchaříková', 'team' => 'redakce', 'info' => ''),
                 array('name' => 'Dagmar Mojžíšová', 'team' => 'redakce', 'info' => ''),
-                array('name' => 'Eliška Plačková', 'team' => 'redakce', 'info' => ''),
                 array('name' => 'Jakub Soukal', 'team' => 'redakce', 'info' => ''),
                 array('name' => 'Lada Radmacherová', 'team' => 'redakce', 'info' => ''),
                 array('name' => 'Martina Petrůjová', 'team' => 'redakce', 'info' => ''),
