@@ -260,10 +260,10 @@
             <i class="fas fa-sliders-h"></i>
             Nastavit zobrazení
         </div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
-        <div class="media-opener"><i class="fas fa-chevron-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
+        <div class="media-opener"><i class="fas fa-angle-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
       </div>
     </div>
   </div>
