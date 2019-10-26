@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
     <div class="container">
-    <a class="navbar-brand" href="{{url("") }}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60" alt="logo">Zpěvník pro scholy</a>
-    @if (Auth::check())
-        <a class="navbar-text px-3 user-logged-in-btn" href="{{route('admin.dashboard')}}">
-            <i class="fas fa-user"></i> {{ Auth::user()->name }}
-        @if (Auth::user()->roles()->count() > 0)
-            ({{Auth::user()->roles()->first()->name}})
+        <a class="navbar-brand" href="{{url("") }}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60" alt="logo">Zpěvník pro scholy</a>
+        @if (Auth::check())
+            <a class="navbar-text px-3 user-logged-in-btn" href="{{route('admin.dashboard')}}">
+                <i class="fas fa-user"></i> {{ Auth::user()->name }}
+            @if (Auth::user()->roles()->count() > 0)
+                ({{Auth::user()->roles()->first()->name}})
+            @endif
+            </a>
         @endif
         </a>
     @endif

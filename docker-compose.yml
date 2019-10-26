@@ -1,0 +1,69 @@
+version: '3'
+services:
+    web:
+      build: 
+        context: ./docker
+        dockerfile: php.Dockerfile
+      volumes:
+        - '.:/var/www/html'
+        - './docker/config/cron.d:/etc/cron.d'
+        - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
+      entrypoint: 'bash ./docker/web/entrypoint_web_test.sh'
+      networks:
+        - bcloud-network
+      restart: always
+      depends_on:
+        - db
+      dns:
+        - 8.8.8.8
+        - 4.4.4.4
+    
+    db:
+      image: mysql:5.7
+      restart: always
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        # So you don't have to use root, but you can if you like
+        MYSQL_USER: ${DB_USERNAME}
+        # You can use whatever password you like
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        # Password for root access
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      ports:
+        # <Port exposed> : < MySQL Port running inside container>
+        - '8003:3306'
+      expose:
+        # Opens port 3306 on the container
+        - '8003'
+        # Where our data will be persisted
+      volumes:
+        # - ./databases:/var/databases
+        - ./docker/mysql:/var/lib/mysql
+      networks: 
+        - bcloud-network
+
+    nginx:
+      image: 'nginx:1.17.3'
+      ports:
+        - '8000:80'
+        - '443:443'
+      links:
+        - 'web'
+      volumes:
+        - '.:/var/www/html'
+        - './docker/config/nginx:/etc/nginx/conf.d'
+        - './docker/logs/nginx:/var/log/nginx'
+      networks:
+        - bcloud-network
+      restart: always
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8001:8080
+        networks:
+          - bcloud-network
+
+networks:
+  bcloud-network:

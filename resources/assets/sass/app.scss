@@ -135,7 +135,7 @@ Home page specific elements
  */
 
 .home {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 
@@ -305,10 +305,6 @@ Home page specific elements
 
 .no-left-padding {
   padding-left: 2px !important;
-}
-
-body {
-  height: auto;
 }
 
 .author-secondary-links a {
