@@ -94,6 +94,11 @@
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
                 ></items-combo-box>
+                <v-checkbox :disabled="model.tags_official.length == 0"
+                  class="mt-0"
+                  v-model="model.is_approved_for_liturgy"
+                  label="Schváleno pro použití v liturgii"
+                ></v-checkbox>
               </v-form>
             </v-flex>
             <v-flex xs12 md5 offset-md1 class="edit-description">
@@ -396,7 +401,8 @@ export default {
         files: [],
         songbook_records: [],
         song: undefined,
-        capo: undefined
+        capo: undefined,
+        is_approved_for_liturgy: undefined
       },
       lang_values: [],
       selected_thumbnail_url: undefined,
@@ -510,6 +516,7 @@ export default {
               lyrics: this.model.lyrics,
               song: this.model.song,
               capo: this.model.capo,
+              is_approved_for_liturgy: this.is_approved_for_liturgy,
               authors: {
                 create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
                 sync: this.model.authors

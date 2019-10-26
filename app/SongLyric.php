@@ -122,7 +122,8 @@ class SongLyric extends Model
             'licence_type',
             'only_regenschori',
             'capo',
-            'visits' 
+            'visits',
+            'is_approved_for_liturgy' 
         ];
 
     private static $lang_string_values = [

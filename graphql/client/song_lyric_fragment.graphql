@@ -47,4 +47,5 @@ fragment SongLyricFillableFragment on SongLyric  {
         }
     }
     capo
+    is_approved_for_liturgy
 }
