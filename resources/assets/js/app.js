@@ -14,7 +14,7 @@ Vue.component('search', require('Public/pages/Search/Search.vue'));
 Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
 Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
 
-Vue.component('firebase-test', require('Public/components/FirebaseTest.vue'));
+Vue.component('user-account', require('Public/pages/UserAccount/UserAccount.vue'));
 
 // firebase firestore plugin for vue    
 import { firestorePlugin } from 'vuefire'
