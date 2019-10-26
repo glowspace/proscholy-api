@@ -19,7 +19,7 @@
             @click="topMode=(topMode==2)?0:2"
           >
             <i class="fas fa-language"></i>
-            <span class="d-none d-sm-inline">Překlady</span>
+            <span class="d-none d-sm-inline">Překlady</span> 
           </a>
           <!-- <a class="btn btn-secondary">
             <i class="fas fa-file-export"></i>
@@ -114,6 +114,9 @@
           <div class="d-flex align-items-start justify-content-between">
               <div id="song-lyrics" class="p-1 overflow-hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
+                <div v-if="song_lyric.capo > 0" class="mb-2">
+                  <i>capo: {{ song_lyric.capo }}</i>
+                </div>
                 <slot></slot>
               </div>
               <right-controls></right-controls>
@@ -378,6 +381,7 @@ const FETCH_SONG_LYRIC = gql`
           lang_string
         }
       }
+      capo
       # songbook_records{number, songbook{id, name, shortcut}}
     }
   }
