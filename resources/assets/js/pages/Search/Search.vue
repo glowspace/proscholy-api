@@ -76,9 +76,11 @@
             <i class="fab fa-apple"></i>
         </div>
         <div v-if="init" class="text-center pt-5 text-white app-download pb-3 h2 mb-0">
-            <a href="http://play.google.com/store/apps/details?id=jozkar.mladez"><i class="fab fa-android"></i></a>
-            <a class="btn px-2 font-weight-bold">APLIKACE</a>
-            <a href="http://itunes.apple.com/app/zpěvník-pro-scholy/id1475375453"><i class="fab fa-apple"></i></a>
+            <a href="http://play.google.com/store/apps/details?id=jozkar.mladez" target="_blank"><i class="fab fa-android"></i></a>
+            <a href="http://itunes.apple.com/app/zpěvník-pro-scholy/id1475375453" target="_blank"><i class="fab fa-apple"></i></a>
+            <span class="btn px-2 font-weight-bold text-white">APLIKACE | SOCIÁLNÍ SÍTĚ</span>
+            <a href="https://www.instagram.com/zpevnik.proscholy.cz/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/proscholy/" target="_blank"><i class="fab fa-facebook"></i></a>
         </div>
         <a class="btn btn-secondary mb-0 search-report bg-transparent" target="_blank" title="Nahlásit"
         :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
