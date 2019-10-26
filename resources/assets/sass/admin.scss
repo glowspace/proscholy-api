@@ -179,3 +179,9 @@ textarea.form-control
   color: #292929;
   opacity: 1;
 }
+
+.statistics-table {
+  td:last-child {
+    text-align: right;
+  }
+}

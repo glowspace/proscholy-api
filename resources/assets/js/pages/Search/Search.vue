@@ -72,8 +72,8 @@
             </div>
         </div>
         <div v-if="init" class="pt-5 pb-3 h2 mb-0 invisible">
-            <i class="fab fa-android"></i>
-            <i class="fab fa-apple"></i>
+            <div><i class="fab fa-android"></i></div>
+            <div><i class="fab fa-apple"></i></div>
         </div>
         <div v-if="init" class="text-center pt-5 text-white app-download pb-3 h2 mb-0">
             <div>
@@ -139,6 +139,10 @@ body {
 .btn.search-report:hover {
     color: #292929;
     opacity: 1;
+}
+
+.home {
+    position: relative;
 }
 </style>
 
