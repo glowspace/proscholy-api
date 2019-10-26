@@ -7,6 +7,7 @@ services:
       volumes:
         - '.:/var/www/html'
         - './docker/config/cron.d:/etc/cron.d'
+        - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
       entrypoint: 'bash ./docker/web/entrypoint_web_test.sh'
       networks:
         - bcloud-network
