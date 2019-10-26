@@ -493,7 +493,6 @@ export default {
     controlsToggle: function() {
       this.controlsDisplay = !this.controlsDisplay;
       document.querySelector(".navbar.fixed-top").classList.toggle("d-none");
-      console.log(this.song_lyric);
     },
 
     fileTypeConvert: function(type) {
