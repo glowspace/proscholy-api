@@ -14,6 +14,12 @@ Vue.component('search', require('Public/pages/Search/Search.vue'));
 Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
 Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
 
+Vue.component('firebase-test', require('Public/components/FirebaseTest.vue'));
+
+// firebase firestore plugin for vue    
+import { firestorePlugin } from 'vuefire'
+Vue.use(firestorePlugin)
+
 
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';

@@ -103,3 +103,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 // refreshing
 Route::get('/refresh-updating/song-lyric/{song_lyric}', 'Api\LockController@refresh_updating_song_lyric');
 Route::get('/refresh-updating/songbook/{songbook}', 'Api\LockController@refresh_updating_songbook');
+
+Route::get('/firebase-test', function() {
+    return view('testing.firebase');
+});
