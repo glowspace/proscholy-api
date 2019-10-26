@@ -37,9 +37,11 @@ class SongLyricCreated
         // and is waiting for approval
         $user = Auth::user();
 
-        $event->song_lyric->update([
-            'is_published' => $user->can('publish songs'),
-            'user_creator_id' => $user->id
-        ]);
+        if ($user) {
+            $event->song_lyric->update([
+                'is_published' => $user->can('publish songs'),
+                'user_creator_id' => $user->id
+            ]);
+        }
     }
 }
