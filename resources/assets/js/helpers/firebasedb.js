@@ -17,11 +17,10 @@ if (!firebase.apps.length) {
   app = firebase.initializeApp(firebaseConfig)
 }
 
-// // export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
-// // export const auth = firebase.auth()
+export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
+export const auth = firebase.auth()
 export const db = firebase.firestore()
 // const { TimeStamp, GeoPoint } = firebase.firestore
 // export { TimeStamp, GeoPoint }
-// // export const StoreDB = firebase.firestore()
 
 export default firebase

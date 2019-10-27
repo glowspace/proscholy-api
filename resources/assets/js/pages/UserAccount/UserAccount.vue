@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Uživatel {{ user.username }}</h1>
+        <h1>Uživatel {{ user ? user.username : '' }}</h1>
         <h2>Zpěvníky:</h2>
 
         <ul class="list-group">
@@ -14,11 +14,17 @@
                 </ul>
             </li>
         </ul>
-    </div>
+ 
+        <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
+        <input type="text" v-model="new_songbook_name"/>
+
+        <a href=""></a>
+    </div> 
 </template>
 
 <script>
-import { db } from 'Public/helpers/firebasedb'
+import { db, GoogleProvider, auth } from 'Public/helpers/firebasedb'
+
 import gql from 'graphql-tag'
 
 const fetch_items = gql`
@@ -34,7 +40,8 @@ export default {
     data() {
         return {
             users:[],
-            search_string: ""
+            search_string: "",
+            new_songbook_name: ""
         }
     },
 
@@ -74,6 +81,28 @@ export default {
             }
 
             return this.song_lyrics.filter(sl => sl.id == id)[0];
+        },
+
+        addNewSongbook() {
+            db.collection('cities').push({
+                name: this.new_songbook_name,
+                songs: []
+            });
+
+            this.new_songbook_name = "";
+        },
+
+        signup() {
+            this.provider = new GoogleProvider();
+            auth
+                .signInWithPopup(this.provider)
+                .then(result => {
+                    console.log(result)
+                })
+                .catch(e => {
+                    this.$snotify.error(e.message);
+                    console.log(e);
+                });
         }
     }
 }
