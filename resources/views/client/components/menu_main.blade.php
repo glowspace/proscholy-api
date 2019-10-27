@@ -10,7 +10,6 @@
             </a>
         @endif
         </a>
-    @endif
     <div class="d-inline-flex">
         <a href="{{url("")}}" class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a> --}}
