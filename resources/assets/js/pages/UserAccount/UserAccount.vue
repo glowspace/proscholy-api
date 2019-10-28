@@ -4,7 +4,7 @@
         <h2>Zpěvníky:</h2>
 
         <ul class="list-group">
-            <li v-for="songbook in user.songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <!-- <li v-for="songbook in user.songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
                 {{ songbook.name }}
                 <span class="badge badge-primary badge-pill">{{ songbook.songs.length }}</span>
                 <ul>
@@ -12,7 +12,7 @@
                         {{ getSongLyric(song_id).name }}
                     </li>
                 </ul>
-            </li>
+            </li> -->
         </ul>
  
         <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
@@ -84,12 +84,12 @@ export default {
         },
 
         addNewSongbook() {
-            db.collection('cities').push({
-                name: this.new_songbook_name,
-                songs: []
-            });
+            // db.collection('cities').push({
+            //     name: this.new_songbook_name,
+            //     songs: []
+            // });
 
-            this.new_songbook_name = "";
+            // this.new_songbook_name = "";
         },
 
         signup() {
@@ -97,7 +97,33 @@ export default {
             auth
                 .signInWithPopup(this.provider)
                 .then(result => {
-                    console.log(result)
+                    console.log(result);
+
+                    let uid = result.user.uid;
+
+                    let userRef = db.collection('users').doc(uid);
+                    userRef.get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log("Document data:", doc.data());
+                            // user exists, so fine 
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log('adding new user ' + uid);
+
+                            // user does not exist yet in the database
+                            // todo: init a datastructure for them
+
+                            userRef.set({
+                                songbooks: [
+                                    {
+                                        song: 1,
+                                        transposition: 0
+                                    }
+                                ],
+                                username: result.user.email
+                            })
+                        }
+                    });
                 })
                 .catch(e => {
                     this.$snotify.error(e.message);
