@@ -32,6 +32,11 @@
             Můžete nám napsat na email <a href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a> nebo se na nás obrátit telefonicky na <a href="tel:+420734791909">734 791 909</a>.
         </p>
 
+        <p>
+            <span class="mr-2">Pokud byste nám chtěli poslat námět na novou píseň do zpěvníku, máme pro vás připravený formulář: </span>
+            <a class="btn btn-outline-primary mb-0" href="https://forms.gle/AYXXxkWtDHQQ13856" target="_blank">Přidat píseň</a>
+        </p>
+
         @php
             $our_team = array(
                 array('name' => 'Michael Dojčár', 'team' => 'organizace', 'info' => 'celková koordinace projektu, IT'),
@@ -47,11 +52,11 @@
                 array('name' => 'Patrik Dobiáš', 'team' => 'vývoj', 'info' => 'mobilní aplikace pro iOS'),
                 array('name' => 'Benjamín Tichý', 'team' => 'vývoj', 'info' => 'logo, vizuální styl, návrh rozhraní'),
                 
+                array('name' => 'Zuzana Haikerová', 'team' => 'public relations', 'info' => 'vedoucí propagace'),
                 array('name' => 'P. Ondřej Talaš', 'team' => 'public relations', 'info' => 'koordinace, duchovní podpora, PR'),
                 array('name' => 'Emma Kasanová', 'team' => 'public relations', 'info' => ''),
-                array('name' => 'Martin Tůma', 'team' => 'public relations', 'info' => ''),
                 array('name' => 'Petra Kalousková', 'team' => 'public relations', 'info' => ''),
-                array('name' => 'Zuzana Haikerová', 'team' => 'public relations', 'info' => ''),
+                array('name' => 'Martin Tůma', 'team' => 'public relations', 'info' => ''),
                 
                 array('name' => 'P. Jan Šlégr', 'team' => 'zástupci z institucí', 'info' => 'Liturgická komise ČBK'),
                 array('name' => 'Veronika Lehrlová', 'team' => 'zástupci z institucí', 'info' => 'Sekce pro mládež ČBK'),

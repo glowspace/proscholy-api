@@ -24,6 +24,14 @@ body.dark {
     color: #ccc;
   }
 
+  .tag {
+    border: #555 1px solid;
+  }
+
+  .song-tags .songbook-tag .songbook-number {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .border {
     border-color: #222 !important;
   }
