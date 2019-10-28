@@ -18,7 +18,7 @@
         <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
         <input type="text" v-model="new_songbook_name"/>
 
-        <a href=""></a>
+        <a @click="signup">Přihlásit se přes Google</a>
     </div> 
 </template>
 
@@ -93,7 +93,7 @@ export default {
         },
 
         signup() {
-            this.provider = new GoogleProvider();
+            this.provider = GoogleProvider;
             auth
                 .signInWithPopup(this.provider)
                 .then(result => {
