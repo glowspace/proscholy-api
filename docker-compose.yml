@@ -2,13 +2,13 @@ version: '3'
 services:
     web:
       build: 
-        context: ./docker
-        dockerfile: php.Dockerfile
+        context: ./docker/setup/web
+        dockerfile: Dockerfile
       volumes:
         - '.:/var/www/html'
         - './docker/config/cron.d:/etc/cron.d'
         - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
-      entrypoint: 'bash ./docker/web/entrypoint_web_test.sh'
+      entrypoint: 'bash ./docker/setup/web/entrypoint_web_test.sh'
       networks:
         - bcloud-network
       restart: always
@@ -42,7 +42,7 @@ services:
         # Where our data will be persisted
       volumes:
         # - ./databases:/var/databases
-        - ./docker/mysql:/var/lib/mysql
+        - ./docker/data/mysql:/var/lib/mysql
       networks: 
         - bcloud-network
 
@@ -68,6 +68,38 @@ services:
             - 8001:8080
         networks:
           - bcloud-network
+
+    # elasticsearch:
+    #   build: ./elasticsearch
+    #   environment:
+    #     - http.host=0.0.0.0
+    #     - transport.host=127.0.0.1
+    #     - xpack.security.enabled=false
+    #   volumes:
+    #     - ./Elasticsearch/data:/etc/elasticsearch/data 
+    #     - ./Elasticsearch/config/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
+    #   ports:
+    #     - "9200:9200"
+    #   networks:
+    #     - bcloud-network
+
+    # kibana:
+    # image: docker.elastic.co/kibana/kibana:7.2.0
+    # ports:
+    #   - "9001:5601"
+    # networks:
+    #   - bcloud-network
+    # depends_on:
+    #   - elasticsearch
+
+  # cerebro:
+  #   image: yannart/cerebro:0.8.1
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - bcloud-network
+  #   depends_on:
+  #     - elasticsearch
 
 networks:
   bcloud-network:
