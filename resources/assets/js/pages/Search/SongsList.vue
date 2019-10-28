@@ -83,17 +83,17 @@
     </template>
     <tr v-else>
       <td v-if="!results_loaded" class="border-top-0 p-1">
-        <i class="px-3 py-2 d-inline-block">Načítám...</i>
+        <span class="px-3 py-2 d-inline-block">Načítám...</span>
         <a class="btn btn-secondary float-right m-0" target="_blank"
         :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
           Nahlásit
         </a>
       </td>
       <td v-else class="border-top-0 p-1">
-        <i class="px-3 py-2 d-inline-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</i>
+        <span class="px-3 py-2 d-inline-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</span>
         <a class="btn btn-secondary float-right m-0" target="_blank"
-        :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
-          Nahlásit
+        :href="'https://forms.gle/AYXXxkWtDHQQ13856'">
+          Přidat píseň
         </a>
       </td>
     </tr>

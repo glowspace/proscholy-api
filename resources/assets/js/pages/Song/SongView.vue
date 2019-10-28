@@ -524,6 +524,11 @@ export default {
       if(this.renderMedia) {
         this.bottomMode = 2;
       }
+      if(this.renderScores) {
+        this.topMode = 1;
+      } else if(this.renderTranslations) {
+        this.topMode = 2;
+      }
     }
   }
 };
