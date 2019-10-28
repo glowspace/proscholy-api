@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', 'Administrace ProScholy.cz')
+
 @section('navbar')
     <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top">
         <div>

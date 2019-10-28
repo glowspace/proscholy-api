@@ -1,5 +1,7 @@
 @extends('layout.client')
 
+@section('title', 'O zpěvníku ProScholy.cz')
+
 @section('content')
     <div class="container">
         <h1>O zpěvníku ProScholy.cz</h1>
