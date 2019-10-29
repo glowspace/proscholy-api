@@ -4,12 +4,12 @@
         <h2>Zpěvníky:</h2>
 
         <ul class="list-group" v-if="user">
-            <li v-for="songbook in user.songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <li v-for="songbook in user_songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
                 {{ songbook.name }}
-                <span class="badge badge-primary badge-pill">{{ songbook.length }}</span>
+                <span class="badge badge-primary badge-pill">{{ songbook.songs.length }}</span>
                 <ul>
-                    <li v-for="song_obj in songbook.songs" v-bind:key="song_obj.song">
-                        {{ getSongLyric(song_obj.song).name }}
+                    <li v-for="song_obj in songbook.songs" v-bind:key="song_obj.song_id">
+                        {{ getSongLyric(song_obj.song_id).name }}
                     </li>
                 </ul>
             </li>
@@ -43,7 +43,8 @@ export default {
             search_string: "",
             new_songbook_name: "",
             user_ref: null,
-            user: null
+            user: null,
+            user_songbooks: null
         }
     },
 
@@ -59,13 +60,13 @@ export default {
                     search_str: this.search_string
                 }
             },
-            // async result() {
-            //     this.$emit("query-loaded", null);
-            //     this.results_loaded = true;
-
-            //     // console.log(window.cachePersistor);
-            //     // console.log(await window.cachePersistor.getSize());
-            // }, 
+            // // async result() {
+            // //     this.$emit("query-loaded", null);
+            // //     this.results_loaded = true;
+// 
+            // //     // console.log(window.cachePersistor);
+            // //     // console.log(await window.cachePersistor.getSize());
+            // // }, 
         }
     },
 
@@ -74,17 +75,12 @@ export default {
             // call it upon creation too
             immediate: false,
             handler(ref) {
-                this.$bind('user', ref)
+                this.$bind('user', ref);
+
+                this.$bind('user_songbooks', ref.collection('songbooks'));
             },
         },
     },
-
-    // computed: {
-    //     async user() {
-    //         // todo return current authenticated user
-    //         return this.user_ref ? await this.user_ref.get() : Promise.resolve();
-    //     }
-    // },
 
     methods: {
         getSongLyric(id) {
@@ -96,7 +92,7 @@ export default {
         },
 
         addNewSongbook() {
-            // db.collection('cities').push({
+            // db.collection('cities').push({ 
             //     name: this.new_songbook_name,
             //     songs: []
             // });
@@ -114,7 +110,6 @@ export default {
                     let uid = result.user.uid;
                     this.user_ref = db.collection('users').doc(uid)
 
-                    // let userRef = db.collection('users').doc(uid);
                     this.user_ref.get().then((doc) => {
                         if (doc.exists) {
                             console.log("Document data:", doc.data());
@@ -138,17 +133,7 @@ export default {
 
                             this.user_ref.set({
                                 username: result.user.email
-                            })
-
-                            // this.user_ref.set({
-                            //     songbooks: [
-                            //         {
-                            //             song: 1,
-                            //             transposition: 0
-                            //         }
-                            //     ],
-                            //     username: result.user.email
-                            // })
+                            });
                         }
                     });
                 })
