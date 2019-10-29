@@ -3,16 +3,16 @@
         <h1>Uživatel {{ user ? user.username : '' }}</h1>
         <h2>Zpěvníky:</h2>
 
-        <ul class="list-group">
-            <!-- <li v-for="songbook in user.songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
+        <ul class="list-group" v-if="user">
+            <li v-for="songbook in user.songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
                 {{ songbook.name }}
-                <span class="badge badge-primary badge-pill">{{ songbook.songs.length }}</span>
+                <span class="badge badge-primary badge-pill">{{ songbook.length }}</span>
                 <ul>
-                    <li v-for="song_id in songbook.songs" v-bind:key="song_id">
-                        {{ getSongLyric(song_id).name }}
+                    <li v-for="song_obj in songbook.songs" v-bind:key="song_obj.song">
+                        {{ getSongLyric(song_obj.song).name }}
                     </li>
                 </ul>
-            </li> -->
+            </li>
         </ul>
  
         <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
@@ -41,7 +41,9 @@ export default {
         return {
             users:[],
             search_string: "",
-            new_songbook_name: ""
+            new_songbook_name: "",
+            user_ref: null,
+            user: null
         }
     },
 
@@ -63,16 +65,26 @@ export default {
 
             //     // console.log(window.cachePersistor);
             //     // console.log(await window.cachePersistor.getSize());
-            // },
+            // }, 
         }
     },
 
-    computed: {
-        user() {
-            // todo return current authenticated user
-            return this.users[0]
-        }
+    watch: {
+        user_ref: {
+            // call it upon creation too
+            immediate: false,
+            handler(ref) {
+                this.$bind('user', ref)
+            },
+        },
     },
+
+    // computed: {
+    //     async user() {
+    //         // todo return current authenticated user
+    //         return this.user_ref ? await this.user_ref.get() : Promise.resolve();
+    //     }
+    // },
 
     methods: {
         getSongLyric(id) {
@@ -100,9 +112,10 @@ export default {
                     console.log(result);
 
                     let uid = result.user.uid;
+                    this.user_ref = db.collection('users').doc(uid)
 
-                    let userRef = db.collection('users').doc(uid);
-                    userRef.get().then(function(doc) {
+                    // let userRef = db.collection('users').doc(uid);
+                    this.user_ref.get().then(function(doc) {
                         if (doc.exists) {
                             console.log("Document data:", doc.data());
                             // user exists, so fine 
@@ -113,7 +126,7 @@ export default {
                             // user does not exist yet in the database
                             // todo: init a datastructure for them
 
-                            userRef.set({
+                            this.user_ref.set({
                                 songbooks: [
                                     {
                                         song: 1,
