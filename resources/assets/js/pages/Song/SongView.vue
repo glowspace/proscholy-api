@@ -407,7 +407,6 @@ export default {
     // use this only in SongView and Chord component
     // use v-model to bind data from every other component
     return {
-      displayTransp: 0,
       controlsDisplay: true,
       bottomMode: 0,
       topMode: 0,
