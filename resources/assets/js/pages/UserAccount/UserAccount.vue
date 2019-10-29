@@ -115,7 +115,7 @@ export default {
                     this.user_ref = db.collection('users').doc(uid)
 
                     // let userRef = db.collection('users').doc(uid);
-                    this.user_ref.get().then(function(doc) {
+                    this.user_ref.get().then((doc) => {
                         if (doc.exists) {
                             console.log("Document data:", doc.data());
                             // user exists, so fine 
@@ -126,15 +126,29 @@ export default {
                             // user does not exist yet in the database
                             // todo: init a datastructure for them
 
-                            this.user_ref.set({
-                                songbooks: [
+                            this.user_ref.collection("songbooks").add({
+                                name: "my_songbook",
+                                songs: [
                                     {
-                                        song: 1,
+                                        song_id: 1,
                                         transposition: 0
                                     }
-                                ],
+                                ]
+                            });
+
+                            this.user_ref.set({
                                 username: result.user.email
                             })
+
+                            // this.user_ref.set({
+                            //     songbooks: [
+                            //         {
+                            //             song: 1,
+                            //             transposition: 0
+                            //         }
+                            //     ],
+                            //     username: result.user.email
+                            // })
                         }
                     });
                 })
