@@ -11,7 +11,7 @@ else
     mkdir releases && cd releases
 fi
 
-DATESTAMP = `date +"%Y-%m-%d-%H-%M-%S"`
+DATESTAMP=`date +"%Y-%m-%d-%H-%M-%S"`
 
 git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' /var/www/html/releases/${DATESTAMP}
 cd ${DATESTAMP}
@@ -19,7 +19,7 @@ git reset --hard master
 
 echo "Linking storage directory"
 rm -rf storage
-ln -nfs ../../storage storage
+ln -nfs /var/www/html/storage /var/www/html/releases/${DATESTAMP}/storage
 
 echo "Modifying access rights for production for: storage, bootstrap/cache"
 chgrp -R www-data storage bootstrap/cache
@@ -44,4 +44,4 @@ php artisan view:clear
 php artisan migrate --force
 php artisan up
 
-ln -nfs . ../../current
+ln -nfs /var/www/html/releases/${DATESTAMP} /var/www/html/current
