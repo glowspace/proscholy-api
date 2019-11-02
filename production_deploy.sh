@@ -15,8 +15,13 @@ echo "Linking storage directory"
 rm -rf storage
 ln -nfs ../../storage storage
 
+echo "Modifying access rights for production for: storage, bootstrap/cache"
+chgrp -R www-data storage bootstrap/cache
+chmod -R ug+rwx storage bootstrap/cache
+
 mv .env.production .env
 
+echo "Installing composer and yarn"
 composer install --optimize-autoloader --no-dev
 composer dump-auto
 

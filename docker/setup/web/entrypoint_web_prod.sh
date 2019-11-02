@@ -1,6 +1,10 @@
 # # PHP FPM start script
-# cd /var/www/html
-# composer install --ignore-platform-reqs
+
+cd current
+
+echo $PWD
+
+# composer install --no-dev --ignore-platform-reqs
 # php artisan storage:link
 # php artisan key:generate
 
@@ -14,4 +18,7 @@
 # # yarn run watch
 # chmod -R 777 storage
 
-# php-fpm
+# chgrp -R www-data storage bootstrap/cache
+# chmod -R ug+rwx storage bootstrap/cache
+
+php-fpm
