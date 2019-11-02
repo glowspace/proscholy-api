@@ -51,7 +51,7 @@ services:
       - 'web'
     volumes:
       - '.:/var/www/html'
-      - './docker/config/nginx:/etc/nginx/conf.d'
+      - './docker/config/nginx_prod:/etc/nginx/conf.d'
       - './docker/logs/nginx:/var/log/nginx'
     networks:
       - bcloud-network
