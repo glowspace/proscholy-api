@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-LAST=`readlink -f current` 
-LAST=${LAST##*/}
-
 if cd releases ; then
+    LAST=`readlink -f current` 
+    LAST=${LAST##*/}
+
     echo 'Removing old releases but one last for backup'
     ls | grep -v ${LAST} | xargs rm -rfv
 else
@@ -11,8 +11,10 @@ else
     mkdir releases && cd releases
 fi
 
-git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' /var/www/html/releases/abcd
-cd abcd
+DATESTAMP = `date +"%Y-%m-%d-%H-%M-%S"`
+
+git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' /var/www/html/releases/${DATESTAMP}
+cd ${DATESTAMP}
 git reset --hard master
 
 echo "Linking storage directory"
