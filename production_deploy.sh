@@ -12,36 +12,40 @@ else
 fi
 
 DATESTAMP=`date +"%Y-%m-%d-%H-%M-%S"`
+LARAVEL='/var/www/html'
 
-git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' /var/www/html/releases/${DATESTAMP}
-cd ${DATESTAMP}
-git reset --hard master
+git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
+    git clone --depth 1 'https://gitlab.com/proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP}
 
-echo "Linking storage directory"
-rm -rf storage
-ln -nfs /var/www/html/storage /var/www/html/releases/${DATESTAMP}/storage
+if cd ${DATESTAMP} ; then 
+    git reset --hard master
 
-echo "Modifying access rights for production for: storage, bootstrap/cache"
-chgrp -R www-data storage bootstrap/cache
-chmod -R ug+rwx storage bootstrap/cache
+    echo "Linking storage directory"
+    rm -rf storage
+    ln -nfs ${LARAVEL}/storage ${LARAVEL}/releases/${DATESTAMP}/storage
 
-mv .env.production .env
+    echo "Modifying access rights for production for: storage, bootstrap/cache"
+    chgrp -R www-data storage bootstrap/cache
+    chmod -R ug+rwx storage bootstrap/cache
 
-echo "Installing composer and yarn"
-composer install --optimize-autoloader --no-dev
-composer dump-auto
+    mv .env.production .env
 
-yarn install
-yarn run production
+    echo "Installing composer and yarn"
+    composer install --optimize-autoloader --no-dev
+    composer dump-auto
 
-rm -rf node_modules
+    yarn install
+    yarn run production
 
-php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
-php artisan config:cache
-php artisan route:cache
-php artisan cache:clear
-php artisan view:clear
-php artisan migrate --force
-php artisan up
+    rm -rf node_modules
 
-ln -nfs /var/www/html/releases/${DATESTAMP} /var/www/html/current
+    php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
+    php artisan config:cache
+    php artisan route:cache
+    php artisan cache:clear
+    php artisan view:clear
+    php artisan migrate --force
+    php artisan up
+
+    ln -nfs ${LARAVEL}/releases/${DATESTAMP} ${LARAVEL}/current
+fi
