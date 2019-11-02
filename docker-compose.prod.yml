@@ -57,29 +57,29 @@ services:
       - bcloud-network
     restart: always
 
-  # adminer:
-  #     image: adminer
-  #     restart: always
-  #     ports:
-  #         - 8001:8080
-  #     networks:
-  #       - bcloud-network
+  adminer:
+      image: adminer
+      restart: always
+      ports:
+          - 8001:8080
+      networks:
+        - bcloud-network
 
-  # elasticsearch:
-  #   build: 
-  #     context: ./docker/setup/elastic
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - http.host=0.0.0.0
-  #     - transport.host=127.0.0.1
-  #     - xpack.security.enabled=false
-  #   volumes:
-  #     - ./data/elastic:/etc/elasticsearch/data 
-  #     - ./config/elastic/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
-  #   ports:
-  #     - "9200:9200"
-  #   networks:
-  #     - bcloud-network
+  elasticsearch:
+    build: 
+      context: ./docker/setup/elastic
+      dockerfile: Dockerfile
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - xpack.security.enabled=false
+    volumes:
+      - ./data/elastic:/etc/elasticsearch/data 
+      - ./config/elastic/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
+    ports:
+      - "9200:9200"
+    networks:
+      - bcloud-network
 
   # kibana:
   #   image: docker.elastic.co/kibana/kibana:7.2.0
