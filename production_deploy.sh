@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+LARAVEL='/var/www/html'
+
 if cd releases ; then
-    LAST=`readlink -f current` 
+    LAST=`readlink -f ../current` 
     LAST=${LAST##*/}
 
     echo 'Removing old releases but one last for backup'
@@ -12,7 +14,6 @@ else
 fi
 
 DATESTAMP=`date +"%Y-%m-%d-%H-%M-%S"`
-LARAVEL='/var/www/html'
 
 git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
     git clone --depth 1 'https://gitlab.com/proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP}
@@ -48,4 +49,8 @@ if cd ${DATESTAMP} ; then
     php artisan up
 
     ln -nfs ${LARAVEL}/releases/${DATESTAMP} ${LARAVEL}/current
+else
+    echo 'Cloning not successful, aborting the deploy'
 fi
+
+cd ${LARAVEL}
