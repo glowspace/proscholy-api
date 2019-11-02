@@ -87,6 +87,21 @@ body.dark .btn.display-all-songs {
   overflow: auto;
 }
 
+.desktop-filter-container {
+  .position-sticky {
+    top: calc(47px + 4rem);
+  }
+  .song-tags {
+    max-height: calc(100vh - 47px - 3.5rem - 66px);
+    overflow: auto;
+    margin-bottom: 0; // chrome fix
+    padding-bottom: 0; // chrome fix of firefox fix
+    a:last-child {
+      margin-bottom: 1em; // firefox fix
+    }
+  }
+}
+
 /**
 View: Search results
  */
