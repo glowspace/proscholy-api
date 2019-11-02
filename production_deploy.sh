@@ -3,9 +3,13 @@
 LAST=`readlink -f current` 
 LAST=${LAST##*/}
 
-cd releases
-echo 'Removing old releases but one last for backup'
-ls | grep -v ${LAST} | xargs rm -rfv
+if cd releases ; then
+    echo 'Removing old releases but one last for backup'
+    ls | grep -v ${LAST} | xargs rm -rfv
+else
+    echo "Releases folder not found, creating one"
+    mkdir releases && cd releases
+fi
 
 git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' /var/www/html/releases/abcd
 cd abcd
