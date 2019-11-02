@@ -10,7 +10,7 @@
                 <i class="fas fa-download p-0"></i>
             </a>
         </td>
-        <td :class="[{'border-top-0': !index}, 'p-2 pl-md-5']">
+        <td :class="[{'border-top-0': !index}, 'p-2 pl-md-5 align-middle']">
             <span v-for="(author, authorIndex) in authors"><span v-if="authorIndex">,</span>
                 <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
             </span>

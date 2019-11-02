@@ -3,7 +3,7 @@
 		<div>Transpozice</div>
 		<div class="btn-group m-0" role="group">
 			<a class="btn btn-secondary" v-on:click="transpose(-1)">-</a>
-			<a class="btn btn-secondary bg-light transpose-window" v-on:click="reset()">{{ displayTransp }}</a>
+			<a class="btn btn-secondary bg-light transpose-window" v-on:click="reset()">{{ transposition }}</a>
 			<a class="btn btn-secondary" v-on:click="transpose(1)">+</a>
 		</div>
 	</div>
@@ -15,25 +15,18 @@
 		
         data() {
             return {
-				transposition: 0,
-				displayTransp: 0
+				transposition: 0
 			}
         },
 
         methods:{
             transpose: function(val) {
                 this.transposition = (this.transposition + val) % 12;
-                this.displayTransp = (this.displayTransp + val) % 12;
-                if (this.transposition < 0) {
-                    this.transposition = 12 + this.transposition;
-				}
-
 				this.$emit("input", this.transposition);
 			},
 			
 			reset() {
 				this.transposition = 0;
-				this.displayTransp = 0;
 				this.$emit("input", this.transposition);
 			},
         }

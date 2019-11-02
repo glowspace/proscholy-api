@@ -19,7 +19,7 @@
             @click="topMode=(topMode==2)?0:2"
           >
             <i class="fas fa-language"></i>
-            <span class="d-none d-sm-inline">Překlady</span>
+            <span class="d-none d-sm-inline">Překlady</span> 
           </a>
           <!-- <a class="btn btn-secondary">
             <i class="fas fa-file-export"></i>
@@ -114,6 +114,9 @@
           <div class="d-flex align-items-start justify-content-between">
               <div id="song-lyrics" class="p-1 overflow-hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
+                <div v-if="song_lyric.capo > 0" class="mb-2">
+                  <i>capo: {{ song_lyric.capo }}</i>
+                </div>
                 <slot></slot>
               </div>
               <right-controls></right-controls>
@@ -260,10 +263,10 @@
             <i class="fas fa-sliders-h"></i>
             Nastavit zobrazení
         </div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-chevron-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
-        <div class="media-opener"><i class="fas fa-chevron-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
+        <div class="media-opener"><i class="fas fa-angle-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
       </div>
     </div>
   </div>
@@ -378,6 +381,7 @@ const FETCH_SONG_LYRIC = gql`
           lang_string
         }
       }
+      capo
       # songbook_records{number, songbook{id, name, shortcut}}
     }
   }
@@ -403,7 +407,6 @@ export default {
     // use this only in SongView and Chord component
     // use v-model to bind data from every other component
     return {
-      displayTransp: 0,
       controlsDisplay: true,
       bottomMode: 0,
       topMode: 0,
@@ -493,7 +496,6 @@ export default {
     controlsToggle: function() {
       this.controlsDisplay = !this.controlsDisplay;
       document.querySelector(".navbar.fixed-top").classList.toggle("d-none");
-      console.log(this.song_lyric);
     },
 
     fileTypeConvert: function(type) {
@@ -520,6 +522,11 @@ export default {
       document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
       if(this.renderMedia) {
         this.bottomMode = 2;
+      }
+      if(this.renderScores) {
+        this.topMode = 1;
+      } else if(this.renderTranslations) {
+        this.topMode = 2;
       }
     }
   }

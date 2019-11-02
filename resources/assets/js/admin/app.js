@@ -70,6 +70,10 @@ const httpLink = createHttpLink({
   uri: base_url + '/graphql',
 })
 
+// clear the session storage used for caching GrapQL queries on the public frontend
+// not doing so causes frontend not updating after admin edits
+window.sessionStorage.clear();
+
 const cache = new InMemoryCache()
 
 // Create the apollo client

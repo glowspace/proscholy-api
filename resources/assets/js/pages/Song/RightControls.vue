@@ -24,6 +24,10 @@
         pointer-events: none;
     }
 
+    body.dark .nosleep-caption {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+    }
+
     .nosleep:hover + .nosleep-caption {
         visibility: visible;
         opacity: 1;
