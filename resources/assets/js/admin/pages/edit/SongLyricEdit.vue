@@ -93,8 +93,12 @@
                   label="Liturgie"
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
+                  :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
                 <v-select :items="liturgy_approval_status_values" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
+                <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_official.length > 0">
+                  Stávající liturgické šítky budou po uložení odstraněny
+                </p>
                 <!-- <v-checkbox :disabled="model.tags_official.length == 0"
                   class="mt-0"
                   v-model="model.liturgy_approval_status"

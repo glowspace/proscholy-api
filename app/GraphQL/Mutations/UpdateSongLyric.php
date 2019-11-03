@@ -67,8 +67,12 @@ class UpdateSongLyric
                 }
             }
         }
-        if (isset($input["tags_official"]["sync"]))
+        if (isset($input["tags_official"]["sync"])
+            // if the liturgy approval status is 'denied' then remove the liturgy tags
+            && $input["liturgy_approval_status"] !== 3)
+        {
             $tagsToSync = array_merge($tagsToSync, $input["tags_official"]["sync"]);
+        }
 
         $song_lyric->tags()->sync($tagsToSync);
 
