@@ -57,13 +57,13 @@ services:
       - bcloud-network
     restart: always
 
-  adminer:
-      image: adminer
-      restart: always
-      ports:
-          - 8001:8080
-      networks:
-        - bcloud-network
+  # adminer:
+  #     image: adminer
+  #     restart: always
+  #     ports:
+  #         - 8001:8080
+  #     networks:
+  #       - bcloud-network
 
   elasticsearch:
     build: 
@@ -80,6 +80,7 @@ services:
       - "9200:9200"
     networks:
       - bcloud-network
+    restart: always
 
   # kibana:
   #   image: docker.elastic.co/kibana/kibana:7.2.0
