@@ -109,6 +109,10 @@ body {
     position: relative;
 }
 
+body.dark {
+    background-image: url("/img/bg_center_dark.svg");
+}
+
 .filter-panel {
     display: block;
 }
