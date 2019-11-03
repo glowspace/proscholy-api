@@ -31,7 +31,7 @@
     "apollo-client": "^2.5.1",
     "apollo-link": "^1.2.11",
     "apollo-link-http": "^1.5.14",
-    "bootstrap-material-design": "^4.1.1",
+    "bootstrap-material-design": "4.1.1",
     "bowser": "^2.4.0",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",

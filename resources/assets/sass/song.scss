@@ -53,6 +53,9 @@
 
 .media-opener {
   border-top: 1px #eee solid;
+  .dark & {
+    border-top: 1px #222 solid;
+  }
   padding: 0.5rem 1rem;
   cursor: pointer;
   &:first-of-type, &:nth-of-type(2) {
@@ -174,6 +177,8 @@
       padding-left: 0.6em;
       background-color: rgba(0, 0, 0, 0.05);
       border-radius: 0 1em 1em 0;
+      display: flex;
+      align-items: center;
     }
   }
 }

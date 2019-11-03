@@ -1,2 +1,4 @@
-mysql/*
+# mysql/*
+
 logs/nginx/*
+data/mysql/*

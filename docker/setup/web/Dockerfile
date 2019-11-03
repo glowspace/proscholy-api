@@ -5,6 +5,7 @@ RUN apt-get update && \
     apt-get install -y git zip libicu-dev libpng-dev
 
 # I need the intl extension so that Bagisto works (class NumberFormatter)
+# ....... ok this is copied here from another project, so just let this be here, after all why shouldn't I keep it?
 RUN docker-php-ext-install mbstring pdo pdo_mysql bcmath intl zip
 
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libgmp-dev libldap2-dev netcat sqlite3 libsqlite3-dev && \
@@ -36,4 +37,4 @@ RUN apt-get update && apt-get install yarn
 RUN composer global require "laravel/envoy=~1.5"
 RUN apt-get install -y gnupg2
 
-WORKDIR /var/www/html
+RUN echo "php_admin_flag[log_errors] = On">>/usr/local/etc/php-fpm.conf

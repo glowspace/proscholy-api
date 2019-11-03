@@ -11,7 +11,7 @@ php artisan view:clear
 php artisan config:clear
 # php artisan vendor:publish --all
 
-#yarn
+# yarn run watch
 chmod -R 777 storage
 
 php-fpm

@@ -5,7 +5,7 @@
             <span class="caption noselect">Zpěvník</span>
         </div>
         <div class="row fixed-top position-sticky mt-n4 justify-content-center zindex-lower">
-            <div :class="[{'col-lg-6': init}, 'col-md-8 px-1 pt-5 pb-3 search-column']">
+            <div :class="[{'col-lg-6': init}, 'col-lg-8 px-1 pt-5 pb-3 search-column']">
                 <div class="search-wrapper shadow">
                     <input class="search-home"
                         placeholder="Zadejte název písně, část textu nebo jméno autora"
@@ -16,16 +16,16 @@
                             class="search-submit" v-if="init" @click="init=false">
                         <i class="fa fa-search d-none d-sm-inline"></i>
                     </button><button type="button"
-                            class="search-submit d-none d-md-inline" v-if="!init">
+                            class="search-submit d-none d-lg-inline" v-if="!init">
                         <i class="fa fa-search"></i>
                     </button>
                     <button type="button"
-                            class="search-submit d-md-none" v-if="!init" :class="{'filter-active': filters_active, 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
+                            class="search-submit d-lg-none" v-if="!init" :class="{'filter-active': filters_active, 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
                 <div v-if="init" @click="resetState(true); init=false;" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
-                <div class="mx-2 d-md-none filter-panel position-absolute" v-show="!init && displayFilter">
+                <div class="mx-2 d-lg-none filter-panel position-absolute" v-show="!init && displayFilter">
                     <a class="btn btn-secondary float-right fixed-top position-sticky"
                         v-on:click="displayFilter=false">
                         <i class="fas fa-times pr-0"></i>
@@ -40,10 +40,10 @@
                     ></Filters>
                 </div>
             </div>
-            <div class="col-md-4 search-balance"></div>
+            <div class="col-lg-4 search-balance"></div>
         </div>
         <div class="row" v-show="!init">
-            <div class="col-md-8">
+            <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body p-0">
                         <SongsList 
@@ -59,21 +59,23 @@
                 </div>
                 <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
             </div>
-            <div class="col-md-4 d-none d-md-block">
-                <!-- filters shown only for desktop -->
-                <Filters 
-                    v-bind:selected-songbooks.sync="selected_songbooks"
-                    v-bind:selected-tags.sync="selected_tags"
-                    v-bind:selected-languages.sync="selected_languages"
-                    v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
-                    v-on:input="updateHistoryState"
-                    v-on:tags-loaded="applyStateChange"
-                ></Filters>
+            <div class="col-lg-4 d-none d-lg-block desktop-filter-container">
+                <div class="fixed-top position-sticky">
+                    <!-- filters shown only for desktop -->
+                    <Filters 
+                        v-bind:selected-songbooks.sync="selected_songbooks"
+                        v-bind:selected-tags.sync="selected_tags"
+                        v-bind:selected-languages.sync="selected_languages"
+                        v-on:update:selected-tags-dcnf="updateSelectedTagsDcnf($event)"
+                        v-on:input="updateHistoryState"
+                        v-on:tags-loaded="applyStateChange"
+                    ></Filters>
+                </div>
             </div>
         </div>
         <div v-if="init" class="pt-5 pb-3 h2 mb-0 invisible">
-            <i class="fab fa-android"></i>
-            <i class="fab fa-apple"></i>
+            <div><i class="fab fa-android"></i></div>
+            <div><i class="fab fa-apple"></i></div>
         </div>
         <div v-if="init" class="text-center pt-5 text-white app-download pb-3 h2 mb-0">
             <div>
@@ -105,6 +107,10 @@ body {
     padding: 0;
     margin: 0;
     position: relative;
+}
+
+body.dark {
+    background-image: url("/img/bg_center_dark.svg");
 }
 
 .filter-panel {
@@ -139,6 +145,10 @@ body {
 .btn.search-report:hover {
     color: #292929;
     opacity: 1;
+}
+
+.home {
+    position: relative;
 }
 </style>
 

@@ -1,6 +1,6 @@
 @extends('layout.client')
 
-@section('title', $song_l->name . ' – píseň ve zpěvníku ProScholy.cz')
+@section('title', $song_l->name . ' – ProScholy.cz')
 @push('meta_tags')
 <meta name="description" content="@component('client.components.song_description', ['song_l' => $song_l])@endcomponent">
 @endpush

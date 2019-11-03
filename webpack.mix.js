@@ -37,7 +37,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
     .browserSync({
-        proxy: 'localhost:8000',
+        // proxy settings for docker 
+        // if you are using php artisan serv then change proxy to 'localhost:8000'
+        proxy: 'nginx:80',
         files: [
             'public/css/app.css',
             'public/js/app.js',
@@ -53,7 +55,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/_admin/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js');
 
-// File hash suffix in production (to bust old caches)
 if (mix.inProduction()) {
     mix
     .webpackConfig({
@@ -75,5 +76,5 @@ if (mix.inProduction()) {
             })
         ],
       })
-    .version();
+    .version(); // File hash suffix in production (to bust old caches)
 }

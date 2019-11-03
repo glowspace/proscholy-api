@@ -407,7 +407,6 @@ export default {
     // use this only in SongView and Chord component
     // use v-model to bind data from every other component
     return {
-      displayTransp: 0,
       controlsDisplay: true,
       bottomMode: 0,
       topMode: 0,
@@ -523,6 +522,11 @@ export default {
       document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
       if(this.renderMedia) {
         this.bottomMode = 2;
+      }
+      if(this.renderScores) {
+        this.topMode = 1;
+      } else if(this.renderTranslations) {
+        this.topMode = 2;
       }
     }
   }

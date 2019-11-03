@@ -75,7 +75,7 @@
                 <div class="card">
                     <div class="card-header">Statistika</div>
                     <div class="card-body">
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-bordered mb-0 statistics-table">
                             <tr>
                                 <td>Písně s&nbsp;textem</td>
                                 <td><b>{{$songs_w_text_count}}</b></td>

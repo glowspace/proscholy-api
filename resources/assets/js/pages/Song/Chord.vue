@@ -77,7 +77,7 @@
         methods:{
             transposeChordBy(chord, semitones, useFlatScale) {
                 // Chromatic scale starting from C using flats only.
-                const FLAT_SCALE = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "Cb"];
+                const FLAT_SCALE = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"];
 
                 // Chromatic scale starting from C using sharps only.
                 const SHARP_SCALE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
@@ -88,7 +88,7 @@
                     chord_i = SHARP_SCALE.indexOf(chord);
                 }
 
-                let new_i = (chord_i + semitones) % 12;
+                let new_i = (chord_i + semitones + 12) % 12;
                 
                 return scale[new_i];
             }
