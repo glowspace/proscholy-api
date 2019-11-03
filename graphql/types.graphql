@@ -60,7 +60,8 @@ type SongLyric {
     capo: Int
     visits: Int
     has_lyrics: Boolean
-    is_approved_for_liturgy: Boolean
+    liturgy_approval_status: Int
+    liturgy_approval_status_string_values: JSON
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
 }

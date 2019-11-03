@@ -94,11 +94,12 @@
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
                 ></items-combo-box>
-                <v-checkbox :disabled="model.tags_official.length == 0"
+                <v-select :items="liturgy_approval_status_values" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
+                <!-- <v-checkbox :disabled="model.tags_official.length == 0"
                   class="mt-0"
-                  v-model="model.is_approved_for_liturgy"
+                  v-model="model.liturgy_approval_status"
                   label="Schváleno pro použití v liturgii"
-                ></v-checkbox>
+                ></v-checkbox> -->
               </v-form>
             </v-flex>
             <v-flex xs12 md5 offset-md1 class="edit-description">
@@ -314,6 +315,7 @@ const FETCH_MODEL_DATABASE = gql`
     model_database: song_lyric(id: $id) {
       ...SongLyricFillableFragment
       lang_string_values
+      liturgy_approval_status_string_values
     }
   }
   ${fragment}
@@ -402,9 +404,10 @@ export default {
         songbook_records: [],
         song: undefined,
         capo: undefined,
-        is_approved_for_liturgy: undefined
+        liturgy_approval_status: undefined
       },
       lang_values: [],
+      liturgy_approval_status_values: [],
       selected_thumbnail_url: undefined,
       is_deleted: false
     };
@@ -427,10 +430,15 @@ export default {
         }
 
         // lang string values are an associative array passed as JSON object
-        let parsed_obj = JSON.parse(song_lyric.lang_string_values);
-
-        for (const [key, value] of Object.entries(parsed_obj)) {
+        const p = JSON.parse(song_lyric.lang_string_values);
+        for (const [key, value] of Object.entries(p)) {
           this.lang_values.push({ value: key, text: value });
+        }
+
+        const pp = JSON.parse(song_lyric.liturgy_approval_status_string_values);
+        console.log(pp)
+        for (const [key, value] of Object.entries(pp)) {
+          this.liturgy_approval_status_values.push({ value: parseInt(key), text: value });
         }
 
         // if there are any thumbnailables, then select the first one
@@ -516,7 +524,7 @@ export default {
               lyrics: this.model.lyrics,
               song: this.model.song,
               capo: this.model.capo,
-              is_approved_for_liturgy: this.is_approved_for_liturgy,
+              liturgy_approval_status: this.liturgy_approval_status,
               authors: {
                 create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
                 sync: this.model.authors

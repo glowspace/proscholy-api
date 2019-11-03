@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIsApprovedForLigurgyToSongLyricsTable extends Migration
+class AddLiturgyApprovalStatusToSongLyricsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddIsApprovedForLigurgyToSongLyricsTable extends Migration
     public function up()
     {
         Schema::table('song_lyrics', function (Blueprint $table) {
-            $table->boolean('is_inappropriate_for_liturgy')->default(false);
+            $table->boolean('liturgy_approval_status')->default(0);
         });
     }
     
@@ -26,7 +26,7 @@ class AddIsApprovedForLigurgyToSongLyricsTable extends Migration
     public function down()
     {
         Schema::table('song_lyrics', function (Blueprint $table) {
-            $table->dropColumn('is_inappropriate_for_liturgy');
+            $table->dropColumn('liturgy_approval_status');
         });
     }
 }
