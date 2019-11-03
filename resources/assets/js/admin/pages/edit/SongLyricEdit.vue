@@ -524,7 +524,7 @@ export default {
               lyrics: this.model.lyrics,
               song: this.model.song,
               capo: this.model.capo,
-              liturgy_approval_status: this.liturgy_approval_status,
+              liturgy_approval_status: this.model.liturgy_approval_status,
               authors: {
                 create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
                 sync: this.model.authors
