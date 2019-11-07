@@ -66,7 +66,7 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'visits'];
+    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id'];
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
