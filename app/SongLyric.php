@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Chord;
 use App\Helpers\ChordSign;
 use App\Helpers\ChordQueue;
+use App\Helpers\SongPart;
 
 use Venturecraft\Revisionable\RevisionableTrait;
 
@@ -58,10 +59,10 @@ use Venturecraft\Revisionable\RevisionableTrait;
 class SongLyric extends Model
 {
     // ElasticSearch Searchable Trait used for full-text searching
-    use Searchable, 
-    // Lockable Trait for enabling to "lock" the model while editing
-        Lockable, 
-        SoftDeletes, 
+    use Searchable,
+        // Lockable Trait for enabling to "lock" the model while editing
+        Lockable,
+        SoftDeletes,
         RevisionableTrait;
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
@@ -104,26 +105,26 @@ class SongLyric extends Model
     ];
 
     protected $fillable
-        = [
-            'name',
-            'song_id',
-            'lyrics',
-            'id',
-            // 'is_original',
-            // 'is_authorized',
-            'type',
-            'lang',
-            'creating_at',
-            'has_anonymous_author',
-            'has_chords',
-            'is_published',
-            'is_approved_by_author',
-            'user_creator_id',
-            'licence_type',
-            'only_regenschori',
-            'capo',
-            'visits' 
-        ];
+    = [
+        'name',
+        'song_id',
+        'lyrics',
+        'id',
+        // 'is_original',
+        // 'is_authorized',
+        'type',
+        'lang',
+        'creating_at',
+        'has_anonymous_author',
+        'has_chords',
+        'is_published',
+        'is_approved_by_author',
+        'user_creator_id',
+        'licence_type',
+        'only_regenschori',
+        'capo',
+        'visits'
+    ];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
@@ -170,7 +171,7 @@ class SongLyric extends Model
         //     && 
     }
 
-    public function getHasLyricsAttribute() : bool
+    public function getHasLyricsAttribute(): bool
     {
         return !empty($this->lyrics);
     }
@@ -212,36 +213,36 @@ class SongLyric extends Model
         return self::$lang_string_values;
     }
 
-    public function song() : BelongsTo
+    public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
 
-    public function authors() : BelongsToMany
+    public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function tags() : BelongsToMany
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function externals() : HasMany
+    public function externals(): HasMany
     {
         return $this->hasMany(External::class);
     }
 
-    public function files() : HasMany
+    public function files(): HasMany
     {
         return $this->hasMany(File::class);
     }
 
-    public function songbook_records() : BelongsToMany
+    public function songbook_records(): BelongsToMany
     {
         return $this->belongsToMany(Songbook::class, "songbook_records")
-                    ->withPivot('number', 'placeholder', 'id')
-                    ->using(SongbookRecord::class);
+            ->withPivot('number', 'placeholder', 'id')
+            ->using(SongbookRecord::class);
     }
 
     public function scopeTranslations($query)
@@ -273,9 +274,9 @@ class SongLyric extends Model
     {
         // show songs, where there is at least one common author 
         // of song authors and to-user-assigned authors
-        return $query->whereHas('authors', function($q) {
+        return $query->whereHas('authors', function ($q) {
             $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
-        // and show those songs, that were created by this user account
+            // and show those songs, that were created by this user account
         })->orWhere('user_creator_id', Auth::user()->id);
     }
 
@@ -285,8 +286,8 @@ class SongLyric extends Model
         // lyrics, sheet music
 
         return $query->whereHas('scoreExternals')
-                    ->orWhereHas('scoreFiles')
-                    ->orWhere('lyrics', '!=', '');
+            ->orWhereHas('scoreFiles')
+            ->orWhere('lyrics', '!=', '');
     }
 
     /*
@@ -316,12 +317,12 @@ class SongLyric extends Model
     {
         return $this->externals()->scores()->orderBy('is_featured', 'desc')->orderBy('type', 'asc');
     }
-    
+
     public function scoreFiles()
     {
         return $this->files()->scores()->orderBy('type', 'desc');
     }
-    
+
 
     public function scoresCount()
     {
@@ -355,7 +356,7 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
+        $songbook_numbers = $this->songbook_records()->get()->map(function ($sb) {
             return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
         })->implode(" ");
 
@@ -370,68 +371,131 @@ class SongLyric extends Model
         return $arr;
     }
 
-    public function getFormattedLyrics()
+    public function getLyricsRepresentation()
     {
+        $parts = [];
+
         $lines = explode("\n", $this->lyrics);
 
-        $output = "";
-        $chordQueue = new ChordQueue();
+        foreach ($lines as $l) {
+            // determine wheter the line starts with a sequence matching a new song part
+            // e.g. R:, B:, 2: etc.
+            $line = trim($l);
 
-        foreach ($lines as $line){
-            $output .= '<div class="song-line">'.$this->processLine($line, $chordQueue).'</div>';
+        
+            // prelude or interlude
+            if (strlen($line) > 0 && $line[0] == '@') {
+                if ($pos = strpos(strtolower($line), 'předehra:')) {
+                    $p = new SongPart('P');
+                    $p->appendLine(substr($line, $pos + strlen('předehra:')));
+                    $parts[] = $p;
+                }
+
+                if ($pos = strpos(strtolower($line), 'mezihra:')) {
+                    $p = new SongPart('M');
+                    $p->appendLine(substr($line, $pos + strlen('mezihra:')));
+                    $parts[] = $p;
+                }
+                continue;
+            }
+
+            // hidden parts
+            if (preg_match('/^\(([RBC])\:\)/', $line, $matches)) {
+                $p = new SongPart($matches[1], true);
+                $parts[] = $p;
+                continue;
+            }
+
+            // normal parts
+            if (preg_match('/^([RBC\d]\d?)[\:\.](.*)/', $line, $matches)) {
+                $p = new SongPart($matches[1]);
+                $p->appendLine($matches[2]);
+                $parts[] = $p;
+                \Log::info($p);
+                continue;
+            }
+
+            // apparently not beginning with a marker
+            // so first check if we have added any
+            if (count($parts) == 0)
+                $parts[] = new SongPart("");
+
+            $activePart = $parts[count($parts) - 1];
+            $activePart->appendLine($line);
+        }
+
+        return $parts;
+    }
+
+
+    // todo: rewrite using new abstract thing
+
+    public function getFormattedLyrics()
+    {
+        // $lines = explode("\n", $this->lyrics);
+
+        // $output = "";
+        // $chordQueue = new ChordQueue();
+
+        // foreach ($lines as $line) {
+        //     $output .= '<div class="song-line">' . $this->processLine($line, $chordQueue) . '</div>';
+        // }
+
+        // return $output;
+        $output = "";
+
+        foreach ($this->getLyricsRepresentation() as $song_part) {
+            $output .= $song_part->toHTML();
         }
 
         return $output;
     }
 
-    private function processLine($line, $chordQueue)
-    {
-        $chords = array();
-        $currentChordText = "";
-        $line = trim($line);
-        
-        // starting of a line, notify Chord "repeater" if we are in a verse
-        if (strlen($line) > 0 && is_numeric($line[0])) {
-            $chordQueue->notifyVerse($line[0]);
-        }
+    // private function processLine($line, $chordQueue)
+    // {
+    //     $chords = array();
+    //     $currentChordText = "";
+    //     $line = trim($line);
 
-        if (trim($line) == '(R:)') {
-            return "";
-        }
+    //     // starting of a line, notify Chord "repeater" if we are in a verse
+    //     if (strlen($line) > 0 && is_numeric($line[0])) {
+    //         $chordQueue->notifyVerse($line[0]);
+    //     }
 
-        for ($i = 0; $i < strlen($line); $i++) {
-            if ($line[$i] == "["){
-                if ($currentChordText != "")
-                    $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-                $currentChordText = "";
-            }
+    //     if (trim($line) == '(R:)') {
+    //         return "";
+    //     }
 
-            $currentChordText .= $line[$i];
-        }
+    //     for ($i = 0; $i < strlen($line); $i++) {
+    //         if ($line[$i] == "[") {
+    //             if ($currentChordText != "")
+    //                 $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
+    //             $currentChordText = "";
+    //         }
 
-        $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
+    //         $currentChordText .= $line[$i];
+    //     }
 
-        $string = "";
-        foreach ($chords as $chord) 
-            $string .= $chord->toHTML();
+    //     $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
 
-        return $string;
-    }
+    //     $string = "";
+    //     foreach ($chords as $chord)
+    //         $string .= $chord->toHTML();
+
+    //     return $string;
+    // }
 
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
-        if (is_numeric($identificator))
-        {
+        if (is_numeric($identificator)) {
             return SongLyric::find($identificator);
-        }
-        else
-        {
+        } else {
             $double = SongLyric::where('name', $identificator)->first();
             if ($uniqueName && $double != null) {
                 return $double;
             }
-            
+
             $song       = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,
