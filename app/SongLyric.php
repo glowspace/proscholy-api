@@ -395,6 +395,10 @@ class SongLyric extends Model
             $chordQueue->notifyVerse($line[0]);
         }
 
+        if (trim($line) == '(R:)') {
+            return "";
+        }
+
         for ($i = 0; $i < strlen($line); $i++) {
             if ($line[$i] == "["){
                 if ($currentChordText != "")
