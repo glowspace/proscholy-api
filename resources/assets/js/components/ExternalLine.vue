@@ -2,7 +2,7 @@
     <tr>
         <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
             <a class="p-2 w-100 d-inline-block" :href="viewLink" title="Zobrazit náhled" target="_blank">
-                <i :class="[typeClass, 'pl-1 pr-3']"></i>{{ name }}<i class="far fa-eye pl-3 pr-0"></i>
+                <i :class="[typeClass, 'pl-1 pr-3']"></i><span class="pr-3">{{ name }}</span><i class="far fa-eye pl-0 pr-0"></i>
             </a>
         </td>
         <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
@@ -65,7 +65,7 @@ export default {
                 if (this.browser.satisfies(this.supportPdfIframesCondition)) {
                     return this.url;
                 } else {
-                    return "https://docs.google.com/viewer?url=" + this.url + "&embedded=true";
+                    return "https://docs.google.com/viewer?url=" + this.url;
                 }
 
             } else {
