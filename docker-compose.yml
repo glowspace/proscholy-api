@@ -14,6 +14,8 @@ services:
     restart: always
     depends_on:
       - db
+      # seeding depends on elastic having built an index, see entrypoint_web_test.sh
+      - elasticsearch
     dns:
       - 8.8.8.8
       - 4.4.4.4
