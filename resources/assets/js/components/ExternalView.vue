@@ -92,7 +92,7 @@ export default {
                 if (this.browser.satisfies(this.supportPdfIframesCondition)) {
                     return this.url;
                 } else {
-                    return "https://docs.google.com/viewer?url=" + this.url + "&embedded=true";
+                    return "https://docs.google.com/viewer?url=" + this.url;
                 }
 
             } else {
