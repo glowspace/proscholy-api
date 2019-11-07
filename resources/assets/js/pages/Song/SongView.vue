@@ -114,7 +114,7 @@
           <div class="d-flex align-items-start justify-content-between">
               <div id="song-lyrics" class="p-1 overflow-hidden">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
-                <div v-if="song_lyric.capo > 0" class="mb-2">
+                <div v-if="!$apollo.loading && song_lyric.capo > 0" class="mb-2">
                   <i>capo: {{ song_lyric.capo }}</i>
                 </div>
                 <slot></slot>
