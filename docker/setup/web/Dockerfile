@@ -37,4 +37,4 @@ RUN apt-get update && apt-get install yarn
 RUN composer global require "laravel/envoy=~1.5"
 RUN apt-get install -y gnupg2
 
-WORKDIR /var/www/html
+RUN echo "php_admin_flag[log_errors] = On">>/usr/local/etc/php-fpm.conf

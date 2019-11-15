@@ -1,5 +1,7 @@
 @extends('layout.admin')
 
+@section('title', '● '.$song_lyric->name.' – administrace ProScholy.cz')
+
 @section('content-withmenu')
     <div class="__container-fluid">
     <h2>Úprava písně</h2>

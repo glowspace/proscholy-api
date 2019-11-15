@@ -1,5 +1,7 @@
 @extends('layout.client')
 
+@section('title', 'O zpěvníku ProScholy.cz')
+
 @section('content')
     <div class="container">
         <h1>O zpěvníku ProScholy.cz</h1>
@@ -44,6 +46,7 @@
                 array('name' => 'Jana Stuchlíková', 'team' => 'organizace', 'info' => 'vedoucí redakce'),
                 array('name' => 'P. Ondřej Talaš', 'team' => 'organizace', 'info' => 'koordinace, duchovní podpora, PR'),
                 array('name' => 'Ondřej Múčka', 'team' => 'organizace', 'info' => 'Musica Sacra'),
+                array('name' => 'Zuzana Haikerová', 'team' => 'organizace', 'info' => 'vedoucí propagace'),
                 
                 array('name' => 'Miroslav Šerý',    'team' => 'vývoj', 'info' => 'vedoucí vývojář, vývoj webu'),
                 array('name' => 'Michael Dojčár', 'team' => 'vývoj', 'info' => 'celková koordinace projektu, IT'),

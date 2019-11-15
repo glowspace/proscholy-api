@@ -1,15 +1,56 @@
 #!/usr/bin/env bash
 
-php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
-git reset --hard
-git pull
-composer install --optimize-autoloader --no-dev
-composer dump-auto
-yarn install
-yarn run production
-php artisan config:cache
-php artisan route:cache
-php artisan cache:clear
-php artisan view:clear
-php artisan migrate --force
-php artisan up
+LARAVEL='/var/www/html'
+
+if cd releases ; then
+    LAST=`readlink -f ../current` 
+    LAST=${LAST##*/}
+
+    echo 'Removing old releases but one last for backup'
+    ls | grep -v ${LAST} | xargs rm -rfv
+else
+    echo "Releases folder not found, creating one"
+    mkdir releases && cd releases
+fi
+
+DATESTAMP=`date +"%Y-%m-%d-%H-%M-%S"`
+
+git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
+    git clone --depth 1 'https://gitlab.com/proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP}
+
+if cd ${DATESTAMP} ; then 
+    git reset --hard master
+
+    echo "Linking storage directory"
+    rm -rf storage
+    ln -nfs ${LARAVEL}/storage ${LARAVEL}/releases/${DATESTAMP}/storage
+
+    echo "Modifying access rights for production for: storage, bootstrap/cache"
+    chgrp -R www-data storage bootstrap/cache
+    chmod -R ug+rwx storage bootstrap/cache
+
+    mv .env.production .env
+
+    echo "Installing composer and yarn"
+    composer install --optimize-autoloader --no-dev
+    composer dump-auto
+
+    yarn install
+    yarn run production
+
+    rm -rf node_modules
+
+    php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
+    php artisan config:cache
+    php artisan route:cache
+    php artisan cache:clear
+    php artisan view:clear
+    php artisan migrate --force
+    php artisan up
+
+    ln -nfs ${LARAVEL}/releases/${DATESTAMP} ${LARAVEL}/current
+else
+    echo 'Cloning not successful, aborting the deploy'
+fi
+
+cd ${LARAVEL}

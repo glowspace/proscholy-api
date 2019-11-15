@@ -1,5 +1,7 @@
 @extends('layout.client')
 
+@section('title', $author->name . ' – ProScholy.cz')
+
 @section('content')
     <div class="container">
         <h2 style="margin-bottom: 0">{{$author->name}}</h2>
