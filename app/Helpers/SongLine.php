@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Log;
 
-class SongLine{
+class SongLine {
 
     protected $text = ""; 
     protected $chords = [];
@@ -47,7 +47,7 @@ class SongLine{
         $html = '<div class="song-line">';
 
         if (isset($songPartTag)) {
-            $html .= '<span class="song-part-tag">' . $songPartTag . '</span>';
+            $html .= '<song-part-tag>' . $songPartTag . '</song-part-tag>';
         }
         
         foreach ($this->chords as $ch) {

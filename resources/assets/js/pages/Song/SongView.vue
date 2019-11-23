@@ -110,9 +110,9 @@
           </div>
         </div>
 
-        <div class="card-body py-2 pl-3">
+        <div class="card-body py-2 pl-3 overflow-hidden">
           <div class="d-flex align-items-start justify-content-between">
-              <div id="song-lyrics" :class="{'p-1': true, 'overflow-hidden': true, 'song-lyrics-extended': chordSharedStore.chordMode==2}">
+              <div id="song-lyrics" :class="{'p-1': true, 'song-lyrics-extended': chordSharedStore.chordMode==2}">
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
                 <div v-if="!$apollo.loading && song_lyric.capo > 0" class="mb-2">
                   <i>capo: {{ song_lyric.capo }}</i>
@@ -325,14 +325,6 @@
 
   .song-lyrics-extended .song-part-hidden {
     display: block;
-  }
-
-  .song-part-tag {
-    display: inline-block;
-    // this is so that the chord line is not displayed on the text
-    position: relative;
-    background: white;
-    z-index: 2;
   }
 </style>
 
