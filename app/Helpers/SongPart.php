@@ -67,6 +67,10 @@ class SongPart{
         return strlen($this->type) > 0 && $this->type[0] == "R";
     }
 
+    function isInline() {
+        return $this->type == "P" || $this->type == "M";
+    }
+
     function isUndefined() {
         return $this->type == "";
     }
@@ -81,6 +85,7 @@ class SongPart{
         $class = "song-part";
         $class .= $this->isRefrain() ? " song-part-refrain" : "";
         $class .= $this->isHidden() ? " song-part-hidden" : "";
+        $class .= $this->isInline() ? " song-part-inline" : "";
 
         $html = '<div class="' . $class .'">';
 

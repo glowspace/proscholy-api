@@ -47,7 +47,7 @@ class SongLine{
         $html = '<div class="song-line">';
 
         if (isset($songPartTag)) {
-            $html .= '<span class="song-part-tag chord-text">' . $songPartTag . '</span>';
+            $html .= '<span class="song-part-tag">' . $songPartTag . '</span>';
         }
         
         foreach ($this->chords as $ch) {

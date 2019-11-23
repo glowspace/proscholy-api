@@ -446,21 +446,8 @@ class SongLyric extends Model
         return $parts;
     }
 
-
-    // todo: rewrite using the new abstract thing
-
     public function getFormattedLyrics()
     {
-        // $lines = explode("\n", $this->lyrics);
-
-        // $output = "";
-        // $chordQueue = new ChordQueue();
-
-        // foreach ($lines as $line) {
-        //     $output .= '<div class="song-line">' . $this->processLine($line, $chordQueue) . '</div>';
-        // }
-
-        // return $output;
         $output = "";
 
         $parts = $this->getLyricsRepresentation();
@@ -471,8 +458,7 @@ class SongLyric extends Model
 
         foreach ($parts as $song_part) {
             if ($song_part->isHidden() && $song_part->isRefrain()) {
-                // substitute by first refrain
-
+                // substitute by the first refrain
                 $subst = clone $firstRefrain;
                 $subst->setHidden(true);
                 $output .= $subst->toHTML();
@@ -483,40 +469,6 @@ class SongLyric extends Model
 
         return $output;
     }
-
-    // private function processLine($line, $chordQueue)
-    // {
-    //     $chords = array();
-    //     $currentChordText = "";
-    //     $line = trim($line);
-
-    //     // starting of a line, notify Chord "repeater" if we are in a verse
-    //     if (strlen($line) > 0 && is_numeric($line[0])) {
-    //         $chordQueue->notifyVerse($line[0]);
-    //     }
-
-    //     if (trim($line) == '(R:)') {
-    //         return "";
-    //     }
-
-    //     for ($i = 0; $i < strlen($line); $i++) {
-    //         if ($line[$i] == "[") {
-    //             if ($currentChordText != "")
-    //                 $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-    //             $currentChordText = "";
-    //         }
-
-    //         $currentChordText .= $line[$i];
-    //     }
-
-    //     $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-
-    //     $string = "";
-    //     foreach ($chords as $chord)
-    //         $string .= $chord->toHTML();
-
-    //     return $string;
-    // }
 
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
