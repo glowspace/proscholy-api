@@ -26,25 +26,25 @@ class SongPart{
         return $this->is_hidden;
     }
 
+    function setHidden($is_hidden) {
+        $this->is_hidden = $is_hidden;
+    }
+
     function getType() {
         return $this->type;
     }
 
-    function getTypeString() {
-        if ($this->isHidden()) {
-            return "";
-        }
-
+    function getSongPartTag() {
         if ($this->isVerse()) {
             return $this->getVerseNumber() . '.&nbsp;';
         }
 
         if ($this->type == 'P') {
-            return 'předehra:&nbsp;';
+            return '<i>předehra:</i>&nbsp;';
         }
 
         if ($this->type == 'M') {
-            return 'mezihra:&nbsp;';
+            return '<i>mezihra:</i>&nbsp;';
         }
 
         if ($this->type == "") {
@@ -63,6 +63,10 @@ class SongPart{
         return (int)$this->type;
     }
 
+    function isRefrain() {
+        return strlen($this->type) > 0 && $this->type[0] == "R";
+    }
+
     function isUndefined() {
         return $this->type == "";
     }
@@ -74,23 +78,21 @@ class SongPart{
 
     function toHTML()
     {
-        $html = '<div class="song-part">';
+        $class = "song-part";
+        $class .= $this->isRefrain() ? " song-part-refrain" : "";
+        $class .= $this->isHidden() ? " song-part-hidden" : "";
 
-        // $html .= '<div class="song-part-tag">' . $this->getTypeString() . '</div>';
+        $html = '<div class="' . $class .'">';
 
         for ($i = 0; $i < count($this->song_lines); $i++) {
             $line = $this->song_lines[$i];
 
             if ($i == 0 && $this->type !== "") {
-                $html .= $line->toHTML($this->getTypeString());
+                $html .= $line->toHTML($this->getSongPartTag());
             } else {
                 $html .= $line->toHTML();
             }
         }
-
-        // foreach ($this->song_lines as $l) {
-        //     $html .= $l->toHTML();
-        // }
 
         $html .= '</div>';
 

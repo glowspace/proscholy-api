@@ -463,8 +463,22 @@ class SongLyric extends Model
         // return $output;
         $output = "";
 
-        foreach ($this->getLyricsRepresentation() as $song_part) {
-            $output .= $song_part->toHTML();
+        $parts = $this->getLyricsRepresentation();
+
+        $firstRefrain = current(array_filter($parts, function ($part) {
+            return $part->isRefrain();
+        }));
+
+        foreach ($parts as $song_part) {
+            if ($song_part->isHidden() && $song_part->isRefrain()) {
+                // substitute by first refrain
+
+                $subst = clone $firstRefrain;
+                $subst->setHidden(true);
+                $output .= $subst->toHTML();
+            } else {
+                $output .= $song_part->toHTML();
+            }
         }
 
         return $output;
