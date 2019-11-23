@@ -8,10 +8,13 @@ class SongLine{
 
     protected $text = ""; 
     protected $chords = [];
+    protected $ch_queue;
 
-    function __construct($text)
+    function __construct($text, ChordQueue $ch_queue)
     {
         $this->text = $text;
+        $this->ch_queue = $ch_queue;
+        $this->ch_queue->notifyNewLine(); // note: this does nothing as for now
         $this->processChords();
     }
 
@@ -20,22 +23,17 @@ class SongLine{
         $currentChordText = "";
         $line = trim($this->text);
 
-        // starting of a line, notify Chord "repeater" if we are in a verse
-        // if (strlen($line) > 0 && is_numeric($line[0])) {
-        //     $chordQueue->notifyVerse($line[0]);
-        // }
-
         for ($i = 0; $i < strlen($line); $i++) {
             if ($line[$i] == "[") {
                 if ($currentChordText != "")
-                    $this->chords[] = Chord::parseFromText($currentChordText, null);
+                    $this->chords[] = Chord::parseFromText($currentChordText, $this->ch_queue);
                 $currentChordText = "";
             }
 
             $currentChordText .= $line[$i];
         }
 
-        $this->chords[] = Chord::parseFromText($currentChordText, null);
+        $this->chords[] = Chord::parseFromText($currentChordText, $this->ch_queue);
 
         // $string = "";
         // foreach ($chords as $chord)
@@ -44,9 +42,13 @@ class SongLine{
         // return $string;
     }
 
-    public function toHTML()
+    public function toHTML($songPartTag = null)
     {
         $html = '<div class="song-line">';
+
+        if (isset($songPartTag)) {
+            $html .= '<span class="song-part-tag chord-text">' . $songPartTag . '</span>';
+        }
         
         foreach ($this->chords as $ch) {
             $html .= $ch->toHTML();
