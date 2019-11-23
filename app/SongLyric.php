@@ -105,26 +105,27 @@ class SongLyric extends Model
     ];
 
     protected $fillable
-    = [
-        'name',
-        'song_id',
-        'lyrics',
-        'id',
-        // 'is_original',
-        // 'is_authorized',
-        'type',
-        'lang',
-        'creating_at',
-        'has_anonymous_author',
-        'has_chords',
-        'is_published',
-        'is_approved_by_author',
-        'user_creator_id',
-        'licence_type',
-        'only_regenschori',
-        'capo',
-        'visits'
-    ];
+        = [
+            'name',
+            'song_id',
+            'lyrics',
+            'id',
+            // 'is_original',
+            // 'is_authorized',
+            'type',
+            'lang',
+            'creating_at',
+            'has_anonymous_author',
+            'has_chords',
+            'is_published',
+            'is_approved_by_author',
+            'user_creator_id',
+            'licence_type',
+            'only_regenschori',
+            'capo',
+            'visits',
+            'liturgy_approval_status' 
+        ];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
@@ -141,6 +142,13 @@ class SongLyric extends Model
         'cu' => 'staroslověnština',
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
         'mixed' => 'vícejazyčná píseň'
+    ];
+
+    private static $liturgy_approval_status_string_values = [
+        0 => 'bez vyjádření ČBK',
+        1 => 'schváleno ČBK pro liturgii',
+        // 2 => 'schváleno ČBK pro dětskou mši',
+        // 3 => 'neschváleno ČBK pro liturgii',
     ];
 
     public function getPublicUrlAttribute()
@@ -213,7 +221,17 @@ class SongLyric extends Model
         return self::$lang_string_values;
     }
 
-    public function song(): BelongsTo
+    public function getLiturgyApprovalStatusStringAttribute()
+    {
+        return self::$liturgy_approval_status_string_values[$this->liturgy_approval_status];
+    }
+
+    public function getLiturgyApprovalStatusStringValuesAttribute()
+    {
+        return self::$liturgy_approval_status_string_values;
+    }
+
+    public function song() : BelongsTo
     {
         return $this->belongsTo(Song::class);
     }

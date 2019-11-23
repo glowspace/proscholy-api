@@ -67,8 +67,10 @@ class UpdateSongLyric
                 }
             }
         }
-        if (isset($input["tags_official"]["sync"]))
+        if (isset($input["tags_official"]["sync"])) 
+        {
             $tagsToSync = array_merge($tagsToSync, $input["tags_official"]["sync"]);
+        }
 
         $song_lyric->tags()->sync($tagsToSync);
 

@@ -61,6 +61,7 @@ input UpdateSongLyricInput {
     song: SongInput
     only_regenschori: Boolean
     capo: Int
+    liturgy_approval_status: Int
 }
 
 input SongInput {

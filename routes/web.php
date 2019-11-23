@@ -103,3 +103,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 // refreshing
 Route::get('/refresh-updating/song-lyric/{song_lyric}', 'Api\LockController@refresh_updating_song_lyric');
 Route::get('/refresh-updating/songbook/{songbook}', 'Api\LockController@refresh_updating_songbook');
+
+// routes for propagation
+Route::get('/advent', function() { return redirect(url('/search?searchString=&tags=24&langs=&songbooks=')); });
+Route::get('/vanoce', function() { return redirect(url('/search?searchString=&tags=22&langs=&songbooks=')); });
+Route::get('/velikonoce', function() { return redirect(url('/search?searchString=&tags=23&langs=&songbooks=')); });
+Route::get('/postni-doba', function() { return redirect(url('/search?searchString=&tags=25&langs=&songbooks=')); });

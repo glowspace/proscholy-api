@@ -10,6 +10,7 @@
     :label="label"
     :multiple="multiple"
     small-chips
+    :disabled="disabled"
   >
     <template v-slot:no-data v-if="enableCustom">
       <v-list-tile>
@@ -60,7 +61,7 @@ import removeDiacritics from '../helpers/removeDiacritics';
 
 export default {
   // todo: 'enable-custom set to false' not working for multiple entry
-  props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom"],
+  props: ["p-items", "value", "label", "header-label", "create-label", "multiple", "enable-custom", "disabled"],
 
   data: () => ({
     colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
