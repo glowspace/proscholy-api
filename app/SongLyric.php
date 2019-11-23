@@ -145,9 +145,9 @@ class SongLyric extends Model
 
     private static $liturgy_approval_status_string_values = [
         0 => 'bez vyjádření ČBK',
-        1 => 'schváleno ČBK pro mši',
-        2 => 'schváleno ČBK pro dětskou mši',
-        3 => 'neschváleno ČBK pro liturgii',
+        1 => 'schváleno ČBK pro liturgii',
+        // 2 => 'schváleno ČBK pro dětskou mši',
+        // 3 => 'neschváleno ČBK pro liturgii',
     ];
 
     public function getPublicUrlAttribute()

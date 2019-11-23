@@ -14,7 +14,7 @@ class AddLiturgyApprovalStatusToSongLyricsTable extends Migration
     public function up()
     {
         Schema::table('song_lyrics', function (Blueprint $table) {
-            $table->boolean('liturgy_approval_status')->default(0);
+            $table->unsignedSmallInteger('liturgy_approval_status')->default(0);
         });
     }
     
