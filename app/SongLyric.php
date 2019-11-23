@@ -66,7 +66,7 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'visits'];
+    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id'];
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
@@ -411,6 +411,10 @@ class SongLyric extends Model
         // starting of a line, notify Chord "repeater" if we are in a verse
         if (strlen($line) > 0 && is_numeric($line[0])) {
             $chordQueue->notifyVerse($line[0]);
+        }
+
+        if (trim($line) == '(R:)') {
+            return "";
         }
 
         for ($i = 0; $i < strlen($line); $i++) {
