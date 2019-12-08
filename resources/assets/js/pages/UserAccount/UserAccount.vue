@@ -74,6 +74,8 @@ export default {
             console.log({ creds });
             let token = await creds.user.getIdToken();
 
+            window.localStorage.setItem('firebase_token', token);
+
             console.log({ token });
 
             let headers = { Authorization: 'Bearer ' + token };

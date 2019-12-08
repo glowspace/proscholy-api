@@ -25,7 +25,23 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { persistCache, CachePersistor } from 'apollo-cache-persist';
+import { ApolloLink } from 'apollo-link'
 import VueApollo from 'vue-apollo';
+
+let user_token = window.localStorage.getItem("firebase_token");
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext({
+    headers: {
+      authorization: `Bearer ${user_token}`
+    }
+  });
+
+  return forward(operation)
+});
+
+console.log(`grqpql bearer token: ${user_token}`);
 
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
 
@@ -50,7 +66,7 @@ persistCache({
   
     // Create the apollo client
     const apolloClient = new ApolloClient({
-      link: httpLink,
+      link: authMiddleware.concat(httpLink),
       cache,
     })
     
@@ -65,20 +81,3 @@ persistCache({
       apolloProvider
     });
 });
-
-// // Create the apollo client
-// const apolloClient = new ApolloClient({
-//   link: httpLink,
-//   cache,
-// })
-
-// Vue.use(VueApollo)
-
-// const apolloProvider = new VueApollo({
-//     defaultClient: apolloClient,
-// })
-
-// const app = new Vue({
-//   el: '#app',
-//   apolloProvider
-// });
