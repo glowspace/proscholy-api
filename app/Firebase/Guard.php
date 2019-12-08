@@ -2,7 +2,7 @@
 namespace App\Firebase;
 
 use Firebase\Auth\Token\Verifier;
-use App\PublicUser;
+use App\PublicModels\PublicUser;
 
 class Guard
 {

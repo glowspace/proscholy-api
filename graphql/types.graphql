@@ -127,7 +127,16 @@ type SongbookRecord {
     songbook: Songbook @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@songbook")
 }
 
+
 type PublicUser {
     name: String
     email: String
+    playlists: [Playlist]
+}
+
+
+type Playlist {
+    name: String
+    #""" todo: custom resolver with ordering the list"""
+    song_lyrics: [SongLyric] 
 }

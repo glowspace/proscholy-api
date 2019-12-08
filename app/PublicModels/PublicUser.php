@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\PublicModels;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,9 +9,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class PublicUser extends Authenticatable
 {
+    // TODO: implement User Settings with https://github.com/glorand/laravel-model-settings
+
     protected $fillable = [
         'name', 'email', 'firebase_id', 'picture_url'
     ];
+
+    public function playlists()
+    {
+        return $this->hasMany(Playlist::class);
+    }
     
     public static function getPublicUserFromClaims($claims)
     {
@@ -20,6 +27,8 @@ class PublicUser extends Authenticatable
         if ($user) {
             return $user;
         }
+
+        // todo: handle more methods than just Google, i.e. email veryfing etc
 
         $user = new PublicUser([
             'firebase_id' => $claims['sub'],

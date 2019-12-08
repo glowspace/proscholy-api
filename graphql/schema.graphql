@@ -63,9 +63,7 @@ type Query {
     file(id: ID! @eq): File @find
     song_lyric(id: ID! @eq): SongLyric @find
     songbook(id: ID! @eq): Songbook @find
-}
 
-extend type Query {
     current_public_user: PublicUser @auth(guard: "web_firebase")
 }
 
