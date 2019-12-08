@@ -17,7 +17,8 @@ class Guard
         $token = $request->bearerToken();
         try {
             $token = $this->verifier->verifyIdToken($token);
-            return new PublicUser($token->getClaims());
+
+            return PublicUser::getPublicUserFromClaims($token->getClaims());
         }
         catch (\Exception $e) {
             return;

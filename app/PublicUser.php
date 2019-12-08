@@ -9,19 +9,30 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class PublicUser extends Authenticatable
 {
-
-    private $claims;
+    protected $primaryKey = 'firebase_id';
+    public $incrementing = false;
     
     protected $fillable = [
-        'name', 'email'
+        'name', 'email', 'firebase_id', 'picture_url'
     ];
     
-    /**
-     * Creates a new authenticatable user from Firebase.
-     */
-    public function __construct($claims)
+    public static function getPublicUserFromClaims($claims)
     {
-        $this->claims = $claims;
+        $user = PublicUser::find($claims['sub']);
+
+        if ($user) {
+            return $user;
+        }
+
+        $user = new PublicUser([
+            'firebase_id' => $claims['sub'],
+            'name' => $claims['name'],
+            'email' => $claims['email'],
+            // 'picture_url' => $claims['picture']
+        ]);
+        $user->save();
+
+        return $user;
     }
 
     /**
