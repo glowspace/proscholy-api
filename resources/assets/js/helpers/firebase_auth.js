@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import 'firebase/firestore'
+// import 'firebase/firestore'
 import 'firebase/auth'
 
 var firebaseConfig = {
@@ -20,7 +20,7 @@ if (!firebase.apps.length) {
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
 export const auth = firebase.auth()
-export const db = firebase.firestore()
+// export const db = firebase.firestore()
 // const { TimeStamp, GeoPoint } = firebase.firestore
 // export { TimeStamp, GeoPoint }
 

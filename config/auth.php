@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'web_firebase' => [
+            'driver' => 'firebase',
+            // 'provider' => 'public_users'
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -69,6 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+
+        // 'public_users' => [
+        //     'driver' => 'firebase',
+        //     'model' => App\PublicUser::class
+        // ]
 
         // 'users' => [
         //     'driver' => 'database',

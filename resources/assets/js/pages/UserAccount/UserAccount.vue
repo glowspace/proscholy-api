@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h1>Uživatel {{ user ? user.username : '' }}</h1>
-        <h2>Zpěvníky:</h2>
+        <!-- <h2>Zpěvníky:</h2>
 
         <ul class="list-group" v-if="user">
             <li v-for="songbook in user_songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
@@ -16,14 +16,14 @@
         </ul>
  
         <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
-        <input type="text" v-model="new_songbook_name"/>
+        <input type="text" v-model="new_songbook_name"/> -->
 
-        <a @click="signup">Přihlásit se přes Google</a>
+        <a @click="signin">Přihlásit se přes Google</a>
     </div> 
 </template>
 
 <script>
-import { db, GoogleProvider, auth } from 'Public/helpers/firebasedb'
+import { GoogleProvider, auth } from 'Public/helpers/firebase_auth'
 
 import gql from 'graphql-tag'
 
@@ -43,13 +43,8 @@ export default {
             search_string: "",
             new_songbook_name: "",
             user_ref: null,
-            user: null,
-            user_songbooks: null
+            user: null, 
         }
-    },
-
-    firestore: {
-        users: db.collection('users')
     },
 
     apollo: {
@@ -60,87 +55,51 @@ export default {
                     search_str: this.search_string
                 }
             },
-            // // async result() {
-            // //     this.$emit("query-loaded", null);
-            // //     this.results_loaded = true;
-// 
-            // //     // console.log(window.cachePersistor);
-            // //     // console.log(await window.cachePersistor.getSize());
-            // // }, 
         }
     },
 
-    watch: {
-        user_ref: {
-            // call it upon creation too
-            immediate: false,
-            handler(ref) {
-                this.$bind('user', ref);
-
-                this.$bind('user_songbooks', ref.collection('songbooks'));
-            },
-        },
-    },
-
     methods: {
-        getSongLyric(id) {
-            if (!this.song_lyrics) {
-                return;
-            }
+        // getSongLyric(id) {
+        //     if (!this.song_lyrics) {
+        //         return;
+        //     }
 
-            return this.song_lyrics.filter(sl => sl.id == id)[0];
-        },
+        //     return this.song_lyrics.filter(sl => sl.id == id)[0];
+        // },
 
-        addNewSongbook() {
-            // db.collection('cities').push({ 
-            //     name: this.new_songbook_name,
-            //     songs: []
-            // });
-
-            // this.new_songbook_name = "";
-        },
-
-        signup() {
+        async signin() {
             this.provider = GoogleProvider;
-            auth
-                .signInWithPopup(this.provider)
-                .then(result => {
-                    console.log(result);
+            let creds = await auth.signInWithPopup(this.provider);
 
-                    let uid = result.user.uid;
-                    this.user_ref = db.collection('users').doc(uid)
+            console.log({ creds });
+            let token = await creds.user.getIdToken();
 
-                    this.user_ref.get().then((doc) => {
-                        if (doc.exists) {
-                            console.log("Document data:", doc.data());
-                            // user exists, so fine 
-                        } else {
-                            // doc.data() will be undefined in this case
-                            console.log('adding new user ' + uid);
+            console.log({ token });
 
-                            // user does not exist yet in the database
-                            // todo: init a datastructure for them
+            let headers = { Authorization: 'Bearer ' + token };
+            let me = await axios.get('/firebase-auth/me', { headers });
 
-                            this.user_ref.collection("songbooks").add({
-                                name: "my_songbook",
-                                songs: [
-                                    {
-                                        song_id: 1,
-                                        transposition: 0
-                                    }
-                                ]
-                            });
+            console.log({ me });
 
-                            this.user_ref.set({
-                                username: result.user.email
-                            });
-                        }
-                    });
-                })
-                .catch(e => {
-                    this.$snotify.error(e.message);
-                    console.log(e);
-                });
+ 
+            // this.provider = GoogleProvider;
+            // auth
+            //     .signInWithPopup(this.provider)
+            //     .then(result => {
+            //         console.log(result);
+
+            //         let uid = result.user.uid;
+
+            //         let token = await result.user.getIdToken()
+            //         console.log({ token })
+            //         let headers = { Authorization: 'Bearer ' + token }
+            //         let me = await axios.get('/api/me', { headers })
+
+            //     })
+            //     .catch(e => {
+            //         this.$snotify.error(e.message);
+            //         console.log(e);
+            //     });
         }
     }
 }

@@ -15,6 +15,7 @@
         "erjanmx/laravel-migrate-check": "^1.2",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
+        "kreait/firebase-tokens": "^1.9",
         "laravel/framework": "5.7.*",
         "laravel/scout": "^7.1",
         "laravel/tinker": "^1.0",

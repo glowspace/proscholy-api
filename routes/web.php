@@ -112,3 +112,8 @@ Route::get('/advent', function() { return redirect(url('/search?searchString=&ta
 Route::get('/vanoce', function() { return redirect(url('/search?searchString=&tags=22&langs=&songbooks=')); });
 Route::get('/velikonoce', function() { return redirect(url('/search?searchString=&tags=23&langs=&songbooks=')); });
 Route::get('/postni-doba', function() { return redirect(url('/search?searchString=&tags=25&langs=&songbooks=')); });
+
+
+Route::get('/firebase-auth/me', function(Request $request) {
+    return (array) $request->public_user();
+})->middleware('auth:web_firebase');
