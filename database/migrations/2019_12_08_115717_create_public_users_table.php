@@ -14,7 +14,8 @@ class CreatePublicUsersTable extends Migration
     public function up()
     {
         Schema::create('public_users', function (Blueprint $table) {
-            $table->string('firebase_id', 200)->unique()->primary();
+            $table->increments('id');
+            $table->string('firebase_id', 200)->unique();
             $table->string('picture_url')->nullable();
             $table->string('name',100);
             $table->string('email');

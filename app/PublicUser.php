@@ -9,16 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class PublicUser extends Authenticatable
 {
-    protected $primaryKey = 'firebase_id';
-    public $incrementing = false;
-    
     protected $fillable = [
         'name', 'email', 'firebase_id', 'picture_url'
     ];
     
     public static function getPublicUserFromClaims($claims)
     {
-        $user = PublicUser::find($claims['sub']);
+        $user = PublicUser::whereFirebaseId($claims['sub'])->first();
 
         if ($user) {
             return $user;
