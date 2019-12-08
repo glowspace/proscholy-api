@@ -26,6 +26,16 @@ class SongPart{
         return $this->is_hidden;
     }
 
+    function isEmpty() {
+        // strip new lines
+        $text = str_replace('\n', "", $this->inner_text);
+
+        // strip whitespaces
+        $text = trim($text);
+
+        return $text == "";
+    }
+
     function setHidden($is_hidden) {
         $this->is_hidden = $is_hidden;
     }

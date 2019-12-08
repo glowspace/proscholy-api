@@ -457,10 +457,13 @@ class SongLyric extends Model
         }));
 
         foreach ($parts as $song_part) {
-            if ($song_part->isHidden() && $song_part->isRefrain()) {
+            if ($song_part->isRefrain() && $song_part->isEmpty()) {
                 // substitute by the first refrain
                 $subst = clone $firstRefrain;
-                $subst->setHidden(true);
+
+                if ($song_part->isHidden()) {
+                    $subst->setHidden(true);
+                }
                 $output .= $subst->toHTML();
             } else {
                 $output .= $song_part->toHTML();
