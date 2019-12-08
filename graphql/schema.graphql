@@ -65,6 +65,10 @@ type Query {
     songbook(id: ID! @eq): Songbook @find
 }
 
+extend type Query {
+    logged_user: PublicUser @auth(guard: "web_firebase")
+}
+
 type Mutation @group(middleware: ["auth:api"]) {
     delete_author(id: ID!): Author @delete
     delete_external(id: ID!): External @delete

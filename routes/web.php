@@ -114,6 +114,6 @@ Route::get('/velikonoce', function() { return redirect(url('/search?searchString
 Route::get('/postni-doba', function() { return redirect(url('/search?searchString=&tags=25&langs=&songbooks=')); });
 
 
-Route::get('/firebase-auth/me', function(Request $request) {
-    return (array) $request->public_user();
-})->middleware('auth:web_firebase');
+// Route::get('/firebase-auth/me', function(Request $request) {
+//     return (array) $request->public_user();
+// })->middleware('auth:web_firebase');

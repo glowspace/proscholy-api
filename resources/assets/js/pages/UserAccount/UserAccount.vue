@@ -83,25 +83,7 @@ export default {
 
             console.log({ me });
 
- 
-            // this.provider = GoogleProvider;
-            // auth
-            //     .signInWithPopup(this.provider)
-            //     .then(result => {
-            //         console.log(result);
-
-            //         let uid = result.user.uid;
-
-            //         let token = await result.user.getIdToken()
-            //         console.log({ token })
-            //         let headers = { Authorization: 'Bearer ' + token }
-            //         let me = await axios.get('/api/me', { headers })
-
-            //     })
-            //     .catch(e => {
-            //         this.$snotify.error(e.message);
-            //         console.log(e);
-            //     });
+            // todo: refresh the page
         }
     }
 }

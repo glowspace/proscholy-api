@@ -126,3 +126,8 @@ type SongbookRecord {
     song_lyric: SongLyric @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@song_lyric")
     songbook: Songbook @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@songbook")
 }
+
+type PublicUser {
+    name: String
+    email: String
+}
