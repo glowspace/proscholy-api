@@ -107,3 +107,8 @@ Route::get('/refresh-updating/songbook/{songbook}', 'Api\LockController@refresh_
 Route::get('/ucet', function() {
     return view('client.account');
 })->name('client.account');
+// routes for propagation
+Route::get('/advent', function() { return redirect(url('/search?searchString=&tags=24&langs=&songbooks=')); });
+Route::get('/vanoce', function() { return redirect(url('/search?searchString=&tags=22&langs=&songbooks=')); });
+Route::get('/velikonoce', function() { return redirect(url('/search?searchString=&tags=23&langs=&songbooks=')); });
+Route::get('/postni-doba', function() { return redirect(url('/search?searchString=&tags=25&langs=&songbooks=')); });

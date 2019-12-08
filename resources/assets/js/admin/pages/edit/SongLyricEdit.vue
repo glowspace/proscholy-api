@@ -93,7 +93,17 @@
                   label="Liturgie"
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
+                  :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
+                <v-select :items="liturgy_approval_status_values" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
+                <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_official.length > 0">
+                  Stávající liturgické šítky budou po uložení odstraněny
+                </p>
+                <!-- <v-checkbox :disabled="model.tags_official.length == 0"
+                  class="mt-0"
+                  v-model="model.liturgy_approval_status"
+                  label="Schváleno pro použití v liturgii"
+                ></v-checkbox> -->
               </v-form>
             </v-flex>
             <v-flex xs12 md5 offset-md1 class="edit-description">
@@ -309,6 +319,7 @@ const FETCH_MODEL_DATABASE = gql`
     model_database: song_lyric(id: $id) {
       ...SongLyricFillableFragment
       lang_string_values
+      liturgy_approval_status_string_values
     }
   }
   ${fragment}
@@ -396,9 +407,11 @@ export default {
         files: [],
         songbook_records: [],
         song: undefined,
-        capo: undefined
+        capo: undefined,
+        liturgy_approval_status: undefined
       },
       lang_values: [],
+      liturgy_approval_status_values: [],
       selected_thumbnail_url: undefined,
       is_deleted: false
     };
@@ -421,10 +434,15 @@ export default {
         }
 
         // lang string values are an associative array passed as JSON object
-        let parsed_obj = JSON.parse(song_lyric.lang_string_values);
-
-        for (const [key, value] of Object.entries(parsed_obj)) {
+        const p = JSON.parse(song_lyric.lang_string_values);
+        for (const [key, value] of Object.entries(p)) {
           this.lang_values.push({ value: key, text: value });
+        }
+
+        const pp = JSON.parse(song_lyric.liturgy_approval_status_string_values);
+        console.log(pp)
+        for (const [key, value] of Object.entries(pp)) {
+          this.liturgy_approval_status_values.push({ value: parseInt(key), text: value });
         }
 
         // if there are any thumbnailables, then select the first one
@@ -510,6 +528,7 @@ export default {
               lyrics: this.model.lyrics,
               song: this.model.song,
               capo: this.model.capo,
+              liturgy_approval_status: this.model.liturgy_approval_status,
               authors: {
                 create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
                 sync: this.model.authors

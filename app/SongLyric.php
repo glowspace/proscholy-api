@@ -122,7 +122,8 @@ class SongLyric extends Model
             'licence_type',
             'only_regenschori',
             'capo',
-            'visits' 
+            'visits',
+            'liturgy_approval_status' 
         ];
 
     private static $lang_string_values = [
@@ -140,6 +141,13 @@ class SongLyric extends Model
         'cu' => 'staroslověnština',
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
         'mixed' => 'vícejazyčná píseň'
+    ];
+
+    private static $liturgy_approval_status_string_values = [
+        0 => 'bez vyjádření ČBK',
+        1 => 'schváleno ČBK pro liturgii',
+        // 2 => 'schváleno ČBK pro dětskou mši',
+        // 3 => 'neschváleno ČBK pro liturgii',
     ];
 
     public function getPublicUrlAttribute()
@@ -210,6 +218,16 @@ class SongLyric extends Model
     public function getLangStringValuesAttribute()
     {
         return self::$lang_string_values;
+    }
+
+    public function getLiturgyApprovalStatusStringAttribute()
+    {
+        return self::$liturgy_approval_status_string_values[$this->liturgy_approval_status];
+    }
+
+    public function getLiturgyApprovalStatusStringValuesAttribute()
+    {
+        return self::$liturgy_approval_status_string_values;
     }
 
     public function song() : BelongsTo
