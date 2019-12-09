@@ -36,14 +36,21 @@ const fetch_items = gql`
             }
         }`;
 
+const fetch_user = gql`
+    # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
+     query {
+            user: current_logged_user {
+                id,
+                name
+            }
+        }`;
+
 export default {
     data() {
         return {
             users:[],
             search_string: "",
             new_songbook_name: "",
-            user_ref: null,
-            user: null, 
         }
     },
 
@@ -55,6 +62,9 @@ export default {
                     search_str: this.search_string
                 }
             },
+        },
+        user: {
+            query: fetch_user
         }
     },
 
@@ -69,18 +79,22 @@ export default {
 
         async signin() {
             this.provider = GoogleProvider;
-            let creds = await auth.signInWithPopup(this.provider);
 
-            console.log({ creds });
-            let token = await creds.user.getIdToken();
+            var user = auth.currentUser;
 
-            window.localStorage.setItem('firebase_token', token);
+            let token = "";
+
+            if (user) {
+                token = await user.getIdToken();
+                console.log(token);
+            } else {
+                let creds = await auth.signInWithPopup(this.provider);
+    
+                console.log({ creds });
+                token = await creds.user.getIdToken();
+            }
 
             console.log({ token });
-
-            let headers = { Authorization: 'Bearer ' + token };
-            let me = await axios.get('/firebase-auth/me', { headers });
-
             console.log({ me });
 
             // todo: refresh the page
