@@ -84,3 +84,10 @@ type Mutation @group(middleware: ["auth:api"]) {
     create_model(input: CreateModelInput!): Model
     delete_model(input: DeleteModelInput!): Model
 }
+
+extend type Mutation @group(middleware: ["auth:web_firebase"]) {
+    update_user_data(input: UpdatePublicUserInput!): PublicUser @update(flatten: true)
+
+    update_playlist(input: UpdatePlaylistInput!): Playlist
+    create_playlist(input: CreatePlaylistInput!): Playlist @create(flatten: true)
+}
