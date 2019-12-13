@@ -132,3 +132,25 @@ input SyncSongbookRecordForSongLyricInput {
   songbook_id: ID!
   number: String
 }
+
+""" public user api """
+
+input UpdatePublicUserInput {
+  id: ID!
+  name: String
+  email: String
+  updated_at: DateTime!
+}
+
+input UpdatePlaylistInput {
+  id: ID!
+  name: String
+  song_lyrics: [ID!]
+  updated_at: DateTime!
+}
+
+input CreatePlaylistInput {
+  name: String!
+  """ necessary..? """
+  song_lyrics: [ID!]
+}

@@ -68,9 +68,13 @@ export default {
     },
 
     mounted() {
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                var token = await user.getIdToken();
+        auth.onAuthStateChanged(this.performUserQuery);
+    },
+
+    methods: {
+        async performUserQuery(firebaseuser) {
+            if (firebaseuser) {
+                var token = await firebaseuser.getIdToken();
 
                 this.$apollo.query({
                     query: fetch_user,
@@ -82,14 +86,13 @@ export default {
                     }
                 }).then((response) => {
                     console.log(response.data.user);
+                    this.user = response.data.user;
                 }).catch((exc) => {
 
                 });
             }
-        });
-    },
+        },
 
-    methods: {
         async signin() { 
             this.provider = GoogleProvider;
 

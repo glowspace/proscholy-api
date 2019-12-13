@@ -14,5 +14,7 @@ class Playlist extends Model
 
     public function song_lyrics() {
         return $this->belongsToMany(SongLyric::class);
+                    // ->withPivot('order')
+                    // ->using(PlaylistSongLyric::class);
     }
 }

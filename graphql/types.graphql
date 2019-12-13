@@ -129,6 +129,7 @@ type SongbookRecord {
 
 
 type PublicUser {
+    id: ID!
     name: String
     email: String
     playlists: [Playlist]
@@ -136,6 +137,7 @@ type PublicUser {
 
 
 type Playlist {
+    id: ID!
     name: String
     #""" todo: custom resolver with ordering the list"""
     song_lyrics: [SongLyric] 
