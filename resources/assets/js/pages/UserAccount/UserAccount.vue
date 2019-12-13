@@ -16,10 +16,10 @@
         </ul>
  
         <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
-        <input type="text" v-model="new_songbook_name"/> -->
+        <input type="text" v-model="new_songbook_name"/>-->
 
         <a @click="signin">Přihlásit se přes Google</a>
-    </div> 
+    </div>
 </template>
 
 <script>
@@ -39,7 +39,7 @@ const fetch_items = gql`
 const fetch_user = gql`
     # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
      query {
-            user: current_logged_user {
+            user: current_public_user {
                 id,
                 name
             }
@@ -48,9 +48,11 @@ const fetch_user = gql`
 export default {
     data() {
         return {
-            users:[],
+            user:null,
             search_string: "",
             new_songbook_name: "",
+            loggedIn: true,
+            token: null
         }
     },
 
@@ -62,40 +64,51 @@ export default {
                     search_str: this.search_string
                 }
             },
-        },
-        user: {
-            query: fetch_user
         }
     },
 
+    mounted() {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                var token = await user.getIdToken();
+
+                this.$apollo.query({
+                    query: fetch_user,
+                    manual: true,
+                    context: {
+                        'headers': {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    }
+                }).then((response) => {
+                    console.log(response.data.user);
+                }).catch((exc) => {
+
+                });
+            }
+        });
+    },
+
     methods: {
-        // getSongLyric(id) {
-        //     if (!this.song_lyrics) {
-        //         return;
-        //     }
-
-        //     return this.song_lyrics.filter(sl => sl.id == id)[0];
-        // },
-
-        async signin() {
+        async signin() { 
             this.provider = GoogleProvider;
 
             var user = auth.currentUser;
 
             let token = "";
 
-            if (user) {
-                token = await user.getIdToken();
-                console.log(token);
-            } else {
+            // if (user) {
+            //     token = await user.getIdToken();
+            //     console.log(token);
+            // } else {
                 let creds = await auth.signInWithPopup(this.provider);
     
                 console.log({ creds });
                 token = await creds.user.getIdToken();
-            }
+            // }
 
             console.log({ token });
-            console.log({ me });
+            // console.log({ me });
 
             // todo: refresh the page
         }

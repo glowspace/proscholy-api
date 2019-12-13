@@ -29,19 +29,6 @@ import { ApolloLink } from 'apollo-link'
 import VueApollo from 'vue-apollo';
 import { auth } from 'Public/helpers/firebase_auth';
 
-// let user_token = window.localStorage.getItem("firebase_token");
-
-const authMiddleware = new ApolloLink(async (operation, forward) => {
-  // add the authorization to the headers
-  operation.setContext({
-    headers: {
-      authorization: `Bearer ${await auth.currentUser.getIdToken()}`
-    }
-  });
-
-  return forward(operation)
-});
-
 var base_url = document.querySelector('#baseUrl').getAttribute('value');
 
 // HTTP connexion to the API
@@ -52,20 +39,20 @@ const httpLink = createHttpLink({
 
 const cache = new InMemoryCache(); 
 
-// Set up cache persistence.
-window.cachePersistor = new CachePersistor({
-  cache,
-  storage: window.sessionStorage,
-});
+// // Set up cache persistence.
+// window.cachePersistor = new CachePersistor({
+//   cache,
+//   storage: window.sessionStorage,
+// });
 
-persistCache({
-  cache,
-  storage: window.sessionStorage
-}).then(function() {
+// persistCache({
+//   cache,
+//   storage: window.sessionStorage
+// }).then(function() {
   
     // Create the apollo client
     const apolloClient = new ApolloClient({
-      link: authMiddleware.concat(httpLink),
+      link: httpLink,
       cache,
     })
     
@@ -79,4 +66,4 @@ persistCache({
       el: '#app',
       apolloProvider
     });
-});
+// });
