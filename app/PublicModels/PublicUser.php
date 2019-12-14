@@ -12,7 +12,7 @@ class PublicUser extends Authenticatable
     // TODO: implement User Settings with https://github.com/glorand/laravel-model-settings
 
     protected $fillable = [
-        'name', 'email', 'firebase_id', 'picture_url'
+        'name', 'email', 'firebase_id', 'picture_url', 'last_jwt_token'
     ];
 
     public function playlists()
@@ -20,7 +20,7 @@ class PublicUser extends Authenticatable
         return $this->hasMany(Playlist::class);
     }
     
-    public static function getPublicUserFromClaims($claims)
+    public static function getPublicUserFromClaims($claims, $jwt)
     {
         $user = PublicUser::whereFirebaseId($claims['sub'])->first();
 
@@ -34,6 +34,7 @@ class PublicUser extends Authenticatable
             'firebase_id' => $claims['sub'],
             'name' => $claims['name'],
             'email' => $claims['email'],
+            'last_jwt_token' => $jwt
             // 'picture_url' => $claims['picture']
         ]);
         $user->save();

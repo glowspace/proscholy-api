@@ -14,14 +14,21 @@ class Guard
 
     public function public_user($request)
     {
-        $token = $request->bearerToken();
-        try {
-            $token = $this->verifier->verifyIdToken($token);
+        $jwt = $request->bearerToken();
+        // try {
+            $cached = PublicUser::whereLastJwtToken($jwt)->first();
 
-            return PublicUser::getPublicUserFromClaims($token->getClaims());
-        }
-        catch (\Exception $e) {
-            return;
-        }
+            if (isset($jwt) && $jwt && $cached) {
+                return $cached;
+            }
+
+            // this takes quite a long time (cca 5s)
+            $token = $this->verifier->verifyIdToken($jwt);
+
+            return PublicUser::getPublicUserFromClaims($token->getClaims(), $jwt);
+        // }
+        // catch (\Exception $e) {
+        //     return;
+        // }
     }
 }
