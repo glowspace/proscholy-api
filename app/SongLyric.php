@@ -103,6 +103,9 @@ class SongLyric extends Model
             'id' => [
                 'type' => 'keyword',
                 // 'boost' => 100
+            ],
+            'lang' => [
+                'type' => 'keyword'
             ]
         ]
     ];
