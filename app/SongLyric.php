@@ -375,14 +375,17 @@ class SongLyric extends Model
     {
         $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
             return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
-        })->implode(" ");
+        })->toArray();
+
+        $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id')->toArray();
 
         $arr = [
             'name' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $this->authors()->get()->implode("name", ", "),
             'songbook_records' => $songbook_numbers,
-            'id' => $this->id
+            'id' => $this->id,
+            'tag_ids' => $tag_ids
         ];
 
         return $arr;
