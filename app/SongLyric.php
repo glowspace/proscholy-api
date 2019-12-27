@@ -100,10 +100,6 @@ class SongLyric extends Model
             'tag_ids' => [
                 'type' => 'keyword'
             ],
-            'id' => [
-                'type' => 'keyword',
-                // 'boost' => 100
-            ],
             'lang' => [
                 'type' => 'keyword'
             ]
@@ -398,7 +394,6 @@ class SongLyric extends Model
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $this->authors()->select('name')->get()->pluck('name'),
             'songbook_records' => $songbook_records,
-            'id' => $this->id,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
             'lang' => $this->lang
         ];
