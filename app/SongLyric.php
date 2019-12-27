@@ -384,23 +384,20 @@ class SongLyric extends Model
     public function toSearchableArray()
     {
         $songbook_records = $this->songbook_records()->get()->map(function($sb) {
-            $data = [
+            return [
                 'songbook_id' => $sb->id,
                 'sonbgook_number' => $sb->pivot->number
             ];
-
-            return $data;
-        })->toArray();
-
-        $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id')->toArray();
+        });
 
         $arr = [
             'name' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
-            'authors' => $this->authors()->get()->implode("name", ", "),
+            'authors' => $this->authors()->select('name')->get()->pluck('name'),
             'songbook_records' => $songbook_records,
             'id' => $this->id,
-            'tag_ids' => $tag_ids
+            'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
+            'lang' => $this->lang
         ];
 
         return $arr;
