@@ -31,6 +31,23 @@ class SearchSongLyrics
         // }
 
         $query = SongLyric::search($args['search_string']);
+
+        // $query = SongLyric::searchRaw([
+        //     'query' => [
+        //         'bool' => [
+        //             'must' => [
+        //                 'match' => [
+        //                     '_all' => 'Brazil'
+        //                 ]
+        //             ]
+        //         ]
+        //     ]
+        // ]);
+
+        // language: where in
+        // 
+
+
         $query->limit = 50;
 
         $query->with('songbook_records');

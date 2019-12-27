@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Chord;
 use App\Helpers\ChordSign;
 use App\Helpers\ChordQueue;
-
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -87,12 +86,23 @@ class SongLyric extends Model
                 'analyzer' => 'name_analyzer'
             ],
             'songook_records' => [
-                'type' => 'text',
+                'type' => 'nested',
+                'properties' => [
+                    'songbook_id' => [
+                        'type' => 'keyword'
+                    ],
+                    'songbook_number' => [
+                        'type' => 'keyword'
+                    ]
+                ]
                 // 'analyzer' => 'standard
+            ],
+            'tag_ids' => [
+                'type' => 'keyword'
             ],
             'id' => [
                 'type' => 'keyword',
-                'boost' => 100
+                // 'boost' => 100
             ]
         ]
     ];
@@ -373,8 +383,13 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
-            return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
+        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
+            $data = [
+                'songbook_id' => $sb->id,
+                'sonbgook_number' => $sb->pivot->number
+            ];
+
+            return $data;
         })->toArray();
 
         $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id')->toArray();
@@ -383,7 +398,7 @@ class SongLyric extends Model
             'name' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $this->authors()->get()->implode("name", ", "),
-            'songbook_records' => $songbook_numbers,
+            'songbook_records' => $songbook_records,
             'id' => $this->id,
             'tag_ids' => $tag_ids
         ];

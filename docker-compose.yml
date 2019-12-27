@@ -83,14 +83,14 @@ services:
     networks:
       - bcloud-network
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:7.2.0
-  #   ports:
-  #     - "9001:5601"
-  #   networks:
-  #     - bcloud-network
-  #   depends_on:
-  #     - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.2.0
+    ports:
+      - "9001:5601"
+    networks:
+      - bcloud-network
+    depends_on:
+      - elasticsearch
 
   # cerebro:
   #   image: yannart/cerebro:0.8.1
