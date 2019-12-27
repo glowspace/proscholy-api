@@ -11,7 +11,6 @@ services:
     entrypoint: 'bash ./docker/setup/web/entrypoint_web_test.sh'
     networks:
       - bcloud-network
-    restart: always
     depends_on:
       - db
       # seeding depends on elastic having built an index, see entrypoint_web_test.sh
@@ -26,7 +25,6 @@ services:
   
   db:
     image: mysql:5.7
-    restart: always
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       # So you don't have to use root, but you can if you like
@@ -61,11 +59,9 @@ services:
       - './docker/logs/nginx:/var/log/nginx'
     networks:
       - bcloud-network
-    restart: always
 
   adminer:
       image: adminer
-      restart: always
       ports:
           - 8001:8080
       networks:
