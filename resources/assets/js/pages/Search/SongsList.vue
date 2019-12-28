@@ -1,7 +1,7 @@
 <template>
   <table class="table m-0">
-    <template v-if="song_lyrics_results && song_lyrics_results.length && !$apollo.loading">
-      <tr v-for="(song_lyric, index) in song_lyrics_results" v-bind:key="song_lyric.id">
+    <template v-if="song_lyrics && song_lyrics.length && !$apollo.loading">
+      <tr v-for="(song_lyric, index) in song_lyrics" v-bind:key="song_lyric.id">
         <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right w-min']">
           <a
             class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
@@ -106,9 +106,8 @@
 
     // Query
     const fetch_items = gql`
-        # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
-        query FetchSongLyrics_cached($search_str: String) {
-            song_lyrics: search_song_lyrics(search_string: $search_str) {
+        query ($search_query: String) {
+            song_lyrics: search_song_lyrics(search_query: $search_query) {
                 id,
                 name,
                 public_url,
@@ -191,6 +190,23 @@
                 res = res.slice(0, this.results_limit);
 
                 return res;
+            },
+
+            searchQuery(){
+              // encode all the search attributes into a query
+
+              const query = {
+                'term': {
+                  'tag_ids': 1
+                }
+              };
+
+              // encode to base64 string to pass as an argument
+
+              const query_str = JSON.stringify(query);
+              const query_base64 = Buffer.from(query_str).toString("base64");
+
+              return query_base64;
             }
 
         },
@@ -229,7 +245,7 @@
                 query: fetch_items,
                 variables() {
                     return {
-                        search_str: this.searchString
+                        search_query: this.searchQuery
                     }
                 },
                 // debounce waits 200ms for query refetching
@@ -237,9 +253,6 @@
                 async result() {
                   this.$emit("query-loaded", null);
                   this.results_loaded = true;
-
-                  // console.log(window.cachePersistor);
-                  // console.log(await window.cachePersistor.getSize());
                 },
             }
         },
