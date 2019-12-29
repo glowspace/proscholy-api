@@ -326,6 +326,24 @@
   .song-lyrics-extended .song-part-hidden {
     display: block;
   }
+
+
+
+  .song-part-hidden-text {
+    margin-bottom: 1em;
+
+    .chord {
+      display: none;
+    }
+  }
+
+  .song-lyrics-extended .song-part-hidden-text {
+    margin-bottom: 0;
+
+    .chord {
+      display: inline-block;
+    }
+  }
 </style>
 
 

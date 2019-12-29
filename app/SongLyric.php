@@ -430,6 +430,8 @@ class SongLyric extends Model
 
                 if ($song_part->isHidden()) {
                     $subst->setHidden(true);
+                } else {
+                    $subst->setHiddenText(true);
                 }
                 $output .= $subst->toHTML();
             } else {

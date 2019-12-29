@@ -7,14 +7,16 @@ class SongPart{
 
     protected $type;
     protected $is_hidden;
+    protected $is_hidden_text;
     protected $inner_text = ""; 
     protected $song_lines = [];
     protected $ch_queue;
 
-    function __construct($type, ChordQueue $chQueue, $is_hidden = false)
+    function __construct($type, ChordQueue $chQueue, $is_hidden = false, $is_hidden_text = false)
     {
         $this->type = $type;
         $this->is_hidden = $is_hidden;
+        $this->is_hidden_text = $is_hidden_text;
         $this->ch_queue = $chQueue;
 
         if ($this->isVerse()) {
@@ -24,6 +26,10 @@ class SongPart{
 
     function isHidden() {
         return $this->is_hidden;
+    }
+
+    function isHiddenText() {
+        return $this->is_hidden_text;
     }
 
     function isEmpty() {
@@ -36,8 +42,12 @@ class SongPart{
         return $text == "";
     }
 
-    function setHidden($is_hidden) {
-        $this->is_hidden = $is_hidden;
+    function setHidden(bool $val) {
+        $this->is_hidden = $val;
+    }
+
+    function setHiddenText(bool $val) {
+        $this->is_hidden_text = $val;
     }
 
     function getType() {
@@ -95,6 +105,7 @@ class SongPart{
         $class = "song-part";
         $class .= $this->isRefrain() ? " song-part-refrain" : "";
         $class .= $this->isHidden() ? " song-part-hidden" : "";
+        $class .= $this->isHiddenText() ? " song-part-hidden-text" : "";
         $class .= $this->isInline() ? " song-part-inline" : "";
 
         $html = '<div class="' . $class .'">';
