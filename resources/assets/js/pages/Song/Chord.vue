@@ -159,4 +159,8 @@
             right: -0.5em;
         }
     }
+
+    .song-part-inline .chord-text {
+        display: none;
+    }
 </style>

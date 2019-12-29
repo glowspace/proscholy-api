@@ -47,7 +47,7 @@ class ChordQueue
 
     public function notifyNewLine()
     {
-
+        
     }
 
     public function processChordSignText($chord_string)

@@ -8,6 +8,7 @@ window.Vue = require('vue');
  */ 
 
 Vue.component('chord', require('Public/pages/Song/Chord.vue'));
+Vue.component('song-part-tag', require('Public/pages/Song/SongPartTag.vue')); 
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
 Vue.component('search', require('Public/pages/Search/Search.vue'));
@@ -32,15 +33,15 @@ const httpLink = createHttpLink({
 const cache = new InMemoryCache(); 
 
 // Set up cache persistence.
-window.cachePersistor = new CachePersistor({
-  cache,
-  storage: window.sessionStorage,
-});
+// window.cachePersistor = new CachePersistor({
+//   cache,
+//   storage: window.sessionStorage,
+// });
 
-persistCache({
-  cache,
-  storage: window.sessionStorage
-}).then(function() {
+// persistCache({
+//   cache,
+//   storage: window.sessionStorage
+// }).then(function() {
   
     // Create the apollo client
     const apolloClient = new ApolloClient({
@@ -58,7 +59,7 @@ persistCache({
       el: '#app',
       apolloProvider
     });
-});
+// });
 
 // // Create the apollo client
 // const apolloClient = new ApolloClient({
