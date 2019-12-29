@@ -1,103 +1,111 @@
 <template>
-  <table class="table m-0">
-    <template v-if="song_lyrics && song_lyrics.length">
-      <tr v-for="(song_lyric, index) in song_lyrics" v-bind:key="song_lyric.id">
-        <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right w-min']">
-          <a
-            class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
-            :href="song_lyric.public_url"
+  <div class="songs-list">
+    <table class="table m-0">
+      <template v-if="song_lyrics && song_lyrics.length && results_loaded">
+        <tr v-for="(song_lyric, index) in song_lyrics" v-bind:key="song_lyric.id">
+          <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right w-min']">
+            <a
+              class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
+              :href="song_lyric.public_url"
+            >
+              <span>{{ getSongNumber(song_lyric, true) }}</span>
+              <span>{{ getSongNumber(song_lyric, false) }}</span>
+            </a>
+          </td>
+          <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
+            <a class="p-2 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
+          </td>
+          <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
+            <span v-for="(author, authorIndex) in song_lyric.authors" :key="authorIndex">
+              <span v-if="authorIndex">,</span>
+              <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
+            </span>
+          </td>
+          <td
+            class="no-left-padding text-right text-uppercase small align-middle pr-3"
+            :class="{'border-top-0': !index}"
           >
-            <span>{{ getSongNumber(song_lyric, true) }}</span>
-            <span>{{ getSongNumber(song_lyric, false) }}</span>
+            <span
+              :class="[{'text-very-muted': !song_lyric.has_lyrics}, 'pr-sm-0 pr-1']"
+              v-if="song_lyric.lang != 'cs'"
+              :title="song_lyric.lang_string"
+            >{{ song_lyric.lang.substring(0, 3) }}</span>
+          </td>
+          <td
+            style="width: 10px;"
+            class="no-left-padding align-middle d-none d-sm-table-cell"
+            :class="{'border-top-0': !index}"
+          >
+            <i
+              v-if="song_lyric.has_lyrics"
+              class="fas fa-align-left text-secondary"
+              title="U této písně je zaznamenán text."
+            ></i>
+            <i v-else class="fas fa-align-left text-very-muted"></i>
+          </td>
+          <td
+            style="width: 10px;"
+            class="no-left-padding align-middle d-none d-sm-table-cell"
+            :class="{'border-top-0': !index}"
+          >
+            <i
+              v-if="song_lyric.has_chords"
+              class="fas fa-guitar text-primary"
+              title="Tato píseň má přidané akordy."
+            ></i>
+            <i v-else class="fas fa-guitar text-very-muted"></i>
+          </td>
+          <td
+            style="width: 10px;"
+            class="no-left-padding align-middle d-none d-sm-table-cell"
+            :class="{'border-top-0': !index}"
+          >
+            <i
+              v-if="song_lyric.scoreFiles.length > 0"
+              class="fa fa-file-alt text-danger"
+              title="K této písni jsou k dispozici noty."
+            ></i>
+            <i v-else class="fa fa-file-alt text-very-muted"></i>
+          </td>
+          <td
+            style="width: 10px;"
+            class="no-left-padding pr-4 align-middle d-none d-sm-table-cell"
+            :class="{'border-top-0': !index}"
+          >
+            <i
+              v-if="(song_lyric.spotifyTracks.length + song_lyric.soundcloudTracks.length + song_lyric.youtubeVideos.length + song_lyric.audioFiles.length)"
+              class="fas fa-headphones text-success"
+              title="U této písně je k dispozici nahrávka."
+            ></i>
+            <i v-else class="fas fa-headphones text-very-muted"></i>
+          </td>
+        </tr>
+        <scroll-trigger @triggerIntersected="loadMore" :enabled="enable_more"/>
+      </template>
+      <tr v-else>
+        <td v-if="!results_loaded" class="border-top-0 p-1">
+          <span class="px-3 py-2 d-inline-block">Načítám...</span>
+          <a class="btn btn-secondary float-right m-0" target="_blank"
+          :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
+            Nahlásit
           </a>
         </td>
-        <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
-          <a class="p-2 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
-        </td>
-        <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
-          <span v-for="(author, authorIndex) in song_lyric.authors" :key="authorIndex">
-            <span v-if="authorIndex">,</span>
-            <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
-          </span>
-        </td>
-        <td
-          class="no-left-padding text-right text-uppercase small align-middle pr-3"
-          :class="{'border-top-0': !index}"
-        >
-          <span
-            :class="[{'text-very-muted': !song_lyric.has_lyrics}, 'pr-sm-0 pr-1']"
-            v-if="song_lyric.lang != 'cs'"
-            :title="song_lyric.lang_string"
-          >{{ song_lyric.lang.substring(0, 3) }}</span>
-        </td>
-        <td
-          style="width: 10px;"
-          class="no-left-padding align-middle d-none d-sm-table-cell"
-          :class="{'border-top-0': !index}"
-        >
-          <i
-            v-if="song_lyric.has_lyrics"
-            class="fas fa-align-left text-secondary"
-            title="U této písně je zaznamenán text."
-          ></i>
-          <i v-else class="fas fa-align-left text-very-muted"></i>
-        </td>
-        <td
-          style="width: 10px;"
-          class="no-left-padding align-middle d-none d-sm-table-cell"
-          :class="{'border-top-0': !index}"
-        >
-          <i
-            v-if="song_lyric.has_chords"
-            class="fas fa-guitar text-primary"
-            title="Tato píseň má přidané akordy."
-          ></i>
-          <i v-else class="fas fa-guitar text-very-muted"></i>
-        </td>
-        <td
-          style="width: 10px;"
-          class="no-left-padding align-middle d-none d-sm-table-cell"
-          :class="{'border-top-0': !index}"
-        >
-          <i
-            v-if="song_lyric.scoreFiles.length > 0"
-            class="fa fa-file-alt text-danger"
-            title="K této písni jsou k dispozici noty."
-          ></i>
-          <i v-else class="fa fa-file-alt text-very-muted"></i>
-        </td>
-        <td
-          style="width: 10px;"
-          class="no-left-padding pr-4 align-middle d-none d-sm-table-cell"
-          :class="{'border-top-0': !index}"
-        >
-          <i
-            v-if="(song_lyric.spotifyTracks.length + song_lyric.soundcloudTracks.length + song_lyric.youtubeVideos.length + song_lyric.audioFiles.length)"
-            class="fas fa-headphones text-success"
-            title="U této písně je k dispozici nahrávka."
-          ></i>
-          <i v-else class="fas fa-headphones text-very-muted"></i>
+        <td v-else class="border-top-0 p-1">
+          <span class="px-3 py-2 d-inline-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</span>
+          <a class="btn btn-secondary float-right m-0" target="_blank"
+          :href="'https://forms.gle/AYXXxkWtDHQQ13856'">
+            Přidat píseň
+          </a>
         </td>
       </tr>
-      <scroll-trigger @triggerIntersected="loadMore" :enabled="enable_more"/>
-    </template>
-    <tr v-else>
-      <td v-if="!results_loaded" class="border-top-0 p-1">
-        <span class="px-3 py-2 d-inline-block">Načítám...</span>
-        <a class="btn btn-secondary float-right m-0" target="_blank"
-        :href="'https://docs.google.com/forms/d/e/1FAIpQLScmdiN_8S_e8oEY_jfEN4yJnLq8idxUR5AJpFmtrrnvd1NWRw/viewform?usp=pp_url&entry.1025781741=' + currentUrl()">
-          Nahlásit
-        </a>
-      </td>
-      <td v-else class="border-top-0 p-1">
-        <span class="px-3 py-2 d-inline-block">Žádná píseň odpovídající zadaným kritériím nebyla nalezena.</span>
-        <a class="btn btn-secondary float-right m-0" target="_blank"
-        :href="'https://forms.gle/AYXXxkWtDHQQ13856'">
-          Přidat píseň
-        </a>
-      </td>
-    </tr>
-  </table>
+    </table>
+    <div class="text-center">
+      <div class="btn btn-primary" v-if="enable_more && results_loaded">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Načítám další výsledky (celkem {{ song_lyrics_paginated.paginatorInfo.total }})
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -144,7 +152,7 @@
             return {
                 page: 1,
                 per_page: 20,
-                enable_more: false,
+                enable_more: true,
                 results_loaded: false,
                 preferred_songbook_id: null
             }
@@ -295,8 +303,9 @@
                 },
                 // debounce waits 200ms for query refetching
                 debounce: 200,
-                async result() {
+                result(result) {
                   this.$emit("query-loaded", null);
+                  this.enable_more = result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
                   this.results_loaded = true;
                 },
             }
