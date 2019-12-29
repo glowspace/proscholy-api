@@ -86,7 +86,7 @@ services:
   # kibana:
   #   image: docker.elastic.co/kibana/kibana:7.2.0
   #   ports:
-  #     - "9001:5601"
+  #     - "9010:5601"
   #   networks:
   #     - bcloud-network
   #   depends_on:
