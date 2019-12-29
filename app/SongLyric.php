@@ -390,11 +390,16 @@ class SongLyric extends Model
             ];
         });
 
+        $all_authors = $this->authors()->with('memberships')->get();
+        foreach ($all_authors as $author) {
+            $all_authors = $all_authors->concat($author->memberships);
+        }
+
         $arr = [
             'name' => $this->name,
             'name_keyword' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
-            'authors' => $this->authors()->select('name')->get()->pluck('name'),
+            'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
             'lang' => $this->lang
