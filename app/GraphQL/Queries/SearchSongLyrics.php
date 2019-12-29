@@ -25,6 +25,9 @@ class SearchSongLyrics
     {
         $searchParams = json_decode($args['search_params'], true);
 
+        $searchParams['size'] = $args['per_page'];
+        $searchParams['from'] = $args['per_page'] * ($args['page'] + 1);
+
         $query = SongLyric::search($searchParams, function ($client, $query) {
             // this will override the default ::search behaviour so that a raw query is accepted
             // for comparison, see ScoutElastic::search and ::searchRaw 

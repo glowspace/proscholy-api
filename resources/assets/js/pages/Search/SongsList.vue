@@ -106,24 +106,30 @@
 
     // Query
     const fetch_items = gql`
-        query ($search_params: String) {
-            song_lyrics: search_song_lyrics(search_params: $search_params) {
-                id,
-                name,
-                public_url,
-                lang,
-                lang_string,
-                scoreExternals: externals(type: 4){id},
-                scoreFiles: files(type: 3){id},
-                youtubeVideos: externals(type: 3){id},
-                spotifyTracks: externals(type: 1){id},
-                soundcloudTracks: externals(type: 2){id},
-                audioFiles: files(type: 4){id},
-                authors{id, name, public_url}
-                tags{id},
-                has_chords,
-                has_lyrics,
-                songbook_records{number, songbook{id, name, shortcut}}
+        query ($search_params: String, $page: Int, $per_page: Int) {
+            song_lyrics_paginated: search_song_lyrics(search_params: $search_params, page: $page, per_page: $per_page) {
+                data {
+                  id,
+                  name,
+                  public_url,
+                  lang,
+                  lang_string,
+                  scoreExternals: externals(type: 4){id},
+                  scoreFiles: files(type: 3){id},
+                  youtubeVideos: externals(type: 3){id},
+                  spotifyTracks: externals(type: 1){id},
+                  soundcloudTracks: externals(type: 2){id},
+                  audioFiles: files(type: 4){id},
+                  authors{id, name, public_url}
+                  tags{id},
+                  has_chords,
+                  has_lyrics,
+                  songbook_records{number, songbook{id, name, shortcut}}
+              },
+              paginatorInfo {
+                currentPage,
+                total
+              }
             }
         }`;
 
@@ -134,7 +140,9 @@
 
         data() {
             return {
-                results_limit: 20,
+                page: 0,
+                per_page: 20,
+                show_more: true,
                 results_loaded: false,
                 preferred_songbook_id: null
             }
@@ -212,14 +220,36 @@
               // // const query_base64 = Buffer.from(query_str).toString("base64");
 
               return query_str;
-            }
+            },
 
+            song_lyrics() {
+              return this.song_lyrics_paginated ? this.song_lyrics_paginated.data : [];
+            }
         },
 
         methods: {
             loadMore() {
-                if (this.results_limit < this.song_lyrics.length)
-                    this.results_limit += 20;
+                this.page++;
+
+                this.$apollo.queries.song_lyrics_paginated.fetchMore({
+                  variables: {
+                    page: this.page,
+                    per_page: this.per_page
+                  },
+                  updateQuery: (previousResult, { fetchMoreResult }) => {
+                    const newSongLyrics = fetchMoreResult.song_lyrics_paginated.data;
+                    const paginatorInfo = fetchMoreResult.song_lyrics_paginated.paginatorInfo;
+
+                    return {
+                      song_lyrics_paginated: {
+                        __typename: previousResult.song_lyrics_paginated.__typename,
+                        // Merging the songLyrics lists
+                        data: [...previousResult.song_lyrics_paginated.data, ...newSongLyrics],
+                        paginatorInfo,
+                      },
+                    }
+                  }
+                });
             }, 
 
             getSongNumber(song_lyric, getfirstPart) {
@@ -246,11 +276,13 @@
 
         // GraphQL client
         apollo: {
-            song_lyrics: {
+            song_lyrics_paginated: {
                 query: fetch_items,
                 variables() {
                     return {
-                        search_params: this.searchParams
+                        search_params: this.searchParams,
+                        page: 0,
+                        per_page: this.per_page
                     }
                 },
                 // debounce waits 200ms for query refetching
