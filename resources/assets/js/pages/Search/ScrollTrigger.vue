@@ -13,6 +13,10 @@ export default {
                 root: null,
                 threshold: "0"
             })
+        },
+        enabled: {
+            type: Boolean,
+            default: true
         }
     },
 
@@ -36,7 +40,7 @@ export default {
 
     methods: {
         handleIntersect(entry) {
-            if (entry.isIntersecting)
+            if (this.enabled && entry.isIntersecting)
                 this.$emit("triggerIntersected")
         }
     }
