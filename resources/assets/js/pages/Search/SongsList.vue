@@ -1,6 +1,6 @@
 <template>
   <table class="table m-0">
-    <template v-if="song_lyrics && song_lyrics.length && !$apollo.loading">
+    <template v-if="song_lyrics && song_lyrics.length">
       <tr v-for="(song_lyric, index) in song_lyrics" v-bind:key="song_lyric.id">
         <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right w-min']">
           <a
@@ -79,7 +79,7 @@
           <i v-else class="fas fa-headphones text-very-muted"></i>
         </td>
       </tr>
-      <scroll-trigger @triggerIntersected="loadMore"/>
+      <scroll-trigger @triggerIntersected="loadMore" :enabled="enable_more"/>
     </template>
     <tr v-else>
       <td v-if="!results_loaded" class="border-top-0 p-1">
@@ -128,7 +128,9 @@
               },
               paginatorInfo {
                 currentPage,
-                total
+                lastPage,
+                total,
+                hasMorePages
               }
             }
         }`;
@@ -140,9 +142,9 @@
 
         data() {
             return {
-                page: 0,
+                page: 1,
                 per_page: 20,
-                show_more: true,
+                enable_more: false,
                 results_loaded: false,
                 preferred_songbook_id: null
             }
@@ -184,7 +186,7 @@
                 query.bool.must.push({
                   'multi_match': {
                     'query': this.searchString,
-                    'fields': ['name^2', 'lyrics', 'authors']
+                    'fields': ['name^2', 'lyrics', 'authors', '_id^50', 'songbook_records.sonbgook_number']
                   }
                 });
               } else {
@@ -229,6 +231,10 @@
 
         methods: {
             loadMore() {
+                if (this.song_lyrics_paginated.paginatorInfo.lastPage == this.song_lyrics_paginated.paginatorInfo.currentPage) {
+                  console.log('no more entries');
+                }
+
                 this.page++;
 
                 this.$apollo.queries.song_lyrics_paginated.fetchMore({
@@ -239,6 +245,8 @@
                   updateQuery: (previousResult, { fetchMoreResult }) => {
                     const newSongLyrics = fetchMoreResult.song_lyrics_paginated.data;
                     const paginatorInfo = fetchMoreResult.song_lyrics_paginated.paginatorInfo;
+
+                    this.enable_more = paginatorInfo.hasMorePages;
 
                     return {
                       song_lyrics_paginated: {
@@ -281,7 +289,7 @@
                 variables() {
                     return {
                         search_params: this.searchParams,
-                        page: 0,
+                        page: 1,
                         per_page: this.per_page
                     }
                 },
@@ -296,12 +304,9 @@
 
         watch: {
           searchParams() {
+            this.page = 1;
             this.results_loaded = false;
           },
-
-          // init() {
-          //   this.$apollo.queries.song_lyrics.skip = false;
-          // }
 
           selectedSongbooks(val) {
               let arr = Object.keys(val);
