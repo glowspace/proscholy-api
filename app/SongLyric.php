@@ -69,7 +69,7 @@ class SongLyric extends Model
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
-    // Here you can specify a mapping for model fields
+    // the Elasticsearch metadata for attributes retrieved by toSearchableArray()
     protected $mapping = [
         'properties' => [
             'name' => [
@@ -101,6 +101,7 @@ class SongLyric extends Model
             'lang' => [
                 'type' => 'keyword'
             ],
+            // the 'text' type cannot be used for sorting, this is why a copy of name is included
             'name_keyword' => [
                 'type' => 'keyword'
             ]

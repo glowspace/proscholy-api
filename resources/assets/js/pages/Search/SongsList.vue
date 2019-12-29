@@ -160,25 +160,13 @@
 
         computed: {
             searchParams(){
-              // encode all the search attributes into a query
+              // encode the elasticsearch attributes into an object and send as JSON text
+              // for docs see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 
-              // example query:
+              // all the searchable fields are defined in App\SongLyrics: toSearchableArray() and $mapping attr 
 
-              // "query": {
-              //   "bool": {
-              //     "must": {
-              //       "multi_match" : {
-              //         "query": "svorni jsme",
-              //         "fields": ["name^2", "lyrics", "authors"]
-              //       }
-              //     },
-              //     "filter": [
-              //       {"terms": { "tag_ids": [1,2,3] }},
-              //       {"term" : { "lang": "cs"}},
-              //       {"terms" : { "songbook_records.songbook_id": [] }}
-              //     ]
-              //   }
-              // }
+              // also, the Kibana tool can be used for debugging the elasticsearch requests
+              // see docker-compose.yml
 
               let query = {
                 'bool': {
@@ -187,6 +175,7 @@
                 }
               };
 
+              // beware that not all attribute types can be used for sorting, this is why 'name_keyword' has been added to index
               let sort = [
               ];
 
@@ -194,6 +183,7 @@
                 query.bool.must.push({
                   'multi_match': {
                     'query': this.searchString,
+
                     'fields': ['name^2', 'lyrics', 'authors', '_id^50', 'songbook_records.sonbgook_number']
                   }
                 });
@@ -225,8 +215,6 @@
                 "query": query
               });
 
-              console.log(query_str);
-
               // // const query_base64 = Buffer.from(query_str).toString("base64");
 
               return query_str;
@@ -239,10 +227,6 @@
 
         methods: {
             loadMore() {
-                if (this.song_lyrics_paginated.paginatorInfo.lastPage == this.song_lyrics_paginated.paginatorInfo.currentPage) {
-                  console.log('no more entries');
-                }
-
                 this.page++;
 
                 this.$apollo.queries.song_lyrics_paginated.fetchMore({
