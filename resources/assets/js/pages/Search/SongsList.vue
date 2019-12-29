@@ -106,8 +106,8 @@
 
     // Query
     const fetch_items = gql`
-        query ($search_query: String) {
-            song_lyrics: search_song_lyrics(search_query: $search_query) {
+        query ($search_params: String) {
+            song_lyrics: search_song_lyrics(search_params: $search_params) {
                 id,
                 name,
                 public_url,
@@ -141,72 +141,77 @@
         },
 
         computed: {
-            /**
-             * Filtered lyrics.
-             */
-            song_lyrics_results() {
-                if (!this.song_lyrics) {
-                    return [];
-                }
-
-                let res = this.song_lyrics;
-
-                let categories = Object.values(this.selectedTagsDcnf);
-
-                for (let category_tags of categories) {
-                  let arr = Object.values(category_tags);
-
-                  if (arr.length > 0) {
-                      res = res.filter(song_lyric => {
-                        for (var tag of song_lyric.tags) { 
-                          if (arr.includes(tag.id)) {
-                            return true;
-                          }
-                        }
-                      });
-                  }
-                }
-
-                // apply the songbooks filter
-                if (Object.keys(this.selectedSongbooks).length > 0) {
-                    res =  res.filter(song_lyric => { 
-                        for (var record of song_lyric.songbook_records) {
-                            if (this.selectedSongbooks[record.songbook.id]) {
-                                return true;
-                            }
-                        }
-                    });
-                }
-
-                // apply the languages filter
-                if (Object.keys(this.selectedLanguages).length > 0) {
-                    res =  res.filter(song_lyric => { 
-                        if (this.selectedLanguages[song_lyric.lang]) {
-                            return true;
-                        }
-                    });
-                }
-                
-                res = res.slice(0, this.results_limit);
-
-                return res;
-            },
-
-            searchQuery(){
+            searchParams(){
               // encode all the search attributes into a query
 
-              const query = {
-                'term': {
-                  'tag_ids': 1
+              // example query:
+
+              // "query": {
+              //   "bool": {
+              //     "must": {
+              //       "multi_match" : {
+              //         "query": "svorni jsme",
+              //         "fields": ["name^2", "lyrics", "authors"]
+              //       }
+              //     },
+              //     "filter": [
+              //       {"terms": { "tag_ids": [1,2,3] }},
+              //       {"term" : { "lang": "cs"}},
+              //       {"terms" : { "songbook_records.songbook_id": [] }}
+              //     ]
+              //   }
+              // }
+
+              let query = {
+                'bool': {
+                  'must': [],
+                  'filter': []
                 }
               };
 
-              // encode to base64 string to pass as an argument
+              let sort = [
+              ];
 
-              const query_str = JSON.stringify(query);
-              const query_base64 = Buffer.from(query_str).toString("base64");
+              if (this.searchString) {
+                query.bool.must.push({
+                  'multi_match': {
+                    'query': this.searchString,
+                    'fields': ['name^2', 'lyrics', 'authors']
+                  }
+                });
+              } else {
+                // no search keyword provided, so use the alphabetical sorting
+                sort.push('name_keyword');
+              }
 
-              return query_base64;
+              for (let category_tags of Object.values(this.selectedTagsDcnf)) {
+                let tag_ids = Object.values(category_tags).map(v => parseInt(v));
+
+                if (tag_ids.length) {
+                  query.bool.filter.push({'terms': {'tag_ids': tag_ids}})
+                }
+              }
+
+              if (Object.keys(this.selectedLanguages).length) {
+                query.bool.filter.push({'terms': {'lang' : Object.keys(this.selectedLanguages)}})
+              }
+
+              if (Object.keys(this.selectedSongbooks).length) {
+                query.bool.filter.push({'terms': {'songbook_records.songbook_id': Object.keys(this.selectedSongbooks)}})
+              }
+
+              // encode to a JSON string to pass as an argument
+
+              const query_str = JSON.stringify({
+                "sort": sort,
+                "query": query
+              });
+
+              console.log(query_str);
+
+              // // const query_base64 = Buffer.from(query_str).toString("base64");
+
+              return query_str;
             }
 
         },
@@ -215,7 +220,7 @@
             loadMore() {
                 if (this.results_limit < this.song_lyrics.length)
                     this.results_limit += 20;
-            },
+            }, 
 
             getSongNumber(song_lyric, getfirstPart) {
               if (this.preferred_songbook_id === null) {
@@ -245,7 +250,7 @@
                 query: fetch_items,
                 variables() {
                     return {
-                        search_query: this.searchQuery
+                        search_params: this.searchParams
                     }
                 },
                 // debounce waits 200ms for query refetching
@@ -258,7 +263,7 @@
         },
 
         watch: {
-          searchString() {
+          searchParams() {
             this.results_loaded = false;
           },
 

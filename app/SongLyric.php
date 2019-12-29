@@ -75,7 +75,6 @@ class SongLyric extends Model
             'name' => [
                 'type' => 'text',
                 'analyzer' => 'name_analyzer',
-                "boost" => 2
             ],
             'lyrics' => [
                 'type' => 'text',
@@ -95,12 +94,14 @@ class SongLyric extends Model
                         'type' => 'keyword'
                     ]
                 ]
-                // 'analyzer' => 'standard
             ],
             'tag_ids' => [
                 'type' => 'keyword'
             ],
             'lang' => [
+                'type' => 'keyword'
+            ],
+            'name_keyword' => [
                 'type' => 'keyword'
             ]
         ]
@@ -391,6 +392,7 @@ class SongLyric extends Model
 
         $arr = [
             'name' => $this->name,
+            'name_keyword' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $this->authors()->select('name')->get()->pluck('name'),
             'songbook_records' => $songbook_records,

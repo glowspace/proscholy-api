@@ -55,7 +55,7 @@ type Query {
     me: User @auth
 
     search_song_lyrics(
-        search_query: String
+        search_params: String
     ): [SongLyric!]!
 
     author(id: ID! @eq): Author @find

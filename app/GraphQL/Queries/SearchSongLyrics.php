@@ -22,13 +22,9 @@ class SearchSongLyrics
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $query = SongLyric::search([
-            'query' => [
-                'wrapper' => [
-                    'query' => $args["search_query"]
-                ]
-            ]
-        ], function ($client, $query) {
+        $searchParams = json_decode($args['search_params'], true);
+
+        $query = SongLyric::search($searchParams, function ($client, $query) {
             // this will override the default ::search behaviour so that a raw query is accepted
             // for comparison, see ScoutElastic::search and ::searchRaw 
             $model = new SongLyric();
