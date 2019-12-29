@@ -32,15 +32,15 @@ const httpLink = createHttpLink({
 const cache = new InMemoryCache(); 
 
 // Set up cache persistence.
-window.cachePersistor = new CachePersistor({
-  cache,
-  storage: window.sessionStorage,
-});
+// window.cachePersistor = new CachePersistor({
+//   cache,
+//   storage: window.sessionStorage,
+// });
 
-persistCache({
-  cache,
-  storage: window.sessionStorage
-}).then(function() {
+// persistCache({
+//   cache,
+//   storage: window.sessionStorage
+// }).then(function() {
   
     // Create the apollo client
     const apolloClient = new ApolloClient({
@@ -58,7 +58,7 @@ persistCache({
       el: '#app',
       apolloProvider
     });
-});
+// });
 
 // // Create the apollo client
 // const apolloClient = new ApolloClient({

@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Chord;
 use App\Helpers\ChordSign;
 use App\Helpers\ChordQueue;
-
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -70,13 +69,12 @@ class SongLyric extends Model
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
-    // Here you can specify a mapping for model fields
+    // the Elasticsearch metadata for attributes retrieved by toSearchableArray()
     protected $mapping = [
         'properties' => [
             'name' => [
                 'type' => 'text',
                 'analyzer' => 'name_analyzer',
-                "boost" => 2
             ],
             'lyrics' => [
                 'type' => 'text',
@@ -87,12 +85,25 @@ class SongLyric extends Model
                 'analyzer' => 'name_analyzer'
             ],
             'songook_records' => [
-                'type' => 'text',
-                // 'analyzer' => 'standard
+                'type' => 'nested',
+                'properties' => [
+                    'songbook_id' => [
+                        'type' => 'keyword'
+                    ],
+                    'songbook_number' => [
+                        'type' => 'keyword'
+                    ]
+                ]
             ],
-            'id' => [
-                'type' => 'keyword',
-                'boost' => 100
+            'tag_ids' => [
+                'type' => 'keyword'
+            ],
+            'lang' => [
+                'type' => 'keyword'
+            ],
+            // the 'text' type cannot be used for sorting, this is why a copy of name is included
+            'name_keyword' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -373,16 +384,26 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
-            return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
-        })->implode(" ");
+        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
+            return [
+                'songbook_id' => $sb->id,
+                'sonbgook_number' => $sb->pivot->number
+            ];
+        });
+
+        $all_authors = $this->authors()->with('memberships')->get();
+        foreach ($all_authors as $author) {
+            $all_authors = $all_authors->concat($author->memberships);
+        }
 
         $arr = [
             'name' => $this->name,
+            'name_keyword' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
-            'authors' => $this->authors()->get()->implode("name", ", "),
-            'songbook_records' => $songbook_numbers,
-            'id' => $this->id
+            'authors' => $all_authors->pluck('name'),
+            'songbook_records' => $songbook_records,
+            'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
+            'lang' => $this->lang
         ];
 
         return $arr;
