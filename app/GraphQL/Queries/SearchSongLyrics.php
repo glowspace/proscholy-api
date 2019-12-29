@@ -8,6 +8,7 @@ use ScoutElastic\Payloads\TypePayload;
 
 use App\SongLyric;
 use App\Author;
+use Log;
 
 class SearchSongLyrics
 {
@@ -38,6 +39,6 @@ class SearchSongLyrics
 
         $query->with('songbook_records');
 
-        return $query->get();
+        return $query->paginate($args['per_page'], 'page', $args['page']);
     }
 }
