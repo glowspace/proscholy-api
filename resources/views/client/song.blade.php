@@ -17,7 +17,7 @@
             </div>
             <div class="song-tags p-0 mt-3">
                 @if (count($tags_officials) + count($tags_unofficials))
-                    <div class="d-inline-flex flex-row flex-wrap align-items-start mr-5">
+                    <div class="d-inline-flex flex-row flex-wrap align-items-start mr-3">
                         @foreach ($tags_officials as $tag)
                             <a class="tag tag-blue" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
                         @endforeach
@@ -31,6 +31,11 @@
                         @endforeach
                     </div>
                 @endif
+                @if ($song_l->liturgy_approval_status)
+                    <div class="d-inline-flex flex-row flex-wrap align-items-start mr-3">
+                        <a class="tag tag-blue">{{$song_l->liturgy_approval_status_string_values[$song_l->liturgy_approval_status]}} <i class="fas fa-check"></i></a>
+                    </div>
+                @endif
                 @if (count($songbook_records))
                     <div class="d-inline-flex flex-row flex-wrap align-items-start">
                         @foreach ($songbook_records as $record)
@@ -41,7 +46,6 @@
                 @endif
             </div>
         </div>
-
         <song-view
             song-id="{{$song_l->id}}"
             render-media="{{ ($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())?true:false }}"
