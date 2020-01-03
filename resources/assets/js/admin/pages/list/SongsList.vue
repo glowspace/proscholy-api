@@ -3,18 +3,8 @@
   <v-app>
     <notifications/>
     <v-container fluid grid-list-xs>
-    <v-radio-group v-model="createmodel_class" class="pt-0 mt-0">
-      <v-radio
-        label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
-        :value="'SongLyric'"
-      ></v-radio>
-      <v-radio
-        label="Píseň pouze pro Regenschori.cz"
-        :value="'SongLyric--Regenschori'"
-      ></v-radio>
-    </v-radio-group>
     <create-model 
-        :class-name="createmodel_class"
+        class-name="SongLyric"
         label="Zadejte jméno nové písně"
         success-msg="Píseň úspěšně vytvořena"
         @saved="$apollo.queries.song_lyrics.refetch()"></create-model>
@@ -122,8 +112,7 @@ export default {
         { text: 'Zveřejnění', value: 'only_regenschori' },
         { text: 'Akce', value: 'action' },
       ],
-      search_string: "",
-      createmodel_class: "SongLyric"
+      search_string: ""
     }
   },
 
