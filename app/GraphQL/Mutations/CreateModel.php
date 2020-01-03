@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Validation\ValidationException;
 use Nuwave\Lighthouse\Execution\ErrorBuffer;
-use App\Helpers\SongLyricHelper;
 
 use App\Author;
 use App\SongLyric;
@@ -79,7 +78,17 @@ class CreateModel
             // TODO: write custom unique validator to handle only IDs < 10000
             $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
             if (!$validator->fails()){
-                $song_lyric = SongLyricHelper::createSong($attr);
+                $last_ps = SongLyric::withTrashed()->where('id', '<', 10000)->orderBy('id', 'desc')->first();
+                $newid = $last_ps->id + 1;
+
+                $song       = Song::create(['name' => $attr]);
+                $song_lyric = SongLyric::create([
+                    'id' => $newid,
+                    'name' => $attr,
+                    'song_id' => $song->id,
+                    // 'is_published' => Auth::user()->can('publish songs'),
+                    // 'user_creator_id' => Auth::user()->id
+                ]);
     
                 $returnValue = [
                     "id" => $song_lyric->id,
@@ -88,7 +97,21 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "SongLyric--Regenschori") {
-            $song_lyric = SongLyricHelper::createSong($attr, true);
+            $last = SongLyric::withTrashed()->where('id', '>=', 10000)->orderBy('id', 'desc')->first();
+            $newid = $last ? $last->id + 1 : 10000;
+
+            // note that when creating a Regenschori song, the name does not have to be unique
+            $song       = Song::create(['name' => $attr]);
+            $song_lyric = SongLyric::create([
+                'id' => $newid,
+                'name' => $attr,
+                'only_regenschori' => true,
+                'song_id' => $song->id,
+                // 'is_published' => Auth::user()->can('publish songs'),
+                // 'user_creator_id' => Auth::user()->id
+            ]);
+
+            // \DB::statement("ALTER TABLE song_lyrics AUTO_INCREMENT = $resetid;");
 
             $returnValue = [
                 "id" => $song_lyric->id,

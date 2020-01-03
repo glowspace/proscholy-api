@@ -2,9 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Song;
-use App\SongLyric;
-
 class SongLyricHelper
 {
     public static function getLyricsRepresentation($song_lyric)
@@ -62,26 +59,5 @@ class SongLyricHelper
         }
 
         return $parts;
-    }
-
-    public static function createSong($name, $only_regenschori = false)
-    {
-        if ($only_regenschori) {
-            $last = SongLyric::withTrashed()->only_regenschori()->orderBy('id', 'desc')->first();
-            $newid = $last ? $last->id + 1 : 10000;
-        } else {
-            $last_ps = SongLyric::withTrashed()->proscholy()->orderBy('id', 'desc')->first();
-            $newid = $last_ps->id + 1;
-        }
-
-        $song       = Song::create(['name' => $name]);
-        $song_lyric = SongLyric::create([
-            'id' => $newid,
-            'name' => $name,
-            'song_id' => $song->id,
-            'only_regenschori' => $only_regenschori,
-            // 'is_published' => Auth::user()->can('publish songs'),
-            // 'user_creator_id' => Auth::user()->id
-        ]);
     }
 }

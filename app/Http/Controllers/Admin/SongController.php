@@ -77,17 +77,17 @@ class SongController extends Controller
         return view('admin.song.edit', compact('song_lyric'));
     }
 
-    // public function destroy(Request $request, SongLyric $song_lyric)
-    // {
-    //     // TODO: find if a Song model that had been linked to this SongLyric has no dependencies anymore
-    //     // in the case delete this one as well
+    public function destroy(Request $request, SongLyric $song_lyric)
+    {
+        // TODO: find if a Song model that had been linked to this SongLyric has no dependencies anymore
+        // in the case delete this one as well
 
-    //     $song_lyric->delete();
+        $song_lyric->delete();
 
-    //     if ($request->has("redirect")) {
-    //         return redirect($request->redirect);
-    //     }
+        if ($request->has("redirect")) {
+            return redirect($request->redirect);
+        }
 
-    //     return redirect()->back();
-    // }
+        return redirect()->back();
+    }
 }

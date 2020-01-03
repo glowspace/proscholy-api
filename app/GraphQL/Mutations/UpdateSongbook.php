@@ -6,7 +6,6 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Nuwave\Lighthouse\Execution\ErrorBuffer;
 
-use App\Helpers\SongLyricHelper;
 use Validator;
 use App\Songbook;
 use App\SongLyric;
@@ -51,13 +50,11 @@ class UpdateSongbook
                 // \Log::info($record);
 
                 if (!$validator->fails()){
-                    // $song       = Song::create(['name' => $record["song_lyric_name"]]);
-                    // $song_lyric = SongLyric::create([
-                    //     'name' => $record["song_lyric_name"],
-                    //     'song_id' => $song->id,
-                    // ]);
-
-                    $song_lyric = SongLyricHelper::createSong($record["song_lyric_name"]);
+                    $song       = Song::create(['name' => $record["song_lyric_name"]]);
+                    $song_lyric = SongLyric::create([
+                        'name' => $record["song_lyric_name"],
+                        'song_id' => $song->id,
+                    ]);
 
                     $songbook->records()->attach([$song_lyric->id => [
                         'number' => $record["number"],
