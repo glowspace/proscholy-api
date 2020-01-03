@@ -301,6 +301,14 @@ class SongLyric extends Model
         }
     }
 
+    public function scopeProscholy($query) {
+        return $query->where('id', '<', 10000);
+    }
+    
+    public function scopeOnlyRegenschori($query) {
+        return $query->where('id', '>=', 10000);
+    }
+
     public function scopeForceRestricted($query)
     {
         // show songs, where there is at least one common author 
@@ -440,26 +448,5 @@ class SongLyric extends Model
         }
 
         return $output;
-    }
-
-    // todo: make obsolete
-    public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
-    {
-        if (is_numeric($identificator)) {
-            return SongLyric::find($identificator);
-        } else {
-            $double = SongLyric::where('name', $identificator)->first();
-            if ($uniqueName && $double != null) {
-                return $double;
-            }
-
-            $song       = Song::create(['name' => $identificator]);
-            $song_lyric = SongLyric::create([
-                'name' => $identificator,
-                'song_id' => $song->id
-            ]);
-
-            return $song_lyric;
-        }
     }
 }

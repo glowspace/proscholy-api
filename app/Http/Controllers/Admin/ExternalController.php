@@ -64,15 +64,15 @@ class ExternalController extends Controller
         ));
     }
 
-    public function destroy(Request $request, External $external)
-    {
-        $external->delete();
+    // public function destroy(Request $request, External $external)
+    // {
+    //     $external->delete();
 
-        if ($request->has("redirect"))
-        {
-            return redirect($request->redirect);
-        }
+    //     if ($request->has("redirect"))
+    //     {
+    //         return redirect($request->redirect);
+    //     }
 
-        return redirect()->back();
-    }
+    //     return redirect()->back();
+    // }
 }

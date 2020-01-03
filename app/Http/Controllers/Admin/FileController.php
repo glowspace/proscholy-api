@@ -94,86 +94,21 @@ class FileController extends Controller
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, File $file)
-    {
-        $file->update($request->all());
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  \App\File  $file
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy(Request $request, File $file)
+    // {
+    //     $file->delete();
 
-        // need to handle the checkbox
-        if (!$request->has("has_anonymous_author")) {
-            $file->has_anonymous_author = 0;
-            $file->save();
-        }
+    //     if ($request->has("redirect"))
+    //     {
+    //         return redirect($request->redirect);
+    //     }
 
-        // handle the AUTHORS
-        if ($request->assigned_authors !== NULL) {
-            // old authors that had been saved in db - an ID is passed
-            $saved_authors = Arr::where($request->assigned_authors, function ($value, $key) {
-                return is_numeric($value);
-            });
-            $file->authors()->sync($saved_authors);
-    
-            // new authors to create - a string NAME is passed
-            $new_authors = Arr::where($request->assigned_authors, function ($value, $key) {
-                return !is_numeric($value);
-            });
-    
-            // create new authors and associate to current file model
-            foreach ($new_authors as $author) {
-                $file->authors()->create(['name' => $author]);
-            }
-            $file->save();
-        } else {
-            $file->authors()->sync([]);
-            $file->save();
-        }
-
-        // no song lyric set, delete if there had been any association
-        if ($request->assigned_song_lyrics == null)
-        {
-            $file->song_lyric()->dissociate();
-            $file->save();
-        }
-        else
-        {
-            $song_lyric_identification = $request->assigned_song_lyrics[0];
-
-            $song_lyric = SongLyric::getByIdOrCreateWithName($song_lyric_identification);
-
-            $file->song_lyric()->associate($song_lyric);
-            $file->save();
-        }
-
-        $redirect_arr = [
-            'save' => route('admin.file.index'),
-            'save_show_song' => isset($song_lyric) ? $song_lyric->public_url : route('admin.song.index'),
-            'save_edit_song' => isset($song_lyric) ? route('admin.song.edit', $song_lyric) : route('admin.song.index')
-        ];
-
-        return redirect($redirect_arr[$request->redirect]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, File $file)
-    {
-        $file->delete();
-
-        if ($request->has("redirect"))
-        {
-            return redirect($request->redirect);
-        }
-
-        return redirect()->back();
-    }
+    //     return redirect()->back();
+    // }
 }
