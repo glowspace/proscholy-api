@@ -21,7 +21,7 @@
                   v-on:input="onNameChange"
                 ></v-text-field>
 
-                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0" disabled>
+                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0">
                   <v-radio
                     label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
                     :value="false"
