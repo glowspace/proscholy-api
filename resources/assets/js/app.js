@@ -8,6 +8,7 @@ window.Vue = require('vue');
  */ 
 
 Vue.component('chord', require('Public/pages/Song/Chord.vue'));
+Vue.component('song-part-tag', require('Public/pages/Song/SongPartTag.vue')); 
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
 Vue.component('search', require('Public/pages/Search/Search.vue'));

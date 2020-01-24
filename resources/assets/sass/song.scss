@@ -38,6 +38,21 @@
   }
 }
 
+$indent-space: 1.5em;
+
+.song-part {
+  margin-left: $indent-space;
+}
+
+.song-line {
+  position: relative;
+}
+
+span.song-part-tag {
+  min-width: $indent-space;
+  margin-left: -$indent-space;
+}
+
 .zindex-lower {
   z-index: 199;
 }

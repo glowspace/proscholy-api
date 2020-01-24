@@ -4,9 +4,11 @@ namespace App\GraphQL\Queries;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use ScoutElastic\Payloads\TypePayload;
 
 use App\SongLyric;
 use App\Author;
+use Log;
 
 class SearchSongLyrics
 {
@@ -21,20 +23,25 @@ class SearchSongLyrics
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        if ($args["search_string"] == "") {
-            return SongLyric::orderBy("name", "asc")->get();
-        }
+        $searchParams = json_decode($args['search_params'], true);
 
-        // one letter => show only songs starting with this letter
-        // if(strlen($args["search_string"]) == 1 || $args["search_string"] == "ch" || $args["search_string"] == "Ch") {
-        //     return SongLyric::where('name', 'like', $args["search_string"].'%')->orderBy("name", "asc")->get();
-        // }
+        $searchParams['size'] = $args['per_page'];
+        $searchParams['from'] = $args['per_page'] * ($args['page'] - 1);
 
-        $query = SongLyric::search($args['search_string']);
-        $query->limit = 50;
+        $query = SongLyric::search($searchParams, function ($client, $query) {
+            // this will override the default ::search behaviour so that a raw query is accepted
+            // for comparison, see ScoutElastic::search and ::searchRaw 
+            $model = new SongLyric();
+
+            $payload = (new TypePayload($model))
+                ->setIfNotEmpty('body', $query)
+                ->get();
+
+            return $client->search($payload);
+        });
 
         $query->with('songbook_records');
 
-        return $query->get();
+        return $query->paginate($args['per_page'], 'page', $args['page']);
     }
 }

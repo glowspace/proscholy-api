@@ -13,9 +13,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Helpers\Chord;
-use App\Helpers\ChordSign;
-use App\Helpers\ChordQueue;
+// use App\Helpers\Chord;
+// use App\Helpers\ChordSign;
+// use App\Helpers\ChordQueue;
+// use App\Helpers\SongPart;
+use App\Helpers\SongLyricHelper;
 
 use Venturecraft\Revisionable\RevisionableTrait;
 
@@ -58,10 +60,10 @@ use Venturecraft\Revisionable\RevisionableTrait;
 class SongLyric extends Model
 {
     // ElasticSearch Searchable Trait used for full-text searching
-    use Searchable, 
-    // Lockable Trait for enabling to "lock" the model while editing
-        Lockable, 
-        SoftDeletes, 
+    use Searchable,
+        // Lockable Trait for enabling to "lock" the model while editing
+        Lockable,
+        SoftDeletes,
         RevisionableTrait;
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
@@ -70,13 +72,12 @@ class SongLyric extends Model
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
-    // Here you can specify a mapping for model fields
+    // the Elasticsearch metadata for attributes retrieved by toSearchableArray()
     protected $mapping = [
         'properties' => [
             'name' => [
                 'type' => 'text',
                 'analyzer' => 'name_analyzer',
-                "boost" => 2
             ],
             'lyrics' => [
                 'type' => 'text',
@@ -87,12 +88,25 @@ class SongLyric extends Model
                 'analyzer' => 'name_analyzer'
             ],
             'songook_records' => [
-                'type' => 'text',
-                // 'analyzer' => 'standard
+                'type' => 'nested',
+                'properties' => [
+                    'songbook_id' => [
+                        'type' => 'keyword'
+                    ],
+                    'songbook_number' => [
+                        'type' => 'keyword'
+                    ]
+                ]
             ],
-            'id' => [
-                'type' => 'keyword',
-                'boost' => 100
+            'tag_ids' => [
+                'type' => 'keyword'
+            ],
+            'lang' => [
+                'type' => 'keyword'
+            ],
+            // the 'text' type cannot be used for sorting, this is why a copy of name is included
+            'name_keyword' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -178,7 +192,7 @@ class SongLyric extends Model
         //     && 
     }
 
-    public function getHasLyricsAttribute() : bool
+    public function getHasLyricsAttribute(): bool
     {
         return !empty($this->lyrics);
     }
@@ -235,31 +249,31 @@ class SongLyric extends Model
         return $this->belongsTo(Song::class);
     }
 
-    public function authors() : BelongsToMany
+    public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function tags() : BelongsToMany
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function externals() : HasMany
+    public function externals(): HasMany
     {
         return $this->hasMany(External::class);
     }
 
-    public function files() : HasMany
+    public function files(): HasMany
     {
         return $this->hasMany(File::class);
     }
 
-    public function songbook_records() : BelongsToMany
+    public function songbook_records(): BelongsToMany
     {
         return $this->belongsToMany(Songbook::class, "songbook_records")
-                    ->withPivot('number', 'placeholder', 'id')
-                    ->using(SongbookRecord::class);
+            ->withPivot('number', 'placeholder', 'id')
+            ->using(SongbookRecord::class);
     }
 
     public function scopeTranslations($query)
@@ -291,9 +305,9 @@ class SongLyric extends Model
     {
         // show songs, where there is at least one common author 
         // of song authors and to-user-assigned authors
-        return $query->whereHas('authors', function($q) {
+        return $query->whereHas('authors', function ($q) {
             $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
-        // and show those songs, that were created by this user account
+            // and show those songs, that were created by this user account
         })->orWhere('user_creator_id', Auth::user()->id);
     }
 
@@ -303,8 +317,8 @@ class SongLyric extends Model
         // lyrics, sheet music
 
         return $query->whereHas('scoreExternals')
-                    ->orWhereHas('scoreFiles')
-                    ->orWhere('lyrics', '!=', '');
+            ->orWhereHas('scoreFiles')
+            ->orWhere('lyrics', '!=', '');
     }
 
     /*
@@ -334,12 +348,12 @@ class SongLyric extends Model
     {
         return $this->externals()->scores()->orderBy('is_featured', 'desc')->orderBy('type', 'asc');
     }
-    
+
     public function scoreFiles()
     {
         return $this->files()->scores()->orderBy('type', 'desc');
     }
-    
+
 
     public function scoresCount()
     {
@@ -373,16 +387,26 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_numbers = $this->songbook_records()->get()->map(function($sb) {
-            return $sb->shortcut . $sb->pivot->number . " " . $sb->pivot->number;
-        })->implode(" ");
+        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
+            return [
+                'songbook_id' => $sb->id,
+                'sonbgook_number' => $sb->pivot->number
+            ];
+        });
+
+        $all_authors = $this->authors()->with('memberships')->get();
+        foreach ($all_authors as $author) {
+            $all_authors = $all_authors->concat($author->memberships);
+        }
 
         $arr = [
             'name' => $this->name,
+            'name_keyword' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
-            'authors' => $this->authors()->get()->implode("name", ", "),
-            'songbook_records' => $songbook_numbers,
-            'id' => $this->id
+            'authors' => $all_authors->pluck('name'),
+            'songbook_records' => $songbook_records,
+            'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
+            'lang' => $this->lang
         ];
 
         return $arr;
@@ -390,66 +414,45 @@ class SongLyric extends Model
 
     public function getFormattedLyrics()
     {
-        $lines = explode("\n", $this->lyrics);
-
         $output = "";
-        $chordQueue = new ChordQueue();
 
-        foreach ($lines as $line){
-            $output .= '<div class="song-line">'.$this->processLine($line, $chordQueue).'</div>';
+        // type :: [App/Helpers/SongPart]
+        $parts = SongLyricHelper::getLyricsRepresentation($this);
+
+        $firstRefrain = current(array_filter($parts, function ($part) {
+            return $part->isRefrain();
+        }));
+
+        foreach ($parts as $song_part) {
+            if ($song_part->isRefrain() && $song_part->isEmpty()) {
+                // substitute by the first refrain
+                $subst = clone $firstRefrain;
+
+                if ($song_part->isHidden()) {
+                    $subst->setHidden(true);
+                } else {
+                    $subst->setHiddenText(true);
+                }
+                $output .= $subst->toHTML();
+            } else {
+                $output .= $song_part->toHTML();
+            }
         }
 
         return $output;
     }
 
-    private function processLine($line, $chordQueue)
-    {
-        $chords = array();
-        $currentChordText = "";
-        $line = trim($line);
-        
-        // starting of a line, notify Chord "repeater" if we are in a verse
-        if (strlen($line) > 0 && is_numeric($line[0])) {
-            $chordQueue->notifyVerse($line[0]);
-        }
-
-        if (trim($line) == '(R:)') {
-            return "";
-        }
-
-        for ($i = 0; $i < strlen($line); $i++) {
-            if ($line[$i] == "["){
-                if ($currentChordText != "")
-                    $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-                $currentChordText = "";
-            }
-
-            $currentChordText .= $line[$i];
-        }
-
-        $chords[] = Chord::parseFromText($currentChordText, $chordQueue);
-
-        $string = "";
-        foreach ($chords as $chord) 
-            $string .= $chord->toHTML();
-
-        return $string;
-    }
-
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
-        if (is_numeric($identificator))
-        {
+        if (is_numeric($identificator)) {
             return SongLyric::find($identificator);
-        }
-        else
-        {
+        } else {
             $double = SongLyric::where('name', $identificator)->first();
             if ($uniqueName && $double != null) {
                 return $double;
             }
-            
+
             $song       = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,
