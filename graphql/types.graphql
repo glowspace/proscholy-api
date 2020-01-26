@@ -141,6 +141,8 @@ type Playlist {
     name: String
     #""" todo: custom resolver with ordering the list"""
     song_lyrics: [SongLyric] 
+}
+
 type SongLyricPaginator {
     data: [SongLyric!]! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver")
     paginatorInfo: PaginatorInfo! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver")
