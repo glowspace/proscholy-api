@@ -28,16 +28,22 @@ import { GoogleProvider, auth } from 'Public/helpers/firebase_auth'
 import gql from 'graphql-tag'
 
 const fetch_items = gql`
-    # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
-     query FetchSongLyrics_cached($search_str: String) {
-            song_lyrics: search_song_lyrics(search_string: $search_str) {
+    query ($search_params: String, $page: Int, $per_page: Int) {
+        song_lyrics_paginated: search_song_lyrics(search_params: $search_params, page: $page, per_page: $per_page) {
+            data {
                 id,
                 name
+            },
+            paginatorInfo {
+                currentPage,
+                lastPage,
+                total,
+                hasMorePages
             }
-        }`;
+        }
+    }`;
 
 const fetch_user = gql`
-    # warning this query is being cached on server-side, see App\Http\Middleware\CachedGraphql
      query {
             user: current_public_user {
                 id,
@@ -57,13 +63,21 @@ export default {
     },
 
     apollo: {
-        song_lyrics: {
+        song_lyrics_paginated: {
             query: fetch_items,
             variables() {
                 return {
-                    search_str: this.search_string
+                    search_params: this.searchParams,
+                    page: 1,
+                    per_page: 100
                 }
             },
+            debounce: 200,
+            // result(result) {
+            //     this.$emit("query-loaded", null);
+            //     this.enable_more = result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
+            //     this.results_loaded = true;
+            // },
         }
     },
 
@@ -114,6 +128,26 @@ export default {
             // console.log({ me });
 
             // todo: refresh the page
+        }
+    },
+
+    computed: {
+        searchParams() {
+            let query = {
+                'bool': {
+                  'must': [],
+                  'filter': []
+                }
+            };
+
+            return JSON.stringify({
+                "sort": ['name_keyword'],
+                "query": query
+            });
+        },
+
+        song_lyrics() {
+            return this.song_lyrics_paginated ? this.song_lyrics_paginated.data : [];
         }
     }
 }
