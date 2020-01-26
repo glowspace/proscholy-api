@@ -36,7 +36,7 @@ return [
     ],
 
     'firebase' => [
-        'project_name' => env('FIREBASE_PROJECT_NAME')
+        'project_name' => env('FIREBASE_PROJECT_ID')
     ]
 
 ];
