@@ -1,24 +1,32 @@
 <template>
     <div class="container">
-        <h1>Uživatel {{ user ? user.username : '' }}</h1>
-        <!-- <h2>Zpěvníky:</h2>
+        <h1>Uživatelský účet</h1>
 
-        <ul class="list-group" v-if="user">
-            <li v-for="songbook in user_songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
-                {{ songbook.name }}
-                <span class="badge badge-primary badge-pill">{{ songbook.songs.length }}</span>
-                <ul>
-                    <li v-for="song_obj in songbook.songs" v-bind:key="song_obj.song_id">
-                        {{ getSongLyric(song_obj.song_id).name }}
-                    </li>
-                </ul>
-            </li>
-        </ul>
- 
-        <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
-        <input type="text" v-model="new_songbook_name"/>-->
+        <div v-if="isLoggedIn">
+            <p>Přihlášený uživatel: {{ user.name }}</p>
+            <p>Email: {{ user.email }}</p>
 
-        <a @click="signin">Přihlásit se přes Google</a>
+            <h2>Zpěvníky:</h2>
+
+            <ul class="list-group">
+                <li v-for="songbook in user.songbooks" v-bind:key="songbook.id" class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ songbook.name }}
+                    <span class="badge badge-primary badge-pill">{{ songbook.song_lyrics.length }}</span>
+                    <ul>
+                        <li v-for="song_lyric in songbook.song_lyrics" v-bind:key="song_lyric.id">
+                            {{ song_lyric.name }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+    
+            <!-- <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
+            <input type="text" v-model="new_songbook_name"/> -->
+        </div>
+        <div v-else>
+            
+            <a @click="signin">Přihlásit se přes Google</a>
+        </div>
     </div>
 </template>
 
@@ -47,18 +55,28 @@ const fetch_user = gql`
      query {
             user: current_public_user {
                 id,
-                name
+                name,
+                email,
+                playlists {
+                    id,
+                    name,
+                    song_lyrics {
+                        id,
+                        name
+                    }
+                }
             }
         }`;
 
 export default {
     data() {
         return {
-            user:null,
-            search_string: "",
+            user: null,
+            token: null,
+            // search_string: "",
             new_songbook_name: "",
-            loggedIn: true,
-            token: null
+
+            isLoggedIn: false
         }
     },
 
@@ -101,6 +119,8 @@ export default {
                 }).then((response) => {
                     console.log(response.data.user);
                     this.user = response.data.user;
+                    this.isLoggedIn = true;
+                    
                 }).catch((exc) => {
 
                 });
