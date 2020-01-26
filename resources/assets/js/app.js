@@ -18,8 +18,8 @@ Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
 Vue.component('user-account', require('Public/pages/UserAccount/UserAccount.vue'));
 
 // firebase firestore plugin for vue    
-import { firestorePlugin } from 'vuefire'
-Vue.use(firestorePlugin)
+// import { firestorePlugin } from 'vuefire'
+// Vue.use(firestorePlugin)
 
 
 import { ApolloClient } from 'apollo-client';
