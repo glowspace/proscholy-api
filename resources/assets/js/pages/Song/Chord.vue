@@ -29,15 +29,10 @@
         created() {
             // each chords notifies its state to the global store.js file
 
-            // I'm a chord that has a chord sign -> allow to display chords
+            // I'm a chord that has a chord sign -> allow to display chords + to switch to extended chord mode
             if (this.base != "" && this.chordSharedStore.nChordModes == 1) {
-                this.chordSharedStore.nChordModes = 2;
-                this.chordSharedStore.chordMode = 1;
-            }
-
-            // I'm a chord that is a substitute -> allow switching to extended chord mode
-            if (this.isSubstitute  && this.chordSharedStore.nChordModes == 2) {
                 this.chordSharedStore.nChordModes = 3;
+                this.chordSharedStore.chordMode = 2;
             }
 
             // After being decided between #/b, do not use later chords
