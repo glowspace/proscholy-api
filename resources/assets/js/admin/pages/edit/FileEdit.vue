@@ -44,7 +44,7 @@
         <v-flex xs12 md6>
           <external-view v-if="model_database"
             :url="model_database.url" 
-            :type="0">
+            :type="model_database.external_type">
           </external-view>
         </v-flex>
       </v-layout>
@@ -83,6 +83,7 @@ const FETCH_MODEL_DATABASE = gql`
     model_database: file(id: $id) {
       ...FileFillableFragment
       type_string_values
+      external_type
     }
   }
   ${fragment}

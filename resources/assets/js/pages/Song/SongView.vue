@@ -117,6 +117,8 @@
                 <div v-if="!$apollo.loading && song_lyric.capo > 0" class="mb-2">
                   <i>capo: {{ song_lyric.capo }}</i>
                 </div>
+                <a class="btn btn-secondary bg-transparent p-0 mb-3" v-if="chordSharedStore.nChordModes != 1 && chordSharedStore.chordMode == 0" @click="chordSharedStore.chordMode = 2">Zobrazit akordy</a>
+                <a class="btn btn-secondary bg-transparent p-0 mb-3" v-if="chordSharedStore.chordMode != 0" @click="chordSharedStore.chordMode = 0">Skrýt akordy</a>
                 <slot></slot>
               </div>
               <right-controls></right-controls>
@@ -265,7 +267,7 @@
         </div>
         <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
         <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}</span></div>
         <div class="media-opener"><i class="fas fa-angle-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
       </div>
     </div>

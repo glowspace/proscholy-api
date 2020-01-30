@@ -7,17 +7,17 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex flex-column flex-lg-row flex-wrap flex-lg-nowrap mt-4 mb-3 justify-content-between">
-            <div class="minw-45">
+        <div class="mt-4 mb-3">
+            <div>
                 <h1 class="song-title">{{$song_l->name}}</h1>
                 <div class="d-flex align-items-center mt-1">
                     <h4 class="song-number m-0">{{ $song_l->id }}</h4>
                     <p class="song-author ml-3 mb-0">@component('client.components.song_lyric_author', ['song_l' => $song_l])@endcomponent</p>
                 </div>
             </div>
-            <div class="song-tags p-0 pt-lg-2 pt-3 pl-lg-2">
+            <div class="song-tags p-0 mt-3">
                 @if (count($tags_officials) + count($tags_unofficials))
-                    <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
+                    <div class="d-inline-flex flex-row flex-wrap align-items-start mr-3">
                         @foreach ($tags_officials as $tag)
                             <a class="tag tag-blue" href="{{route("client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name }}</a>
                         @endforeach
@@ -31,8 +31,13 @@
                         @endforeach
                     </div>
                 @endif
+                @if ($song_l->liturgy_approval_status)
+                    <div class="d-inline-flex flex-row flex-wrap align-items-start mr-3">
+                        <a class="tag tag-blue">{{$song_l->liturgy_approval_status_string_values[$song_l->liturgy_approval_status]}} <i class="fas fa-check"></i></a>
+                    </div>
+                @endif
                 @if (count($songbook_records))
-                    <div class="d-flex flex-row flex-wrap align-items-start justify-content-lg-end mb-2">
+                    <div class="d-inline-flex flex-row flex-wrap align-items-start">
                         @foreach ($songbook_records as $record)
                             {{-- <a class="tag tag-yellow" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{ $record->name . ' ' . $record->pivot->number }}</a> --}}
                             <a class="tag tag-yellow songbook-tag" title="{{ $record->name }}" href="{{route("client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}"><span class="songbook-name">{{ $record->name }}</span><span class="songbook-number">{{ $record->pivot->number }}</span></a>
@@ -41,7 +46,6 @@
                 @endif
             </div>
         </div>
-
         <song-view
             song-id="{{$song_l->id}}"
             render-media="{{ ($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())?true:false }}"
