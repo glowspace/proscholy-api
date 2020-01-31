@@ -115,12 +115,12 @@
         <div class="card-body py-2 pl-3 overflow-hidden">
           <div class="d-flex align-items-start justify-content-between">
               <div id="song-lyrics" :class="{'p-1': true, 'song-lyrics-extended': chordSharedStore.chordMode==2}">
-                <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
-                <div v-if="!$apollo.loading && song_lyric.capo > 0" class="mb-2">
-                  <i>capo: {{ song_lyric.capo }}</i>
-                </div>
                 <a class="btn btn-secondary bg-transparent p-0 mb-3" v-if="chordSharedStore.nChordModes != 1 && chordSharedStore.chordMode == 0" @click="chordSharedStore.chordMode = 2">Zobrazit akordy</a>
                 <a class="btn btn-secondary bg-transparent p-0 mb-3" v-if="chordSharedStore.chordMode != 0" @click="chordSharedStore.chordMode = 0">Skrýt akordy</a>
+                <div v-if="!$apollo.loading && song_lyric.capo > 0 && chordSharedStore.chordMode != 0" class="mb-2">
+                  <i>capo: {{ song_lyric.capo }}</i>
+                </div>
+                <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
                 <slot></slot>
               </div>
               <right-controls></right-controls>
