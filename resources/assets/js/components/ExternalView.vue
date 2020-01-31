@@ -5,6 +5,7 @@
             <span v-for="(author, index) in authors" v-bind:key="author.id"><span v-if="index">,</span>
                 <a :href="author.public_url">{{ author.name }}</a>
             </span>
+            <a v-if="downloadUrl" :href="downloadUrl" title="Stáhnout" class="float-right"><i class="fas fa-download"></i></a>
         </div>
         <iframe v-if="type == 1"
                 :src="iframeSrc"
@@ -43,6 +44,7 @@ import Bowser from "bowser";
 export default {
     props: {
         url: String,
+        downloadUrl: String,
         type: Number,
         thumbnailUrl: String,
         mediaId: String,

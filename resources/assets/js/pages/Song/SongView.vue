@@ -47,6 +47,8 @@
                   v-bind:key="index"
                   :index="index"
                   :url="score.url"
+                  :download-url="score.download_url"
+                  :song-name="song_lyric.name"
                   :name="score.public_name"
                   :type="score.type"
                   :authors="score.authors"
@@ -184,6 +186,7 @@
                 <div class="col-md-6" v-for="file in mediaFiles" v-bind:key="file.id">
                   <external-view
                     :url="file.url"
+                    :download-url="file.download_url"
                     :media-id="file.media_id"
                     :type="fileTypeConvert(file.type)"
                     :authors="file.authors"
@@ -387,6 +390,7 @@ const FETCH_SONG_LYRIC = gql`
         id
         public_name
         url
+        download_url
         type
         authors {
           id
