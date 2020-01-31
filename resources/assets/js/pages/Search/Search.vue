@@ -175,6 +175,14 @@ export default {
         }
     },
 
+    watch: {
+        init: function(val) {
+            if(!val) {
+                document.getElementsByTagName("body")[0].style.overflowY = "scroll";
+            }
+        }
+    },
+
     methods: {
         updateSelectedTagsDcnf(event) {
             this.selected_tags_dcnf = event;
