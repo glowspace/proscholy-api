@@ -19,12 +19,20 @@
                             class="search-submit d-none d-lg-inline" v-if="!init">
                         <i class="fa fa-search"></i>
                     </button>
-                    <button type="button"
+                    <button type="button" aria-label="Vyhledávácí filtry"
                             class="search-submit d-lg-none" v-if="!init" :class="{'filter-active': filters_active, 'filter-open': displayFilter}" @click="displayFilter=!displayFilter">
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
-                <div v-if="init" @click="resetState(true); init=false;" class="text-center pt-4 text-white"><a class="btn btn-outline-light display-all-songs font-weight-bold"><i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ</a></div>
+                <div 
+                    v-if="init" 
+                    @click="resetState(true); init=false;"
+                    class="text-center pt-4 text-white">
+                        <div class="btn btn-outline-light display-all-songs font-weight-bold"
+                            role="button">
+                            <i class="fas fa-chevron-down pr-1"></i> ZOBRAZIT VŠECHNY PÍSNĚ
+                        </div>
+                </div>
                 <div class="mx-2 d-lg-none filter-panel position-absolute" v-show="!init && displayFilter">
                     <a class="btn btn-secondary float-right fixed-top position-sticky"
                         v-on:click="displayFilter=false">
