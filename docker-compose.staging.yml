@@ -10,7 +10,7 @@ services:
       - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
     entrypoint: 'bash ./docker/setup/web/entrypoint_web_prod.sh'
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     restart: always
     depends_on:
       - db
@@ -40,7 +40,7 @@ services:
       - ./docker/data/databases:/var/databases
       - ./docker/data/mysql:/var/lib/mysql
     networks: 
-      - bcloud-network
+      - bcloud-network-staging
 
   nginx:
     image: 'nginx:1.17.3'
@@ -54,7 +54,7 @@ services:
       - './docker/config/nginx_prod:/etc/nginx/conf.d'
       - './docker/logs/nginx:/var/log/nginx'
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     restart: always
 
   adminer:
@@ -63,7 +63,7 @@ services:
     ports:
         - 28080:8080
     networks:
-      - bcloud-network
+      - bcloud-network-staging
 
   elasticsearch:
     build: 
@@ -79,7 +79,7 @@ services:
     ports:
       - "29200:9200"
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     restart: always
 
   kibana:
@@ -87,7 +87,7 @@ services:
     ports:
       - "25601:5601"
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     depends_on:
       - elasticsearch
 
@@ -96,9 +96,9 @@ services:
   #   ports:
   #     - "9000:9000"
   #   networks:
-  #     - bcloud-network
+  #     - bcloud-network-staging
   #   depends_on:
   #     - elasticsearch
 
 networks:
-  bcloud-network:
+  bcloud-network-staging:
