@@ -31,13 +31,14 @@ if cd ${DATESTAMP} ; then
 
     mv .env.staging .env
 
-    echo "Linking vendor and node_modules folders from the root folder"
+    echo "Linking vendor, node_modules and public folders from the root folder"
     ln -s /var/www/html/vendor 
     ln -s /var/www/html/node_modules
+    ln -s /var/www/html/public
 
     echo "Installing composer and yarn"
     php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
-    
+
     composer install --optimize-autoloader
     composer dump-auto
 
