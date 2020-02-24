@@ -31,10 +31,13 @@ if cd ${DATESTAMP} ; then
 
     mv .env.staging .env
 
+    # remove the public folder to be later linked from the root folder
+    rm -rf public
+
     echo "Linking vendor, node_modules and public folders from the root folder"
-    ln -s /var/www/html/vendor 
-    ln -s /var/www/html/node_modules
-    ln -s /var/www/html/public
+    ln -nfs /var/www/html/vendor 
+    ln -nfs /var/www/html/node_modules
+    ln -nfs /var/www/html/public
 
     echo "Installing composer and yarn"
     php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
@@ -47,6 +50,7 @@ if cd ${DATESTAMP} ; then
 
     # rm -rf node_modules
 
+    # this needs to be run __after__ public folder linking
     php artisan config:cache
     php artisan route:cache
     php artisan cache:clear
