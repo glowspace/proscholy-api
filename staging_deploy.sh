@@ -32,7 +32,7 @@ if cd ${DATESTAMP} ; then
     mv .env.staging .env
 
     # remove the public folder to be later linked from the root folder
-    rm -rf public
+    mv public public_old
 
     echo "Linking vendor, node_modules and public folders from the root folder"
     ln -nfs /var/www/html/vendor 
