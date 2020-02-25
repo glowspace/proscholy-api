@@ -31,26 +31,25 @@ if cd ${DATESTAMP} ; then
 
     mv .env.staging .env
 
-    # remove the public folder to be later linked from the root folder
-    rm -rf public
+    echo "Moving the node_modules folder from root to current to be used by yarn"
+    mv ${LARAVEL}/node_modules ${LARAVEL}/releases/${DATESTAMP}/node_modules
 
-    echo "Linking vendor, node_modules and public folders from the root folder"
+    # build yarn
+    yarn install
+    yarn run dev
+
+    echo "Moving the node_modules folder back"
+    mv ${LARAVEL}/releases/${DATESTAMP}/node_modules ${LARAVEL}/node_modules
+
+    echo "Linking vendor folder from the root folder"
     ln -nfs /var/www/html/vendor 
-    ln -nfs /var/www/html/node_modules
-    ln -nfs /var/www/html/public
 
-    echo "Installing composer and yarn"
+    echo "Installing composer"
     php artisan down --message="Probíhá aktualizace zpěvníku na novou verzi. Zkuste to později" --retry=60
 
     composer install --optimize-autoloader
     composer dump-auto
 
-    yarn install
-    yarn run dev
-
-    # rm -rf node_modules
-
-    # this needs to be run __after__ public folder linking
     php artisan config:cache
     php artisan route:cache
     php artisan cache:clear
