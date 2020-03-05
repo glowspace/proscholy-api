@@ -5,10 +5,11 @@ window.Vue = require('vue');
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
- */ 
+ */
 
+Vue.component('client-spa', require('Public/client/ClientSpa.vue'));
 Vue.component('chord', require('Public/pages/Song/Chord.vue'));
-Vue.component('song-part-tag', require('Public/pages/Song/SongPartTag.vue')); 
+Vue.component('song-part-tag', require('Public/pages/Song/SongPartTag.vue'));
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 Vue.component('dark-mode-button', require('Public/components/DarkModeButton.vue'));
 Vue.component('search', require('Public/pages/Search/Search.vue'));
@@ -17,7 +18,7 @@ Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
 
 Vue.component('user-account', require('Public/pages/UserAccount/UserAccount.vue'));
 
-// firebase firestore plugin for vue    
+// firebase firestore plugin for vue
 // import { firestorePlugin } from 'vuefire'
 // Vue.use(firestorePlugin)
 
@@ -38,7 +39,7 @@ const httpLink = createHttpLink({
   uri: base_url + '/graphql',
 })
 
-const cache = new InMemoryCache(); 
+const cache = new InMemoryCache();
 
 // // Set up cache persistence.
 // window.cachePersistor = new CachePersistor({
@@ -50,19 +51,19 @@ const cache = new InMemoryCache();
 //   cache,
 //   storage: window.sessionStorage
 // }).then(function() {
-  
+
     // Create the apollo client
     const apolloClient = new ApolloClient({
       link: httpLink,
       cache,
     })
-    
-    Vue.use(VueApollo)
-  
+
+    Vue.use(VueApollo);
+
     const apolloProvider = new VueApollo({
         defaultClient: apolloClient,
-    })
-  
+    });
+
     const app = new Vue({
       el: '#app',
       apolloProvider

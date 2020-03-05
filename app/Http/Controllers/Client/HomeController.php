@@ -11,6 +11,9 @@ class HomeController extends Controller
 {
     public function renderHome()
     {
+        return view('client.spa');
+
+        /*
         $top_songs   = SongLyric::orderBy('visits', 'desc')->where('lyrics', '!=', '')->take(7)->get();
         $top_authors = Author::orderBy('visits', 'desc')->take(15)->get();
 
@@ -21,6 +24,7 @@ class HomeController extends Controller
             'top_songs'     => $top_songs,
             'top_authors'   => $top_authors,
         ]);
+        */
     }
 
     public function renderAboutSongbook()
