@@ -2,28 +2,19 @@
  * ProScholy.cz app.js file.
  *
  * It contains:
- * - Vue.js SPA
- * - single components import
- * - apollo drivers.
+ * - Vue.js SPA with Vue Router 3
+ * - Apollo GraphQL driver
  */
 
 // Imports
 window.Vue = require('vue');
 
 // Client single page app
-Vue.component('client-spa', require('./client/ClientSpa.vue'));
+Vue.component('client-spa', require('../client/ClientSpa.vue'));
 
 
 // TODO: add laravel automatic recursive import
-Vue.component('chord', require('./pages/Song/Chord.vue'));
-Vue.component('song-part-tag', require('./pages/Song/SongPartTag.vue'));
-Vue.component('external-view', require('./components/ExternalView.vue'));
-Vue.component('dark-mode-button', require('./components/DarkModeButton.vue'));
-Vue.component('search', require('./pages/Search/Search.vue'));
-Vue.component('song-view', require('./pages/Song/SongView.vue'));
-Vue.component('recaptcha', require('./pages/Login/Recaptcha.vue'));
-
-Vue.component('user-account', require('./pages/UserAccount/UserAccount.vue'));
+Vue.component('chord', require('../pages/Song/Chord.vue'));
 
 
 import {ApolloClient} from 'apollo-client';

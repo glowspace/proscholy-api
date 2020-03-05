@@ -33,11 +33,12 @@ mix.webpackConfig({
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/client/client.js', 'public/js')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
     .browserSync({
-        // proxy settings for docker 
+        // proxy settings for docker
         // if you are using php artisan serv then change proxy to 'localhost:8000'
         proxy: 'nginx:80',
         files: [
@@ -57,24 +58,24 @@ mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js
 
 if (mix.inProduction()) {
     mix
-    .webpackConfig({
-        plugins: [
-            new BrotliGzipPlugin({
-                asset: '[path].br[query]',
-                algorithm: 'brotli',
-                test: /\.(js|css|html|svg)$/,
-                threshold: 10240,
-                minRatio: 0.8,
-                quality: 11
-            }),
-            new BrotliGzipPlugin({
-                asset: '[path].gz[query]',
-                algorithm: 'gzip',
-                test: /\.(js|css|html|svg)$/,
-                threshold: 10240,
-                minRatio: 0.8
-            })
-        ],
-      })
-    .version(); // File hash suffix in production (to bust old caches)
+        .webpackConfig({
+            plugins: [
+                new BrotliGzipPlugin({
+                    asset: '[path].br[query]',
+                    algorithm: 'brotli',
+                    test: /\.(js|css|html|svg)$/,
+                    threshold: 10240,
+                    minRatio: 0.8,
+                    quality: 11
+                }),
+                new BrotliGzipPlugin({
+                    asset: '[path].gz[query]',
+                    algorithm: 'gzip',
+                    test: /\.(js|css|html|svg)$/,
+                    threshold: 10240,
+                    minRatio: 0.8
+                })
+            ],
+        })
+        .version(); // File hash suffix in production (to bust old caches)
 }
