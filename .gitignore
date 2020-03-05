@@ -17,5 +17,4 @@ npm-debug.log
 .env
 .env.testing
 .phpunit.result.cache
-_ide_helper.php
 /public/mix-manifest.json
