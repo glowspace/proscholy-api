@@ -12,25 +12,14 @@
 */
 
 /**
- * Public routes.
+ * Public client.
  */
-Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
-//Route::get('/o-zpevniku', 'Client\HomeController@renderAboutSongbook')->name('client.about');
-
-
-// Redirects to real search route.
-Route::post('/vyhledavani/send_search', 'Client\SearchController@searchSend')->name('client.search');
-// The real user search route
-// Route::get('/vyhledavani/', 'Client\SearchController@searchResults')->name('client.search_results');
-// Route::get('/vyhledavani/{phrase?}', 'Client\SearchController@searchResults')->name('client.search_results');
-Route::get('/search', 'Client\HomeController@renderHome')->name('client.search_results');
-
-Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')->name('client.song.list');
-Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
+Route::get('/', 'Client\HomeController@renderHome')->name('client.spa');
 
 // Client single model views
 Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
+
 // TODO: Songbook view
 Route::get('/zpevnik/{songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');
 
