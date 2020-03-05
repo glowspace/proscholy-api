@@ -29,11 +29,6 @@ Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')-
 Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
 
 // Client single model views
-// Route::get('/pisen/{song_lyric}/noty', 'Client\SongLyricsController@songScore')->name('client.song.score');
-// Route::get('/pisen/{song_lyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
-// Route::get('/pisen/{song_lyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
-// Route::get('/pisen/{song_lyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
-// Route::get('/pisen/{song_lyric}/soubory', 'Client\SongLyricsController@songFiles')->name('client.song.files');
 Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
 // TODO: Songbook view
@@ -62,12 +57,12 @@ Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExt
 Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
-    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () 
+    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function ()
     {
         Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
         Route::resource('external', 'ExternalController')->except(['show', 'update', 'store', 'create']);
-        
+
 
         Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
         // todo
