@@ -181,7 +181,7 @@ textarea.form-control
 }
 
 .statistics-table {
-  td:last-child {
+  td:not(:first-child) {
     text-align: right;
   }
 }

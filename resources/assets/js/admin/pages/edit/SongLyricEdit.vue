@@ -163,17 +163,19 @@
                 >
               </number-input>
               <p>
-                Text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např.
-                <b>[E], [C#m] nebo [Cism], [Fmaj7]</b> apod.
-                <br>Akordy pište českými značkami: H dur:
-                <b>[H]</b>, B dur:
-                <b>[B]</b>, B moll:
-                <b>[Bm]</b>
-                <br>Akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem [%], nakopírují se automaticky z první sloky
-                <br>Sloky označujte číslicí, tečkou a mezerou: 1. Text první sloky
-                <br>Refrén velkým R, dvojtečkou a mezerou: R: Text refrénu (při opakování už nepsat znovu text)
-                <br>Bridge velkým B, dvojtečkou a mezerou: B: Text bridge
-                <br>Coda velkým C, dvojtečkou a mezerou: C: Text cody
+                <ul>
+                  <li>text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E]</b>, <b>[C#m]</b> nebo <b>[Cism]</b>, <b>[Fmaj7]</b> apod.</li>
+                  <li>akordy pište českými značkami – H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b></li>
+                  <li>akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
+                  <li>sloky označujte číslicí, tečkou a mezerou: <b>1. Text první sloky</b></li>
+                  <li>refrén velkým R, dvojtečkou a mezerou – <b>R: Text refrénu</b> (při opakování už nepsat znovu text)</li>
+                  <li>pokud je naprosto zřejmé, že na dané místo patří refrén (např. se opakuje po každé sloce písně), umisťuje se R: do závorky – <b>(R:)</b></li>
+                  <li>R: nebo (R:) je nezbytné psát všude, kam v písni refrén patří (výrazně tak usnadníme práci hudebníkům)</li>
+                  <li>bridge velkým B, dvojtečkou a mezerou – <b>B: Text bridge</b></li>
+                  <li>coda velkým C, dvojtečkou a mezerou – <b>C: Text cody</b></li>
+                  <li>předehra se značí pomocí zavináče – <b>@předehra: [Dm][C][F][C][B]</b></li>
+                  <li>podobně se značí mezihra – <b>@mezihra: [Dm][C][F][C][B]</b></li>
+                </ul>
               </p>
             </v-flex>
             <v-flex xs12 md6>

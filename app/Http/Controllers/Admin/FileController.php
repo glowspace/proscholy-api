@@ -59,10 +59,16 @@ class FileController extends Controller
         
         $slugified = str_slug($filename, '-').'.'.$extension;
 
+        $type = 3; // default is sheet music
+
+        if ($extension == "mp3") {
+            $type = 4;
+        }
+
         $file = File::create([
             'filename' => $slugified,
             'path' => $path,
-            'type' => 3 // set default to sheet music
+            'type' => $type // set default to sheet music
         ]);
 
         if ($request->has('song_lyric_id')) {

@@ -92,6 +92,7 @@ type File {
     description: String
     name: String
     filename: String
+    external_type: Int
 }
 
 type Tag {

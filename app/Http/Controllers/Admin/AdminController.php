@@ -19,15 +19,18 @@ class AdminController extends Controller
         return view('admin.dash', [
             'songs_count'        => SongLyric::count(),
             'songs_w_text_count' => SongLyric::where('lyrics', '!=', '')->count(),
-            'songs_w_all_count' => SongLyric::where('lyrics', '!=', '', 'and')
-                ->where('has_chords', '=', true, 'and')
-                ->whereHas('authors', null, 'and')
-                ->whereHas('tags')->count(),
-            'songs_w_just_title_count' => SongLyric::whereNull('lyrics', 'and')
-                ->whereDoesntHave('authors', null, 'and')
-                ->whereDoesntHave('tags', null, 'and')
-                ->whereDoesntHave('songbook_records', null, 'and')
-                ->whereDoesntHave('files', null, 'and')
+            'songs_w_all_count' => SongLyric::where('lyrics', '!=', '')
+                ->where('has_chords', '=', true)
+                ->where(function($query) {
+                    $query->whereHas('authors', null)->orWhere('has_anonymous_author', 1);
+                })->whereHas('tags')->count(),
+            'songs_w_just_title_count' => SongLyric::whereNull('lyrics')
+                ->where(function($query) {
+                    $query->whereDoesntHave('authors', null)->where('has_anonymous_author', 0);
+                })
+                ->whereDoesntHave('tags', null)
+                ->whereDoesntHave('songbook_records', null)
+                ->whereDoesntHave('files', null)
                 ->whereDoesntHave('externals')->count(),
             'authors_count'      => Author::count(),
             'externals_count'    => External::count(),

@@ -5,6 +5,8 @@ namespace App\GraphQL\Queries;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use ScoutElastic\Payloads\TypePayload;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\SongLyric;
 use App\Author;
@@ -23,6 +25,18 @@ class SearchSongLyrics
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
+        if (config('elastic-custom.is-disabled')) {
+            // Elastic disabled by .env, return all songs
+            // return SongLyric::paginate($args['per_page'], 'page', $args['page']);
+
+            $paginator = (new LengthAwarePaginator(SongLyric::all(), SongLyric::count(), $args['per_page'], $args['page'], [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]));
+
+            return $paginator;
+        }
+
         $searchParams = json_decode($args['search_params'], true);
 
         $searchParams['size'] = $args['per_page'];

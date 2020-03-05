@@ -37,23 +37,16 @@
             :class="{'border-top-0': !index}"
           >
             <i
-              v-if="song_lyric.has_lyrics"
-              class="fas fa-align-left text-secondary"
-              title="U této písně je zaznamenán text."
-            ></i>
-            <i v-else class="fas fa-align-left text-very-muted"></i>
-          </td>
-          <td
-            style="width: 10px;"
-            class="no-left-padding align-middle d-none d-sm-table-cell"
-            :class="{'border-top-0': !index}"
-          >
-            <i
               v-if="song_lyric.has_chords"
               class="fas fa-guitar text-primary"
               title="Tato píseň má přidané akordy."
             ></i>
-            <i v-else class="fas fa-guitar text-very-muted"></i>
+            <i
+              v-else-if="song_lyric.has_lyrics"
+              class="fas fa-align-left text-secondary"
+              title="U této písně je zaznamenán text (bez akordů)."
+            ></i>
+            <i v-else class="fas fa-align-left text-very-muted"></i>
           </td>
           <td
             style="width: 10px;"

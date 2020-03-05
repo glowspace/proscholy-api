@@ -6,6 +6,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 use App\External;
+use Exception;
 
 class Externals
 {
@@ -22,14 +23,18 @@ class Externals
     {
         $query = External::query();
 
-        if (isset($args['id']))
-          $query = $query->where('id' , $args['id']);
-
-        if (isset($args['type']))
+        if (array_has($args, 'type'))
           $query = $query->where('type', $args['type']);
 
-        if (isset($args['is_todo']) && $args['is_todo'])
+        if (array_has($args, 'is_todo') && $args['is_todo'])
           $query = $query->todo();
+
+        if (array_has($args, 'orderBy')) {
+          $orderConfig = $args['orderBy'][0];
+
+          // the `field` and `order` elements are validated by lighthouse, no need to check again here
+          $query = $query->orderBy($orderConfig['field'], $orderConfig['order']);
+        }
 
         return $query->get();
     }

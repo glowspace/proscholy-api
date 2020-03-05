@@ -89,8 +89,9 @@ class External extends Model implements ISource
 
     public function scopeTodo($query)
     {
-        return $query->where('author_id', null)->where('has_anonymous_author', 0)
-            ->orWhere('song_lyric_id', null);
+        return $query->where(function ($query) {
+            $query->doesntHave('authors')->where('has_anonymous_author', 0);
+        })->orDoesntHave('song_lyric');
     }
 
     public static function urlAsSpotify($url)

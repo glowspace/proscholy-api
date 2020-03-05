@@ -203,6 +203,11 @@ class File extends Model implements ISource
         return $converter[$this->type];
     }
 
+    public function getExternalTypeAttribute()
+    {
+        return $this->getSourceType();
+    }
+
     public function getMediaId()
     {
         return false;
