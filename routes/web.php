@@ -14,7 +14,7 @@
 /**
  * Public client.
  */
-Route::get('/', 'Client\HomeController@renderHome')->name('client.spa');
+Route::get('/', 'Client\ClientController@spa')->name('client.spa');
 
 // Client single model views
 Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
