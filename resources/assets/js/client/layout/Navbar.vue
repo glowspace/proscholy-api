@@ -10,12 +10,13 @@
                          alt="logo">Zpěvník pro scholy</a>
 
                 <div class="d-inline-flex">
-                    <a href=""
-                       class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
+                    <router-link to="/"
+                                 class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání
+                    </router-link>
 
-                    <a href=""
+                    <router-link to="o-zpevniku"
                        class="btn btn-secondary">
-                        <i class="fas fa-info"></i> O zpěvníku</a>
+                        <i class="fas fa-info"></i> O zpěvníku</router-link>
 
                     <dark-mode-button v-cloak> Tmavý mód</dark-mode-button>
                 </div>

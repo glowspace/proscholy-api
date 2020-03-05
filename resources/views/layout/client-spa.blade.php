@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('wrapper-classes', 'home')
+c
 @section('google-analytics')
      <!-- Google Analytics -->
      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>

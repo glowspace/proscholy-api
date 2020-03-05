@@ -1,8 +1,8 @@
 import VueRouter from "vue-router";
 
 import AboutSongBook from "./about/AboutSongBook";
-import Song from "./song/Song";
 import Search from "./search/Search";
+import SongView from "./song/SongView";
 
 /*
 Client application Vue Router
@@ -12,7 +12,8 @@ Client application Vue Router
 const routes = [
     {path: '/', component: Search},
     {path: '/o-zpevniku', component: AboutSongBook},
-    {path: '/song', component: Song}
+    {path: '/pisen/:id/:slug', component: SongView},
+    {path: '/muj-zpevnik', component: SongView}
 ];
 
 // Client app Vue router instance.
