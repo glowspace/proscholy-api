@@ -167,7 +167,7 @@
 
     export default {
         name: "AboutSongBook",
-        components: {UserCard}
+        components: {UserCard},
     }
 </script>
 

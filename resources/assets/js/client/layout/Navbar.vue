@@ -2,12 +2,11 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
             <div class="container">
-                <a class="navbar-brand"
-                   href="/">
+                <router-link to="/" class="navbar-brand">
                     <img src="img/logo_v2.png"
                          style="padding: 0 10px 0 0;"
                          width="60"
-                         alt="logo">Zpěvník pro scholy</a>
+                         alt="logo">Zpěvník pro scholy</router-link>
 
                 <div class="d-inline-flex">
                     <router-link to="/"
@@ -32,16 +31,16 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
             <div class="container">
-                <a href="/"
+                <router-link to="/"
                    class="btn">
                     <img src="img/logo_v2.png"
                          height="24"
-                         alt="logo"></a>
-                <a href="/"
-                   class="btn btn-secondary"><i class="fas fa-search"></i></a>
+                         alt="logo"></router-link>
+                <router-link to="/"
+                   class="btn btn-secondary"><i class="fas fa-search"></i></router-link>
 
-                <a href=""
-                   class="btn btn-secondary"><i class="fas fa-info"></i></a>
+                <router-link to="/o-zpevniku"
+                   class="btn btn-secondary"><i class="fas fa-info"></i></router-link>
 
                 <dark-mode-button></dark-mode-button>
             </div>

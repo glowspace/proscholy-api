@@ -135,6 +135,14 @@
             }
         },
 
+        beforeCreate: function() {
+            document.body.className = 'home';
+        },
+
+        beforeDestroy() {
+            document.body.className = '';
+        },
+
         methods: {
             updateSelectedTagsDcnf(event) {
                 this.selected_tags_dcnf = event;
@@ -265,23 +273,6 @@
 </script>
 
 <style lang="scss">
-    body {
-        background-image: url("/img/bg_center.svg");
-        background-color: #da3926;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-
-        min-height: 100%;
-        padding: 0;
-        margin: 0;
-        position: relative;
-    }
-
-    body.dark {
-        background-image: url("/img/bg_center_dark.svg");
-    }
-
     .filter-panel {
         display: block;
     }

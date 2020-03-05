@@ -35,6 +35,27 @@ h4 {
   margin: 0.7em 0;
 }
 
+/**
+SPA body variants
+ */
+body.home {
+    background-image: url("/img/bg_center.svg");
+    background-color: #da3926;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+body.dark {
+    background-image: url("/img/bg_center_dark.svg");
+}
+
+
 .material-shadow {
   -webkit-box-shadow: #1a1f21c2 2px 2px 6px;
   box-shadow: #1a1f21c2 2px 2px 6px;
@@ -159,19 +180,7 @@ Home page specific elements
   }
 }
 
-.background-home {
-  background-image: url("/img/bg_center.svg");
-  background-color: #da3926;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  flex: 1;
-  // min-height: 450px;
 
-  @include media-breakpoint-down(sm) {
-    // background-position: -170.5px 0;
-  }
-}
 
 .logo-wrapper {
   text-align: center;
