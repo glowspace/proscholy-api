@@ -9,7 +9,7 @@ use App\External;
 
 class HomeController extends Controller
 {
-    public function renderHome()
+    public function renderSpa()
     {
         return view('client.spa');
 
@@ -25,10 +25,5 @@ class HomeController extends Controller
             'top_authors'   => $top_authors,
         ]);
         */
-    }
-
-    public function renderAboutSongbook()
-    {
-        return view('client.about_songbook');
     }
 }
