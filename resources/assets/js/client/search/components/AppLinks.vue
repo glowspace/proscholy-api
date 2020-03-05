@@ -31,5 +31,19 @@
 </script>
 
 <style scoped>
+    .app-download {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 
+    .app-download div * {
+        color: white !important;
+    }
+
+    .app-download span.btn {
+        background-color: transparent !important;
+        cursor: initial !important;
+    }
 </style>

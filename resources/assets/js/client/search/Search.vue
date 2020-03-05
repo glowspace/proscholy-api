@@ -3,10 +3,8 @@
         <div class="container">
 
             <div :class="[init?'home-init':'home-afterinit']">
-                <div class="logo-wrapper">
-                    <div class="logo"></div>
-                    <span class="caption noselect">Zpěvník</span>
-                </div>
+                <logo/>
+
                 <div class="row fixed-top position-sticky mt-n4 justify-content-center zindex-lower">
                     <div :class="[{'col-lg-6': init}, 'col-lg-8 px-1 pt-5 pb-3 search-column']">
                         <div class="search-wrapper shadow">
@@ -74,7 +72,6 @@
                                 ></SongsList>
                             </div>
                         </div>
-                        <!-- <AuthorsList v-bind:search-string="search_string"></AuthorsList> -->
                     </div>
                     <div class="col-lg-4 d-none d-lg-block desktop-filter-container">
                         <div class="fixed-top position-sticky">
@@ -91,7 +88,7 @@
                     </div>
                 </div>
 
-                <app-links v-if="init" />
+                <app-links v-if="init"/>
 
                 <a class="btn btn-secondary mb-0 search-report bg-transparent"
                    target="_blank"
@@ -109,6 +106,7 @@
     import SongsList from "./components/SongsList";
     import Filters from "./components/Filters";
     import AppLinks from "./components/AppLinks";
+    import Logo from "./components/Logo";
 
     /**
      * Root search component.
@@ -240,6 +238,7 @@
         },
 
         components: {
+            Logo,
             AppLinks,
             AuthorsList,
             SongsList,
@@ -265,13 +264,14 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     body {
         background-image: url("/img/bg_center.svg");
         background-color: #da3926;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
+
         min-height: 100%;
         padding: 0;
         margin: 0;
@@ -284,22 +284,6 @@
 
     .filter-panel {
         display: block;
-    }
-
-    .app-download {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
-    .app-download div * {
-        color: white !important;
-    }
-
-    .app-download span.btn {
-        background-color: transparent !important;
-        cursor: initial !important;
     }
 
     .btn.search-report {
