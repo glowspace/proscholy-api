@@ -90,28 +90,9 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="init"
-                     class="pt-5 pb-3 h2 mb-0 invisible">
-                    <div><i class="fab fa-android"></i></div>
-                    <div><i class="fab fa-apple"></i></div>
-                </div>
-                <div v-if="init"
-                     class="text-center pt-5 text-white app-download pb-3 h2 mb-0">
-                    <div>
-                        <a href="http://play.google.com/store/apps/details?id=jozkar.mladez"
-                           target="_blank"><i class="fab fa-android"></i></a>
-                        <span class="btn px-2 font-weight-bold">APLIKACE</span>
-                        <a href="http://itunes.apple.com/app/zpěvník-pro-scholy/id1475375453"
-                           target="_blank"><i class="fab fa-apple"></i></a>
-                    </div>
-                    <div>
-                        <a href="https://www.facebook.com/proscholy/"
-                           target="_blank"><i class="fab fa-facebook"></i></a>
-                        <span class="btn px-2 font-weight-bold">SOCIÁLNÍ SÍTĚ</span>
-                        <a href="https://www.instagram.com/zpevnik.proscholy.cz/"
-                           target="_blank"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+
+                <app-links v-if="init" />
+
                 <a class="btn btn-secondary mb-0 search-report bg-transparent"
                    target="_blank"
                    title="Nahlásit"
@@ -123,67 +104,17 @@
     </div>
 </template>
 
-<style>
-    body {
-        background-image: url("/img/bg_center.svg");
-        background-color: #da3926;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        min-height: 100%;
-        padding: 0;
-        margin: 0;
-        position: relative;
-    }
-
-    body.dark {
-        background-image: url("/img/bg_center_dark.svg");
-    }
-
-    .filter-panel {
-        display: block;
-    }
-
-    .app-download {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
-    .app-download div * {
-        color: white !important;
-    }
-
-    .app-download span.btn {
-        background-color: transparent !important;
-        cursor: initial !important;
-    }
-
-    .btn.search-report {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        color: #292929;
-        opacity: 0.5;
-        transition: 0.2s;
-    }
-
-    .btn.search-report:hover {
-        color: #292929;
-        opacity: 1;
-    }
-
-    .home {
-        position: relative;
-    }
-</style>
-
 <script>
-    import AuthorsList from "./AuthorsList";
-    import SongsList from "./SongsList";
-    import Filters from "./Filters";
+    import AuthorsList from "./components/AuthorsList";
+    import SongsList from "./components/SongsList";
+    import Filters from "./components/Filters";
+    import AppLinks from "./components/AppLinks";
 
+    /**
+     * Root search component.
+     *
+     * Toggles 2 views (SearchHome and SearchResults).
+     */
     export default {
         props: {
             "str-prefill": String
@@ -191,12 +122,16 @@
 
         data() {
             return {
+                // Search data
                 search_string: "",
                 selected_songbooks: {},
                 selected_languages: {},
                 selected_tags: {},
+
                 // dcnf - disjunctive canonical normal form :)
                 selected_tags_dcnf: {},
+
+                // View state
                 init: true,
                 displayFilter: false
             }
@@ -212,7 +147,7 @@
                     return;
 
                 let url = "/search?";
-                let params = []
+                let params = [];
 
                 params.push("searchString=" + this.search_string);
                 params.push("tags=" + Object.keys(this.selected_tags));
@@ -305,15 +240,21 @@
         },
 
         components: {
+            AppLinks,
             AuthorsList,
             SongsList,
             Filters
         },
 
         computed: {
+            /**
+             * Note that there has to be sth together at the line with return,
+             * otherwise js will see only return; and don't give a f*ck about the things below.
+             *
+             * @returns {boolean}
+             */
             filters_active() {
-                // note that there has to be sth together at the line with return,
-                // otherwise js will see only return; and don't give a f*ck about the things below
+
                 return (
                     Object.keys(this.selected_songbooks).length +
                     Object.keys(this.selected_tags).length +
@@ -323,3 +264,59 @@
         }
     }
 </script>
+
+<style>
+    body {
+        background-image: url("/img/bg_center.svg");
+        background-color: #da3926;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        min-height: 100%;
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+
+    body.dark {
+        background-image: url("/img/bg_center_dark.svg");
+    }
+
+    .filter-panel {
+        display: block;
+    }
+
+    .app-download {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .app-download div * {
+        color: white !important;
+    }
+
+    .app-download span.btn {
+        background-color: transparent !important;
+        cursor: initial !important;
+    }
+
+    .btn.search-report {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        color: #292929;
+        opacity: 0.5;
+        transition: 0.2s;
+    }
+
+    .btn.search-report:hover {
+        color: #292929;
+        opacity: 1;
+    }
+
+    .home {
+        position: relative;
+    }
+</style>

@@ -163,7 +163,7 @@
               // encode the elasticsearch attributes into an object and send as JSON text
               // for docs see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 
-              // all the searchable fields are defined in App\SongLyrics: toSearchableArray() and $mapping attr 
+              // all the searchable fields are defined in App\SongLyrics: toSearchableArray() and $mapping attr
 
               // also, the Kibana tool can be used for debugging the elasticsearch requests
               // see docker-compose.yml
@@ -250,7 +250,7 @@
                     }
                   }
                 });
-            }, 
+            },
 
             getSongNumber(song_lyric, getfirstPart) {
               if (this.preferred_songbook_id === null) {
