@@ -5,7 +5,12 @@
 </template>
 
 <script>
+    /**
+     * Dark mode button.
+     */
     export default {
+        name: 'dark-mode-button',
+
         methods:{
             darkModeToggle: function() {
 				document.getElementsByTagName("body")[0].classList.toggle("dark");

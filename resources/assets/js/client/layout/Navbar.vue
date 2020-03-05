@@ -17,7 +17,7 @@
                        class="btn btn-secondary">
                         <i class="fas fa-info"></i> O zpěvníku</a>
 
-                    <dark-mode-button v-cloak> Tmavý&nbsp;mód</dark-mode-button>
+                    <dark-mode-button v-cloak> Tmavý mód</dark-mode-button>
                 </div>
 
                 <div class="d-inline-flex">
@@ -49,8 +49,12 @@
 </template>
 
 <script>
+    import DarkModeButton from "../../components/DarkModeButton";
+
     export default {
-        name: "Navbar"
+        name: "Navbar",
+
+        components: {DarkModeButton}
     }
 </script>
 
