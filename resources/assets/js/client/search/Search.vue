@@ -135,7 +135,8 @@
             }
         },
 
-        beforeCreate: function() {
+
+        beforeCreate: function () {
             document.body.className = 'home';
         },
 
@@ -152,15 +153,17 @@
                 if (this.init)
                     return;
 
-                let url = "/search?";
+                let url = "/search/";
                 let params = [];
 
-                params.push("searchString=" + this.search_string);
+                params.push("q=" + this.search_string);
                 params.push("tags=" + Object.keys(this.selected_tags));
                 params.push("langs=" + Object.keys(this.selected_languages));
                 params.push("songbooks=" + Object.keys(this.selected_songbooks));
 
-                history.pushState(null, "", url + params.join("&"));
+             //   history.pushState(null, "", url + params.join("&"));
+
+                this.$router.push({path: url + params.join("&")})
             },
 
             applyStateChange(event) {
