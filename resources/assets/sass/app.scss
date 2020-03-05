@@ -4,13 +4,13 @@ Imports
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
 @font-face {
-    font-family: "Luckiest Guy";
-    src: url("/fonts/luckiest-guy.regular.ttf");
+  font-family: "Luckiest Guy";
+  src: url("/fonts/luckiest-guy.regular.ttf");
 }
 
 @font-face {
-    font-family: "Cocogoose";
-    src: url("/fonts/cocogoose-pro-regular.ttf");
+  font-family: "Cocogoose";
+  src: url("/fonts/cocogoose-pro-regular.ttf");
 }
 
 @import "variables";
@@ -32,29 +32,30 @@ h1,
 h2,
 h3,
 h4 {
-    margin: 0.7em 0;
+  margin: 0.7em 0;
 }
 
 .material-shadow {
-    -webkit-box-shadow: #1a1f21c2 2px 2px 6px;
-    box-shadow: #1a1f21c2 2px 2px 6px;
+  -webkit-box-shadow: #1a1f21c2 2px 2px 6px;
+  box-shadow: #1a1f21c2 2px 2px 6px;
 }
 
 .material-shadow-text {
-    text-shadow: #1a1f21c2 2px 2px 6px;
+  text-shadow: #1a1f21c2 2px 2px 6px;
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 .card {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /**
@@ -63,224 +64,348 @@ Layout
 
 html,
 body {
-    height: 100%;
-    overflow-x: visible;
+  height: 100%;
+  overflow-x: visible;
 }
 
 input::placeholder {
-    line-height: inherit;
+  line-height: inherit;
 }
 
 [v-cloak] {
-    display: none;
+  display: none;
 }
 
 .search-home,
 .form-control {
-    line-height: calc((2.3775rem + 2px) / 1.5);
+  line-height: calc((2.3775rem + 2px) / 1.5);
 }
 
 .navbar {
-    z-index: 200;
-    background-color: #292929;
-    min-height: 66px;
-    font-family: "Nunito", sans-serif;
+  z-index: 200;
+  background-color: #292929;
+  min-height: 66px;
+  font-family: "Nunito", sans-serif;
 }
 
 .navbar-brand {
-    padding: 0 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .navbar-label {
-    padding: 3px 10px;
+  padding: 3px 10px;
 
-    background-color: #292929;
-    color: white;
+  background-color: #292929;
+  color: white;
 }
 
+// .content {
+  // height:     calc(100% - 66px);
+  // width:      calc(100% - #{$sidebar-width});
+
+  // margin-top: 66px;
+
+  // @include media-breakpoint-up(lg) {
+  //   margin-left: 300px;
+  // }
+
+  // // On md and above navbar is hidden
+  // @include media-breakpoint-down(md) {
+  //   width:               100%;
+
+  //   background-position: -290.5px -11px;
+  // }
+
+  // padding:    0;
+
+  // overflow-x: hidden;
+// }
+
+// .content-padding {
+//   padding: 0 30px 20px;
+// }
+
+// .content-padding-top {
+//   padding-top: 30px;
+// }
 
 /**
 Home page specific elements
  */
 
 .home {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 
-    .card {
-        opacity: 0.9;
-    }
+  .card {
+    opacity: 0.9;
+  }
 }
 
 .home .home-init {
-    .search-balance {
-        max-width: 0;
-        padding: 0;
-    }
+  .search-balance {
+    max-width: 0;
+    padding: 0;
+  }
 }
 
 .home .home-afterinit {
-    .logo-wrapper {
-        opacity: 0;
-        height: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+  .logo-wrapper {
+    opacity: 0;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .background-home {
-    background-image: url("/img/bg_center.svg");
-    background-color: #da3926;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    flex: 1;
-    // min-height: 450px;
+  background-image: url("/img/bg_center.svg");
+  background-color: #da3926;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  flex: 1;
+  // min-height: 450px;
 
-    @include media-breakpoint-down(sm) {
-        // background-position: -170.5px 0;
-    }
+  @include media-breakpoint-down(sm) {
+    // background-position: -170.5px 0;
+  }
 }
 
+.logo-wrapper {
+  text-align: center;
+  margin-top: 130px;
+  transition: 0.5s;
+  height: 160px;
+  margin-right: -15px;
+  margin-left: -15px;
+
+  @include media-breakpoint-down(sm) {
+    margin-top: 110px;
+    margin-bottom: -50px;
+    height: 90px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    margin-top: 90px;
+    margin-bottom: -70px;
+    height: 70x;
+  }
+
+  .logo {
+    height: 130px;
+    width: 130px;
+
+    display: inline-block;
+    position: relative;
+    top: 27px;
+
+    background-image: url(/img/logo_bubble.svg);
+    background-position: center;
+    background-size: 149%;
+
+    @include media-breakpoint-down(sm) {
+      top: 2px;
+      height: 50px;
+      width: 50px;
+
+      margin-right: 6px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      top: 0;
+      height: 30px;
+      width: 30px;
+
+      margin-right: 3px;
+    }
+  }
+
+  .caption {
+    font-size: 118px;
+    color: white;
+
+    line-height: 160px;
+
+    font-family: "Cocogoose", "Arial Black", sans-serif;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 60px;
+      line-height: 60px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 40px;
+      line-height: 40px;
+    }
+  }
+}
 
 .card-blue {
-    border-radius: 3px;
+  border-radius: 3px;
+  .card-header {
+    color: white;
+    background-color: $main-blue !important;
 
-    .card-header {
-        color: white;
-        background-color: $main-blue !important;
-
-        border-radius: 3px 3px 0 0;
-
-        a {
-            color: white;
-            font-weight: bold;
-        }
-    }
+    border-radius: 3px 3px 0 0;
 
     a {
-        color: $main-blue;
+      color: white;
+      font-weight: bold;
     }
+  }
+
+  a {
+    color: $main-blue;
+  }
 }
 
 .card-green {
-    border-radius: 3px;
+  border-radius: 3px;
+  .card-header {
+    color: white;
+    background-color: $main-green !important;
 
-    .card-header {
-        color: white;
-        background-color: $main-green !important;
+    border-radius: 3px 3px 0 0;
 
-        border-radius: 3px 3px 0 0;
-
-        a,
-        a:hover {
-            color: white;
-        }
+    a,
+    a:hover {
+      color: white;
     }
+  }
 
-    a {
-        color: $main-green;
-    }
+  a {
+    color: $main-green;
+  }
 }
 
 .card-red {
-    border-radius: 3px;
+  border-radius: 3px;
+  .card-header {
+    color: white;
+    background-color: $main-red !important;
 
-    .card-header {
-        color: white;
-        background-color: $main-red !important;
-
-        border-radius: 3px 3px 0 0;
-
-        a {
-            color: white;
-        }
-    }
+    border-radius: 3px 3px 0 0;
 
     a {
-        color: $main-red;
+      color: white;
     }
+  }
+
+  a {
+    color: $main-red;
+  }
 }
 
 .text-very-muted {
-    color: #efefef;
+  color: #efefef;
 }
 
 .no-left-padding {
-    padding-left: 2px !important;
+  padding-left: 2px !important;
 }
 
 .author-secondary-links a {
-    color: #6c757d !important;
+  color: #6c757d !important;
 }
 
 .navbar-dark .navbar-text.user-logged-in-btn {
-    color: #aaa;
+  color: #aaa;
 
-    &:hover {
-        text-decoration: none;
-    }
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .error {
-    color: white;
-    text-align: center;
+  color: white;
+  text-align: center;
 
-    h1 {
-        font-size: calc(4vw + 50px);
-        font-weight: bold;
-        margin-bottom: 0;
-    }
+  h1 {
+    font-size: calc(4vw + 50px);
+    font-weight: bold;
+    margin-bottom: 0;
+  }
 
-    p {
-        font-size: calc(2vw + 10px);
-    }
+  p {
+    font-size: calc(2vw + 10px);
+  }
 
-    .display-all-songs {
-        font-size: calc(1vw + 10px);
-    }
+  .display-all-songs {
+    font-size: calc(1vw + 10px);
+  }
 }
 
 .stretched-link {
-    position: static;
-    will-change: initial;
+  position: static;
+  will-change: initial;
 }
 
 .stretched-link::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    pointer-events: auto;
-    content: "";
-    background-color: rgba(0, 0, 0, 0);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: "";
+  background-color: rgba(0,0,0,0);
 }
 
 .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
 
-    @include media-breakpoint-down(sm) {
-        position: relative;
-        height: auto;
-        padding-top: 1rem;
-        width: 100%;
-    }
+  @include media-breakpoint-down(sm) {
+    position: relative;
+    height: auto;
+    padding-top: 1rem;
+    width: 100%;
+  }
 }
 
 .minw-45 {
-    min-width: 45%;
+  min-width: 45%;
 }
 
 .w-min {
-    width: 1%;
+  width: 1%;
 }
 
+.our-team {
+  h4 {
+    transition: padding 0.2s;
+  }
+
+  &:hover h4 {
+    padding-left: 0.5rem;
+  }
+
+  .flex-wrap {
+    margin: 0 -10px;
+
+    .card {
+      flex: 0 0 calc(100% / 3 - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
+      @include media-breakpoint-between(sm, md) {
+        flex: 0 0 calc(100% / 2 - 20px);
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-bottom: 15px;
+
+        .card-body {
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}
