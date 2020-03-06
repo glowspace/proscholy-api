@@ -21,8 +21,8 @@
                 </div>
 
                 <div class="d-inline-flex">
-                    <a href=""
-                       class="btn btn-secondary"><i class="fas fa-user"></i> Uživatel</a>
+                    <router-link to="/muj-ucet"
+                       class="btn btn-secondary"><i class="fas fa-user"></i> Uživatel</router-link>
                 </div>
             </div>
         </nav>

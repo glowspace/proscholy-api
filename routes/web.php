@@ -12,7 +12,7 @@
 */
 
 // Client single model views
-Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
+//Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
 
 // TODO: Songbook view
