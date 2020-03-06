@@ -148,3 +148,31 @@ type SongLyricPaginator {
     data: [SongLyric!]! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver")
     paginatorInfo: PaginatorInfo! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver")
 }
+
+type SongPart {
+    type: Int!
+    isHidden: Boolean
+    isHiddenText: Boolean
+    isEmpty: Boolean
+    isVerse: Boolean
+    isRefrain: Boolean
+    isInline: Boolean
+    songLines: [SongLine]
+}
+
+type SongLine {
+    chords: [Chord]
+}
+
+type Chord {
+    base: String
+    variant: String
+    extension: String
+    bass: String
+
+    isSubstitute: Boolean
+    isOptional: Boolean
+    isDivided: Boolean
+
+    text: String
+}
