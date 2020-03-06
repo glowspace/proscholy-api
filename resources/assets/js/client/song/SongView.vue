@@ -44,14 +44,14 @@
               <div class="row ml-0" v-if="!$apollo.loading">
                 <table class="table m-0 w-auto">
                   <external-line v-for="(score, index) in scores"
-                  v-bind:key="index"
-                  :index="index"
-                  :url="score.url"
-                  :download-url="score.download_url"
-                  :song-name="song_lyric.name"
-                  :name="score.public_name"
-                  :type="score.type"
-                  :authors="score.authors"
+                    v-bind:key="index"
+                    :index="index"
+                    :url="score.url"
+                    :download-url="score.download_url"
+                    :song-name="song_lyric.name"
+                    :name="score.public_name"
+                    :type="score.type"
+                    :authors="score.authors"
                   ></external-line>
                 </table>
               </div>
@@ -121,7 +121,8 @@
                   <i>capo: {{ song_lyric.capo }}</i>
                 </div>
                 <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
-                <slot></slot>
+                <!-- <slot></slot> -->
+                <song-lyric-parts :song-id="songId"></song-lyric-parts>
               </div>
               <right-controls></right-controls>
 
@@ -362,6 +363,7 @@ import ChordSharpFlat from "./ChordSharpFlat";
 import RightControls from "./RightControls";
 import Transposition from "./Transposition";
 import TranslationLine from "./TranslationLine.vue";
+import SongLyricParts from "./SongLyricParts.vue";
 import ExternalView from "Public/components/ExternalView.vue";
 import ExternalLine from "Public/components/ExternalLine.vue";
 
@@ -432,7 +434,8 @@ export default {
     ExternalLine,
     RightControls,
     Transposition,
-    TranslationLine
+    TranslationLine,
+    SongLyricParts
   },
 
   data() {
@@ -550,17 +553,17 @@ export default {
   },
 
   mounted() {
-    if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "") {
-      document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
-      if(this.renderMedia) {
-        this.bottomMode = 2;
-      }
-      if(this.renderScores) {
-        this.topMode = 1;
-      } else if(this.renderTranslations) {
-        this.topMode = 2;
-      }
-    }
+    // if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "") {
+    //   document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
+    //   if(this.renderMedia) {
+    //     this.bottomMode = 2;
+    //   }
+    //   if(this.renderScores) {
+    //     this.topMode = 1;
+    //   } else if(this.renderTranslations) {
+    //     this.topMode = 2;
+    //   }
+    // }
   }
 };
 </script>
