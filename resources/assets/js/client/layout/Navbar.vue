@@ -13,7 +13,7 @@
                                  class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání
                     </router-link>
 
-                    <router-link to="o-zpevniku"
+                    <router-link to="/o-zpevniku"
                        class="btn btn-secondary">
                         <i class="fas fa-info"></i> O zpěvníku</router-link>
 

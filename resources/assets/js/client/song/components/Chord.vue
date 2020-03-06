@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import { store } from "./store.js";
-    
+    import { store } from "../store.js";
+
     export default {
         props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
 
@@ -42,7 +42,7 @@
             }
 
             // I'm a B-flat chord -> set flats as default
-            if (this.base === "B" || 
+            if (this.base === "B" ||
                 (this.base.length > 1 && this.base[1] === "b")) {
                 this.chordSharedStore.useFlatScale = true;
                 this.chordSharedStore.useFlatScale_notified = true;
@@ -84,7 +84,7 @@
                 }
 
                 let new_i = (chord_i + semitones + 12) % 12;
-                
+
                 return scale[new_i];
             }
         }

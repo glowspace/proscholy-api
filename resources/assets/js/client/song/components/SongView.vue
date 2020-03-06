@@ -19,7 +19,7 @@
             @click="topMode=(topMode==2)?0:2"
           >
             <i class="fas fa-language"></i>
-            <span class="d-none d-sm-inline">Překlady</span> 
+            <span class="d-none d-sm-inline">Překlady</span>
           </a>
           <!-- <a class="btn btn-secondary">
             <i class="fas fa-file-export"></i>
@@ -138,7 +138,7 @@
               </div>-->
           </div>
         </div>
-        
+
         <div
           class="controls fixed-bottom position-sticky p-1"
           v-bind:class="{'card-footer': controlsDisplay}"
@@ -353,7 +353,7 @@
 
 
 <script>
-import { store } from "./store.js";
+import { store } from "../store.js";
 
 import FontSizer from "./FontSizer";
 import ChordMode from "./ChordMode";
@@ -516,7 +516,7 @@ export default {
           [4, 8, 9].includes(ext.type)
         );
         const filteredFiles = this.song_lyric.files
-          .map(mapFile) 
+          .map(mapFile)
           .filter(file => [4, 8, 9].includes(file.type));
 
         return [...filteredExternals, ...filteredFiles];

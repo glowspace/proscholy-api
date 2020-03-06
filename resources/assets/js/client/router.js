@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 
 import AboutSongBook from "./about/AboutSongBook";
 import Search from "./search/Search";
-import SongView from "./song/SongView";
+import SongView from "./song/components/SongView";
 
 /*
 Client application Vue Router
