@@ -54,6 +54,10 @@ class SongPart{
         return $this->type;
     }
 
+    function getSongLines() {
+        return $this->song_lines;
+    }
+
     function getSongPartTag() {
         if ($this->isVerse()) {
             return $this->getVerseNumber() . '.&nbsp;';
@@ -100,30 +104,30 @@ class SongPart{
         $this->song_lines[] = new SongLine($line, $this->ch_queue);
     }
 
-    function toHTML()
-    {
-        $class = "song-part";
-        $class .= $this->isRefrain() ? " song-part-refrain" : "";
-        $class .= $this->isHidden() ? " song-part-hidden" : "";
-        $class .= $this->isHiddenText() ? " song-part-hidden-text" : "";
-        $class .= $this->isInline() ? " song-part-inline" : "";
+    // function toHTML()
+    // {
+    //     $class = "song-part";
+    //     $class .= $this->isRefrain() ? " song-part-refrain" : "";
+    //     $class .= $this->isHidden() ? " song-part-hidden" : "";
+    //     $class .= $this->isHiddenText() ? " song-part-hidden-text" : "";
+    //     $class .= $this->isInline() ? " song-part-inline" : "";
 
-        $html = '<div class="' . $class .'">';
+    //     $html = '<div class="' . $class .'">';
 
-        for ($i = 0; $i < count($this->song_lines); $i++) {
-            $line = $this->song_lines[$i];
+    //     for ($i = 0; $i < count($this->song_lines); $i++) {
+    //         $line = $this->song_lines[$i];
 
-            if ($i == 0 && $this->type !== "") {
-                $html .= $line->toHTML($this->getSongPartTag());
-            } else {
-                $html .= $line->toHTML();
-            }
-        }
+    //         if ($i == 0 && $this->type !== "") {
+    //             $html .= $line->toHTML($this->getSongPartTag());
+    //         } else {
+    //             $html .= $line->toHTML();
+    //         }
+    //     }
 
-        $html .= '</div>';
+    //     $html .= '</div>';
 
-        return $html;
-    }
+    //     return $html;
+    // }
 
     public function __toString()
     {

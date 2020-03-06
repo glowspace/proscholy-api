@@ -42,20 +42,25 @@ class SongLine {
         // return $string;
     }
 
-    public function toHTML($songPartTag = null)
+    public function getChords()
     {
-        $html = '<div class="song-line">';
-
-        if (isset($songPartTag)) {
-            $html .= '<song-part-tag>' . $songPartTag . '</song-part-tag>';
-        }
-        
-        foreach ($this->chords as $ch) {
-            $html .= $ch->toHTML();
-        }
-
-        $html .= '</div>';
-
-        return $html;
+        return $this->chords;
     }
+
+    // public function toHTML($songPartTag = null)
+    // {
+    //     $html = '<div class="song-line">';
+
+    //     if (isset($songPartTag)) {
+    //         $html .= '<song-part-tag>' . $songPartTag . '</song-part-tag>';
+    //     }
+        
+    //     foreach ($this->chords as $ch) {
+    //         $html .= $ch->toHTML();
+    //     }
+
+    //     $html .= '</div>';
+
+    //     return $html;
+    // }
 }
