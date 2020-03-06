@@ -13,7 +13,7 @@
             </a>
           </td>
           <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
-            <a class="p-2 w-100 d-inline-block" :href="song_lyric.public_url">{{ song_lyric.name }}</a>
+            <router-link class="p-2 w-100 d-inline-block" :to="song_lyric.public_url">{{ song_lyric.name }}</router-link>
           </td>
           <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
             <span v-for="(author, authorIndex) in song_lyric.authors" :key="authorIndex">
@@ -119,7 +119,7 @@
                 data {
                   id,
                   name,
-                  public_url,
+                  public_uri,
                   lang,
                   lang_string,
                   scoreExternals: externals(type: 4){id},

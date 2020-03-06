@@ -10,93 +10,57 @@
                     </p>
                 </div>
             </div>
-            <div class="song-tags p-0 mt-3">
-                <div class="d-inline-flex flex-row flex-wrap align-items-start mr-3"
-                     v-if="tags.officials.length && tags.unofficials.length">
-                    @foreach ($tags_officials as $tag)
-                    <a class="tag tag-blue"
-                       href="{{route("
-                       client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name
-                    }}</a>
-                    @endforeach
-                    @foreach ($tags_unofficials as $tag)
-                    @if ($tag->parent_tag == null)
-                    {{-- do not display the parent tag as for now --}}
-                    {{-- <a class="tag tag-green">{{ $tag->name }}</a> --}}
-                    @else
-                    <a class="tag tag-green"
-                       href="{{route("
-                       client.search_results")}}?searchString=&tags={{ $tag->id }}&langs=&songbooks=">{{ $tag->name
-                    }}</a>
-                    @endif
-                    @endforeach
-                </div>
 
-                <!-- Liturgy ČBK approval -->
-                <div class="d-inline-flex flex-row flex-wrap align-items-start mr-3"
-                     v-if="song.liturgy_approval_status">
-                    <a class="tag tag-blue">{{song.liturgy_approval_status_string_values[song.liturgy_approval_status]}}
-                        <i class="fas fa-check"></i></a>
-                </div>
-
-                <div class="d-inline-flex flex-row flex-wrap align-items-start"
-                     v-if="songbook_records">
-                    @foreach ($songbook_records as $record)
-                    {{-- <a class="tag tag-yellow"
-                            title="{{ $record->name }}"
-                            href="{{route("
-                            client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id }}">{{
-                    $record->name . ' ' . $record->pivot->number }}</a> --}}
-                    <a class="tag tag-yellow songbook-tag"
-                       title="{{ $record->name }}"
-                       href="{{route("
-                       client.search_results")}}?searchString=&tags=&langs=&songbooks={{ $record->id
-                    }}"><span class="songbook-name">{{ $record->name }}</span><span class="songbook-number">{{ $record->pivot->number }}</span></a>
-                    @endforeach
-                </div>
-
-            </div>
+            <!--tags :song="song"/ -->
         </div>
+
         <song-view
-            song-id="{{$song_l->id}}"
-            render-media="{{ ($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() + $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())?true:false }}"
-            render-scores="{{ ($song_l->scoresCount())?true:false }}"
-            render-translations="{{ ($song_l->song->song_lyrics()->count() > 1)?true:false }}"
+            :song-id="song.id"
+            :render-media="song.youtubeVideos.length + song.spotifyTracks.length + song.soundcloudTracks.count + song.audioFiles.count"
+            :render-scores="song.scoresCount.length"
+            :render-translations="song.renderTranslations"
         >
-            {!! $song_l->getFormattedLyrics() !!}
+
+            {{ song.getFormattedLyrics }}
+
             <template v-slot:score>
-                @if($song_l->scoreFiles()->count() + $song_l->scoreExternals()->count())
-                <div class="card-header media-opener py-2 rounded">
+                <div class="card-header media-opener py-2 rounded"
+                     v-if="song.scoreFiles.length + song.scoreExternals.length">
                     <i class="fas fa-file-alt"></i>
                     Zobrazit notové zápisy
                 </div>
-                @endif
             </template>
+
             <template v-slot:media>
-                @if($song_l->youtubeVideos()->count() + $song_l->spotifyTracks()->count() +
-                $song_l->soundcloudTracks()->count() + $song_l->audioFiles()->count())
-                <div class="card-header media-opener py-2">
-                    <i class="fas fa-headphones"></i>
-                    Dostupné nahrávky<span class="d-none d-xl-inline"> a videa</span>
+                <div v-if="song.youtubeVideos.length + song.spotifyTracks.length +
+                    song.soundcloudTracks.length + song.audioFiles.length">
+
+                    <div class="card-header media-opener py-2">
+                        <i class="fas fa-headphones"></i>
+                        Dostupné nahrávky<span class="d-none d-xl-inline"> a videa</span>
+                    </div>
+
+                    <div class="media-opener"
+                         v-if="song.spotifyTracks.length">
+                        <i class="fab fa-spotify text-success"></i> Spotify
+                    </div>
+
+                    <div class="media-opener"
+                         v-if="song.soundcloudTracks.length">
+                        <i class="fab fa-soundcloud"
+                           style="color: orangered;"></i> SoundCloud
+                    </div>
+
+                    <div class="media-opener"
+                         v-if="song.audioFiles.length">
+                        <i class="fas fa-music"></i> MP3
+                    </div>
+
+                    <div class="media-opener"
+                         v-if="song.youtubeVideos.length">
+                        <i class="fab fa-youtube text-danger"></i> YouTube
+                    </div>
                 </div>
-                @if($song_l->spotifyTracks()->count() > 0)
-                <div class="media-opener"><i class="fab fa-spotify text-success"></i> Spotify</div>
-                @endif
-
-                @if($song_l->soundcloudTracks()->count() > 0)
-                <div class="media-opener"><i class="fab fa-soundcloud"
-                                             style="color: orangered;"></i> SoundCloud
-                </div>
-                @endif
-
-                @if($song_l->audioFiles()->count() > 0)
-                <div class="media-opener"><i class="fas fa-music"></i> MP3</div>
-                @endif
-
-                @if($song_l->youtubeVideos()->count() > 0)
-                <div class="media-opener"><i class="fab fa-youtube text-danger"></i> YouTube</div>
-                @endif
-                @endif
             </template>
         </song-view>
 
@@ -121,65 +85,40 @@
                         <!--googleon: all-->
                     </div>
                     <div class="card-body py-2">
-                        {!! $song_l->getFormattedLyrics() !!}
+                        {{ song.getFormattedLyrics }}
                     </div>
                     <div class="controls p-1"></div>
                     <div class="card-footer p-1 song-links">
                         <div class="px-3 py-2 d-inline-block">
-                            Zpěvník ProScholy.cz <img src="{{asset('img/logo_v2.png')}}"
-                                                      width="20"> {{date('Y')}}
+                            Zpěvník ProScholy.cz <img src="/img/logo_v2.png'"
+                                                      width="20"
+                                                      alt="Logo zpěvníku"> 2020
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        @if (Auth::check())
-        <div class="admin-controls d-none d-sm-block">
-            <a class="btn btn-secondary"
-               href="{{route('admin.dashboard')}}">
-                <i class="fas fa-columns"></i>
-            </a>
-            <a class="btn btn-secondary"
-               href="#">Nástěnka</a>
-            <br>
-
-            @if (App\SongLyric::restricted()->where('id', $song_l->id)->count() > 0)
-            <a class="btn btn-secondary"
-               href="{{route('admin.song.edit', ['song_lyric' => $song_l->id])}}">
-                <i class="fas fa-edit"></i>
-            </a>
-            <a class="btn btn-secondary"
-               href="#">Upravit písničku</a>
-            <br>
-
-            <a class="btn btn-secondary"
-               href="{{route('admin.external.create_for_song', ['song_lyric' => $song_l->id])}}">
-                <i class="fas fa-link"></i>
-            </a>
-            <a class="btn btn-secondary"
-               href="#">Přidat odkaz</a>
-            <br>
-
-            <a class="btn btn-secondary"
-               href="{{route('admin.file.create_for_song', ['song_lyric' => $song_l->id])}}">
-                <i class="fas fa-file"></i>
-            </a>
-            <a class="btn btn-secondary"
-               href="#">Nahrát soubor</a>
-        </div>
-        @endif
-    </div>
-    @endif
+        <!-- admin-toolbox :song="song" v-if="false"></admin-toolbox -->
     </div>
 </template>
 
 <script>
     import SongAuthorLabel from "./components/SongAuthorLabel";
+   // import Tags from "./components/Tags";
+    import SongView from "./components/SongView";
 
     export default {
         name: "Song",
-        components: {SongAuthorLabel}
+        components: {SongView, SongAuthorLabel},
+
+        data: () => {
+            return {
+                song: {
+
+                }
+            }
+        }
     }
 </script>
 

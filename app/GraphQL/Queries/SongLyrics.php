@@ -13,7 +13,7 @@ class SongLyrics
 
 		if (isset($args['search_string']))
 			return SongLyric::search($args['search_string'])->get();
-		
+
 		if (isset($args['is_published']))
 			$query = $query->where('is_published', $args['is_published']);
 
@@ -40,10 +40,10 @@ class SongLyrics
 
 		if (isset($args['only_apk']) && $args['only_apk'] === true)
 			$query = $query->where('is_approved_by_author', 1)->where('is_published', 1)->where('lyrics', '!=', '');
-
+;
 		if (isset($args['order_abc']))
 			$query = $query->orderBy('name', 'asc');
-			
+
 		if (isset($args['updated_after']))
 			$query = $query->where('updated_at', '>', $args['updated_after']);
 

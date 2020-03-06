@@ -24,19 +24,19 @@ use Venturecraft\Revisionable\RevisionableTrait;
 /**
  * App\SongLyric
  *
- * @property int                                                           $id
- * @property string|null                                                   $name
- * @property string|null                                                   $description
- * @property string|null                                                   $lyrics
- * @property int|null                                                      $is_opensong
- * @property int|null                                                      $lang_id
- * @property int|null                                                      $song_id
- * @property int|null                                                      $licence_type
- * @property string|null                                                   $licence_content
- * @property \Carbon\Carbon|null                                           $created_at
- * @property \Carbon\Carbon|null                                           $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]   $authors
- * @property-read \App\Song|null                                           $song
+ * @property int $id
+ * @property string|null $name
+ * @property string|null $description
+ * @property string|null $lyrics
+ * @property int|null $is_opensong
+ * @property int|null $lang_id
+ * @property int|null $song_id
+ * @property int|null $licence_type
+ * @property string|null $licence_content
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[] $authors
+ * @property-read \App\Song|null $song
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereId($value)
@@ -51,9 +51,9 @@ use Venturecraft\Revisionable\RevisionableTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereSongId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property int|null                                                      $visits
+ * @property int|null $visits
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereVisits($value)
- * @property string                                                        $lang
+ * @property string $lang
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
  */
@@ -81,34 +81,34 @@ class SongLyric extends Model
             ],
             'lyrics' => [
                 'type' => 'text',
-                'analyzer' => 'czech_analyzer'
+                'analyzer' => 'czech_analyzer',
             ],
             'authors' => [
                 'type' => 'text',
-                'analyzer' => 'name_analyzer'
+                'analyzer' => 'name_analyzer',
             ],
             'songook_records' => [
                 'type' => 'nested',
                 'properties' => [
                     'songbook_id' => [
-                        'type' => 'keyword'
+                        'type' => 'keyword',
                     ],
                     'songbook_number' => [
-                        'type' => 'keyword'
-                    ]
-                ]
+                        'type' => 'keyword',
+                    ],
+                ],
             ],
             'tag_ids' => [
-                'type' => 'keyword'
+                'type' => 'keyword',
             ],
             'lang' => [
-                'type' => 'keyword'
+                'type' => 'keyword',
             ],
             // the 'text' type cannot be used for sorting, this is why a copy of name is included
             'name_keyword' => [
-                'type' => 'keyword'
-            ]
-        ]
+                'type' => 'keyword',
+            ],
+        ],
     ];
 
     protected $dispatchesEvents = [
@@ -137,7 +137,7 @@ class SongLyric extends Model
             'only_regenschori',
             'capo',
             'visits',
-            'liturgy_approval_status' 
+            'liturgy_approval_status',
         ];
 
     private static $lang_string_values = [
@@ -154,7 +154,7 @@ class SongLyric extends Model
         'he' => 'hebrejština',
         'cu' => 'staroslověnština',
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
-        'mixed' => 'vícejazyčná píseň'
+        'mixed' => 'vícejazyčná píseň',
     ];
 
     private static $liturgy_approval_status_string_values = [
@@ -168,15 +168,21 @@ class SongLyric extends Model
     {
         return route('client.song.text', [
             'song_lyric' => $this,
-            'name' => str_slug($this->name)
+            'name' => str_slug($this->name),
         ]);
     }
+
+    public function getPublicUriAttribute()
+    {
+        return '/pisen/' . $this->id . '/' . str_slug($this->name);
+    }
+
 
     public function getLyricsNoChordsAttribute()
     {
         $str = preg_replace(
-            array('/-/', '/\[[^\]]+\]/'),
-            array("", ""),
+            ['/-/', '/\[[^\]]+\]/'],
+            ["", ""],
             $this->lyrics
         );
 
@@ -186,10 +192,10 @@ class SongLyric extends Model
     // TODO: implement
     public function getIsEmptyAttribute()
     {
-        // return $this->lyrics == null 
+        // return $this->lyrics == null
         //     && $this->externals()->count() +
         //     $this->files()->count() == 0
-        //     && 
+        //     &&
     }
 
     public function getHasLyricsAttribute(): bool
@@ -199,14 +205,14 @@ class SongLyric extends Model
 
     // public function getHasMediaAttribute() : bool
     // {
-    //     return 
-    //         $this->externals()->media()->exists() || 
+    //     return
+    //         $this->externals()->media()->exists() ||
     //         $this->files()->audio()->exists();
     // }
 
     // public function getHasSheetMusicAttribute() : bool
     // {
-    //     return 
+    //     return
     //         $this->externals()->scores()->exists() ||
     //         $this->files()->scores()->exists();
     // }
@@ -244,7 +250,7 @@ class SongLyric extends Model
         return self::$liturgy_approval_status_string_values;
     }
 
-    public function song() : BelongsTo
+    public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
@@ -294,16 +300,19 @@ class SongLyric extends Model
     public function scopeRestricted($query)
     {
         // restrict results if current user is Author
-        if (Auth::user()->hasRole('autor')) {
+        if (Auth::user()->hasRole('autor'))
+        {
             return $query->forceRestricted();
-        } else {
+        }
+        else
+        {
             return $query;
         }
     }
 
     public function scopeForceRestricted($query)
     {
-        // show songs, where there is at least one common author 
+        // show songs, where there is at least one common author
         // of song authors and to-user-assigned authors
         return $query->whereHas('authors', function ($q) {
             $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
@@ -387,15 +396,16 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
+        $songbook_records = $this->songbook_records()->get()->map(function ($sb) {
             return [
                 'songbook_id' => $sb->id,
-                'sonbgook_number' => $sb->pivot->number
+                'sonbgook_number' => $sb->pivot->number,
             ];
         });
 
         $all_authors = $this->authors()->with('memberships')->get();
-        foreach ($all_authors as $author) {
+        foreach ($all_authors as $author)
+        {
             $all_authors = $all_authors->concat($author->memberships);
         }
 
@@ -406,7 +416,7 @@ class SongLyric extends Model
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
-            'lang' => $this->lang
+            'lang' => $this->lang,
         ];
 
         return $arr;
@@ -423,18 +433,25 @@ class SongLyric extends Model
             return $part->isRefrain();
         }));
 
-        foreach ($parts as $song_part) {
-            if ($song_part->isRefrain() && $song_part->isEmpty()) {
+        foreach ($parts as $song_part)
+        {
+            if ($song_part->isRefrain() && $song_part->isEmpty())
+            {
                 // substitute by the first refrain
                 $subst = clone $firstRefrain;
 
-                if ($song_part->isHidden()) {
+                if ($song_part->isHidden())
+                {
                     $subst->setHidden(true);
-                } else {
+                }
+                else
+                {
                     $subst->setHiddenText(true);
                 }
                 $output .= $subst->toHTML();
-            } else {
+            }
+            else
+            {
                 $output .= $song_part->toHTML();
             }
         }
@@ -445,18 +462,22 @@ class SongLyric extends Model
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
-        if (is_numeric($identificator)) {
+        if (is_numeric($identificator))
+        {
             return SongLyric::find($identificator);
-        } else {
+        }
+        else
+        {
             $double = SongLyric::where('name', $identificator)->first();
-            if ($uniqueName && $double != null) {
+            if ($uniqueName && $double != null)
+            {
                 return $double;
             }
 
-            $song       = Song::create(['name' => $identificator]);
+            $song = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,
-                'song_id' => $song->id
+                'song_id' => $song->id,
             ]);
 
             return $song_lyric;

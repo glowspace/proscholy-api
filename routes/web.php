@@ -11,11 +11,6 @@
 |
 */
 
-/**
- * Public client.
- */
-Route::get('/', 'Client\ClientController@spa')->name('client.spa');
-
 // Client single model views
 Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
 Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
@@ -32,7 +27,7 @@ Route::post('/navrh/{id}', 'RequestController@storeRequest')->name('client.reque
 Route::get('/report', 'Client\ReportController@report')->name('client.report');
 Route::post('/report', 'Client\ReportController@storeReport')->name('client.report');
 
-/**
+/**n
  * Administrace.
  */
 Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
@@ -101,3 +96,10 @@ Route::get('/postni-doba', function() { return redirect(url('/search?searchStrin
 // Route::get('/firebase-auth/me', function(Request $request) {
 //     return (array) $request->public_user();
 // })->middleware('auth:web_firebase');
+
+/**
+ * Public client.
+ */
+Route::get('/', 'Client\ClientController@spa');
+Route::get('/{any}', 'Client\ClientController@spa');
+Route::get('{any}', 'Client\ClientController@spa');

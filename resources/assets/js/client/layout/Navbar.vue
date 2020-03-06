@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark justify-content-between absolute-top">
             <div class="container">
                 <router-link to="/" class="navbar-brand">
-                    <img src="img/logo_v2.png"
+                    <img src="/img/logo_v2.png"
                          style="padding: 0 10px 0 0;"
                          width="60"
                          alt="logo">Zpěvník pro scholy</router-link>

@@ -36,6 +36,10 @@ class SongLyricType extends GraphQLType
 				'type' => Type::string(),
 				'description' => 'The public url of the song'
 			],
+            'public_uri' => [
+                'type' => Type::string(),
+                'description' => 'The public uri of the song'
+            ],
 			'lyrics_no_chords' => [
 				'type' => Type::string(),
 				'description' => 'The lyrics without chords'
