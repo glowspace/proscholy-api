@@ -363,7 +363,7 @@ import ChordSharpFlat from "./ChordSharpFlat";
 import RightControls from "./RightControls";
 import Transposition from "./Transposition";
 import TranslationLine from "./TranslationLine.vue";
-import SongLyricParts from "./SongLyricParts.vue";
+import SongLyricParts from "../SongLyricParts.vue";
 import ExternalView from "Public/components/ExternalView.vue";
 import ExternalLine from "Public/components/ExternalLine.vue";
 

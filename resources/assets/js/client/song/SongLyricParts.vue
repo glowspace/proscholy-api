@@ -21,7 +21,7 @@
 
 <script>
 import gql from "graphql-tag";
-import Chord from "./Chord";
+import Chord from "./components/Chord";
 
 const FETCH_SONG_LYRIC_PARTS = gql`
     query($id: ID!) {

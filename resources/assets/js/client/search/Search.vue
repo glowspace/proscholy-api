@@ -153,7 +153,7 @@
                 if (this.init)
                     return;
 
-                let url = "/search/";
+                let url = "/search?";
                 let params = [];
 
                 params.push("q=" + this.search_string);

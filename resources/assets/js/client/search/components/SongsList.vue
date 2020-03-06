@@ -4,16 +4,16 @@
       <template v-if="song_lyrics && song_lyrics.length && results_loaded">
         <tr v-for="(song_lyric, index) in song_lyrics" v-bind:key="song_lyric.id">
           <td :class="[{'border-top-0': !index}, 'p-1 align-middle text-right w-min']">
-            <a
+            <router-link
               class="p-2 pl-3 w-100 d-flex justify-content-between text-secondary"
-              :href="song_lyric.public_url"
+              :to="'/pisen/' + song_lyric.id + '/slug'"
             >
               <span>{{ getSongNumber(song_lyric, true) }}</span>
               <span>{{ getSongNumber(song_lyric, false) }}</span>
-            </a>
+            </router-link>
           </td>
           <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
-            <router-link class="p-2 w-100 d-inline-block" :to="song_lyric.public_url">{{ song_lyric.name }}</router-link>
+            <router-link class="p-2 w-100 d-inline-block" :to="'/pisen/' + song_lyric.id + '/slug'">{{ song_lyric.name }}</router-link>
           </td>
           <td :class="[{'border-top-0': !index}, 'p-1 align-middle']">
             <span v-for="(author, authorIndex) in song_lyric.authors" :key="authorIndex">
@@ -119,7 +119,6 @@
                 data {
                   id,
                   name,
-                  public_uri,
                   lang,
                   lang_string,
                   scoreExternals: externals(type: 4){id},

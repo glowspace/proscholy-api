@@ -14,7 +14,7 @@ Vue.component('client-spa', require('../client/ClientSpa.vue'));
 
 
 // ! only for debugging purposes, delete soon
-Vue.component('song-view', require('../client/song/SongView.vue'));
+//Vue.component('song-view', require('../client/song/SongView.vue'));
 
 // GraphQL
 import apolloProvider from "./apollo";

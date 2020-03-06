@@ -105,7 +105,7 @@
 
 <script>
     import SongAuthorLabel from "./components/SongAuthorLabel";
-   // import Tags from "./components/Tags";
+    // import Tags from "./components/Tags";
     import SongView from "./components/SongView";
 
     export default {
@@ -114,9 +114,7 @@
 
         data: () => {
             return {
-                song: {
-
-                }
+                song: {}
             }
         }
     }
