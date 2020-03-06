@@ -102,4 +102,5 @@ Route::get('/postni-doba', function() { return redirect(url('/search?searchStrin
  */
 Route::get('/', 'Client\ClientController@spa');
 Route::get('/{any}', 'Client\ClientController@spa');
+Route::get('/pisen/{any}/{slug}', 'Client\ClientController@spa');
 Route::get('{any}', 'Client\ClientController@spa');
