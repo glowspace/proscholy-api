@@ -13,43 +13,71 @@ class Chord{
         $this->isSubstitute = $isSubstitute;
     }
 
-    public function toHTML(){
-        // TODO: format with https://laravelcollective.com/docs/5.4/html
-
-        $html = "";
-
-        if (strlen($this->text) > 0 && $this->text[0] == " ") {
-            $html.=" ";
-        }
-
-        $text_value = rtrim($this->text);
-        // see song Amen - substitute "-" by " " for better readability
-        if ($text_value == "-" && $this->chordSign->getBase() != "") {
-            $text_value = "";
-        }
-
-        // hide everything else than text from google
-        $html.= '<!--googleoff: all-->';
-
-        $html.= '<chord';
-        $html.= ' base="'.$this->chordSign->getBase().'"';
-        $html.= ' variant="'.$this->chordSign->getVariant().'"';
-        $html.= ' extension="'.$this->chordSign->getExtension().'"';
-        $html.= ' bass="'.$this->chordSign->getBassNote().'"';
-        $html.= ' is-divided="'.$this->isDivided().'"';
-        $html.= ' is-substitute="'.$this->isSubstitute.'"';
-        $html.= ' is-optional="'.$this->chordSign->isOptional().'"';
-        $html.= '>';
-
-        $html.= '<!--googleon: all-->';
-        $html.= $text_value;
-        $html.= "</chord>";
-
-        if (!$this->isDivided())
-            $html.= " ";
-
-        return $html;
+    public function getBase() {
+        return $this->chordSign->getBase();
     }
+
+    public function getVariant() {
+        return $this->chordSign->getVariant();
+    }
+
+    public function getExtension() {
+        return $this->chordSign->getExtension();
+    }
+
+    public function getBass() {
+        return $this->chordSign->getBassNote();
+    }
+
+    public function isOptional() {
+        return $this->chordSign->isOptional();
+    }
+
+    public function getText() {
+        return $this->text;
+    }
+
+    public function isSubstitute() {
+        return $this->isSubstitute;
+    }
+
+    // public function toHTML(){
+    //     // TODO: format with https://laravelcollective.com/docs/5.4/html
+
+    //     $html = "";
+
+    //     if (strlen($this->text) > 0 && $this->text[0] == " ") {
+    //         $html.=" ";
+    //     }
+
+    //     $text_value = rtrim($this->text);
+    //     // see song Amen - substitute "-" by " " for better readability
+    //     if ($text_value == "-" && $this->chordSign->getBase() != "") {
+    //         $text_value = "";
+    //     }
+
+    //     // hide everything else than text from google
+    //     $html.= '<!--googleoff: all-->';
+
+    //     $html.= '<chord';
+    //     $html.= ' base="'.$this->chordSign->getBase().'"';
+    //     $html.= ' variant="'.$this->chordSign->getVariant().'"';
+    //     $html.= ' extension="'.$this->chordSign->getExtension().'"';
+    //     $html.= ' bass="'.$this->chordSign->getBassNote().'"';
+    //     $html.= ' is-divided="'.$this->isDivided().'"';
+    //     $html.= ' is-substitute="'.$this->isSubstitute.'"';
+    //     $html.= ' is-optional="'.$this->chordSign->isOptional().'"';
+    //     $html.= '>';
+
+    //     $html.= '<!--googleon: all-->';
+    //     $html.= $text_value;
+    //     $html.= "</chord>";
+
+    //     if (!$this->isDivided())
+    //         $html.= " ";
+
+    //     return $html;
+    // }
 
     public function isDivided(){
         if (strlen($this->text) == 0) return false;

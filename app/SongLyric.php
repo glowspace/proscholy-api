@@ -172,12 +172,6 @@ class SongLyric extends Model
         ]);
     }
 
-    public function getPublicUriAttribute()
-    {
-        return '/pisen/' . $this->id . '/' . str_slug($this->name);
-    }
-
-
     public function getLyricsNoChordsAttribute()
     {
         $str = preg_replace(
@@ -250,7 +244,7 @@ class SongLyric extends Model
         return self::$liturgy_approval_status_string_values;
     }
 
-    public function song(): BelongsTo
+    public function song() : BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
@@ -396,16 +390,15 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_records = $this->songbook_records()->get()->map(function ($sb) {
+        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
             return [
                 'songbook_id' => $sb->id,
-                'sonbgook_number' => $sb->pivot->number,
+                'sonbgook_number' => $sb->pivot->number
             ];
         });
 
         $all_authors = $this->authors()->with('memberships')->get();
-        foreach ($all_authors as $author)
-        {
+        foreach ($all_authors as $author) {
             $all_authors = $all_authors->concat($author->memberships);
         }
 
@@ -416,68 +409,87 @@ class SongLyric extends Model
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
-            'lang' => $this->lang,
+            'lang' => $this->lang
         ];
 
         return $arr;
     }
 
-    public function getFormattedLyrics()
-    {
-        $output = "";
+    // // todo: make obsolete
+    // public function getFormattedLyrics()
+    // {
+    //     $output = "";
 
-        // type :: [App/Helpers/SongPart]
+    //     // type :: [App/Helpers/SongPart]
+    //     $parts = SongLyricHelper::getLyricsRepresentation($this);
+
+    //     $firstRefrain = current(array_filter($parts, function ($part) {
+    //         return $part->isRefrain();
+    //     }));
+
+    //     foreach ($parts as $song_part) {
+    //         if ($song_part->isRefrain() && $song_part->isEmpty()) {
+    //             // substitute by the first refrain
+    //             $subst = clone $firstRefrain;
+
+    //             if ($song_part->isHidden()) {
+    //                 $subst->setHidden(true);
+    //             } else {
+    //                 $subst->setHiddenText(true);
+    //             }
+    //             $output .= $subst->toHTML();
+    //         } else {
+    //             $output .= $song_part->toHTML();
+    //         }
+    //     }
+
+    //     return $output;
+    // }
+
+    public function getSongParts()
+    {
         $parts = SongLyricHelper::getLyricsRepresentation($this);
 
         $firstRefrain = current(array_filter($parts, function ($part) {
             return $part->isRefrain();
         }));
 
-        foreach ($parts as $song_part)
-        {
-            if ($song_part->isRefrain() && $song_part->isEmpty())
-            {
+        $newParts = [];
+
+        foreach ($parts as $song_part) {
+            if ($song_part->isRefrain() && $song_part->isEmpty()) {
                 // substitute by the first refrain
                 $subst = clone $firstRefrain;
 
-                if ($song_part->isHidden())
-                {
+                if ($song_part->isHidden()) {
                     $subst->setHidden(true);
-                }
-                else
-                {
+                } else {
                     $subst->setHiddenText(true);
                 }
-                $output .= $subst->toHTML();
-            }
-            else
-            {
-                $output .= $song_part->toHTML();
+                $newParts[] = $subst;
+            } else {
+                $newParts[] = $song_part;
             }
         }
 
-        return $output;
+        return $newParts;
     }
 
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
-        if (is_numeric($identificator))
-        {
+        if (is_numeric($identificator)) {
             return SongLyric::find($identificator);
-        }
-        else
-        {
+        } else {
             $double = SongLyric::where('name', $identificator)->first();
-            if ($uniqueName && $double != null)
-            {
+            if ($uniqueName && $double != null) {
                 return $double;
             }
 
-            $song = Song::create(['name' => $identificator]);
+            $song       = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,
-                'song_id' => $song->id,
+                'song_id' => $song->id
             ]);
 
             return $song_lyric;

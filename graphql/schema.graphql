@@ -63,8 +63,10 @@ type Query {
     author(id: ID! @eq): Author @find
     external(id: ID! @eq): External @find
     file(id: ID! @eq): File @find
-    song_lyric(id: ID! @eq): SongLyric @find
     songbook(id: ID! @eq): Songbook @find
+    song_lyric(id: ID! @eq): SongLyric @find
+
+    song_lyric_parts(id: ID!): [SongPart]
 
     current_public_user: PublicUser @auth(guard: "web_firebase")
 }
