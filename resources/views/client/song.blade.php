@@ -52,7 +52,7 @@
             render-scores="{{ ($song_l->scoresCount())?true:false }}"
             render-translations="{{ ($song_l->song->song_lyrics()->count() > 1)?true:false }}"
             >
-            {!! $song_l->getFormattedLyrics() !!}
+            {{-- {!! $song_l->getFormattedLyrics() !!} --}}
             <template v-slot:score>
                 @if($song_l->scoreFiles()->count() + $song_l->scoreExternals()->count())
                 <div class="card-header media-opener py-2 rounded">
@@ -105,9 +105,9 @@
                     </a>
                     <!--googleon: all-->
                 </div>
-                <div class="card-body py-2">
+                {{-- <div class="card-body py-2">
                     {!! $song_l->getFormattedLyrics() !!}
-                </div>
+                </div> --}}
                 <div class="controls p-1"></div>
                 <div class="card-footer p-1 song-links">
                     <div class="px-3 py-2 d-inline-block">
