@@ -22,7 +22,7 @@
                class="btn btn-secondary"><i class="fas fa-search"></i> Vyhledávání</a>
             {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i> Zpěvníky</a> --}}
             {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i> Oblíbené</a> --}}
-            <a href="{{route("client.about")}}"
+            <a href=""
                class="btn btn-secondary"><i class="fas fa-info"></i> O&nbsp;zpěvníku</a>
             {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-cog"></i> Nastavení</a> --}}
 
@@ -48,7 +48,7 @@
            class="btn btn-secondary"><i class="fas fa-search"></i></a>
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-book"></i></a> --}}
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i></a> --}}
-        <a href="{{route("client.about")}}"
+        <a href=""
            class="btn btn-secondary"><i class="fas fa-info"></i></a>
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-cog"></i></a> --}}
         <dark-mode-button></dark-mode-button>
