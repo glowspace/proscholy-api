@@ -150,7 +150,7 @@ type SongLyricPaginator {
 }
 
 type SongPart {
-    type: Int!
+    type: String
     isHidden: Boolean
     isHiddenText: Boolean
     isEmpty: Boolean
