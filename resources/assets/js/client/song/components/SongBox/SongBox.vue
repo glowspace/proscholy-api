@@ -417,10 +417,10 @@
     import ChordSharpFlat from "../ChordSharpFlat";
     import RightControls from "./RightControls";
     import Transposition from "./Transposition";
-    import TranslationLine from "../TranslationLine.vue";
+    import TranslationLine from "./TranslationLine.vue";
     import SongLyricParts from "../Renderer/SongLyricParts.vue";
     import ExternalView from "../../../../components/ExternalView.vue";
-    import ExternalLine from "../ExternalLine.vue";
+    import ExternalLine from "./ExternalLine.vue";
 
     /**
      * This component renders white box on song detail page.
