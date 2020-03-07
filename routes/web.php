@@ -14,7 +14,7 @@
  * Amen
  *
  * Routes are nested in separate files, grouped by their purpose.
- * Order of requires is important.
+ * Order of imports is important.
  */
 
 // Load administration routes
