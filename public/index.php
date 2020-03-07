@@ -39,6 +39,16 @@ require __DIR__.'/../vendor/autoload.php';
 | will load up this application so that we can run it and send
 | the responses back to the browser and delight our users.
 |
+| Gen 1, 1-5
+|
+| In the beginning, God created the heavens and the earth.
+| The earth was without form and void, and darkness was over the face of the deep.
+| And the Spirit of God was hovering over the face of the waters.
+|
+| And God said, “Let there be light,” and there was light.
+| And God saw that the light was good. And God separated the light from the darkness.
+| God called the light Day, and the darkness he called Night.
+| And there was evening and there was morning, the first day.
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
