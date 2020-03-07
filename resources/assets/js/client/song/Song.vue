@@ -1,13 +1,10 @@
 <template>
     <song-loading v-if="$apollo.loading"></song-loading>
     <song-detail v-else
-                 :song="song"></song-detail>
+                 :song="song_lyric"></song-detail>
 </template>
 
 <script>
-    import SongAuthorLabel from "./components/SongAuthorLabel";
-    // import Tags from "./components/Tags";
-    import SongView from "./components/SongView";
     import SongDetail from "./SongDetail";
     import SongLoading from "./SongLoading";
 
@@ -67,13 +64,11 @@
 
     export default {
         name: "Song",
-        components: {SongLoading, SongDetail, SongView, SongAuthorLabel},
+        components: {SongLoading, SongDetail},
 
         data: () => {
             return {
-                ready: false,
-                songId: 1,
-                song: {}
+                song_lyric: {}
             }
         },
 
@@ -82,39 +77,17 @@
         },
 
         apollo: {
-            song: {
+            song_lyric: {
                 query: FETCH_SONG_LYRIC,
                 variables() {
                     return {
-                        id: this.songId
+                        id: this.$route.params.id
                     };
                 }
             }
         },
 
-        methods: {
-            mockSong() {
-                this.song = {
-                    id: 1,
-                    name: 'Nový song',
-                    lang: '',
-                    lang_string: '',
-                    scoreExternals: [],
-                    scoreFiles: [],
-                    youtubeVideos: [],
-                    spotifyTracks: [],
-                    soundcloudTracks: [],
-                    audioFiles: [],
-                    authors: [],
-                    tags: [],
-                    has_chords: false,
-                    has_lyrics: true,
-                    songbook_records: []
-                };
-
-                this.ready = true;
-            }
-        }
+        methods: {}
     }
 </script>
 

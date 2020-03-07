@@ -15,7 +15,7 @@
         </div>
 
         <song-view
-            :song="song"
+            :song_lyric="song"
             :render-media="false"
             :render-scores="false"
             :render-translations="false"
@@ -90,7 +90,7 @@
                     <div class="controls p-1"></div>
                     <div class="card-footer p-1 song-links">
                         <div class="px-3 py-2 d-inline-block">
-                            Zpěvník ProScholy.cz <img src="/img/logo_v2.png'"
+                            Zpěvník ProScholy.cz <img src="/img/logo_v2.png"
                                                       width="20"
                                                       alt="Logo zpěvníku"> 2020
                         </div>
@@ -105,10 +105,16 @@
 
 <script>
     import SongAuthorLabel from "./components/SongAuthorLabel";
-    import SongView from "./components/SongView";
+    import SongView from "./components/SongBox/SongBox";
+
     export default {
         name: "SongDetail",
-        components: {SongView, SongAuthorLabel},
+
+        components: {
+            SongView,
+            SongAuthorLabel
+        },
+
         props: ['song']
     }
 </script>

@@ -23,8 +23,9 @@ Route::get('/postni-doba', function () {
  * TODO: Maybe find (prettier) better solution.
  */
 Route::get('/', 'Client\ClientController@spa');
-Route::get('/{1}', 'Client\ClientController@spa');
-Route::get('/{1}/{2}/{3}', 'Client\ClientController@spa');
+Route::get('/{a}', 'Client\ClientController@spa');
+Route::get('/{a}/{b}', 'Client\ClientController@spa');
+Route::get('/{a}/{b}/{c}', 'Client\ClientController@spa');
 
 
 /**

@@ -50,7 +50,7 @@ const FETCH_SONG_LYRIC_PARTS = gql`
 `;
 
 export default {
-    props: ["song-id"],
+    props: ["songId"],
 
     components: {
         Chord

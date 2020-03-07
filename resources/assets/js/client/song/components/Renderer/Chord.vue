@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import { store } from "../store.js";
+    import { store } from "../../store.js";
 
     export default {
         props: ['base', 'variant', 'extension', 'bass', 'isDivided', 'isSubstitute', 'isOptional'],
