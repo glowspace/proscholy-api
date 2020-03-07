@@ -363,65 +363,9 @@ import ChordSharpFlat from "./ChordSharpFlat";
 import RightControls from "./RightControls";
 import Transposition from "./Transposition";
 import TranslationLine from "./TranslationLine.vue";
-import SongLyricParts from "../SongLyricParts.vue";
+import SongLyricParts from "./SongLyricParts.vue";
 import ExternalView from "Public/components/ExternalView.vue";
 import ExternalLine from "Public/components/ExternalLine.vue";
-
-// base_url = document.querySelector('#baseUrl').getAttribute('value');
-
-import gql, { disableFragmentWarnings } from "graphql-tag";
-
-const FETCH_SONG_LYRIC = gql`
-  query($id: ID!) {
-    song_lyric(id: $id) {
-      id
-      name
-      externals(orderBy: { field: "type", order: ASC }) {
-        id
-        public_name
-        url
-        type
-        media_id
-        authors {
-          id
-          name
-          public_url
-        }
-      }
-      files {
-        id
-        public_name
-        url
-        download_url
-        type
-        authors {
-          id
-          name
-          public_url
-        }
-      }
-      song {
-        song_lyrics {
-          id
-          name
-          public_url
-          type
-          authors {
-            id
-            name
-            public_url
-          }
-          lang
-          lang_string
-        }
-      }
-      capo
-      # songbook_records{number, songbook{id, name, shortcut}}
-    }
-  }
-`;
-
-import { clone } from 'lodash';
 
 export default {
   props: ["song-id", "render-media", "render-scores", "render-translations"],
@@ -462,17 +406,6 @@ export default {
     autoscrollNum: function () {
       this.setScroll(this.autoscrollNum, this.autoscroll);
     },
-  },
-
-  apollo: {
-    song_lyric: {
-      query: FETCH_SONG_LYRIC,
-      variables() {
-        return {
-          id: this.songId
-        };
-      }
-    }
   },
 
   computed: {
@@ -553,17 +486,7 @@ export default {
   },
 
   mounted() {
-    // if(document.getElementById("song-lyrics").innerHTML.replace(/<[^>]+>/g, "").replace(/\s/g, "") == "") {
-    //   document.getElementById("song-lyrics").innerHTML = "Text písně připravujeme.";
-    //   if(this.renderMedia) {
-    //     this.bottomMode = 2;
-    //   }
-    //   if(this.renderScores) {
-    //     this.topMode = 1;
-    //   } else if(this.renderTranslations) {
-    //     this.topMode = 2;
-    //   }
-    // }
+
   }
 };
 </script>

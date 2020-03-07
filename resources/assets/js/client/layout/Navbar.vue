@@ -33,7 +33,7 @@
             <div class="container">
                 <router-link to="/"
                    class="btn">
-                    <img src="img/logo_v2.png"
+                    <img src="/img/logo_v2.png"
                          height="24"
                          alt="logo"></router-link>
                 <router-link to="/"

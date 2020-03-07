@@ -2,7 +2,7 @@
     <div class="container">
         <div class="mt-4 mb-3">
             <div>
-                <h1 class="song-title">{{ song.name}}</h1>
+                <h1 class="song-title">{{ song.name }}</h1>
                 <div class="d-flex align-items-center mt-1">
                     <h4 class="song-number m-0">{{ song.id }}</h4>
                     <p class="song-author ml-3 mb-0">
@@ -15,10 +15,10 @@
         </div>
 
         <song-view
-            :song-id="song.id"
-            :render-media="song.youtubeVideos.length + song.spotifyTracks.length + song.soundcloudTracks.count + song.audioFiles.count"
-            :render-scores="song.scoresCount.length"
-            :render-translations="song.renderTranslations"
+            :song="song"
+            :render-media="false"
+            :render-scores="false"
+            :render-translations="false"
         >
 
             {{ song.getFormattedLyrics }}
@@ -104,9 +104,11 @@
 </template>
 
 <script>
+    import SongAuthorLabel from "./components/SongAuthorLabel";
+    import SongView from "./components/SongView";
     export default {
         name: "SongDetail",
-
+        components: {SongView, SongAuthorLabel},
         props: ['song']
     }
 </script>
