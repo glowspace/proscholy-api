@@ -39,7 +39,7 @@ require __DIR__.'/../vendor/autoload.php';
 | will load up this application so that we can run it and send
 | the responses back to the browser and delight our users.
 |
-| Gen 1, 1-5
+| Gen 1,1-5
 |
 | In the beginning, God created the heavens and the earth.
 | The earth was without form and void, and darkness was over the face of the deep.
@@ -63,6 +63,11 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | the client's browser allowing them to enjoy the creative
 | and wonderful application we have prepared for them.
 |
+|
+| Gen 1,31
+|
+| And God saw everything that he had made, and behold, it was very good.
+| And there was evening and there was morning, the sixth day.
 */
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
