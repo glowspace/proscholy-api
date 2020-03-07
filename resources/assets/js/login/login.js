@@ -1,3 +1,5 @@
+require('./bootstrap');
+
 // Import Vue
 window.Vue = require('vue');
 

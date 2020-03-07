@@ -59,7 +59,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     headers: {
       authorization: `Bearer ${user_token}`
     }
-  }) 
+  })
 
   return forward(operation)
 });
@@ -68,31 +68,31 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 const httpLink = createHttpLink({
   // You should use an absolute URL here
   uri: base_url + '/graphql',
-})
+});
 
 // clear the session storage used for caching GrapQL queries on the public frontend
 // not doing so causes frontend not updating after admin edits
 window.sessionStorage.clear();
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
   link: authMiddleware.concat(httpLink),
   cache,
-})
+});
 
 import VueApollo from 'vue-apollo'
-Vue.use(VueApollo)
+Vue.use(VueApollo);
 
 const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
-})
+});
 
 import Vuetify from 'vuetify'
 
 Vue.use(Vuetify, {
-  theme: 
+  theme:
     {
       primary: "#3f51b5",
       secondary: "#00bcd4",
@@ -102,13 +102,13 @@ Vue.use(Vuetify, {
       info: "#2196f3",
       success: "#4caf50"
       }
-})
+});
 
 import Notifications from 'vue-notification'
-Vue.use(Notifications)
+Vue.use(Notifications);
 
 import VeeValidate from 'vee-validate'
-Vue.use(VeeValidate)
+Vue.use(VeeValidate);
 
 
 const app = new Vue({
