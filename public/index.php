@@ -63,7 +63,6 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | the client's browser allowing them to enjoy the creative
 | and wonderful application we have prepared for them.
 |
-|
 | Gen 1,31
 |
 | And God saw everything that he had made, and behold, it was very good.
