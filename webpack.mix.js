@@ -32,9 +32,9 @@ mix.webpackConfig({
     }
 });
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.js('resources/assets/js/login/login.js', 'public/js')
     .js('resources/assets/js/client/client.js', 'public/js')
-    .js('resources/assets/js/admin/app.js', 'public/_admin/js')
+    .js('resources/assets/js/admin/login.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
     .browserSync({
@@ -43,8 +43,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         proxy: 'nginx:80',
         files: [
             'public/css/app.css',
-            'public/js/app.js',
-            'public/_admin/js/app.js',
+            'public/js/login.js',
+            'public/_admin/js/login.js',
             'public/_admin/css/admin.css',
             'app/**/*',
             'routes/**/*',

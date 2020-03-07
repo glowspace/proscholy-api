@@ -1,5 +1,5 @@
 /**
- * ProScholy.cz app.js file.
+ * ProScholy.cz login.js file.
  *
  * It contains:
  * - Vue.js SPA with Vue Router 3

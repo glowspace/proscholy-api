@@ -28,11 +28,6 @@
 
             <dark-mode-button v-cloak> Tmavý&nbsp;mód</dark-mode-button>
         </div>
-
-        <div class="d-inline-flex">
-            <a href="{{route("client.account")}}"
-               class="btn btn-secondary"><i class="fas fa-user"></i> Uživatel</a>
-        </div>
     </div>
 </nav>
 

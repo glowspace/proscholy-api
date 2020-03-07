@@ -9,7 +9,7 @@
                        :class="{'chosen': (topMode == 1)}"
                        @click="topMode=(topMode==1) ? 0 : 1">
                         <i class="fas fa-file-alt"></i>
-                        <span class="d-none d-sm-inline">Noty</span>
+                        <span class="d-none d-sm-inline">Noty</span>clie
                     </a>
                     <a
                         v-if="renderTranslations"

@@ -5,7 +5,7 @@
 ])
 
 @include('admin.components.menu-item', [
-    'route' => 'client.home',
+    'route' => 'client.spa',
     'icon' => 'arrow-left',
     'text' => 'Návrat na web'
 ])

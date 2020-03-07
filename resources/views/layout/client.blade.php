@@ -9,24 +9,24 @@
      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>
      <script>
          window.dataLayer = window.dataLayer || [];
- 
+
          function gtag() {
              dataLayer.push(arguments);
          }
- 
+
          gtag('js', new Date());
- 
+
          gtag('config', 'UA-94042414-8');
      </script>
 @endsection
 
 @section('app-css')
-    
+
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
 
     <script type="text/javascript">
-        // fix of flash of white background in Google Chrome when Dark mode is on... 
-        
+        // fix of flash of white background in Google Chrome when Dark mode is on...
+
         var dom_observer = new MutationObserver(function(mutation) {
             // this runs (multiple times but most importantly), before the body is rendered
             if (window.localStorage) {
@@ -46,5 +46,5 @@
 @endsection
 
 @section('app-js')
-    <script type="text/javascript" src="{{ mix('js/client.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/login.js') }}"></script>
 @endsection
