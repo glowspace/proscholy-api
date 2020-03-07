@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Laravel - A PHP Framework For Web Artisans
+ * Zpěvník ProScholy.cz
  *
- * @package  Laravel
- * @author   Taylor Otwell <taylor@laravel.com>
+ * @package Zpěvník ProScholy.cz
  */
 
 define('LARAVEL_START', microtime(true));
@@ -19,6 +18,13 @@ define('LARAVEL_START', microtime(true));
 | into the script here so that we don't have to worry about manual
 | loading any of our classes later on. It feels great to relax.
 |
+| Our Father who art in heaven, hallowed be Thy Name. Thy Kingdom come.
+| Thy Will be done, on earth as it is in heaven. Give us this day
+| our daily bread. And forgive us our trespasses,  as we forgive those
+| who trespass against us. And lead us not into temptation,
+| but deliver us from evil.
+|
+| Amen
 */
 
 require __DIR__.'/../vendor/autoload.php';
