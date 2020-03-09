@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <h1>Uživatelský účet</h1>
+        <h1>Přihlášení do zpěvníku</h1>
+
+        <div class="alert alert-primary">Pomocí účtu si můžete vytvářet vlastní seznamy písní.</div>
 
         <div v-if="isLoggedIn">
             <p>Přihlášený uživatel: {{ user.name }}</p>
