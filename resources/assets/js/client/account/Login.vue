@@ -1,37 +1,24 @@
 <template>
-    <div class="container">
-        <h1>Přihlášení do zpěvníku</h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="card">
+                    <div class="card-header">Přihlášení do mého zpěvníku</div>
+                    <div class="card-body">
+                        <div class="alert alert-primary">
+                            K přihlášení lze použít existující Google účet.
+                        </div>
 
-        <div class="alert alert-primary">Pomocí účtu si můžete vytvářet vlastní seznamy písní.</div>
+                        <div>
+                            <a @click="signin">Přihlásit se přes Google</a>
+                        </div>
+                    </div>
+                </div>
 
-        <div v-if="isLoggedIn">
-            <p>Přihlášený uživatel: {{ user.name }}</p>
-            <p>Email: {{ user.email }}</p>
-
-            <h2>Zpěvníky:</h2>
-
-            <ul class="list-group">
-                <li v-for="songbook in user.songbooks"
-                    v-bind:key="songbook.id"
-                    class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ songbook.name }}
-                    <span class="badge badge-primary badge-pill">{{ songbook.song_lyrics.length }}</span>
-                    <ul>
-                        <li v-for="song_lyric in songbook.song_lyrics"
-                            v-bind:key="song_lyric.id">
-                            {{ song_lyric.name }}
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <!-- <a @click="addNewSongbook" :disabled="new_songbook_name == ''">Přidat nový zpěvník</a>
-            <input type="text" v-model="new_songbook_name"/> -->
+            </div>
         </div>
-        <div v-else>
 
-            <a @click="signin">Přihlásit se přes Google</a>
-        </div>
+
     </div>
 </template>
 
@@ -74,7 +61,7 @@
         }`;
 
     /**
-     * Account component.
+     * Login component.
      *
      * TODO: frontend
      */
@@ -102,6 +89,7 @@
                         per_page: 100
                     }
                 },
+
                 debounce: 200,
                 // result(result) {
                 //     this.$emit("query-loaded", null);
@@ -139,6 +127,11 @@
                 }
             },
 
+            /**
+             * Sign into account using Google.
+             *
+             * @returns {Promise<void>}
+             */
             async signin() {
                 this.provider = GoogleProvider;
 
