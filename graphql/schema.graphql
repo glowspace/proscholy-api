@@ -9,6 +9,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 "Import graphql schema files"
 #import author.graphql
 #import user.graphql
+#import song_lyric.graphql
 #import songbook.graphql
 #import songbook_record.graphql
 #import song.graphql
@@ -24,6 +25,10 @@ type FilterTagCategory {
     selected_tags: [Tag!]!
 }
 
-type Query {}
+type Query {
+    author_dummy(id: ID! @eq): Author @find
+}
 
-type Mutation @group(middleware: ["auth:api"]) {}
+type Mutation @group(middleware: ["auth:api"]) {
+    delete_author_dummy(id: ID!): Author @delete
+}
