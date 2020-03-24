@@ -1,0 +1,6 @@
+type PublicUser {
+    id: ID!
+    name: String
+    email: String
+    playlists: [Playlist]
+}
