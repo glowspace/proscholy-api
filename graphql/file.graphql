@@ -1,0 +1,43 @@
+type File {
+    id: ID!
+    public_name: String
+    url: String
+    download_url: String
+    type: Int
+    type_string: String
+    type_string_values: [String]
+    authors: [Author] @belongsToMany
+    song_lyric: SongLyric @belongsTo
+    thumbnail_url: String
+    description: String
+    name: String
+    filename: String
+    external_type: Int
+}
+
+extend type Query  {
+    files (
+        type: Int
+        is_todo: Boolean
+    ): [File!]!
+
+    file(id: ID! @eq): File @find
+}
+
+type Mutation @group(middleware: ["auth:api"]) {
+    update_file(input: UpdateFileInput!): File @update(flatten: true)
+
+    delete_file(id: ID!): File @delete
+}
+
+input UpdateFileInput {
+    id: ID!
+    filename: String @rules(apply: ["required", "regex:/^([a-zA-Z0-9\\s_.\\-\\(\\):])+\\.[a-zA-Z0-9]+$/"], messages: {
+        required: "Jméno souboru nesmí zůstat prázdné",
+        regex: "Neplatné jméno souboru, používejte prosím pouze znaky bez diakritiky a nezapomeňte na příponu souboru (např. .pdf, .jpg apod..)"})
+    name: String
+    description: String
+    type: Int!
+    authors: SyncAuthorsRelation
+    song_lyric: SyncSongLyricRelation
+}

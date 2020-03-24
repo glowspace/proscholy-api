@@ -78,25 +78,28 @@
                         <table class="table table-bordered mb-0 statistics-table">
                             <tr>
                                 <td>Písně s&nbsp;textem</td>
+                                <td>{{round(($songs_w_text_count/$songs_count)*100)}} %</td>
                                 <td><b>{{$songs_w_text_count}}</b></td>
                             </tr>
                             <tr>
                                 <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
+                                <td>{{round(($songs_w_all_count/$songs_count)*100)}} %</td>
                                 <td><b class="text-success">{{$songs_w_all_count}}</b></td>
                             </tr>
                             <tr>
                                 <td>Písně pouze s&nbsp;názvem</td>
+                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}} %</td>
                                 <td><b class="text-warning">{{$songs_w_just_title_count}}</b></td>
                             </tr>
                             <tr>
-                                <td>Písně celkem</td>
+                                <td colspan="2">Písně celkem</td>
                                 <td><b class="text-primary">{{$songs_count}}</b></td>
                             </tr>
                             <tr>
-                                <td>Autoři</td>
+                                <td colspan="2">Autoři</td>
                                 <td><b>{{$authors_count}}</b></td>
                             </tr><tr>
-                                <td>Externí odkazy</td>
+                                <td colspan="2">Externí odkazy</td>
                                 <td><b>{{$externals_count}}</b></td>
                             </tr>
                         </table>

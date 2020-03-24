@@ -1,0 +1,20 @@
+type Model {
+    id: ID!
+    class_name: String!
+    edit_url: String
+}
+
+extend type Mutation @group(middleware: ["auth:api"]) {
+    create_model(input: CreateModelInput!): Model
+    delete_model(input: DeleteModelInput!): Model
+}
+
+input CreateModelInput {
+    required_attribute: String!
+    class_name: String!
+}
+
+input DeleteModelInput {
+    id: ID!
+    class_name: String!
+}

@@ -37,9 +37,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
     .browserSync({
-        // proxy settings for docker 
-        // if you are using php artisan serv then change proxy to 'localhost:8000'
-        proxy: 'nginx:80',
+        // proxy settings for php artisan serve
+        // if you are using docker then change proxy to 'nginx:80'
+        proxy: 'localhost:8000',
         files: [
             'public/css/app.css',
             'public/js/app.js',

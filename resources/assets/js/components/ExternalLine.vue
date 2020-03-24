@@ -2,11 +2,11 @@
     <tr>
         <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
             <a class="p-2 w-100 d-inline-block" :href="viewLink" title="Zobrazit náhled" target="_blank">
-                <i :class="[typeClass, 'pl-1 pr-3']"></i><span class="pr-3">{{ name }}</span><i class="far fa-eye pl-0 pr-0"></i>
+                <i :class="[typeClass, 'pl-1 pr-3']"></i><span class="pr-3">{{ displayName }}</span><i class="far fa-eye pl-0 pr-0"></i>
             </a>
         </td>
         <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
-            <a class="p-2" :href="downloadLink" title="Stáhnout">
+            <a v-if="downloadUrl" class="p-2" :href="downloadUrl" title="Stáhnout">
                 <i class="fas fa-download p-0"></i>
             </a>
         </td>
@@ -25,6 +25,8 @@ export default {
     props: {
         index: Number,
         url: String,
+        downloadUrl: String,
+        songName: String,
         name: String,
         type: Number,
         authors: Array
@@ -73,8 +75,12 @@ export default {
             }
         },
 
-        downloadLink() {
-            return this.url.replace('/preview/', '/download/');
+        displayName() {
+            if(this.downloadUrl) {
+                return this.name;
+            } else {
+                return this.songName + " – noty č. " + (this.index + 1);
+            }
         },
 
         typeClass() {

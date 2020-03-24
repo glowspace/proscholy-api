@@ -47,6 +47,8 @@
                   v-bind:key="index"
                   :index="index"
                   :url="score.url"
+                  :download-url="score.download_url"
+                  :song-name="song_lyric.name"
                   :name="score.public_name"
                   :type="score.type"
                   :authors="score.authors"
@@ -113,10 +115,12 @@
         <div class="card-body py-2 pl-3 overflow-hidden">
           <div class="d-flex align-items-start justify-content-between">
               <div id="song-lyrics" :class="{'p-1': true, 'song-lyrics-extended': chordSharedStore.chordMode==2}">
-                <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
-                <div v-if="!$apollo.loading && song_lyric.capo > 0" class="mb-2">
+                <a class="btn btn-secondary bg-transparent p-0 mb-3" v-if="chordSharedStore.nChordModes != 1 && chordSharedStore.chordMode == 0" @click="chordSharedStore.chordMode = 2">Zobrazit akordy</a>
+                <a class="btn btn-secondary bg-transparent p-0 mb-3" v-if="chordSharedStore.chordMode != 0" @click="chordSharedStore.chordMode = 0">Skrýt akordy</a>
+                <div v-if="!$apollo.loading && song_lyric.capo > 0 && chordSharedStore.chordMode != 0" class="mb-2">
                   <i>capo: {{ song_lyric.capo }}</i>
                 </div>
+                <!-- here goes the song lyrics (vue components generated as a string by Laravel) -->
                 <slot></slot>
               </div>
               <right-controls></right-controls>
@@ -182,6 +186,7 @@
                 <div class="col-md-6" v-for="file in mediaFiles" v-bind:key="file.id">
                   <external-view
                     :url="file.url"
+                    :download-url="file.download_url"
                     :media-id="file.media_id"
                     :type="fileTypeConvert(file.type)"
                     :authors="file.authors"
@@ -265,7 +270,7 @@
         </div>
         <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Transpozice:  <span class="float-right">{{ chordSharedStore.transposition }}</span></div>
         <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Posuvky:  <span class="float-right">{{ chordSharedStore.useFlatScale?"♭":"#" }}</span></div>
-        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}{{ chordSharedStore.chordMode==2?"+":"" }}</span></div>
+        <div class="media-opener" v-if="chordSharedStore.nChordModes != 1"><i class="fas fa-angle-right"></i> Akordy:  <span class="float-right">{{ chordSharedStore.chordMode?"+":"–" }}</span></div>
         <div class="media-opener"><i class="fas fa-angle-right"></i> Velikost písma: <span class="float-right">{{ (chordSharedStore.fontSizePercent - 100)/10 }}</span></div>
       </div>
     </div>
@@ -385,6 +390,7 @@ const FETCH_SONG_LYRIC = gql`
         id
         public_name
         url
+        download_url
         type
         authors {
           id
