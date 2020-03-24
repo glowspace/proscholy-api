@@ -1,0 +1,41 @@
+type External {
+    id: ID!
+    public_name: String
+    type: Int
+    type_string: String
+    type_string_values: [String]
+    authors: [Author] @belongsToMany
+    song_lyric: SongLyric @belongsTo
+    url: String
+    media_id: String
+}
+
+extend type Query  {
+    externals (
+        type: Int
+        is_todo: Boolean
+        orderBy: [OrderByClause!] @orderBy
+    ): [External!]!
+
+    external(id: ID! @eq): External @find
+}
+
+type Mutation @group(middleware: ["auth:api"]) {
+    update_external(input: UpdateExternalInput!): External @update(flatten: true)
+
+    delete_external(id: ID!): External @delete
+}
+
+input UpdateExternalInput {
+    id: ID!
+    url: String @rules(apply: ["required"], messages: {
+        required: "Url odkazu nesmí být prázdná"})
+    type: Int!
+    authors: SyncAuthorsRelation
+    song_lyric: SyncSongLyricRelation
+}
+
+input SyncSongLyricRelation {
+    update: UpdateSongLyricRelation
+    disconnect: Boolean
+}

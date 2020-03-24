@@ -1,0 +1,107 @@
+type SongLyric {
+    id: ID!
+    name: String
+    public_url: String
+    lyrics_no_chords: String
+    lyrics: String
+    type: Int!
+    is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
+    is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
+    is_approved_by_author: Boolean!
+    is_published: Boolean!
+    has_anonymous_author: Boolean!
+    lang: String
+    lang_string: String
+    lang_string_values: JSON
+    updated_at: String
+    authors: [Author] @belongsToMany
+    externals(
+        id: Int @eq,
+        type: Int @eq
+        orderBy: [OrderByClause!] @orderBy
+    ): [External] @hasMany
+    files(id: Int @eq, type: Int @eq): [File] @hasMany
+    tags(type: Int @eq): [Tag] @belongsToMany
+    songbook_records: [SongbookRecord] @belongsToMany
+    song: Song! @belongsTo
+    has_chords: Boolean!
+    siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
+    trashed: Boolean @method(name: "trashed")
+    only_regenschori: Boolean
+    capo: Int
+    visits: Int
+    has_lyrics: Boolean
+    liturgy_approval_status: Int
+    liturgy_approval_status_string_values: JSON
+    # has_sheet_music: Boolean @with(relation: "externals")
+    # has_media: Boolean @with(relation: "files")
+}
+
+type SongLyricPaginator {
+    data: [SongLyric!]! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver")
+    paginatorInfo: PaginatorInfo! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver")
+}
+
+extend type Query  {
+    song_lyric(id: ID! @eq): SongLyric @find
+
+    song_lyrics(
+        only_apk: Boolean
+        search_string: String
+        is_published: Boolean
+        is_approved_by_author: Boolean
+        has_lyrics: Boolean
+        has_authors: Boolean
+        has_tags: Boolean
+        has_chords: Boolean
+        order_abc: Boolean
+        updated_after: DateTime
+    ): [SongLyric!]!
+
+    search_song_lyrics(
+        search_params: String
+        page: Int
+        per_page: Int
+    ): SongLyricPaginator
+}
+
+
+type Mutation @group(middleware: ["auth:api"]) {
+    delete_song_lyric(id: ID!): SongLyric @delete
+
+    update_song_lyric(input: UpdateSongLyricInput!): SongLyric
+}
+
+input UpdateSongLyricRelation {
+    id: ID
+}
+
+input UpdateSongLyricInput {
+    id: ID!
+    name: String @rules(apply: ["required"], messages: {
+        required: "Jméno písně nesmí zůstat prázdné"})
+    has_anonymous_author: Boolean
+    lang: String
+    authors: SyncAuthorsRelation
+    tags_unofficial: SyncUnofficialTagsRelation
+    tags_official: SyncOfficialTagsRelation
+    songbook_records: SyncSongbookRecordsForSongLyricRelation
+    lyrics: String
+    song: SongInput
+    only_regenschori: Boolean
+    capo: Int
+    liturgy_approval_status: Int
+}
+
+input SyncOfficialTagsRelation {
+    sync: [ID!]
+}
+
+input SyncUnofficialTagsRelation {
+    create: [CreateUnofficialTagInput!]
+    sync: [ID!]
+}
+
+input CreateUnofficialTagInput {
+    name: String!
+}

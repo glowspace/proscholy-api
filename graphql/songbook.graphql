@@ -1,0 +1,67 @@
+type Songbook {
+    id: ID!
+    name: String!
+    shortcut: String """ todo: max length 6 """
+    records: [SongbookRecord] @belongsToMany
+    songs_count: Int
+    is_private: Boolean
+    color: String
+}
+
+extend type Query {
+    songbooks (
+        is_private: Boolean @eq
+    ): [Songbook] @all
+
+    songbook(id: ID! @eq): Songbook @find
+}
+
+type Mutation @group(middleware: ["auth:api"]) {
+    update_songbook(input: UpdateSongbookInput!): Songbook
+
+    delete_songbook(id: ID!): Songbook @delete
+}
+
+input UpdateSongbookInput {
+    id: ID!
+    name: String
+    shortcut: String
+    records: SyncSongbookRecordsForSongbookRelation
+    """ this is string because of the validation message """
+    songs_count: String @rules(apply: ["integer"], messages: {
+        integer: "Zadejte číselnou hodnotu"})
+    is_private: Boolean
+    color: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: {
+        regex: "Zadejte barvu v hexadecimálním formátu"})
+}
+
+input SyncSongbookRecordsForSongbookRelation {
+    create: [CreateSongbookRecordForSongbookInput!]
+    sync: [SyncSongbookRecordForSongbookInput!]
+}
+
+input SyncSongbookRecordsForSongLyricRelation {
+    create: [CreateSongbookRecordForSongLyricInput!]
+    sync: [SyncSongbookRecordForSongLyricInput!]
+}
+
+input CreateSongbookRecordForSongbookInput {
+    song_lyric_name: String!
+    number: String
+}
+
+input CreateSongbookRecordForSongLyricInput {
+    songbook: String!
+    number: String
+}
+
+input SyncSongbookRecordForSongbookInput {
+    song_lyric_id: ID!
+    number: String
+}
+
+input SyncSongbookRecordForSongLyricInput {
+    songbook_id: ID!
+    number: String
+}
+
