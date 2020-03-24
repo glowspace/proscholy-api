@@ -9,6 +9,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 "Import graphql schema files"
 #import author.graphql
 #import user.graphql
+#import song_lyric.graphql
 #import songbook.graphql
 #import songbook_record.graphql
 #import song.graphql
@@ -27,10 +28,13 @@ type FilterTagCategory {
 }
 
 type Query {
+    author_dummy(id: ID! @eq): Author @find
     current_public_user: PublicUser @auth(guard: "web_firebase")
 }
 
-type Mutation @group(middleware: ["auth:api"]) {}
+type Mutation @group(middleware: ["auth:api"]) {
+    author_dummy(id: ID! @eq): Author @find
+}
 
 extend type Mutation @group(middleware: ["auth:web_firebase"]) {
     update_user_data(input: UpdatePublicUserInput!): PublicUser @update(flatten: true)
