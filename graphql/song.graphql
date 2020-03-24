@@ -1,0 +1,22 @@
+type Song {
+    id: ID!
+    name: String
+    song_lyrics(type: Int @eq): [SongLyric] @hasMany
+}
+
+extend type Query  {
+    songs: [Song!]!
+}
+
+input SongInput {
+    __typename: String
+    id: ID
+    song_lyrics: [SongLyricForSongInput]
+}
+
+input SongLyricForSongInput {
+    __typename: String
+    id: ID
+    name: String
+    type: Int
+}

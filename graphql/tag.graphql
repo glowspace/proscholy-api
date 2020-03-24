@@ -1,0 +1,16 @@
+type Tag {
+    id: ID!
+    name: String
+    type: Int
+    parent_tag: Tag @belongsTo
+    child_tags: [Tag] @hasMany
+    description: String
+}
+
+extend type Query {
+    tags(type: Int @eq): [Tag] @all
+}
+
+type Mutation @group(middleware: ["auth:api"]) {
+    delete_tag(id: ID!): Tag @delete
+}
