@@ -4,3 +4,14 @@ type PublicUser {
     email: String
     playlists: [Playlist]
 }
+
+extend type Query {
+    current_public_user: PublicUser @auth(guard: "web_firebase")
+}
+
+extend type Mutation @group(middleware: ["auth:web_firebase"]) {
+    update_user_data(input: UpdatePublicUserInput!): PublicUser @update(flatten: true)
+
+    update_playlist(input: UpdatePlaylistInput!): Playlist
+    create_playlist(input: CreatePlaylistInput!): Playlist @create(flatten: true)
+}
