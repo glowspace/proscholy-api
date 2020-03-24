@@ -3,24 +3,6 @@ type User {
     name: String
 }
 
-type Author {
-    id: ID!
-    name: String!
-    description: String
-    type: Int
-    type_string: String
-    type_string_values: [String]
-    email: String
-    url: String
-    visits: Int
-    public_url: String
-    song_lyrics: [SongLyric] @belongsToMany
-    externals: [External] @belongsToMany
-    files: [File] @belongsToMany
-    members: [Author] @belongsToMany
-    memberships: [Author] @belongsToMany
-}
-
 type Song {
     id: ID!
     name: String
