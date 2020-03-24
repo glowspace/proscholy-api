@@ -15,3 +15,23 @@ extend type Mutation @group(middleware: ["auth:web_firebase"]) {
     update_playlist(input: UpdatePlaylistInput!): Playlist
     create_playlist(input: CreatePlaylistInput!): Playlist @create(flatten: true)
 }
+
+input UpdatePublicUserInput {
+    id: ID!
+    name: String
+    email: String
+    updated_at: DateTime!
+}
+
+input UpdatePlaylistInput {
+    id: ID!
+    name: String
+    song_lyrics: [ID!]
+    updated_at: DateTime!
+}
+
+input CreatePlaylistInput {
+    name: String!
+    """ necessary..? """
+    song_lyrics: [ID!]
+}
