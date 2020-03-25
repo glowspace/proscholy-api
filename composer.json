@@ -21,7 +21,7 @@
         "laravel/tinker": "^1.0",
         "mll-lab/graphql-php-scalars": "^2.1",
         "mll-lab/laravel-graphql-playground": "^1.0",
-        "nuwave/lighthouse": "dev-empty-syncing",
+        "nuwave/lighthouse": "^4.10",
         "spatie/laravel-permission": "^2.33",
         "spatie/pdf-to-image": "^1.8",
         "spatie/pdf-to-text": "^1.1",
