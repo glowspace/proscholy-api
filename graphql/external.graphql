@@ -20,7 +20,7 @@ extend type Query  {
     external(id: ID! @eq): External @find
 }
 
-type Mutation @group(middleware: ["auth:api"]) {
+type Mutation @middleware(checks: ["auth:api"]) {
     update_external(input: UpdateExternalInput!): External @update(flatten: true)
 
     delete_external(id: ID!): External @delete

@@ -31,7 +31,7 @@ type Query {
     author_dummy(id: ID! @eq): Author @find
 }
 
-type Mutation @group(middleware: ["auth:api"]) {
+type Mutation @middleware(checks: ["auth:api"]) {
     author_dummy(id: ID! @eq): Author @find
 }
 

@@ -24,7 +24,7 @@ extend type Query  {
     file(id: ID! @eq): File @find
 }
 
-type Mutation @group(middleware: ["auth:api"]) {
+type Mutation @middleware(checks: ["auth:api"]) {
     update_file(input: UpdateFileInput!): File @update(flatten: true)
 
     delete_file(id: ID!): File @delete

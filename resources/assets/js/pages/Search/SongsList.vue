@@ -235,6 +235,7 @@
 
                     return {
                       song_lyrics_paginated: {
+                        // todo: remove __typename field
                         __typename: previousResult.song_lyrics_paginated.__typename,
                         // Merging the songLyrics lists
                         data: [...previousResult.song_lyrics_paginated.data, ...newSongLyrics],

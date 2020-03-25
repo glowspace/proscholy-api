@@ -4,7 +4,7 @@ type Model {
     edit_url: String
 }
 
-extend type Mutation @group(middleware: ["auth:api"]) {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     create_model(input: CreateModelInput!): Model
     delete_model(input: DeleteModelInput!): Model
 }
