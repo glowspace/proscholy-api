@@ -5,7 +5,7 @@ type Song {
 }
 
 extend type Query  {
-    songs: [Song!]!
+    songs: [Song!]! """ see App/GraphQL/Queries/Songs.php """
 }
 
 input SongInput {

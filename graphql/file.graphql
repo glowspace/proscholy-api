@@ -19,13 +19,13 @@ extend type Query  {
     files (
         type: Int
         is_todo: Boolean
-    ): [File!]!
+    ): [File!]! """ see App/GraphQL/Queries/Files.php """
 
     file(id: ID! @eq): File @find
 }
 
 type Mutation @middleware(checks: ["auth:api"]) {
-    update_file(input: UpdateFileInput!): File @update(flatten: true)
+    update_file(input: UpdateFileInput! @spread): File @update
 
     delete_file(id: ID!): File @delete
 }

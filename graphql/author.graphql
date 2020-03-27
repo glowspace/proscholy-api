@@ -28,7 +28,7 @@ extend type Query {
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
     delete_author(id: ID!): Author @delete
-    update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
+    update_author(input: UpdateAuthorInput! @spread): Author @update
 }
 
 

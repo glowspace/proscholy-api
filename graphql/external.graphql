@@ -15,13 +15,13 @@ extend type Query  {
         type: Int
         is_todo: Boolean
         orderBy: [OrderByClause!] @orderBy
-    ): [External!]!
+    ): [External!]! """ see App/GraphQL/Queries/Externals.php """
 
     external(id: ID! @eq): External @find
 }
 
 type Mutation @middleware(checks: ["auth:api"]) {
-    update_external(input: UpdateExternalInput!): External @update(flatten: true)
+    update_external(input: UpdateExternalInput! @spread): External @update
 
     delete_external(id: ID!): External @delete
 }
