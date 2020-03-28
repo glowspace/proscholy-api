@@ -1,27 +1,25 @@
 version: '3'
 services:
-  web:
-    build: 
-      context: ./docker/setup/web
-      dockerfile: Dockerfile
-    volumes:
-      - '.:/var/www/html'
-      - './docker/config/cron.d:/etc/cron.d'
-      - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
-    entrypoint: 'bash ./docker/setup/web/entrypoint_web_test.sh'
-    networks:
-      - bcloud-network
-    depends_on:
-      - db
-      # seeding depends on elastic having built an index, see entrypoint_web_test.sh
-      - elasticsearch
-    dns:
-      - 8.8.8.8
-      - 4.4.4.4
-    # expose browsersync ports
-    ports:
-      - '3000:3000'
-      - '3001:3001'
+  # web:
+  #   build: 
+  #     context: ./docker/setup/web
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - '.:/var/www/html'
+  #     - './docker/config/cron.d:/etc/cron.d'
+  #     - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
+  #   entrypoint: 'bash ./docker/setup/web/entrypoint_web_test.sh'
+  #   networks:
+  #     - bcloud-network
+  #   depends_on:
+  #     - db
+  #   dns:
+  #     - 8.8.8.8
+  #     - 4.4.4.4
+  #   # expose browsersync ports
+  #   ports:
+  #     - '3000:3000'
+  #     - '3001:3001'
   
   db:
     image: mysql:5.7
@@ -46,19 +44,19 @@ services:
     networks: 
       - bcloud-network
 
-  nginx:
-    image: 'nginx:1.17.3'
-    ports:
-      - '8000:80'
-      - '443:443'
-    links:
-      - 'web'
-    volumes:
-      - '.:/var/www/html'
-      - './docker/config/nginx_dev:/etc/nginx/conf.d'
-      - './docker/logs/nginx:/var/log/nginx'
-    networks:
-      - bcloud-network
+  # nginx:
+  #   image: 'nginx:1.17.3'
+  #   ports:
+  #     - '8000:80'
+  #     - '443:443'
+  #   links:
+  #     - 'web'
+  #   volumes:
+  #     - '.:/var/www/html'
+  #     - './docker/config/nginx_dev:/etc/nginx/conf.d'
+  #     - './docker/logs/nginx:/var/log/nginx'
+  #   networks:
+  #     - bcloud-network
 
   adminer:
       image: adminer
@@ -66,40 +64,6 @@ services:
           - 8001:8080
       networks:
         - bcloud-network
-
-  elasticsearch:
-    build: 
-      context: ./docker/setup/elastic
-      dockerfile: Dockerfile
-    environment:
-      - http.host=0.0.0.0
-      - transport.host=127.0.0.1
-      - xpack.security.enabled=false
-    volumes:
-      - ./data/elastic:/etc/elasticsearch/data 
-      - ./config/elastic/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
-    ports:
-      - "9200:9200"
-    networks:
-      - bcloud-network
-
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:7.2.0
-  #   ports:
-  #     - "9010:5601"
-  #   networks:
-  #     - bcloud-network
-  #   depends_on:
-  #     - elasticsearch
-
-  # cerebro:
-  #   image: yannart/cerebro:0.8.1
-  #   ports:
-  #     - "9000:9000"
-  #   networks:
-  #     - bcloud-network
-  #   depends_on:
-  #     - elasticsearch
 
 networks:
   bcloud-network:
