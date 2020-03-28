@@ -23,8 +23,8 @@ php artisan view:clear
 php artisan config:clear
 php artisan vendor:publish --all
 
-chmod -R 777 storage
+sudo chmod -R 777 storage
 
-if [ "$SCOUT_DRIVER" == "elastic" ] && [ "$DISABLE_ELASTIC" != "true" ]; then
-    # todo: build a new index, if necessary, import models with scout
-fi
+# if [ "$SCOUT_DRIVER" == "elastic" ] && [ "$DISABLE_ELASTIC" != "true" ]; then
+#     # todo: build a new index, if necessary, import models with scout
+# fi
