@@ -23,11 +23,8 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: 'proscholy'
-      # So you don't have to use root, but you can if you like
       MYSQL_USER: 'zpevnik'
-      # You can use whatever password you like
       MYSQL_PASSWORD: 'zpev123'
-      # Password for root access
       MYSQL_ROOT_PASSWORD: 'zpzpzp123'
     ports:
       # <Port exposed> : < MySQL Port running inside container>
@@ -81,24 +78,6 @@ services:
     networks:
       - bcloud-network
     restart: always
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.2.0
-    ports:
-      - "25601:5601"
-    networks:
-      - bcloud-network
-    depends_on:
-      - elasticsearch
-
-  # cerebro:
-  #   image: yannart/cerebro:0.8.1
-  #   ports:
-  #     - "9000:9000"
-  #   networks:
-  #     - bcloud-network
-  #   depends_on:
-  #     - elasticsearch
 
 networks:
   bcloud-network:
