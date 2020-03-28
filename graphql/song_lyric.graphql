@@ -56,20 +56,20 @@ extend type Query  {
         has_chords: Boolean
         order_abc: Boolean
         updated_after: DateTime
-    ): [SongLyric!]! """ see App/GraphQL/Queries/SongLyrics.php """
+    ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php 
 
     search_song_lyrics(
         search_params: String
         page: Int
         per_page: Int
-    ): SongLyricPaginator """ see App/GraphQL/Queries/SearchSongLyrics.php """
+    ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
 }
 
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
     delete_song_lyric(id: ID!): SongLyric @delete
 
-    update_song_lyric(input: UpdateSongLyricInput!): SongLyric """ see App/GraphQL/Mutations/UpdateSongLyric.php """
+    update_song_lyric(input: UpdateSongLyricInput!): SongLyric # see App/GraphQL/Mutations/UpdateSongLyric.php
 }
 
 input UpdateSongLyricRelation {

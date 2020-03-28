@@ -15,7 +15,7 @@ extend type Query  {
         type: Int
         is_todo: Boolean
         orderBy: [OrderByClause!] @orderBy
-    ): [External!]! """ see App/GraphQL/Queries/Externals.php """
+    ): [External!]! # see App/GraphQL/Queries/Externals.php
 
     external(id: ID! @eq): External @find
 }

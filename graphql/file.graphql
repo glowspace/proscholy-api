@@ -19,7 +19,7 @@ extend type Query  {
     files (
         type: Int
         is_todo: Boolean
-    ): [File!]! """ see App/GraphQL/Queries/Files.php """
+    ): [File!]! # see App/GraphQL/Queries/Files.php
 
     file(id: ID! @eq): File @find
 }

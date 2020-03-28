@@ -12,7 +12,7 @@ extend type Query {
 extend type Mutation @middleware(checks: ["auth:web_firebase"]) {
     update_user_data(input: UpdatePublicUserInput! @spread): PublicUser @update
 
-    update_playlist(input: UpdatePlaylistInput!): Playlist """ see App/GraphQL/Mutations/UpdatePlaylist.php """
+    update_playlist(input: UpdatePlaylistInput!): Playlist # see App/GraphQL/Mutations/UpdatePlaylist.php
     create_playlist(input: CreatePlaylistInput! @spread): Playlist @update
 }
 
