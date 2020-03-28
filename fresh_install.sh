@@ -2,8 +2,11 @@
 
 # run from the root folder of the project (either in Docker or not)
 if [ -f ".env" ]; then
+    echo "Lets goo";
+else
+    ls;
     echo "Probably not in the laravel root folder. (.env file not found)";
-    exit 1;
+    exit;
 fi
 
 composer install --ignore-platform-reqs
