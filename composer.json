@@ -23,7 +23,6 @@
         "nuwave/lighthouse": "^4.10",
         "spatie/laravel-permission": "^2.33",
         "spatie/pdf-to-image": "^1.8",
-        "spatie/pdf-to-text": "^1.1",
         "venturecraft/revisionable": "^1.30"
     },
     "require-dev": {

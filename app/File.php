@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 use Spatie\PdfToImage\Pdf;
 
-use Spatie\PdfToText\Pdf as PdfToText;
-
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -211,17 +209,5 @@ class File extends Model implements ISource
     public function getMediaId()
     {
         return false;
-    }
-
-    // just for fun
-    public function getPdfText()
-    {
-        if (pathinfo($this->path, PATHINFO_EXTENSION) !== "pdf")
-            return "";
-
-        $text = PdfToText::getText(Storage::path($this->path));
-        $text = str_replace('-', ' ', str_slug($text));
-
-        return $text;
     }
 }
