@@ -10,6 +10,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 #import author.graphql
 #import user.graphql
 #import song_lyric.graphql
+#import song_lyric_part.graphql
 #import songbook.graphql
 #import songbook_record.graphql
 #import song.graphql
