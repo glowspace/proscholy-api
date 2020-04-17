@@ -6,7 +6,6 @@ type Author {
     type_string: String
     type_string_values: [String]
     email: String
-    url: String
     visits: Int
     public_url: String
     song_lyrics: [SongLyric] @belongsToMany

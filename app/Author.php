@@ -51,7 +51,7 @@ class Author extends Model
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['visits'];
     
-    protected $fillable = ['name', 'description', 'email', 'url', 'type'];
+    protected $fillable = ['name', 'description', 'email', 'type'];
 
     private $type_string_values
         = [
