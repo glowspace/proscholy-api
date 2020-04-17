@@ -4,7 +4,7 @@ type Author {
     description: String
     type: Int
     type_string: String
-    type_string_values: [String]
+    type_string_values: JSON
     email: String
     visits: Int
     public_url: String
@@ -25,7 +25,12 @@ extend type Query {
     author(id: ID! @eq): Author @find
 }
 
-extend type Mutation @middleware(checks: ["auth:api"]) {
+# extend type Mutation @middleware(checks: ["auth:api"]) {
+#     delete_author(id: ID!): Author @delete
+#     update_author(input: UpdateAuthorInput! @spread): Author @update
+# }
+
+extend type Mutation {
     delete_author(id: ID!): Author @delete
     update_author(input: UpdateAuthorInput! @spread): Author @update
 }
@@ -36,16 +41,22 @@ input UpdateAuthorInput {
     name: String @rules(apply: ["required", "min:2"], messages: { 
             required: "Jméno autora nesmí zůstat prázdné", 
             min: "Jméno autora by mělo mít aspoň 2 znaky"})
-    type: Int!
+    type: Int
     description: String
     members: SyncAuthorsRelation
 }
 
 input SyncAuthorsRelation {
   create: [CreateAuthorInput!]
+  upsert: [UpsertAuthorInput!]
   sync: [ID!]
 }
 
 input CreateAuthorInput {
   name: String!
+}
+
+input UpsertAuthorInput {
+  id: ID
+  name: String
 }

@@ -15,7 +15,7 @@
             <v-tooltip right :disabled="model.memberships.length == 0">
               <template v-slot:activator="{ on }">
                 <div v-on="on">
-                  <v-select :items="type_values" v-model="model.type" label="Typ" :readonly="model.memberships.length > 0"></v-select>
+                  <v-select :items="enums.type" v-model="model.type" label="Typ" :readonly="model.memberships.length > 0"></v-select>
                 </div>
               </template>
               <span>Uvedli jste, že autor je členem nějaké skupiny, proto nelze měnit jeho typ.</span>
@@ -121,9 +121,11 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
+// import { loadModelDataFromResult, loadEnumJsonFromResult } from 'Admin/models/manipulation'
+import EditForm from './EditForm'
 
 export default {
-  props: ["preset-id"],
+  extends: EditForm,
 
   components: {
     ItemsComboBox,
@@ -145,8 +147,11 @@ export default {
         members: [],
         memberships: []
       },
-      type_values: [],
-      is_deleted: false
+      enums: {
+        type: []
+      },
+      is_deleted: false,
+      fragment: fragment
     };
   },
 
@@ -159,49 +164,12 @@ export default {
         };
       },
       result(result) {
-        let author = result.data.model_database;
-        // load the requested fields to the vue data.model property
-        for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, author[field]);
-        }
-
-        this.type_values = author.type_string_values.map((val, index) => {
-          return { value: index, text: val };
-        });
+        this.loadModelDataFromResult(result);
+        this.loadEnumJsonFromResult(result, "type_string_values", this.enums.type);
       }
     },
     authors: {
       query: FETCH_AUTHORS
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted() {
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = e => {
-      if (this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-  },
-
-  computed: {
-    isDirty() {
-      if (!this.model_database) return false;
-
-      for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])) {
-          return true;
-        }
-      }
-
-      return false;
     }
   },
 
@@ -242,62 +210,8 @@ export default {
             return;
           }
 
-          let errorFields = error.graphQLErrors[0].extensions.validation;
-
-          // clear the old errors and (add new ones if exist)
-          this.$validator.errors.clear();
-          for (const [key, value] of Object.entries(errorFields)) {
-            this.$validator.errors.add({ field: key, msg: value });
-          }
+          this.handleValidationErrors(error);
         });
-    },
-
-    // getModelsToCreateBelongsToMany(models){
-    //   return models.filter(model => {
-    //     if(model.id) return false;
-    //     return true;
-    //   });
-    // },
-
-    // getModelsToSyncBelongsToMany(models){
-    //   return models.filter(model => {
-    //     if(model.id) return true;
-    //     return false;
-    //   }).map(model => {
-    //     return model.id
-    //   });
-    // },
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment(includeId) {
-      let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => {
-        if (field.alias) return field.alias.value;
-        return field.name.value;
-      });
-
-      if (!includeId)
-        fieldNames = fieldNames.filter(field => {
-          return field != "id";
-        });
-
-      return fieldNames;
-    },
-
-    async goToPage(url, save=true) {
-      if (this.isDirty && save)
-        await this.submit();
-
-      setTimeout(() => {
-        if (!this.isDirty && save) {
-          var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/' + url;
-        }
-      }, 500);
-    },
-
-    goToAdminPage(url, save=true) {
-      this.goToPage('/admin/' + url, save);
     },
 
     show() {
