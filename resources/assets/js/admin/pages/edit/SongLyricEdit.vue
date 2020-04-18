@@ -309,7 +309,6 @@
 
 <script>
 import gql from "graphql-tag";
-import fragment from "Fragments/song_lyric_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
 import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
@@ -317,42 +316,7 @@ import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
 
 import EditForm from './EditForm';
-
-const FETCH_MODEL_DATABASE = gql`
-  query($id: ID!) {
-    model_database: song_lyric(id: $id) {
-      ...SongLyricFillableFragment
-
-      public_url
-      
-      lang_string_values
-      liturgy_approval_status_string_values
-
-      externals {
-          id
-          public_name
-          url
-          type
-      }
-      files {
-          id
-          public_name
-          url
-          type
-      }
-    }
-  }
-  ${fragment}
-`;
-
-const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateSongLyricInput!) {
-    update_song_lyric(input: $input) {
-      ...SongLyricFillableFragment
-    }
-  }
-  ${fragment}
-`;
+import SongLyric from 'Admin/models/SongLyric'
 
 const FETCH_AUTHORS = gql`
   query {
@@ -362,7 +326,6 @@ const FETCH_AUTHORS = gql`
     }
   }
 `;
-
 const FETCH_SONG_LYRICS = gql`
   query {
     song_lyrics {
@@ -371,7 +334,6 @@ const FETCH_SONG_LYRICS = gql`
     }
   }
 `;
-
 const FETCH_SONGBOOKS = gql`
   query {
     songbooks {
@@ -380,7 +342,6 @@ const FETCH_SONGBOOKS = gql`
     }
   }
 `;
-
 const FETCH_TAGS_UNOFFICIAL = gql`
   query {
     tags_unofficial: tags(type: 0) {
@@ -389,7 +350,6 @@ const FETCH_TAGS_UNOFFICIAL = gql`
     }
   }
 `;
-
 const FETCH_TAGS_OFFICIAL = gql`
   query {
     tags_official: tags(type: 1) {
@@ -434,7 +394,7 @@ export default {
 
       selected_thumbnail_url: undefined,
       is_deleted: false,
-      fragment: fragment,
+      fragment: SongLyric.fragment,
 
       enums: {
         lang: [],
@@ -445,11 +405,9 @@ export default {
 
   apollo: {
     model_database: {
-      query: FETCH_MODEL_DATABASE,
+      query: SongLyric.QUERY,
       variables() {
-        return {
-          id: this.model.id
-        };
+        return SongLyric.getQueryVariables(this.model);
       },
       result(result) {
         this.loadModelDataFromResult(result);
@@ -501,48 +459,8 @@ export default {
     submit() {
       return this.$apollo
         .mutate({
-          mutation: MUTATE_MODEL_DATABASE,
-          variables: {
-            input: {
-              id: this.model.id,
-              name: this.model.name,
-              lang: this.model.lang,
-              has_anonymous_author: this.model.has_anonymous_author,
-              only_regenschori: this.model.only_regenschori,
-              lyrics: this.model.lyrics,
-              song: this.model.song,
-              capo: this.model.capo,
-              liturgy_approval_status: this.model.liturgy_approval_status,
-              authors: {
-                create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.authors
-                  .filter(m => m.hasOwnProperty("id"))
-                  .map(m => m.id)
-              },
-              tags_unofficial: {
-                create: this.model.tags_unofficial.filter(
-                  m => !m.hasOwnProperty("id")
-                ),
-                sync: this.model.tags_unofficial
-                  .filter(m => m.hasOwnProperty("id"))
-                  .map(m => m.id)
-              },
-              tags_official: {
-                // create: this.model.tags_official.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.tags_official
-                  .filter(m => m.hasOwnProperty("id"))
-                  .map(m => m.id)
-              },
-              songbook_records: {
-                // was not working
-                // create: this.model.songbook_records.filter(m => typeof m.songbook === "string"),
-                sync: this.model.songbook_records.map(m => ({
-                  songbook_id: parseInt(m.songbook.id),
-                  number: m.number
-                }))
-              }
-            }
-          }
+          mutation: SongLyric.MUTATION,
+          variables: SongLyric.getMutationVariables(this.model)
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -589,20 +507,6 @@ export default {
           this.$refs.textarea.calculateInputHeight();
         }, 1);
       }
-    },
-
-    getModelToSyncBelongsTo(model) {
-      let obj = {};
-
-      if (model) {
-        obj.update = {
-          id: model.id
-        };
-      } else {
-        obj.disconnect = true;
-      }
-
-      return obj;
     },
 
     handleOpensongFile(e) {

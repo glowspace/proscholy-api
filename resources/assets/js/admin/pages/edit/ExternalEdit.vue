@@ -91,30 +91,12 @@
 
 <script>
 import gql from "graphql-tag";
-import fragment from "Fragments/external_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import ExternalView from "Public/components/ExternalView.vue";
+
 import EditForm from './EditForm';
-
-const FETCH_MODEL_DATABASE = gql`
-  query($id: ID!) {
-    model_database: external(id: $id) {
-      ...ExternalFillableFragment
-      type_string_values
-    }
-  }
-  ${fragment}
-`;
-
-const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateExternalInput!) {
-    update_external(input: $input) {
-      ...ExternalFillableFragment
-    }
-  }
-  ${fragment}
-`;
+import External from 'Admin/models/External';
 
 const FETCH_AUTHORS = gql`
   query {
@@ -156,19 +138,18 @@ export default {
       enums: {
         type: []
       },
-      fragment: fragment,
+      fragment: External.fragment,
       is_deleted: false
     };
   },
 
   apollo: {
     model_database: {
-      query: FETCH_MODEL_DATABASE,
+      query: External.QUERY,
       variables() {
-        return {
-          id: this.model.id
-        };
+        return External.getQueryVariables(this.model)
       },
+
       result(result) {
         this.loadModelDataFromResult(result);
         this.loadEnumJsonFromResult(result, "type_string_values", this.enums.type);
@@ -186,7 +167,7 @@ export default {
   //   isDirty() {
   //     if (this.is_deleted) return false;
   //     if (!this.model_database) return false;
-  //                      if (!this.model.url) return true;
+  // todo:                     if (!this.model.url) return true;
 
   //     for (let field of this.getFieldsFromFragment(this)) {
   //       if (!_.isEqual(this.model[field], this.model_database[field])) {
@@ -202,19 +183,8 @@ export default {
     submit() {
       this.$apollo
         .mutate({
-          mutation: MUTATE_MODEL_DATABASE,
-          variables: {
-            input: {
-              id: this.model.id,
-              url: this.model.url,
-              type: this.model.type,
-              song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
-              authors: {
-                create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.authors.filter(m => m.hasOwnProperty("id")).map(m => m.id)
-              }
-            }
-          }
+          mutation: External.MUTATION,
+          variables: External.getMutationVariables(this.model)
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -237,20 +207,6 @@ export default {
 
           this.handleValidationErrors(error);
         });
-    },
-
-    getModelToSyncBelongsTo(model) {
-      let obj = {};
-
-      if (model) {
-        obj.update = {
-          id: model.id
-        };
-      } else {
-        obj.disconnect = true;
-      }
-
-      return obj;
     },
 
     showSong() {

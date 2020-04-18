@@ -72,32 +72,13 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "Fragments/file_fragment.graphql";
+import gql from "graphql-tag";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import ExternalView from "Public/components/ExternalView.vue";
 import EditForm from "./EditForm";
 
-const FETCH_MODEL_DATABASE = gql`
-  query($id: ID!) {
-    model_database: file(id: $id) {
-      ...FileFillableFragment
-      type_string_values
-      external_type
-    }
-  }
-  ${fragment}
-`;
-
-const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateFileInput!) {
-    update_file(input: $input) {
-      ...FileFillableFragment
-    }
-  }
-  ${fragment}
-`;
+import File from "Admin/models/File";
 
 const FETCH_AUTHORS = gql`
   query {
@@ -141,17 +122,15 @@ export default {
         type: []
       },
       is_deleted: false,
-      fragment: fragment
+      fragment: File.fragment
     };
   },
 
   apollo: {
     model_database: {
-      query: FETCH_MODEL_DATABASE,
+      query: File.QUERY,
       variables() {
-        return {
-          id: this.model.id
-        };
+        return File.getQueryVariables(this.model);
       },
       result(result) {
         this.loadModelDataFromResult(result);
@@ -170,20 +149,8 @@ export default {
     submit() {
       this.$apollo
         .mutate({
-          mutation: MUTATE_MODEL_DATABASE,
-          variables: { 
-            input: {
-              id: this.model.id,
-              name: this.model.name,
-              filename: this.model.filename,
-              type: this.model.type,
-              song_lyric: this.getModelToSyncBelongsTo(this.model.song_lyric),
-              authors: {
-                create: this.model.authors.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.authors.filter(m => m.hasOwnProperty("id")).map(m => m.id)
-              }
-            }
-          }
+          mutation: File.MUTATION,
+          variables: File.getMutationVariables(this.model)
         })
         .then(result => {
           this.$validator.errors.clear();
@@ -206,20 +173,6 @@ export default {
 
           this.handleValidationErrors(error);
         });
-    },
-
-    getModelToSyncBelongsTo(model) {
-      let obj = {};
-
-      if (model) {
-        obj.update = {
-          id: model.id
-        }
-      } else {
-        obj.disconnect = true;
-      }
-      
-      return obj;
     },
 
     showSong() {

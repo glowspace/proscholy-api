@@ -1,5 +1,4 @@
 <script>
-import { getFieldsFromFragment } from "Admin/models/manipulation";
 
 export default {
   props: ["preset-id"],
@@ -8,9 +7,9 @@ export default {
     isDirty() {
       if (this.is_deleted) return false;
       if (!this.model_database) return false;
-    //   if (!this.model.url) return true;
+      //   if (!this.model.url) return true;
 
-      for (let field of getFieldsFromFragment(this.fragment)) {
+      for (let field of this._getFieldsFromFragment(this.fragment)) {
         if (!_.isEqual(this.model[field], this.model_database[field])) {
           return true;
         }
@@ -22,10 +21,10 @@ export default {
 
   mounted() {
     if (!this.fragment) {
-        throw new Error("Edit form's data.fragment is not defined!");
+      throw new Error("Edit form's data.fragment is not defined!");
     }
     if (!this.model) {
-        throw new Error("Edit form's data.model is not defined!");
+      throw new Error("Edit form's data.model is not defined!");
     }
 
     this.model.id = this.presetId;
@@ -72,7 +71,7 @@ export default {
     },
 
     reset() {
-      for (let field of getFieldsFromFragment(this.fragment, {
+      for (let field of this._getFieldsFromFragment(this.fragment, {
         includeId: false
       })) {
         let clone = _.cloneDeep(this.model_database[field]);
@@ -81,10 +80,10 @@ export default {
     },
 
     loadModelDataFromResult(result) {
-      console.log(getFieldsFromFragment(this.fragment));
+      console.log(this._getFieldsFromFragment(this.fragment));
 
       // load the requested fields to the vue data.model property
-      for (let field of getFieldsFromFragment(this.fragment, {
+      for (let field of this._getFieldsFromFragment(this.fragment, {
         includeId: false
       })) {
         Vue.set(
@@ -110,62 +109,23 @@ export default {
       }
     },
 
-    prepareDataForMutation(mutators) {
-      mutators_mock = {
-        authors: this.makeBelongsToManyMutator({ sync: true, create: true }),
-        song_lyrics: this.makeBelogsToMutator()
+    _getFieldsFromFragment(fragment, options = { includeId: true }) {
+      if (!fragment) {
+        throw new Error("Fragment is not defined.");
       }
 
-      let result = {};
+      let fieldDefs = fragment.definitions[0].selectionSet.selections;
+      let fieldNames = fieldDefs.map(field => {
+        if (field.alias) return field.alias.value;
+        return field.name.value;
+      });
 
-      // load fragment data
-      const fields = this.getFieldsFromFragment(this.fragment);
-      const fieldsToMutate = Object.keys(mutators_mock);
+      if (!options.includeId)
+        fieldNames = fieldNames.filter(field => {
+          return field != "id";
+        });
 
-      for (const field of fields) {
-        if (field in fieldsToMutate) {
-          const mutatorFunc = mutators_mock[field];
-          result[field] = mutatorFunc(this.model[field]);
-        } else {
-          result[field] = this.model[field];
-        }
-      }
-
-      return result;
-    },
-
-    makeBelongsToManyMutator(options = {
-      sync: true,
-      create: true
-    }) {
-      return function (relationData) {
-        let obj = {};
-
-        if (options.sync) {
-          obj.sync = relationData.filter(x => x.hasOwnProperty("id")).map(x => x.id)
-        }
-        if (options.create) {
-          obj.create = relationData.filter(x => !x.hasOwnProperty("id")),
-        }
-
-        return obj;
-      }
-    },
-
-    makeBelogsToMutator() {
-      return function(relationData) {
-        let obj = {};
-  
-        if (model) {
-          obj.update = {
-            id: model.id
-          }
-        } else {
-          obj.disconnect = true;
-        }
-        
-        return obj;
-      }
+      return fieldNames;
     }
   }
 };

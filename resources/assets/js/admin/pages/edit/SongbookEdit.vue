@@ -130,30 +130,13 @@
 </style>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "Fragments/songbook_fragment.graphql";
+import gql from "graphql-tag";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
+
 import EditForm from "./EditForm";
-
-const FETCH_MODEL_DATABASE = gql`
-  query($id: ID!) {
-    model_database: songbook(id: $id) {
-      ...SongbookFillableFragment
-    }
-  }
-  ${fragment}
-`;
-
-const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateSongbookInput!) {
-    update_songbook(input: $input) {
-      ...SongbookFillableFragment
-    }
-  }
-  ${fragment}
-`;
+import Songbook from "Admin/models/Songbook"
 
 const FETCH_SONG_LYRICS = gql`
   query {
@@ -192,17 +175,15 @@ export default {
         { text: "Akce", value: "action" }
       ],
       hide_empty: false,
-      fragment: fragment
+      fragment: Songbook.fragment
     };
   },
 
   apollo: {
     model_database: {
-      query: FETCH_MODEL_DATABASE,
+      query: Songbook.QUERY,
       variables() {
-        return {
-          id: this.model.id
-        };
+        return Songbook.getQueryVariables(this.model);
       },
       result(result) {
         this.loadModelDataFromResult(result);
@@ -252,33 +233,8 @@ export default {
     submit() {
       this.$apollo
         .mutate({
-          mutation: MUTATE_MODEL_DATABASE,
-          variables: {
-            input: {
-              id: this.model.id,
-              name: this.model.name,
-              shortcut: this.model.shortcut,
-              songs_count: this.model.songs_count,
-              is_private: this.model.is_private,
-              color: this.model.color,
-              records: {
-                // first let's filter out records that had been assigned a song_lyric but
-                // it was then set to null
-                sync: this.model.records
-                  .filter(r => r.song_lyric !== null && r.song_lyric.hasOwnProperty("id"))
-                  .map(m => ({
-                    song_lyric_id: parseInt(m.song_lyric.id), 
-                    number: m.number
-                  })),
-                create: this.model.records
-                  .filter(r => r.song_lyric !== null && !r.song_lyric.hasOwnProperty("id"))
-                  .map(m => ({
-                    song_lyric_name: m.song_lyric.name,
-                    number: m.number
-                  }))
-              }
-            }
-          }
+          mutation: Songbook.MUTATION,
+          variables: Songbook.getMutationVariables(this.model)
         })
         .then(result => {
           this.$validator.errors.clear();

@@ -88,29 +88,11 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
-import fragment from "Fragments/author_fragment.graphql";
+import gql from "graphql-tag";
+
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
-
-const FETCH_MODEL_DATABASE = gql`
-  query($id: ID!) {
-    model_database: author(id: $id) {
-      ...AuthorFillableFragment
-      type_string_values
-    }
-  }
-  ${fragment}
-`;
-
-const MUTATE_MODEL_DATABASE = gql`
-  mutation($input: UpdateAuthorInput!) {
-    update_author(input: $input) {
-      ...AuthorFillableFragment
-    }
-  }
-  ${fragment}
-`;
+import Author from 'Admin/models/Author';
 
 const FETCH_AUTHORS = gql`
   query { 
@@ -121,7 +103,6 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
-// import { loadModelDataFromResult, loadEnumJsonFromResult } from 'Admin/models/manipulation'
 import EditForm from './EditForm'
 
 export default {
@@ -151,18 +132,17 @@ export default {
         type: []
       },
       is_deleted: false,
-      fragment: fragment
+      fragment: Author.fragment
     };
   },
 
   apollo: {
     model_database: {
-      query: FETCH_MODEL_DATABASE,
+      query: Author.QUERY,
       variables() {
-        return {
-          id: this.model.id
-        };
+        return Author.getQueryVariables(this.model);
       },
+
       result(result) {
         this.loadModelDataFromResult(result);
         this.loadEnumJsonFromResult(result, "type_string_values", this.enums.type);
@@ -173,23 +153,16 @@ export default {
     }
   },
 
+  mounted() {
+    console.log(Admin);
+  },
+
   methods: {
     submit() {
       this.$apollo
         .mutate({
-          mutation: MUTATE_MODEL_DATABASE,
-          variables: {
-            input: {
-              id: this.model.id,
-              name: this.model.name,
-              type: this.model.type,
-              description: this.model.description,
-              members: {
-                create: this.model.members.filter(m => !m.hasOwnProperty("id")),
-                sync: this.model.members.filter(m => m.hasOwnProperty("id")).map(m => m.id)
-              }
-            }
-          }
+          mutation: Author.MUTATION,
+          variables: Author.getMutationVariables(this.model)
         })
         .then(result => {
           this.$validator.errors.clear();
