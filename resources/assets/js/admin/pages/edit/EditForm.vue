@@ -108,6 +108,64 @@ export default {
 
         vueEnumModel.push({ value: key_parsed, text: value });
       }
+    },
+
+    prepareDataForMutation(mutators) {
+      mutators_mock = {
+        authors: this.makeBelongsToManyMutator({ sync: true, create: true }),
+        song_lyrics: this.makeBelogsToMutator()
+      }
+
+      let result = {};
+
+      // load fragment data
+      const fields = this.getFieldsFromFragment(this.fragment);
+      const fieldsToMutate = Object.keys(mutators_mock);
+
+      for (const field of fields) {
+        if (field in fieldsToMutate) {
+          const mutatorFunc = mutators_mock[field];
+          result[field] = mutatorFunc(this.model[field]);
+        } else {
+          result[field] = this.model[field];
+        }
+      }
+
+      return result;
+    },
+
+    makeBelongsToManyMutator(options = {
+      sync: true,
+      create: true
+    }) {
+      return function (relationData) {
+        let obj = {};
+
+        if (options.sync) {
+          obj.sync = relationData.filter(x => x.hasOwnProperty("id")).map(x => x.id)
+        }
+        if (options.create) {
+          obj.create = relationData.filter(x => !x.hasOwnProperty("id")),
+        }
+
+        return obj;
+      }
+    },
+
+    makeBelogsToMutator() {
+      return function(relationData) {
+        let obj = {};
+  
+        if (model) {
+          obj.update = {
+            id: model.id
+          }
+        } else {
+          obj.disconnect = true;
+        }
+        
+        return obj;
+      }
     }
   }
 };
