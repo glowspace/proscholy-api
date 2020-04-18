@@ -19,6 +19,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 #import tag.graphql
 #import playlist.graphql
 #import public_user.graphql
+#import model.graphql
 
 
 union SearchResult = SongLyric | Author
