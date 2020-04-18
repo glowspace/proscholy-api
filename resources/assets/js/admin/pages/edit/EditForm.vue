@@ -1,5 +1,27 @@
 <script>
 
+/**
+ * Base Vue object to extend from other ModelEdit.vue files.
+ * 
+ * Concepts:
+ *  this.model_database
+ *  - is loaded from graphql, immutable and copied into data.model
+ *  - is used for comparing if the form has changed (isDirty) or resetting to the db's state
+ *  
+ *  this.model
+ *  - is current state-handling object, mirroring all the updates on the frontend
+ *  - has only fields defined in the fragment (see this.fragment)
+ * 
+ *  this.enums
+ *  - is a storage for all possible values for inputs such as Select Boxes
+ * 
+ *  this.fragment
+ *  - is a type of GraphQL fragment (see https://graphql.org/learn/queries/#fragments)
+ *    with model's editable (fillable) attributes and relations
+ *  - each model has it's own defined in admin/models/Model.js
+ * 
+ */
+
 export default {
   props: ["preset-id"],
 
@@ -80,8 +102,6 @@ export default {
     },
 
     loadModelDataFromResult(result) {
-      console.log(this._getFieldsFromFragment(this.fragment));
-
       // load the requested fields to the vue data.model property
       for (let field of this._getFieldsFromFragment(this.fragment, {
         includeId: false
@@ -89,7 +109,7 @@ export default {
         Vue.set(
           this.model,
           field,
-          _.cloneDeep(result.data.model_database[field])
+          _.cloneDeep(result.data.model_database[field]) // necessary for nested models
         );
       }
     },
@@ -111,19 +131,14 @@ export default {
 
     _getFieldsFromFragment(fragment, options = { includeId: true }) {
       if (!fragment) {
-        throw new Error("Fragment is not defined.");
+        throw new Error("Expected a fragment, but got none.");
       }
 
       let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => {
-        if (field.alias) return field.alias.value;
-        return field.name.value;
-      });
+      let fieldNames = fieldDefs.map(field => field.alias ? field.alias.value : field.name.value);
 
       if (!options.includeId)
-        fieldNames = fieldNames.filter(field => {
-          return field != "id";
-        });
+        fieldNames = fieldNames.filter(field => field != "id");
 
       return fieldNames;
     }

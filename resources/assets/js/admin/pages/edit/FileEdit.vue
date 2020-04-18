@@ -110,7 +110,6 @@ export default {
     return {
       model: {
         // here goes the definition of model attributes
-        // should match the definition in its ModelFillableFragment in (see graphql/client/model_fragment.graphwl)
         id: undefined,
         type: undefined,
         name: "",
