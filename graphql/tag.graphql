@@ -11,6 +11,6 @@ extend type Query {
     tags(type: Int @eq): [Tag] @all
 }
 
-type Mutation @middleware(checks: ["auth:api"]) {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     delete_tag(id: ID!): Tag @delete
 }
