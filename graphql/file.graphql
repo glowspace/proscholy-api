@@ -5,7 +5,7 @@ type File {
     download_url: String
     type: Int
     type_string: String
-    type_string_values: [String]
+    type_string_values: JSON
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     thumbnail_url: String
@@ -24,7 +24,7 @@ extend type Query  {
     file(id: ID! @eq): File @find
 }
 
-type Mutation @middleware(checks: ["auth:api"]) {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     update_file(input: UpdateFileInput! @spread): File @update
 
     delete_file(id: ID!): File @delete
