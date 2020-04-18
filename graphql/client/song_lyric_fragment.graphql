@@ -5,7 +5,6 @@ fragment SongLyricFillableFragment on SongLyric  {
         id
         name
     }
-    public_url
     has_anonymous_author
     lang
     only_regenschori
@@ -25,18 +24,6 @@ fragment SongLyricFillableFragment on SongLyric  {
             name
             type
         }
-    }
-    externals {
-        id
-        public_name
-        url
-        type
-    }
-    files {
-        id
-        public_name
-        url
-        type
     }
     songbook_records {
         id

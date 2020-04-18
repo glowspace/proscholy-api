@@ -3,7 +3,7 @@ type External {
     public_name: String
     type: Int
     type_string: String
-    type_string_values: [String]
+    type_string_values: JSON
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     url: String

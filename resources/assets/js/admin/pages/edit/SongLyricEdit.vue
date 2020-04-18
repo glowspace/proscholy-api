@@ -95,7 +95,7 @@
                   :multiple="true"
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
-                <v-select :items="liturgy_approval_status_values" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
+                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
                 <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_official.length > 0">
                   Stávající liturgické šítky budou po uložení odstraněny
                 </p>
@@ -129,7 +129,7 @@
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12 md6>
-              <v-select :items="lang_values" v-model="model.lang" label="Jazyk"></v-select>
+              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk"></v-select>
               <!-- <v-text-field
                 label="Kapodastr"
                 required
@@ -308,7 +308,7 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
+import gql from "graphql-tag";
 import fragment from "Fragments/song_lyric_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
@@ -316,12 +316,30 @@ import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
 
+import EditForm from './EditForm';
+
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
     model_database: song_lyric(id: $id) {
       ...SongLyricFillableFragment
+
+      public_url
+      
       lang_string_values
       liturgy_approval_status_string_values
+
+      externals {
+          id
+          public_name
+          url
+          type
+      }
+      files {
+          id
+          public_name
+          url
+          type
+      }
     }
   }
   ${fragment}
@@ -382,7 +400,7 @@ const FETCH_TAGS_OFFICIAL = gql`
 `;
 
 export default {
-  props: ["preset-id", "csrf"],
+  props: ["csrf"],
   components: {
     ItemsComboBox,
     SongLyricsGroup,
@@ -390,6 +408,7 @@ export default {
     DeleteModelDialog,
     NumberInput
   },
+  extends: EditForm,
 
   data() {
     return {
@@ -412,10 +431,15 @@ export default {
         capo: undefined,
         liturgy_approval_status: undefined
       },
-      lang_values: [],
-      liturgy_approval_status_values: [],
+
       selected_thumbnail_url: undefined,
-      is_deleted: false
+      is_deleted: false,
+      fragment: fragment,
+
+      enums: {
+        lang: [],
+        liturgy_approval_status: []
+      }
     };
   },
 
@@ -428,24 +452,9 @@ export default {
         };
       },
       result(result) {
-        let song_lyric = result.data.model_database;
-        // load the requested fields to the vue data.model property
-        for (let field of this.getFieldsFromFragment(false)) {
-          let clone = _.cloneDeep(song_lyric[field]);
-          Vue.set(this.model, field, clone);
-        }
-
-        // lang string values are an associative array passed as JSON object
-        const p = JSON.parse(song_lyric.lang_string_values);
-        for (const [key, value] of Object.entries(p)) {
-          this.lang_values.push({ value: key, text: value });
-        }
-
-        const pp = JSON.parse(song_lyric.liturgy_approval_status_string_values);
-        console.log(pp)
-        for (const [key, value] of Object.entries(pp)) {
-          this.liturgy_approval_status_values.push({ value: parseInt(key), text: value });
-        }
+        this.loadModelDataFromResult(result);
+        this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
+        this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
@@ -466,41 +475,14 @@ export default {
       query: FETCH_SONGBOOKS
     }
   },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
   mounted() {
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = e => {
-      if (this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-
     // send blocking info 
     setInterval(() => {
-        $.get( "/refresh-updating/song-lyric/" + this.presetId );
-    }, 1000);
+        // $.get( "/refresh-updating/song-lyric/" + this.presetId );
+    }, 5000);
   },
 
   computed: {
-    isDirty() {
-      if (!this.model_database) return false;
-
-      for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])) {
-          return true;
-        }
-      }
-
-      return false;
-    },
-
     thumbnailables() {
       // mix the externals and files that can have thumbnail
       return this.model.externals
@@ -584,13 +566,7 @@ export default {
             return;
           }
 
-          let errorFields = error.graphQLErrors[0].extensions.validation;
-
-          // clear the old errors and (add new ones if exist)
-          this.$validator.errors.clear();
-          for (const [key, value] of Object.entries(errorFields)) {
-            this.$validator.errors.add({ field: key, msg: value });
-          }
+          this.handleValidationErrors(error);
 
           this.$notify({
             title: "Chyba při ukládání",
@@ -601,32 +577,8 @@ export default {
         });
     },
 
-    reset() {
-      for (let field of this.getFieldsFromFragment(false)) {
-        let clone = _.cloneDeep(this.model_database[field]);
-        Vue.set(this.model, field, clone);
-      }
-    },
-
     show() {
       window.location.href = this.model_database.public_url;
-    },
-
-    async goToPage(url, save = true) {
-      if (this.isDirty && save) await this.submit();
-
-      setTimeout(() => {
-        if (!this.isDirty && save) {
-          var base_url = document
-            .querySelector("#baseUrl")
-            .getAttribute("value");
-          window.location.href = base_url + "/" + url;
-        }
-      }, 500);
-    },
-
-    goToAdminPage(url, save = true) {
-      this.goToPage("/admin/" + url, save);
     },
 
     onTabChange() {
@@ -637,22 +589,6 @@ export default {
           this.$refs.textarea.calculateInputHeight();
         }, 1);
       }
-    },
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment(includeId) {
-      let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => {
-        if (field.alias) return field.alias.value;
-        return field.name.value;
-      });
-
-      if (!includeId)
-        fieldNames = fieldNames.filter(field => {
-          return field != "id";
-        });
-
-      return fieldNames;
     },
 
     getModelToSyncBelongsTo(model) {

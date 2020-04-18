@@ -6,7 +6,9 @@ export default {
 
   computed: {
     isDirty() {
+      if (this.is_deleted) return false;
       if (!this.model_database) return false;
+    //   if (!this.model.url) return true;
 
       for (let field of getFieldsFromFragment(this.fragment)) {
         if (!_.isEqual(this.model[field], this.model_database[field])) {
@@ -62,9 +64,22 @@ export default {
       }
     },
 
+    reset() {
+      for (let field of getFieldsFromFragment(this.fragment, {
+        includeId: false
+      })) {
+        let clone = _.cloneDeep(this.model_database[field]);
+        Vue.set(this.model, field, clone);
+      }
+    },
+
     loadModelDataFromResult(result) {
+      console.log(getFieldsFromFragment(this.fragment));
+
       // load the requested fields to the vue data.model property
-      for (let field of getFieldsFromFragment(this.fragment, { includeId: false })) {
+      for (let field of getFieldsFromFragment(this.fragment, {
+        includeId: false
+      })) {
         Vue.set(
           this.model,
           field,
