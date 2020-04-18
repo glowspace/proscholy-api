@@ -59,12 +59,6 @@
         </v-flex>
         <v-flex xs12 md6 class="edit-description">
           <h5>Seznam písní ve zpěvníku</h5>
-          <!-- <v-checkbox
-            class="mt-0"
-            v-model="hide_empty"
-            label="Skrýt prázdné záznamy"
-            v-if="model.songs_count"
-          ></v-checkbox> -->
           <v-radio-group v-if="model.songs_count" v-model="hide_empty">
             <v-radio
               label="Zobrazení přiřazených písní (vč. písní bez čísla)"
@@ -125,12 +119,23 @@
   </v-app>
 </template>
 
+<style lang="scss">
+  a.as-link {
+    color: #3f51b5 !important;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+</style>
+
 <script>
 import gql, { disableFragmentWarnings } from "graphql-tag";
 import fragment from "Fragments/songbook_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
+import EditForm from "./EditForm";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -160,13 +165,12 @@ const FETCH_SONG_LYRICS = gql`
 `;
 
 export default {
-  props: ["preset-id"],
-
   components: {
     ItemsComboBox,
     DeleteModelDialog,
     NumberInput
   },
+  extends: EditForm,
 
   data() {
     return {
@@ -187,7 +191,8 @@ export default {
         { text: "Píseň", value: "name" },
         { text: "Akce", value: "action" }
       ],
-      hide_empty: false
+      hide_empty: false,
+      fragment: fragment
     };
   },
 
@@ -200,14 +205,7 @@ export default {
         };
       },
       result(result) {
-        let songbook = result.data.model_database;
-
-        // load the requested fields to the vue data.model property
-        // Vue.set(this.model, "records", this.getRecordsWithEmpty(songbook["records"], songbook["songs_count"]));
-
-        for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, _.cloneDeep(songbook[field]));
-        }
+        this.loadModelDataFromResult(result);
       }
     },
     song_lyrics: {
@@ -215,40 +213,14 @@ export default {
     }
   },
 
-  $_veeValidate: {
-    validator: "new"
-  },
-
   mounted() {
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = e => {
-      if (this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-
     // send blocking info 
     setInterval(() => {
-        $.get( "/refresh-updating/songbook/" + this.presetId );
+        // $.get( "/refresh-updating/songbook/" + this.presetId );
     }, 20000);
   },
 
   computed: {
-    isDirty() {
-      if (!this.model_database) return false;
-
-      for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])) {
-          return true;
-        }
-      }
-
-      return false;
-    },
-
     recordsWithEmpty() {
       if (this.hide_empty || !this.model.songs_count) {
         return this.model.records.filter(r => r.song_lyric !== null);
@@ -327,50 +299,8 @@ export default {
             return;
           }
 
-          let errorFields = error.graphQLErrors[0].extensions.validation;
-
-          // clear the old errors and (add new ones if exist)
-          this.$validator.errors.clear();
-          for (const [key, value] of Object.entries(errorFields)) {
-            this.$validator.errors.add({ field: key, msg: value });
-          }
+          this.handleValidationErrors(error);
         });
-    },
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment(includeId, excludeFields = []) {
-      let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => {
-        if (field.alias) return field.alias.value;
-        return field.name.value;
-      });
-
-      if (!includeId) fieldNames = fieldNames.filter(field => field != "id");
-
-      fieldNames = fieldNames.filter(field => !excludeFields.includes(field));
-
-      return fieldNames;
-    },
-
-    async goToPage(url, save = true, blank = false) {
-      if (this.isDirty && save) await this.submit();
-
-      if (blank) {
-        window.open(url, "_blank");
-      } else {
-        setTimeout(() => {
-          if (!this.isDirty && save) {
-            var base_url = document
-              .querySelector("#baseUrl")
-              .getAttribute("value");
-            window.location.href = base_url + "/" + url;
-          }
-        }, 500);
-      }
-    },
-
-    goToAdminPage(url, save = true, blank = false) {
-      this.goToPage("/admin/" + url, save, blank);
     },
 
     show() {
@@ -393,13 +323,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-  a.as-link {
-    color: #3f51b5 !important;
-
-    &:hover {
-      text-decoration: underline !important;
-    }
-  }
-</style>

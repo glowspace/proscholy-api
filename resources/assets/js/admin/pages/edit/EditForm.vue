@@ -21,6 +21,13 @@ export default {
   },
 
   mounted() {
+    if (!this.fragment) {
+        throw new Error("Edit form's data.fragment is not defined!");
+    }
+    if (!this.model) {
+        throw new Error("Edit form's data.model is not defined!");
+    }
+
     this.model.id = this.presetId;
 
     // prevent user to leave the form if dirty

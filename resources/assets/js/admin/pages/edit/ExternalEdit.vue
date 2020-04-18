@@ -156,6 +156,7 @@ export default {
       enums: {
         type: []
       },
+      fragment: fragment,
       is_deleted: false
     };
   },

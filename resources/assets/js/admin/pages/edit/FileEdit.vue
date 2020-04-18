@@ -22,7 +22,7 @@
               :error-messages="errors.collect('input.filename')"
             ></v-text-field>
 
-            <v-select :items="type_values" v-model="model.type" label="Typ"></v-select>
+            <v-select :items="enums.type" v-model="model.type" label="Typ"></v-select>
             <items-combo-box
                   v-bind:p-items="authors"
                   v-model="model.authors"
@@ -77,6 +77,7 @@ import fragment from "Fragments/file_fragment.graphql";
 import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import ExternalView from "Public/components/ExternalView.vue";
+import EditForm from "./EditForm";
 
 const FETCH_MODEL_DATABASE = gql`
   query($id: ID!) {
@@ -117,12 +118,12 @@ const FETCH_SONG_LYRICS= gql`
 `;
 
 export default {
-  props: ["preset-id"],
   components: {
     ItemsComboBox,
     DeleteModelDialog,
     ExternalView
   },
+  extends: EditForm,
 
   data() {
     return {
@@ -136,8 +137,11 @@ export default {
         authors: [],
         song_lyric: undefined
       },
-      type_values: [],
-      is_deleted: false
+      enums: {
+        type: []
+      },
+      is_deleted: false,
+      fragment: fragment
     };
   },
 
@@ -150,15 +154,8 @@ export default {
         };
       },
       result(result) {
-        let file = result.data.model_database;
-        // load the requested fields to the vue data.model property
-        for (let field of this.getFieldsFromFragment(false)) {
-          Vue.set(this.model, field, file[field]);
-        }
-
-        this.type_values = file.type_string_values.map((val, index) => {
-          return { value: index, text: val };
-        });
+        this.loadModelDataFromResult(result);
+        this.loadEnumJsonFromResult(result, "type_string_values", this.enums.type);
       }
     },
     authors: {
@@ -166,38 +163,6 @@ export default {
     },
     song_lyrics: {
       query: FETCH_SONG_LYRICS,
-    }
-  },
-
-  $_veeValidate: {
-    validator: "new"
-  },
-
-  mounted() {
-    this.model.id = this.presetId;
-
-    // prevent user to leave the form if dirty
-    window.onbeforeunload = e => {
-      if (this.isDirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-  },
-
-  computed: {
-    isDirty() {
-      if (!this.model_database) return false;
-
-      if (!this.model.url) return true;
-
-      for (let field of this.getFieldsFromFragment(this)) {
-        if (!_.isEqual(this.model[field], this.model_database[field])){
-          return true;
-        }
-      }
-
-      return false;
     }
   },
 
@@ -239,46 +204,9 @@ export default {
             return;
           }
 
-          let errorFields = error.graphQLErrors[0].extensions.validation;
-
-          // clear the old errors and (add new ones if exist)
-          this.$validator.errors.clear();
-          for (const [key, value] of Object.entries(errorFields)) {
-            this.$validator.errors.add({ field: key, msg: value });
-          }
+          this.handleValidationErrors(error);
         });
     },
-
-    // helper method to load field names defined in fragment graphql definition
-    getFieldsFromFragment(includeId) {
-      let fieldDefs = fragment.definitions[0].selectionSet.selections;
-      let fieldNames = fieldDefs.map(field => {
-        return field.name.value;
-      });
-
-      if (!includeId)
-        fieldNames = fieldNames.filter(field => {
-          return field != "id";
-        });
-
-      return fieldNames;
-    },
-
-    // getModelsToCreateBelongsToMany(models){
-    //   return models.filter(model => {
-    //     if(model.id) return false;
-    //     return true;
-    //   });
-    // },
-
-    // getModelsToSyncBelongsToMany(models){
-    //   return models.filter(model => {
-    //     if(model.id) return true;
-    //     return false;
-    //   }).map(model => {
-    //     return model.id
-    //   });
-    // },
 
     getModelToSyncBelongsTo(model) {
       let obj = {};
@@ -292,22 +220,6 @@ export default {
       }
       
       return obj;
-    },
-
-    async goToPage(url, save=true) {
-      if (this.isDirty && save)
-        await this.submit();
-
-      setTimeout(() => {
-        if (!this.isDirty && save) {
-          var base_url = document.querySelector('#baseUrl').getAttribute('value');
-          window.location.href = base_url + '/' + url;
-        }
-      }, 500);
-    },
-
-    goToAdminPage(url, save=true) {
-      this.goToPage('/admin/' + url, save);
     },
 
     showSong() {
