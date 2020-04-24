@@ -21,7 +21,7 @@ type SongLyric {
         orderBy: [OrderByClause!] @orderBy
     ): [External] @hasMany
     files(id: Int @eq, type: Int @eq): [File] @hasMany
-    tags(type: Int @eq): [Tag] @belongsToMany
+    tags(type: Int @eq): [Tag] @morphMany
     songbook_records: [SongbookRecord] @belongsToMany
     song: Song! @belongsTo
     has_chords: Boolean!

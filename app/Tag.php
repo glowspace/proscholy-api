@@ -4,10 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
@@ -17,6 +16,9 @@ class Tag extends Model
         'neoficiální', 'oficiální (liturgie)'
     ];
 
+    public static $song_lyric_types = [0, 1];
+    // public static $external_types = [2];
+
     public function getTypeStringAttribute()
     {
         return self::$type_string_values[$this->type];
@@ -25,6 +27,10 @@ class Tag extends Model
     public function getTypeStringValuesAttribute()
     {
         return $this->type_string_values;
+    }
+
+    public function scopeSongLyricsTags($query) {
+        return $query->whereIn('type', self::$type_string_values);
     }
 
     public function scopeOfficials($query)
@@ -37,9 +43,9 @@ class Tag extends Model
         return $query->where('type', 0);
     }
 
-    public function song_lyrics() : BelongsToMany
+    public function song_lyrics() : MorphToMany
     {
-        return $this->belongsToMany(SongLyric::class);
+        return $this->morphedByMany(SongLyric::class, 'taggable');
     }
 
     public static function getByIdOrCreateWithName($identificator)
