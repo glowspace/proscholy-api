@@ -458,10 +458,9 @@ class SongLyric extends Model
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
             'lang' => $this->lang,
             'is_arrangement' => $this->is_arrangement,
-            'tag_instrumentation_ids' => [
-                ...$this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'),
-                ...$this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')
-            ],
+            'tag_instrumentation_ids' => $this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')->concat(
+                $this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'))
+            ,
             'tag_period_ids' => $this->tags()->period()->select('tags.id')->get()->pluck('id')
         ];
 
