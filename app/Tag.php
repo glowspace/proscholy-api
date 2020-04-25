@@ -4,18 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type', 'parent_tag_id'];
 
     public static $type_string_values = [
-        'neoficiální', 'oficiální (liturgie)'
+        0 => 'neoficiální',
+        1 =>'oficiální (liturgie)',
+        50 => 'instrumentace',
+        100 => 'žánr'
     ];
+
+    public static $song_lyric_types = [0, 1];
+    public static $external_types = [50];
 
     public function getTypeStringAttribute()
     {
@@ -25,6 +30,14 @@ class Tag extends Model
     public function getTypeStringValuesAttribute()
     {
         return $this->type_string_values;
+    }
+
+    public function scopeSongLyricsTags($query) {
+        return $query->whereIn('type', self::$song_lyric_types);
+    }
+
+    public function scopeExternalTags($query) {
+        return $query->whereIn('type', self::$external_types);
     }
 
     public function scopeOfficials($query)
@@ -37,10 +50,26 @@ class Tag extends Model
         return $query->where('type', 0);
     }
 
-    public function song_lyrics() : BelongsToMany
+    public function scopeGenre($query)
     {
-        return $this->belongsToMany(SongLyric::class);
+        return $query->where('type', 100);
     }
+
+    public function scopeInstrumentation($query)
+    {
+        return $query->where('type', 50);
+    }
+
+    public function song_lyrics() : MorphToMany
+    {
+        return $this->morphedByMany(SongLyric::class, 'taggable');
+    }
+
+    public function externals() : MorphToMany
+    {
+        return $this->morphedByMany(External::class, 'taggable');
+    }
+
 
     public static function getByIdOrCreateWithName($identificator)
     {

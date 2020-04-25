@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { belongsToManyMutator, belongsToMutator } from "./relations";
+import { belongsToManyMutator } from "./relations";
 
 const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
@@ -12,14 +12,6 @@ const fragment = gql`
         has_anonymous_author
         lang
         only_regenschori
-        tags_unofficial: tags(type: 0) {
-            id
-            name
-        }
-        tags_official: tags(type: 1) {
-            id
-            name
-        }
         lyrics
         song {
             id
@@ -36,6 +28,15 @@ const fragment = gql`
                 id
                 name
             }
+        }
+        tags_official {
+            id
+            name
+        }
+
+        tags_unofficial {
+            id
+            name
         }
         capo
         liturgy_approval_status
@@ -70,7 +71,29 @@ const QUERY = gql`
 `;
 
 const MUTATION = gql`
-    mutation($input: UpdateSongLyricInput!) {
+    mutation($input: UpdateSongLyricInput!,
+            $officialTagsInput: SyncCreateTagsRelation!,
+            $unofficialTagsInput: SyncCreateTagsRelation!
+            $taggable_id: Int!) {
+
+        sync_tags_official: sync_create_tags(
+            input: $officialTagsInput
+            tags_type: 1
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+        sync_tags_unofficial: sync_create_tags(
+            input: $unofficialTagsInput
+            tags_type: 0
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
         update_song_lyric(input: $input) {
             ...SongLyricFillableFragment
         }
@@ -99,10 +122,6 @@ export default {
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
             authors: belongsToManyMutator(vueModel.authors),
-            tags_unofficial: belongsToManyMutator(vueModel.tags_unofficial),
-            tags_official: belongsToManyMutator(vueModel.tags_official, {
-                disableCreate: true
-            }),
 
             // specific mutator
             songbook_records: {
@@ -113,6 +132,11 @@ export default {
                     number: m.number
                 }))
             }
-        }
+        },
+        officialTagsInput: belongsToManyMutator(vueModel.tags_official, {
+            disableCreate: true
+        }),
+        unofficialTagsInput: belongsToManyMutator(vueModel.tags_unofficial),
+        taggable_id: vueModel.id
     })
 };

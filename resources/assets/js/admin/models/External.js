@@ -16,6 +16,10 @@ const fragment = gql`
             name
             public_url
         }
+        tags_instrumentation {
+            id
+            name
+        }
     }
 `;
 
@@ -30,7 +34,20 @@ const QUERY = gql`
 `;
 
 const MUTATION = gql`
-    mutation($input: UpdateExternalInput!) {
+    mutation(
+            $input: UpdateExternalInput!
+            $instrumentationTagsInput: SyncCreateTagsRelation!
+            $taggable_id: Int!
+        ) {
+        sync_tags_instrumentation: sync_create_tags(
+            input: $instrumentationTagsInput
+            tags_type: 50
+            taggable: EXTERNAL
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
         update_external(input: $input) {
             ...ExternalFillableFragment
         }
@@ -54,6 +71,8 @@ export default {
             type: vueModel.type,
             song_lyric: belongsToMutator(vueModel.song_lyric),
             authors: belongsToManyMutator(vueModel.authors)
-        }
+        },
+        instrumentationTagsInput: belongsToManyMutator(vueModel.tags_instrumentation),
+        taggable_id: vueModel.id
     })
 };

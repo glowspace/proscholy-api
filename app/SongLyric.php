@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // use App\Helpers\ChordQueue;
 // use App\Helpers\SongPart;
 use App\Helpers\SongLyricHelper;
-
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -254,9 +254,9 @@ class SongLyric extends Model
         return $this->belongsToMany(Author::class);
     }
 
-    public function tags(): BelongsToMany
+    public function tags(): MorphToMany
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function externals(): HasMany

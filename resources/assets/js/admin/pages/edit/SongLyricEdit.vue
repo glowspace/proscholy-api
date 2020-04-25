@@ -508,6 +508,14 @@ export default {
       }
     },
 
+    isDirtyChecker() {
+      for (let field of ["tags_unofficial", "tags_official"]) {
+        if (!_.isEqual(this.model[field], this.model_database[field])) {
+          return true;
+        }
+      }
+    },
+
     handleOpensongFile(e) {
       var file = e.target.files[0];
 

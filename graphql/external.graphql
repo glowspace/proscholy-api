@@ -8,6 +8,10 @@ type External {
     song_lyric: SongLyric @belongsTo
     url: String
     media_id: String
+    tags: [Tag] @morphMany
+
+    # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
+    tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
 }
 
 extend type Query  {

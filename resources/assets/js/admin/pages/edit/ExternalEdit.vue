@@ -30,6 +30,15 @@
               :multiple="false"
               :enable-custom="false"
             ></items-combo-box>
+            <items-combo-box
+                v-bind:p-items="tags_instrumentation"
+                v-model="model.tags_instrumentation"
+                label="Instrumentace"
+                header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                create-label="Potvrďte enterem a vytvořte nový štítek"
+                :multiple="true"
+                :enable-custom="true"
+              ></items-combo-box>
           </v-form>
         </v-flex>
         <v-flex xs12 md6>
@@ -116,6 +125,15 @@ const FETCH_SONG_LYRICS = gql`
   }
 `;
 
+const FETCH_TAGS_INSTRUMENTATION = gql`
+  query {
+    tags_instrumentation: tags(type: 50) {
+      id
+      name
+    }
+  }
+`;
+
 export default {
   components: {
     ItemsComboBox,
@@ -132,7 +150,8 @@ export default {
         url: undefined,
         type: undefined,
         authors: [],
-        song_lyric: undefined
+        song_lyric: undefined,
+        tags_instrumentation: []
       },
       enums: {
         type: []
@@ -159,7 +178,10 @@ export default {
     },
     song_lyrics: {
       query: FETCH_SONG_LYRICS
-    }
+    },
+    tags_instrumentation: {
+      query: FETCH_TAGS_INSTRUMENTATION
+    },
   },
 
   // computed: {

@@ -21,7 +21,7 @@ type SongLyric {
         orderBy: [OrderByClause!] @orderBy
     ): [External] @hasMany
     files(id: Int @eq, type: Int @eq): [File] @hasMany
-    tags(type: Int @eq): [Tag] @belongsToMany
+    tags(type: Int @eq): [Tag] @morphMany
     songbook_records: [SongbookRecord] @belongsToMany
     song: Song! @belongsTo
     has_chords: Boolean!
@@ -33,6 +33,9 @@ type SongLyric {
     has_lyrics: Boolean
     liturgy_approval_status: Int
     liturgy_approval_status_string_values: JSON
+
+    tags_official: [Tag] @morphMany(relation: "tags", scopes: ["officials"])
+    tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["unofficials"])
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
 }
