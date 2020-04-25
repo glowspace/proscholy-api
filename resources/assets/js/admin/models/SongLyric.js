@@ -1,5 +1,5 @@
-import gql, { disableFragmentWarnings }  from "graphql-tag";
-import { belongsToManyMutator, belongsToMutator } from "./relations";
+import gql from "graphql-tag";
+import { belongsToManyMutator } from "./relations";
 
 const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
