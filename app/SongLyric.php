@@ -412,36 +412,36 @@ class SongLyric extends Model
         return $arr;
     }
 
-    // // todo: make obsolete
-    // public function getFormattedLyrics()
-    // {
-    //     $output = "";
+    // todo: make obsolete
+    public function getFormattedLyrics()
+    {
+        $output = "";
 
-    //     // type :: [App/Helpers/SongPart]
-    //     $parts = SongLyricHelper::getLyricsRepresentation($this);
+        // type :: [App/Helpers/SongPart]
+        $parts = SongLyricHelper::getLyricsRepresentation($this);
 
-    //     $firstRefrain = current(array_filter($parts, function ($part) {
-    //         return $part->isRefrain();
-    //     }));
+        $firstRefrain = current(array_filter($parts, function ($part) {
+            return $part->isRefrain();
+        }));
 
-    //     foreach ($parts as $song_part) {
-    //         if ($song_part->isRefrain() && $song_part->isEmpty()) {
-    //             // substitute by the first refrain
-    //             $subst = clone $firstRefrain;
+        foreach ($parts as $song_part) {
+            if ($song_part->isRefrain() && $song_part->isEmpty()) {
+                // substitute by the first refrain
+                $subst = clone $firstRefrain;
 
-    //             if ($song_part->isHidden()) {
-    //                 $subst->setHidden(true);
-    //             } else {
-    //                 $subst->setHiddenText(true);
-    //             }
-    //             $output .= $subst->toHTML();
-    //         } else {
-    //             $output .= $song_part->toHTML();
-    //         }
-    //     }
+                if ($song_part->isHidden()) {
+                    $subst->setHidden(true);
+                } else {
+                    $subst->setHiddenText(true);
+                }
+                $output .= $subst->toHTML();
+            } else {
+                $output .= $song_part->toHTML();
+            }
+        }
 
-    //     return $output;
-    // }
+        return $output;
+    }
 
     public function getSongParts()
     {
