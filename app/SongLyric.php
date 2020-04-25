@@ -113,6 +113,9 @@ class SongLyric extends Model
             ],
             'tag_instrumentation_ids' => [
                 'type' => 'keyword'
+            ],
+            'tag_period_ids' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -458,7 +461,8 @@ class SongLyric extends Model
             'tag_instrumentation_ids' => [
                 ...$this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'),
                 ...$this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')
-            ]
+            ],
+            'tag_period_ids' => $this->tags()->period()->select('tags.id')->get()->pluck('id')
         ];
 
         return $arr;
