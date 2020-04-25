@@ -110,6 +110,9 @@ class SongLyric extends Model
             ],
             'is_arrangement' => [
                 'type' => 'boolean'
+            ],
+            'tag_instrumentation_ids' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -451,7 +454,11 @@ class SongLyric extends Model
             'songbook_records' => $songbook_records,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
             'lang' => $this->lang,
-            'is_arrangement' => $this->is_arrangement
+            'is_arrangement' => $this->is_arrangement,
+            'tag_instrumentation_ids' => [
+                ...$this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'),
+                ...$this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')
+            ]
         ];
 
         return $arr;
