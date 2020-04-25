@@ -27,20 +27,22 @@ class SyncCreateTags
         $taggable_id = $args["taggable_id"];
         $tags_type = $args["tags_type"];
 
-        // get the model instance
         $model = $taggable::find($taggable_id);
+        // it is important not to let go the tags of other type (note the sync() method being used later)
+        $notRelatedTags = $model->tags()->where('type', '!=', $tags_type)->get()->pluck('id')->toArray();
+
 
         $tagsSync = $input["sync"];
         $parentTags = Tag::whereIn('id', $tagsSync)->whereNotNull('parent_tag_id')->get()->pluck('parent_tag_id')->toArray();
         // dd($parentTags);
-        $tagsToSync = array_merge($tagsSync, $parentTags);
+        $tagsToSync = array_merge($tagsSync, $parentTags, $notRelatedTags);
         
         // todo: check that all sync tags are really of given type
 
         // sync without detaching because there are tags of other types, that should be preserved / not detached
-        $model->tags()->syncWithoutDetaching($tagsToSync);
+        $model->tags()->sync($tagsToSync);
 
-        if (array_key_exists("create", $args)) {
+        if (array_key_exists("create", $input)) {
             $tagsCreate = $input["create"];
             foreach ($tagsCreate as $newTag) {
                 $model->tags()->create([
