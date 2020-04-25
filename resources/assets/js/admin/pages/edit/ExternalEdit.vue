@@ -120,7 +120,7 @@ const FETCH_SONG_LYRICS = gql`
   query {
     song_lyrics {
       id
-      name
+      name: rich_name
     }
   }
 `;

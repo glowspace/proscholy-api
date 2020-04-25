@@ -41,6 +41,15 @@
               data-vv-name="input.description"
               :error-messages="errors.collect('input.description')"
             ></v-textarea>
+            <items-combo-box
+                v-bind:p-items="tags_period"
+                v-model="model.tags_period"
+                label="Historické období (pro Regenschori)"
+                header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                create-label="Potvrďte enterem a vytvořte nový štítek"
+                :multiple="true"
+                :enable-custom="false"
+              ></items-combo-box>
           </v-form>
         </v-flex>
         <v-flex xs12 md6 class="edit-description">
@@ -103,6 +112,15 @@ const FETCH_AUTHORS = gql`
   }
 `;
 
+const FETCH_TAGS_PERIOD = gql`
+  query {
+    tags_period: tags(type: 10) {
+      id
+      name
+    }
+  }
+`;
+
 import EditForm from './EditForm'
 
 export default {
@@ -125,7 +143,8 @@ export default {
         externals: [],
         files: [],
         members: [],
-        memberships: []
+        memberships: [],
+        tags_period: []
       },
       enums: {
         type: []
@@ -149,11 +168,14 @@ export default {
     },
     authors: {
       query: FETCH_AUTHORS
+    },
+    tags_period: {
+      query: FETCH_TAGS_PERIOD
     }
   },
 
   mounted() {
-    console.log(Admin);
+    // console.log(Admin);
   },
 
   methods: {

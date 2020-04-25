@@ -1,10 +1,11 @@
 type SongLyric {
     id: ID!
     name: String
+    rich_name: String @with(relation: "authors")
     public_url: String
     lyrics_no_chords: String
     lyrics: String
-    type: Int!
+    type: Int
     is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
     is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
     is_approved_by_author: Boolean!
@@ -23,7 +24,7 @@ type SongLyric {
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @morphMany
     songbook_records: [SongbookRecord] @belongsToMany
-    song: Song! @belongsTo
+    song: Song @belongsTo
     has_chords: Boolean!
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
     trashed: Boolean @method(name: "trashed")
@@ -36,6 +37,11 @@ type SongLyric {
 
     tags_official: [Tag] @morphMany(relation: "tags", scopes: ["officials"])
     tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["unofficials"])
+    tags_period: [Tag] @morphMany(relation: "tags", scopes: ["period"])
+
+    arrangements: [SongLyric] @hasMany
+    arrangement_source: SongLyric @belongsTo
+    is_arrangement: Boolean
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
 }
@@ -73,6 +79,7 @@ extend type Mutation @middleware(checks: ["auth:api"]) {
     delete_song_lyric(id: ID!): SongLyric @delete
 
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric # see App/GraphQL/Mutations/UpdateSongLyric.php
+    create_arrangement(input: CreateArrangementInput! @spread): SongLyric
 }
 
 input UpdateSongLyricRelation {
@@ -94,6 +101,7 @@ input UpdateSongLyricInput {
     only_regenschori: Boolean
     capo: Int
     liturgy_approval_status: Int
+    arrangement_source: SyncSongLyricArrangementRelation
 }
 
 input SyncOfficialTagsRelation {
@@ -107,4 +115,19 @@ input SyncUnofficialTagsRelation {
 
 input CreateUnofficialTagInput {
     name: String!
+}
+
+input CreateArrangementInput {
+    name: String!
+    arrangement_of: Int!
+}
+
+
+
+input SyncSongLyricArrangementRelation {
+    update: UpdateSongLyricArrangementInput
+}
+
+input UpdateSongLyricArrangementInput {
+    id: ID!
 }

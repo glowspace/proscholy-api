@@ -16,7 +16,7 @@
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-star"></i> Oblíbené</a> --}}
         <a href="{{route("client.about")}}" class="btn btn-secondary"><i class="fas fa-info"></i> O&nbsp;zpěvníku</a>
         {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-cog"></i> Nastavení</a> --}}
-        <a href="{{route("client.account")}}" class="btn btn-secondary"><i class="fas fa-user"></i> Uživatel</a>
+        {{-- <a href="{{route("client.account")}}" class="btn btn-secondary"><i class="fas fa-user"></i> Uživatel</a> --}}
         <dark-mode-button v-cloak> Tmavý&nbsp;mód</dark-mode-button>
     </div>
     </div>

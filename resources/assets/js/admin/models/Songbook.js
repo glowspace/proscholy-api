@@ -10,7 +10,7 @@ const fragment = gql`
             number
             song_lyric {
                 id
-                name
+                name: rich_name
             }
         }
         songs_count

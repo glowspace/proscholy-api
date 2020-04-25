@@ -8,6 +8,7 @@
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
+        <v-tab v-if="model_database && model_database.is_arrangement === false">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -31,6 +32,27 @@
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
+
+                <v-layout row mb-2>
+                  <v-flex xs12 lg6>
+                    <items-combo-box
+                      v-if="model_database.is_arrangement"
+                      v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
+                      v-model="model.arrangement_source"
+                      label="Aranžovaná píseň"
+                      header-label="Vyberte původní píseň pro tuto aranž"
+                      create-label="Potvrďte enterem a vytvořte novou píseň"
+                      :multiple="false"
+                      :enable-custom="false"
+                    ></items-combo-box>
+                  </v-flex>
+                  <v-flex xs12 lg6>
+                    <v-btn v-if="model_database.is_arrangement"
+                          @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
+                          :disabled="!model.arrangement_source"
+                        >Přejít na editaci aranžované písně</v-btn>
+                  </v-flex>
+                </v-layout>
 
                 <v-layout row wrap>
                   <v-flex xs12 lg8>
@@ -95,7 +117,18 @@
                   :multiple="true"
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
-                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
+                <items-combo-box
+                  v-bind:p-items="tags_period"
+                  v-model="model.tags_period"
+                  label="Historické období (pro Regenschori)"
+                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                  create-label="Potvrďte enterem a vytvořte nový štítek"
+                  :multiple="true"
+                  :enable-custom="false"
+                ></items-combo-box>
+
+                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
+
                 <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_official.length > 0">
                   Stávající liturgické šítky budou po uložení odstraněny
                 </p>
@@ -129,7 +162,7 @@
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12 md6>
-              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk"></v-select>
+              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!model_database.is_arrangement"></v-select>
               <!-- <v-text-field
                 label="Kapodastr"
                 required
@@ -201,7 +234,7 @@
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
-                v-for="external in model.externals"
+                v-for="external in model_database.externals"
                 v-bind:key="external.id"
                 class="text-none"
                 @click="goToAdminPage('external/' + external.id + '/edit')"
@@ -216,7 +249,7 @@
             <v-flex xs12 md6>
               <h5>Soubory:</h5>
               <v-btn
-                v-for="file in model.files"
+                v-for="file in model_database.files"
                 v-bind:key="file.id"
                 class="text-none"
                 @click="goToAdminPage('file/' + file.id + '/edit')"
@@ -263,6 +296,34 @@
                 outline
                 @click="addSongbookRecord()"
               >Přidat nový záznam ve zpěvníku</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item v-if="model_database && model_database.is_arrangement === false">
+          <v-layout row wrap mb-4>
+            <v-flex xs12>
+              <h5>Přidružené aranže:</h5>
+
+              <v-btn
+                v-for="arrangement in [...model_database.arrangements, ...created_arrangements]"
+                v-bind:key="arrangement.id"
+                class="text-none"
+                @click="goToAdminPage('song/' + arrangement.id + '/edit')"
+              >{{ arrangement.name }} 
+              <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
+              </v-btn>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
+            <v-flex xs4>
+              <v-text-field label="Název aranže (nepovinné)" v-model="new_arrangement_name"></v-text-field>
+            </v-flex>
+            <v-flex xs4>
+              <v-btn
+                color="info"
+                outline
+                @click="createNewArrangement()"
+              >Přidat novou aranž písně</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -331,6 +392,7 @@ const FETCH_SONG_LYRICS = gql`
     song_lyrics {
       id
       name
+      is_arrangement
     }
   }
 `;
@@ -353,6 +415,24 @@ const FETCH_TAGS_UNOFFICIAL = gql`
 const FETCH_TAGS_OFFICIAL = gql`
   query {
     tags_official: tags(type: 1) {
+      id
+      name
+    }
+  }
+`;
+
+const FETCH_TAGS_PERIOD = gql`
+  query {
+    tags_period: tags(type: 10) {
+      id
+      name
+    }
+  }
+`;
+
+const CREATE_ARRANGEMENT = gql`
+  mutation ($input: CreateArrangementInput!){
+    create_arrangement(input: $input) {
       id
       name
     }
@@ -382,18 +462,23 @@ export default {
         only_regenschori: undefined,
         tags_unofficial: [],
         tags_official: [],
+        tags_period: [],
         authors: [],
         externals: [],
         files: [],
         songbook_records: [],
         song: undefined,
         capo: undefined,
-        liturgy_approval_status: undefined
+        liturgy_approval_status: undefined,
+        arrangement_source: undefined
       },
 
       selected_thumbnail_url: undefined,
       is_deleted: false,
       fragment: SongLyric.fragment,
+
+      new_arrangement_name: "",
+      created_arrangements: [],
 
       enums: {
         lang: [],
@@ -428,8 +513,14 @@ export default {
     tags_unofficial: {
       query: FETCH_TAGS_UNOFFICIAL
     },
+    tags_period: {
+      query: FETCH_TAGS_PERIOD
+    },
     songbooks: {
       query: FETCH_SONGBOOKS
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
     }
   },
   mounted() {
@@ -596,6 +687,52 @@ export default {
       }
 
       this.$delete(this.model.songbook_records, i);
+    },
+
+    createNewArrangement() {
+      this.$apollo
+        .mutate({
+          mutation: CREATE_ARRANGEMENT,
+          variables: {
+            input: {
+              name: this.new_arrangement_name,
+              arrangement_of: this.model.id
+            }
+          }
+        })
+        .then(result => {
+          this.$validator.errors.clear();
+          this.$notify({
+            title: "Úspěšně uloženo :)",
+            text: "Píseň byla úspěšně uložena",
+            type: "success"
+          });
+
+          console.log(result.data);
+          this.new_arrangement_name = "";
+          this.created_arrangements.push(result.data.create_arrangement);
+        })
+        .catch(error => {
+          if (
+            error.graphQLErrors.length == 0 ||
+            error.graphQLErrors[0].extensions.validation === undefined
+          ) {
+            // unknown error happened
+            this.$notify({
+              title: "Chyba při vytváření aranže",
+              text: "Aranž nebyla vytvořena",
+              type: "error"
+            });
+            return;
+          }
+
+          // this.$notify({
+          //   title: "Chyba při ukládání",
+          //   text:
+          //     "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
+          //   type: "error"
+          // });
+        });
     }
   }
 };

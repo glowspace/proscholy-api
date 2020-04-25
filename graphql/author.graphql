@@ -13,6 +13,8 @@ type Author {
     files: [File] @belongsToMany
     members: [Author] @belongsToMany
     memberships: [Author] @belongsToMany
+
+    tags_period: [Tag] @morphMany(relation: "tags", scopes: ["period"])
 }
 
 extend type Query {

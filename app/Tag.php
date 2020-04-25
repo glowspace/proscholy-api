@@ -15,12 +15,15 @@ class Tag extends Model
     public static $type_string_values = [
         0 => 'neoficiální',
         1 =>'oficiální (liturgie)',
+        10 => 'historické období',
         50 => 'instrumentace',
         100 => 'žánr'
     ];
 
-    public static $song_lyric_types = [0, 1];
+    public static $song_lyric_types = [0, 1, 10];
     public static $external_types = [50];
+    public static $file_types = [50];
+    public static $author_types = [10];
 
     public function getTypeStringAttribute()
     {
@@ -38,6 +41,14 @@ class Tag extends Model
 
     public function scopeExternalTags($query) {
         return $query->whereIn('type', self::$external_types);
+    }
+
+    public function scopeFileTags($query) {
+        return $query->whereIn('type', self::$file_types);
+    }
+
+    public function scopeAuthorTags($query) {
+        return $query->whereIn('type', self::$author_types);
     }
 
     public function scopeOfficials($query)
@@ -60,6 +71,11 @@ class Tag extends Model
         return $query->where('type', 50);
     }
 
+    public function scopePeriod($query)
+    {
+        return $query->where('type', 10);
+    }
+
     public function song_lyrics() : MorphToMany
     {
         return $this->morphedByMany(SongLyric::class, 'taggable');
@@ -68,6 +84,16 @@ class Tag extends Model
     public function externals() : MorphToMany
     {
         return $this->morphedByMany(External::class, 'taggable');
+    }
+
+    public function files() : MorphToMany
+    {
+        return $this->morphedByMany(File::class, 'taggable');
+    }
+
+    public function authors() : MorphToMany
+    {
+        return $this->morphedByMany(Author::class, 'taggable');
     }
 
 

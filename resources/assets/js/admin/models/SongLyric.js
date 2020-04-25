@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { belongsToManyMutator } from "./relations";
+import { belongsToManyMutator, belongsToMutator } from "./relations";
 
 const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
@@ -29,6 +29,7 @@ const fragment = gql`
                 name
             }
         }
+        
         tags_official {
             id
             name
@@ -38,8 +39,18 @@ const fragment = gql`
             id
             name
         }
+
+        tags_period {
+            id
+            name
+        }
         capo
         liturgy_approval_status
+
+        arrangement_source {
+            id
+            name
+        }
     }
 `;
 
@@ -53,6 +64,8 @@ const QUERY = gql`
             lang_string_values
             liturgy_approval_status_string_values
 
+            is_arrangement
+
             externals {
                 id
                 public_name
@@ -65,6 +78,26 @@ const QUERY = gql`
                 url
                 type
             }
+
+            arrangements { 
+                id
+                name
+                externals {
+                    id
+                    public_name
+                    url
+                    type
+                }
+                files {
+                    id
+                    public_name
+                    url
+                    type
+                }
+                authors {
+                    name
+                }
+            }
         }
     }
     ${fragment}
@@ -73,7 +106,8 @@ const QUERY = gql`
 const MUTATION = gql`
     mutation($input: UpdateSongLyricInput!,
             $officialTagsInput: SyncCreateTagsRelation!,
-            $unofficialTagsInput: SyncCreateTagsRelation!
+            $unofficialTagsInput: SyncCreateTagsRelation!,
+            $periodTagsInput: SyncCreateTagsRelation!,
             $taggable_id: Int!) {
 
         sync_tags_official: sync_create_tags(
@@ -85,6 +119,7 @@ const MUTATION = gql`
             id
             name
         }
+
         sync_tags_unofficial: sync_create_tags(
             input: $unofficialTagsInput
             tags_type: 0
@@ -94,6 +129,17 @@ const MUTATION = gql`
             id
             name
         }
+
+        sync_tags_period: sync_create_tags(
+            input: $periodTagsInput
+            tags_type: 10
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+        
         update_song_lyric(input: $input) {
             ...SongLyricFillableFragment
         }
@@ -122,6 +168,7 @@ export default {
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
             authors: belongsToManyMutator(vueModel.authors),
+            arrangement_source: vueModel.arrangement_source === null ? null : belongsToMutator(vueModel.arrangement_source),
 
             // specific mutator
             songbook_records: {
@@ -134,6 +181,9 @@ export default {
             }
         },
         officialTagsInput: belongsToManyMutator(vueModel.tags_official, {
+            disableCreate: true
+        }),
+        periodTagsInput: belongsToManyMutator(vueModel.tags_period, {
             disableCreate: true
         }),
         unofficialTagsInput: belongsToManyMutator(vueModel.tags_unofficial),

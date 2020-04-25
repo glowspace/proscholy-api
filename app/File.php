@@ -10,6 +10,7 @@ use Spatie\PdfToImage\Pdf;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 use App\Interfaces\ISource;
 
@@ -184,6 +185,11 @@ class File extends Model implements ISource
     public function song_lyric() : BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
+    }
+
+    public function tags() : MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     // IMPLEMENTING INTERFACE ISOURCE

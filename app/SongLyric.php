@@ -107,6 +107,15 @@ class SongLyric extends Model
             // the 'text' type cannot be used for sorting, this is why a copy of name is included
             'name_keyword' => [
                 'type' => 'keyword'
+            ],
+            'is_arrangement' => [
+                'type' => 'boolean'
+            ],
+            'tag_instrumentation_ids' => [
+                'type' => 'keyword'
+            ],
+            'tag_period_ids' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -137,7 +146,8 @@ class SongLyric extends Model
             'only_regenschori',
             'capo',
             'visits',
-            'liturgy_approval_status' 
+            'liturgy_approval_status',
+            'arrangement_of'
         ];
 
     private static $lang_string_values = [
@@ -267,6 +277,46 @@ class SongLyric extends Model
     public function files(): HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function arrangements() : HasMany
+    {
+        return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
+    }
+
+    public function arrangement_source() : BelongsTo
+    {
+        return $this->belongsTo(SongLyric::class, 'arrangement_of', 'id');
+    }
+
+    public function getIsArrangementAttribute() : bool
+    {
+        return $this->arrangement_of !== null;
+    }
+
+    public function getHasArrangementsAttribute() : bool 
+    {
+        return $this->arrangements()->count() > 0;
+    }
+
+    public function getRichNameAttribute() : string
+    {
+        $name = $this->name;
+
+        if ($this->is_arrangement) {
+            $name .= " (ar. písně " . $this->arrangement_source->name;
+
+            $author_names = $this->authors()->select('name')->get()->pluck('name');
+
+            if ($author_names->count() > 0) {
+                $name .= ", autoři: ";
+                $name .= $author_names->join(', ');
+            }
+
+            $name .= ")";
+        }
+
+        return $name;
     }
 
     public function songbook_records(): BelongsToMany
@@ -406,7 +456,13 @@ class SongLyric extends Model
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
-            'lang' => $this->lang
+            'lang' => $this->lang,
+            'is_arrangement' => $this->is_arrangement,
+            'tag_instrumentation_ids' => [
+                ...$this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'),
+                ...$this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')
+            ],
+            'tag_period_ids' => $this->tags()->period()->select('tags.id')->get()->pluck('id')
         ];
 
         return $arr;
