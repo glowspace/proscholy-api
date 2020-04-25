@@ -226,7 +226,7 @@
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
-                v-for="external in model.externals"
+                v-for="external in model_database.externals"
                 v-bind:key="external.id"
                 class="text-none"
                 @click="goToAdminPage('external/' + external.id + '/edit')"
@@ -241,7 +241,7 @@
             <v-flex xs12 md6>
               <h5>Soubory:</h5>
               <v-btn
-                v-for="file in model.files"
+                v-for="file in model_database.files"
                 v-bind:key="file.id"
                 class="text-none"
                 @click="goToAdminPage('file/' + file.id + '/edit')"
