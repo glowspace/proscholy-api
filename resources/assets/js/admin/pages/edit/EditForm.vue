@@ -37,6 +37,10 @@ export default {
         }
       }
 
+      if (typeof this.isDirtyChecker == 'function') {
+        return this.isDirtyChecker();
+      }
+
       return false;
     }
   },
@@ -134,8 +138,11 @@ export default {
         throw new Error("Expected a fragment, but got none.");
       }
 
-      let fieldDefs = fragment.definitions[0].selectionSet.selections;
+      // here, all the fragments' definitions must be on same data type (see SongLyric.js for example)
+      let fieldDefs = fragment.definitions.flatMap(def => def.selectionSet.selections);
+
       let fieldNames = fieldDefs.map(field => field.alias ? field.alias.value : field.name.value);
+      console.log(fieldNames);
 
       if (!options.includeId)
         fieldNames = fieldNames.filter(field => field != "id");

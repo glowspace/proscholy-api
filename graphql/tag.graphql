@@ -11,6 +11,31 @@ extend type Query {
     tags(type: Int @eq): [Tag] @all
 }
 
-extend type Mutation @middleware(checks: ["auth:api"]) {
+enum Taggable {
+  SONG_LYRIC @enum(value: "App\\SongLyric")
+#   AUTHOR @enum(value: "App\\Author")
+  EXTERNAL @enum(value: "App\\External")
+#   FILE @enum(value: "App\\File")
+}
+
+extend type Mutation {
     delete_tag(id: ID!): Tag @delete
+
+    sync_create_tags(input: SyncCreateTagsRelation!, tags_type: Int!, taggable: Taggable!, taggable_id: Int!): [Tag]
+    # sync_tags(input: SyncTagsRelation!, type: Int!, taggable: String!, taggable_id: Int!)
+}
+
+
+
+input SyncTagsRelation {
+    sync: [ID!]
+}
+
+input SyncCreateTagsRelation {
+    create: [CreateTagInput!]
+    sync: [ID!]
+}
+
+input CreateTagInput {
+    name: String!
 }

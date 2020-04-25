@@ -13,11 +13,13 @@ class Tag extends Model
     protected $fillable = ['name', 'description', 'type', 'parent_tag_id'];
 
     public static $type_string_values = [
-        'neoficiální', 'oficiální (liturgie)'
+        0 => 'neoficiální',
+        1 =>'oficiální (liturgie)',
+        100 => 'Žánr'
     ];
 
     public static $song_lyric_types = [0, 1];
-    // public static $external_types = [2];
+    public static $external_types = [100];
 
     public function getTypeStringAttribute()
     {
@@ -30,7 +32,11 @@ class Tag extends Model
     }
 
     public function scopeSongLyricsTags($query) {
-        return $query->whereIn('type', self::$type_string_values);
+        return $query->whereIn('type', self::$song_lyric_types);
+    }
+
+    public function scopeExternalTags($query) {
+        return $query->whereIn('type', self::$external_types);
     }
 
     public function scopeOfficials($query)
@@ -43,10 +49,21 @@ class Tag extends Model
         return $query->where('type', 0);
     }
 
+    public function scopeGenre($query)
+    {
+        return $query->where('type', 100);
+    }
+
     public function song_lyrics() : MorphToMany
     {
         return $this->morphedByMany(SongLyric::class, 'taggable');
     }
+
+    public function externals() : MorphToMany
+    {
+        return $this->morphedByMany(External::class, 'taggable');
+    }
+
 
     public static function getByIdOrCreateWithName($identificator)
     {

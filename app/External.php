@@ -12,6 +12,7 @@ use App\Interfaces\ISource;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * App\External
@@ -231,6 +232,11 @@ class External extends Model implements ISource
     public function song_lyric() : BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
+    }
+
+    public function tags() : MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function scopeRestricted($query)
