@@ -33,27 +33,26 @@
                   ></v-radio>
                 </v-radio-group>
 
-                <items-combo-box
-                  v-if="model_database.is_arrangement"
-                  v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
-                  v-model="model.arrangement_source"
-                  label="Aranžovaná píseň"
-                  header-label="Vyberte původní píseň pro tuto aranž"
-                  create-label="Potvrďte enterem a vytvořte novou píseň"
-                  :multiple="false"
-                  :enable-custom="false"
-                ></items-combo-box>
-                <v-btn v-if="model_database.is_arrangement"
-                      @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
-                      :disabled="!model.arrangement_source"
-                    >Přejít na editaci aranžované písně</v-btn>
-
-                <!-- <v-btn
-                v-for="arrangement in model_database.arrangements"
-                v-bind:key="arrangement.id"
-                class="text-none"
-                @click="goToAdminPage('song/' + arrangement.id + '/edit')"
-              >{{ arrangement.name }} (autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</v-btn> -->
+                <v-layout row mb-2>
+                  <v-flex xs12 lg6>
+                    <items-combo-box
+                      v-if="model_database.is_arrangement"
+                      v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
+                      v-model="model.arrangement_source"
+                      label="Aranžovaná píseň"
+                      header-label="Vyberte původní píseň pro tuto aranž"
+                      create-label="Potvrďte enterem a vytvořte novou píseň"
+                      :multiple="false"
+                      :enable-custom="false"
+                    ></items-combo-box>
+                  </v-flex>
+                  <v-flex xs12 lg6>
+                    <v-btn v-if="model_database.is_arrangement"
+                          @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
+                          :disabled="!model.arrangement_source"
+                        >Přejít na editaci aranžované písně</v-btn>
+                  </v-flex>
+                </v-layout>
 
                 <v-layout row wrap>
                   <v-flex xs12 lg8>
