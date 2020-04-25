@@ -137,7 +137,8 @@ class SongLyric extends Model
             'only_regenschori',
             'capo',
             'visits',
-            'liturgy_approval_status' 
+            'liturgy_approval_status',
+            'arrangement_of'
         ];
 
     private static $lang_string_values = [

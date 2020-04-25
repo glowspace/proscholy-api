@@ -29,14 +29,13 @@ class CreateArrangement
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $input = $args["input"];
-        // $attr = $input["required_attribute"];
+        // $input = $args["input"];
 
-        $name = $input["name"];
-        $arrangement_of = $input["arrangement_of"];
-
-        // SongLyric::create([
-
-        // ])
+        return SongLyric::create([
+            'name' => $args["name"],
+            'arrangement_of' => $args["arrangement_of"],
+            'type' => null,
+            'song_id' => null // arrangement has no `song` - meaning belongs to no song group per definition
+        ]);
     }
 }
