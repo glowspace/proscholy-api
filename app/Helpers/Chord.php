@@ -41,43 +41,42 @@ class Chord{
         return $this->isSubstitute;
     }
 
-    // public function toHTML(){
-    //     // TODO: format with https://laravelcollective.com/docs/5.4/html
+    // todo: make obsolete
+    public function toHTML(){
+        $html = "";
 
-    //     $html = "";
+        if (strlen($this->text) > 0 && $this->text[0] == " ") {
+            $html.=" ";
+        }
 
-    //     if (strlen($this->text) > 0 && $this->text[0] == " ") {
-    //         $html.=" ";
-    //     }
+        $text_value = rtrim($this->text);
+        // see song Amen - substitute "-" by " " for better readability
+        if ($text_value == "-" && $this->chordSign->getBase() != "") {
+            $text_value = "";
+        }
 
-    //     $text_value = rtrim($this->text);
-    //     // see song Amen - substitute "-" by " " for better readability
-    //     if ($text_value == "-" && $this->chordSign->getBase() != "") {
-    //         $text_value = "";
-    //     }
+        // hide everything else than text from google
+        $html.= '<!--googleoff: all-->';
 
-    //     // hide everything else than text from google
-    //     $html.= '<!--googleoff: all-->';
+        $html.= '<chord';
+        $html.= ' base="'.$this->chordSign->getBase().'"';
+        $html.= ' variant="'.$this->chordSign->getVariant().'"';
+        $html.= ' extension="'.$this->chordSign->getExtension().'"';
+        $html.= ' bass="'.$this->chordSign->getBassNote().'"';
+        $html.= ' is-divided="'.$this->isDivided().'"';
+        $html.= ' is-substitute="'.$this->isSubstitute.'"';
+        $html.= ' is-optional="'.$this->chordSign->isOptional().'"';
+        $html.= '>';
 
-    //     $html.= '<chord';
-    //     $html.= ' base="'.$this->chordSign->getBase().'"';
-    //     $html.= ' variant="'.$this->chordSign->getVariant().'"';
-    //     $html.= ' extension="'.$this->chordSign->getExtension().'"';
-    //     $html.= ' bass="'.$this->chordSign->getBassNote().'"';
-    //     $html.= ' is-divided="'.$this->isDivided().'"';
-    //     $html.= ' is-substitute="'.$this->isSubstitute.'"';
-    //     $html.= ' is-optional="'.$this->chordSign->isOptional().'"';
-    //     $html.= '>';
+        $html.= '<!--googleon: all-->';
+        $html.= $text_value;
+        $html.= "</chord>";
 
-    //     $html.= '<!--googleon: all-->';
-    //     $html.= $text_value;
-    //     $html.= "</chord>";
+        if (!$this->isDivided())
+            $html.= " ";
 
-    //     if (!$this->isDivided())
-    //         $html.= " ";
-
-    //     return $html;
-    // }
+        return $html;
+    }
 
     public function isDivided(){
         if (strlen($this->text) == 0) return false;
