@@ -272,7 +272,7 @@ class SongLyric extends Model
 
     public function arrangements() : HasMany
     {
-        return $this->hasMany(SongLyric::class, 'id', 'arrangement_of');
+        return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
     }
 
     public function arrangement_source() : BelongsTo

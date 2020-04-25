@@ -43,6 +43,17 @@
                   :multiple="false"
                   :enable-custom="false"
                 ></items-combo-box>
+                <v-btn v-if="model_database.is_arrangement"
+                      @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
+                      :disabled="!model.arrangement_source"
+                    >Přejít na editaci aranžované písně</v-btn>
+
+                <!-- <v-btn
+                v-for="arrangement in model_database.arrangements"
+                v-bind:key="arrangement.id"
+                class="text-none"
+                @click="goToAdminPage('song/' + arrangement.id + '/edit')"
+              >{{ arrangement.name }} (autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</v-btn> -->
 
                 <v-layout row wrap>
                   <v-flex xs12 lg8>
@@ -283,7 +294,16 @@
         <v-tab-item v-if="model_database && model_database.is_arrangement === false">
           <v-layout row wrap>
             <v-flex xs12>
-              <h5>Přiřazené aranže:</h5>
+              <h5>Přidružené aranže:</h5>
+
+              <v-btn
+                v-for="arrangement in model_database.arrangements"
+                v-bind:key="arrangement.id"
+                class="text-none"
+                @click="goToAdminPage('song/' + arrangement.id + '/edit')"
+              >{{ arrangement.name }} 
+              <span v-if="arrangement.authors.length > 0">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
+              </v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>

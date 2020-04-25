@@ -72,6 +72,26 @@ const QUERY = gql`
                 url
                 type
             }
+
+            arrangements { 
+                id
+                name
+                externals {
+                    id
+                    public_name
+                    url
+                    type
+                }
+                files {
+                    id
+                    public_name
+                    url
+                    type
+                }
+                authors {
+                    name
+                }
+            }
         }
     }
     ${fragment}
