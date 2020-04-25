@@ -40,7 +40,7 @@ class SyncCreateTags
         // sync without detaching because there are tags of other types, that should be preserved / not detached
         $model->tags()->syncWithoutDetaching($tagsToSync);
 
-        if ($input["create"]) {
+        if (array_key_exists("create", $args)) {
             $tagsCreate = $input["create"];
             foreach ($tagsCreate as $newTag) {
                 $model->tags()->create([

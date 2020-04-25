@@ -29,11 +29,6 @@ const fragment = gql`
                 name
             }
         }
-        capo
-        liturgy_approval_status
-    }
-
-    fragment SongLyricLoadFragment on SongLyric {
         tags_official {
             id
             name
@@ -43,6 +38,8 @@ const fragment = gql`
             id
             name
         }
+        capo
+        liturgy_approval_status
     }
 `;
 
@@ -50,7 +47,6 @@ const QUERY = gql`
     query($id: ID!) {
         model_database: song_lyric(id: $id) {
             ...SongLyricFillableFragment
-            ...SongLyricLoadFragment
 
             public_url
 
@@ -80,24 +76,26 @@ const MUTATION = gql`
             $unofficialTagsInput: SyncCreateTagsRelation!
             $taggable_id: Int!) {
 
-        update_song_lyric(input: $input) {
-            ...SongLyricFillableFragment
-        }
-        sync_official_tags: sync_create_tags(
+        tags_official: sync_create_tags(
             input: $officialTagsInput
-            tags_type: 0
-            taggable: SONG_LYRIC
-            taggable_id: $taggable_id
-        ) {
-            id
-        }
-        sync_unofficial_tags: sync_create_tags(
-            input: $unofficialTagsInput
             tags_type: 1
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
             id
+            name
+        }
+        tags_unofficial: sync_create_tags(
+            input: $unofficialTagsInput
+            tags_type: 0
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+        update_song_lyric(input: $input) {
+            ...SongLyricFillableFragment
         }
     }
     ${fragment}
@@ -138,7 +136,7 @@ export default {
         officialTagsInput: belongsToManyMutator(vueModel.tags_official, {
             disableCreate: true
         }),
-        $unofficialTagsInput: belongsToManyMutator(vueModel.tags_unofficial),
+        unofficialTagsInput: belongsToManyMutator(vueModel.tags_unofficial),
         taggable_id: vueModel.id
     })
 };
