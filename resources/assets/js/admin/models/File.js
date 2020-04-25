@@ -13,7 +13,7 @@ const fragment = gql`
         }
         song_lyric {
             id
-            name
+            name: rich_name
             public_url
         }
     }
