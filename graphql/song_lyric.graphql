@@ -4,7 +4,7 @@ type SongLyric {
     public_url: String
     lyrics_no_chords: String
     lyrics: String
-    type: Int!
+    type: Int
     is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
     is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
     is_approved_by_author: Boolean!
@@ -23,7 +23,7 @@ type SongLyric {
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @morphMany
     songbook_records: [SongbookRecord] @belongsToMany
-    song: Song! @belongsTo
+    song: Song @belongsTo
     has_chords: Boolean!
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
     trashed: Boolean @method(name: "trashed")
