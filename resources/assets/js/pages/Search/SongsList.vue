@@ -164,7 +164,9 @@
               let query = {
                 'bool': {
                   'must': [],
-                  'filter': []
+                  'filter': [
+                    {'term': {'is_arrangement': {'value': false}}}
+                  ]
                 }
               };
 

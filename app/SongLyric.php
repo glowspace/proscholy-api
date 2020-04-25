@@ -107,6 +107,9 @@ class SongLyric extends Model
             // the 'text' type cannot be used for sorting, this is why a copy of name is included
             'name_keyword' => [
                 'type' => 'keyword'
+            ],
+            'is_arrangement' => [
+                'type' => 'boolean'
             ]
         ]
     ];
@@ -447,7 +450,8 @@ class SongLyric extends Model
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
             'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
-            'lang' => $this->lang
+            'lang' => $this->lang,
+            'is_arrangement' => $this->is_arrangement
         ];
 
         return $arr;
