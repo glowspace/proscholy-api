@@ -1,6 +1,7 @@
 type SongLyric {
     id: ID!
     name: String
+    rich_name: String @with(relation: "authors")
     public_url: String
     lyrics_no_chords: String
     lyrics: String

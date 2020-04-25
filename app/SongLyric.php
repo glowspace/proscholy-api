@@ -290,6 +290,26 @@ class SongLyric extends Model
         return $this->arrangements()->count() > 0;
     }
 
+    public function getRichNameAttribute() : string
+    {
+        $name = $this->name;
+
+        if ($this->is_arrangement) {
+            $name .= " (ar. písně " . $this->arrangement_source->name;
+
+            $author_names = $this->authors()->select('name')->get()->pluck('name');
+
+            if ($author_names->count() > 0) {
+                $name .= ", autoři: ";
+                $name .= $author_names->join(', ');
+            }
+
+            $name .= ")";
+        }
+
+        return $name;
+    }
+
     public function songbook_records(): BelongsToMany
     {
         return $this->belongsToMany(Songbook::class, "songbook_records")
