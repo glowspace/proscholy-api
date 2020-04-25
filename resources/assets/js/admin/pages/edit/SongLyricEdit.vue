@@ -8,7 +8,7 @@
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
-        <v-tab>Aranže</v-tab>
+        <v-tab v-if="model_database && model_database.is_arrangement === false">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -32,6 +32,17 @@
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
+
+                <items-combo-box
+                  v-if="model_database.is_arrangement"
+                  v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
+                  v-model="model.arrangement_source"
+                  label="Aranžovaná píseň"
+                  header-label="Vyberte původní píseň pro tuto aranž"
+                  create-label="Potvrďte enterem a vytvořte novou píseň"
+                  :multiple="false"
+                  :enable-custom="false"
+                ></items-combo-box>
 
                 <v-layout row wrap>
                   <v-flex xs12 lg8>
@@ -96,7 +107,9 @@
                   :multiple="true"
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
-                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení"></v-select>
+
+                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
+
                 <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_official.length > 0">
                   Stávající liturgické šítky budou po uložení odstraněny
                 </p>
@@ -130,7 +143,7 @@
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12 md6>
-              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk"></v-select>
+              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="model_database && model_database.is_arrangement"></v-select>
               <!-- <v-text-field
                 label="Kapodastr"
                 required
@@ -267,7 +280,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item v-if="model_database && model_database.is_arrangement === false">
           <v-layout row wrap>
             <v-flex xs12>
               <h5>Přiřazené aranže:</h5>
@@ -339,6 +352,7 @@ const FETCH_SONG_LYRICS = gql`
     song_lyrics {
       id
       name
+      is_arrangement
     }
   }
 `;
@@ -396,7 +410,8 @@ export default {
         songbook_records: [],
         song: undefined,
         capo: undefined,
-        liturgy_approval_status: undefined
+        liturgy_approval_status: undefined,
+        arrangement_source: undefined
       },
 
       selected_thumbnail_url: undefined,
@@ -438,6 +453,9 @@ export default {
     },
     songbooks: {
       query: FETCH_SONGBOOKS
+    },
+    song_lyrics: {
+      query: FETCH_SONG_LYRICS
     }
   },
   mounted() {

@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { belongsToManyMutator } from "./relations";
+import { belongsToManyMutator, belongsToMutator } from "./relations";
 
 const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
@@ -40,6 +40,11 @@ const fragment = gql`
         }
         capo
         liturgy_approval_status
+
+        arrangement_source {
+            id
+            name
+        }
     }
 `;
 
@@ -52,6 +57,8 @@ const QUERY = gql`
 
             lang_string_values
             liturgy_approval_status_string_values
+
+            is_arrangement
 
             externals {
                 id
@@ -122,6 +129,7 @@ export default {
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
             authors: belongsToManyMutator(vueModel.authors),
+            arrangement_source: vueModel.arrangement_source === null ? null : belongsToMutator(vueModel.arrangement_source),
 
             // specific mutator
             songbook_records: {

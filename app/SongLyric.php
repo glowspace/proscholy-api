@@ -272,12 +272,12 @@ class SongLyric extends Model
 
     public function arrangements() : HasMany
     {
-        return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
+        return $this->hasMany(SongLyric::class, 'id', 'arrangement_of');
     }
 
-    public function arrangement_of() : BelongsTo
+    public function arrangement_source() : BelongsTo
     {
-        return $this->belongsTo(SongLyric::class, 'id', 'arrangement_of');
+        return $this->belongsTo(SongLyric::class, 'arrangement_of', 'id');
     }
 
     public function getIsArrangementAttribute() : bool

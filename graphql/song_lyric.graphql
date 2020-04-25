@@ -99,6 +99,7 @@ input UpdateSongLyricInput {
     only_regenschori: Boolean
     capo: Int
     liturgy_approval_status: Int
+    arrangement_source: SyncSongLyricArrangementRelation
 }
 
 input SyncOfficialTagsRelation {
@@ -117,4 +118,14 @@ input CreateUnofficialTagInput {
 input CreateArrangementInput {
     name: String!
     arrangement_of: Int!
+}
+
+
+
+input SyncSongLyricArrangementRelation {
+    update: UpdateSongLyricArrangementInput
+}
+
+input UpdateSongLyricArrangementInput {
+    id: ID!
 }

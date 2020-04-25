@@ -42,6 +42,8 @@ class UpdateSongLyric
 
         $song_lyric->update($input);
 
+        // todo if has key
+        $this->handleArrangementSourceUpdate($input["arrangement_source"], $song_lyric);
         $this->handleSongGroup($input["song"], $song_lyric);
 
         // HANDLE AUTHORS
@@ -130,6 +132,22 @@ class UpdateSongLyric
                 // todo: validation error
                 Log::error("situation 3 - error");
             }
+        }
+    }
+
+    private function handleArrangementSourceUpdate($arrangement_source_data, $song_lyric)
+    {
+        // do this only if the song is an arrangement
+        if ($song_lyric->is_arrangement) {
+            $arrangement_source_id = $arrangement_source_data["update"]["id"];
+            $arrangement_source = SongLyric::find($arrangement_source_id);
+
+            if ($arrangement_source->is_arrangement) {
+                // todo throw error
+                return;
+            }
+
+            $song_lyric->arrangement_source()->associate($arrangement_source);
         }
     }
 }

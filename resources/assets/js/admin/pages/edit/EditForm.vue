@@ -33,6 +33,7 @@ export default {
 
       for (let field of this._getFieldsFromFragment(this.fragment)) {
         if (!_.isEqual(this.model[field], this.model_database[field])) {
+          console.log("Dirty check found mismatch on the field " + field)
           return true;
         }
       }
