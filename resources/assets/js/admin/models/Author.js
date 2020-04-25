@@ -28,6 +28,10 @@ const fragment = gql`
                 id
                 public_name
             }
+            tags_period {
+                id
+                name
+            }
         }
     `;
 
@@ -43,7 +47,19 @@ const QUERY = gql`
     `;
 
 const MUTATION = gql`
-        mutation($input: UpdateAuthorInput!) {
+        mutation($input: UpdateAuthorInput!
+            $periodTagsInput: SyncCreateTagsRelation!
+            $taggable_id: Int!
+        ) {
+            sync_tags_period: sync_create_tags(
+                input: $periodTagsInput
+                tags_type: 10
+                taggable: AUTHOR
+                taggable_id: $taggable_id
+            ) {
+                id
+                name
+            }
             update_author(input: $input) {
                 ...AuthorFillableFragment
             }
@@ -67,6 +83,8 @@ export default {
             type: vueModel.type,
             description: vueModel.description,
             members: belongsToManyMutator(vueModel.members)
-        }
+        },
+        periodTagsInput: belongsToManyMutator(vueModel.tags_period),
+        taggable_id: vueModel.id
     })
 }

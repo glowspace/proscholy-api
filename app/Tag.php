@@ -23,6 +23,7 @@ class Tag extends Model
     public static $song_lyric_types = [0, 1, 10];
     public static $external_types = [50];
     public static $file_types = [50];
+    public static $author_types = [10];
 
     public function getTypeStringAttribute()
     {
@@ -44,6 +45,10 @@ class Tag extends Model
 
     public function scopeFileTags($query) {
         return $query->whereIn('type', self::$file_types);
+    }
+
+    public function scopeAuthorTags($query) {
+        return $query->whereIn('type', self::$author_types);
     }
 
     public function scopeOfficials($query)
@@ -86,6 +91,10 @@ class Tag extends Model
         return $this->morphedByMany(File::class, 'taggable');
     }
 
+    public function authors() : MorphToMany
+    {
+        return $this->morphedByMany(Author::class, 'taggable');
+    }
 
 
     public static function getByIdOrCreateWithName($identificator)

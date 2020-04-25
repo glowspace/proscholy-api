@@ -13,7 +13,7 @@ extend type Query {
 
 enum Taggable {
   SONG_LYRIC @enum(value: "App\\SongLyric")
-#   AUTHOR @enum(value: "App\\Author")
+  AUTHOR @enum(value: "App\\Author")
   EXTERNAL @enum(value: "App\\External")
   FILE @enum(value: "App\\File")
 }
