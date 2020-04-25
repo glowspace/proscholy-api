@@ -47,20 +47,21 @@ class SongLine {
         return $this->chords;
     }
 
-    // public function toHTML($songPartTag = null)
-    // {
-    //     $html = '<div class="song-line">';
+    // todo: make obsolete
+    public function toHTML($songPartTag = null)
+    {
+        $html = '<div class="song-line">';
 
-    //     if (isset($songPartTag)) {
-    //         $html .= '<song-part-tag>' . $songPartTag . '</song-part-tag>';
-    //     }
+        if (isset($songPartTag)) {
+            $html .= '<song-part-tag>' . $songPartTag . '</song-part-tag>';
+        }
         
-    //     foreach ($this->chords as $ch) {
-    //         $html .= $ch->toHTML();
-    //     }
+        foreach ($this->chords as $ch) {
+            $html .= $ch->toHTML();
+        }
 
-    //     $html .= '</div>';
+        $html .= '</div>';
 
-    //     return $html;
-    // }
+        return $html;
+    }
 }
