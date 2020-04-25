@@ -269,6 +269,26 @@ class SongLyric extends Model
         return $this->hasMany(File::class);
     }
 
+    public function arrangements() : HasMany
+    {
+        return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
+    }
+
+    public function arrangement_of() : BelongsTo
+    {
+        return $this->belongsTo(SongLyric::class, 'id', 'arrangement_of');
+    }
+
+    public function getIsArrangementAttribute() : bool
+    {
+        return $this->arrangement_of !== null;
+    }
+
+    public function getHasArrangementsAttribute() : bool 
+    {
+        return $this->arrangements()->count() > 0;
+    }
+
     public function songbook_records(): BelongsToMany
     {
         return $this->belongsToMany(Songbook::class, "songbook_records")

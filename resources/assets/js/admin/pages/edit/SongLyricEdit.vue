@@ -8,6 +8,7 @@
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
+        <v-tab>Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -263,6 +264,13 @@
                 outline
                 @click="addSongbookRecord()"
               >Přidat nový záznam ve zpěvníku</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <h5>Přiřazené aranže:</h5>
             </v-flex>
           </v-layout>
         </v-tab-item>

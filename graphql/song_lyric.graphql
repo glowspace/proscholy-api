@@ -36,6 +36,10 @@ type SongLyric {
 
     tags_official: [Tag] @morphMany(relation: "tags", scopes: ["officials"])
     tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["unofficials"])
+
+    arrangements: [SongLyric] @hasMany
+    arrangement_source: SongLyric @belongsTo
+    is_arrangement: Boolean
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
 }
