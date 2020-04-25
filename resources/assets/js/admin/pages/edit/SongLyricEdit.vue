@@ -315,11 +315,14 @@
             </v-flex>
           </v-layout>
           <v-layout row wrap>
-            <v-flex xs12 class="mb-5">
+            <v-flex xs4>
+              <v-text-field label="Název aranže (nepovinné)" v-model="new_arrangement_name"></v-text-field>
+            </v-flex>
+            <v-flex xs4>
               <v-btn
                 color="info"
                 outline
-                @click="goToAdminPage('song/new-arrangement-for/' + model.id)"
+                @click="createNewArrangement()"
               >Přidat novou aranž písně</v-btn>
             </v-flex>
           </v-layout>
@@ -464,6 +467,7 @@ export default {
       selected_thumbnail_url: undefined,
       is_deleted: false,
       fragment: SongLyric.fragment,
+      new_arrangement_name: "",
 
       enums: {
         lang: [],
@@ -672,6 +676,11 @@ export default {
       }
 
       this.$delete(this.model.songbook_records, i);
+    },
+
+    addNewArrangement() {
+      // do a grapqhl mutation
+      
     }
   }
 };
