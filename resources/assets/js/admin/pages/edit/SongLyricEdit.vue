@@ -117,6 +117,15 @@
                   :multiple="true"
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
+                <items-combo-box
+                  v-bind:p-items="tags_period"
+                  v-model="model.tags_period"
+                  label="Historické období"
+                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                  create-label="Potvrďte enterem a vytvořte nový štítek"
+                  :multiple="true"
+                  :enable-custom="false"
+                ></items-combo-box>
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
 
@@ -400,6 +409,15 @@ const FETCH_TAGS_OFFICIAL = gql`
   }
 `;
 
+const FETCH_TAGS_PERIOD = gql`
+  query {
+    tags_period: tags(type: 10) {
+      id
+      name
+    }
+  }
+`;
+
 export default {
   props: ["csrf"],
   components: {
@@ -423,6 +441,7 @@ export default {
         only_regenschori: undefined,
         tags_unofficial: [],
         tags_official: [],
+        tags_period: [],
         authors: [],
         externals: [],
         files: [],
@@ -469,6 +488,9 @@ export default {
     },
     tags_unofficial: {
       query: FETCH_TAGS_UNOFFICIAL
+    },
+    tags_period: {
+      query: FETCH_TAGS_PERIOD
     },
     songbooks: {
       query: FETCH_SONGBOOKS

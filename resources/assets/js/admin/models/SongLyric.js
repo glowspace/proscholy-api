@@ -29,12 +29,18 @@ const fragment = gql`
                 name
             }
         }
+        
         tags_official {
             id
             name
         }
 
         tags_unofficial {
+            id
+            name
+        }
+
+        tags_period {
             id
             name
         }
@@ -100,7 +106,8 @@ const QUERY = gql`
 const MUTATION = gql`
     mutation($input: UpdateSongLyricInput!,
             $officialTagsInput: SyncCreateTagsRelation!,
-            $unofficialTagsInput: SyncCreateTagsRelation!
+            $unofficialTagsInput: SyncCreateTagsRelation!,
+            $periodTagsInput: SyncCreateTagsRelation!,
             $taggable_id: Int!) {
 
         sync_tags_official: sync_create_tags(
@@ -112,6 +119,7 @@ const MUTATION = gql`
             id
             name
         }
+
         sync_tags_unofficial: sync_create_tags(
             input: $unofficialTagsInput
             tags_type: 0
@@ -121,6 +129,17 @@ const MUTATION = gql`
             id
             name
         }
+
+        sync_tags_period: sync_create_tags(
+            input: $periodTagsInput
+            tags_type: 10
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+        
         update_song_lyric(input: $input) {
             ...SongLyricFillableFragment
         }
@@ -162,6 +181,9 @@ export default {
             }
         },
         officialTagsInput: belongsToManyMutator(vueModel.tags_official, {
+            disableCreate: true
+        }),
+        periodTagsInput: belongsToManyMutator(vueModel.tags_period, {
             disableCreate: true
         }),
         unofficialTagsInput: belongsToManyMutator(vueModel.tags_unofficial),

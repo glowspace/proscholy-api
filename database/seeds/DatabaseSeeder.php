@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             SongSeeder::class,
             AuthorSeeder::class,
             UserSeeder::class,
-            UserRolesPermissionsSeeder::class
+            UserRolesPermissionsSeeder::class,
+            PeriodTagsSeeder::class,
         ]);
     }
 }

@@ -15,11 +15,12 @@ class Tag extends Model
     public static $type_string_values = [
         0 => 'neoficiální',
         1 =>'oficiální (liturgie)',
+        10 => 'historické období',
         50 => 'instrumentace',
         100 => 'žánr'
     ];
 
-    public static $song_lyric_types = [0, 1];
+    public static $song_lyric_types = [0, 1, 10];
     public static $external_types = [50];
     public static $file_types = [50];
 
@@ -63,6 +64,11 @@ class Tag extends Model
     public function scopeInstrumentation($query)
     {
         return $query->where('type', 50);
+    }
+
+    public function scopePeriod($query)
+    {
+        return $query->where('type', 10);
     }
 
     public function song_lyrics() : MorphToMany
