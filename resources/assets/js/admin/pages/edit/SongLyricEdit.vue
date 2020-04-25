@@ -300,17 +300,17 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item v-if="model_database && model_database.is_arrangement === false">
-          <v-layout row wrap>
+          <v-layout row wrap mb-4>
             <v-flex xs12>
               <h5>Přidružené aranže:</h5>
 
               <v-btn
-                v-for="arrangement in model_database.arrangements"
+                v-for="arrangement in [...model_database.arrangements, ...created_arrangements]"
                 v-bind:key="arrangement.id"
                 class="text-none"
                 @click="goToAdminPage('song/' + arrangement.id + '/edit')"
               >{{ arrangement.name }} 
-              <span v-if="arrangement.authors.length > 0">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
+              <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
               </v-btn>
             </v-flex>
           </v-layout>
@@ -430,6 +430,15 @@ const FETCH_TAGS_PERIOD = gql`
   }
 `;
 
+const CREATE_ARRANGEMENT = gql`
+  mutation ($input: CreateArrangementInput!){
+    create_arrangement(input: $input) {
+      id
+      name
+    }
+  }
+`;
+
 export default {
   props: ["csrf"],
   components: {
@@ -467,7 +476,9 @@ export default {
       selected_thumbnail_url: undefined,
       is_deleted: false,
       fragment: SongLyric.fragment,
+
       new_arrangement_name: "",
+      created_arrangements: [],
 
       enums: {
         lang: [],
@@ -678,9 +689,50 @@ export default {
       this.$delete(this.model.songbook_records, i);
     },
 
-    addNewArrangement() {
-      // do a grapqhl mutation
-      
+    createNewArrangement() {
+      this.$apollo
+        .mutate({
+          mutation: CREATE_ARRANGEMENT,
+          variables: {
+            input: {
+              name: this.new_arrangement_name,
+              arrangement_of: this.model.id
+            }
+          }
+        })
+        .then(result => {
+          this.$validator.errors.clear();
+          this.$notify({
+            title: "Úspěšně uloženo :)",
+            text: "Píseň byla úspěšně uložena",
+            type: "success"
+          });
+
+          console.log(result.data);
+          this.new_arrangement_name = "";
+          this.created_arrangements.push(result.data.create_arrangement);
+        })
+        .catch(error => {
+          if (
+            error.graphQLErrors.length == 0 ||
+            error.graphQLErrors[0].extensions.validation === undefined
+          ) {
+            // unknown error happened
+            this.$notify({
+              title: "Chyba při vytváření aranže",
+              text: "Aranž nebyla vytvořena",
+              type: "error"
+            });
+            return;
+          }
+
+          // this.$notify({
+          //   title: "Chyba při ukládání",
+          //   text:
+          //     "Píseň nebyla uložena, opravte prosím chybějící pole označená červeně",
+          //   type: "error"
+          // });
+        });
     }
   }
 };
