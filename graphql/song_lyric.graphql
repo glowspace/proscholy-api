@@ -77,6 +77,7 @@ extend type Mutation @middleware(checks: ["auth:api"]) {
     delete_song_lyric(id: ID!): SongLyric @delete
 
     update_song_lyric(input: UpdateSongLyricInput!): SongLyric # see App/GraphQL/Mutations/UpdateSongLyric.php
+    create_arrangement(input: CreateArrangementInput! @spread): SongLyric
 }
 
 input UpdateSongLyricRelation {
@@ -111,4 +112,9 @@ input SyncUnofficialTagsRelation {
 
 input CreateUnofficialTagInput {
     name: String!
+}
+
+input CreateArrangementInput {
+    name: String!
+    arrangement_of: Int!
 }

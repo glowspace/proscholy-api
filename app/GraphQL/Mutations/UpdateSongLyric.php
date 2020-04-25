@@ -25,7 +25,6 @@ class UpdateSongLyric
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        Log::info($args["input"]);
         $input = $args["input"];
 
         $song_lyric = SongLyric::find($input["id"]);
@@ -43,6 +42,8 @@ class UpdateSongLyric
 
         $song_lyric->update($input);
 
+        $this->handleSongGroup($input["song"], $song_lyric);
+
         // HANDLE AUTHORS
         if (isset($input["authors"]["sync"]))
             $song_lyric->authors()->sync($input["authors"]["sync"]);
@@ -53,9 +54,41 @@ class UpdateSongLyric
         }
         $song_lyric->save();
 
+        // HANDLE SONGBOOK RECORDS
+        if (isset($input["songbook_records"]["sync"])) {
+            $syncModels = [];
+            foreach ($input["songbook_records"]["sync"] as $record) {
+                $syncModels[$record["songbook_id"]] = [
+                    'number' => $record["number"]
+                ];
+            }
+            $song_lyric->songbook_records()->sync($syncModels);
+        }
+        // if (isset($input["songbook_records"]["create"])) {
+        //     foreach ($input["songbook_records"]["create"] as $record) {
+        //         // $songbook = Songbook::create(["name" => $record["songbook"]]);
+
+        //         \Log::info($song_lyric);
+
+        //         $song_lyric->songbook_records()->create([
+        //             'name' => $record["songbook"]
+        //         ], [
+        //             'number' => $record["number"]
+        //         ]);
+        //     }
+        // }
+
+        $song_lyric->save();
+
+        // reload from database
+        return SongLyric::find($input["id"]);
+    }
+
+    private function handleSongGroup($song_input_data, $song_lyric)
+    {
         // HANDLE ASSOCIATED SONG LYRICS
-        if (isset($input["song"])) {
-            $sl_group = collect($input["song"]["song_lyrics"]);
+        if (isset($song_input_data)) {
+            $sl_group = collect($song_input_data["song_lyrics"]);
 
             // 1. case: song was alone and now is added to a group
             if (!$song_lyric->hasSiblings() && $sl_group->count() > 1) {
@@ -66,7 +99,7 @@ class UpdateSongLyric
                 foreach ($sl_group as $sl_object) {
                     $new_sibling = SongLyric::find($sl_object["id"]);
                     $new_sibling->update([
-                        'song_id' => $input["song"]["id"],
+                        'song_id' => $song_input_data["id"],
                         'type' => $sl_object["type"]
                     ]);
                 }
@@ -98,34 +131,5 @@ class UpdateSongLyric
                 Log::error("situation 3 - error");
             }
         }
-
-        // HANDLE SONGBOOK RECORDS
-        if (isset($input["songbook_records"]["sync"])) {
-            $syncModels = [];
-            foreach ($input["songbook_records"]["sync"] as $record) {
-                $syncModels[$record["songbook_id"]] = [
-                    'number' => $record["number"]
-                ];
-            }
-            $song_lyric->songbook_records()->sync($syncModels);
-        }
-        // if (isset($input["songbook_records"]["create"])) {
-        //     foreach ($input["songbook_records"]["create"] as $record) {
-        //         // $songbook = Songbook::create(["name" => $record["songbook"]]);
-
-        //         \Log::info($song_lyric);
-
-        //         $song_lyric->songbook_records()->create([
-        //             'name' => $record["songbook"]
-        //         ], [
-        //             'number' => $record["number"]
-        //         ]);
-        //     }
-        // }
-
-        $song_lyric->save();
-
-        // reload from database
-        return SongLyric::find($input["id"]);
     }
 }
