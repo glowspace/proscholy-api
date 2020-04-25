@@ -162,7 +162,7 @@
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12 md6>
-              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="model_database && model_database.is_arrangement"></v-select>
+              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!model_database.is_arrangement"></v-select>
               <!-- <v-text-field
                 label="Kapodastr"
                 required
@@ -312,6 +312,15 @@
               >{{ arrangement.name }} 
               <span v-if="arrangement.authors.length > 0">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
               </v-btn>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
+            <v-flex xs12 class="mb-5">
+              <v-btn
+                color="info"
+                outline
+                @click="goToAdminPage('song/new-arrangement-for/' + model.id)"
+              >Přidat novou aranž písně</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>
