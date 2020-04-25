@@ -76,7 +76,7 @@ const MUTATION = gql`
             $unofficialTagsInput: SyncCreateTagsRelation!
             $taggable_id: Int!) {
 
-        tags_official: sync_create_tags(
+        sync_tags_official: sync_create_tags(
             input: $officialTagsInput
             tags_type: 1
             taggable: SONG_LYRIC
@@ -85,7 +85,7 @@ const MUTATION = gql`
             id
             name
         }
-        tags_unofficial: sync_create_tags(
+        sync_tags_unofficial: sync_create_tags(
             input: $unofficialTagsInput
             tags_type: 0
             taggable: SONG_LYRIC

@@ -10,7 +10,8 @@ type External {
     media_id: String
     tags: [Tag] @morphMany
 
-    tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
+    # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
+    tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
 }
 
 extend type Query  {
@@ -36,16 +37,9 @@ input UpdateExternalInput {
     type: Int!
     authors: SyncAuthorsRelation
     song_lyric: SyncSongLyricRelation
-    # tags_scoped_genre: SyncCreateTagsRelation
 }
 
 input SyncSongLyricRelation {
     update: UpdateSongLyricRelation
     disconnect: Boolean
 }
-
-
-# input SyncUnofficialTagsRelation {
-#     create: [CreateUnofficialTagInput!]
-#     sync: [ID!]
-# }
