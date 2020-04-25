@@ -13,6 +13,9 @@ type File {
     name: String
     filename: String
     external_type: Int
+
+    tags: [Tag] @morphMany
+    tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
 }
 
 extend type Query  {
