@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SongSeeder::class,
             AuthorSeeder::class,
+            AuthorSongSeeder::class,
             UserSeeder::class,
             UserRolesPermissionsSeeder::class,
             PeriodTagsSeeder::class,
