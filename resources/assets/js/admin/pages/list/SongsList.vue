@@ -163,9 +163,20 @@ export default {
 
     buildSearchIndex() {
       for (var item of this.song_lyrics) {
-        const authors = item.authors.map(a => a.name).join(" ") || (item.has_anonymous_author ? "anonymni" : "");
         const types = ["original", "preklad", "autorizovany preklad"];
-        const str = removeDiacritics([item.name, types[item.type], authors].join(" ")).toLowerCase();
+
+        let searchableItems = [
+          item.name,
+          item.authors.map(a => a.name).join(" ") || (item.has_anonymous_author ? "anonymni" : ""), // authors
+          types[item.type]
+        ];
+
+        if (item.is_arrangement) {
+          searchableItems.push("aranz");
+          searchableItems.push(item.arrangement_source.name);
+        }
+
+        const str = removeDiacritics(searchableItems.join(" ")).toLowerCase();
 
         this.$set(item, "search_index", str);
       }
