@@ -117,6 +117,7 @@
                   :multiple="true"
                 ></items-combo-box>
                 <items-combo-box
+                  v-if="!model_database.is_arrangement"
                   v-bind:p-items="tags_liturgy_part"
                   v-model="model.tags_liturgy_part"
                   label="Části liturgie"
@@ -125,6 +126,7 @@
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
                 <items-combo-box
+                  v-if="!model_database.is_arrangement"
                   v-bind:p-items="tags_liturgy_period"
                   v-model="model.tags_liturgy_period"
                   label="Liturgický rok"
