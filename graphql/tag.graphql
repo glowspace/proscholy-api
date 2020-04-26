@@ -2,20 +2,33 @@ type Tag {
     id: ID!
     name: String
     type: Int
-    parent_tag: Tag @belongsTo
-    child_tags: [Tag] @hasMany
+    type_enum: TagType @rename(attribute: "type")
+    parent_tag: Tag @belongsTo @deprecated
+    child_tags: [Tag] @hasMany @deprecated
     description: String
 }
 
 extend type Query {
-    tags(type: Int @eq): [Tag] @all
+    tags(type: Int @eq): [Tag] @all @deprecated
+
+    tags_enum(type: TagType @eq): [Tag] @all
+}
+
+enum TagType {
+    GENERIC @enum(value: 0)
+    LITURGY_PART @enum(value: 1)
+    LITURGY_PERIOD @enum(value: 2)
+    SAINTS @enum(value: 3)
+    HISTORICAL_PERIOD @enum(value: 10)
+    INSTRUMENTATION @enum(value: 50)
+    GENRE @enum(value: 100)
 }
 
 enum Taggable {
-  SONG_LYRIC @enum(value: "App\\SongLyric")
-  AUTHOR @enum(value: "App\\Author")
-  EXTERNAL @enum(value: "App\\External")
-  FILE @enum(value: "App\\File")
+    SONG_LYRIC @enum(value: "App\\SongLyric")
+    AUTHOR @enum(value: "App\\Author")
+    EXTERNAL @enum(value: "App\\External")
+    FILE @enum(value: "App\\File")
 }
 
 extend type Mutation {

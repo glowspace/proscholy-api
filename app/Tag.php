@@ -10,17 +10,19 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
-    protected $fillable = ['name', 'description', 'type', 'parent_tag_id'];
+    protected $fillable = ['name', 'description', 'type'];
 
     public static $type_string_values = [
-        0 => 'neoficiální',
-        1 =>'oficiální (liturgie)',
+        0 => 'příležitosti',
+        1 =>'litugie (část)',
+        2 => 'liturgická doba',
+        3 => 'ke svatým',
         10 => 'historické období',
         50 => 'instrumentace',
         100 => 'žánr'
     ];
 
-    public static $song_lyric_types = [0, 1, 10];
+    public static $song_lyric_types = [0, 1, 2, 3, 10];
     public static $external_types = [50];
     public static $file_types = [50];
     public static $author_types = [10];
@@ -118,11 +120,13 @@ class Tag extends Model
         }
     }
 
+    // todo: make obsolete
     public function child_tags() : HasMany
     {
         return $this->hasMany(Tag::class, 'parent_tag_id');
     }
 
+    // todo: make obsolete
     public function parent_tag() : BelongsTo
     {
         return $this->belongsTo(Tag::class, 'parent_tag_id');
