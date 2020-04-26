@@ -33,9 +33,9 @@ class SyncCreateTags
 
 
         $tagsSync = $input["sync"];
-        $parentTags = Tag::whereIn('id', $tagsSync)->whereNotNull('parent_tag_id')->get()->pluck('parent_tag_id')->toArray();
+        // $parentTags = Tag::whereIn('id', $tagsSync)->whereNotNull('parent_tag_id')->get()->pluck('parent_tag_id')->toArray();
         // dd($parentTags);
-        $tagsToSync = array_merge($tagsSync, $parentTags, $notRelatedTags);
+        $tagsToSync = array_merge($tagsSync, $notRelatedTags);
         
         // todo: check that all sync tags are really of given type
 
