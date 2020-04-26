@@ -29,7 +29,7 @@ class SearchSongLyrics
             // Elastic disabled by .env, return all songs
             // return SongLyric::paginate($args['per_page'], 'page', $args['page']);
 
-            $paginator = (new LengthAwarePaginator(SongLyric::all(), SongLyric::count(), $args['per_page'], $args['page'], [
+            $paginator = (new LengthAwarePaginator(SongLyric::take(40)->get(), max(SongLyric::count(), 40), $args['per_page'], $args['page'], [
                 'path' => Paginator::resolveCurrentPath(),
                 'pageName' => 'page',
             ]));
