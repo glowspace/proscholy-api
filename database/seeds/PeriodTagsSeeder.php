@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PeriodTasksSeeder extends Seeder
+class PeriodTagsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
