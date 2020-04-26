@@ -31,6 +31,9 @@
                 <span v-if="props.item.type === 0">Originál</span>
                 <span v-if="props.item.type === 1">Překlad</span>
                 <span v-if="props.item.type === 2">Autorizovaný překlad</span>
+                <span v-if="props.item.is_arrangement === true">
+                  Aranž<br/>{{ props.item.arrangement_source.name }}
+                </span>
               </td>
               <td>{{ props.item.authors.map(a => a.name).join(", ") || (props.item.has_anonymous_author ? "(anonymní)" : "-")}}</td>
               <td>{{ props.item.updated_at }}</td>
@@ -84,6 +87,10 @@ const fetch_items = gql`
                 }
                 only_regenschori
                 has_anonymous_author
+                is_arrangement
+                arrangement_source {
+                  name
+                }
             }
         }`;
 
