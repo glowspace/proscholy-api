@@ -125,7 +125,7 @@ const MUTATION = gql`
 
         sync_tags_liturgy_part: sync_create_tags(
             input: $liturgyPartTagsInput
-            tags_type: 1
+            tags_type: LITURGY_PART
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
@@ -135,17 +135,7 @@ const MUTATION = gql`
 
         sync_tags_generic: sync_create_tags(
             input: $genericTagsInput
-            tags_type: 0
-            taggable: SONG_LYRIC
-            taggable_id: $taggable_id
-        ) {
-            id
-            name
-        }
-
-        sync_tags_liturgy_period: sync_create_tags(
-            input: $liturgyPeriodTagsInput
-            tags_type: 10
+            tags_type: GENERIC
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
@@ -155,7 +145,17 @@ const MUTATION = gql`
 
         sync_tags_history_period: sync_create_tags(
             input: $historyPeriodTagsInput
-            tags_type: 2
+            tags_type: HISTORY_PERIOD
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+
+        sync_tags_liturgy_period: sync_create_tags(
+            input: $liturgyPeriodTagsInput
+            tags_type: LITURGY_PERIOD
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
@@ -165,7 +165,7 @@ const MUTATION = gql`
 
         sync_tags_saints: sync_create_tags(
             input: $saintsTagsInput
-            tags_type: 3
+            tags_type: SAINTS
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {

@@ -48,12 +48,12 @@ const QUERY = gql`
 
 const MUTATION = gql`
         mutation($input: UpdateAuthorInput!
-            $periodTagsInput: SyncCreateTagsRelation!
+            $historyPeriodTagsInput: SyncCreateTagsRelation!
             $taggable_id: Int!
         ) {
-            sync_tags_period: sync_create_tags(
-                input: $periodTagsInput
-                tags_type: 10
+            sync_tags_history_period: sync_create_tags(
+                input: $historyPeriodTagsInput
+                tags_type: HISTORY_PERIOD
                 taggable: AUTHOR
                 taggable_id: $taggable_id
             ) {
@@ -84,7 +84,7 @@ export default {
             description: vueModel.description,
             members: belongsToManyMutator(vueModel.members)
         },
-        periodTagsInput: belongsToManyMutator(vueModel.tags_period),
+        historyPeriodTagsInput: belongsToManyMutator(vueModel.tags_period),
         taggable_id: vueModel.id
     })
 }

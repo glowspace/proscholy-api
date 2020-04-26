@@ -34,7 +34,7 @@ enum Taggable {
 extend type Mutation {
     delete_tag(id: ID!): Tag @delete
 
-    sync_create_tags(input: SyncCreateTagsRelation!, tags_type: Int!, taggable: Taggable!, taggable_id: Int!): [Tag]
+    sync_create_tags(input: SyncCreateTagsRelation!, tags_type: TagType!, taggable: Taggable!, taggable_id: Int!): [Tag]
     # sync_tags(input: SyncTagsRelation!, type: Int!, taggable: String!, taggable_id: Int!)
 }
 

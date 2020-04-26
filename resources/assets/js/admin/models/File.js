@@ -43,7 +43,7 @@ const MUTATION = gql`
     ) {
         sync_tags_instrumentation: sync_create_tags(
             input: $instrumentationTagsInput
-            tags_type: 50
+            tags_type: INSTRUMENTATION
             taggable: FILE
             taggable_id: $taggable_id
         ) {
