@@ -330,13 +330,14 @@
           </v-layout>
           <v-layout row wrap>
             <v-flex xs4>
-              <v-text-field label="Název aranže (nepovinné)" v-model="new_arrangement_name"></v-text-field>
+              <v-text-field label="Název nové aranže" v-model="new_arrangement_name"></v-text-field>
             </v-flex>
             <v-flex xs4>
               <v-btn
                 color="info"
                 outline
                 @click="createNewArrangement()"
+                :disabled="new_arrangement_name.length == 0"
               >Přidat novou aranž písně</v-btn>
             </v-flex>
           </v-layout>
