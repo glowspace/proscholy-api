@@ -30,20 +30,31 @@ const fragment = gql`
             }
         }
         
-        tags_official {
+        tags_liturgy_period {
             id
             name
         }
 
-        tags_unofficial {
+        tags_liturgy_part {
             id
             name
         }
 
-        tags_period {
+        tags_history_period {
             id
             name
         }
+
+        tags_generic {
+            id
+            name
+        }
+
+        tags_saints {
+            id
+            name
+        }
+
         capo
         liturgy_approval_status
 
@@ -105,13 +116,15 @@ const QUERY = gql`
 
 const MUTATION = gql`
     mutation($input: UpdateSongLyricInput!,
-            $officialTagsInput: SyncCreateTagsRelation!,
-            $unofficialTagsInput: SyncCreateTagsRelation!,
-            $periodTagsInput: SyncCreateTagsRelation!,
+            $liturgyPartTagsInput: SyncCreateTagsRelation!,
+            $genericTagsInput: SyncCreateTagsRelation!,
+            $historyPeriodTagsInput: SyncCreateTagsRelation!, 
+            $liturgyPeriodTagsInput: SyncCreateTagsRelation!, 
+            $saintsTagsInput: SyncCreateTagsRelation!, 
             $taggable_id: Int!) {
 
-        sync_tags_official: sync_create_tags(
-            input: $officialTagsInput
+        sync_tags_liturgy_part: sync_create_tags(
+            input: $liturgyPartTagsInput
             tags_type: 1
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
@@ -120,8 +133,8 @@ const MUTATION = gql`
             name
         }
 
-        sync_tags_unofficial: sync_create_tags(
-            input: $unofficialTagsInput
+        sync_tags_generic: sync_create_tags(
+            input: $genericTagsInput
             tags_type: 0
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
@@ -130,9 +143,29 @@ const MUTATION = gql`
             name
         }
 
-        sync_tags_period: sync_create_tags(
-            input: $periodTagsInput
+        sync_tags_liturgy_period: sync_create_tags(
+            input: $liturgyPeriodTagsInput
             tags_type: 10
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+
+        sync_tags_history_period: sync_create_tags(
+            input: $historyPeriodTagsInput
+            tags_type: 2
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+
+        sync_tags_saints: sync_create_tags(
+            input: $saintsTagsInput
+            tags_type: 3
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
@@ -180,13 +213,17 @@ export default {
                 }))
             }
         },
-        officialTagsInput: belongsToManyMutator(vueModel.tags_official, {
+        liturgyPartTagsInput: belongsToManyMutator(vueModel.tags_liturgy_part, {
             disableCreate: true
         }),
-        periodTagsInput: belongsToManyMutator(vueModel.tags_period, {
+        liturgyPeriodTagsInput: belongsToManyMutator(vueModel.tags_liturgy_period, {
             disableCreate: true
         }),
-        unofficialTagsInput: belongsToManyMutator(vueModel.tags_unofficial),
+        historyPeriodTagsInput: belongsToManyMutator(vueModel.tags_history_period, {
+            disableCreate: true
+        }),
+        genericTagsInput: belongsToManyMutator(vueModel.tags_generic),
+        saintsTagsInput: belongsToManyMutator(vueModel.tags_saints),
         taggable_id: vueModel.id
     })
 };

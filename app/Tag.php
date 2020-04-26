@@ -12,6 +12,7 @@ class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type'];
 
+    // todo: make obsolete???
     public static $type_string_values = [
         0 => 'příležitosti',
         1 =>'litugie (část)',
@@ -53,12 +54,13 @@ class Tag extends Model
         return $query->whereIn('type', self::$author_types);
     }
 
-    public function scopeOfficials($query)
+    public function scopeLiturgyPart($query)
     {
         return $query->where('type', 1);
     }
 
-    public function scopeUnofficials($query)
+
+    public function scopeGeneric($query)
     {
         return $query->where('type', 0);
     }
@@ -73,9 +75,19 @@ class Tag extends Model
         return $query->where('type', 50);
     }
 
-    public function scopePeriod($query)
+    public function scopeLiturgyPeriod($query)
+    {
+        return $query->where('type', 2);
+    }
+
+    public function scopeHistoryPeriod($query)
     {
         return $query->where('type', 10);
+    }
+
+    public function scopeSaints($query)
+    {
+        return $query->where('type', 3);
     }
 
     public function song_lyrics() : MorphToMany

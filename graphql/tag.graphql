@@ -19,7 +19,7 @@ enum TagType {
     LITURGY_PART @enum(value: 1)
     LITURGY_PERIOD @enum(value: 2)
     SAINTS @enum(value: 3)
-    HISTORICAL_PERIOD @enum(value: 10)
+    HISTORY_PERIOD @enum(value: 10)
     INSTRUMENTATION @enum(value: 50)
     GENRE @enum(value: 100)
 }

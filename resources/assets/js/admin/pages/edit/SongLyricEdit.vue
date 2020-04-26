@@ -101,25 +101,39 @@
                 </v-card>
 
                 <items-combo-box
-                  v-bind:p-items="tags_unofficial"
-                  v-model="model.tags_unofficial"
-                  label="Štítky"
+                  v-bind:p-items="tags_generic"
+                  v-model="model.tags_generic"
+                  label="Štítky (příležitosti)"
                   header-label="Vyberte štítek z nabídky nebo vytvořte nový"
                   create-label="Potvrďte enterem a vytvořte nový štítek"
                   :multiple="true"
                   :enable-custom="true"
                 ></items-combo-box>
                 <items-combo-box
-                  v-bind:p-items="tags_official"
-                  v-model="model.tags_official"
-                  label="Liturgie"
+                  v-bind:p-items="tags_saints"
+                  v-model="model.tags_saints"
+                  label="Štitky ke svatým"
+                  header-label="Vyberte část liturgie z nabídky"
+                  :multiple="true"
+                ></items-combo-box>
+                <items-combo-box
+                  v-bind:p-items="tags_liturgy_part"
+                  v-model="model.tags_liturgy_part"
+                  label="Části liturgie"
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
                 <items-combo-box
-                  v-bind:p-items="tags_period"
-                  v-model="model.tags_period"
+                  v-bind:p-items="tags_liturgy_period"
+                  v-model="model.tags_liturgy_period"
+                  label="Liturgický rok"
+                  header-label="Vyberte část liturgie z nabídky"
+                  :multiple="true"
+                ></items-combo-box>
+                <items-combo-box
+                  v-bind:p-items="tags_history_period"
+                  v-model="model.tags_history_period"
                   label="Historické období (pro Regenschori)"
                   header-label="Vyberte štítek z nabídky nebo vytvořte nový"
                   create-label="Potvrďte enterem a vytvořte nový štítek"
@@ -129,10 +143,10 @@
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
 
-                <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_official.length > 0">
+                <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_liturgy_part.length > 0">
                   Stávající liturgické šítky budou po uložení odstraněny
                 </p>
-                <!-- <v-checkbox :disabled="model.tags_official.length == 0"
+                <!-- <v-checkbox :disabled="model.tags_liturgy_part.length == 0"
                   class="mt-0"
                   v-model="model.liturgy_approval_status"
                   label="Schváleno pro použití v liturgii"
@@ -404,32 +418,45 @@ const FETCH_SONGBOOKS = gql`
     }
   }
 `;
-const FETCH_TAGS_UNOFFICIAL = gql`
+const FETCH_TAGS_GENERIC = gql`
   query {
-    tags_unofficial: tags(type: 0) {
+    tags_generic: tags_enum(type: GENERIC) {
       id
       name
     }
   }
 `;
-const FETCH_TAGS_OFFICIAL = gql`
+const FETCH_TAGS_LITURGY_PART = gql`
   query {
-    tags_official: tags(type: 1) {
+    tags_liturgy_part: tags_enum(type: LITURGY_PART) {
       id
       name
     }
   }
 `;
-
-const FETCH_TAGS_PERIOD = gql`
+const FETCH_TAGS_LITURGY_PERIOD = gql`
   query {
-    tags_period: tags(type: 10) {
+    tags_liturgy_period: tags_enum(type: LITURGY_PERIOD) {
       id
       name
     }
   }
 `;
-
+const FETCH_TAGS_HISTORY_PERIOD = gql`
+  query {
+    tags_history_period: tags_enum(type: HISTORY_PERIOD) {
+      id
+      name
+    }
+  }
+`;
+const FETCH_TAGS_SAINTS = gql`
+  query {
+    tags_saints: tags_enum(type: SAINTS) {
+      id
+      name
+    }
+}`;
 const CREATE_ARRANGEMENT = gql`
   mutation ($input: CreateArrangementInput!){
     create_arrangement(input: $input) {
@@ -460,9 +487,11 @@ export default {
         lang: undefined,
         lyrics: undefined,
         only_regenschori: undefined,
-        tags_unofficial: [],
-        tags_official: [],
-        tags_period: [],
+        tags_generic: [],
+        tags_liturgy_part: [],
+        tags_liturgy_period: [],
+        tags_history_period: [],
+        tags_saints: [],
         authors: [],
         externals: [],
         files: [],
@@ -507,14 +536,20 @@ export default {
     authors: {
       query: FETCH_AUTHORS
     },
-    tags_official: {
-      query: FETCH_TAGS_OFFICIAL
+    tags_liturgy_part: {
+      query: FETCH_TAGS_LITURGY_PART
     },
-    tags_unofficial: {
-      query: FETCH_TAGS_UNOFFICIAL
+    tags_generic: {
+      query: FETCH_TAGS_GENERIC
     },
-    tags_period: {
-      query: FETCH_TAGS_PERIOD
+    tags_history_period: {
+      query: FETCH_TAGS_HISTORY_PERIOD
+    },
+    tags_liturgy_period: {
+      query: FETCH_TAGS_LITURGY_PERIOD
+    },
+    tags_saints: {
+      query: FETCH_TAGS_SAINTS
     },
     songbooks: {
       query: FETCH_SONGBOOKS
@@ -600,7 +635,7 @@ export default {
     },
 
     isDirtyChecker() {
-      for (let field of ["tags_unofficial", "tags_official"]) {
+      for (let field of ["tags_generic", "tags_liturgy_part"]) {
         if (!_.isEqual(this.model[field], this.model_database[field])) {
           return true;
         }

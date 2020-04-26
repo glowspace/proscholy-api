@@ -35,9 +35,14 @@ type SongLyric {
     liturgy_approval_status: Int
     liturgy_approval_status_string_values: JSON
 
-    tags_official: [Tag] @morphMany(relation: "tags", scopes: ["officials"])
-    tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["unofficials"])
-    tags_period: [Tag] @morphMany(relation: "tags", scopes: ["period"])
+    tags_official: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"]) @deprecated(reason:"Use tags_liturgy_part instead")
+    tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["generic"]) @deprecated(reason: "Use tags_generic instead")
+
+    tags_generic: [Tag] @morphMany(relation: "tags", scopes: ["generic"])
+    tags_liturgy_part: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"])
+    tags_liturgy_period: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPeriod"])
+    tags_history_period: [Tag] @morphMany(relation: "tags", scopes: ["historyPeriod"])
+    tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
 
     arrangements: [SongLyric] @hasMany
     arrangement_source: SongLyric @belongsTo
