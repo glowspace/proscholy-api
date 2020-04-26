@@ -100,11 +100,11 @@
     'text' => 'Nahrané soubory'
 ])
 
-@include('admin.components.menu-item', [
+{{-- @include('admin.components.menu-item', [
     'route' => 'admin.tag.index',
     'icon' => 'tag',
     'text' => 'Štítky/Kategorie písniček'
-])
+]) --}}
 
 @include('admin.components.menu-item', [
     'route' => 'admin.songbook.index',
