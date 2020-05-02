@@ -452,11 +452,31 @@ class SongLyric extends Model
         // get all song's tags
         $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id');
 
-        // instrumentation ids (from the song_lyric's scores)
-        $tag_ids = $tag_ids->concat(
-            $this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')->concat(
-                $this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'))
-        );
+        $interestingExternals = $this->externals()
+                                        ->with('tags')
+                                        ->whereHas('tags', 
+                                            function($q) { return $q->instrumentation(); })
+                                        ->get();
+
+        $interestingFiles = $this->files()
+                                        ->with('tags')
+                                        ->whereHas('tags', 
+                                            function($q) { return $q->instrumentation(); })
+                                        ->get();
+
+        // adjoin externals' instrumentation tags
+        foreach ($interestingExternals as $external) {
+            $tag_ids = $tag_ids->concat(
+                $external->tags()->instrumentation()->select('id')->get()->pluck('id')
+            );
+        }
+
+        // adjoin files' instrumentation tags
+        foreach ($interestingFiles as $file) {
+            $tag_ids = $tag_ids->concat(
+                $file->tags()->instrumentation()->select('id')->get()->pluck('id')
+            );
+        }
 
         $arr = [
             'name' => $this->name,
