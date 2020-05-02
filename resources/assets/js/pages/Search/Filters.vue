@@ -1,27 +1,39 @@
 <template>
     <div class="song-tags card pt-1">
+        <!-- todo: make component -->
         <h4>Liturgie – mše svatá</h4>
-
         <a
             v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
-            v-for="tag in tags_official"
+            v-for="tag in tags_liturgy_part"
             v-bind:key="'tag-'+tag.id"
             v-on:click="selectTag(tag)"
         >{{ tag.name }}</a>
 
-        <div v-for="tag in parent_tags_unofficial" v-bind:key="tag.id">
-            <h4>{{ tag.description }}</h4>
+        <h4>Liturgický rok</h4>
+        <a
+            v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-for="tag in tags_liturgy_period"
+            v-bind:key="'tag-'+tag.id"
+            v-on:click="selectTag(tag)"
+        >{{ tag.name }}</a>
 
-            <a
-                v-bind:class="['tag', 'tag-green', isSelectedTag(child_tag) ? 'tag-selected' : '']"
-                v-for="child_tag in tag.child_tags"
-                v-bind:key="'tag-'+child_tag.id"
-                v-on:click="selectTag(child_tag)"
-            >{{ child_tag.name }}</a>
-        </div>
+        <h4>Příležitosti</h4>
+        <a
+            v-bind:class="['tag', 'tag-green', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-for="tag in tags_generic"
+            v-bind:key="'tag-'+tag.id"
+            v-on:click="selectTag(tag)"
+        >{{ tag.name }}</a>
+
+        <h4>Ke svatým</h4>
+        <a
+            v-bind:class="['tag', 'tag-green', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-for="tag in tags_saints"
+            v-bind:key="'tag-'+tag.id"
+            v-on:click="selectTag(tag)"
+        >{{ tag.name }}</a>
 
         <h4>Zpěvníky</h4>
-
         <a
             v-bind:class="['tag', 'tag-yellow', isSelectedSongbook(songbook) ? 'tag-selected' : '']"
             v-for="songbook in songbooks"
@@ -30,7 +42,6 @@
         >{{ songbook.name }}</a>
 
         <h4>Jazyky</h4>
-
         <a
             v-bind:class="['tag', 'tag-red', isSelectedLanguage(lang_code) ? 'tag-selected' : '']"
             v-for="(lang_name, lang_code) in all_languages"
@@ -60,6 +71,38 @@ const fetch_items = gql`
         }
     }
 `;
+
+const FETCH_TAGS_GENERIC = gql`
+  query {
+    tags_generic: tags_enum(type: GENERIC) {
+      id
+      name
+    }
+  }
+`;
+const FETCH_TAGS_LITURGY_PART = gql`
+  query {
+    tags_liturgy_part: tags_enum(type: LITURGY_PART) {
+      id
+      name
+    }
+  }
+`;
+const FETCH_TAGS_LITURGY_PERIOD = gql`
+  query {
+    tags_liturgy_period: tags_enum(type: LITURGY_PERIOD) {
+      id
+      name
+    }
+  }
+`;
+const FETCH_TAGS_SAINTS = gql`
+  query {
+    tags_saints: tags_enum(type: SAINTS) {
+      id
+      name
+    }
+}`;
 
 const fetch_songbooks = gql`
     query {
@@ -98,31 +141,20 @@ export default {
     },
 
     apollo: {
-        tags: {
-            query: fetch_items,
-            result() {
-                this.$emit('tags-loaded', null);
-            }
+        tags_generic: {
+            query: FETCH_TAGS_GENERIC,
         },
-
+        tags_liturgy_part: {
+            query: FETCH_TAGS_LITURGY_PART
+        },
+        tags_liturgy_period: {
+            query: FETCH_TAGS_LITURGY_PERIOD
+        },
+        tags_saints: {
+            query: FETCH_TAGS_SAINTS
+        },
         songbooks: {
             query: fetch_songbooks
-        }
-    },
-
-    computed: {
-        parent_tags_unofficial() {
-            if (this.tags) {
-                return this.tags.filter(
-                    tag => tag.type == 0 && tag.child_tags.length > 0
-                );
-            }
-        },
-
-        tags_official() {
-            if (this.tags) {
-                return this.tags.filter(tag => tag.type == 1);
-            }
         }
     },
 
@@ -176,23 +208,28 @@ export default {
         },
 
         getSelectedTagsDcnf() {
-            let res = {};
+            const filterMapTags = tags => 
+                            tags.filter(tag => this.isSelectedTag(tag))
+                                .map(tag => tag.id);
 
-            res["officials"] = this.tags_official
-                .filter(tag => this.isSelectedTag(tag))
-                .map(tag => tag.id);
-
-            for (parent of this.parent_tags_unofficial) {
-                res[parent.id] = parent.child_tags
-                    .filter(tag => this.isSelectedTag(tag))
-                    .map(tag => tag.id);
-            }
-
-            return res;
+            return ({
+                liturgy_part: filterMapTags(this.tags_liturgy_part),
+                liturgy_period: filterMapTags(this.tags_liturgy_period),
+                generic: filterMapTags(this.tags_generic),
+                saints: filterMapTags(this.tags_saints),
+            });
         },
     },
 
     watch: {
+        $apollo: {
+            loading(val, prev) {
+                if (val && !prev) {
+                    this.$emit('tags-loaded', null);
+                }
+            }
+        },
+
         // watch props for changes
         selectedTags(val, prev) {
             this.selected_tags = val;
