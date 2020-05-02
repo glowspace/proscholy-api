@@ -449,19 +449,24 @@ class SongLyric extends Model
             $all_authors = $all_authors->concat($author->memberships);
         }
 
+        // get all song's tags
+        $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id');
+
+        // instrumentation ids (from the song_lyric's scores)
+        $tag_ids = $tag_ids->concat(
+            $this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')->concat(
+                $this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'))
+        );
+
         $arr = [
             'name' => $this->name,
             'name_keyword' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
-            'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
             'lang' => $this->lang,
             'is_arrangement' => $this->is_arrangement,
-            'tag_instrumentation_ids' => $this->externals()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id')->concat(
-                $this->files()->scores()->tags()->instrumentation()->select('tags.id')->get()->pluck('id'))
-            ,
-            'tag_period_ids' => $this->tags()->period()->select('tags.id')->get()->pluck('id')
+            'tag_ids' => $tag_ids,
         ];
 
         return $arr;
