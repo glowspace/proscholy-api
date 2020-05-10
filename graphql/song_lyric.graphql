@@ -34,6 +34,8 @@ type SongLyric {
     has_lyrics: Boolean
     liturgy_approval_status: Int
     liturgy_approval_status_string_values: JSON
+    missa_type: MisaType
+    missa_type_string_values: JSON
 
     tags_official: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"]) @deprecated(reason:"Use tags_liturgy_part instead")
     tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["generic"]) @deprecated(reason: "Use tags_generic instead")
@@ -49,6 +51,12 @@ type SongLyric {
     is_arrangement: Boolean
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
+}
+
+enum MisaType {
+    NONE @enum(value: 0)
+    ORDINARIUM @enum(value: 1)
+    PROPRIUM @enum(value: 2)
 }
 
 type SongLyricPaginator {
@@ -107,6 +115,7 @@ input UpdateSongLyricInput {
     capo: Int
     liturgy_approval_status: Int
     arrangement_source: SyncSongLyricArrangementRelation
+    missa_type: MissaType
 }
 
 input SyncOfficialTagsRelation {

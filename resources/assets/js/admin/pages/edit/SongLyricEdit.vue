@@ -142,6 +142,8 @@
                   :multiple="true"
                   :enable-custom="false"
                 ></items-combo-box>
+                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Mešní něco" v-if="model_database && model_database.is_arrangement === false"></v-select>
+
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
 
@@ -502,7 +504,8 @@ export default {
         song: undefined,
         capo: undefined,
         liturgy_approval_status: undefined,
-        arrangement_source: undefined
+        arrangement_source: undefined,
+        missa_type: undefined
       },
 
       selected_thumbnail_url: undefined,
@@ -514,7 +517,8 @@ export default {
 
       enums: {
         lang: [],
-        liturgy_approval_status: []
+        liturgy_approval_status: [],
+        missa_type: []
       }
     };
   },
@@ -529,6 +533,7 @@ export default {
         this.loadModelDataFromResult(result);
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
+        this.loadEnumJsonFromResult(result, "missa_type_string_values", this.enums.missa_type);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
