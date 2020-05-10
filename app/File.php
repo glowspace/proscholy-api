@@ -39,7 +39,7 @@ use App\Interfaces\ISource;
  */
 class File extends Model implements ISource
 {
-    protected $fillable = ['filename', 'type', 'description', 'path', 'name', 'has_anonymous_author', 'downloads'];
+    protected $fillable = ['filename', 'type', 'description', 'path', 'name', 'has_anonymous_author', 'downloads', 'catalog_number', 'copyright', 'editor', 'published_by'];
 
     // See App/Listeners/FileDeleting where the deleting actually happens
     protected $dispatchesEvents = [

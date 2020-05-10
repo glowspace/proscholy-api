@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  */
 class External extends Model implements ISource
 {
-    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author'];
+    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by'];
 
     private $type_string_values
         = [

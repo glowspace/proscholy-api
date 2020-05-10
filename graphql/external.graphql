@@ -9,6 +9,10 @@ type External {
     url: String
     media_id: String
     tags: [Tag] @morphMany
+    catalog_number: String
+    copyright: String
+    editor: String
+    published_by: String
 
     # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
     tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
@@ -37,6 +41,10 @@ input UpdateExternalInput {
     type: Int!
     authors: SyncAuthorsRelation
     song_lyric: SyncSongLyricRelation
+    catalog_number: String
+    copyright: String
+    editor: String
+    published_by: String
 }
 
 input SyncSongLyricRelation {

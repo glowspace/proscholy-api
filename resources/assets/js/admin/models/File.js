@@ -20,6 +20,10 @@ const fragment = gql`
             id
             name
         }
+        catalog_number
+        copyright
+        editor
+        published_by
     }
 `;
 
@@ -72,6 +76,10 @@ export default {
             name: vueModel.name,
             filename: vueModel.filename,
             type: vueModel.type,
+            copyright: vueModel.copyright,
+            editor: vueModel.editor,
+            published_by: vueModel.published_by,
+            catalog_number: vueModel.catalog_number,
             song_lyric: belongsToMutator(vueModel.song_lyric),
             authors: belongsToManyMutator(vueModel.authors)
         },

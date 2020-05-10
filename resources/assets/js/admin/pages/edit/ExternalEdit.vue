@@ -151,7 +151,11 @@ export default {
         type: undefined,
         authors: [],
         song_lyric: undefined,
-        tags_instrumentation: []
+        tags_instrumentation: [],
+        catalog_number: undefined,
+        copyright: undefined,
+        editor: undefined,
+        published_by: undefined
       },
       enums: {
         type: []

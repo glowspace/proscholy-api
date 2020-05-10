@@ -13,6 +13,10 @@ type File {
     name: String
     filename: String
     external_type: Int
+    catalog_number: String
+    copyright: String
+    editor: String """ autor not """
+    published_by: String
 
     tags: [Tag] @morphMany
     tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
@@ -35,12 +39,16 @@ extend type Mutation @middleware(checks: ["auth:api"]) {
 
 input UpdateFileInput {
     id: ID!
-    filename: String @rules(apply: ["required", "regex:/^([a-zA-Z0-9\\s_.\\-\\(\\):])+\\.[a-zA-Z0-9]+$/"], messages: {
-        required: "Jméno souboru nesmí zůstat prázdné",
-        regex: "Neplatné jméno souboru, používejte prosím pouze znaky bez diakritiky a nezapomeňte na příponu souboru (např. .pdf, .jpg apod..)"})
     name: String
     description: String
     type: Int!
     authors: SyncAuthorsRelation
     song_lyric: SyncSongLyricRelation
+    catalog_number: String
+    copyright: String
+    editor: String
+    published_by: String
+    filename: String @rules(apply: ["required", "regex:/^([a-zA-Z0-9\\s_.\\-\\(\\):])+\\.[a-zA-Z0-9]+$/"], messages: {
+        required: "Jméno souboru nesmí zůstat prázdné",
+        regex: "Neplatné jméno souboru, používejte prosím pouze znaky bez diakritiky a nezapomeňte na příponu souboru (např. .pdf, .jpg apod..)"})
 }
