@@ -181,22 +181,15 @@
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!model_database.is_arrangement"></v-select>
-              <!-- <v-text-field
-                label="Kapodastr"
-                required
-                type="number"
-                append-outer-icon="add" @click:append-outer="model.capo = parseInt(model.capo,10) + 1" 
-                prepend-icon="remove" @click:prepend="model.capo = parseInt(model.capo,10) - 1"
-                v-model="model.capo"
-                data-vv-name="input.capo"
-                :error-messages="errors.collect('input.capo')"
-              ></v-text-field> -->
-              <a
+
+              <!-- todo: re-enable when handleOpensongFile has been reimplemented to graphql -->
+              <!-- <a
                 id="file_select"
                 class="btn btn-primary"
                 v-on:click="$refs.fileinput.click()"
               >Nahrát ze souboru OpenSong</a>
-              <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile">
+              <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile"> -->
+
               <v-textarea
                 auto-grow
                 outline
@@ -650,27 +643,29 @@ export default {
       }
     },
 
-    handleOpensongFile(e) {
-      var file = e.target.files[0];
+    // todo: rewrite from jquery to graphql
 
-      var reader = new FileReader();
-      reader.onload = e => {
-        console.log("file loaded succesfully");
+    // handleOpensongFile(e) {
+    //   var file = e.target.files[0];
 
-        $.post(
-          "/api/parse/opensong",
-          {
-            file_contents: e.target.result,
-            _token: this.csrf
-          },
-          data => {
-            this.model.lyrics = data;
-          }
-        );
-      };
+    //   var reader = new FileReader();
+    //   reader.onload = e => {
+    //     console.log("file loaded succesfully");
 
-      reader.readAsText(file);
-    },
+    //     $.post(
+    //       "/api/parse/opensong",
+    //       {
+    //         file_contents: e.target.result,
+    //         _token: this.csrf
+    //       },
+    //       data => {
+    //         this.model.lyrics = data;
+    //       }
+    //     );
+    //   };
+
+    //   reader.readAsText(file);
+    // },
 
     resetGroup() {
       this.model.song.song_lyrics = this.model.song.song_lyrics.filter(
