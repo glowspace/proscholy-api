@@ -39,6 +39,12 @@
                 :multiple="true"
                 :enable-custom="true"
               ></items-combo-box>
+
+              <!-- string values -->
+              <v-text-field label="Editor" v-model="model.editor"></v-text-field>
+              <v-text-field label="Publikoval" v-model="model.published_by"></v-text-field>
+              <v-text-field label="Katalogové číslo" v-model="model.catalog_number"></v-text-field>
+              <v-text-field label="Copyright" v-model="model.copyright"></v-text-field>
           </v-form>
         </v-flex>
         <v-flex xs12 md6>
