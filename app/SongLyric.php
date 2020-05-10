@@ -185,7 +185,7 @@ class SongLyric extends Model
     {
         return route('client.song.text', [
             'song_lyric' => $this,
-            'name' => str_slug($this->name)
+            'name' => Str::slug($this->name)
         ]);
     }
 
