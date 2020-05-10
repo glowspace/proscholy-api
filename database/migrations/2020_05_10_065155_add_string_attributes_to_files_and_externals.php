@@ -19,6 +19,13 @@ class AddStringAttributesToFilesAndExternals extends Migration
             $table->string('editor', 100)->nullable();
             $table->string('published_by', 100)->nullable();
         });
+
+        Schema::table('externals', function (Blueprint $table) {
+            $table->string('catalog_number', 100)->nullable();
+            $table->string('copyright', 100)->nullable();
+            $table->string('editor', 100)->nullable();
+            $table->string('published_by', 100)->nullable();
+        });
     }
 
     /**
@@ -29,6 +36,13 @@ class AddStringAttributesToFilesAndExternals extends Migration
     public function down()
     {
         Schema::table('files', function (Blueprint $table) {
+            $table->dropColumn('catalog_number');
+            $table->dropColumn('copyright');
+            $table->dropColumn('editor');
+            $table->dropColumn('published_by');
+        });
+
+        Schema::table('externals', function (Blueprint $table) {
             $table->dropColumn('catalog_number');
             $table->dropColumn('copyright');
             $table->dropColumn('editor');
