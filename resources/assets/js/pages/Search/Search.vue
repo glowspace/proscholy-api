@@ -48,11 +48,16 @@
                     ></Filters>
                 </div>
             </div>
-            <div class="col-lg-4 search-balance"></div>
+            <div class="col-lg-4 search-balance">
+            </div>
         </div>
         <div class="row" v-show="!init">
             <div class="col-lg-8">
+                <!-- v-auth is a custom directive that checks if user_token is set -->
+                <new-song-create :name="search_string" v-auth></new-song-create>
+
                 <div class="card">
+
                     <div class="card-body p-0">
                         <SongsList 
                             v-bind:search-string="search_string"
@@ -104,66 +109,11 @@
     </div>
 </template>
 
-<style>
-body {
-    background-image: url("/img/bg_center.svg");
-    background-color: #da3926;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    min-height: 100%;
-    padding: 0;
-    margin: 0;
-    position: relative;
-}
-
-body.dark {
-    background-image: url("/img/bg_center_dark.svg");
-}
-
-.filter-panel {
-    display: block;
-}
-
-.app-download {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.app-download div * {
-    color: white !important;
-}
-
-.app-download span.btn {
-    background-color: transparent !important;
-    cursor: initial !important;
-}
-
-.btn.search-report {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    color: #292929;
-    opacity: 0.5;
-    transition: 0.2s;
-}
-
-.btn.search-report:hover {
-    color: #292929;
-    opacity: 1;
-}
-
-.home {
-    position: relative;
-}
-</style>
-
 <script>
 import AuthorsList from "./AuthorsList";
 import SongsList from "./SongsList";
 import Filters from "./Filters";
+import NewSongCreate from './NewSongCreate';
 
 export default {
     props: {
@@ -296,7 +246,8 @@ export default {
     components: {
         AuthorsList,
         SongsList,
-        Filters
+        Filters,
+        NewSongCreate
     },
 
     computed: {
@@ -312,3 +263,60 @@ export default {
     }
 }
 </script>
+
+
+<style>
+body {
+    background-image: url("/img/bg_center.svg");
+    background-color: #da3926;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+body.dark {
+    background-image: url("/img/bg_center_dark.svg");
+}
+
+.filter-panel {
+    display: block;
+}
+
+.app-download {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-download div * {
+    color: white !important;
+}
+
+.app-download span.btn {
+    background-color: transparent !important;
+    cursor: initial !important;
+}
+
+.btn.search-report {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    color: #292929;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.btn.search-report:hover {
+    color: #292929;
+    opacity: 1;
+}
+
+.home {
+    position: relative;
+}
+</style>

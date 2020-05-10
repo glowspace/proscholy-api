@@ -104,6 +104,7 @@
 <script>
     import gql from 'graphql-tag';
     import ScrollTrigger from './ScrollTrigger';
+    
 
     // Query
     const fetch_items = gql`
@@ -267,7 +268,7 @@
 
             currentUrl() {
               return encodeURIComponent(window.location.href);
-            }
+            },
         },
 
         // GraphQL client
