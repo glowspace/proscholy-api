@@ -10,9 +10,9 @@
     text-transform: none;
   }
 </style>
-
+ 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
+import gql from "graphql-tag";
 
 const CREATE_MODEL_MUTATION = gql`
   mutation($input: CreateModelInput!) {
