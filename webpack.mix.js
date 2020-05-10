@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,16 +11,16 @@ let mix = require('laravel-mix');
  |
  */
 
-var BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
+// var BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 
 mix.webpackConfig({
     module: {
         rules: [
             {
                 test: /\.(graphql|gql)$/,
-                loader: 'graphql-tag/loader'
-            }
-        ]
+                loader: 'graphql-tag/loader',
+            },
+        ],
     },
     resolve: {
         alias: {
@@ -29,7 +29,7 @@ mix.webpackConfig({
             'Public': path.resolve(__dirname, 'resources/assets/js/'),
             'Fragments': path.resolve(__dirname, 'graphql/client/'),
         },
-    }
+    },
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')
@@ -48,33 +48,33 @@ mix.js('resources/assets/js/app.js', 'public/js')
             'app/**/*',
             'routes/**/*',
             'resources/views/**/*',
-            'resources/lang/**/*'
-        ]
+            'resources/lang/**/*',
+        ],
     });
 
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/_admin/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js');
 
 if (mix.inProduction()) {
-    mix
-    .webpackConfig({
-        plugins: [
-            new BrotliGzipPlugin({
-                asset: '[path].br[query]',
-                algorithm: 'brotli',
-                test: /\.(js|css|html|svg)$/,
-                threshold: 10240,
-                minRatio: 0.8,
-                quality: 11
-            }),
-            new BrotliGzipPlugin({
-                asset: '[path].gz[query]',
-                algorithm: 'gzip',
-                test: /\.(js|css|html|svg)$/,
-                threshold: 10240,
-                minRatio: 0.8
-            })
-        ],
-      })
-    .version(); // File hash suffix in production (to bust old caches)
+    mix.version();
+    // .webpackConfig({
+    //     plugins: [
+    //         new BrotliGzipPlugin({
+    //             asset: '[path].br[query]',
+    //             algorithm: 'brotli',
+    //             test: /\.(js|css|html|svg)$/,
+    //             threshold: 10240,
+    //             minRatio: 0.8,
+    //             quality: 11
+    //         }),
+    //         new BrotliGzipPlugin({
+    //             asset: '[path].gz[query]',
+    //             algorithm: 'gzip',
+    //             test: /\.(js|css|html|svg)$/,
+    //             threshold: 10240,
+    //             minRatio: 0.8
+    //         })
+    //     ],
+    //   })
+    // .version(); // File hash suffix in production (to bust old caches)
 }
