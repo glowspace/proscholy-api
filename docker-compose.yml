@@ -30,6 +30,12 @@ services:
     networks:
       - bcloud-network
 
+  # lilypond:
+  #   build:
+  #     context: ./docker/setup/lilypond
+  #     dockerfile: Dockerfile
+  #   tty: true
+
 # web:
   #   build: 
   #     context: ./docker/setup/web
