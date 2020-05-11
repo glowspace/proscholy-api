@@ -29,7 +29,7 @@ const fragment = gql`
                 name
             }
         }
-        
+
         tags_liturgy_period {
             id
             name
@@ -92,7 +92,7 @@ const QUERY = gql`
                 type
             }
 
-            arrangements { 
+            arrangements {
                 id
                 name
                 externals {
@@ -117,14 +117,15 @@ const QUERY = gql`
 `;
 
 const MUTATION = gql`
-    mutation($input: UpdateSongLyricInput!,
-            $liturgyPartTagsInput: SyncCreateTagsRelation!,
-            $genericTagsInput: SyncCreateTagsRelation!,
-            $historyPeriodTagsInput: SyncCreateTagsRelation!, 
-            $liturgyPeriodTagsInput: SyncCreateTagsRelation!, 
-            $saintsTagsInput: SyncCreateTagsRelation!, 
-            $taggable_id: Int!) {
-
+    mutation(
+        $input: UpdateSongLyricInput!
+        $liturgyPartTagsInput: SyncCreateTagsRelation!
+        $genericTagsInput: SyncCreateTagsRelation!
+        $historyPeriodTagsInput: SyncCreateTagsRelation!
+        $liturgyPeriodTagsInput: SyncCreateTagsRelation!
+        $saintsTagsInput: SyncCreateTagsRelation!
+        $taggable_id: Int!
+    ) {
         sync_tags_liturgy_part: sync_create_tags(
             input: $liturgyPartTagsInput
             tags_type: LITURGY_PART
@@ -174,7 +175,7 @@ const MUTATION = gql`
             id
             name
         }
-        
+
         update_song_lyric(input: $input) {
             ...SongLyricFillableFragment
         }
@@ -204,7 +205,10 @@ export default {
             liturgy_approval_status: vueModel.liturgy_approval_status,
             missa_type: vueModel.missa_type,
             authors: belongsToManyMutator(vueModel.authors),
-            arrangement_source: vueModel.arrangement_source === null ? null : belongsToMutator(vueModel.arrangement_source),
+            arrangement_source:
+                vueModel.arrangement_source === null
+                    ? null
+                    : belongsToMutator(vueModel.arrangement_source),
 
             // specific mutator
             songbook_records: {
@@ -219,12 +223,18 @@ export default {
         liturgyPartTagsInput: belongsToManyMutator(vueModel.tags_liturgy_part, {
             disableCreate: true
         }),
-        liturgyPeriodTagsInput: belongsToManyMutator(vueModel.tags_liturgy_period, {
-            disableCreate: true
-        }),
-        historyPeriodTagsInput: belongsToManyMutator(vueModel.tags_history_period, {
-            disableCreate: true
-        }),
+        liturgyPeriodTagsInput: belongsToManyMutator(
+            vueModel.tags_liturgy_period,
+            {
+                disableCreate: true
+            }
+        ),
+        historyPeriodTagsInput: belongsToManyMutator(
+            vueModel.tags_history_period,
+            {
+                disableCreate: true
+            }
+        ),
         genericTagsInput: belongsToManyMutator(vueModel.tags_generic),
         saintsTagsInput: belongsToManyMutator(vueModel.tags_saints),
         taggable_id: vueModel.id

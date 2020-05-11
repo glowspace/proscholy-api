@@ -83,7 +83,9 @@ export default {
             song_lyric: belongsToMutator(vueModel.song_lyric),
             authors: belongsToManyMutator(vueModel.authors)
         },
-        instrumentationTagsInput: belongsToManyMutator(vueModel.tags_instrumentation),
+        instrumentationTagsInput: belongsToManyMutator(
+            vueModel.tags_instrumentation
+        ),
         taggable_id: vueModel.id
     })
 };

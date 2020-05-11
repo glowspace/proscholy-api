@@ -3,51 +3,81 @@
         <!-- todo: make component -->
         <h4>Liturgie – mše svatá</h4>
         <a
-            v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-bind:class="[
+                'tag',
+                'tag-blue',
+                isSelectedTag(tag) ? 'tag-selected' : ''
+            ]"
             v-for="tag in tags_liturgy_part"
-            v-bind:key="'tag-'+tag.id"
+            v-bind:key="'tag-' + tag.id"
             v-on:click="selectTag(tag)"
-        >{{ tag.name }}</a>
+            >{{ tag.name }}</a
+        >
 
         <h4>Liturgický rok</h4>
         <a
-            v-bind:class="['tag', 'tag-blue', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-bind:class="[
+                'tag',
+                'tag-blue',
+                isSelectedTag(tag) ? 'tag-selected' : ''
+            ]"
             v-for="tag in tags_liturgy_period"
-            v-bind:key="'tag-'+tag.id"
+            v-bind:key="'tag-' + tag.id"
             v-on:click="selectTag(tag)"
-        >{{ tag.name }}</a>
+            >{{ tag.name }}</a
+        >
 
         <h4>Příležitosti</h4>
         <a
-            v-bind:class="['tag', 'tag-green', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-bind:class="[
+                'tag',
+                'tag-green',
+                isSelectedTag(tag) ? 'tag-selected' : ''
+            ]"
             v-for="tag in tags_generic"
-            v-bind:key="'tag-'+tag.id"
+            v-bind:key="'tag-' + tag.id"
             v-on:click="selectTag(tag)"
-        >{{ tag.name }}</a>
+            >{{ tag.name }}</a
+        >
 
         <h4>Ke svatým</h4>
         <a
-            v-bind:class="['tag', 'tag-green', isSelectedTag(tag) ? 'tag-selected' : '']"
+            v-bind:class="[
+                'tag',
+                'tag-green',
+                isSelectedTag(tag) ? 'tag-selected' : ''
+            ]"
             v-for="tag in tags_saints"
-            v-bind:key="'tag-'+tag.id"
+            v-bind:key="'tag-' + tag.id"
             v-on:click="selectTag(tag)"
-        >{{ tag.name }}</a>
+            >{{ tag.name }}</a
+        >
 
         <h4>Zpěvníky</h4>
         <a
-            v-bind:class="['tag', 'tag-yellow', isSelectedSongbook(songbook) ? 'tag-selected' : '']"
+            v-bind:class="[
+                'tag',
+                'tag-yellow',
+                isSelectedSongbook(songbook) ? 'tag-selected' : ''
+            ]"
             v-for="songbook in songbooks"
-            v-bind:key="'songbook-'+songbook.id"
+            v-bind:key="'songbook-' + songbook.id"
             v-on:click="selectSongbook(songbook)"
-        >{{ songbook.name }}</a>
+            >{{ songbook.name }}</a
+        >
 
         <h4>Jazyky</h4>
         <a
-            v-bind:class="['tag', 'tag-red', isSelectedLanguage(lang_code) ? 'tag-selected' : '']"
+            v-bind:class="[
+                'tag',
+                'tag-red',
+                isSelectedLanguage(lang_code) ? 'tag-selected' : ''
+            ]"
             v-for="(lang_name, lang_code) in all_languages"
-            v-bind:key="'lang-'+lang_code"
+            v-bind:key="'lang-' + lang_code"
             v-on:click="selectLanguage(lang_code)"
-        >{{ lang_name }}</a>
+            >{{ lang_name }}</a
+        >
     </div>
 </template>
 
@@ -73,36 +103,37 @@ const fetch_items = gql`
 `;
 
 const FETCH_TAGS_GENERIC = gql`
-  query {
-    tags_generic: tags_enum(type: GENERIC) {
-      id
-      name
+    query {
+        tags_generic: tags_enum(type: GENERIC) {
+            id
+            name
+        }
     }
-  }
 `;
 const FETCH_TAGS_LITURGY_PART = gql`
-  query {
-    tags_liturgy_part: tags_enum(type: LITURGY_PART) {
-      id
-      name
+    query {
+        tags_liturgy_part: tags_enum(type: LITURGY_PART) {
+            id
+            name
+        }
     }
-  }
 `;
 const FETCH_TAGS_LITURGY_PERIOD = gql`
-  query {
-    tags_liturgy_period: tags_enum(type: LITURGY_PERIOD) {
-      id
-      name
+    query {
+        tags_liturgy_period: tags_enum(type: LITURGY_PERIOD) {
+            id
+            name
+        }
     }
-  }
 `;
 const FETCH_TAGS_SAINTS = gql`
-  query {
-    tags_saints: tags_enum(type: SAINTS) {
-      id
-      name
+    query {
+        tags_saints: tags_enum(type: SAINTS) {
+            id
+            name
+        }
     }
-}`;
+`;
 
 const fetch_songbooks = gql`
     query {
@@ -142,7 +173,7 @@ export default {
 
     apollo: {
         tags_generic: {
-            query: FETCH_TAGS_GENERIC,
+            query: FETCH_TAGS_GENERIC
         },
         tags_liturgy_part: {
             query: FETCH_TAGS_LITURGY_PART
@@ -208,24 +239,23 @@ export default {
         },
 
         getSelectedTagsDcnf() {
-            const filterMapTags = tags => 
-                            tags.filter(tag => this.isSelectedTag(tag))
-                                .map(tag => tag.id);
+            const filterMapTags = tags =>
+                tags.filter(tag => this.isSelectedTag(tag)).map(tag => tag.id);
 
-            return ({
+            return {
                 liturgy_part: filterMapTags(this.tags_liturgy_part),
                 liturgy_period: filterMapTags(this.tags_liturgy_period),
                 generic: filterMapTags(this.tags_generic),
-                saints: filterMapTags(this.tags_saints),
-            });
-        },
+                saints: filterMapTags(this.tags_saints)
+            };
+        }
     },
 
     watch: {
         $apollo: {
             loading(val, prev) {
                 if (val && !prev) {
-                    this.$emit('tags-loaded', null);
+                    this.$emit("tags-loaded", null);
                 }
             }
         },

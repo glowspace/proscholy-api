@@ -4,12 +4,12 @@
  *  {id: 1, data: "updated data for old model"},
  *  {data: "data for new model"}
  * ]
- * 
- * @param {Array} relationModels 
+ *
+ * @param {Array} relationModels
  * @param {Object} options
  * @param {Boolean} options.disableCreate - Disable creating new models
  * @returns {Object} Input object for Lighthouse's mutation
- * 
+ *
  */
 const belongsToManyMutator = function(
     relationModels,
@@ -30,8 +30,8 @@ const belongsToManyMutator = function(
 
 /**
  * Data transformer method, takes the input data in following format:
- * 
- * @param {Object|null} relationModel 
+ *
+ * @param {Object|null} relationModel
  * @returns {Object} Input object for Lighthouse's mutation
  */
 const belongsToMutator = function(relationModel) {
@@ -48,7 +48,4 @@ const belongsToMutator = function(relationModel) {
     return obj;
 };
 
-export {
-    belongsToManyMutator,
-    belongsToMutator
-};
+export { belongsToManyMutator, belongsToMutator };

@@ -39,10 +39,10 @@ const QUERY = gql`
 
 const MUTATION = gql`
     mutation(
-            $input: UpdateExternalInput!
-            $instrumentationTagsInput: SyncCreateTagsRelation!
-            $taggable_id: Int!
-        ) {
+        $input: UpdateExternalInput!
+        $instrumentationTagsInput: SyncCreateTagsRelation!
+        $taggable_id: Int!
+    ) {
         sync_tags_instrumentation: sync_create_tags(
             input: $instrumentationTagsInput
             tags_type: INSTRUMENTATION
@@ -80,7 +80,9 @@ export default {
             song_lyric: belongsToMutator(vueModel.song_lyric),
             authors: belongsToManyMutator(vueModel.authors)
         },
-        instrumentationTagsInput: belongsToManyMutator(vueModel.tags_instrumentation),
+        instrumentationTagsInput: belongsToManyMutator(
+            vueModel.tags_instrumentation
+        ),
         taggable_id: vueModel.id
     })
 };

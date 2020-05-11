@@ -1,25 +1,40 @@
 <template>
     <tr>
-        <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
-            <a class="p-2 w-100 d-inline-block" :href="viewLink" title="Zobrazit náhled" target="_blank">
-                <i :class="[typeClass, 'pl-1 pr-3']"></i><span class="pr-3">{{ displayName }}</span><i class="far fa-eye pl-0 pr-0"></i>
+        <td :class="[{ 'border-top-0': !index }, 'p-0 align-middle']">
+            <a
+                class="p-2 w-100 d-inline-block"
+                :href="viewLink"
+                title="Zobrazit náhled"
+                target="_blank"
+            >
+                <i :class="[typeClass, 'pl-1 pr-3']"></i
+                ><span class="pr-3">{{ displayName }}</span
+                ><i class="far fa-eye pl-0 pr-0"></i>
             </a>
         </td>
-        <td :class="[{'border-top-0': !index}, 'p-0 align-middle']">
-            <a v-if="downloadUrl" class="p-2" :href="downloadUrl" title="Stáhnout">
+        <td :class="[{ 'border-top-0': !index }, 'p-0 align-middle']">
+            <a
+                v-if="downloadUrl"
+                class="p-2"
+                :href="downloadUrl"
+                title="Stáhnout"
+            >
                 <i class="fas fa-download p-0"></i>
             </a>
         </td>
-        <td :class="[{'border-top-0': !index}, 'p-2 pl-md-5 align-middle']">
-            <span v-for="(author, authorIndex) in authors"><span v-if="authorIndex">,</span>
-                <a :href="author.public_url" class="text-secondary">{{ author.name }}</a>
+        <td :class="[{ 'border-top-0': !index }, 'p-2 pl-md-5 align-middle']">
+            <span v-for="(author, authorIndex) in authors"
+                ><span v-if="authorIndex">,</span>
+                <a :href="author.public_url" class="text-secondary">{{
+                    author.name
+                }}</a>
             </span>
         </td>
     </tr>
 </template>
 
 <script>
-import Bowser from "bowser"; 
+import Bowser from "bowser";
 
 export default {
     props: {
@@ -44,24 +59,24 @@ export default {
                 6: "youtube_channel",
                 7: "audio",
                 8: "pdf/text_chords",
-                9: "pdf/text",
+                9: "pdf/text"
             },
             browser: Bowser.getParser(window.navigator.userAgent),
             supportPdfIframesCondition: {
                 mobile: {
-                    chrome: '>1000',
+                    chrome: ">1000"
                 },
                 desktop: {
-                    chrome: '>70',
-                    firefox: ">60",
+                    chrome: ">70",
+                    firefox: ">60"
                 }
             }
-        }
+        };
     },
 
     computed: {
         viewLink() {
-            if ([4,8,9].includes(this.type)) {
+            if ([4, 8, 9].includes(this.type)) {
                 // pdf file
                 // decide if the browser can display that directly in iframe
                 if (this.browser.satisfies(this.supportPdfIframesCondition)) {
@@ -69,14 +84,13 @@ export default {
                 } else {
                     return "https://docs.google.com/viewer?url=" + this.url;
                 }
-
             } else {
                 return this.url;
             }
         },
 
         displayName() {
-            if(this.downloadUrl) {
+            if (this.downloadUrl) {
                 return this.name;
             } else {
                 return this.songName + " – noty č. " + (this.index + 1);
@@ -95,12 +109,12 @@ export default {
                 case 9:
                     return "fas fa-file-pdf";
                     break;
-            
+
                 default:
                     return "fas fa-file-alt";
                     break;
             }
         }
     }
-}
+};
 </script>

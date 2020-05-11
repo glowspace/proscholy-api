@@ -1,7 +1,7 @@
-import firebase from 'firebase/app'
+import firebase from "firebase/app";
 // import 'firebase/firestore'
-import 'firebase/auth'
-import 'firebase/analytics'
+import "firebase/auth";
+import "firebase/analytics";
 
 var firebaseConfig = {
     apiKey: "AIzaSyC3jFunEGoCxoGdmp6wPfy8sJikU5Dxvwc",
@@ -23,10 +23,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
-export const auth = firebase.auth()
+export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+export const auth = firebase.auth();
 // export const db = firebase.firestore()
 // const { TimeStamp, GeoPoint } = firebase.firestore
 // export { TimeStamp, GeoPoint }
 
-export default firebase
+export default firebase;
