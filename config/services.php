@@ -35,4 +35,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'firebase' => [
+        'project_name' => env('FIREBASE_PROJECT_ID')
+    ]
+
 ];

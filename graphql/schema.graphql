@@ -6,9 +6,20 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 
-#import types.graphql
-#import inputs_update.graphql
-#import inputs_create_delete.graphql
+"Import graphql schema files"
+#import author.graphql
+#import user.graphql
+#import song_lyric.graphql
+#import song_lyric_part.graphql
+#import songbook.graphql
+#import songbook_record.graphql
+#import song.graphql
+#import file.graphql
+#import external.graphql
+#import tag.graphql
+#import playlist.graphql
+#import public_user.graphql
+#import model.graphql
 
 
 union SearchResult = SongLyric | Author
@@ -19,68 +30,11 @@ type FilterTagCategory {
 }
 
 type Query {
-    users: [User!]! @all
-    user(id: ID @eq): User @find
-    authors(
-        search_string: String
-        order_abc: Boolean
-        type: Int
-    ): [Author!]!
-    song_lyrics(
-        only_apk: Boolean
-        search_string: String
-        is_published: Boolean
-        is_approved_by_author: Boolean
-        has_lyrics: Boolean
-        has_authors: Boolean
-        has_tags: Boolean
-        has_chords: Boolean
-        order_abc: Boolean
-        updated_after: DateTime
-    ): [SongLyric!]!
-    songs: [Song!]!
-    externals (
-        type: Int
-        is_todo: Boolean
-        orderBy: [OrderByClause!] @orderBy
-    ): [External!]! @all
-    files (
-        type: Int
-        is_todo: Boolean
-    ): [File!]!
-    tags(type: Int @eq): [Tag] @all
-    songbooks (
-        is_private: Boolean @eq
-    ): [Songbook] @all
-    me: User @auth
-
-    search_song_lyrics(
-        search_params: String
-        page: Int
-        per_page: Int
-    ): SongLyricPaginator
-
-    author(id: ID! @eq): Author @find
-    external(id: ID! @eq): External @find
-    file(id: ID! @eq): File @find
-    song_lyric(id: ID! @eq): SongLyric @find
-    songbook(id: ID! @eq): Songbook @find
+    author_dummy(id: ID! @eq): Author @find
 }
 
-type Mutation @group(middleware: ["auth:api"]) {
-    delete_author(id: ID!): Author @delete
-    delete_external(id: ID!): External @delete
-    delete_file(id: ID!): File @delete
-    delete_song_lyric(id: ID!): SongLyric @delete
-    delete_tag(id: ID!): Tag @delete
-    delete_songbook(id: ID!): Songbook @delete
-
-    update_author(input: UpdateAuthorInput!): Author @update(flatten: true)
-    update_external(input: UpdateExternalInput!): External @update(flatten: true)
-    update_file(input: UpdateFileInput!): File @update(flatten: true)
-    update_song_lyric(input: UpdateSongLyricInput!): SongLyric
-    update_songbook(input: UpdateSongbookInput!): Songbook
-    
-    create_model(input: CreateModelInput!): Model
-    delete_model(input: DeleteModelInput!): Model
+type Mutation @middleware(checks: ["auth:api"]) {
+    author_dummy(id: ID! @eq): Author @find
 }
+
+

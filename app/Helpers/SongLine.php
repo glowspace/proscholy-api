@@ -42,6 +42,12 @@ class SongLine {
         // return $string;
     }
 
+    public function getChords()
+    {
+        return $this->chords;
+    }
+
+    // todo: make obsolete
     public function toHTML($songPartTag = null)
     {
         $html = '<div class="song-line">';

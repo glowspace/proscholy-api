@@ -1,20 +1,24 @@
 <template>
     <span>
-        <input type="hidden" name="g-recaptcha-response" :value="token" v-if="token">
+        <input
+            type="hidden"
+            name="g-recaptcha-response"
+            :value="token"
+            v-if="token"
+        />
     </span>
 </template>
 
 <script>
-
 import { VueReCaptcha } from 'vue-recaptcha-v3';
 
 export default {
     props: ['site-key'],
-    
+
     data() {
         return {
             token: null
-        }
+        };
     },
 
     mounted() {
@@ -24,10 +28,10 @@ export default {
 
     methods: {
         initRecaptcha() {
-            this.$recaptcha('login').then((token) => {
+            this.$recaptcha('login').then(token => {
                 this.token = token;
-            })
+            });
         }
     }
-}
+};
 </script>

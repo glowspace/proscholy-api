@@ -1,0 +1,147 @@
+type SongLyric {
+    id: ID!
+    name: String
+    rich_name: String @with(relation: "authors")
+    public_url: String
+    lyrics_no_chords: String
+    lyrics: String
+    type: Int
+    is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
+    is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
+    is_approved_by_author: Boolean!
+    is_published: Boolean!
+    has_anonymous_author: Boolean!
+    lang: String
+    lang_string: String
+    lang_string_values: JSON
+    updated_at: String
+    authors: [Author] @belongsToMany
+    externals(
+        id: Int @eq,
+        type: Int @eq
+        orderBy: [OrderByClause!] @orderBy
+    ): [External] @hasMany
+    files(id: Int @eq, type: Int @eq): [File] @hasMany
+    tags(type: Int @eq): [Tag] @morphMany
+    songbook_records: [SongbookRecord] @belongsToMany
+    song: Song @belongsTo
+    has_chords: Boolean!
+    siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
+    trashed: Boolean @method(name: "trashed")
+    only_regenschori: Boolean
+    capo: Int
+    visits: Int
+    has_lyrics: Boolean
+    liturgy_approval_status: Int
+    liturgy_approval_status_string_values: JSON
+    missa_type: MissaType
+    missa_type_string_values: JSON
+
+    tags_official: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"]) @deprecated(reason:"Use tags_liturgy_part instead")
+    tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["generic"]) @deprecated(reason: "Use tags_generic instead")
+
+    tags_generic: [Tag] @morphMany(relation: "tags", scopes: ["generic"])
+    tags_liturgy_part: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"])
+    tags_liturgy_period: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPeriod"])
+    tags_history_period: [Tag] @morphMany(relation: "tags", scopes: ["historyPeriod"])
+    tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
+
+    arrangements: [SongLyric] @hasMany
+    arrangement_source: SongLyric @belongsTo
+    is_arrangement: Boolean
+    # has_sheet_music: Boolean @with(relation: "externals")
+    # has_media: Boolean @with(relation: "files")
+}
+
+enum MissaType {
+    NONE @enum(value: 0)
+    ORDINARIUM @enum(value: 1)
+    PROPRIUM @enum(value: 2)
+}
+
+type SongLyricPaginator {
+    data: [SongLyric!]! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver")
+    paginatorInfo: PaginatorInfo! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver")
+}
+
+extend type Query  {
+    song_lyric(id: ID! @eq): SongLyric @find
+
+    song_lyrics(
+        only_apk: Boolean
+        search_string: String
+        is_published: Boolean
+        is_approved_by_author: Boolean
+        has_lyrics: Boolean
+        has_authors: Boolean
+        has_tags: Boolean
+        has_chords: Boolean
+        order_abc: Boolean
+        updated_after: DateTime
+    ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php 
+
+    search_song_lyrics(
+        search_params: String
+        page: Int
+        per_page: Int
+    ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
+}
+
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    delete_song_lyric(id: ID!): SongLyric @delete
+
+    update_song_lyric(input: UpdateSongLyricInput!): SongLyric # see App/GraphQL/Mutations/UpdateSongLyric.php
+    create_arrangement(input: CreateArrangementInput! @spread): SongLyric
+}
+
+input UpdateSongLyricRelation {
+    id: ID
+}
+
+input UpdateSongLyricInput {
+    id: ID!
+    name: String @rules(apply: ["required"], messages: {
+        required: "Jméno písně nesmí zůstat prázdné"})
+    has_anonymous_author: Boolean
+    lang: String
+    authors: SyncAuthorsRelation
+    tags_unofficial: SyncUnofficialTagsRelation
+    tags_official: SyncOfficialTagsRelation
+    songbook_records: SyncSongbookRecordsForSongLyricRelation
+    lyrics: String
+    song: SongInput
+    only_regenschori: Boolean
+    capo: Int
+    liturgy_approval_status: Int
+    arrangement_source: SyncSongLyricArrangementRelation
+    missa_type: MissaType
+}
+
+input SyncOfficialTagsRelation {
+    sync: [ID!]
+}
+
+input SyncUnofficialTagsRelation {
+    create: [CreateUnofficialTagInput!]
+    sync: [ID!]
+}
+
+input CreateUnofficialTagInput {
+    name: String!
+}
+
+input CreateArrangementInput {
+    name: String!
+    arrangement_of: Int!
+}
+
+
+
+input SyncSongLyricArrangementRelation {
+    update: UpdateSongLyricArrangementInput
+}
+
+input UpdateSongLyricArrangementInput {
+    id: ID!
+}

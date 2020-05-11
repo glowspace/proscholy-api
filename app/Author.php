@@ -10,6 +10,7 @@ use Log;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -51,7 +52,7 @@ class Author extends Model
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['visits'];
     
-    protected $fillable = ['name', 'description', 'email', 'url', 'type'];
+    protected $fillable = ['name', 'description', 'email', 'type'];
 
     private $type_string_values
         = [
@@ -144,6 +145,11 @@ class Author extends Model
     public function files() : BelongsToMany
     {
         return $this->belongsToMany(File::class);
+    }
+
+    public function tags() : MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function getTypeStringAttribute()
