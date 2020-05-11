@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { VueReCaptcha } from "vue-recaptcha-v3";
+import { VueReCaptcha } from 'vue-recaptcha-v3';
 
 export default {
-    props: ["site-key"],
+    props: ['site-key'],
 
     data() {
         return {
@@ -28,7 +28,7 @@ export default {
 
     methods: {
         initRecaptcha() {
-            this.$recaptcha("login").then(token => {
+            this.$recaptcha('login').then(token => {
                 this.token = token;
             });
         }

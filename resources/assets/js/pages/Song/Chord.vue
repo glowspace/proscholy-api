@@ -22,17 +22,17 @@
 </template>
 
 <script>
-import { store } from "./store.js";
+import { store } from './store.js';
 
 export default {
     props: [
-        "base",
-        "variant",
-        "extension",
-        "bass",
-        "isDivided",
-        "isSubstitute",
-        "isOptional"
+        'base',
+        'variant',
+        'extension',
+        'bass',
+        'isDivided',
+        'isSubstitute',
+        'isOptional'
     ],
 
     data() {
@@ -45,7 +45,7 @@ export default {
         // each chords notifies its state to the global store.js file
 
         // I'm a chord that has a chord sign -> allow to display chords + to switch to extended chord mode
-        if (this.base != "" && this.chordSharedStore.nChordModes == 1) {
+        if (this.base != '' && this.chordSharedStore.nChordModes == 1) {
             this.chordSharedStore.nChordModes = 3;
             this.chordSharedStore.chordMode = 2;
         }
@@ -58,8 +58,8 @@ export default {
 
         // I'm a B-flat chord -> set flats as default
         if (
-            this.base === "B" ||
-            (this.base.length > 1 && this.base[1] === "b")
+            this.base === 'B' ||
+            (this.base.length > 1 && this.base[1] === 'b')
         ) {
             this.chordSharedStore.useFlatScale = true;
             this.chordSharedStore.useFlatScale_notified = true;
@@ -68,8 +68,8 @@ export default {
 
     computed: {
         baseNote() {
-            if (this.base == "") {
-                return "";
+            if (this.base == '') {
+                return '';
             }
 
             return this.transposeChordBy(
@@ -80,8 +80,8 @@ export default {
         },
 
         bassNote() {
-            if (this.bass == "") {
-                return "";
+            if (this.bass == '') {
+                return '';
             }
 
             return this.transposeChordBy(
@@ -103,34 +103,34 @@ export default {
         transposeChordBy(chord, semitones, useFlatScale) {
             // Chromatic scale starting from C using flats only.
             const FLAT_SCALE = [
-                "C",
-                "Db",
-                "D",
-                "Eb",
-                "E",
-                "F",
-                "Gb",
-                "G",
-                "Ab",
-                "A",
-                "B",
-                "H"
+                'C',
+                'Db',
+                'D',
+                'Eb',
+                'E',
+                'F',
+                'Gb',
+                'G',
+                'Ab',
+                'A',
+                'B',
+                'H'
             ];
 
             // Chromatic scale starting from C using sharps only.
             const SHARP_SCALE = [
-                "C",
-                "C#",
-                "D",
-                "D#",
-                "E",
-                "F",
-                "F#",
-                "G",
-                "G#",
-                "A",
-                "A#",
-                "H"
+                'C',
+                'C#',
+                'D',
+                'D#',
+                'E',
+                'F',
+                'F#',
+                'G',
+                'G#',
+                'A',
+                'A#',
+                'H'
             ];
 
             let scale = useFlatScale ? FLAT_SCALE : SHARP_SCALE;

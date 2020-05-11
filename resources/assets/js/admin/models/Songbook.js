@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { belongsToManyMutator } from "./relations";
+import gql from 'graphql-tag';
+import { belongsToManyMutator } from './relations';
 
 const fragment = gql`
     fragment SongbookFillableFragment on Songbook {
@@ -61,7 +61,7 @@ export default {
                     .filter(
                         r =>
                             r.song_lyric !== null &&
-                            r.song_lyric.hasOwnProperty("id")
+                            r.song_lyric.hasOwnProperty('id')
                     )
                     .map(m => ({
                         song_lyric_id: parseInt(m.song_lyric.id),
@@ -71,7 +71,7 @@ export default {
                     .filter(
                         r =>
                             r.song_lyric !== null &&
-                            !r.song_lyric.hasOwnProperty("id")
+                            !r.song_lyric.hasOwnProperty('id')
                     )
                     .map(m => ({
                         song_lyric_name: m.song_lyric.name,

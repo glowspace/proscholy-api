@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    props: ["value"],
+    props: ['value'],
 
     computed: {
         useFlatScale: {
@@ -28,7 +28,7 @@ export default {
                 return this.value;
             },
             set(val) {
-                this.$emit("input", val);
+                this.$emit('input', val);
             }
         }
     }

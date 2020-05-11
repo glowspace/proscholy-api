@@ -175,19 +175,19 @@
 </template>
 
 <script>
-import AuthorsList from "./AuthorsList";
-import SongsList from "./SongsList";
-import Filters from "./Filters";
-import NewSongCreate from "./NewSongCreate";
+import AuthorsList from './AuthorsList';
+import SongsList from './SongsList';
+import Filters from './Filters';
+import NewSongCreate from './NewSongCreate';
 
 export default {
     props: {
-        "str-prefill": String
+        'str-prefill': String
     },
 
     data() {
         return {
-            search_string: "",
+            search_string: '',
             selected_songbooks: {},
             selected_languages: {},
             selected_tags: {},
@@ -201,8 +201,8 @@ export default {
     watch: {
         init: function(val) {
             if (!val) {
-                document.getElementsByTagName("body")[0].style.overflowY =
-                    "scroll";
+                document.getElementsByTagName('body')[0].style.overflowY =
+                    'scroll';
             }
         }
     },
@@ -215,34 +215,34 @@ export default {
         updateHistoryState() {
             if (this.init) return;
 
-            let url = "/search?";
+            let url = '/search?';
             let params = [];
 
-            params.push("searchString=" + this.search_string);
-            params.push("tags=" + Object.keys(this.selected_tags));
-            params.push("langs=" + Object.keys(this.selected_languages));
-            params.push("songbooks=" + Object.keys(this.selected_songbooks));
+            params.push('searchString=' + this.search_string);
+            params.push('tags=' + Object.keys(this.selected_tags));
+            params.push('langs=' + Object.keys(this.selected_languages));
+            params.push('songbooks=' + Object.keys(this.selected_songbooks));
 
-            history.pushState(null, "", url + params.join("&"));
+            history.pushState(null, '', url + params.join('&'));
         },
 
         applyStateChange(event) {
-            let fragments = decodeURIComponent(window.location.href).split("?");
+            let fragments = decodeURIComponent(window.location.href).split('?');
 
             if (fragments.length === 1) {
                 this.resetState(false);
                 return;
             }
 
-            let params = fragments[1].split("&");
+            let params = fragments[1].split('&');
 
             for (let param of params) {
-                let param_fragments = param.split("=");
+                let param_fragments = param.split('=');
 
-                if (param_fragments[0] === "searchString") {
+                if (param_fragments[0] === 'searchString') {
                     this.search_string = param_fragments[1];
                 }
-                if (param_fragments[0] === "tags") {
+                if (param_fragments[0] === 'tags') {
                     let obj = {};
 
                     for (let id of this.getSplittedParam(param_fragments[1])) {
@@ -251,7 +251,7 @@ export default {
 
                     this.selected_tags = obj;
                 }
-                if (param_fragments[0] === "langs") {
+                if (param_fragments[0] === 'langs') {
                     let obj = {};
 
                     for (let lang of this.getSplittedParam(
@@ -262,7 +262,7 @@ export default {
 
                     this.selected_languages = obj;
                 }
-                if (param_fragments[0] === "songbooks") {
+                if (param_fragments[0] === 'songbooks') {
                     let obj = {};
 
                     for (let id of this.getSplittedParam(param_fragments[1])) {
@@ -275,11 +275,11 @@ export default {
         },
 
         getSplittedParam(param) {
-            return param.split(",").filter(str => str.length > 0);
+            return param.split(',').filter(str => str.length > 0);
         },
 
         resetState(update_url) {
-            this.search_string = "";
+            this.search_string = '';
             this.selected_tags = {};
             this.selected_languages = {};
             this.selected_songbooks = {};
@@ -290,7 +290,7 @@ export default {
         },
 
         autoInit() {
-            if (this.init && this.search_string !== "") {
+            if (this.init && this.search_string !== '') {
                 this.init = false;
             }
         },
@@ -301,10 +301,10 @@ export default {
     },
 
     mounted() {
-        this.search_string = this.strPrefill ? this.strPrefill : "";
+        this.search_string = this.strPrefill ? this.strPrefill : '';
         window.onpopstate = this.applyStateChange;
 
-        if (window.location.href.indexOf("?search") > 0) {
+        if (window.location.href.indexOf('?search') > 0) {
             // this.applyStateChange();
             this.init = false;
         }
@@ -334,7 +334,7 @@ export default {
 
 <style>
 body {
-    background-image: url("/img/bg_center.svg");
+    background-image: url('/img/bg_center.svg');
     background-color: #da3926;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -346,7 +346,7 @@ body {
 }
 
 body.dark {
-    background-image: url("/img/bg_center_dark.svg");
+    background-image: url('/img/bg_center_dark.svg');
 }
 
 .filter-panel {

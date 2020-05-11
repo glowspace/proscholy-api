@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    props: ["value", "n-chord-modes"],
+    props: ['value', 'n-chord-modes'],
 
     computed: {
         chordMode: {
@@ -28,7 +28,7 @@ export default {
                 return this.value;
             },
             set(val) {
-                this.$emit("input", val);
+                this.$emit('input', val);
             }
         }
     }

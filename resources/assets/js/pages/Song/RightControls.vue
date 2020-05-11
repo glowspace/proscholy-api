@@ -26,8 +26,8 @@
         ></a>
         <a class="btn btn-secondary nosleep-caption">{{
             !nosleep
-                ? "zhasínání&nbsp;displeje není&nbsp;blokováno"
-                : "zhasínání&nbsp;displeje je&nbsp;blokováno"
+                ? 'zhasínání&nbsp;displeje není&nbsp;blokováno'
+                : 'zhasínání&nbsp;displeje je&nbsp;blokováno'
         }}</a>
     </div>
 </template>
@@ -60,7 +60,7 @@ body.dark .nosleep-caption {
 </style>
 
 <script>
-import NoSleep from "nosleep.js";
+import NoSleep from 'nosleep.js';
 
 export default {
     data() {
@@ -114,16 +114,16 @@ export default {
     },
 
     mounted() {
-        document.addEventListener("fullscreenchange", this.fullscreenChanged);
+        document.addEventListener('fullscreenchange', this.fullscreenChanged);
         document.addEventListener(
-            "mozfullscreenchange",
+            'mozfullscreenchange',
             this.fullscreenChanged
         );
         document.addEventListener(
-            "webkitfullscreenchange",
+            'webkitfullscreenchange',
             this.fullscreenChanged
         );
-        document.addEventListener("msfullscreenchange", this.fullscreenChanged);
+        document.addEventListener('msfullscreenchange', this.fullscreenChanged);
     }
 };
 </script>

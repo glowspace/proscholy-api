@@ -141,13 +141,13 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
-import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
-import ExternalView from "Public/components/ExternalView.vue";
-import EditForm from "./EditForm";
+import gql from 'graphql-tag';
+import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
+import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
+import ExternalView from 'Public/components/ExternalView.vue';
+import EditForm from './EditForm';
 
-import File from "Admin/models/File";
+import File from 'Admin/models/File';
 
 const FETCH_AUTHORS = gql`
     query {
@@ -190,8 +190,8 @@ export default {
                 // here goes the definition of model attributes
                 id: undefined,
                 type: undefined,
-                name: "",
-                filename: "",
+                name: '',
+                filename: '',
                 authors: [],
                 song_lyric: undefined,
                 tags_instrumentation: [],
@@ -218,7 +218,7 @@ export default {
                 this.loadModelDataFromResult(result);
                 this.loadEnumJsonFromResult(
                     result,
-                    "type_string_values",
+                    'type_string_values',
                     this.enums.type
                 );
             }
@@ -244,18 +244,18 @@ export default {
                 .then(result => {
                     this.$validator.errors.clear();
                     this.$notify({
-                        title: "Úspěšně uloženo :)",
-                        text: "Soubor byl úspěšně uložen",
-                        type: "success"
+                        title: 'Úspěšně uloženo :)',
+                        text: 'Soubor byl úspěšně uložen',
+                        type: 'success'
                     });
                 })
                 .catch(error => {
                     if (error.graphQLErrors.length == 0) {
                         // unknown error happened
                         this.$notify({
-                            title: "Chyba při ukládání",
-                            text: "Soubor nebyl uložen",
-                            type: "error"
+                            title: 'Chyba při ukládání',
+                            text: 'Soubor nebyl uložen',
+                            type: 'error'
                         });
                         return;
                     }

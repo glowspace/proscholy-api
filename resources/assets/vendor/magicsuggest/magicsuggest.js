@@ -9,7 +9,7 @@
  * Licence:      MagicSuggest is licenced under MIT licence (http://opensource.org/licenses/MIT)
  */
 (function($) {
-    "use strict";
+    'use strict';
     var MagicSuggest = function(element, options) {
         var ms = this;
 
@@ -48,7 +48,7 @@
             /**
              * Allow customization of query parameter
              */
-            queryParam: "query",
+            queryParam: 'query',
 
             /**
              * A function triggered just before the ajax request is sent, similar to jQuery
@@ -58,7 +58,7 @@
             /**
              * A custom CSS class to apply to the field's underlying element.
              */
-            cls: "",
+            cls: '',
 
             /**
              * JSON Data source used to populate the combo box. 3 options are available here:
@@ -104,7 +104,7 @@
             /**
              * Name of JSON object property displayed in the combo list
              */
-            displayField: "name",
+            displayField: 'name',
 
             /**
              * Set to false if you only want mouse interaction. In that case the combo will
@@ -145,7 +145,7 @@
             /**
              * A class that is added to the info message appearing on the top-right part of the component
              */
-            infoMsgCls: "",
+            infoMsgCls: '',
 
             /**
              * Additional parameters passed out to the INPUT tag. Enables usage of AngularJS's custom tags for ex.
@@ -155,7 +155,7 @@
             /**
              * The class that is applied to show that the field is invalid
              */
-            invalidCls: "ms-inv",
+            invalidCls: 'ms-inv',
 
             /**
              * Set to true to filter data results according to case. Useless if the data is fetched remotely
@@ -178,10 +178,10 @@
              */
             maxEntryRenderer: function(v) {
                 return (
-                    "Please reduce your entry by " +
+                    'Please reduce your entry by ' +
                     v +
-                    " character" +
-                    (v > 1 ? "s" : "")
+                    ' character' +
+                    (v > 1 ? 's' : '')
                 );
             },
 
@@ -202,17 +202,17 @@
              */
             maxSelectionRenderer: function(v) {
                 return (
-                    "Nemůžete zvolit více než " +
+                    'Nemůžete zvolit více než ' +
                     v +
-                    " položku(y)" +
-                    (v > 1 ? "s" : "")
+                    ' položku(y)' +
+                    (v > 1 ? 's' : '')
                 );
             },
 
             /**
              * The method used by the ajax request.
              */
-            method: "POST",
+            method: 'POST',
 
             /**
              * The minimum number of characters the user must type before the combo expands and offers suggestions.
@@ -225,7 +225,7 @@
              */
             minCharsRenderer: function(v) {
                 return (
-                    "Please type " + v + " more character" + (v > 1 ? "s" : "")
+                    'Please type ' + v + ' more character' + (v > 1 ? 's' : '')
                 );
             },
 
@@ -233,7 +233,7 @@
              * Whether or not sorting / filtering should be done remotely or locally.
              * Use either 'local' or 'remote'
              */
-            mode: "local",
+            mode: 'local',
 
             /**
              * The name used as a form element.
@@ -243,12 +243,12 @@
             /**
              * The text displayed when there are no suggestions.
              */
-            noSuggestionText: "Žádné návrhy",
+            noSuggestionText: 'Žádné návrhy',
 
             /**
              * The default placeholder text when nothing has been entered
              */
-            placeholder: "Klikněte a začněte psát",
+            placeholder: 'Klikněte a začněte psát',
 
             /**
              * A function used to define how the items will be presented in the combo
@@ -268,17 +268,17 @@
             /**
              * Text delimiter to use in a delimited string.
              */
-            resultAsStringDelimiter: ",",
+            resultAsStringDelimiter: ',',
 
             /**
              * Name of JSON object property that represents the list of suggested objects
              */
-            resultsField: "results",
+            resultsField: 'results',
 
             /**
              * A custom CSS class to add to a selected item
              */
-            selectionCls: "",
+            selectionCls: '',
 
             /**
              * An optional element replacement in which the selection is rendered
@@ -288,7 +288,7 @@
             /**
              * Where the selected items will be displayed. Only 'right', 'bottom' and 'inner' are valid values
              */
-            selectionPosition: "inner",
+            selectionPosition: 'inner',
 
             /**
              * A function used to define how the items will be presented in the tag list
@@ -304,7 +304,7 @@
             /**
              * Direction used for sorting. Only 'asc' and 'desc' are valid values
              */
-            sortDir: "asc",
+            sortDir: 'asc',
 
             /**
              * name of JSON object property for local result sorting.
@@ -320,7 +320,7 @@
             /**
              * Custom style added to the component container.
              */
-            style: "",
+            style: '',
 
             /**
              * If set to true, the combo will expand / collapse when clicked upon
@@ -355,7 +355,7 @@
             /**
              * name of JSON object property that represents its underlying value
              */
-            valueField: "id",
+            valueField: 'id',
 
             /**
              * regular expression to validate the values against
@@ -396,7 +396,7 @@
                     self._renderSelection();
                     this.empty();
                     if (isSilent !== true) {
-                        $(this).trigger("selectionchange", [
+                        $(this).trigger('selectionchange', [
                             this,
                             this.getSelection()
                         ]);
@@ -404,9 +404,9 @@
                 }
             }
             this.input.attr(
-                "placeholder",
-                cfg.selectionPosition === "inner" && this.getValue().length > 0
-                    ? ""
+                'placeholder',
+                cfg.selectionPosition === 'inner' && this.getValue().length > 0
+                    ? ''
                     : cfg.placeholder
             );
         };
@@ -426,7 +426,7 @@
             if (cfg.expanded === true) {
                 this.combobox.detach();
                 cfg.expanded = false;
-                $(this).trigger("collapse", [this]);
+                $(this).trigger('collapse', [this]);
             }
         };
 
@@ -434,25 +434,25 @@
          * Set the component in a disabled state.
          */
         this.disable = function() {
-            this.container.addClass("ms-ctn-disabled");
+            this.container.addClass('ms-ctn-disabled');
             cfg.disabled = true;
-            ms.input.attr("disabled", true);
+            ms.input.attr('disabled', true);
         };
 
         /**
          * Empties out the combo user text
          */
         this.empty = function() {
-            this.input.val("");
+            this.input.val('');
         };
 
         /**
          * Set the component in a enable state.
          */
         this.enable = function() {
-            this.container.removeClass("ms-ctn-disabled");
+            this.container.removeClass('ms-ctn-disabled');
             cfg.disabled = false;
-            ms.input.attr("disabled", false);
+            ms.input.attr('disabled', false);
         };
 
         /**
@@ -467,7 +467,7 @@
                 this.combobox.appendTo(this.container);
                 self._processSuggestions();
                 cfg.expanded = true;
-                $(this).trigger("expand", [this]);
+                $(this).trigger('expand', [this]);
             }
         };
 
@@ -551,7 +551,7 @@
             if (valuechanged === true) {
                 self._renderSelection();
                 if (isSilent !== true) {
-                    $(this).trigger("selectionchange", [
+                    $(this).trigger('selectionchange', [
                         this,
                         this.getSelection()
                     ]);
@@ -564,9 +564,9 @@
                 }
             }
             this.input.attr(
-                "placeholder",
-                cfg.selectionPosition === "inner" && this.getValue().length > 0
-                    ? ""
+                'placeholder',
+                cfg.selectionPosition === 'inner' && this.getValue().length > 0
+                    ? ''
                     : cfg.placeholder
             );
         };
@@ -594,7 +594,7 @@
         this.setName = function(name) {
             cfg.name = name;
             if (name) {
-                cfg.name += name.indexOf("[]") > 0 ? "" : "[]";
+                cfg.name += name.indexOf('[]') > 0 ? '' : '[]';
             }
             if (ms._valueContainer) {
                 $.each(ms._valueContainer.children(), function(i, el) {
@@ -630,7 +630,7 @@
                     }
                 });
                 if (!found) {
-                    if (typeof value === "object") {
+                    if (typeof value === 'object') {
                         items.push(value);
                     } else {
                         var json = {};
@@ -691,14 +691,14 @@
                 } else {
                     for (var grpName in _groups) {
                         nbGroups += 1;
-                        $("<div/>", {
-                            class: "ms-res-group",
+                        $('<div/>', {
+                            class: 'ms-res-group',
                             html: grpName
                         }).appendTo(ms.combobox);
                         self._renderComboItems(_groups[grpName].items, true);
                     }
                     var _groupItemHeight = ms.combobox
-                        .find(".ms-res-group")
+                        .find('.ms-res-group')
                         .outerHeight();
                     if (_groupItemHeight !== null) {
                         var tmpResHeight = nbGroups * _groupItemHeight;
@@ -724,18 +724,18 @@
                 if (data.length === 1 && cfg.autoSelect === true) {
                     ms.combobox
                         .children()
-                        .filter(":not(.ms-res-item-disabled):last")
-                        .addClass("ms-res-item-active");
+                        .filter(':not(.ms-res-item-disabled):last')
+                        .addClass('ms-res-item-active');
                 }
 
                 if (cfg.selectFirst === true) {
                     ms.combobox
                         .children()
-                        .filter(":not(.ms-res-item-disabled):first")
-                        .addClass("ms-res-item-active");
+                        .filter(':not(.ms-res-item-disabled):first')
+                        .addClass('ms-res-item-active');
                 }
 
-                if (data.length === 0 && ms.getRawValue() !== "") {
+                if (data.length === 0 && ms.getRawValue() !== '') {
                     var noSuggestionText = cfg.noSuggestionText.replace(
                         /\{\{.*\}\}/,
                         ms.input.val()
@@ -779,35 +779,35 @@
 
                 //escape special regex characters
                 var specialCharacters = [
-                    "^",
-                    "$",
-                    "*",
-                    "+",
-                    "?",
-                    ".",
-                    "(",
-                    ")",
-                    ":",
-                    "!",
-                    "|",
-                    "{",
-                    "}",
-                    "[",
-                    "]"
+                    '^',
+                    '$',
+                    '*',
+                    '+',
+                    '?',
+                    '.',
+                    '(',
+                    ')',
+                    ':',
+                    '!',
+                    '|',
+                    '{',
+                    '}',
+                    '[',
+                    ']'
                 ];
 
                 $.each(specialCharacters, function(index, value) {
-                    q = q.replace(value, "\\" + value);
+                    q = q.replace(value, '\\' + value);
                 });
 
                 if (q.length === 0) {
                     return html; // nothing entered as input
                 }
 
-                var glob = cfg.matchCase === true ? "g" : "gi";
+                var glob = cfg.matchCase === true ? 'g' : 'gi';
                 return html.replace(
-                    new RegExp("(" + q + ")(?!([^<]+)?>)", glob),
-                    "<em>$1</em>"
+                    new RegExp('(' + q + ')(?!([^<]+)?>)', glob),
+                    '<em>$1</em>'
                 );
             },
 
@@ -822,20 +822,20 @@
                 }
                 var list, start, active, scrollPos;
                 list = ms.combobox.find(
-                    ".ms-res-item:not(.ms-res-item-disabled)"
+                    '.ms-res-item:not(.ms-res-item-disabled)'
                 );
-                if (dir === "down") {
+                if (dir === 'down') {
                     start = list.eq(0);
                 } else {
-                    start = list.filter(":last");
+                    start = list.filter(':last');
                 }
                 active = ms.combobox.find(
-                    ".ms-res-item-active:not(.ms-res-item-disabled):first"
+                    '.ms-res-item-active:not(.ms-res-item-disabled):first'
                 );
                 if (active.length > 0) {
-                    if (dir === "down") {
+                    if (dir === 'down') {
                         start = active
-                            .nextAll(".ms-res-item:not(.ms-res-item-disabled)")
+                            .nextAll('.ms-res-item:not(.ms-res-item-disabled)')
                             .first();
                         if (start.length === 0) {
                             start = list.eq(0);
@@ -850,10 +850,10 @@
                         }
                     } else {
                         start = active
-                            .prevAll(".ms-res-item:not(.ms-res-item-disabled)")
+                            .prevAll('.ms-res-item:not(.ms-res-item-disabled)')
                             .first();
                         if (start.length === 0) {
-                            start = list.filter(":last");
+                            start = list.filter(':last');
                             ms.combobox.scrollTop(
                                 _comboItemHeight * list.length
                             );
@@ -865,8 +865,8 @@
                         }
                     }
                 }
-                list.removeClass("ms-res-item-active");
-                start.addClass("ms-res-item-active");
+                list.removeClass('ms-res-item-active');
+                start.addClass('ms-res-item-active');
             },
 
             /**
@@ -877,12 +877,12 @@
                 var json = null,
                     data = source || cfg.data;
                 if (data !== null) {
-                    if (typeof data === "function") {
+                    if (typeof data === 'function') {
                         data = data.call(ms, ms.getRawValue());
                     }
-                    if (typeof data === "string") {
+                    if (typeof data === 'string') {
                         // get results from ajax
-                        $(ms).trigger("beforeload", [ms]);
+                        $(ms).trigger('beforeload', [ms]);
                         var queryParams = {};
                         queryParams[cfg.queryParam] = ms.input.val();
                         var params = $.extend(queryParams, cfg.dataUrlParams);
@@ -895,15 +895,15 @@
                                     beforeSend: cfg.beforeSend,
                                     success: function(asyncData) {
                                         json =
-                                            typeof asyncData === "string"
+                                            typeof asyncData === 'string'
                                                 ? JSON.parse(asyncData)
                                                 : asyncData;
                                         self._processSuggestions(json);
-                                        $(ms).trigger("load", [ms, json]);
+                                        $(ms).trigger('load', [ms, json]);
                                         if (self._asyncValues) {
                                             ms.setValue(
                                                 typeof self._asyncValues ===
-                                                    "string"
+                                                    'string'
                                                     ? JSON.parse(
                                                           self._asyncValues
                                                       )
@@ -914,7 +914,7 @@
                                         }
                                     },
                                     error: function() {
-                                        throw "Could not reach server";
+                                        throw 'Could not reach server';
                                     }
                                 },
                                 cfg.ajaxConfig
@@ -923,7 +923,7 @@
                         return;
                     } else {
                         // results from local array
-                        if (data.length > 0 && typeof data[0] === "string") {
+                        if (data.length > 0 && typeof data[0] === 'string') {
                             // results from array of strings
                             _cbData = self._getEntriesFromStringArray(data);
                         } else {
@@ -932,7 +932,7 @@
                         }
                     }
                     var sortedData =
-                        cfg.mode === "remote"
+                        cfg.mode === 'remote'
                             ? _cbData
                             : self._sortAndTrim(_cbData);
                     self._displaySuggestions(self._group(sortedData));
@@ -946,34 +946,34 @@
             _render: function(el) {
                 ms.setName(cfg.name); // make sure the form name is correct
                 // holds the main div, will relay the focus events to the contained input element.
-                ms.container = $("<div/>", {
+                ms.container = $('<div/>', {
                     class:
-                        "ms-ctn form-control " +
-                        (cfg.resultAsString ? "ms-as-string " : "") +
+                        'ms-ctn form-control ' +
+                        (cfg.resultAsString ? 'ms-as-string ' : '') +
                         cfg.cls +
-                        ($(el).hasClass("input-lg") ? " input-lg" : "") +
-                        ($(el).hasClass("input-sm") ? " input-sm" : "") +
-                        (cfg.disabled === true ? " ms-ctn-disabled" : "") +
-                        (cfg.editable === true ? "" : " ms-ctn-readonly") +
-                        (cfg.hideTrigger === false ? "" : " ms-no-trigger"),
+                        ($(el).hasClass('input-lg') ? ' input-lg' : '') +
+                        ($(el).hasClass('input-sm') ? ' input-sm' : '') +
+                        (cfg.disabled === true ? ' ms-ctn-disabled' : '') +
+                        (cfg.editable === true ? '' : ' ms-ctn-readonly') +
+                        (cfg.hideTrigger === false ? '' : ' ms-no-trigger'),
                     style: cfg.style,
                     id: cfg.id
                 });
-                ms.container.on("focus", $.proxy(handlers._onFocus, this));
-                ms.container.on("blur", $.proxy(handlers._onBlur, this));
-                ms.container.on("keydown", $.proxy(handlers._onKeyDown, this));
-                ms.container.on("keyup", $.proxy(handlers._onKeyUp, this));
+                ms.container.on('focus', $.proxy(handlers._onFocus, this));
+                ms.container.on('blur', $.proxy(handlers._onBlur, this));
+                ms.container.on('keydown', $.proxy(handlers._onKeyDown, this));
+                ms.container.on('keyup', $.proxy(handlers._onKeyUp, this));
 
                 // holds the input field
                 ms.input = $(
-                    "<input/>",
+                    '<input/>',
                     $.extend(
                         {
-                            type: "text",
+                            type: 'text',
                             class:
                                 cfg.editable === true
-                                    ? ""
-                                    : " ms-input-readonly",
+                                    ? ''
+                                    : ' ms-input-readonly',
                             readonly: !cfg.editable,
                             placeholder: cfg.placeholder,
                             disabled: cfg.disabled
@@ -982,41 +982,41 @@
                     )
                 );
 
-                ms.input.on("focus", $.proxy(handlers._onInputFocus, this));
-                ms.input.on("click", $.proxy(handlers._onInputClick, this));
+                ms.input.on('focus', $.proxy(handlers._onInputFocus, this));
+                ms.input.on('click', $.proxy(handlers._onInputClick, this));
 
                 // holds the suggestions. will always be placed on focus
-                ms.combobox = $("<div/>", {
-                    class: "ms-res-ctn"
+                ms.combobox = $('<div/>', {
+                    class: 'ms-res-ctn'
                 }).height(cfg.maxDropHeight);
 
                 // bind the onclick and mouseover using delegated events (needs jQuery >= 1.7)
                 ms.combobox.on(
-                    "click",
-                    "div.ms-res-item",
+                    'click',
+                    'div.ms-res-item',
                     $.proxy(handlers._onComboItemSelected, this)
                 );
                 ms.combobox.on(
-                    "mouseover",
-                    "div.ms-res-item",
+                    'mouseover',
+                    'div.ms-res-item',
                     $.proxy(handlers._onComboItemMouseOver, this)
                 );
 
                 if (cfg.selectionContainer) {
                     ms.selectionContainer = cfg.selectionContainer;
-                    $(ms.selectionContainer).addClass("ms-sel-ctn");
+                    $(ms.selectionContainer).addClass('ms-sel-ctn');
                 } else {
-                    ms.selectionContainer = $("<div/>", {
-                        class: "ms-sel-ctn"
+                    ms.selectionContainer = $('<div/>', {
+                        class: 'ms-sel-ctn'
                     });
                 }
                 ms.selectionContainer.on(
-                    "click",
+                    'click',
                     $.proxy(handlers._onFocus, this)
                 );
 
                 if (
-                    cfg.selectionPosition === "inner" &&
+                    cfg.selectionPosition === 'inner' &&
                     !cfg.selectionContainer
                 ) {
                     ms.selectionContainer.append(ms.input);
@@ -1024,8 +1024,8 @@
                     ms.container.append(ms.input);
                 }
 
-                ms.helper = $("<span/>", {
-                    class: "ms-helper " + cfg.infoMsgCls
+                ms.helper = $('<span/>', {
+                    class: 'ms-helper ' + cfg.infoMsgCls
                 });
                 self._updateHelper();
                 ms.container.append(ms.helper);
@@ -1035,18 +1035,18 @@
 
                 if (!cfg.selectionContainer) {
                     switch (cfg.selectionPosition) {
-                        case "bottom":
+                        case 'bottom':
                             ms.selectionContainer.insertAfter(ms.container);
                             if (cfg.selectionStacked === true) {
                                 ms.selectionContainer.width(
                                     ms.container.width()
                                 );
-                                ms.selectionContainer.addClass("ms-stacked");
+                                ms.selectionContainer.addClass('ms-stacked');
                             }
                             break;
-                        case "right":
+                        case 'right':
                             ms.selectionContainer.insertAfter(ms.container);
-                            ms.container.css("float", "left");
+                            ms.container.css('float', 'left');
                             break;
                         default:
                             ms.container.append(ms.selectionContainer);
@@ -1056,25 +1056,25 @@
 
                 // holds the trigger on the right side
                 if (cfg.hideTrigger === false) {
-                    ms.trigger = $("<div/>", {
-                        class: "ms-trigger",
+                    ms.trigger = $('<div/>', {
+                        class: 'ms-trigger',
                         html: '<div class="ms-trigger-ico"></div>'
                     });
                     ms.trigger.on(
-                        "click",
+                        'click',
                         $.proxy(handlers._onTriggerClick, this)
                     );
                     ms.container.append(ms.trigger);
                 }
 
                 $(window).on(
-                    "resize",
+                    'resize',
                     $.proxy(handlers._onWindowResized, this)
                 );
 
                 // do not perform an initial call if we are using ajax unless we have initial values
                 if (cfg.value !== null || cfg.data !== null) {
-                    if (typeof cfg.data === "string") {
+                    if (typeof cfg.data === 'string') {
                         self._asyncValues = cfg.value;
                         self._processSuggestions();
                     } else {
@@ -1086,12 +1086,12 @@
                     }
                 }
 
-                $("body").on("click", function(e) {
+                $('body').on('click', function(e) {
                     if (
-                        ms.container.hasClass("ms-ctn-focus") &&
+                        ms.container.hasClass('ms-ctn-focus') &&
                         ms.container.has(e.target).length === 0 &&
-                        e.target.className.indexOf("ms-res-item") < 0 &&
-                        e.target.className.indexOf("ms-close-btn") < 0 &&
+                        e.target.className.indexOf('ms-res-item') < 0 &&
+                        e.target.className.indexOf('ms-close-btn') < 0 &&
                         ms.container[0] !== e.target
                     ) {
                         handlers._onBlur();
@@ -1110,7 +1110,7 @@
              */
             _renderComboItems: function(items, isGrouped) {
                 var ref = this,
-                    html = "";
+                    html = '';
                 $.each(items, function(index, value) {
                     var displayed =
                         cfg.renderer !== null
@@ -1119,27 +1119,27 @@
                     var disabled =
                         cfg.disabledField !== null &&
                         value[cfg.disabledField] === true;
-                    var resultItemEl = $("<div/>", {
+                    var resultItemEl = $('<div/>', {
                         class:
-                            "ms-res-item " +
-                            (isGrouped ? "ms-res-item-grouped " : "") +
-                            (disabled ? "ms-res-item-disabled " : "") +
+                            'ms-res-item ' +
+                            (isGrouped ? 'ms-res-item-grouped ' : '') +
+                            (disabled ? 'ms-res-item-disabled ' : '') +
                             (index % 2 === 1 && cfg.useZebraStyle === true
-                                ? "ms-res-odd"
-                                : ""),
+                                ? 'ms-res-odd'
+                                : ''),
                         html:
                             cfg.highlight === true
                                 ? self._highlightSuggestion(displayed)
                                 : displayed,
-                        "data-json": JSON.stringify(value)
+                        'data-json': JSON.stringify(value)
                     });
-                    html += $("<div/>")
+                    html += $('<div/>')
                         .append(resultItemEl)
                         .html();
                 });
                 ms.combobox.append(html);
                 _comboItemHeight = ms.combobox
-                    .find(".ms-res-item:first")
+                    .find('.ms-res-item:first')
                     .outerHeight();
             },
 
@@ -1154,7 +1154,7 @@
                     items = [],
                     asText = cfg.resultAsString === true && !_hasFocus;
 
-                ms.selectionContainer.find(".ms-sel-item").remove();
+                ms.selectionContainer.find('.ms-sel-item').remove();
                 if (ms._valueContainer !== undefined) {
                     ms._valueContainer.remove();
                 }
@@ -1170,38 +1170,38 @@
                     var validCls = self._validateSingleItem(
                         value[cfg.displayField]
                     )
-                        ? ""
-                        : " ms-sel-invalid";
+                        ? ''
+                        : ' ms-sel-invalid';
 
                     // tag representing selected value
                     if (asText === true) {
-                        selectedItemEl = $("<div/>", {
+                        selectedItemEl = $('<div/>', {
                             class:
-                                "ms-sel-item ms-sel-text " +
+                                'ms-sel-item ms-sel-text ' +
                                 cfg.selectionCls +
                                 validCls,
                             html:
                                 selectedItemHtml +
                                 (index === _selection.length - 1
-                                    ? ""
+                                    ? ''
                                     : cfg.resultAsStringDelimiter)
-                        }).data("json", value);
+                        }).data('json', value);
                     } else {
-                        selectedItemEl = $("<div/>", {
-                            class: "ms-sel-item " + cfg.selectionCls + validCls,
+                        selectedItemEl = $('<div/>', {
+                            class: 'ms-sel-item ' + cfg.selectionCls + validCls,
                             html: selectedItemHtml
-                        }).data("json", value);
+                        }).data('json', value);
 
                         if (cfg.disabled === false) {
                             // small cross img
-                            delItemEl = $("<span/>", {
-                                class: "ms-close-btn"
+                            delItemEl = $('<span/>', {
+                                class: 'ms-close-btn'
                             })
-                                .data("json", value)
+                                .data('json', value)
                                 .appendTo(selectedItemEl);
 
                             delItemEl.on(
-                                "click",
+                                'click',
                                 $.proxy(handlers._onTagTriggerClick, ref)
                             );
                         }
@@ -1212,12 +1212,12 @@
                 ms.selectionContainer.prepend(items);
 
                 // store the values, behaviour of multiple select
-                ms._valueContainer = $("<div/>", {
-                    style: "display: none;"
+                ms._valueContainer = $('<div/>', {
+                    style: 'display: none;'
                 });
                 $.each(ms.getValue(), function(i, val) {
-                    var el = $("<input/>", {
-                        type: "hidden",
+                    var el = $('<input/>', {
+                        type: 'hidden',
                         name: cfg.name,
                         value: val
                     });
@@ -1226,7 +1226,7 @@
                 ms._valueContainer.appendTo(ms.selectionContainer);
 
                 if (
-                    cfg.selectionPosition === "inner" &&
+                    cfg.selectionPosition === 'inner' &&
                     !cfg.selectionContainer
                 ) {
                     ms.input.width(0);
@@ -1255,8 +1255,8 @@
                 if (cfg.maxSelection === 1) {
                     _selection = [];
                 }
-                ms.addToSelection(item.data("json"));
-                item.removeClass("ms-res-item-active");
+                ms.addToSelection(item.data('json'));
+                item.removeClass('ms-res-item-active');
                 if (
                     cfg.expandOnFocus === false ||
                     _selection.length === cfg.maxSelection
@@ -1264,7 +1264,7 @@
                     ms.collapse();
                 }
                 if (!_hasFocus) {
-                    ms.input.trigger("focus");
+                    ms.input.trigger('focus');
                 } else if (_hasFocus && (cfg.expandOnFocus || _ctrlDown)) {
                     self._processSuggestions();
                     if (_ctrlDown) {
@@ -1317,10 +1317,10 @@
                 if (cfg.sortOrder !== null) {
                     newSuggestions.sort(function(a, b) {
                         if (a[cfg.sortOrder] < b[cfg.sortOrder]) {
-                            return cfg.sortDir === "asc" ? -1 : 1;
+                            return cfg.sortDir === 'asc' ? -1 : 1;
                         }
                         if (a[cfg.sortOrder] > b[cfg.sortOrder]) {
-                            return cfg.sortDir === "asc" ? 1 : -1;
+                            return cfg.sortDir === 'asc' ? 1 : -1;
                         }
                         return 0;
                     });
@@ -1342,11 +1342,11 @@
 
                     $.each(data, function(index, value) {
                         var props =
-                            cfg.groupBy.indexOf(".") > -1
-                                ? cfg.groupBy.split(".")
+                            cfg.groupBy.indexOf('.') > -1
+                                ? cfg.groupBy.split('.')
                                 : cfg.groupBy;
                         var prop = value[cfg.groupBy];
-                        if (typeof props != "string") {
+                        if (typeof props != 'string') {
                             prop = value;
                             while (props.length > 0) {
                                 prop = prop[props.shift()];
@@ -1368,7 +1368,7 @@
              */
             _updateHelper: function(html) {
                 ms.helper.html(html);
-                if (!ms.helper.is(":visible")) {
+                if (!ms.helper.is(':visible')) {
                     ms.helper.fadeIn();
                 }
             },
@@ -1382,19 +1382,19 @@
                     return cfg.vregex.test(value);
                 } else if (cfg.vtype !== null) {
                     switch (cfg.vtype) {
-                        case "alpha":
+                        case 'alpha':
                             return /^[a-zA-Z_]+$/.test(value);
-                        case "alphanum":
+                        case 'alphanum':
                             return /^[a-zA-Z0-9_]+$/.test(value);
-                        case "email":
+                        case 'email':
                             return /^(\w+)([\-+.][\w]+)*@(\w[\-\w]*\.){1,5}([A-Za-z]){2,6}$/.test(
                                 value
                             );
-                        case "url":
+                        case 'url':
                             return /(((^https?)|(^ftp)):\/\/([\-\w]+\.)+\w{2,3}(\/[%\-\w]+(\.\w{2,})?)*(([\w\-\.\?\\\/+@&#;`~=%!]*)(\.\w{2,})?)*\/?)/i.test(
                                 value
                             );
-                        case "ipaddress":
+                        case 'ipaddress':
                             return /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(
                                 value
                             );
@@ -1410,10 +1410,10 @@
              * @private
              */
             _onBlur: function() {
-                ms.container.removeClass("ms-ctn-focus");
+                ms.container.removeClass('ms-ctn-focus');
                 ms.collapse();
                 _hasFocus = false;
-                if (ms.getRawValue() !== "" && cfg.allowFreeEntries === true) {
+                if (ms.getRawValue() !== '' && cfg.allowFreeEntries === true) {
                     var obj = {};
                     obj[cfg.displayField] = obj[cfg.valueField] = $.trim(
                         ms.getRawValue()
@@ -1425,14 +1425,14 @@
                 if (ms.isValid() === false) {
                     ms.container.addClass(cfg.invalidCls);
                 } else if (
-                    ms.input.val() !== "" &&
+                    ms.input.val() !== '' &&
                     cfg.allowFreeEntries === false
                 ) {
                     ms.empty();
-                    self._updateHelper("");
+                    self._updateHelper('');
                 }
 
-                $(ms).trigger("blur", [ms]);
+                $(ms).trigger('blur', [ms]);
             },
 
             /**
@@ -1442,9 +1442,9 @@
              */
             _onComboItemMouseOver: function(e) {
                 var target = $(e.currentTarget);
-                if (!target.hasClass("ms-res-item-disabled")) {
-                    ms.combobox.children().removeClass("ms-res-item-active");
-                    target.addClass("ms-res-item-active");
+                if (!target.hasClass('ms-res-item-disabled')) {
+                    ms.combobox.children().removeClass('ms-res-item-active');
+                    target.addClass('ms-res-item-active');
                 }
             },
 
@@ -1455,7 +1455,7 @@
              */
             _onComboItemSelected: function(e) {
                 var target = $(e.currentTarget);
-                if (!target.hasClass("ms-res-item-disabled")) {
+                if (!target.hasClass('ms-res-item-disabled')) {
                     self._selectItem($(e.currentTarget));
                 }
             },
@@ -1465,7 +1465,7 @@
              * @private
              */
             _onFocus: function() {
-                ms.input.trigger("focus");
+                ms.input.trigger('focus');
             },
 
             /**
@@ -1491,7 +1491,7 @@
             _onInputFocus: function() {
                 if (ms.isDisabled() === false && !_hasFocus) {
                     _hasFocus = true;
-                    ms.container.addClass("ms-ctn-focus");
+                    ms.container.addClass('ms-ctn-focus');
                     ms.container.removeClass(cfg.invalidCls);
 
                     var curLength = ms.getRawValue().length;
@@ -1516,7 +1516,7 @@
                     }
 
                     self._renderSelection();
-                    $(ms).trigger("focus", [ms]);
+                    $(ms).trigger('focus', [ms]);
                 }
             },
 
@@ -1530,10 +1530,10 @@
             _onKeyDown: function(e) {
                 // check how tab should be handled
                 var active = ms.combobox.find(
-                        ".ms-res-item-active:not(.ms-res-item-disabled):first"
+                        '.ms-res-item-active:not(.ms-res-item-disabled):first'
                     ),
                     freeInput = ms.input.val();
-                $(ms).trigger("keydown", [ms, e]);
+                $(ms).trigger('keydown', [ms, e]);
 
                 if (
                     e.keyCode === KEYCODES.TAB &&
@@ -1550,22 +1550,22 @@
                         if (
                             freeInput.length === 0 &&
                             ms.getSelection().length > 0 &&
-                            cfg.selectionPosition === "inner"
+                            cfg.selectionPosition === 'inner'
                         ) {
                             _selection.pop();
                             self._renderSelection();
-                            $(ms).trigger("selectionchange", [
+                            $(ms).trigger('selectionchange', [
                                 ms,
                                 ms.getSelection()
                             ]);
                             ms.input.attr(
-                                "placeholder",
-                                cfg.selectionPosition === "inner" &&
+                                'placeholder',
+                                cfg.selectionPosition === 'inner' &&
                                     ms.getValue().length > 0
-                                    ? ""
+                                    ? ''
                                     : cfg.placeholder
                             );
-                            ms.input.trigger("focus");
+                            ms.input.trigger('focus');
                             e.preventDefault();
                         }
                         break;
@@ -1574,7 +1574,7 @@
                         e.preventDefault();
                         break;
                     case KEYCODES.ENTER:
-                        if (freeInput !== "" || cfg.expanded) {
+                        if (freeInput !== '' || cfg.expanded) {
                             e.preventDefault();
                         }
                         break;
@@ -1588,11 +1588,11 @@
                         break;
                     case KEYCODES.DOWNARROW:
                         e.preventDefault();
-                        self._moveSelectedRow("down");
+                        self._moveSelectedRow('down');
                         break;
                     case KEYCODES.UPARROW:
                         e.preventDefault();
-                        self._moveSelectedRow("up");
+                        self._moveSelectedRow('up');
                         break;
                     default:
                         if (_selection.length === cfg.maxSelection) {
@@ -1617,7 +1617,7 @@
                     selected,
                     obj = {};
 
-                $(ms).trigger("keyup", [ms, e]);
+                $(ms).trigger('keyup', [ms, e]);
 
                 clearTimeout(_timer);
 
@@ -1651,7 +1651,7 @@
                             if (cfg.expanded === true) {
                                 // if a selection is performed, select it and reset field
                                 selected = ms.combobox.find(
-                                    ".ms-res-item-active:not(.ms-res-item-disabled):first"
+                                    '.ms-res-item-active:not(.ms-res-item-disabled):first'
                                 );
                                 if (selected.length > 0) {
                                     self._selectItem(selected);
@@ -1668,7 +1668,7 @@
                                 ] = $.trim(freeInput);
                                 ms.addToSelection(obj);
                                 ms.collapse(); // reset combo suggestions
-                                ms.input.trigger("focus");
+                                ms.input.trigger('focus');
                             }
                             break;
                         }
@@ -1727,7 +1727,7 @@
              * @private
              */
             _onTagTriggerClick: function(e) {
-                ms.removeFromSelection($(e.currentTarget).data("json"));
+                ms.removeFromSelection($(e.currentTarget).data('json'));
             },
 
             /**
@@ -1742,13 +1742,13 @@
                         _selection.length === cfg.maxSelection
                     )
                 ) {
-                    $(ms).trigger("triggerclick", [ms]);
+                    $(ms).trigger('triggerclick', [ms]);
                     if (cfg.expanded === true) {
                         ms.collapse();
                     } else {
                         var curLength = ms.getRawValue().length;
                         if (curLength >= cfg.minChars) {
-                            ms.input.trigger("focus");
+                            ms.input.trigger('focus');
                             ms.expand();
                         } else {
                             self._updateHelper(
@@ -1780,8 +1780,8 @@
     $.fn.magicSuggest = function(options) {
         var obj = $(this);
 
-        if (obj.length === 1 && obj.data("magicSuggest")) {
-            return obj.data("magicSuggest");
+        if (obj.length === 1 && obj.data('magicSuggest')) {
+            return obj.data('magicSuggest');
         }
 
         obj.each(function(i) {
@@ -1789,24 +1789,24 @@
             var cntr = $(this);
 
             // Return early if this element already has a plugin instance
-            if (cntr.data("magicSuggest")) {
+            if (cntr.data('magicSuggest')) {
                 return;
             }
 
-            if (this.nodeName.toLowerCase() === "select") {
+            if (this.nodeName.toLowerCase() === 'select') {
                 // rendering from select
                 options.data = [];
                 options.value = [];
                 $.each(this.children, function(index, child) {
                     if (
                         child.nodeName &&
-                        child.nodeName.toLowerCase() === "option"
+                        child.nodeName.toLowerCase() === 'option'
                     ) {
                         options.data.push({
                             id: child.value,
                             name: child.text
                         });
-                        if ($(child).attr("selected")) {
+                        if ($(child).attr('selected')) {
                             options.value.push(child.value);
                         }
                     }
@@ -1817,7 +1817,7 @@
             // set values from DOM container element
             $.each(this.attributes, function(i, att) {
                 def[att.name] =
-                    att.name === "value" && att.value !== ""
+                    att.name === 'value' && att.value !== ''
                         ? JSON.parse(att.value)
                         : att.value;
             });
@@ -1826,12 +1826,12 @@
                 this,
                 $.extend([], $.fn.magicSuggest.defaults, options, def)
             );
-            cntr.data("magicSuggest", field);
-            field.container.data("magicSuggest", field);
+            cntr.data('magicSuggest', field);
+            field.container.data('magicSuggest', field);
         });
 
         if (obj.length === 1) {
-            return obj.data("magicSuggest");
+            return obj.data('magicSuggest');
         }
         return obj;
     };

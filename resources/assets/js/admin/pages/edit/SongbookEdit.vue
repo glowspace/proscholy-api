@@ -173,13 +173,13 @@ a.as-link {
 </style>
 
 <script>
-import gql from "graphql-tag";
-import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
-import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
-import NumberInput from "Admin/components/NumberInput.vue";
+import gql from 'graphql-tag';
+import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
+import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
+import NumberInput from 'Admin/components/NumberInput.vue';
 
-import EditForm from "./EditForm";
-import Songbook from "Admin/models/Songbook";
+import EditForm from './EditForm';
+import Songbook from 'Admin/models/Songbook';
 
 const FETCH_SONG_LYRICS = gql`
     query {
@@ -212,9 +212,9 @@ export default {
             },
             is_deleted: false,
             records_headers: [
-                { text: "Číslo", value: "number" },
-                { text: "Píseň", value: "name" },
-                { text: "Akce", value: "action" }
+                { text: 'Číslo', value: 'number' },
+                { text: 'Píseň', value: 'name' },
+                { text: 'Akce', value: 'action' }
             ],
             hide_empty: false,
             fragment: Songbook.fragment
@@ -281,18 +281,18 @@ export default {
                 .then(result => {
                     this.$validator.errors.clear();
                     this.$notify({
-                        title: "Úspěšně uloženo :)",
-                        text: "Zpěvník byl úspěšně uložen",
-                        type: "success"
+                        title: 'Úspěšně uloženo :)',
+                        text: 'Zpěvník byl úspěšně uložen',
+                        type: 'success'
                     });
                 })
                 .catch(error => {
                     if (error.graphQLErrors.length == 0) {
                         // unknown error happened
                         this.$notify({
-                            title: "Chyba při ukládání",
-                            text: "Zpěvník nebyl uložen",
-                            type: "error"
+                            title: 'Chyba při ukládání',
+                            text: 'Zpěvník nebyl uložen',
+                            type: 'error'
                         });
                         return;
                     }
@@ -303,9 +303,9 @@ export default {
 
         show() {
             var base_url = document
-                .querySelector("#baseUrl")
-                .getAttribute("value");
-            window.location.href = base_url + "/autor/" + this.model.id;
+                .querySelector('#baseUrl')
+                .getAttribute('value');
+            window.location.href = base_url + '/autor/' + this.model.id;
         },
 
         updateRecordItem(song_lyric, number) {
@@ -317,7 +317,7 @@ export default {
                     song_lyric: song_lyric
                 });
             } else {
-                this.$set(record, "song_lyric", song_lyric);
+                this.$set(record, 'song_lyric', song_lyric);
             }
         }
     }

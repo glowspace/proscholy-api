@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 // Query
 const fetch_items = gql`
@@ -35,7 +35,7 @@ const fetch_items = gql`
     }
 `;
 export default {
-    props: ["search-string"],
+    props: ['search-string'],
 
     // GraphQL client
     apollo: {

@@ -23,22 +23,22 @@
 
 <script>
 export default {
-    props: ["value"],
+    props: ['value'],
 
     data() {
         return {
             fontSizePercent: 100,
-            sl_doc: document.getElementById("song-lyrics"),
+            sl_doc: document.getElementById('song-lyrics'),
             sl_refresh_handler: null
         };
     },
 
     methods: {
         setFontSizePercent: function(val) {
-            let sl = document.getElementById("song-lyrics");
+            let sl = document.getElementById('song-lyrics');
 
             if (!sl.style.height) {
-                sl.style.height = sl.clientHeight + "px";
+                sl.style.height = sl.clientHeight + 'px';
             }
 
             if (this.sl_refresh_handler) {
@@ -51,7 +51,7 @@ export default {
 
             if (val > 70) {
                 this.fontSizePercent = val;
-                this.$emit("input", val);
+                this.$emit('input', val);
             }
         }
     }

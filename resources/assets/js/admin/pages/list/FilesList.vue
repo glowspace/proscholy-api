@@ -38,14 +38,14 @@
                                 {{
                                     props.item.song_lyric
                                         ? props.item.song_lyric.name
-                                        : "-"
+                                        : '-'
                                 }}
                             </td>
                             <td>
                                 {{
                                     props.item.authors
                                         .map(a => a.name)
-                                        .join(", ") || "-"
+                                        .join(', ') || '-'
                                 }}
                             </td>
                             <td>
@@ -72,9 +72,9 @@ input {
 }
 </style>
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-import removeDiacritics from "Admin/helpers/removeDiacritics";
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
 
 const fetch_items = gql`
     query FetchFiles($is_todo: Boolean) {
@@ -102,18 +102,18 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ["is-todo"],
+    props: ['is-todo'],
 
     data() {
         return {
             headers: [
-                { text: "Název", value: "public_name" },
-                { text: "Typ", value: "type_string" },
-                { text: "Píseň", value: "song_lyric" },
-                { text: "Autoři", value: "authors" },
-                { text: "Akce", value: "action" }
+                { text: 'Název', value: 'public_name' },
+                { text: 'Typ', value: 'type_string' },
+                { text: 'Píseň', value: 'song_lyric' },
+                { text: 'Autoři', value: 'authors' },
+                { text: 'Akce', value: 'action' }
             ],
-            search_string: ""
+            search_string: ''
         };
     },
 
@@ -133,7 +133,7 @@ export default {
 
     methods: {
         askForm(id) {
-            if (confirm("Opravdu chcete smazat daný záznam?")) {
+            if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteFile(id);
             }
         },
@@ -150,26 +150,26 @@ export default {
                     ]
                 })
                 .then(result => {
-                    console.log("uspesne vymazano");
+                    console.log('uspesne vymazano');
                 })
                 .catch(error => {
-                    console.log("error");
+                    console.log('error');
                 });
         },
 
         buildSearchIndex() {
             for (var item of this.files) {
-                const authors = item.authors.map(a => a.name).join(" ");
+                const authors = item.authors.map(a => a.name).join(' ');
                 const str = removeDiacritics(
                     [
                         item.public_name,
                         authors,
-                        item.song_lyric ? item.song_lyric.name : "",
+                        item.song_lyric ? item.song_lyric.name : '',
                         item.type_string
-                    ].join(" ")
+                    ].join(' ')
                 ).toLowerCase();
 
-                this.$set(item, "search_index", str);
+                this.$set(item, 'search_index', str);
             }
         },
 

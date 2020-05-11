@@ -163,8 +163,8 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import ScrollTrigger from "./ScrollTrigger";
+import gql from 'graphql-tag';
+import ScrollTrigger from './ScrollTrigger';
 
 // Query
 const fetch_items = gql`
@@ -229,12 +229,12 @@ const fetch_items = gql`
 
 export default {
     props: [
-        "search-string",
-        "selected-tags-dcnf",
-        "selected-songbooks",
-        "selected-tags",
-        "selected-languages",
-        "init"
+        'search-string',
+        'selected-tags-dcnf',
+        'selected-songbooks',
+        'selected-tags',
+        'selected-languages',
+        'init'
     ],
 
     components: { ScrollTrigger },
@@ -275,17 +275,17 @@ export default {
                         query: this.searchString,
 
                         fields: [
-                            "name^2",
-                            "lyrics",
-                            "authors",
-                            "_id^50",
-                            "songbook_records.sonbgook_number"
+                            'name^2',
+                            'lyrics',
+                            'authors',
+                            '_id^50',
+                            'songbook_records.sonbgook_number'
                         ]
                     }
                 });
             } else {
                 // no search keyword provided, so use the alphabetical sorting
-                sort.push("name_keyword");
+                sort.push('name_keyword');
             }
 
             for (let category_tags of Object.values(this.selectedTagsDcnf)) {
@@ -307,7 +307,7 @@ export default {
             if (Object.keys(this.selectedSongbooks).length) {
                 query.bool.filter.push({
                     terms: {
-                        "songbook_records.songbook_id": Object.keys(
+                        'songbook_records.songbook_id': Object.keys(
                             this.selectedSongbooks
                         )
                     }
@@ -370,7 +370,7 @@ export default {
         getSongNumber(song_lyric, getfirstPart) {
             if (this.preferred_songbook_id === null) {
                 if (getfirstPart) {
-                    return "";
+                    return '';
                 } else {
                     return song_lyric.id;
                 }
@@ -379,7 +379,7 @@ export default {
                     record => record.songbook.id === this.preferred_songbook_id
                 )[0];
                 if (getfirstPart) {
-                    return rec.songbook.shortcut + " ";
+                    return rec.songbook.shortcut + ' ';
                 } else {
                     return rec.number;
                 }
@@ -405,7 +405,7 @@ export default {
             // debounce waits 200ms for query refetching
             debounce: 200,
             result(result) {
-                this.$emit("query-loaded", null);
+                this.$emit('query-loaded', null);
                 this.enable_more =
                     result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
                 this.results_loaded = true;

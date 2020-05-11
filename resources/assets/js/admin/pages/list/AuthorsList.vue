@@ -65,10 +65,10 @@ input {
 >fetch_items
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-import removeDiacritics from "Admin/helpers/removeDiacritics";
-import CreateModel from "Admin/components/CreateModel.vue";
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
+import CreateModel from 'Admin/components/CreateModel.vue';
 
 const fetch_items = gql`
     query FetchAuthors {
@@ -89,7 +89,7 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ["is-todo"],
+    props: ['is-todo'],
 
     components: {
         CreateModel
@@ -98,11 +98,11 @@ export default {
     data() {
         return {
             headers: [
-                { text: "Jméno", value: "name" },
-                { text: "Typ", value: "type_string" },
-                { text: "Akce", value: "action" }
+                { text: 'Jméno', value: 'name' },
+                { text: 'Typ', value: 'type_string' },
+                { text: 'Akce', value: 'action' }
             ],
-            search_string: ""
+            search_string: ''
         };
     },
 
@@ -122,7 +122,7 @@ export default {
 
     methods: {
         askForm(id) {
-            if (confirm("Opravdu chcete smazat daný záznam?")) {
+            if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteAuthor(id);
             }
         },
@@ -140,13 +140,13 @@ export default {
                 })
                 .then(result => {
                     this.$notify({
-                        title: "Úspěšně vymazáno",
-                        text: "Autor byl úspěšně vymazán z databáze",
-                        type: "info"
+                        title: 'Úspěšně vymazáno',
+                        text: 'Autor byl úspěšně vymazán z databáze',
+                        type: 'info'
                     });
                 })
                 .catch(error => {
-                    console.log("error");
+                    console.log('error');
                 });
         },
 
@@ -154,10 +154,10 @@ export default {
             for (var item of this.authors) {
                 // const authors = item.authors.map(a => a.name).join(" ") || (item.has_anonymous_author ? "anonymni" : "");
                 const str = removeDiacritics(
-                    item.name + " " + item.type_string
+                    item.name + ' ' + item.type_string
                 ).toLowerCase();
 
-                this.$set(item, "search_index", str);
+                this.$set(item, 'search_index', str);
             }
         },
 

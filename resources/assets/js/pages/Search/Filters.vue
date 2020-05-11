@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 const fetch_items = gql`
     query {
@@ -146,7 +146,7 @@ const fetch_songbooks = gql`
 `;
 
 export default {
-    props: ["selected-tags", "selected-songbooks", "selected-languages"],
+    props: ['selected-tags', 'selected-songbooks', 'selected-languages'],
 
     data() {
         return {
@@ -154,19 +154,19 @@ export default {
             selected_songbooks: {},
             selected_languages: {},
             all_languages: {
-                cs: "čeština",
-                sk: "slovenština",
-                en: "angličtina",
-                la: "latina",
-                pl: "polština",
-                de: "němčina",
-                fr: "francouzština",
-                es: "španělština",
-                it: "italština",
-                sv: "svahilština",
-                he: "hebrejština",
-                cu: "staroslověnština",
-                mixed: "vícejazyčná píseň"
+                cs: 'čeština',
+                sk: 'slovenština',
+                en: 'angličtina',
+                la: 'latina',
+                pl: 'polština',
+                de: 'němčina',
+                fr: 'francouzština',
+                es: 'španělština',
+                it: 'italština',
+                sv: 'svahilština',
+                he: 'hebrejština',
+                cu: 'staroslověnština',
+                mixed: 'vícejazyčná píseň'
             }
         };
     },
@@ -198,8 +198,8 @@ export default {
             }
 
             // notify the parent that sth has changed
-            this.$emit("update:selected-tags", this.selected_tags);
-            this.$emit("input", null);
+            this.$emit('update:selected-tags', this.selected_tags);
+            this.$emit('input', null);
         },
 
         selectSongbook(songbook) {
@@ -210,8 +210,8 @@ export default {
             }
 
             // notify the parent that sth has changed
-            this.$emit("update:selected-songbooks", this.selected_songbooks);
-            this.$emit("input", null);
+            this.$emit('update:selected-songbooks', this.selected_songbooks);
+            this.$emit('input', null);
         },
 
         selectLanguage(language) {
@@ -222,8 +222,8 @@ export default {
             }
 
             // notify the parent that sth has changed
-            this.$emit("update:selected-languages", this.selected_languages);
-            this.$emit("input", null);
+            this.$emit('update:selected-languages', this.selected_languages);
+            this.$emit('input', null);
         },
 
         isSelectedTag(tag) {
@@ -255,7 +255,7 @@ export default {
         $apollo: {
             loading(val, prev) {
                 if (val && !prev) {
-                    this.$emit("tags-loaded", null);
+                    this.$emit('tags-loaded', null);
                 }
             }
         },
@@ -266,7 +266,7 @@ export default {
 
             // ok this needs to be here because otherwise the applyStateChange method on Search.vue
             // doesn't work properly when updating only the selectedTags property
-            this.$emit("update:selected-tags-dcnf", this.getSelectedTagsDcnf());
+            this.$emit('update:selected-tags-dcnf', this.getSelectedTagsDcnf());
         },
 
         selectedSongbooks(val, prev) {

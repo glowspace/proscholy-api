@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
+import gql, { disableFragmentWarnings } from 'graphql-tag';
 
 const DELETE_MODEL_DATABASE = gql`
     mutation($input: DeleteModelInput!) {
@@ -29,7 +29,7 @@ const DELETE_MODEL_DATABASE = gql`
 `;
 
 export default {
-    props: ["class-name", "model-id", "delete-msg"],
+    props: ['class-name', 'model-id', 'delete-msg'],
 
     data() {
         return {
@@ -53,20 +53,20 @@ export default {
                 })
                 .then(result => {
                     if (result.data.delete_model) {
-                        this.$emit("deleted", result.data.delete_model);
+                        this.$emit('deleted', result.data.delete_model);
                     } else {
-                        this.$emit("error", "Daná položka už byla vymazána");
+                        this.$emit('error', 'Daná položka už byla vymazána');
                     }
                 })
                 .catch(error => {
                     // error
-                    this.$emit("error", error);
+                    this.$emit('error', error);
                 });
         },
 
         onCancel() {
             this.dialog = false;
-            this.$emit("cancelled", this.modelId);
+            this.$emit('cancelled', this.modelId);
         },
 
         onConfirm() {

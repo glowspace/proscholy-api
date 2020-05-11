@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
+import gql, { disableFragmentWarnings } from 'graphql-tag';
 
 const CREATE_MODEL_MUTATION = gql`
     mutation($input: CreateModelInput!) {
@@ -32,11 +32,11 @@ const CREATE_MODEL_MUTATION = gql`
 `;
 
 export default {
-    props: ["class-name", "label", "success-msg", "force-edit"],
+    props: ['class-name', 'label', 'success-msg', 'force-edit'],
 
     data() {
         return {
-            attribute_value: ""
+            attribute_value: ''
         };
     },
 
@@ -54,17 +54,17 @@ export default {
                 })
                 .then(result => {
                     this.$notify({
-                        title: "Hotovo :)",
+                        title: 'Hotovo :)',
                         text: this.successMsg,
-                        type: "success"
+                        type: 'success'
                     });
 
                     if (redir) {
                         window.location.href =
                             result.data.create_model.edit_url;
                     } else {
-                        this.$emit("saved");
-                        this.attribute_value = "";
+                        this.$emit('saved');
+                        this.attribute_value = '';
                     }
                 })
                 .catch(error => {
@@ -74,9 +74,9 @@ export default {
                     ) {
                         // unknown error happened
                         this.$notify({
-                            title: "Chyba při ukládání",
-                            text: "Položka nebyla uložena (" + error + ")",
-                            type: "error"
+                            title: 'Chyba při ukládání',
+                            text: 'Položka nebyla uložena (' + error + ')',
+                            type: 'error'
                         });
                         return;
                     }
@@ -94,7 +94,7 @@ export default {
     },
 
     $_veeValidate: {
-        validator: "new"
+        validator: 'new'
     }
 };
 </script>

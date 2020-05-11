@@ -47,14 +47,14 @@
                                 {{
                                     props.item.song_lyric
                                         ? props.item.song_lyric.name
-                                        : "-"
+                                        : '-'
                                 }}
                             </td>
                             <td>
                                 {{
                                     props.item.authors
                                         .map(a => a.name)
-                                        .join(", ") || "-"
+                                        .join(', ') || '-'
                                 }}
                             </td>
                             <td>
@@ -80,10 +80,10 @@ input {
 </style>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-import removeDiacritics from "Admin/helpers/removeDiacritics";
-import CreateModel from "Admin/components/CreateModel.vue";
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
+import CreateModel from 'Admin/components/CreateModel.vue';
 
 const fetch_items = gql`
     query FetchExternals($is_todo: Boolean) {
@@ -110,7 +110,7 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ["is-todo"],
+    props: ['is-todo'],
 
     components: {
         CreateModel
@@ -119,13 +119,13 @@ export default {
     data() {
         return {
             headers: [
-                { text: "Adresa", value: "url" },
-                { text: "Typ", value: "type_string" },
-                { text: "Píseň", value: "song_lyric" },
-                { text: "Autoři", value: "authors" },
-                { text: "Akce", value: "action" }
+                { text: 'Adresa', value: 'url' },
+                { text: 'Typ', value: 'type_string' },
+                { text: 'Píseň', value: 'song_lyric' },
+                { text: 'Autoři', value: 'authors' },
+                { text: 'Akce', value: 'action' }
             ],
-            search_string: ""
+            search_string: ''
         };
     },
 
@@ -145,7 +145,7 @@ export default {
 
     methods: {
         askForm(id) {
-            if (confirm("Opravdu chcete smazat daný záznam?")) {
+            if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteExternal(id);
             }
         },
@@ -162,10 +162,10 @@ export default {
                     ]
                 })
                 .then(result => {
-                    console.log("uspesne vymazano");
+                    console.log('uspesne vymazano');
                 })
                 .catch(error => {
-                    console.log("error");
+                    console.log('error');
                 });
         },
 
@@ -173,30 +173,30 @@ export default {
             if (!url) return;
 
             const bare = url
-                .replace("http://", "")
-                .replace("https://", "")
-                .replace("www.", "");
+                .replace('http://', '')
+                .replace('https://', '')
+                .replace('www.', '');
             if (bare.length < 50) return bare;
 
             const head = bare.substring(0, 15);
             const tail = bare.substring(bare.length - 15, bare.length);
 
-            return head + "..." + tail;
+            return head + '...' + tail;
         },
 
         buildSearchIndex() {
             for (var item of this.externals) {
-                const authors = item.authors.map(a => a.name).join(" ");
+                const authors = item.authors.map(a => a.name).join(' ');
                 const str = removeDiacritics(
                     [
                         item.url,
                         authors,
-                        item.song_lyric ? item.song_lyric.name : "",
+                        item.song_lyric ? item.song_lyric.name : '',
                         item.type_string
-                    ].join(" ")
+                    ].join(' ')
                 ).toLowerCase();
 
-                this.$set(item, "search_index", str);
+                this.$set(item, 'search_index', str);
             }
         },
 

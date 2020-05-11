@@ -18,11 +18,11 @@ const belongsToManyMutator = function(
     }
 ) {
     let obj = {
-        sync: relationModels.filter(x => x.hasOwnProperty("id")).map(x => x.id)
+        sync: relationModels.filter(x => x.hasOwnProperty('id')).map(x => x.id)
     };
 
     if (!options.disableCreate) {
-        obj.create = relationModels.filter(x => !x.hasOwnProperty("id"));
+        obj.create = relationModels.filter(x => !x.hasOwnProperty('id'));
     }
 
     return obj;

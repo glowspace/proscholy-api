@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    props: ["value"],
+    props: ['value'],
 
     data() {
         return {
@@ -26,12 +26,12 @@ export default {
     methods: {
         transpose: function(val) {
             this.transposition = (this.transposition + val) % 12;
-            this.$emit("input", this.transposition);
+            this.$emit('input', this.transposition);
         },
 
         reset() {
             this.transposition = 0;
-            this.$emit("input", this.transposition);
+            this.$emit('input', this.transposition);
         }
     }
 };

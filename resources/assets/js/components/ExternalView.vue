@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import Bowser from "bowser";
+import Bowser from 'bowser';
 
 export default {
     props: {
@@ -75,25 +75,25 @@ export default {
     data() {
         return {
             types: {
-                0: "link",
-                1: "spotify",
-                2: "soundcloud",
-                3: "youtube",
-                4: "score",
-                5: "webpage",
-                6: "youtube_channel",
-                7: "audio",
-                8: "pdf/text_chords",
-                9: "pdf/text"
+                0: 'link',
+                1: 'spotify',
+                2: 'soundcloud',
+                3: 'youtube',
+                4: 'score',
+                5: 'webpage',
+                6: 'youtube_channel',
+                7: 'audio',
+                8: 'pdf/text_chords',
+                9: 'pdf/text'
             },
             browser: Bowser.getParser(window.navigator.userAgent),
             supportPdfIframesCondition: {
                 mobile: {
-                    chrome: ">1000"
+                    chrome: '>1000'
                 },
                 desktop: {
-                    chrome: ">70",
-                    firefox: ">60"
+                    chrome: '>70',
+                    firefox: '>60'
                 }
             }
         };
@@ -102,22 +102,22 @@ export default {
     computed: {
         iframeSrc() {
             if (this.type == 1) {
-                return "https://open.spotify.com/embed/track/" + this.mediaId;
+                return 'https://open.spotify.com/embed/track/' + this.mediaId;
             } else if (this.type == 2) {
                 return (
-                    "https://w.soundcloud.com/player/?url=" +
+                    'https://w.soundcloud.com/player/?url=' +
                     this.mediaId +
-                    "&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+                    '&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true'
                 );
             } else if (this.type == 3) {
-                return "https://www.youtube.com/embed/" + this.mediaId;
+                return 'https://www.youtube.com/embed/' + this.mediaId;
             } else if ([4, 8, 9].includes(this.type)) {
                 // pdf file
                 // decide if the browser can display that directly in iframe
                 if (this.browser.satisfies(this.supportPdfIframesCondition)) {
                     return this.url;
                 } else {
-                    return "https://docs.google.com/viewer?url=" + this.url;
+                    return 'https://docs.google.com/viewer?url=' + this.url;
                 }
             } else {
                 return this.url;
@@ -126,7 +126,7 @@ export default {
 
         mediaLink() {
             if (this.type == 1) {
-                return "https://open.spotify.com/track/" + this.mediaId;
+                return 'https://open.spotify.com/track/' + this.mediaId;
             } else {
                 return this.url;
             }
@@ -139,23 +139,23 @@ export default {
         typeClass() {
             switch (this.type) {
                 case 1:
-                    return "fab fa-spotify";
+                    return 'fab fa-spotify';
                     break;
 
                 case 2:
-                    return "fab fa-soundcloud";
+                    return 'fab fa-soundcloud';
                     break;
 
                 case 3:
-                    return "fab fa-youtube";
+                    return 'fab fa-youtube';
                     break;
 
                 case 4:
-                    return "fas fa-file-pdf";
+                    return 'fas fa-file-pdf';
                     break;
 
                 default:
-                    return "fas fa-music";
+                    return 'fas fa-music';
                     break;
             }
         }

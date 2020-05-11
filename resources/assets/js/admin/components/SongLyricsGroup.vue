@@ -14,24 +14,24 @@
 </template>
 
 <script>
-import ButtonColorToggle from "../components/ButtonColorToggle.vue";
+import ButtonColorToggle from '../components/ButtonColorToggle.vue';
 
 export default {
     components: {
         ButtonColorToggle
     },
 
-    props: ["value", "edit-id"],
+    props: ['value', 'edit-id'],
 
     data() {
         return {
             colors_def: [
-                "info lighten-1",
-                "success lighten-1",
-                "warning lighten-1"
+                'info lighten-1',
+                'success lighten-1',
+                'warning lighten-1'
             ],
-            colors: ["info", "success", "warning"],
-            hoverTexts: ["Originál", "Překlad", "Autorizovaný překlad"]
+            colors: ['info', 'success', 'warning'],
+            hoverTexts: ['Originál', 'Překlad', 'Autorizovaný překlad']
             // types - 0: original 1: translation 2: authorized translation
         };
     },
@@ -55,7 +55,7 @@ export default {
                 // allow only one original -> set other originals to translation
                 for (var song_lyric of this.value) {
                     if (song_lyric.type == 0 && song_lyric.id !== last.id) {
-                        Vue.set(song_lyric, "type", 1);
+                        Vue.set(song_lyric, 'type', 1);
                     }
                 }
             }

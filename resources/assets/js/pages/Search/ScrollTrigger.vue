@@ -11,7 +11,7 @@ export default {
             type: Object,
             default: () => ({
                 root: null,
-                threshold: "0"
+                threshold: '0'
             })
         },
         enabled: {
@@ -41,7 +41,7 @@ export default {
     methods: {
         handleIntersect(entry) {
             if (this.enabled && entry.isIntersecting)
-                this.$emit("triggerIntersected");
+                this.$emit('triggerIntersected');
         }
     }
 };

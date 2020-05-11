@@ -435,7 +435,7 @@
                 >
                     <i class="fas fa-angle-right"></i> Posuvky:
                     <span class="float-right">{{
-                        chordSharedStore.useFlatScale ? "♭" : "#"
+                        chordSharedStore.useFlatScale ? '♭' : '#'
                     }}</span>
                 </div>
                 <div
@@ -444,7 +444,7 @@
                 >
                     <i class="fas fa-angle-right"></i> Akordy:
                     <span class="float-right">{{
-                        chordSharedStore.chordMode ? "+" : "–"
+                        chordSharedStore.chordMode ? '+' : '–'
                     }}</span>
                 </div>
                 <div class="media-opener">
@@ -531,21 +531,21 @@
 </style>
 
 <script>
-import { store } from "./store.js";
+import { store } from './store.js';
 
-import FontSizer from "./FontSizer";
-import ChordMode from "./ChordMode";
-import ChordSharpFlat from "./ChordSharpFlat";
+import FontSizer from './FontSizer';
+import ChordMode from './ChordMode';
+import ChordSharpFlat from './ChordSharpFlat';
 // import MediaOpener from './MediaOpener';
-import RightControls from "./RightControls";
-import Transposition from "./Transposition";
-import TranslationLine from "./TranslationLine.vue";
-import ExternalView from "Public/components/ExternalView.vue";
-import ExternalLine from "Public/components/ExternalLine.vue";
+import RightControls from './RightControls';
+import Transposition from './Transposition';
+import TranslationLine from './TranslationLine.vue';
+import ExternalView from 'Public/components/ExternalView.vue';
+import ExternalLine from 'Public/components/ExternalLine.vue';
 
 // base_url = document.querySelector('#baseUrl').getAttribute('value');
 
-import gql, { disableFragmentWarnings } from "graphql-tag";
+import gql, { disableFragmentWarnings } from 'graphql-tag';
 
 const FETCH_SONG_LYRIC = gql`
     query($id: ID!) {
@@ -597,10 +597,10 @@ const FETCH_SONG_LYRIC = gql`
     }
 `;
 
-import { clone } from "lodash";
+import { clone } from 'lodash';
 
 export default {
-    props: ["song-id", "render-media", "render-scores", "render-translations"],
+    props: ['song-id', 'render-media', 'render-scores', 'render-translations'],
 
     components: {
         FontSizer,
@@ -707,8 +707,8 @@ export default {
         controlsToggle: function() {
             this.controlsDisplay = !this.controlsDisplay;
             document
-                .querySelector(".navbar.fixed-top")
-                .classList.toggle("d-none");
+                .querySelector('.navbar.fixed-top')
+                .classList.toggle('d-none');
         },
 
         fileTypeConvert: function(type) {
@@ -735,12 +735,12 @@ export default {
     mounted() {
         if (
             document
-                .getElementById("song-lyrics")
-                .innerHTML.replace(/<[^>]+>/g, "")
-                .replace(/\s/g, "") == ""
+                .getElementById('song-lyrics')
+                .innerHTML.replace(/<[^>]+>/g, '')
+                .replace(/\s/g, '') == ''
         ) {
-            document.getElementById("song-lyrics").innerHTML =
-                "Text písně připravujeme.";
+            document.getElementById('song-lyrics').innerHTML =
+                'Text písně připravujeme.';
             if (this.renderMedia) {
                 this.bottomMode = 2;
             }

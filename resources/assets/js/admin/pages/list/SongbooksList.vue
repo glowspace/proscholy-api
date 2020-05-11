@@ -46,8 +46,8 @@
                             <td>
                                 {{
                                     props.item.is_private
-                                        ? "interní"
-                                        : "veřejný"
+                                        ? 'interní'
+                                        : 'veřejný'
                                 }}
                             </td>
                             <td>{{ props.item.records.length }}</td>
@@ -74,10 +74,10 @@ input {
 </style>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-import removeDiacritics from "Admin/helpers/removeDiacritics";
-import CreateModel from "Admin/components/CreateModel.vue";
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
+import CreateModel from 'Admin/components/CreateModel.vue';
 
 const fetch_items = gql`
     query {
@@ -102,7 +102,7 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ["is-todo"],
+    props: ['is-todo'],
 
     components: {
         CreateModel
@@ -111,13 +111,13 @@ export default {
     data() {
         return {
             headers: [
-                { text: "Jméno", value: "name" },
-                { text: "Zkratka", value: "shortcut" },
-                { text: "Typ", value: "is_private" },
-                { text: "Počet záznamů", value: "n_records" },
-                { text: "Akce", value: "action" }
+                { text: 'Jméno', value: 'name' },
+                { text: 'Zkratka', value: 'shortcut' },
+                { text: 'Typ', value: 'is_private' },
+                { text: 'Počet záznamů', value: 'n_records' },
+                { text: 'Akce', value: 'action' }
             ],
-            search_string: ""
+            search_string: ''
         };
     },
 
@@ -129,7 +129,7 @@ export default {
 
     methods: {
         askForm(id) {
-            if (confirm("Opravdu chcete smazat daný záznam?")) {
+            if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteItem(id);
             }
         },
@@ -147,18 +147,18 @@ export default {
                 })
                 .then(result => {
                     this.$notify({
-                        title: "Úspěšně vymazáno",
-                        text: "Zpěvník byl úspěšně vymazán z databáze",
-                        type: "info"
+                        title: 'Úspěšně vymazáno',
+                        text: 'Zpěvník byl úspěšně vymazán z databáze',
+                        type: 'info'
                     });
                 })
                 .catch(error => {
-                    console.log("error");
+                    console.log('error');
                 });
         },
 
         formFilter(val, search) {
-            if (typeof val == "string") {
+            if (typeof val == 'string') {
                 let hay = removeDiacritics(val).toLowerCase();
                 let needle = removeDiacritics(search).toLowerCase();
 

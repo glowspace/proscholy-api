@@ -35,7 +35,7 @@
 
 <script>
 export default {
-    props: ["colors", "value", "hover-texts"],
+    props: ['colors', 'value', 'hover-texts'],
 
     data() {
         return {
@@ -56,7 +56,7 @@ export default {
             },
             set(i) {
                 this.index = i;
-                this.$emit("input", i);
+                this.$emit('input', i);
             }
         }
     },

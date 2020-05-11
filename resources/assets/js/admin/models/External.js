@@ -1,5 +1,5 @@
-import gql from "graphql-tag";
-import { belongsToManyMutator, belongsToMutator } from "./relations";
+import gql from 'graphql-tag';
+import { belongsToManyMutator, belongsToMutator } from './relations';
 
 const fragment = gql`
     fragment ExternalFillableFragment on External {

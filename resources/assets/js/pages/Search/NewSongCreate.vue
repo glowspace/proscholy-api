@@ -12,7 +12,7 @@
 </style>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 const CREATE_MODEL_MUTATION = gql`
     mutation($input: CreateModelInput!) {
@@ -24,11 +24,11 @@ const CREATE_MODEL_MUTATION = gql`
 `;
 
 export default {
-    props: ["name"],
+    props: ['name'],
 
     data() {
         return {
-            label: ""
+            label: ''
         };
     },
 
@@ -40,7 +40,7 @@ export default {
                     variables: {
                         input: {
                             required_attribute: this.name,
-                            class_name: "SongLyric"
+                            class_name: 'SongLyric'
                         }
                     }
                 })
@@ -49,7 +49,7 @@ export default {
                         window.location.href =
                             result.data.create_model.edit_url;
                     } else {
-                        this.label = "Píseň " + this.name + "byla vytvořena";
+                        this.label = 'Píseň ' + this.name + 'byla vytvořena';
                     }
                 })
                 .catch(error => {
@@ -68,7 +68,7 @@ export default {
 
     watch: {
         name() {
-            this.label = "Vytvořit novou píseň s názvem " + this.name;
+            this.label = 'Vytvořit novou píseň s názvem ' + this.name;
         }
     }
 };

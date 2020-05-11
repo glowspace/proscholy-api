@@ -22,7 +22,7 @@
  */
 
 export default {
-    props: ["preset-id"],
+    props: ['preset-id'],
 
     computed: {
         isDirty() {
@@ -33,13 +33,13 @@ export default {
             for (let field of this._getFieldsFromFragment(this.fragment)) {
                 if (!_.isEqual(this.model[field], this.model_database[field])) {
                     console.log(
-                        "Dirty check found mismatch on the field " + field
+                        'Dirty check found mismatch on the field ' + field
                     );
                     return true;
                 }
             }
 
-            if (typeof this.isDirtyChecker == "function") {
+            if (typeof this.isDirtyChecker == 'function') {
                 return this.isDirtyChecker();
             }
 
@@ -61,13 +61,13 @@ export default {
         window.onbeforeunload = e => {
             if (this.isDirty) {
                 e.preventDefault();
-                e.returnValue = "";
+                e.returnValue = '';
             }
         };
     },
 
     $_veeValidate: {
-        validator: "new"
+        validator: 'new'
     },
 
     methods: {
@@ -77,15 +77,15 @@ export default {
             setTimeout(() => {
                 if (!this.isDirty && save) {
                     var base_url = document
-                        .querySelector("#baseUrl")
-                        .getAttribute("value");
-                    window.location.href = base_url + "/" + url;
+                        .querySelector('#baseUrl')
+                        .getAttribute('value');
+                    window.location.href = base_url + '/' + url;
                 }
             }, 500);
         },
 
         goToAdminPage(url, save = true) {
-            this.goToPage("/admin/" + url, save);
+            this.goToPage('/admin/' + url, save);
         },
 
         handleValidationErrors(error) {
@@ -137,7 +137,7 @@ export default {
 
         _getFieldsFromFragment(fragment, options = { includeId: true }) {
             if (!fragment) {
-                throw new Error("Expected a fragment, but got none.");
+                throw new Error('Expected a fragment, but got none.');
             }
 
             // here, all the fragments' definitions must be on same data type (see SongLyric.js for example)
@@ -151,7 +151,7 @@ export default {
             console.log(fieldNames);
 
             if (!options.includeId)
-                fieldNames = fieldNames.filter(field => field != "id");
+                fieldNames = fieldNames.filter(field => field != 'id');
 
             return fieldNames;
         }

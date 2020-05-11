@@ -60,10 +60,10 @@
                                 {{
                                     props.item.authors
                                         .map(a => a.name)
-                                        .join(", ") ||
+                                        .join(', ') ||
                                         (props.item.has_anonymous_author
-                                            ? "(anonymní)"
-                                            : "-")
+                                            ? '(anonymní)'
+                                            : '-')
                                 }}
                             </td>
                             <td>{{ props.item.updated_at }}</td>
@@ -100,10 +100,10 @@ input {
 </style>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-import removeDiacritics from "Admin/helpers/removeDiacritics";
-import CreateModel from "Admin/components/CreateModel.vue";
+import removeDiacritics from 'Admin/helpers/removeDiacritics';
+import CreateModel from 'Admin/components/CreateModel.vue';
 
 const fetch_items = gql`
     query FetchSongLyrics(
@@ -145,7 +145,7 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ["has-lyrics", "has-authors", "has-chords", "has-tags"],
+    props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
 
     components: {
         CreateModel
@@ -154,15 +154,15 @@ export default {
     data() {
         return {
             headers: [
-                { text: "Název písničky", value: "name" },
-                { text: "Typ", value: "type" },
-                { text: "Autoři", value: "only_regenschori" },
-                { text: "Naposledy upraveno", value: "updated_at" },
-                { text: "Publikováno", value: "is_published" },
-                { text: "Zveřejnění", value: "only_regenschori" },
-                { text: "Akce", value: "action" }
+                { text: 'Název písničky', value: 'name' },
+                { text: 'Typ', value: 'type' },
+                { text: 'Autoři', value: 'only_regenschori' },
+                { text: 'Naposledy upraveno', value: 'updated_at' },
+                { text: 'Publikováno', value: 'is_published' },
+                { text: 'Zveřejnění', value: 'only_regenschori' },
+                { text: 'Akce', value: 'action' }
             ],
-            search_string: ""
+            search_string: ''
         };
     },
 
@@ -185,7 +185,7 @@ export default {
 
     methods: {
         askForm(id) {
-            if (confirm("Opravdu chcete smazat daný záznam?")) {
+            if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteSong(id);
             }
         },
@@ -202,34 +202,34 @@ export default {
                     ]
                 })
                 .then(result => {
-                    console.log("uspesne vymazano");
+                    console.log('uspesne vymazano');
                 })
                 .catch(error => {
-                    console.log("error");
+                    console.log('error');
                 });
         },
 
         buildSearchIndex() {
             for (var item of this.song_lyrics) {
-                const types = ["original", "preklad", "autorizovany preklad"];
+                const types = ['original', 'preklad', 'autorizovany preklad'];
 
                 let searchableItems = [
                     item.name,
-                    item.authors.map(a => a.name).join(" ") ||
-                        (item.has_anonymous_author ? "anonymni" : ""), // authors
+                    item.authors.map(a => a.name).join(' ') ||
+                        (item.has_anonymous_author ? 'anonymni' : ''), // authors
                     types[item.type]
                 ];
 
                 if (item.is_arrangement) {
-                    searchableItems.push("aranz");
+                    searchableItems.push('aranz');
                     searchableItems.push(item.arrangement_source.name);
                 }
 
                 const str = removeDiacritics(
-                    searchableItems.join(" ")
+                    searchableItems.join(' ')
                 ).toLowerCase();
 
-                this.$set(item, "search_index", str);
+                this.$set(item, 'search_index', str);
             }
         },
 

@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from "graphql-tag";
-import removeDiacritics from "../helpers/removeDiacritics";
+import gql, { disableFragmentWarnings } from 'graphql-tag';
+import removeDiacritics from '../helpers/removeDiacritics';
 
 const FETCH_SONGS = gql`
     query {
@@ -52,7 +52,7 @@ const FETCH_SONGS = gql`
 `;
 
 export default {
-    props: ["outline"],
+    props: ['outline'],
 
     data() {
         return {
@@ -69,9 +69,9 @@ export default {
 
     methods: {
         getSongLyricNames(song) {
-            let name = "";
+            let name = '';
             for (let sl of song.song_lyrics) {
-                name += sl.name + ", ";
+                name += sl.name + ', ';
             }
 
             return name.slice(0, name.length - 2);
@@ -84,13 +84,13 @@ export default {
 
         onSubmit() {
             this.dialog = false;
-            this.$emit("submit", this.song);
+            this.$emit('submit', this.song);
         },
 
         filter(item, queryText, itemText) {
             if (item.header) return false;
 
-            const hasValue = val => (val != null ? val : "");
+            const hasValue = val => (val != null ? val : '');
 
             const text = removeDiacritics(hasValue(itemText));
             const query = removeDiacritics(hasValue(queryText));

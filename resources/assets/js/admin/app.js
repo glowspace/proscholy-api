@@ -3,14 +3,14 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-require("./bootstrap");
+require('./bootstrap');
 
 // /**
 //  * Materialise.css
 //  */
 // require('materialize-css');
 
-window.Vue = require("vue");
+window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -20,24 +20,24 @@ window.Vue = require("vue");
 
 // import SongsList from "Pages/list/SongsList";
 
-Vue.component("songs-list", require("Admin/pages/list/SongsList.vue"));
-Vue.component("externals-list", require("Admin/pages/list/ExternalsList.vue"));
-Vue.component("files-list", require("Admin/pages/list/FilesList.vue"));
-Vue.component("authors-list", require("Admin/pages/list/AuthorsList.vue"));
-Vue.component("songbooks-list", require("Admin/pages/list/SongbooksList.vue"));
+Vue.component('songs-list', require('Admin/pages/list/SongsList.vue'));
+Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
+Vue.component('files-list', require('Admin/pages/list/FilesList.vue'));
+Vue.component('authors-list', require('Admin/pages/list/AuthorsList.vue'));
+Vue.component('songbooks-list', require('Admin/pages/list/SongbooksList.vue'));
 
-Vue.component("author-edit", require("Admin/pages/edit/AuthorEdit.vue"));
-Vue.component("external-edit", require("Admin/pages/edit/ExternalEdit.vue"));
-Vue.component("song-lyric-edit", require("Admin/pages/edit/SongLyricEdit.vue"));
-Vue.component("file-edit", require("Admin/pages/edit/FileEdit.vue"));
-Vue.component("songbook-edit", require("Admin/pages/edit/SongbookEdit.vue"));
+Vue.component('author-edit', require('Admin/pages/edit/AuthorEdit.vue'));
+Vue.component('external-edit', require('Admin/pages/edit/ExternalEdit.vue'));
+Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
+Vue.component('file-edit', require('Admin/pages/edit/FileEdit.vue'));
+Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
 
-Vue.component("external-view", require("Public/components/ExternalView.vue"));
+Vue.component('external-view', require('Public/components/ExternalView.vue'));
 
-import { ApolloClient } from "apollo-client";
-import { createHttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloLink } from "apollo-link";
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
 
 // let web_url = 'http://localhost:8000/graphql';
 
@@ -47,8 +47,8 @@ import { ApolloLink } from "apollo-link";
 //   web_url = 'http://localhost:8000/graphql';
 // }
 
-var base_url = document.querySelector("#baseUrl").getAttribute("value");
-var user_token = document.querySelector("#userToken").getAttribute("value");
+var base_url = document.querySelector('#baseUrl').getAttribute('value');
+var user_token = document.querySelector('#userToken').getAttribute('value');
 
 const authMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
@@ -64,7 +64,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 // HTTP connexion to the API
 const httpLink = createHttpLink({
     // You should use an absolute URL here
-    uri: base_url + "/graphql"
+    uri: base_url + '/graphql'
 });
 
 // clear the session storage used for caching GrapQL queries on the public frontend
@@ -79,35 +79,35 @@ const apolloClient = new ApolloClient({
     cache
 });
 
-import VueApollo from "vue-apollo";
+import VueApollo from 'vue-apollo';
 Vue.use(VueApollo);
 
 const apolloProvider = new VueApollo({
     defaultClient: apolloClient
 });
 
-import Vuetify from "vuetify";
+import Vuetify from 'vuetify';
 
 Vue.use(Vuetify, {
     theme: {
-        primary: "#3f51b5",
-        secondary: "#00bcd4",
-        accent: "#3f51b5",
-        error: "#f44336",
-        warning: "#ff9800",
-        info: "#2196f3",
-        success: "#4caf50"
+        primary: '#3f51b5',
+        secondary: '#00bcd4',
+        accent: '#3f51b5',
+        error: '#f44336',
+        warning: '#ff9800',
+        info: '#2196f3',
+        success: '#4caf50'
     }
 });
 
-import Notifications from "vue-notification";
+import Notifications from 'vue-notification';
 Vue.use(Notifications);
 
-import VeeValidate from "vee-validate";
+import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
 const app = new Vue({
-    el: "#app",
+    el: '#app',
     apolloProvider
     // render: h => h(App)
 });

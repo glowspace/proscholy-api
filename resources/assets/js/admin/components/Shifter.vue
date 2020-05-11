@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
-    props: ["id", "table-name"],
+    props: ['id', 'table-name'],
 
     apollo: {
         items: {

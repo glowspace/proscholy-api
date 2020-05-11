@@ -66,23 +66,23 @@
 </template>
 
 <script>
-import removeDiacritics from "../helpers/removeDiacritics";
+import removeDiacritics from '../helpers/removeDiacritics';
 
 export default {
     // todo: 'enable-custom set to false' not working for multiple entry
     props: [
-        "p-items",
-        "value",
-        "label",
-        "header-label",
-        "create-label",
-        "multiple",
-        "enable-custom",
-        "disabled"
+        'p-items',
+        'value',
+        'label',
+        'header-label',
+        'create-label',
+        'multiple',
+        'enable-custom',
+        'disabled'
     ],
 
     data: () => ({
-        colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
+        colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
         editing: null,
         index: -1,
         search: null,
@@ -95,7 +95,7 @@ export default {
                 return this.value;
             },
             set(val) {
-                this.$emit("input", val);
+                this.$emit('input', val);
             }
         },
 
@@ -111,7 +111,7 @@ export default {
             if (!val) return;
 
             const handleNewItem = item => {
-                if (typeof item === "string") {
+                if (typeof item === 'string') {
                     item = {
                         name: item
                     };
@@ -159,7 +159,7 @@ export default {
         filter(item, queryText, itemText) {
             if (item.header) return false;
 
-            const hasValue = val => (val != null ? val : "");
+            const hasValue = val => (val != null ? val : '');
 
             const text = removeDiacritics(hasValue(itemText));
             const query = removeDiacritics(hasValue(queryText));

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { store } from "Public/components/store.js";
+import { store } from 'Public/components/store.js';
 
 export default {
     data() {
@@ -38,15 +38,15 @@ export default {
     },
     computed: {
         hasMediaSlot() {
-            return !!this.$slots["media"];
+            return !!this.$slots['media'];
         }
     },
     methods: {
         controlsToggle: function() {
             this.controlsDisplay = !this.controlsDisplay;
             document
-                .querySelector(".navbar.fixed-top")
-                .classList.toggle("d-none");
+                .querySelector('.navbar.fixed-top')
+                .classList.toggle('d-none');
         }
     }
 };

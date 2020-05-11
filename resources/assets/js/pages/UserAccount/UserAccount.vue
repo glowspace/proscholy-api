@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { GoogleProvider, auth } from "Public/helpers/firebase_auth";
+import { GoogleProvider, auth } from 'Public/helpers/firebase_auth';
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 const fetch_items = gql`
     query($search_params: String, $page: Int, $per_page: Int) {
@@ -88,7 +88,7 @@ export default {
             user: null,
             token: null,
             // search_string: "",
-            new_songbook_name: "",
+            new_songbook_name: '',
 
             isLoggedIn: false
         };
@@ -128,7 +128,7 @@ export default {
                         manual: true,
                         context: {
                             headers: {
-                                Authorization: "Bearer " + token
+                                Authorization: 'Bearer ' + token
                             }
                         }
                     })
@@ -146,7 +146,7 @@ export default {
 
             var user = auth.currentUser;
 
-            let token = "";
+            let token = '';
 
             // if (user) {
             //     token = await user.getIdToken();
@@ -175,7 +175,7 @@ export default {
             };
 
             return JSON.stringify({
-                sort: ["name_keyword"],
+                sort: ['name_keyword'],
                 query: query
             });
         },

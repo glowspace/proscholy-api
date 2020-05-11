@@ -37,14 +37,14 @@
 
 <script>
 export default {
-    props: ["translation", "original_name"],
+    props: ['translation', 'original_name'],
     computed: {
         typeString() {
-            let typeStrings = ["originál", "překlad", "autorizovaný překlad"];
+            let typeStrings = ['originál', 'překlad', 'autorizovaný překlad'];
             return typeStrings[this.translation.type];
         },
         typeChar() {
-            let typeChars = ["O", "P", "AP"];
+            let typeChars = ['O', 'P', 'AP'];
             return typeChars[this.translation.type];
         }
     }

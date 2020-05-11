@@ -141,11 +141,11 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
-import ItemsComboBox from "Admin/components/ItemsComboBox.vue";
-import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
-import Author from "Admin/models/Author";
+import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
+import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
+import Author from 'Admin/models/Author';
 
 const FETCH_AUTHORS = gql`
     query {
@@ -165,7 +165,7 @@ const FETCH_TAGS_PERIOD = gql`
     }
 `;
 
-import EditForm from "./EditForm";
+import EditForm from './EditForm';
 
 export default {
     extends: EditForm,
@@ -209,7 +209,7 @@ export default {
                 this.loadModelDataFromResult(result);
                 this.loadEnumJsonFromResult(
                     result,
-                    "type_string_values",
+                    'type_string_values',
                     this.enums.type
                 );
             }
@@ -236,18 +236,18 @@ export default {
                 .then(result => {
                     this.$validator.errors.clear();
                     this.$notify({
-                        title: "Úspěšně uloženo :)",
-                        text: "Autor byl úspěšně uložen",
-                        type: "success"
+                        title: 'Úspěšně uloženo :)',
+                        text: 'Autor byl úspěšně uložen',
+                        type: 'success'
                     });
                 })
                 .catch(error => {
                     if (error.graphQLErrors.length == 0) {
                         // unknown error happened
                         this.$notify({
-                            title: "Chyba při ukládání",
-                            text: "Autor nebyl uložen",
-                            type: "error"
+                            title: 'Chyba při ukládání',
+                            text: 'Autor nebyl uložen',
+                            type: 'error'
                         });
                         return;
                     }
@@ -258,9 +258,9 @@ export default {
 
         show() {
             var base_url = document
-                .querySelector("#baseUrl")
-                .getAttribute("value");
-            window.location.href = base_url + "/autor/" + this.model.id;
+                .querySelector('#baseUrl')
+                .getAttribute('value');
+            window.location.href = base_url + '/autor/' + this.model.id;
         }
     }
 };

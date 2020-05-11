@@ -61,7 +61,7 @@ a.tag {
 </style>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 const fetch_items = gql`
     query FetchTags {
@@ -82,7 +82,7 @@ const fetch_items = gql`
 
 export default {
     // type: {"tag_id": true, "tag_id2": true}
-    props: ["value"],
+    props: ['value'],
 
     data() {
         return {
@@ -131,7 +131,7 @@ export default {
 
             // notify the parent that sth has changed
             // works with v-model
-            this.$emit("input", this.selectedTags);
+            this.$emit('input', this.selectedTags);
         },
 
         isSelected(tag) {
