@@ -3,6 +3,7 @@ type SongLyric {
     name: String
     rich_name: String @with(relation: "authors")
     public_url: String
+    public_route: String
     lyrics_no_chords: String
     lyrics: String
     type: Int
@@ -17,7 +18,7 @@ type SongLyric {
     updated_at: String
     authors: [Author] @belongsToMany
     externals(
-        id: Int @eq,
+        id: Int @eq
         type: Int @eq
         orderBy: [OrderByClause!] @orderBy
     ): [External] @hasMany
@@ -37,13 +38,20 @@ type SongLyric {
     missa_type: MissaType
     missa_type_string_values: JSON
 
-    tags_official: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"]) @deprecated(reason:"Use tags_liturgy_part instead")
-    tags_unofficial: [Tag] @morphMany(relation: "tags", scopes: ["generic"]) @deprecated(reason: "Use tags_generic instead")
+    tags_official: [Tag]
+        @morphMany(relation: "tags", scopes: ["liturgyPart"])
+        @deprecated(reason: "Use tags_liturgy_part instead")
+    tags_unofficial: [Tag]
+        @morphMany(relation: "tags", scopes: ["generic"])
+        @deprecated(reason: "Use tags_generic instead")
 
     tags_generic: [Tag] @morphMany(relation: "tags", scopes: ["generic"])
-    tags_liturgy_part: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPart"])
-    tags_liturgy_period: [Tag] @morphMany(relation: "tags", scopes: ["liturgyPeriod"])
-    tags_history_period: [Tag] @morphMany(relation: "tags", scopes: ["historyPeriod"])
+    tags_liturgy_part: [Tag]
+        @morphMany(relation: "tags", scopes: ["liturgyPart"])
+    tags_liturgy_period: [Tag]
+        @morphMany(relation: "tags", scopes: ["liturgyPeriod"])
+    tags_history_period: [Tag]
+        @morphMany(relation: "tags", scopes: ["historyPeriod"])
     tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
 
     arrangements: [SongLyric] @hasMany
@@ -60,11 +68,17 @@ enum MissaType {
 }
 
 type SongLyricPaginator {
-    data: [SongLyric!]! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver")
-    paginatorInfo: PaginatorInfo! @field(resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver")
+    data: [SongLyric!]!
+        @field(
+            resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver"
+        )
+    paginatorInfo: PaginatorInfo!
+        @field(
+            resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver"
+        )
 }
 
-extend type Query  {
+extend type Query {
     song_lyric(id: ID! @eq): SongLyric @find
 
     song_lyrics(
@@ -78,15 +92,13 @@ extend type Query  {
         has_chords: Boolean
         order_abc: Boolean
         updated_after: DateTime
-    ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php 
-
+    ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php
     search_song_lyrics(
         search_params: String
         page: Int
         per_page: Int
     ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
 }
-
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
     delete_song_lyric(id: ID!): SongLyric @delete
@@ -101,8 +113,11 @@ input UpdateSongLyricRelation {
 
 input UpdateSongLyricInput {
     id: ID!
-    name: String @rules(apply: ["required"], messages: {
-        required: "Jméno písně nesmí zůstat prázdné"})
+    name: String
+        @rules(
+            apply: ["required"]
+            messages: { required: "Jméno písně nesmí zůstat prázdné" }
+        )
     has_anonymous_author: Boolean
     lang: String
     authors: SyncAuthorsRelation
@@ -135,8 +150,6 @@ input CreateArrangementInput {
     name: String!
     arrangement_of: Int!
 }
-
-
 
 input SyncSongLyricArrangementRelation {
     update: UpdateSongLyricArrangementInput
