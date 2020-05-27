@@ -127,29 +127,29 @@ class SongLyric extends Model
     ];
 
     protected $fillable
-        = [
-            'name',
-            'song_id',
-            'lyrics',
-            'id',
-            // 'is_original',
-            // 'is_authorized',
-            'type',
-            'lang',
-            'creating_at',
-            'has_anonymous_author',
-            'has_chords',
-            'is_published',
-            'is_approved_by_author',
-            'user_creator_id',
-            'licence_type',
-            'only_regenschori',
-            'capo',
-            'visits',
-            'liturgy_approval_status',
-            'arrangement_of',
-            'missa_type'
-        ];
+    = [
+        'name',
+        'song_id',
+        'lyrics',
+        'id',
+        // 'is_original',
+        // 'is_authorized',
+        'type',
+        'lang',
+        'creating_at',
+        'has_anonymous_author',
+        'has_chords',
+        'is_published',
+        'is_approved_by_author',
+        'user_creator_id',
+        'licence_type',
+        'only_regenschori',
+        'capo',
+        'visits',
+        'liturgy_approval_status',
+        'arrangement_of',
+        'missa_type'
+    ];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
@@ -187,6 +187,11 @@ class SongLyric extends Model
             'song_lyric' => $this,
             'name' => Str::slug($this->name)
         ]);
+    }
+
+    public function getPublicRouteAttribute()
+    {
+        return str_replace(url(""), "", $this->public_url);
     }
 
     public function getLyricsNoChordsAttribute()
@@ -271,7 +276,7 @@ class SongLyric extends Model
         return self::$missa_type_string_values;
     }
 
-    public function song() : BelongsTo
+    public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
@@ -296,27 +301,27 @@ class SongLyric extends Model
         return $this->hasMany(File::class);
     }
 
-    public function arrangements() : HasMany
+    public function arrangements(): HasMany
     {
         return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
     }
 
-    public function arrangement_source() : BelongsTo
+    public function arrangement_source(): BelongsTo
     {
         return $this->belongsTo(SongLyric::class, 'arrangement_of', 'id');
     }
 
-    public function getIsArrangementAttribute() : bool
+    public function getIsArrangementAttribute(): bool
     {
         return $this->arrangement_of !== null;
     }
 
-    public function getHasArrangementsAttribute() : bool 
+    public function getHasArrangementsAttribute(): bool
     {
         return $this->arrangements()->count() > 0;
     }
 
-    public function getRichNameAttribute() : string
+    public function getRichNameAttribute(): string
     {
         $name = $this->name;
 
@@ -454,7 +459,7 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
+        $songbook_records = $this->songbook_records()->get()->map(function ($sb) {
             return [
                 'songbook_id' => $sb->id,
                 'sonbgook_number' => $sb->pivot->number
@@ -470,16 +475,24 @@ class SongLyric extends Model
         $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id');
 
         $interestingExternals = $this->externals()
-                                        ->with('tags')
-                                        ->whereHas('tags', 
-                                            function($q) { return $q->instrumentation(); })
-                                        ->get();
+            ->with('tags')
+            ->whereHas(
+                'tags',
+                function ($q) {
+                    return $q->instrumentation();
+                }
+            )
+            ->get();
 
         $interestingFiles = $this->files()
-                                        ->with('tags')
-                                        ->whereHas('tags', 
-                                            function($q) { return $q->instrumentation(); })
-                                        ->get();
+            ->with('tags')
+            ->whereHas(
+                'tags',
+                function ($q) {
+                    return $q->instrumentation();
+                }
+            )
+            ->get();
 
         // adjoin externals' instrumentation tags
         foreach ($interestingExternals as $external) {

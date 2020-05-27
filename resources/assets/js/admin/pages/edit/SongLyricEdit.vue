@@ -142,7 +142,7 @@
                   :multiple="true"
                   :enable-custom="false"
                 ></items-combo-box>
-                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Mešní něco" v-if="model_database && model_database.is_arrangement === false"></v-select>
+                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="model_database && model_database.is_arrangement === false"></v-select>
 
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
