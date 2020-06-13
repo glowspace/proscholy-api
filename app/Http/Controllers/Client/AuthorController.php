@@ -13,17 +13,12 @@ class AuthorController extends Controller
         $author->visits = $author->visits + 1;
         $author->save();
 
-        $originals = $author->songLyricsWithAssociatedAuthors()->originals()->orderBy('name')->get();
-        $translations = $author->songLyricsWithAssociatedAuthors()->translations()->orderBy('name')->get();
-
-        $interpreted = $author->getSongLyricsInterpreted()->orderBy('name')->get()->diff($originals->merge($translations));
-
         return view('client.author', [
             'author'     => $author,
             'page_title' => $author->name,
-            'originals' => $originals,
-            'translations' => $translations,
-            'interpreted' => $interpreted
+            'originals' => $author->songs_originals,
+            'translations' => $author->songs_translations,
+            'interpreted' => $author->songs_interpreted
         ]);
     }
 }

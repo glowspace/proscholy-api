@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AuthorService;
 use Log;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -54,6 +55,8 @@ class Author extends Model
 
     protected $fillable = ['name', 'description', 'email', 'type'];
 
+    protected $authorService;
+
     private $type_string_values
     = [
         0 => 'autor',
@@ -75,37 +78,9 @@ class Author extends Model
         ]
     ];
 
-    public function getSongLyricsInterpreted()
+    public function __construct()
     {
-        return SongLyric::whereHas('externals', function ($q) {
-            $q->media()->whereHas('authors', function ($a) {
-                $a->where('authors.id', $this->id);
-            });
-        })->orWhereHas('files', function ($q) {
-            $q->audio()->whereHas('authors', function ($a) {
-                $a->where('authors.id', $this->id);
-            });
-        });
-    }
-
-    public function getAssociatedAuthorsIds()
-    {
-        $authors = collect([$this]);
-
-        return $authors->merge($this->members()->get())->map(function ($a) {
-            return $a["id"];
-        })->toArray();
-    }
-
-    public function songLyricsWithAssociatedAuthors()
-    {
-        Log::info($this->getAssociatedAuthorsIds());
-
-        $ids = $this->getAssociatedAuthorsIds();
-
-        return SongLyric::whereHas('authors', function ($q) use ($ids) {
-            $q->whereIn('authors.id', $ids);
-        });
+        $this->authorService = app()->make(AuthorService::class);
     }
 
     public function scopeRestricted($query)
@@ -166,6 +141,23 @@ class Author extends Model
     {
         return $this->type_string_values;
     }
+
+    public function getSongsOriginalsAttribute()
+    {
+        return $this->authorService->song_lyrics_include_associated_authors($this)->originals()->orderBy('name')->get();
+    }
+
+    public function getSongsTranslationsAttribute()
+    {
+        return $this->authorService->song_lyrics_include_associated_authors($this)->translations()->orderBy('name')->get();
+    }
+
+    public function getSongsInterpretedAttribute()
+    {
+        return $this->authorService->song_lyrics_interpreted($this)->orderBy('name')->get()
+            ->diff($this->songs_originals->merge($this->songs_translations));
+    }
+
 
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
