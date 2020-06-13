@@ -6,6 +6,7 @@
       <v-tabs color="transparent" v-on:change="onTabChange">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
+        <v-tab>Lilypond</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
@@ -266,6 +267,24 @@
         <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12 md6>
+              <v-textarea
+                auto-grow
+                outline
+                name="input-7-4"
+                label="Lilypoond noty"
+                ref="textarea"
+                v-model="model.lilypond"
+                v-on:input="debounceLilypondUrl"
+              ></v-textarea>
+            </v-flex>
+            <v-flex xs12 md6>
+                <iframe :src="lilypond_url" frameborder="0" width="100%" height="500"></iframe>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row wrap mb-4>
+            <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
                 v-for="external in model_database.externals"
@@ -495,13 +514,16 @@ export default {
         capo: undefined,
         liturgy_approval_status: undefined,
         arrangement_source: undefined,
-        missa_type: undefined
+        missa_type: undefined,
+        lilypond: ""
       },
 
       selected_thumbnail_url: undefined,
       is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
+
+      lilypond_url: "",
 
       new_arrangement_name: "",
       created_arrangements: [],
@@ -588,6 +610,10 @@ export default {
       }
 
       return false;
+    }, 
+
+    lilypond_preview_url() {
+      return "http://localhost:1234/svg_html?data=" + this.model.lilypond;
     }
   },
 
@@ -747,6 +773,10 @@ export default {
 
       this.$delete(this.model.songbook_records, i);
     },
+
+    debounceLilypondUrl: _.debounce(function () {
+        this.lilypond_url = "http://localhost:1234/svg_html?data=" + this.model.lilypond;
+    }, 0),
 
     createNewArrangement() {
       this.$apollo
