@@ -17,7 +17,6 @@ RUN apt-get -y install wget unzip
 RUN wget https://github.com/msoap/shell2http/releases/download/1.13/shell2http-1.13.linux.amd64.tar.gz && \
     tar -xf shell2http-1.13.linux.amd64.tar.gz
 
-# ./shell2http -form /svg "lilypond -dbackend=svg --format=svg /scores/li.ly && cat /scores/li.svg"
 ENTRYPOINT ./shell2http -form \
-    /svg 'echo $v_data > score.ly && lilypond -dbackend=svg --format=svg score.ly && cat score.svg' \ 
-    /svg_html 'echo $v_data > score.ly && lilypond -dbackend=svg --format=svg score.ly && echo "<html>" && cat score.svg && echo "</html>"'
+    /svg 'echo $v_data > score.ly && (lilypond -dbackend=svg --format=svg score.ly 2>err.txt && cat score.svg || cat err.txt)' \ 
+    /svg_html 'echo $v_data > score.ly && (lilypond -dbackend=svg --format=svg score.ly 2>err.txt && (echo "<html>"; cat score.svg; echo "</html>") || cat err.txt)'
