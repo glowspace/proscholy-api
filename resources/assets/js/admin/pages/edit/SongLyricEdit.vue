@@ -275,6 +275,7 @@
                 ref="textarea"
                 v-model="model.lilypond"
                 v-on:input="debounceLilypondUrl"
+                v-on:keydown.tab.prevent="preventTextareaTab($event)"
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
@@ -588,7 +589,7 @@ export default {
     setInterval(() => {
         // $.get( "/refresh-updating/song-lyric/" + this.presetId );
     }, 5000);
-  },
+  },  
 
   computed: {
     thumbnailables() {
@@ -677,6 +678,17 @@ export default {
           return true;
         }
       }
+    },
+
+    preventTextareaTab(event) {
+      let text = this.model.lilypond,
+              originalSelectionStart = event.target.selectionStart,
+              textStart = text.slice(0, originalSelectionStart),
+              textEnd =  text.slice(originalSelectionStart);
+
+      this.model.lilypond = `${textStart}\t${textEnd}`
+      event.target.value = this.model.lilypond // required to make the cursor stay in place.
+      event.target.selectionEnd = event.target.selectionStart = originalSelectionStart + 1
     },
 
     // todo: rewrite from jquery to graphql
