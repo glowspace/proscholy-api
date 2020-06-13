@@ -6,6 +6,8 @@ type SongLyric {
     public_route: String
     lyrics_no_chords: String
     lyrics: String
+    lilypond: String
+    lilypond_svg: String
     type: Int
     is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
     is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
@@ -125,6 +127,7 @@ input UpdateSongLyricInput {
     tags_official: SyncOfficialTagsRelation
     songbook_records: SyncSongbookRecordsForSongLyricRelation
     lyrics: String
+    lilypond: String
     song: SongInput
     only_regenschori: Boolean
     capo: Int

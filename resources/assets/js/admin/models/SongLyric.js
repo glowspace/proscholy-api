@@ -13,6 +13,7 @@ const fragment = gql`
         lang
         only_regenschori
         lyrics
+        lilypond
         song {
             id
             song_lyrics {
@@ -200,6 +201,7 @@ export default {
             has_anonymous_author: vueModel.has_anonymous_author,
             only_regenschori: vueModel.only_regenschori,
             lyrics: vueModel.lyrics,
+            lilypond: vueModel.lilypond,
             song: vueModel.song,
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
