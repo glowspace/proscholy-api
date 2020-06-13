@@ -15,6 +15,11 @@ type Author {
     members: [Author] @belongsToMany
     memberships: [Author] @belongsToMany
 
+    # author page
+    songs_originals: [SongLyric]
+    songs_translations: [SongLyric]
+    songs_interpreted: [SongLyric]
+
     tags_period: [Tag] @morphMany(relation: "tags", scopes: ["historyPeriod"])
 }
 
