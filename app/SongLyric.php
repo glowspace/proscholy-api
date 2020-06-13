@@ -148,7 +148,9 @@ class SongLyric extends Model
         'visits',
         'liturgy_approval_status',
         'arrangement_of',
-        'missa_type'
+        'missa_type',
+        'lilypond',
+        'lilypond_svg'
     ];
 
     private static $lang_string_values = [

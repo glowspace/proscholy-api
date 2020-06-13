@@ -516,7 +516,7 @@ export default {
         liturgy_approval_status: undefined,
         arrangement_source: undefined,
         missa_type: undefined,
-        lilypond: ""
+        lilypond: undefined
       },
 
       selected_thumbnail_url: undefined,
@@ -557,6 +557,8 @@ export default {
         }
 
         this.is_loading = false;
+        // load lilypond
+        this.debounceLilypondUrl()
       }
     },
     authors: {
@@ -612,10 +614,6 @@ export default {
 
       return false;
     }, 
-
-    lilypond_preview_url() {
-      return "http://localhost:1234/svg_html?data=" + this.model.lilypond;
-    }
   },
 
   methods: {
