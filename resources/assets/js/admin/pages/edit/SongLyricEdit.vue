@@ -55,7 +55,7 @@
                   </v-flex>
                 </v-layout>
 
-                <v-card class="mb-3">
+                <v-card class="mb-5">
                   <v-card-title><h3>Autoři</h3></v-card-title>
 
                   <v-card-text>
@@ -195,12 +195,7 @@
 
               <h5>Autoři</h5>
               <p>
-                Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
-                <!-- @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
-                  a autor (autoři) se po uložení písně automaticky vytvoří.
-                @else Je potřeba požádat administrátory o vytvoření nového autora @endcan-->
-                <br>V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
+                Po kliknutí na Přidat autora začněte zadávat jméno autora, pokud se nenachází ve vyskakovací nabídce, tak stačí napsat celé jméno, odentrovat a přidá se (zeleně označený) nový autor. Změna v databázi se provede až po uložení celé písně.
               </p>
             </v-flex>
           </v-layout>
