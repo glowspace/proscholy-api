@@ -1,8 +1,13 @@
 <template>
   <v-app>
     <notifications/>
+    <!-- todo: position this loader to look good -->
+    <!-- <v-container fluid v-show="$apollo.loading"><v-progress-circular
+      indeterminate
+    ></v-progress-circular></v-container> -->
+
     <!-- <v-fade-transition> -->
-    <v-container fluid grid-list-xs v-show="!$apollo.loading">
+    <v-container fluid grid-list-xs>
       <v-tabs color="transparent" v-on:change="onTabChange">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
@@ -259,7 +264,7 @@
                 ></v-select>
 
                 <!-- <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img> -->
-                <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe>
+                <!-- <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe> -->
               </template>
             </v-flex>
           </v-layout>
@@ -271,16 +276,15 @@
                 auto-grow
                 outline
                 name="input-7-4"
-                label="Lilypoond noty"
+                label="Notový zápis ve formátu Lilypond"
                 ref="textarea"
                 v-model="model.lilypond"
-                v-on:input="debounceLilypondUrl"
                 v-on:keydown.tab.prevent="preventTextareaTab($event)"
                 style="font-family: monospace; tab-size: 2;"
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <iframe v-show="lilypond_url" :src="lilypond_url" frameborder="0" width="100%" height="500"></iframe>
+                <div v-html="lilypond_parse.svg"></div>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -416,10 +420,6 @@
         </v-card>
       </v-dialog>
     </v-container>
-
-    <v-container fluid v-show="$apollo.loading"><v-progress-circular
-      indeterminate
-    ></v-progress-circular></v-container>
     <!-- </v-fade-transition> -->
   </v-app>
 </template>
@@ -482,6 +482,13 @@ const CREATE_ARRANGEMENT = gql`
   }
 `;
 
+const FETCH_LILYPOND = gql`
+  query ($lilypond: String) {
+    lilypond_parse (lilypond: $lilypond) {
+      svg
+    }
+  }
+`;
 export default {
   props: ["csrf"],
   components: {
@@ -524,8 +531,6 @@ export default {
       is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
-
-      lilypond_url: "",
 
       new_arrangement_name: "",
       created_arrangements: [],
@@ -585,6 +590,13 @@ export default {
     },
     song_lyrics: {
       query: FETCH_DATA
+    },
+    lilypond_parse: {
+      query: FETCH_LILYPOND,
+      debounce: 200,
+      variables() {
+        return { lilypond: this.model.lilypond }
+      }
     }
   },
   mounted() {
@@ -784,14 +796,6 @@ export default {
 
       this.$delete(this.model.songbook_records, i);
     },
-
-    debounceLilypondUrl: _.debounce(function () {
-      if (this.model.lilypond.trim() == "") {
-        this.lilypond_url = "";
-      } else {
-        this.lilypond_url = "http://localhost:1234/svg_html?data=" + encodeURI(this.model.lilypond);
-      }
-    }, 200),
 
     createNewArrangement() {
       this.$apollo
