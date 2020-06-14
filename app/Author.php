@@ -78,8 +78,9 @@ class Author extends Model
         ]
     ];
 
-    public function __construct()
+    public function __construct($attributes = array())
     {
+        parent::__construct($attributes);
         $this->authorService = app()->make(AuthorService::class);
     }
 
