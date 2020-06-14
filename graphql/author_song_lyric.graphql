@@ -15,3 +15,19 @@ type AuthorSongLyric {
     author: Author
         @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@author")
 }
+
+input SyncAuthorsSongLyricRelation {
+    create: [CreateAuthorSongLyricInput!]
+    sync: [SyncAuthorSongLyricInput!]
+}
+
+input CreateAuthorSongLyricInput {
+    author_name: String!
+    authorship_type: AuthorshipType
+}
+
+input SyncAuthorSongLyricInput {
+    author_id: ID
+    authorship_type: AuthorshipType
+}
+

@@ -54,8 +54,40 @@
                   </v-flex>
                 </v-layout>
 
+                <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
+                  <v-flex xs4>
+                    <items-combo-box
+                      v-model="author_pivot.author"
+                      v-bind:p-items="authors"
+                      item-text="name"
+                      label="Autor"
+                      :multiple="false"
+                      :enable-custom="true"
+                    ></items-combo-box>
+                  </v-flex>
+                  <v-flex xs2>
+                    <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                    <v-select :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                  </v-flex>
+                  <v-flex xs2>
+                    <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                    <!-- <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn> -->
+                  </v-flex>
+                </v-layout>
+
                 <v-layout row wrap>
-                  <v-flex xs12 lg8>
+                  <v-flex xs12 class="mb-5">
+                    <v-btn
+                      color="info"
+                      outline
+                      @click="addEmptyAuthor()"
+                    >Přidat autora</v-btn>
+                  </v-flex>
+                </v-layout>
+
+                
+                <!-- <v-layout row wrap>
+                  <v-flex xs6>
                     <items-combo-box
                       v-bind:p-items="authors"
                       v-model="model.authors"
@@ -65,7 +97,9 @@
                       :multiple="true"
                       :enable-custom="true"
                     ></items-combo-box>
-
+                  </v-flex>
+                  <v-flex>
+                    <v-select :items="enums.authorship" v-model="model.authorship" label="Liturgický typ" v-if="is_arrangement_layout"></v-select>
                   </v-flex>
                   <v-flex xs12 lg4>
                   <v-checkbox :disabled="model.authors.length > 0"
@@ -74,7 +108,7 @@
                   label="Anonymní autor (nezobrazovat v to-do)"
                 ></v-checkbox>
                   </v-flex>
-                </v-layout>
+                </v-layout> -->
                 
 
                 <v-card v-if="model.song && model_database.song" class="mb-3">
@@ -464,7 +498,7 @@ export default {
         tags_liturgy_period: [],
         tags_history_period: [],
         tags_saints: [],
-        authors: [],
+        authors_pivot: [],
         externals: [],
         files: [],
         songbook_records: [],
@@ -486,7 +520,8 @@ export default {
       enums: {
         lang: [],
         liturgy_approval_status: [],
-        missa_type: []
+        missa_type: [],
+        authorship_type: []
       }
     };
   },
@@ -502,6 +537,7 @@ export default {
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
         this.loadEnumJsonFromResult(result, "missa_type_string_values", this.enums.missa_type);
+        this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
@@ -691,6 +727,13 @@ export default {
           name: ""
         }
       });
+    },
+
+    addEmptyAuthor() {
+      this.model.authors_pivot.push({
+        authorship_type: "GENERIC",
+        author: null
+      })
     },
 
     removeSongbookRecord(i) {

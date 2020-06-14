@@ -10,11 +10,11 @@ class AuthorSongLyric extends Pivot
     protected $fillable = ["id", "author_id", "song_lyric_id", "authorship_type"];
     public $incrementing = true;
 
-    // type: enum
-    // 0: generic/all
-    // 1: lyrics
-    // 2: music
-    // next..?
+    public static $authorship_type_string_values = [
+        'GENERIC' => 'Univerzální',
+        'LYRICS' => 'Text',
+        'MUSIC' => 'Hudba',
+    ];
 
     public function song_lyric()
     {
