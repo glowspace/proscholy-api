@@ -18,5 +18,4 @@ RUN wget https://github.com/msoap/shell2http/releases/download/1.13/shell2http-1
     tar -xf shell2http-1.13.linux.amd64.tar.gz
 
 ENTRYPOINT ./shell2http -form \
-    /svg 'echo $v_data > score.ly && (lilypond -dbackend=svg --format=svg score.ly 2>err.txt && cat score.svg || cat err.txt)' \ 
-    /svg_html 'echo $v_data > score.ly && (lilypond -dbackend=svg --format=svg score.ly 2>err.txt && (echo "<html>"; cat score.svg; echo "</html>") || cat err.txt)'
+    POST:/svg 'cat $filepath_file_lilypond > score.ly && (lilypond -dbackend=svg --format=svg score.ly 2>err.txt && cat score.svg || cat err.txt)'
