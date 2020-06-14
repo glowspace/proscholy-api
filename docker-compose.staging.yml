@@ -1,69 +1,69 @@
-version: '3'
+version: "3"
 services:
   web:
-    build: 
+    build:
       context: ./docker/setup/web
       dockerfile: Dockerfile
     volumes:
-      - '.:/var/www/html'
-      - './docker/config/cron.d:/etc/cron.d'
-      - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
-    entrypoint: 'bash ./docker/setup/web/entrypoint_web_prod.sh'
+      - ".:/var/www/html"
+      - "./docker/config/cron.d:/etc/cron.d"
+      - "./docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini"
+    entrypoint: "bash ./docker/setup/web/entrypoint_web_prod.sh"
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     restart: always
     depends_on:
       - db
     dns:
       - 8.8.8.8
       - 4.4.4.4
-  
+
   db:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'proscholy'
-      MYSQL_USER: 'zpevnik'
-      MYSQL_PASSWORD: 'zpev123'
-      MYSQL_ROOT_PASSWORD: 'zpzpzp123'
+      MYSQL_DATABASE: "proscholy"
+      MYSQL_USER: "zpevnik"
+      MYSQL_PASSWORD: "zpev123"
+      MYSQL_ROOT_PASSWORD: "zpzpzp123"
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - '23306:3306'
+      - "23306:3306"
     expose:
       # Opens port 3306 on the container
-      - '3306'
+      - "3306"
       # Where our data will be persisted
     volumes:
       - ./docker/data/databases:/var/databases
       - ./docker/data/mysql:/var/lib/mysql
-    networks: 
-      - bcloud-network
+    networks:
+      - bcloud-network-staging
 
   nginx:
-    image: 'nginx:1.17.3'
+    image: "nginx:1.17.3"
     ports:
-      - '20080:80'
-      - '20443:443'
+      - "20080:80"
+      - "20443:443"
     links:
-      - 'web'
+      - "web"
     volumes:
-      - '.:/var/www/html'
-      - './docker/config/nginx_prod:/etc/nginx/conf.d'
-      - './docker/logs/nginx:/var/log/nginx'
+      - ".:/var/www/html"
+      - "./docker/config/nginx_prod:/etc/nginx/conf.d"
+      - "./docker/logs/nginx:/var/log/nginx"
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     restart: always
 
   adminer:
     image: adminer
     restart: always
     ports:
-        - 28080:8080
+      - 28080:8080
     networks:
-      - bcloud-network
+      - bcloud-network-staging
 
   elasticsearch:
-    build: 
+    build:
       context: ./docker/setup/elastic
       dockerfile: Dockerfile
     environment:
@@ -71,13 +71,13 @@ services:
       - transport.host=127.0.0.1
       - xpack.security.enabled=false
     volumes:
-      - ./data/elastic:/etc/elasticsearch/data 
+      - ./data/elastic:/etc/elasticsearch/data
       - ./config/elastic/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
     ports:
       - "29200:9200"
     networks:
-      - bcloud-network
+      - bcloud-network-staging
     restart: always
 
 networks:
-  bcloud-network:
+  bcloud-network-staging:
