@@ -11,7 +11,7 @@ class SongLyricService
 {
     public function getLilypondSvg($lilypond)
     {
-        $endpoint = "http://localhost:1234/svg";
+        $endpoint = config('lilypond.host') . ":" . config('lilypond.port') . '/svg';
 
         $client = new Client();
         $res = $client->post($endpoint, [

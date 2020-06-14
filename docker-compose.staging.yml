@@ -95,6 +95,17 @@ services:
   #     - bcloud-network-staging
   #   depends_on:
   #     - elasticsearch
+  lilypond:
+    build:
+      context: ./docker/setup/lilypond
+      dockerfile: Dockerfile
+    tty: true
+    volumes:
+      - ./data/lilypond:/scores
+    ports:
+      - 1234:8080
+    networks:
+      - bcloud-network-staging
 
 networks:
   bcloud-network-staging:
