@@ -11,10 +11,18 @@ class SongLyricService
 {
     public function getLilypondSvg($lilypond)
     {
-        $url = "http://localhost:1234/svg?data=" . urlencode($lilypond);
+        $url = "http://localhost:1234/svg";
 
         $client = new Client();
-        $res = $client->request('GET', $url);
+        $res = $client->post($url, [
+            'multipart' => [
+                [
+                    'name'     => 'file_lilypond',
+                    'contents' => $lilypond,
+                    'filename' => 'score.ly'
+                ]
+            ]
+        ]);
 
         if ($res->getStatusCode() == 200) {
             return $res->getBody();
