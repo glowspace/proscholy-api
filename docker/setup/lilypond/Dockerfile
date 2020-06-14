@@ -17,5 +17,8 @@ RUN apt-get -y install wget unzip
 RUN wget https://github.com/msoap/shell2http/releases/download/1.13/shell2http-1.13.linux.amd64.tar.gz && \
     tar -xf shell2http-1.13.linux.amd64.tar.gz
 
+# run a simple http server that listens on /svg route for a POST request with a multipart form data:
+# file_lilypond -> contents of lilypond formatted file
+
 ENTRYPOINT ./shell2http -form \
     POST:/svg 'cat $filepath_file_lilypond > score.ly && (lilypond -dbackend=svg --format=svg score.ly 2>err.txt && cat score.svg || cat err.txt)'

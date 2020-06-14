@@ -11,10 +11,7 @@ class LilypondParse
     {
         $sl_service = new SongLyricService();
 
-        logger($args);
-
         $svg = $sl_service->getLilypondSvg($args['lilypond']);
-        // $html = "<html>$svg</html>";
 
         return compact('svg');
     }
