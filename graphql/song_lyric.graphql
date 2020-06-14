@@ -18,8 +18,10 @@ type SongLyric {
     updated_at: String
     authors: [Author]
         @belongsToMany
-        @deprecated(reason: "Use authors_pivot for additional relation data")
-    authors_pivot: [AuthorSongLyric] @belongsToMany
+        @deprecated(reason: "Use `authors_pivot` for additional relation data")
+    authors_pivot(
+        authorship_type: AuthorshipType @eq
+    ): [AuthorSongLyric] @belongsToMany
     externals(
         id: Int @eq
         type: Int @eq

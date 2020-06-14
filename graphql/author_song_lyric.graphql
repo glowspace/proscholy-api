@@ -1,6 +1,12 @@
+enum AuthorshipType {
+    GENERIC @enum(value: 0)
+    LYRICS @enum(value: 1)
+    MUSIC @enum(value: 2)
+}
+
 type AuthorSongLyric {
     id: ID! @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@id")
-    authorship_type: ID!
+    authorship_type: AuthorshipType
         @field(
             resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@authorship_type"
         )

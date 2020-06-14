@@ -281,9 +281,17 @@ class SongLyric extends Model
         return $this->belongsTo(Song::class);
     }
 
+    // todo: make obsolete (together with an graphql endpoint)
     public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
+    }
+
+    public function authors_pivot(): BelongsToMany
+    {
+        return $this->belongsToMany(Author::class)
+            ->withPivot('authorship_type', 'id')
+            ->using(AuthorSongLyric::class);
     }
 
     public function tags(): MorphToMany
