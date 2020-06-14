@@ -14,7 +14,7 @@
         <v-tab>Lilypond</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
-        <v-tab v-if="model_database && model_database.is_arrangement === false">Aranže</v-tab>
+        <v-tab v-if="is_arrangement_layout">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -42,7 +42,7 @@
                 <v-layout row mb-2>
                   <v-flex xs12 lg6>
                     <items-combo-box
-                      v-if="model_database.is_arrangement"
+                      v-if="is_arrangement_layout"
                       v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
                       v-model="model.arrangement_source"
                       label="Aranžovaná píseň"
@@ -53,7 +53,7 @@
                     ></items-combo-box>
                   </v-flex>
                   <v-flex xs12 lg6>
-                    <v-btn v-if="model_database.is_arrangement"
+                    <v-btn v-if="is_arrangement_layout"
                           @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
                           :disabled="!model.arrangement_source"
                         >Přejít na editaci aranžované písně</v-btn>
@@ -123,7 +123,7 @@
                   :multiple="true"
                 ></items-combo-box>
                 <items-combo-box
-                  v-if="!model_database.is_arrangement"
+                  v-if="!is_arrangement_layout"
                   v-bind:p-items="tags_liturgy_part"
                   v-model="model.tags_liturgy_part"
                   label="Části liturgie"
@@ -132,7 +132,7 @@
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
                 <items-combo-box
-                  v-if="!model_database.is_arrangement"
+                  v-if="!is_arrangement_layout"
                   v-bind:p-items="tags_liturgy_period"
                   v-model="model.tags_liturgy_period"
                   label="Liturgický rok"
@@ -148,10 +148,10 @@
                   :multiple="true"
                   :enable-custom="false"
                 ></items-combo-box>
-                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="model_database && model_database.is_arrangement === false"></v-select>
+                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="is_arrangement_layout"></v-select>
 
 
-                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
+                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
 
                 <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_liturgy_part.length > 0">
                   Stávající liturgické šítky budou po uložení odstraněny
@@ -186,7 +186,7 @@
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12 md6>
-              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!model_database.is_arrangement"></v-select>
+              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!is_arrangement_layout"></v-select>
 
               <!-- todo: re-enable when handleOpensongFile has been reimplemented to graphql -->
               <!-- <a
@@ -266,7 +266,7 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row wrap mb-4>
+          <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
@@ -335,7 +335,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item v-if="model_database && model_database.is_arrangement === false">
+        <v-tab-item v-if="!is_arrangement_layout && model_database">
           <v-layout row wrap mb-4>
             <v-flex xs12>
               <h5>Přidružené aranže:</h5>
@@ -412,70 +412,44 @@ import NumberInput from "Admin/components/NumberInput.vue";
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric'
 
-const FETCH_AUTHORS = gql`
+const FETCH_DATA = gql`
   query {
     authors {
       id
       name
     }
-  }
-`;
-const FETCH_SONG_LYRICS = gql`
-  query {
     song_lyrics {
       id
       name
       is_arrangement
     }
-  }
-`;
-const FETCH_SONGBOOKS = gql`
-  query {
     songbooks {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_GENERIC = gql`
-  query {
     tags_generic: tags_enum(type: GENERIC) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_LITURGY_PART = gql`
-  query {
     tags_liturgy_part: tags_enum(type: LITURGY_PART) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_LITURGY_PERIOD = gql`
-  query {
     tags_liturgy_period: tags_enum(type: LITURGY_PERIOD) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_HISTORY_PERIOD = gql`
-  query {
     tags_history_period: tags_enum(type: HISTORY_PERIOD) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_SAINTS = gql`
-  query {
     tags_saints: tags_enum(type: SAINTS) {
       id
       name
     }
-}`;
+  }
+`;
+
 const CREATE_ARRANGEMENT = gql`
   mutation ($input: CreateArrangementInput!){
     create_arrangement(input: $input) {
@@ -531,6 +505,7 @@ export default {
       },
 
       selected_thumbnail_url: undefined,
+      is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
 
@@ -561,31 +536,33 @@ export default {
         if (this.thumbnailables.length) {
           this.selected_thumbnail_url = this.thumbnailables[0].url;
         }
+
+        this.is_loading = false;
       }
     },
     authors: {
-      query: FETCH_AUTHORS
+      query: FETCH_DATA
     },
     tags_liturgy_part: {
-      query: FETCH_TAGS_LITURGY_PART
+      query: FETCH_DATA
     },
     tags_generic: {
-      query: FETCH_TAGS_GENERIC
+      query: FETCH_DATA
     },
     tags_history_period: {
-      query: FETCH_TAGS_HISTORY_PERIOD
+      query: FETCH_DATA
     },
     tags_liturgy_period: {
-      query: FETCH_TAGS_LITURGY_PERIOD
+      query: FETCH_DATA
     },
     tags_saints: {
-      query: FETCH_TAGS_SAINTS
+      query: FETCH_DATA
     },
     songbooks: {
-      query: FETCH_SONGBOOKS
+      query: FETCH_DATA
     },
     song_lyrics: {
-      query: FETCH_SONG_LYRICS
+      query: FETCH_DATA
     },
     lilypond_parse: {
       query: FETCH_LILYPOND,
@@ -614,7 +591,15 @@ export default {
             return [1, 2, 3].includes(file.type);
           })
         );
-    }, 
+    },
+
+    is_arrangement_layout() {
+      if (this.model_database) {
+        return this.model_database.is_arrangement;
+      }
+
+      return false;
+    }
   },
 
   methods: {
@@ -793,7 +778,6 @@ export default {
             type: "success"
           });
 
-          console.log(result.data);
           this.new_arrangement_name = "";
           this.created_arrangements.push(result.data.create_arrangement);
         })
