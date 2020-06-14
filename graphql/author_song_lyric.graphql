@@ -1,0 +1,33 @@
+enum AuthorshipType {
+    GENERIC @enum(value: 0)
+    LYRICS @enum(value: 1)
+    MUSIC @enum(value: 2)
+}
+
+type AuthorSongLyric {
+    id: ID! @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@id")
+    authorship_type: AuthorshipType
+        @field(
+            resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@authorship_type"
+        )
+    song_lyric: SongLyric
+        @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@song_lyric")
+    author: Author
+        @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@author")
+}
+
+input SyncAuthorsSongLyricRelation {
+    create: [CreateAuthorSongLyricInput!]
+    sync: [SyncAuthorSongLyricInput!]
+}
+
+input CreateAuthorSongLyricInput {
+    author_name: String!
+    authorship_type: AuthorshipType
+}
+
+input SyncAuthorSongLyricInput {
+    author_id: ID
+    authorship_type: AuthorshipType
+}
+

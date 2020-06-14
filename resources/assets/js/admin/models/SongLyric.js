@@ -5,9 +5,13 @@ const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
         id
         name
-        authors {
+        authors_pivot {
             id
-            name
+            authorship_type
+            author {
+                id
+                name
+            }
         }
         has_anonymous_author
         lang
@@ -76,6 +80,7 @@ const QUERY = gql`
             lang_string_values
             liturgy_approval_status_string_values
             missa_type_string_values
+            authorship_type_string_values
 
             is_arrangement
 
@@ -204,16 +209,28 @@ export default {
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
             missa_type: vueModel.missa_type,
-            authors: belongsToManyMutator(vueModel.authors),
+            // a pivot mutator
+            authors: {
+                sync: vueModel.authors_pivot
+                    .filter(a => a.author && a.author.hasOwnProperty('id'))
+                    .map(a => ({
+                        author_id: parseInt(a.author.id),
+                        authorship_type: a.authorship_type
+                    })),
+                create: vueModel.authors_pivot
+                    .filter(a => a.author && !a.author.hasOwnProperty('id'))
+                    .map(a => ({
+                        author_name: a.author.name,
+                        authorship_type: a.authorship_type
+                    }))
+            },
             arrangement_source:
                 vueModel.arrangement_source === null
                     ? null
                     : belongsToMutator(vueModel.arrangement_source),
 
-            // specific mutator
+            // a pivot mutator
             songbook_records: {
-                // //was not working
-                // //create: vueModel.songbook_records.filter(m => typeof m.songbook === "string"),
                 sync: vueModel.songbook_records.map(m => ({
                     songbook_id: parseInt(m.songbook.id),
                     number: m.number

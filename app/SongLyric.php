@@ -276,14 +276,28 @@ class SongLyric extends Model
         return self::$missa_type_string_values;
     }
 
+    // helper method, so this can be included in graphql schema
+    public function getAuthorshipTypeStringValuesAttribute()
+    {
+        return AuthorSongLyric::$authorship_type_string_values;
+    }
+
     public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
 
+    // todo: make obsolete (together with an graphql endpoint)
     public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
+    }
+
+    public function authors_pivot(): BelongsToMany
+    {
+        return $this->belongsToMany(Author::class)
+            ->withPivot('authorship_type', 'id')
+            ->using(AuthorSongLyric::class);
     }
 
     public function tags(): MorphToMany

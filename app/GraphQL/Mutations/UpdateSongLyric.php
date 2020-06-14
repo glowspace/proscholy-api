@@ -8,7 +8,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Log;
 use App\SongLyric;
 use App\Song;
-use App\Tag;
+use App\Author;
 use App\Songbook;
 use function Safe\array_combine;
 
@@ -47,13 +47,29 @@ class UpdateSongLyric
         $this->handleSongGroup($input["song"], $song_lyric);
 
         // HANDLE AUTHORS
-        if (isset($input["authors"]["sync"]))
-            $song_lyric->authors()->sync($input["authors"]["sync"]);
+        $syncAuthors = [];
+
         if (isset($input["authors"]["create"])) {
             foreach ($input["authors"]["create"] as $author) {
-                $song_lyric->authors()->create(['name' => $author["name"]]);
+                $a = Author::create([
+                    'name' => $author['author_name']
+                ]);
+
+                $syncAuthors[$a->id] = [
+                    'authorship_type' => $author['authorship_type']
+                ];
             }
         }
+
+        if (isset($input["authors"]["sync"])) {
+            foreach ($input['authors']['sync'] as $author) {
+                $syncAuthors[$author["author_id"]] = [
+                    'authorship_type' => $author["authorship_type"]
+                ];
+            }
+        }
+
+        $song_lyric->authors_pivot()->sync($syncAuthors);
         $song_lyric->save();
 
         // HANDLE SONGBOOK RECORDS

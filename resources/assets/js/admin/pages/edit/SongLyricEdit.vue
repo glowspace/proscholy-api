@@ -8,7 +8,7 @@
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
-        <v-tab v-if="model_database && model_database.is_arrangement === false">Aranže</v-tab>
+        <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -36,7 +36,7 @@
                 <v-layout row mb-2>
                   <v-flex xs12 lg6>
                     <items-combo-box
-                      v-if="model_database.is_arrangement"
+                      v-if="is_arrangement_layout"
                       v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
                       v-model="model.arrangement_source"
                       label="Aranžovaná píseň"
@@ -47,38 +47,66 @@
                     ></items-combo-box>
                   </v-flex>
                   <v-flex xs12 lg6>
-                    <v-btn v-if="model_database.is_arrangement"
+                    <v-btn v-if="is_arrangement_layout"
                           @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
                           :disabled="!model.arrangement_source"
+                          color="info" outline
                         >Přejít na editaci aranžované písně</v-btn>
                   </v-flex>
                 </v-layout>
 
-                <v-layout row wrap>
-                  <v-flex xs12 lg8>
-                    <items-combo-box
-                      v-bind:p-items="authors"
-                      v-model="model.authors"
-                      label="Autoři"
-                      header-label="Vyberte autora z nabídky nebo vytvořte nového"
-                      create-label="Potvrďte enterem a vytvořte nového autora"
-                      :multiple="true"
-                      :enable-custom="true"
-                    ></items-combo-box>
+                <v-card class="mb-5">
+                  <v-card-title><h3>Autoři</h3></v-card-title>
 
+                  <v-card-text>
+                    <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
+                      <v-flex xs7>
+                        <items-combo-box
+                          v-model="author_pivot.author"
+                          v-bind:p-items="authors"
+                          item-text="name"
+                          label="Autor"
+                          :multiple="false"
+                          :enable-custom="true"
+                        ></items-combo-box>
+                      </v-flex>
+                      <v-flex xs2>
+                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                        <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                        <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                      </v-flex>
+                      <v-flex xs2>
+                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                        <v-btn color="error" outline @click="removeAuthor(i)">Odstranit</v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </v-card-text>
+
+                  <v-card-actions>
+                      <v-flex xs12>
+                        <v-btn
+                          color="info"
+                          outline
+                          @click="addEmptyAuthor()"
+                        >Přidat autora</v-btn>
+                      </v-flex>
+                  </v-card-actions>
+                </v-card>
+
+                <!-- <h3>Autoři</h3>
+
+                <v-layout row wrap>
+                  <v-flex xs12 class="mb-5">
+                    <v-btn
+                      color="info"
+                      outline
+                      @click="addEmptyAuthor()"
+                    >Přidat autora</v-btn>
                   </v-flex>
-                  <v-flex xs12 lg4>
-                  <v-checkbox :disabled="model.authors.length > 0"
-                  class="mt-0"
-                  v-model="model.has_anonymous_author"
-                  label="Anonymní autor (nezobrazovat v to-do)"
-                ></v-checkbox>
-                  </v-flex>
-                </v-layout>
-                
+                </v-layout> -->
 
                 <v-card v-if="model.song && model_database.song" class="mb-3">
-                  <v-card-title>Skupina písní</v-card-title>
+                  <v-card-title><h3>Skupina písní</h3></v-card-title>
 
                   <v-card-text>
                   <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
@@ -117,7 +145,7 @@
                   :multiple="true"
                 ></items-combo-box>
                 <items-combo-box
-                  v-if="!model_database.is_arrangement"
+                  v-if="!is_arrangement_layout"
                   v-bind:p-items="tags_liturgy_part"
                   v-model="model.tags_liturgy_part"
                   label="Části liturgie"
@@ -126,7 +154,7 @@
                   :disabled="model.liturgy_approval_status == 3"
                 ></items-combo-box>
                 <items-combo-box
-                  v-if="!model_database.is_arrangement"
+                  v-if="!is_arrangement_layout"
                   v-bind:p-items="tags_liturgy_period"
                   v-model="model.tags_liturgy_period"
                   label="Liturgický rok"
@@ -142,10 +170,10 @@
                   :multiple="true"
                   :enable-custom="false"
                 ></items-combo-box>
-                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="model_database && model_database.is_arrangement === false"></v-select>
+                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="is_arrangement_layout"></v-select>
 
 
-                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="model_database && model_database.is_arrangement === false"></v-select>
+                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
 
                 <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_liturgy_part.length > 0">
                   Stávající liturgické šítky budou po uložení odstraněny
@@ -167,12 +195,7 @@
 
               <h5>Autoři</h5>
               <p>
-                Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
-                <!-- @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
-                  a autor (autoři) se po uložení písně automaticky vytvoří.
-                @else Je potřeba požádat administrátory o vytvoření nového autora @endcan-->
-                <br>V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
+                Po kliknutí na Přidat autora začněte zadávat jméno autora, pokud se nenachází ve vyskakovací nabídce, tak stačí napsat celé jméno, odentrovat a přidá se (zeleně označený) nový autor. Změna v databázi se provede až po uložení celé písně.
               </p>
             </v-flex>
           </v-layout>
@@ -180,7 +203,7 @@
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12 md6>
-              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!model_database.is_arrangement"></v-select>
+              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!is_arrangement_layout"></v-select>
 
               <!-- todo: re-enable when handleOpensongFile has been reimplemented to graphql -->
               <!-- <a
@@ -241,7 +264,7 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row wrap mb-4>
+          <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
@@ -310,7 +333,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item v-if="model_database && model_database.is_arrangement === false">
+        <v-tab-item v-if="!is_arrangement_layout && model_database">
           <v-layout row wrap mb-4>
             <v-flex xs12>
               <h5>Přidružené aranže:</h5>
@@ -391,70 +414,44 @@ import NumberInput from "Admin/components/NumberInput.vue";
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric'
 
-const FETCH_AUTHORS = gql`
+const FETCH_DATA = gql`
   query {
     authors {
       id
       name
     }
-  }
-`;
-const FETCH_SONG_LYRICS = gql`
-  query {
     song_lyrics {
       id
       name
       is_arrangement
     }
-  }
-`;
-const FETCH_SONGBOOKS = gql`
-  query {
     songbooks {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_GENERIC = gql`
-  query {
     tags_generic: tags_enum(type: GENERIC) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_LITURGY_PART = gql`
-  query {
     tags_liturgy_part: tags_enum(type: LITURGY_PART) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_LITURGY_PERIOD = gql`
-  query {
     tags_liturgy_period: tags_enum(type: LITURGY_PERIOD) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_HISTORY_PERIOD = gql`
-  query {
     tags_history_period: tags_enum(type: HISTORY_PERIOD) {
       id
       name
     }
-  }
-`;
-const FETCH_TAGS_SAINTS = gql`
-  query {
     tags_saints: tags_enum(type: SAINTS) {
       id
       name
     }
-}`;
+  }
+`;
+
 const CREATE_ARRANGEMENT = gql`
   mutation ($input: CreateArrangementInput!){
     create_arrangement(input: $input) {
@@ -490,7 +487,7 @@ export default {
         tags_liturgy_period: [],
         tags_history_period: [],
         tags_saints: [],
-        authors: [],
+        authors_pivot: [],
         externals: [],
         files: [],
         songbook_records: [],
@@ -502,6 +499,7 @@ export default {
       },
 
       selected_thumbnail_url: undefined,
+      is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
 
@@ -511,7 +509,8 @@ export default {
       enums: {
         lang: [],
         liturgy_approval_status: [],
-        missa_type: []
+        missa_type: [],
+        authorship_type: []
       }
     };
   },
@@ -527,36 +526,39 @@ export default {
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
         this.loadEnumJsonFromResult(result, "missa_type_string_values", this.enums.missa_type);
+        this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
           this.selected_thumbnail_url = this.thumbnailables[0].url;
         }
+
+        this.is_loading = false;
       }
     },
     authors: {
-      query: FETCH_AUTHORS
+      query: FETCH_DATA
     },
     tags_liturgy_part: {
-      query: FETCH_TAGS_LITURGY_PART
+      query: FETCH_DATA
     },
     tags_generic: {
-      query: FETCH_TAGS_GENERIC
+      query: FETCH_DATA
     },
     tags_history_period: {
-      query: FETCH_TAGS_HISTORY_PERIOD
+      query: FETCH_DATA
     },
     tags_liturgy_period: {
-      query: FETCH_TAGS_LITURGY_PERIOD
+      query: FETCH_DATA
     },
     tags_saints: {
-      query: FETCH_TAGS_SAINTS
+      query: FETCH_DATA
     },
     songbooks: {
-      query: FETCH_SONGBOOKS
+      query: FETCH_DATA
     },
     song_lyrics: {
-      query: FETCH_SONG_LYRICS
+      query: FETCH_DATA
     }
   },
   mounted() {
@@ -578,6 +580,14 @@ export default {
             return [1, 2, 3].includes(file.type);
           })
         );
+    },
+
+    is_arrangement_layout() {
+      if (this.model_database) {
+        return this.model_database.is_arrangement;
+      }
+
+      return false;
     }
   },
 
@@ -708,6 +718,17 @@ export default {
       });
     },
 
+    addEmptyAuthor() {
+      this.model.authors_pivot.push({
+        authorship_type: "GENERIC",
+        author: null
+      })
+    },
+
+    removeAuthor(i) {
+      this.$delete(this.model.authors_pivot, i);
+    },
+
     removeSongbookRecord(i) {
       let name = this.model.songbook_records[i].songbook.name;
       if (name) {
@@ -746,7 +767,6 @@ export default {
             type: "success"
           });
 
-          console.log(result.data);
           this.new_arrangement_name = "";
           this.created_arrangements.push(result.data.create_arrangement);
         })

@@ -16,7 +16,12 @@ type SongLyric {
     lang_string: String
     lang_string_values: JSON
     updated_at: String
-    authors: [Author] @belongsToMany
+    authors: [Author]
+        @belongsToMany
+        @deprecated(reason: "Use `authors_pivot` for additional relation data")
+    authors_pivot(
+        authorship_type: AuthorshipType @eq
+    ): [AuthorSongLyric] @belongsToMany
     externals(
         id: Int @eq
         type: Int @eq
@@ -37,6 +42,7 @@ type SongLyric {
     liturgy_approval_status_string_values: JSON
     missa_type: MissaType
     missa_type_string_values: JSON
+    authorship_type_string_values: JSON
 
     tags_official: [Tag]
         @morphMany(relation: "tags", scopes: ["liturgyPart"])
@@ -120,7 +126,7 @@ input UpdateSongLyricInput {
         )
     has_anonymous_author: Boolean
     lang: String
-    authors: SyncAuthorsRelation
+    authors: SyncAuthorsSongLyricRelation
     tags_unofficial: SyncUnofficialTagsRelation
     tags_official: SyncOfficialTagsRelation
     songbook_records: SyncSongbookRecordsForSongLyricRelation
