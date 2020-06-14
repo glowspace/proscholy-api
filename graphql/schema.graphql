@@ -7,6 +7,7 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 
 "Import graphql schema files"
+#import author_song_lyric.graphql
 #import author.graphql
 #import user.graphql
 #import song_lyric.graphql
@@ -31,11 +32,9 @@ type FilterTagCategory {
 }
 
 type Query {
-    author_dummy(id: ID! @eq): Author @find
+    well_hello_there(id: ID! @eq): Author @find @deprecated(reason: "Only a dummy thing to comply with graphql schema")
 }
 
 type Mutation @middleware(checks: ["auth:api"]) {
-    author_dummy(id: ID! @eq): Author @find
+    well_hello_there(id: ID! @eq): Author @find @deprecated(reason: "Only a dummy thing to comply with graphql schema")
 }
-
-

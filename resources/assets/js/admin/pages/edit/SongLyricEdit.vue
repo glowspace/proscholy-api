@@ -14,7 +14,7 @@
         <v-tab>Lilypond</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
-        <v-tab v-if="!is_arrangement_layout">Aranže</v-tab>
+        <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -56,35 +56,63 @@
                     <v-btn v-if="is_arrangement_layout"
                           @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
                           :disabled="!model.arrangement_source"
+                          color="info" outline
                         >Přejít na editaci aranžované písně</v-btn>
                   </v-flex>
                 </v-layout>
 
-                <v-layout row wrap>
-                  <v-flex xs12 lg8>
-                    <items-combo-box
-                      v-bind:p-items="authors"
-                      v-model="model.authors"
-                      label="Autoři"
-                      header-label="Vyberte autora z nabídky nebo vytvořte nového"
-                      create-label="Potvrďte enterem a vytvořte nového autora"
-                      :multiple="true"
-                      :enable-custom="true"
-                    ></items-combo-box>
+                <v-card class="mb-5">
+                  <v-card-title><h3>Autoři</h3></v-card-title>
 
+                  <v-card-text>
+                    <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
+                      <v-flex xs7>
+                        <items-combo-box
+                          v-model="author_pivot.author"
+                          v-bind:p-items="authors"
+                          item-text="name"
+                          label="Autor"
+                          :multiple="false"
+                          :enable-custom="true"
+                        ></items-combo-box>
+                      </v-flex>
+                      <v-flex xs2>
+                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                        <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                        <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                      </v-flex>
+                      <v-flex xs2>
+                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                        <v-btn color="error" outline @click="removeAuthor(i)">Odstranit</v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </v-card-text>
+
+                  <v-card-actions>
+                      <v-flex xs12>
+                        <v-btn
+                          color="info"
+                          outline
+                          @click="addEmptyAuthor()"
+                        >Přidat autora</v-btn>
+                      </v-flex>
+                  </v-card-actions>
+                </v-card>
+
+                <!-- <h3>Autoři</h3>
+
+                <v-layout row wrap>
+                  <v-flex xs12 class="mb-5">
+                    <v-btn
+                      color="info"
+                      outline
+                      @click="addEmptyAuthor()"
+                    >Přidat autora</v-btn>
                   </v-flex>
-                  <v-flex xs12 lg4>
-                  <v-checkbox :disabled="model.authors.length > 0"
-                  class="mt-0"
-                  v-model="model.has_anonymous_author"
-                  label="Anonymní autor (nezobrazovat v to-do)"
-                ></v-checkbox>
-                  </v-flex>
-                </v-layout>
-                
+                </v-layout> -->
 
                 <v-card v-if="model.song && model_database.song" class="mb-3">
-                  <v-card-title>Skupina písní</v-card-title>
+                  <v-card-title><h3>Skupina písní</h3></v-card-title>
 
                   <v-card-text>
                   <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
@@ -173,12 +201,7 @@
 
               <h5>Autoři</h5>
               <p>
-                Začněte zadávat jméno autora (textu nebo hudby) a pokud se vám během psaní zobrazí vyskakovací nabídka s hledaným jménem,
-                tak jej označte kliknutím nebo Enterem. Pokud se autor v nabídce nenachází, znamená to, že ještě nebyl přidán do databáze.
-                <!-- @can('add authors')To ale ničemu nevadí, stačí správně napsat jméno (resp. více jmen), potvrdit Enterem
-                  a autor (autoři) se po uložení písně automaticky vytvoří.
-                @else Je potřeba požádat administrátory o vytvoření nového autora @endcan-->
-                <br>V současné verzi zpěvníku pro jednoduchost zatím nerozlišujeme vztah autora k písni.
+                Po kliknutí na Přidat autora začněte zadávat jméno autora, pokud se nenachází ve vyskakovací nabídce, tak stačí napsat celé jméno, odentrovat a přidá se (zeleně označený) nový autor. Změna v databázi se provede až po uložení celé písně.
               </p>
             </v-flex>
           </v-layout>
@@ -492,7 +515,7 @@ export default {
         tags_liturgy_period: [],
         tags_history_period: [],
         tags_saints: [],
-        authors: [],
+        authors_pivot: [],
         externals: [],
         files: [],
         songbook_records: [],
@@ -515,7 +538,8 @@ export default {
       enums: {
         lang: [],
         liturgy_approval_status: [],
-        missa_type: []
+        missa_type: [],
+        authorship_type: []
       }
     };
   },
@@ -531,6 +555,7 @@ export default {
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
         this.loadEnumJsonFromResult(result, "missa_type_string_values", this.enums.missa_type);
+        this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
@@ -738,6 +763,17 @@ export default {
           name: ""
         }
       });
+    },
+
+    addEmptyAuthor() {
+      this.model.authors_pivot.push({
+        authorship_type: "GENERIC",
+        author: null
+      })
+    },
+
+    removeAuthor(i) {
+      this.$delete(this.model.authors_pivot, i);
     },
 
     removeSongbookRecord(i) {
