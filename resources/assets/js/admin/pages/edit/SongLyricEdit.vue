@@ -8,7 +8,7 @@
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
-        <v-tab v-if="is_arrangement_layout && model_database">Aranže</v-tab>
+        <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
@@ -338,7 +338,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item v-if="is_arrangement_layout && model_database">
+        <v-tab-item v-if="!is_arrangement_layout && model_database">
           <v-layout row wrap mb-4>
             <v-flex xs12>
               <h5>Přidružené aranže:</h5>
