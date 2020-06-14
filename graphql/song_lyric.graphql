@@ -16,7 +16,10 @@ type SongLyric {
     lang_string: String
     lang_string_values: JSON
     updated_at: String
-    authors: [Author] @belongsToMany
+    authors: [Author]
+        @belongsToMany
+        @deprecated(reason: "Use authors_pivot for additional relation data")
+    authors_pivot: [AuthorSongLyric] @belongsToMany
     externals(
         id: Int @eq
         type: Int @eq

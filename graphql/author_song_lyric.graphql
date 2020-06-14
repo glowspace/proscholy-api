@@ -1,0 +1,11 @@
+type AuthorSongLyric {
+    id: ID! @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@id")
+    authorship_type: ID!
+        @field(
+            resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@authorship_type"
+        )
+    song_lyric: SongLyric
+        @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@song_lyric")
+    author: Author
+        @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@author")
+}
