@@ -253,10 +253,11 @@
                 v-model="model.lilypond"
                 v-on:input="debounceLilypondUrl"
                 v-on:keydown.tab.prevent="preventTextareaTab($event)"
+                style="font-family: monospace; tab-size: 2;"
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <iframe :src="lilypond_url" frameborder="0" width="100%" height="500"></iframe>
+                <iframe v-show="lilypond_url" :src="lilypond_url" frameborder="0" width="100%" height="500"></iframe>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -765,8 +766,12 @@ export default {
     },
 
     debounceLilypondUrl: _.debounce(function () {
-        this.lilypond_url = "http://localhost:1234/svg_html?data=" + this.model.lilypond;
-    }, 0),
+      if (this.model.lilypond.trim() == "") {
+        this.lilypond_url = "";
+      } else {
+        this.lilypond_url = "http://localhost:1234/svg_html?data=" + encodeURI(this.model.lilypond);
+      }
+    }, 200),
 
     createNewArrangement() {
       this.$apollo
