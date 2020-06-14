@@ -209,6 +209,7 @@ export default {
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
             missa_type: vueModel.missa_type,
+            // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot
                     .filter(a => a.author && a.author.hasOwnProperty('id'))
@@ -228,10 +229,8 @@ export default {
                     ? null
                     : belongsToMutator(vueModel.arrangement_source),
 
-            // specific mutator
+            // a pivot mutator
             songbook_records: {
-                // //was not working
-                // //create: vueModel.songbook_records.filter(m => typeof m.songbook === "string"),
                 sync: vueModel.songbook_records.map(m => ({
                     songbook_id: parseInt(m.songbook.id),
                     number: m.number
