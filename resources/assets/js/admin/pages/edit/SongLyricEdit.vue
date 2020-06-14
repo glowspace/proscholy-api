@@ -50,30 +50,50 @@
                     <v-btn v-if="is_arrangement_layout"
                           @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
                           :disabled="!model.arrangement_source"
+                          color="info" outline
                         >Přejít na editaci aranžované písně</v-btn>
                   </v-flex>
                 </v-layout>
 
-                <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
-                  <v-flex xs4>
-                    <items-combo-box
-                      v-model="author_pivot.author"
-                      v-bind:p-items="authors"
-                      item-text="name"
-                      label="Autor"
-                      :multiple="false"
-                      :enable-custom="true"
-                    ></items-combo-box>
-                  </v-flex>
-                  <v-flex xs2>
-                    <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                    <v-select :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
-                  </v-flex>
-                  <v-flex xs2>
-                    <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                    <!-- <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn> -->
-                  </v-flex>
-                </v-layout>
+                <v-card class="mb-3">
+                  <v-card-title><h3>Autoři</h3></v-card-title>
+
+                  <v-card-text>
+                    <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
+                      <v-flex xs7>
+                        <items-combo-box
+                          v-model="author_pivot.author"
+                          v-bind:p-items="authors"
+                          item-text="name"
+                          label="Autor"
+                          :multiple="false"
+                          :enable-custom="true"
+                        ></items-combo-box>
+                      </v-flex>
+                      <v-flex xs2>
+                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                        <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                        <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                      </v-flex>
+                      <v-flex xs2>
+                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                        <v-btn color="error" outline @click="removeAuthor(i)">Odstranit</v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </v-card-text>
+
+                  <v-card-actions>
+                      <v-flex xs12>
+                        <v-btn
+                          color="info"
+                          outline
+                          @click="addEmptyAuthor()"
+                        >Přidat autora</v-btn>
+                      </v-flex>
+                  </v-card-actions>
+                </v-card>
+
+                <!-- <h3>Autoři</h3>
 
                 <v-layout row wrap>
                   <v-flex xs12 class="mb-5">
@@ -83,36 +103,10 @@
                       @click="addEmptyAuthor()"
                     >Přidat autora</v-btn>
                   </v-flex>
-                </v-layout>
-
-                
-                <!-- <v-layout row wrap>
-                  <v-flex xs6>
-                    <items-combo-box
-                      v-bind:p-items="authors"
-                      v-model="model.authors"
-                      label="Autoři"
-                      header-label="Vyberte autora z nabídky nebo vytvořte nového"
-                      create-label="Potvrďte enterem a vytvořte nového autora"
-                      :multiple="true"
-                      :enable-custom="true"
-                    ></items-combo-box>
-                  </v-flex>
-                  <v-flex>
-                    <v-select :items="enums.authorship" v-model="model.authorship" label="Liturgický typ" v-if="is_arrangement_layout"></v-select>
-                  </v-flex>
-                  <v-flex xs12 lg4>
-                  <v-checkbox :disabled="model.authors.length > 0"
-                  class="mt-0"
-                  v-model="model.has_anonymous_author"
-                  label="Anonymní autor (nezobrazovat v to-do)"
-                ></v-checkbox>
-                  </v-flex>
                 </v-layout> -->
-                
 
                 <v-card v-if="model.song && model_database.song" class="mb-3">
-                  <v-card-title>Skupina písní</v-card-title>
+                  <v-card-title><h3>Skupina písní</h3></v-card-title>
 
                   <v-card-text>
                   <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
@@ -734,6 +728,10 @@ export default {
         authorship_type: "GENERIC",
         author: null
       })
+    },
+
+    removeAuthor(i) {
+      this.$delete(this.model.authors_pivot, i);
     },
 
     removeSongbookRecord(i) {
