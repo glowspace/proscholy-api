@@ -11,6 +11,12 @@
 ])
 
 @include('admin.components.menu-item', [
+    'route' => 'client.home',
+    'icon' => 'user',
+    'text' => 'Můj účet'
+])
+
+@include('admin.components.menu-item', [
     'route' => 'auth.logout',
     'icon' => 'sign-out-alt',
     'text' => 'Odhlásit se'

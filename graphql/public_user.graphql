@@ -3,11 +3,16 @@ type PublicUser {
     name: String
     email: String
     playlists: [Playlist]
+    admin_user: User
     is_admin: Boolean
 }
 
 extend type Query {
     current_public_user: PublicUser @auth(guard: "web_firebase")
+}
+
+extend type Query @middleware(checks: ["auth:api"]) {
+    public_users: [PublicUser] @all(model: "App\\PublicModels\\PublicUser")
 }
 
 extend type Mutation @middleware(checks: ["auth:web_firebase"]) {
@@ -16,6 +21,7 @@ extend type Mutation @middleware(checks: ["auth:web_firebase"]) {
     update_playlist(input: UpdatePlaylistInput!): Playlist # see App/GraphQL/Mutations/UpdatePlaylist.php
     create_playlist(input: CreatePlaylistInput! @spread): Playlist @update
 }
+
 
 input UpdatePublicUserInput {
     id: ID!

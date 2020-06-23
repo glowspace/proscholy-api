@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 
+use App\PublicModels\PublicUser;
+
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -59,6 +61,11 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token'
     ];
 
+    public function public_user()
+    {
+        return $this->hasOne(PublicUser::class, 'admin_user_id');
+    }
+
     public function getApiToken()
     {
         if ($this->api_token) {
@@ -71,7 +78,7 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
-    public function assigned_authors() : BelongsToMany
+    public function assigned_authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }

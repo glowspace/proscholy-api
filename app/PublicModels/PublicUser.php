@@ -2,6 +2,8 @@
 
 namespace App\PublicModels;
 
+use App\User;
+
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Notifications\Notifiable;
@@ -12,12 +14,22 @@ class PublicUser extends Authenticatable
     // TODO: implement User Settings with https://github.com/glorand/laravel-model-settings
 
     protected $fillable = [
-        'name', 'email', 'firebase_id', 'picture_url', 'last_jwt_token', 'is_admin'
+        'name', 'email', 'firebase_id', 'picture_url', 'last_jwt_token', 'admin_user_id'
     ];
 
     public function playlists()
     {
         return $this->hasMany(Playlist::class);
+    }
+
+    public function admin_user()
+    {
+        return $this->belongsTo(User::class, 'admin_user_id');
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->admin_user_id !== null;
     }
 
     public static function getPublicUserFromClaims($claims, $jwt)

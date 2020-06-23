@@ -1,11 +1,14 @@
 type User {
     id: ID!
     name: String
+    public_user: PublicUser
 }
 
 extend type Query {
+    me: User @auth
+}
+
+extend type Query @middleware(checks: ["auth:api"]) {
     users: [User!]! @all
     user(id: ID @eq): User @find
-
-    me: User @auth
 }
