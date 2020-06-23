@@ -3,6 +3,7 @@ type PublicUser {
     name: String
     email: String
     playlists: [Playlist]
+    is_admin: Boolean
 }
 
 extend type Query {
