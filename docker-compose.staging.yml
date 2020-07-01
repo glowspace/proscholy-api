@@ -42,7 +42,7 @@ services:
   nginx:
     image: "nginx:1.17.3"
     ports:
-      - "20080:80"
+      - "20085:80"
       - "20443:443"
     links:
       - "web"
