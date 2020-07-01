@@ -1,12 +1,12 @@
 @extends('layout.master')
 
-@section('title', 'Administrace ProScholy.cz')
+@section('title', 'Administrace ProScholy & Regenschori')
 
 @section('navbar')
     <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top">
         <div>
             <a class="navbar-brand" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
-                Zpěvník pro scholy
+                ProScholy & Regenschori
                 <span style="color: #ffffff3d">– po ruce všem, kteří se chtějí modlit hudbou</span>
             </a>
         </div>

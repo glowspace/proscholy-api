@@ -1,6 +1,6 @@
 @extends('layout.admin')
 
-@section('title', '● '.$song_lyric->name.' – administrace ProScholy.cz')
+@section('title', '● '.$song_lyric->name.' – administrace ProScholy & Regenschori')
 
 @section('content-withmenu')
     <div class="__container-fluid">
