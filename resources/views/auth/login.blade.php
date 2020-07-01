@@ -1,5 +1,17 @@
 @extends('layout.client')
 
+@section('title', 'Administrace ProScholy & Regenschori')
+
+@section('navbar')
+    <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top d-block">
+        <div class="w-100 text-center">
+            <a class="navbar-brand mr-4" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
+                ProScholy & Regenschori
+            </a>
+        </div>
+    </nav>
+@endsection
+
 @push('scripts')
     <script>document.getElementById('email').focus();</script>
 @endpush
@@ -9,7 +21,7 @@
         <div class="w-100" style="max-width:400px">
             <div class="card text-white bg-info mb-3 text-center">
                 <div class="card-body">
-                    <p class="card-text">Dál už můžeme jenom my, redaktoři ProScholy.cz.</p>
+                    <p class="card-text">Dál už můžeme jenom my, <br>redaktoři projektů ProScholy a&nbsp;Regenschori.</p>
                     <p class="card-text">
                         Chceš se stát jedním z&nbsp;nás?
                         <br>Napiš na <a class="text-white" href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a>.
