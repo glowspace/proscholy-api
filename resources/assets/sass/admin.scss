@@ -54,7 +54,7 @@ textarea.form-control
   @include media-breakpoint-up(lg) {
     min-height: calc(100vh - 66px);
   }
-  
+
   @include media-breakpoint-down(md) {
     margin-right: -15px;
   }
@@ -104,7 +104,7 @@ textarea.form-control
 		font-size: 1.1rem;
 		margin-bottom: 0.25rem;
   }
-  
+
   & > .card {
     margin-left: 10px;
     margin-right: 10px;
@@ -127,7 +127,7 @@ textarea.form-control
     img, .img-icon {
       transition: opacity 0.2s;
     }
-    
+
     &:hover {
       text-decoration: none;
 
@@ -141,7 +141,7 @@ textarea.form-control
       height: 100%;
       flex-direction: row;
       transition: border 0.2s;
-      
+
       img, .img-icon {
         height: auto;
         text-align: center;
@@ -155,7 +155,7 @@ textarea.form-control
       .fa-phone-square {
         transform: scaleX(-1);
       }
-  
+
       .card-body {
         flex: 1;
         margin: auto 0;
@@ -163,7 +163,7 @@ textarea.form-control
         padding-bottom: 0;
       }
     }
-	} 
+	}
 }
 
 .btn.admin-report {
@@ -184,4 +184,8 @@ textarea.form-control
   td:not(:first-child) {
     text-align: right;
   }
+}
+
+.application--wrap {
+    min-height: initial !important;
 }

@@ -1,24 +1,30 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.dashboard',
-    'icon' => 'home',
+    'icon' => 'tachometer-alt',
     'text' => 'Nástěnka'
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'client.home',
-    'icon' => 'arrow-left',
-    'text' => 'Návrat na web'
+    'icon' => 'guitar',
+    'text' => 'Zpěvník pro scholy'
 ])
 
-@include('admin.components.menu-item', [
+{{-- @include('admin.components.menu-item', [
+    'route' => 'client.home',
+    'icon' => 'church',
+    'text' => 'Regenschori'
+]) --}}
+
+{{-- @include('admin.components.menu-item', [
     'route' => 'client.home',
     'icon' => 'user',
     'text' => 'Můj účet'
-])
+]) --}}
 
 @include('admin.components.menu-item', [
     'route' => 'auth.logout',
-    'icon' => 'sign-out-alt',
+    'icon' => 'lock',
     'text' => 'Odhlásit se'
 ])
 

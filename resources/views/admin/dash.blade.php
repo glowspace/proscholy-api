@@ -3,7 +3,7 @@
 @section('content-withmenu')
     <div class="__container-fluid">
         <h1>Administrace</h1>
-        
+
         <div class="row">
             <div class="col-sm-8 dash d-flex flex-wrap">
                 <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CCC2UEP1A" target="_blank">
@@ -78,17 +78,17 @@
                         <table class="table table-bordered mb-0 statistics-table">
                             <tr>
                                 <td>Písně s&nbsp;textem</td>
-                                <td>{{round(($songs_w_text_count/$songs_count)*100)}} %</td>
+                                <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
                                 <td><b>{{$songs_w_text_count}}</b></td>
                             </tr>
                             <tr>
                                 <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
-                                <td>{{round(($songs_w_all_count/$songs_count)*100)}} %</td>
+                                <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>
                                 <td><b class="text-success">{{$songs_w_all_count}}</b></td>
                             </tr>
                             <tr>
                                 <td>Písně pouze s&nbsp;názvem</td>
-                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}} %</td>
+                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>
                                 <td><b class="text-warning">{{$songs_w_just_title_count}}</b></td>
                             </tr>
                             <tr>
