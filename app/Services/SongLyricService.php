@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Log;
 use App\Author;
 use App\SongLyric;
 use GuzzleHttp\Client;
