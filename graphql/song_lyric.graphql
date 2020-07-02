@@ -9,9 +9,10 @@ type SongLyric {
     lyrics: String
     lilypond: String
     lilypond_svg: String
-    type: Int
-    is_original: Boolean! @deprecated(reason: "Use the `type` field instead")
-    is_authorized: Boolean! @deprecated(reason: "Use the `type` field instead")
+    type: Int @deprecated(reason: "Use the `type_enum` field instead")
+    type_enum: SongType @rename(attribute: "type")
+    is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
+    is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
     is_approved_by_author: Boolean!
     is_published: Boolean!
     has_anonymous_author: Boolean!
