@@ -284,7 +284,8 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <div v-html="lilypond_parse.svg" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -303,7 +304,7 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <div v-html="lilypond_parse.svg" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" style="max-height: 70vh; overflow: scroll;"></div>
             </v-flex>
           </v-layout>
         </v-tab-item>
