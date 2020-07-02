@@ -33,6 +33,10 @@ class SongLyricCreated
      */
     public function handle(SongLyricCreatedEvent $event)
     {
+        $event->song_lyric->update([
+            'song_number' => $event->song_lyric->id
+        ]);
+
         // if current user cannot publish songs-> the song is not published yet
         // and is waiting for approval
         $user = Auth::user();

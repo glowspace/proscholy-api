@@ -4,6 +4,7 @@ type SongLyric {
     rich_name: String @with(relation: "authors")
     public_url: String
     public_route: String
+    song_number: Int
     lyrics_no_chords: String
     lyrics: String
     lilypond: String
@@ -69,10 +70,10 @@ type SongLyric {
     # has_media: Boolean @with(relation: "files")
 }
 
-enum MissaType {
-    NONE @enum(value: 0)
-    ORDINARIUM @enum(value: 1)
-    PROPRIUM @enum(value: 2)
+enum SongType {
+    ORIGINAL @enum(value: 0)
+    TRANSLATION @enum(value: 1)
+    AUTHORIZED_TRANSLATION @enum(value: 2)
 }
 
 type SongLyricPaginator {

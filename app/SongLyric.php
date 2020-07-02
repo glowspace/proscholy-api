@@ -150,7 +150,8 @@ class SongLyric extends Model
         'arrangement_of',
         'missa_type',
         'lilypond',
-        'lilypond_svg'
+        'lilypond_svg',
+        'song_number'
     ];
 
     private static $lang_string_values = [
