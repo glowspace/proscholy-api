@@ -32,30 +32,6 @@
     <div class="navbar-label material-shadow text-danger">Plnění obsahem</div>
 
     @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-lyric',
-        'icon' => 'music',
-        'text' => 'Písně bez textu'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-author',
-        'icon' => 'music',
-        'text' => 'Písně bez autora'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-chord',
-        'icon' => 'music',
-        'text' => 'Písně bez akordů'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-tag',
-        'icon' => 'music',
-        'text' => 'Písně bez štítků'
-    ])
-
-    @include('admin.components.menu-item', [
         'route' => 'admin.external.no-author',
         'icon' => 'link',
         'text' => 'Odkazy bez autora/písničky'

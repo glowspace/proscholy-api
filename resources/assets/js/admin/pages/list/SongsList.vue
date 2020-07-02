@@ -10,7 +10,31 @@
                 @saved="$apollo.queries.song_lyrics.refetch()"
             ></create-model>
             <v-layout row>
-                <v-flex xs5 offset-xs7 md3 offset-md9>
+                <v-flex xs7>
+                    <v-radio-group v-model="filter_mode">
+                        <v-radio
+                            label="Všechny písně"
+                            value="no-filter"
+                        ></v-radio>
+                        <v-radio
+                            label="Písně bez textu"
+                            value="no-lyrics"
+                        ></v-radio>
+                        <v-radio
+                            label="Písně bez akordů"
+                            value="no-chords"
+                        ></v-radio>
+                        <v-radio
+                            label="Písně bez autora"
+                            value="no-author"
+                        ></v-radio>
+                        <v-radio
+                            label="Písně bez štítků"
+                            value="no-tags"
+                        ></v-radio>
+                    </v-radio-group>
+                </v-flex>
+                <v-flex xs5>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
@@ -145,8 +169,6 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ['has-lyrics', 'has-authors', 'has-chords', 'has-tags'],
-
     components: {
         CreateModel
     },
@@ -162,7 +184,8 @@ export default {
                 { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Akce', value: 'action' }
             ],
-            search_string: ''
+            search_string: '',
+            filter_mode: 'no-filter'
         };
     },
 
@@ -171,10 +194,13 @@ export default {
             query: fetch_items,
             variables() {
                 return {
-                    has_lyrics: this.hasLyrics,
-                    has_authors: this.hasAuthors,
-                    has_chords: this.hasChords,
-                    has_tags: this.hasTags
+                    has_lyrics:
+                        this.filter_mode == 'no-lyrics' ? false : undefined,
+                    has_authors:
+                        this.filter_mode == 'no-authors' ? false : undefined,
+                    has_chords:
+                        this.filter_mode == 'no-chords' ? false : undefined,
+                    has_tags: this.filter_mode == 'no-tags' ? false : undefined
                 };
             },
             result(result) {
