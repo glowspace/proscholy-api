@@ -11,7 +11,19 @@
                 :force-edit="true"
             ></create-model>
             <v-layout row>
-                <v-flex xs5 offset-xs7 md3 offset-md9>
+                <v-flex xs7>
+                    <v-radio-group v-model="filter_mode">
+                        <v-radio
+                            label="Všechny externí odkazy"
+                            value="no-filter"
+                        ></v-radio>
+                        <v-radio
+                            label="Externí odkazy bez autora / přiřazené písničky"
+                            value="filter-todo"
+                        ></v-radio>
+                    </v-radio-group>
+                </v-flex>
+                <v-flex xs5>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
@@ -110,8 +122,6 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ['is-todo'],
-
     components: {
         CreateModel
     },
@@ -125,7 +135,8 @@ export default {
                 { text: 'Autoři', value: 'authors' },
                 { text: 'Akce', value: 'action' }
             ],
-            search_string: ''
+            search_string: '',
+            filter_mode: 'no-filter'
         };
     },
 
@@ -134,7 +145,8 @@ export default {
             query: fetch_items,
             variables() {
                 return {
-                    is_todo: this.isTodo
+                    is_todo:
+                        this.filter_mode == 'filter-todo' ? true : undefined
                 };
             },
             result(result) {

@@ -28,21 +28,10 @@
     'text' => 'Odhlásit se'
 ])
 
+{{-- 
 @can('access todo')
     <div class="navbar-label material-shadow text-danger">Plnění obsahem</div>
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.external.no-author',
-        'icon' => 'link',
-        'text' => 'Odkazy bez autora/písničky'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.file.no-author',
-        'icon' => 'file',
-        'text' => 'Soubory bez autora/písničky'
-    ])
-@endcan
+@endcan --}}
 
 {{-- <div class="navbar-label material-shadow text-danger">Kontrola obsahu</div>
 
