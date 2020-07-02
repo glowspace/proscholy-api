@@ -22,6 +22,7 @@
         "mll-lab/graphql-php-scalars": "^2.1",
         "mll-lab/laravel-graphql-playground": "^1.0",
         "nuwave/lighthouse": "^4.10",
+        "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-backup": "^6.9",
         "spatie/laravel-permission": "^2.33",
         "venturecraft/revisionable": "^1.30"
