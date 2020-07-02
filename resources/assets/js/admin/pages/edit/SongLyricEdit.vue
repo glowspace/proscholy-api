@@ -292,25 +292,6 @@
         <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12 md6>
-              <v-textarea
-                auto-grow
-                outline
-                name="input-7-4"
-                label="Notový zápis ve formátu Lilypond"
-                ref="textarea"
-                v-model="model.lilypond"
-                v-on:keydown.tab.prevent="preventTextareaTab($event)"
-                style="font-family: monospace; tab-size: 2;"
-              ></v-textarea>
-            </v-flex>
-            <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" style="max-height: 70vh; overflow: scroll;"></div>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item>
-          <v-layout row wrap mb-4 v-if="model_database">
-            <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
                 v-for="external in model_database.externals"
