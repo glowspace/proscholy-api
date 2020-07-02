@@ -75,7 +75,7 @@ export default {
             if (this.isDirty && save) await this.submit();
 
             setTimeout(() => {
-                if (!this.isDirty && save) {
+                if (!(this.isDirty && save)) {
                     var base_url = document
                         .querySelector('#baseUrl')
                         .getAttribute('value');
