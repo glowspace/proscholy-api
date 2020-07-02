@@ -62,11 +62,11 @@
                 </v-layout>
 
                 <v-card class="mb-5">
-                  <v-card-title><h3>Autoři</h3></v-card-title>
+                  <v-card-title><h3>Autoři<span v-if="is_arrangement_layout"> aranže</span></h3></v-card-title>
 
                   <v-card-text>
                     <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
-                      <v-flex xs7>
+                      <v-flex xs12 sm5>
                         <items-combo-box
                           v-model="author_pivot.author"
                           v-bind:p-items="authors"
@@ -76,12 +76,12 @@
                           :enable-custom="true"
                         ></items-combo-box>
                       </v-flex>
-                      <v-flex xs2>
+                      <v-flex xs7 sm4>
                         <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
                         <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
                         <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
                       </v-flex>
-                      <v-flex xs2>
+                      <v-flex xs5 sm2>
                         <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
                         <v-btn color="error" outline @click="removeAuthor(i)">Odstranit</v-btn>
                       </v-flex>
