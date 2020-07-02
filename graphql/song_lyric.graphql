@@ -1,41 +1,103 @@
 type SongLyric {
     id: ID!
     name: String
+    """
+    Song name with autors and additional info (i.e. arrangement)
+    Ex.: Tvůj Plamen - SBM (aranž písně Tvůj plamen, autoři: ..., ...)
+    """
     rich_name: String @with(relation: "authors")
+    """
+    Full url of the song page
+    """
     public_url: String
+    """
+    Url suffix of the song page, i.e. /pisen/12/nazev-pisne
+    """
     public_route: String
+    """
+    So far, song_number equals to song ID, but this will change in the future
+    """
     song_number: Int
+    """
+    Lyrics without ChordPro and other syntactical things - just plain words
+    """
     lyrics_no_chords: String
+    """
+    Raw unparsed lyrics of the song, including:
+    - ChordPro chord tags: `[C], [Dmi]` ...
+    - chord 'repeater' symbols in verses: `[%]`
+    - verse/refrain/.. marks: `1.`, `2.`, `R:`, `R2:` ... 
+    - other stuff: `@předehra:`, `@mezihra:`     
+
+    Soon, there will hopefully be a PE grammar used and available for lyrics parsing
+    """
     lyrics: String
+    """
+    Raw lilypond source
+    """
     lilypond: String
+    """
+    SVG output of lilypond parsing
+    """
     lilypond_svg: String
-    type: Int @deprecated(reason: "Use the `type_enum` field instead")
     type_enum: SongType @rename(attribute: "type")
-    is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
-    is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
     is_approved_by_author: Boolean!
     is_published: Boolean!
+    """
+    Marks that the song doesn't have any known author
+    """
     has_anonymous_author: Boolean!
+    """
+    Language in two-lettered codes: `cs, en, pl, de`... (exception: `mixed` for songs with more languages)
+    """
     lang: String
+    """
+    Czech name of the song language: `čeština, angličtina, polština` ...
+    """
     lang_string: String
+    """
+    All possible lang_code: lang_string pairs in JSON, used for select boxes
+    """
     lang_string_values: JSON
     updated_at: String
     authors: [Author]
         @belongsToMany
         @deprecated(reason: "Use `authors_pivot` for additional relation data")
+    """
+    Authors' relation with pivotal information about 'authorship type'
+    """
     authors_pivot(
         authorship_type: AuthorshipType @eq
     ): [AuthorSongLyric] @belongsToMany
+    """
+    External links (youtube, spotify, ...)
+    """
     externals(
         id: Int @eq
         type: Int @eq
         orderBy: [OrderByClause!] @orderBy
     ): [External] @hasMany
+    """
+    Files uploaded on our servers (mp3, pdf, ...) 
+    """
     files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @morphMany
+    """
+    Pivotal relation of song to its records in songbooks (currently reflects only printed songbooks)
+    """
     songbook_records: [SongbookRecord] @belongsToMany
+    """
+    'Parent' object that groups together same songs but of different type (`original`, `translation`, `authorized_translation`).
+    For quick reference to song's siblings (with same parent), see `siblings` attribute.
+    """
     song: Song @belongsTo
+    """
+    Whether the `lyrics` attribute includes ChordPro [..] chords
+    """
     has_chords: Boolean!
+    """
+    SongLyrics with same Song parent object
+    """
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
@@ -67,6 +129,10 @@ type SongLyric {
     arrangements: [SongLyric] @hasMany
     arrangement_source: SongLyric @belongsTo
     is_arrangement: Boolean
+    
+    type: Int @deprecated(reason: "Use the `type_enum` field instead")
+    is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
+    is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
 }
