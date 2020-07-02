@@ -309,7 +309,7 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row wrap mb-4>
+          <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
               <v-btn
