@@ -26,6 +26,11 @@ type Chord {
     text: String
 }
 
+type SongPartsJson {
+    json: JSON
+}
+
 extend type Query {
     song_lyric_parts(id: ID!): [SongPart]
+    song_lyric_parts_json(id: ID!): SongPartsJson
 }
