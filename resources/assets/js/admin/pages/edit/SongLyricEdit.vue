@@ -109,7 +109,7 @@
                       </v-flex>
                       <v-flex grow mt-3>
                          <v-checkbox
-                          :disabled="model.authors_pivot.length"
+                          :disabled="model.authors_pivot.length > 0"
                           class="mt-1"
                           v-model="model.has_anonymous_author"
                           label="Píseň má anonymního autora"
@@ -649,7 +649,7 @@ export default {
     },
 
     is_original() {
-      if (this.model) {
+      if (this.model && this.model.song) {
         const song_lyric_type = this.model.song.song_lyrics.find(sl => 
           sl.id == this.model.id
         ).type;
