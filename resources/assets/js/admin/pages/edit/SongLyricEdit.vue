@@ -45,6 +45,7 @@
                       v-if="is_arrangement_layout"
                       v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
                       v-model="model.arrangement_source"
+                      disabled
                       label="Aranžovaná píseň"
                       header-label="Vyberte původní píseň pro tuto aranž"
                       create-label="Potvrďte enterem a vytvořte novou píseň"
