@@ -11,7 +11,7 @@ class AuthorSongLyric extends Pivot
     public $incrementing = true;
 
     public static $authorship_type_string_values = [
-        'GENERIC' => 'Univerzální',
+        'GENERIC' => 'Obecný',
         'LYRICS' => 'Text',
         'MUSIC' => 'Hudba',
     ];
