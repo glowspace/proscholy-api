@@ -62,9 +62,13 @@
                 </v-layout>
 
                 <v-card class="mb-5">
-                  <v-card-title><h3>Autoři<span v-if="is_arrangement_layout"> aranže</span></h3></v-card-title>
+                  <v-card-title>
+                    <h3>Autoři<span v-if="is_arrangement_layout"> aranže</span>
+                    <span v-if="!is_original"> překladu</span>
+                    </h3>
+                  </v-card-title>
 
-                  <v-card-text>
+                  <v-card-text v-if="model.authors_pivot.length">
                     <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
                       <v-flex xs12 sm5>
                         <items-combo-box
@@ -87,14 +91,29 @@
                       </v-flex>
                     </v-layout>
                   </v-card-text>
+                  <v-card-text v-else>
+                    <span v-if="!model.has_anonymous_author">
+                      Zatím k písni nikdo nepřiřadil autora (u písně je označení "autor<span v-if="!is_original"> překladu </span> neznámý")
+                    </span>
+                    <span v-else>U písně je označení "anonymní autor"</span>
+                  </v-card-text>
 
                   <v-card-actions>
-                      <v-flex xs12>
+                      <v-flex shrink mr-1>
                         <v-btn
+                          :disabled="model.has_anonymous_author"
                           color="info"
                           outline
                           @click="addEmptyAuthor()"
                         >Přidat autora</v-btn>
+                      </v-flex>
+                      <v-flex grow mt-3>
+                         <v-checkbox
+                          :disabled="model.authors_pivot.length"
+                          class="mt-1"
+                          v-model="model.has_anonymous_author"
+                          label="Píseň má anonymního autora"
+                        ></v-checkbox>
                       </v-flex>
                   </v-card-actions>
                 </v-card>
@@ -484,7 +503,7 @@ const CREATE_ARRANGEMENT = gql`
 `;
 
 const FETCH_LILYPOND = gql`
-  query ($lilypond: String) {
+  query ($lilypond: String) { 
     lilypond_parse (lilypond: $lilypond) {
       svg
     }
@@ -627,7 +646,19 @@ export default {
       }
 
       return false;
-    }, 
+    },
+
+    is_original() {
+      if (this.model) {
+        const song_lyric_type = this.model.song.song_lyrics.find(sl => 
+          sl.id == this.model.id
+        ).type;
+
+        return song_lyric_type == 0;
+      }
+
+      return true;
+    }
   },
 
   methods: {
