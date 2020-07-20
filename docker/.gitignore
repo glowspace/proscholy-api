@@ -2,3 +2,4 @@
 
 logs/nginx/*
 data/mysql/*
+data/mysql_old

@@ -1,0 +1,36 @@
+type SongPart {
+    type: String
+    isHidden: Boolean
+    isHiddenText: Boolean
+    isEmpty: Boolean
+    isVerse: Boolean
+    isRefrain: Boolean
+    isInline: Boolean
+    songLines: [SongLine]
+}
+
+type SongLine {
+    chords: [Chord]
+}
+
+type Chord {
+    base: String
+    variant: String
+    extension: String
+    bass: String
+
+    isSubstitute: Boolean
+    isOptional: Boolean
+    isDivided: Boolean
+
+    text: String
+}
+
+type SongPartsJson {
+    json: JSON
+}
+
+extend type Query {
+    song_lyric_parts(id: ID!): [SongPart]
+    song_lyric_parts_json(id: ID!): SongPartsJson
+}

@@ -28,7 +28,7 @@ class SongLyrics
 		if (isset($args['has_authors']) && $args['has_authors'] === true)
 			$query = $query->whereHas('authors');
 		if (isset($args['has_authors']) && $args['has_authors'] === false)
-			$query = $query->whereDoesntHave('authors');
+			$query = $query->whereDoesntHave('authors')->where('has_anonymous_author', 0);
 
 		if (isset($args['has_tags']) && $args['has_tags'] === true)
 			$query = $query->whereHas('tags');

@@ -1,0 +1,20 @@
+type Model {
+    id: ID!
+    class_name: String!
+    edit_url: String
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    create_model(input: CreateModelInput!): Model # see App/GraphQL/Mutations/CreateModel.php
+    delete_model(input: DeleteModelInput!): Model # see App/GraphQL/Mutations/UpdateModel.php
+}
+
+input CreateModelInput {
+    required_attribute: String!
+    class_name: String!
+}
+
+input DeleteModelInput {
+    id: ID!
+    class_name: String!
+}

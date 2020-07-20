@@ -4,53 +4,49 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | GraphQL Endpoint
-    |--------------------------------------------------------------------------
-    |
-    | Set the endpoint to which the GraphQL server responds.
-    | The default route endpoint is "yourdomain.com/graphql".
-    |
-    */
-
-    'route_name' => 'graphql',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enable GET Requests
-    |--------------------------------------------------------------------------
-    |
-    | This setting controls if GET requests to the GraphQL endpoint are allowed.
-    |
-    */
-
-    'route_enable_get' => true,
-
-    /*
-    |--------------------------------------------------------------------------
     | Route Configuration
     |--------------------------------------------------------------------------
     |
-    | Additional configuration for the route group https://lumen.laravel.com/docs/routing#route-groups
-    |
-    | Beware that middleware defined here runs before the GraphQL execution phase.
-    | This means that errors will cause the whole query to abort and return a
-    | response that is not spec-compliant. It is preferable to use directives
-    | to add middleware to single fields in the schema.
-    | Read more https://lighthouse-php.com/docs/auth.html#apply-auth-middleware
+    | Controls the HTTP route that your GraphQL server responds to.
+    | You may set `route` => false, to disable the default route
+    | registration and take full control.
     |
     */
 
     'route' => [
-        'prefix' => '',
+        /*
+         * The URI the endpoint responds to, e.g. mydomain.com/graphql.
+         */
+        'uri' => '/graphql',
+
+        /*
+         * Lighthouse creates a named route for convenient URL generation and redirects.
+         */
+        'name' => 'graphql',
+
+        /*
+         * Beware that middleware defined here runs before the GraphQL execution phase,
+         * make sure to return spec-compliant responses in case an error is thrown.
+         */
         'middleware' => [
             \Nuwave\Lighthouse\Support\Http\Middleware\AcceptJson::class,
-            \App\Http\Middleware\CachedGrapqhl::class
+
+            // Logs in a user if they are authenticated. In contrast to Laravel's 'auth'
+            // middleware, this delegates auth and permission checks to the field level.
+            // If you want to use another guard, change the suffix (remove for default).
+            \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class.':api',
         ],
+
+        /*
+         * The `prefix` and `domain` configuration options are optional.
+         */
+        //'prefix' => '',
+        //'domain' => '',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Schema Declaration
+    | Schema Location
     |--------------------------------------------------------------------------
     |
     | This is a path that points to where your GraphQL schema is located
@@ -68,15 +64,16 @@ return [
     | Schema Cache
     |--------------------------------------------------------------------------
     |
-    | A large part of schema generation is parsing the schema into an AST.
-    | This operation is pretty expensive so it is recommended to enable
-    | caching in production mode, especially for large schemas.
+    | A large part of schema generation consists of parsing and AST manipulation.
+    | This operation is very expensive, so it is highly recommended to enable
+    | caching of the final schema to optimize performance of large schemas.
     |
     */
 
     'cache' => [
-        'enable' => env('LIGHTHOUSE_CACHE_ENABLE', false),
+        'enable' => env('LIGHTHOUSE_CACHE_ENABLE', env('APP_ENV') !== 'local'),
         'key' => env('LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema'),
+        'ttl' => env('LIGHTHOUSE_CACHE_TTL', null),
     ],
 
     /*
@@ -84,8 +81,8 @@ return [
     | Namespaces
     |--------------------------------------------------------------------------
     |
-    | These are the default namespaces where Lighthouse looks for classes
-    | that extend functionality of the schema. You may pass either a string
+    | These are the default namespaces where Lighthouse looks for classes to
+    | extend functionality of the schema. You may pass in either a string
     | or an array, they are tried in order and the first match is used.
     |
     */
@@ -107,14 +104,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | Control how Lighthouse handles security related query validation.
-    | This configures the options from http://webonyx.github.io/graphql-php/security/
-    | A setting of "0" means that the validation rule is disabled.
+    | Read more at http://webonyx.github.io/graphql-php/security/
     |
     */
 
     'security' => [
-        'max_query_complexity' => 0,
-        'max_query_depth' => 0,
+        'max_query_complexity' => \GraphQL\Validator\Rules\QueryComplexity::DISABLED,
+        'max_query_depth' => \GraphQL\Validator\Rules\QueryDepth::DISABLED,
         'disable_introspection' => \GraphQL\Validator\Rules\DisableIntrospection::DISABLED,
     ],
 
@@ -138,11 +134,26 @@ return [
     |
     | Set the name to use for the generated argument on paginated fields
     | that controls how many results are returned.
-    | This will default to "first" in v4.
+    |
+    | DEPRECATED This setting will be removed in v5.
     |
     */
 
-    'pagination_amount_argument' => 'count',
+    'pagination_amount_argument' => 'first',
+
+    /*
+    |--------------------------------------------------------------------------
+    | @orderBy input name
+    |--------------------------------------------------------------------------
+    |
+    | Set the name to use for the generated argument on the
+    | OrderByClause used for the @orderBy directive.
+    |
+    | DEPRECATED This setting will be removed in v5.
+    |
+    */
+
+    'orderBy' => 'field',
 
     /*
     |--------------------------------------------------------------------------
@@ -173,17 +184,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | GraphQL Controller
-    |--------------------------------------------------------------------------
-    |
-    | Specify which controller (and method) you want to handle GraphQL requests.
-    |
-    */
-
-    'controller' => \Nuwave\Lighthouse\Support\Http\Controllers\GraphQLController::class.'@query',
-
-    /*
-    |--------------------------------------------------------------------------
     | Global ID
     |--------------------------------------------------------------------------
     |
@@ -211,8 +211,8 @@ return [
     | Transactional Mutations
     |--------------------------------------------------------------------------
     |
-    | Sets default setting for transactional mutations.
-    | You may set this flag to have @create|@update mutations transactional or not.
+    | If set to true, mutations such as @create or @update will be
+    | wrapped in a transaction to ensure atomicity.
     |
     */
 
@@ -220,16 +220,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | New Between Directives
+    | Batchload Relations
     |--------------------------------------------------------------------------
     |
-    | Use the new @whereBetween and @whereBetween directives that will
-    | replace their current implementation in v4 by setting this to true.
-    | As the old versions are removed, this will not have an effect anymore.
+    | If set to true, relations marked with directives like @hasMany or @belongsTo
+    | will be optimized by combining the queries through the BatchLoader.
     |
     */
 
-    'new_between_directives' => false,
+    'batchload_relations' => true,
 
     /*
     |--------------------------------------------------------------------------

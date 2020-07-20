@@ -11,7 +11,7 @@ class SongSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Song::class, 3)->create()->each(function ($song) {
+        factory(App\Song::class, 100)->create()->each(function ($song) {
             $song->song_lyrics()->save(factory(App\SongLyric::class)->make());
         });
     }

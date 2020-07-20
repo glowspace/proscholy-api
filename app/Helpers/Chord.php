@@ -13,9 +13,36 @@ class Chord{
         $this->isSubstitute = $isSubstitute;
     }
 
-    public function toHTML(){
-        // TODO: format with https://laravelcollective.com/docs/5.4/html
+    public function getBase() {
+        return $this->chordSign->getBase();
+    }
 
+    public function getVariant() {
+        return $this->chordSign->getVariant();
+    }
+
+    public function getExtension() {
+        return $this->chordSign->getExtension();
+    }
+
+    public function getBass() {
+        return $this->chordSign->getBassNote();
+    }
+
+    public function isOptional() {
+        return $this->chordSign->isOptional();
+    }
+
+    public function getText() {
+        return $this->text;
+    }
+
+    public function isSubstitute() {
+        return $this->isSubstitute;
+    }
+
+    // todo: make obsolete
+    public function toHTML(){
         $html = "";
 
         if (strlen($this->text) > 0 && $this->text[0] == " ") {

@@ -1,0 +1,53 @@
+type External {
+    id: ID!
+    public_name: String
+    type: Int
+    type_string: String
+    type_string_values: JSON
+    authors: [Author] @belongsToMany
+    song_lyric: SongLyric @belongsTo
+    url: String
+    media_id: String
+    tags: [Tag] @morphMany
+    catalog_number: String
+    copyright: String
+    editor: String
+    published_by: String
+
+    # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
+    tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
+}
+
+extend type Query  {
+    externals (
+        type: Int
+        is_todo: Boolean
+        orderBy: [OrderByClause!] @orderBy
+    ): [External!]! # see App/GraphQL/Queries/Externals.php
+
+    external(id: ID! @eq): External @find
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    update_external(input: UpdateExternalInput! @spread): External @update
+
+    delete_external(id: ID!): External @delete
+}
+
+input UpdateExternalInput {
+    id: ID!
+    url: String @rules(apply: ["required"], messages: {
+        required: "Url odkazu nesmí být prázdná"})
+    type: Int!
+    authors: SyncAuthorsRelation
+    song_lyric: SyncSongLyricRelation
+    catalog_number: String
+    copyright: String
+    editor: String
+    published_by: String
+}
+
+input SyncSongLyricRelation {
+    update: UpdateSongLyricRelation
+    disconnect: Boolean
+}

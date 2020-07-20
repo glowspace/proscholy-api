@@ -7,13 +7,21 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 use Log;
 use App\SongLyric;
+use App\Services\SongLyricService;
 use App\Song;
-use App\Tag;
+use App\Author;
 use App\Songbook;
 use function Safe\array_combine;
 
 class UpdateSongLyric
 {
+    protected $sl_service;
+
+    public function __construct(SongLyricService $slservice)
+    {
+        $this->sl_service = $slservice;
+    }
+
     /**
      * Return a value for the field.
      *
@@ -25,7 +33,6 @@ class UpdateSongLyric
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        Log::info($args["input"]);
         $input = $args["input"];
 
         $song_lyric = SongLyric::find($input["id"]);
@@ -41,92 +48,47 @@ class UpdateSongLyric
             }
         }
 
+        if ($input["lilypond"] !== $song_lyric->lilypond) {
+            try {
+                $input['lilypond_svg'] = $this->sl_service->getLilypondSvg($input['lilypond']);
+                logger($input['lilypond']);
+                logger($input['lilypond_svg']);
+            } catch (\Exception $e) {
+                logger($e);
+            }
+        }
+
         $song_lyric->update($input);
 
+        // todo if has key
+        $this->sl_service->handleArrangementSourceUpdate($song_lyric, $input["arrangement_source"]);
+        $this->sl_service->handleSongGroup($song_lyric, $input["song"]);
+
         // HANDLE AUTHORS
-        if (isset($input["authors"]["sync"]))
-            $song_lyric->authors()->sync($input["authors"]["sync"]);
+        $syncAuthors = [];
+
         if (isset($input["authors"]["create"])) {
             foreach ($input["authors"]["create"] as $author) {
-                $song_lyric->authors()->create(['name' => $author["name"]]);
-            }
-        }
-        $song_lyric->save();
-
-        $tagsToSync = [];
-
-        // HANDLE TAGS - sync
-        if (isset($input["tags_unofficial"]["sync"])) {
-            $tagsToSync = $input["tags_unofficial"]["sync"];
-            // unofficial tags can have parent tags, so add them as well
-
-            foreach ($tagsToSync as $tag_id) {
-                $parent = Tag::find($tag_id)->parent_tag;
-                if ($parent != null && !in_array($parent->id, $tagsToSync)) {
-                    $tagsToSync[] = $parent->id;
-                }
-            }
-        }
-        if (isset($input["tags_official"]["sync"])) 
-        {
-            $tagsToSync = array_merge($tagsToSync, $input["tags_official"]["sync"]);
-        }
-
-        $song_lyric->tags()->sync($tagsToSync);
-
-        // CREATE NEW TAGS
-        if (isset($input["tags_unofficial"]["create"])) {
-            foreach ($input["tags_unofficial"]["create"] as $author) {
-                $song_lyric->tags()->create(['name' => $author["name"]]);
-            }
-        }
-        // $song_lyric->save();
-
-        // HANDLE ASSOCIATED SONG LYRICS
-        if (isset($input["song"])) {
-            $sl_group = collect($input["song"]["song_lyrics"]);
-
-            // 1. case: song was alone and now is added to a group
-            if (!$song_lyric->hasSiblings() && $sl_group->count() > 1) {
-                // add this song to that foreign group - aka change the song_id
-                // todo: check that there are only two different song ids
-                Log::info("situation 1");
-
-                foreach ($sl_group as $sl_object) {
-                    $new_sibling = SongLyric::find($sl_object["id"]);
-                    $new_sibling->update([
-                        'song_id' => $input["song"]["id"],
-                        'type' => $sl_object["type"]
-                    ]);
-                }
-            }
-            // 2. case: song was in a group and now is alone
-            elseif ($song_lyric->hasSiblings() && $sl_group->count() == 1) {
-                // create new song and associate this song_lyric to that one
-                Log::info("situation 2");
-
-                $sl_object = $sl_group[0];
-
-                $new_song = Song::create(["name" => $sl_object["name"]]);
-                $former_sibling = SongLyric::find($sl_object["id"]);
-                $former_sibling->update([
-                    'song_id' => $new_song->id,
-                    'type' => $sl_object["type"]
+                $a = Author::create([
+                    'name' => $author['author_name']
                 ]);
-            }
-            // 3. case: no insertions/deletions, just update the types
-            elseif ($song_lyric->getSiblings()->count() + 1 == $sl_group->count()) {
-                foreach ($sl_group as $sl_object) {
-                    $sibling = SongLyric::find($sl_object["id"]);
-                    $sibling->update([
-                        'type' => $sl_object["type"]
-                    ]);
-                }
-            } else {
-                // todo: validation error
-                Log::error("situation 3 - error");
+
+                $syncAuthors[$a->id] = [
+                    'authorship_type' => $author['authorship_type']
+                ];
             }
         }
+
+        if (isset($input["authors"]["sync"])) {
+            foreach ($input['authors']['sync'] as $author) {
+                $syncAuthors[$author["author_id"]] = [
+                    'authorship_type' => $author["authorship_type"]
+                ];
+            }
+        }
+
+        $song_lyric->authors_pivot()->sync($syncAuthors);
+        $song_lyric->save();
 
         // HANDLE SONGBOOK RECORDS
         if (isset($input["songbook_records"]["sync"])) {

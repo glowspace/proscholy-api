@@ -104,8 +104,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 Route::get('/refresh-updating/song-lyric/{song_lyric}', 'Api\LockController@refresh_updating_song_lyric');
 Route::get('/refresh-updating/songbook/{songbook}', 'Api\LockController@refresh_updating_songbook');
 
+Route::get('/ucet', function() {
+    return view('client.account');
+})->name('client.account');
+
 // routes for propagation
-Route::get('/advent', function() { return redirect(url('/search?searchString=&tags=24&langs=&songbooks=')); });
-Route::get('/vanoce', function() { return redirect(url('/search?searchString=&tags=22&langs=&songbooks=')); });
-Route::get('/velikonoce', function() { return redirect(url('/search?searchString=&tags=23&langs=&songbooks=')); });
-Route::get('/postni-doba', function() { return redirect(url('/search?searchString=&tags=25&langs=&songbooks=')); });
+Route::get('/advent', function() { return redirect(url('/?stitky=24')); });
+Route::get('/vanoce', function() { return redirect(url('/?stitky=22')); });
+Route::get('/velikonoce', function() { return redirect(url('/?stitky=23')); });
+Route::get('/postni-doba', function() { return redirect(url('/?stitky=25')); });
+
+
+// Route::get('/firebase-auth/me', function(Request $request) {
+//     return (array) $request->public_user();
+// })->middleware('auth:web_firebase');

@@ -45,6 +45,7 @@ if cd ${DATESTAMP} ; then
     php artisan route:cache
     php artisan cache:clear
     php artisan view:clear
+    php artisan lighthouse:clear-cache
     php artisan migrate --force
     php artisan up
 

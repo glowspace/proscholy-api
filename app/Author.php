@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AuthorService;
 use Log;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -50,17 +52,19 @@ class Author extends Model
     use Searchable, RevisionableTrait;
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['visits'];
-    
-    protected $fillable = ['name', 'description', 'email', 'url', 'type'];
+
+    protected $fillable = ['name', 'description', 'email', 'type'];
+
+    protected $authorService;
 
     private $type_string_values
-        = [
-            0 => 'autor',
-            1 => 'hudební uskupení',
-            2 => 'schola',
-            3 => 'kapela',
-            4 => 'sbor',
-        ];
+    = [
+        0 => 'autor',
+        1 => 'hudební uskupení',
+        2 => 'schola',
+        3 => 'kapela',
+        4 => 'sbor',
+    ];
 
     protected $indexConfigurator = AuthorIndexConfigurator::class;
 
@@ -74,36 +78,10 @@ class Author extends Model
         ]
     ];
 
-    public function getSongLyricsInterpreted()
+    public function __construct($attributes = array())
     {
-        return SongLyric::whereHas('externals', function($q) {
-            $q->media()->whereHas('authors', function($a) {
-                $a->where('authors.id', $this->id);
-            });
-        })->orWhereHas('files', function($q) {
-            $q->audio()->whereHas('authors', function($a) {
-                $a->where('authors.id', $this->id);
-            });
-        });
-    }
-
-    public function getAssociatedAuthorsIds(){
-        $authors = collect([$this]);
-
-        return $authors->merge($this->members()->get())->map(function($a) {
-            return $a["id"];
-        })->toArray();
-    }
-
-    public function songLyricsWithAssociatedAuthors()
-    {
-        Log::info($this->getAssociatedAuthorsIds());
-
-        $ids = $this->getAssociatedAuthorsIds();
-
-        return SongLyric::whereHas('authors', function($q) use ($ids) {
-            $q->whereIn('authors.id', $ids);
-        });
+        parent::__construct($attributes);
+        $this->authorService = app()->make(AuthorService::class);
     }
 
     public function scopeRestricted($query)
@@ -115,35 +93,44 @@ class Author extends Model
         }
     }
 
-    public function members() : BelongsToMany
+    public function members(): BelongsToMany
     {
-        return $this->belongsToMany(Author::class,
+        return $this->belongsToMany(
+            Author::class,
             'author_membership',
             'is_member_of',
-            'author_id');
+            'author_id'
+        );
     }
 
-    public function memberships() : BelongsToMany
+    public function memberships(): BelongsToMany
     {
-        return $this->belongsToMany(Author::class,
+        return $this->belongsToMany(
+            Author::class,
             'author_membership',
             'author_id',
-            'is_member_of');
+            'is_member_of'
+        );
     }
 
-    public function song_lyrics() : BelongsToMany
+    public function song_lyrics(): BelongsToMany
     {
         return $this->belongsToMany(SongLyric::class);
     }
 
-    public function externals() : BelongsToMany
+    public function externals(): BelongsToMany
     {
         return $this->belongsToMany(External::class);
     }
 
-    public function files() : BelongsToMany
+    public function files(): BelongsToMany
     {
         return $this->belongsToMany(File::class);
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function getTypeStringAttribute()
@@ -156,15 +143,29 @@ class Author extends Model
         return $this->type_string_values;
     }
 
+    public function getSongsOriginalsAttribute()
+    {
+        return $this->authorService->song_lyrics_include_associated_authors($this)->originals()->orderBy('name')->get();
+    }
+
+    public function getSongsTranslationsAttribute()
+    {
+        return $this->authorService->song_lyrics_include_associated_authors($this)->translations()->orderBy('name')->get();
+    }
+
+    public function getSongsInterpretedAttribute()
+    {
+        return $this->authorService->song_lyrics_interpreted($this)->orderBy('name')->get()
+            ->diff($this->songs_originals->merge($this->songs_translations));
+    }
+
+
     // todo: make obsolete
     public static function getByIdOrCreateWithName($identificator, $uniqueName = false)
     {
-        if (is_numeric($identificator))
-        {
+        if (is_numeric($identificator)) {
             return Author::find($identificator);
-        }
-        else
-        {
+        } else {
             $double = Author::where('name', $identificator)->first();
             if ($uniqueName && $double != null) {
                 return $double;
@@ -196,5 +197,10 @@ class Author extends Model
     public function getPublicUrlAttribute()
     {
         return route('client.author', $this);
+    }
+
+    public function getPublicRouteAttribute()
+    {
+        return str_replace(url(""), "", $this->public_url);
     }
 }

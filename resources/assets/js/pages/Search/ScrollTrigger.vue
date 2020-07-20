@@ -5,13 +5,13 @@
 <script>
 // see https://www.netguru.com/codestories/infinite-scroll-with-vue.js-and-intersection-observer
 
-export default {    
+export default {
     props: {
         opts: {
             type: Object,
-            default: () => ({  
+            default: () => ({
                 root: null,
-                threshold: "0"
+                threshold: '0'
             })
         },
         enabled: {
@@ -20,13 +20,13 @@ export default {
         }
     },
 
-    data(){
+    data() {
         return {
             observer: null
-        }
+        };
     },
 
-    mounted(){
+    mounted() {
         this.observer = new IntersectionObserver(entries => {
             this.handleIntersect(entries[0]);
         }, this.opts);
@@ -41,9 +41,8 @@ export default {
     methods: {
         handleIntersect(entry) {
             if (this.enabled && entry.isIntersecting)
-                this.$emit("triggerIntersected")
+                this.$emit('triggerIntersected');
         }
     }
-}
+};
 </script>
-

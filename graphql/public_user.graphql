@@ -1,0 +1,44 @@
+type PublicUser {
+    id: ID!
+    name: String
+    email: String
+    playlists: [Playlist]
+    admin_user: User
+    is_admin: Boolean
+}
+
+extend type Query {
+    current_public_user: PublicUser @auth(guard: "web_firebase")
+}
+
+extend type Query @middleware(checks: ["auth:api"]) {
+    public_users: [PublicUser] @all(model: "App\\PublicModels\\PublicUser")
+}
+
+extend type Mutation @middleware(checks: ["auth:web_firebase"]) {
+    update_user_data(input: UpdatePublicUserInput! @spread): PublicUser @update
+
+    update_playlist(input: UpdatePlaylistInput!): Playlist # see App/GraphQL/Mutations/UpdatePlaylist.php
+    create_playlist(input: CreatePlaylistInput! @spread): Playlist @update
+}
+
+
+input UpdatePublicUserInput {
+    id: ID!
+    name: String
+    email: String
+    updated_at: DateTime!
+}
+
+input UpdatePlaylistInput {
+    id: ID!
+    name: String
+    song_lyrics: [ID!]
+    updated_at: DateTime!
+}
+
+input CreatePlaylistInput {
+    name: String!
+    """ necessary..? """
+    song_lyrics: [ID!]
+}

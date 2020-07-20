@@ -1,60 +1,37 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.dashboard',
-    'icon' => 'home',
+    'icon' => 'tachometer-alt',
     'text' => 'Nástěnka'
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'client.home',
-    'icon' => 'arrow-left',
-    'text' => 'Návrat na web'
+    'icon' => 'guitar',
+    'text' => 'Zpěvník pro scholy'
 ])
+
+{{-- @include('admin.components.menu-item', [
+    'route' => 'client.home',
+    'icon' => 'church',
+    'text' => 'Regenschori'
+]) --}}
+
+{{-- @include('admin.components.menu-item', [
+    'route' => 'client.home',
+    'icon' => 'user',
+    'text' => 'Můj účet'
+]) --}}
 
 @include('admin.components.menu-item', [
     'route' => 'auth.logout',
-    'icon' => 'sign-out-alt',
+    'icon' => 'lock',
     'text' => 'Odhlásit se'
 ])
 
+{{-- 
 @can('access todo')
     <div class="navbar-label material-shadow text-danger">Plnění obsahem</div>
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-lyric',
-        'icon' => 'music',
-        'text' => 'Písně bez textu'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-author',
-        'icon' => 'music',
-        'text' => 'Písně bez autora'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-chord',
-        'icon' => 'music',
-        'text' => 'Písně bez akordů'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.song.no-tag',
-        'icon' => 'music',
-        'text' => 'Písně bez štítků'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.external.no-author',
-        'icon' => 'link',
-        'text' => 'Odkazy bez autora/písničky'
-    ])
-
-    @include('admin.components.menu-item', [
-        'route' => 'admin.file.no-author',
-        'icon' => 'file',
-        'text' => 'Soubory bez autora/písničky'
-    ])
-@endcan
+@endcan --}}
 
 {{-- <div class="navbar-label material-shadow text-danger">Kontrola obsahu</div>
 
@@ -100,11 +77,11 @@
     'text' => 'Nahrané soubory'
 ])
 
-@include('admin.components.menu-item', [
+{{-- @include('admin.components.menu-item', [
     'route' => 'admin.tag.index',
     'icon' => 'tag',
     'text' => 'Štítky/Kategorie písniček'
-])
+]) --}}
 
 @include('admin.components.menu-item', [
     'route' => 'admin.songbook.index',

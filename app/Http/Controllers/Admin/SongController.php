@@ -27,27 +27,9 @@ class SongController extends Controller
 
     public function index()
     {
-        return view('admin.song.index', ['type' => 'list-all']);
+        return view('admin.song.index');
     }
 
-    public function todoLyrics()
-    {
-        return view('admin.song.index', ['type' => 'todo-lyrics']);
-    }
-
-    public function todoAuthors() 
-    {
-        return view('admin.song.index', ['type' => 'todo-authors']);
-    }
-
-    public function todoChords()
-    {
-        return view('admin.song.index', ['type' => 'todo-chords']);
-    }
-
-    public function todoTags() {
-        return view('admin.song.index', ['type' => 'todo-tags']);
-    }
 
     public function todoPublish(Request $request) {
         $query = SongLyric::where('is_published', 0)->orderBy('name');

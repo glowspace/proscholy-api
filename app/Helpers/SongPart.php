@@ -54,6 +54,10 @@ class SongPart{
         return $this->type;
     }
 
+    function getSongLines() {
+        return $this->song_lines;
+    }
+
     function getSongPartTag() {
         if ($this->isVerse()) {
             return $this->getVerseNumber() . '.&nbsp;';
@@ -100,6 +104,7 @@ class SongPart{
         $this->song_lines[] = new SongLine($line, $this->ch_queue);
     }
 
+    // todo: make obsolete
     function toHTML()
     {
         $class = "song-part";

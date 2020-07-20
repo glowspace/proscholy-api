@@ -12,6 +12,7 @@ use App\Interfaces\ISource;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * App\External
@@ -38,7 +39,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class External extends Model implements ISource
 {
-    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author'];
+    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by'];
 
     private $type_string_values
         = [
@@ -89,8 +90,9 @@ class External extends Model implements ISource
 
     public function scopeTodo($query)
     {
-        return $query->where('author_id', null)->where('has_anonymous_author', 0)
-            ->orWhere('song_lyric_id', null);
+        return $query->where(function ($query) {
+            $query->doesntHave('authors')->where('has_anonymous_author', 0);
+        })->orDoesntHave('song_lyric');
     }
 
     public static function urlAsSpotify($url)
@@ -230,6 +232,11 @@ class External extends Model implements ISource
     public function song_lyric() : BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
+    }
+
+    public function tags() : MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function scopeRestricted($query)

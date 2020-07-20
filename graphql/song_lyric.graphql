@@ -1,0 +1,243 @@
+type SongLyric {
+    id: ID!
+    name: String
+    """
+    Song name with autors and additional info (i.e. arrangement)
+    Ex.: Tvůj Plamen - SBM (aranž písně Tvůj plamen, autoři: ..., ...)
+    """
+    rich_name: String @with(relation: "authors")
+    """
+    Full url of the song page
+    """
+    public_url: String
+    """
+    Url suffix of the song page, i.e. /pisen/12/nazev-pisne
+    """
+    public_route: String
+    """
+    So far, song_number equals to song ID, but this will change in the future
+    """
+    song_number: Int
+    """
+    Lyrics without ChordPro and other syntactical things - just plain words
+    """
+    lyrics_no_chords: String
+    """
+    Raw unparsed lyrics of the song, including:
+    - ChordPro chord tags: `[C], [Dmi]` ...
+    - chord 'repeater' symbols in verses: `[%]`
+    - verse/refrain/.. marks: `1.`, `2.`, `R:`, `R2:` ... 
+    - other stuff: `@předehra:`, `@mezihra:`     
+
+    Soon, there will hopefully be a PE grammar used and available for lyrics parsing
+    """
+    lyrics: String
+    """
+    Raw lilypond source
+    """
+    lilypond: String
+    """
+    SVG output of lilypond parsing
+    """
+    lilypond_svg: String
+    type_enum: SongType @rename(attribute: "type")
+    is_approved_by_author: Boolean!
+    is_published: Boolean!
+    """
+    Marks that the song doesn't have any known author
+    """
+    has_anonymous_author: Boolean!
+    """
+    Language in two-lettered codes: `cs, en, pl, de`... (exception: `mixed` for songs with more languages)
+    """
+    lang: String
+    """
+    Czech name of the song language: `čeština, angličtina, polština` ...
+    """
+    lang_string: String
+    """
+    All possible lang_code: lang_string pairs in JSON, used for select boxes
+    """
+    lang_string_values: JSON
+    updated_at: String
+    authors: [Author]
+        @belongsToMany
+        @deprecated(reason: "Use `authors_pivot` for additional relation data")
+    """
+    Authors' relation with pivotal information about 'authorship type'
+    """
+    authors_pivot(
+        authorship_type: AuthorshipType @eq
+    ): [AuthorSongLyric] @belongsToMany
+    """
+    External links (youtube, spotify, ...)
+    """
+    externals(
+        id: Int @eq
+        type: Int @eq
+        orderBy: [OrderByClause!] @orderBy
+    ): [External] @hasMany
+    """
+    Files uploaded on our servers (mp3, pdf, ...) 
+    """
+    files(id: Int @eq, type: Int @eq): [File] @hasMany
+    tags(type: Int @eq): [Tag] @morphMany
+    """
+    Pivotal relation of song to its records in songbooks (currently reflects only printed songbooks)
+    """
+    songbook_records: [SongbookRecord] @belongsToMany
+    """
+    'Parent' object that groups together same songs but of different type (`original`, `translation`, `authorized_translation`).
+    For quick reference to song's siblings (with same parent), see `siblings` attribute.
+    """
+    song: Song @belongsTo
+    """
+    Whether the `lyrics` attribute includes ChordPro [..] chords
+    """
+    has_chords: Boolean!
+    """
+    SongLyrics with same Song parent object
+    """
+    siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
+    trashed: Boolean @method(name: "trashed")
+    only_regenschori: Boolean
+    capo: Int
+    visits: Int
+    has_lyrics: Boolean
+    liturgy_approval_status: Int
+    liturgy_approval_status_string_values: JSON
+    missa_type: MissaType
+    missa_type_string_values: JSON
+    authorship_type_string_values: JSON
+
+    tags_official: [Tag]
+        @morphMany(relation: "tags", scopes: ["liturgyPart"])
+        @deprecated(reason: "Use tags_liturgy_part instead")
+    tags_unofficial: [Tag]
+        @morphMany(relation: "tags", scopes: ["generic"])
+        @deprecated(reason: "Use tags_generic instead")
+
+    tags_generic: [Tag] @morphMany(relation: "tags", scopes: ["generic"])
+    tags_liturgy_part: [Tag]
+        @morphMany(relation: "tags", scopes: ["liturgyPart"])
+    tags_liturgy_period: [Tag]
+        @morphMany(relation: "tags", scopes: ["liturgyPeriod"])
+    tags_history_period: [Tag]
+        @morphMany(relation: "tags", scopes: ["historyPeriod"])
+    tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
+
+    arrangements: [SongLyric] @hasMany
+    arrangement_source: SongLyric @belongsTo
+    is_arrangement: Boolean
+    
+    type: Int @deprecated(reason: "Use the `type_enum` field instead")
+    is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
+    is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
+    # has_sheet_music: Boolean @with(relation: "externals")
+    # has_media: Boolean @with(relation: "files")
+}
+
+enum SongType {
+    ORIGINAL @enum(value: 0)
+    TRANSLATION @enum(value: 1)
+    AUTHORIZED_TRANSLATION @enum(value: 2)
+}
+
+enum MissaType {
+    NONE @enum(value: 0)
+    ORDINARIUM @enum(value: 1)
+    PROPRIUM @enum(value: 2)
+}
+
+type SongLyricPaginator {
+    data: [SongLyric!]!
+        @field(
+            resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@dataResolver"
+        )
+    paginatorInfo: PaginatorInfo!
+        @field(
+            resolver: "Nuwave\\Lighthouse\\Pagination\\PaginatorField@paginatorInfoResolver"
+        )
+}
+
+extend type Query {
+    song_lyric(id: ID! @eq): SongLyric @find
+
+    song_lyrics(
+        only_apk: Boolean
+        search_string: String
+        is_published: Boolean
+        is_approved_by_author: Boolean
+        has_lyrics: Boolean
+        has_authors: Boolean
+        has_tags: Boolean
+        has_chords: Boolean
+        order_abc: Boolean
+        updated_after: DateTime
+    ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php
+    search_song_lyrics(
+        search_params: String
+        page: Int
+        per_page: Int
+    ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    delete_song_lyric(id: ID!): SongLyric @delete
+
+    update_song_lyric(input: UpdateSongLyricInput!): SongLyric # see App/GraphQL/Mutations/UpdateSongLyric.php
+    create_arrangement(input: CreateArrangementInput! @spread): SongLyric
+}
+
+input UpdateSongLyricRelation {
+    id: ID
+}
+
+input UpdateSongLyricInput {
+    id: ID!
+    name: String
+        @rules(
+            apply: ["required"]
+            messages: { required: "Jméno písně nesmí zůstat prázdné" }
+        )
+    has_anonymous_author: Boolean
+    lang: String
+    authors: SyncAuthorsSongLyricRelation
+    tags_unofficial: SyncUnofficialTagsRelation
+    tags_official: SyncOfficialTagsRelation
+    songbook_records: SyncSongbookRecordsForSongLyricRelation
+    lyrics: String
+    lilypond: String
+    song: SongInput
+    only_regenschori: Boolean
+    capo: Int
+    liturgy_approval_status: Int
+    arrangement_source: SyncSongLyricArrangementRelation
+    missa_type: MissaType
+}
+
+input SyncOfficialTagsRelation {
+    sync: [ID!]
+}
+
+input SyncUnofficialTagsRelation {
+    create: [CreateUnofficialTagInput!]
+    sync: [ID!]
+}
+
+input CreateUnofficialTagInput {
+    name: String!
+}
+
+input CreateArrangementInput {
+    name: String!
+    arrangement_of: Int!
+}
+
+input SyncSongLyricArrangementRelation {
+    update: UpdateSongLyricArrangementInput
+}
+
+input UpdateSongLyricArrangementInput {
+    id: ID!
+}

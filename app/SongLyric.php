@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
 use ScoutElastic\Searchable;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // use App\Helpers\ChordQueue;
 // use App\Helpers\SongPart;
 use App\Helpers\SongLyricHelper;
-
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 /**
@@ -107,6 +107,15 @@ class SongLyric extends Model
             // the 'text' type cannot be used for sorting, this is why a copy of name is included
             'name_keyword' => [
                 'type' => 'keyword'
+            ],
+            'is_arrangement' => [
+                'type' => 'boolean'
+            ],
+            'tag_instrumentation_ids' => [
+                'type' => 'keyword'
+            ],
+            'tag_period_ids' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -118,27 +127,32 @@ class SongLyric extends Model
     ];
 
     protected $fillable
-        = [
-            'name',
-            'song_id',
-            'lyrics',
-            'id',
-            // 'is_original',
-            // 'is_authorized',
-            'type',
-            'lang',
-            'creating_at',
-            'has_anonymous_author',
-            'has_chords',
-            'is_published',
-            'is_approved_by_author',
-            'user_creator_id',
-            'licence_type',
-            'only_regenschori',
-            'capo',
-            'visits',
-            'liturgy_approval_status' 
-        ];
+    = [
+        'name',
+        'song_id',
+        'lyrics',
+        'id',
+        // 'is_original',
+        // 'is_authorized',
+        'type',
+        'lang',
+        'creating_at',
+        'has_anonymous_author',
+        'has_chords',
+        'is_published',
+        'is_approved_by_author',
+        'user_creator_id',
+        'licence_type',
+        'only_regenschori',
+        'capo',
+        'visits',
+        'liturgy_approval_status',
+        'arrangement_of',
+        'missa_type',
+        'lilypond',
+        'lilypond_svg',
+        'song_number'
+    ];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
@@ -164,12 +178,23 @@ class SongLyric extends Model
         // 3 => 'neschváleno ČBK pro liturgii',
     ];
 
+    private static $missa_type_string_values = [
+        'NONE' => 'píseň',
+        'ORDINARIUM' => 'ordinárium',
+        'PROPRIUM' => 'proprium',
+    ];
+
     public function getPublicUrlAttribute()
     {
         return route('client.song.text', [
             'song_lyric' => $this,
-            'name' => str_slug($this->name)
+            'name' => Str::slug($this->name)
         ]);
+    }
+
+    public function getPublicRouteAttribute()
+    {
+        return str_replace(url(""), "", $this->public_url);
     }
 
     public function getLyricsNoChordsAttribute()
@@ -244,19 +269,43 @@ class SongLyric extends Model
         return self::$liturgy_approval_status_string_values;
     }
 
-    public function song() : BelongsTo
+    public function getMissaTypeStringAttribute()
+    {
+        return self::$missa_type_string_values[$this->missa_type];
+    }
+
+    public function getMissaTypeStringValuesAttribute()
+    {
+        return self::$missa_type_string_values;
+    }
+
+    // helper method, so this can be included in graphql schema
+    public function getAuthorshipTypeStringValuesAttribute()
+    {
+        return AuthorSongLyric::$authorship_type_string_values;
+    }
+
+    public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
     }
 
+    // todo: make obsolete (together with an graphql endpoint)
     public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function tags(): BelongsToMany
+    public function authors_pivot(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Author::class)
+            ->withPivot('authorship_type', 'id')
+            ->using(AuthorSongLyric::class);
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function externals(): HasMany
@@ -267,6 +316,46 @@ class SongLyric extends Model
     public function files(): HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function arrangements(): HasMany
+    {
+        return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
+    }
+
+    public function arrangement_source(): BelongsTo
+    {
+        return $this->belongsTo(SongLyric::class, 'arrangement_of', 'id');
+    }
+
+    public function getIsArrangementAttribute(): bool
+    {
+        return $this->arrangement_of !== null;
+    }
+
+    public function getHasArrangementsAttribute(): bool
+    {
+        return $this->arrangements()->count() > 0;
+    }
+
+    public function getRichNameAttribute(): string
+    {
+        $name = $this->name;
+
+        if ($this->is_arrangement) {
+            $name .= " (ar. písně " . $this->arrangement_source->name;
+
+            $author_names = $this->authors()->select('name')->get()->pluck('name');
+
+            if ($author_names->count() > 0) {
+                $name .= ", autoři: ";
+                $name .= $author_names->join(', ');
+            }
+
+            $name .= ")";
+        }
+
+        return $name;
     }
 
     public function songbook_records(): BelongsToMany
@@ -387,7 +476,7 @@ class SongLyric extends Model
      */
     public function toSearchableArray()
     {
-        $songbook_records = $this->songbook_records()->get()->map(function($sb) {
+        $songbook_records = $this->songbook_records()->get()->map(function ($sb) {
             return [
                 'songbook_id' => $sb->id,
                 'sonbgook_number' => $sb->pivot->number
@@ -399,19 +488,58 @@ class SongLyric extends Model
             $all_authors = $all_authors->concat($author->memberships);
         }
 
+        // get all song's tags
+        $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id');
+
+        $interestingExternals = $this->externals()
+            ->with('tags')
+            ->whereHas(
+                'tags',
+                function ($q) {
+                    return $q->instrumentation();
+                }
+            )
+            ->get();
+
+        $interestingFiles = $this->files()
+            ->with('tags')
+            ->whereHas(
+                'tags',
+                function ($q) {
+                    return $q->instrumentation();
+                }
+            )
+            ->get();
+
+        // adjoin externals' instrumentation tags
+        foreach ($interestingExternals as $external) {
+            $tag_ids = $tag_ids->concat(
+                $external->tags()->instrumentation()->select('id')->get()->pluck('id')
+            );
+        }
+
+        // adjoin files' instrumentation tags
+        foreach ($interestingFiles as $file) {
+            $tag_ids = $tag_ids->concat(
+                $file->tags()->instrumentation()->select('id')->get()->pluck('id')
+            );
+        }
+
         $arr = [
             'name' => $this->name,
             'name_keyword' => $this->name,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
-            'tag_ids' => $this->tags()->select('tags.id')->get()->pluck('id'),
-            'lang' => $this->lang
+            'lang' => $this->lang,
+            'is_arrangement' => $this->is_arrangement,
+            'tag_ids' => $tag_ids,
         ];
 
         return $arr;
     }
 
+    // todo: make obsolete
     public function getFormattedLyrics()
     {
         $output = "";
@@ -440,6 +568,35 @@ class SongLyric extends Model
         }
 
         return $output;
+    }
+
+    public function getSongParts()
+    {
+        $parts = SongLyricHelper::getLyricsRepresentation($this);
+
+        $firstRefrain = current(array_filter($parts, function ($part) {
+            return $part->isRefrain();
+        }));
+
+        $newParts = [];
+
+        foreach ($parts as $song_part) {
+            if ($song_part->isRefrain() && $song_part->isEmpty()) {
+                // substitute by the first refrain
+                $subst = clone $firstRefrain;
+
+                if ($song_part->isHidden()) {
+                    $subst->setHidden(true);
+                } else {
+                    $subst->setHiddenText(true);
+                }
+                $newParts[] = $subst;
+            } else {
+                $newParts[] = $song_part;
+            }
+        }
+
+        return $newParts;
     }
 
     // todo: make obsolete

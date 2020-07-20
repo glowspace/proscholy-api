@@ -1,0 +1,64 @@
+type Author {
+    id: ID!
+    name: String!
+    description: String
+    type: Int
+    type_string: String
+    type_string_values: JSON
+    email: String
+    visits: Int
+    public_url: String
+    public_route: String
+    song_lyrics: [SongLyric] @belongsToMany
+    externals: [External] @belongsToMany
+    files: [File] @belongsToMany
+    members: [Author] @belongsToMany
+    memberships: [Author] @belongsToMany
+
+    # author page
+    songs_originals: [SongLyric]
+    songs_translations: [SongLyric]
+    songs_interpreted: [SongLyric]
+
+    tags_period: [Tag] @morphMany(relation: "tags", scopes: ["historyPeriod"])
+}
+
+extend type Query {
+    authors(search_string: String, order_abc: Boolean, type: Int): [Author!]! #  see App/GraphQL/Queries/Authors.php
+    author(id: ID! @eq): Author @find
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    delete_author(id: ID!): Author @delete
+    update_author(input: UpdateAuthorInput! @spread): Author @update
+}
+
+input UpdateAuthorInput {
+    id: ID!
+    name: String
+        @rules(
+            apply: ["required", "min:2"]
+            messages: {
+                required: "Jméno autora nesmí zůstat prázdné"
+                min: "Jméno autora by mělo mít aspoň 2 znaky"
+            }
+        )
+    type: Int
+    description: String
+    members: SyncAuthorsRelation
+}
+
+input SyncAuthorsRelation {
+    create: [CreateAuthorInput!]
+    upsert: [UpsertAuthorInput!]
+    sync: [ID!]
+}
+
+input CreateAuthorInput {
+    name: String!
+}
+
+input UpsertAuthorInput {
+    id: ID
+    name: String
+}

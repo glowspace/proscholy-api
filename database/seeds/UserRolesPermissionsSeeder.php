@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\User;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserRolesPermissionsSeeder extends Seeder
 {
@@ -14,14 +14,6 @@ class UserRolesPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $tableNames = config('permission.table_names');
-
-        // DB::table($tableNames['role_has_permissions'])->delete();
-        // DB::table($tableNames['model_has_roles'])->delete();
-        // DB::table($tableNames['model_has_permissions'])->delete();
-        // DB::table($tableNames['roles'])->delete();
-        // DB::table($tableNames['permissions'])->delete();
-
         $permissions = ['manage users', 'manage official tags', 'access todo', 'add authors', 'manage tags', 'publish songs', 'approve songs'];
 
         // if the permission already exists then do not create new one
@@ -33,7 +25,8 @@ class UserRolesPermissionsSeeder extends Seeder
 
         // .. and roles
         $admin = Role::firstOrNew(['name' => 'admin']);
-        foreach ($permissions as $perm) {
+        foreach ($permissions as $perm)
+        {
             $admin->givePermissionTo($perm);
         }
         $admin->save();
@@ -52,11 +45,14 @@ class UserRolesPermissionsSeeder extends Seeder
         // set some roles
         $admins_to_be = [
             User::where('email', 'michaeldojcar@gmail.com')->first(),
-            User::where('email', 'athes01@gmail.com')->first()
+            User::where('email', 'athes01@gmail.com')->first(),
+            User::where('email', 'admin@admin.com')->first(),
         ];
 
-        foreach ($admins_to_be as $admin_to_be) {
-            if (isset($admin_to_be)) {
+        foreach ($admins_to_be as $admin_to_be)
+        {
+            if (isset($admin_to_be))
+            {
                 $admin_to_be->assignRole($admin);
                 $admin_to_be->save();
             }

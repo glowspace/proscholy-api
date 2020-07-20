@@ -1,0 +1,54 @@
+type Tag {
+    id: ID!
+    name: String
+    type: Int
+    type_enum: TagType @rename(attribute: "type")
+    parent_tag: Tag @belongsTo @deprecated
+    child_tags: [Tag] @hasMany @deprecated
+    description: String
+}
+
+extend type Query {
+    tags(type: Int @eq): [Tag] @all @deprecated
+
+    tags_enum(type: TagType @eq): [Tag] @all
+}
+
+enum TagType {
+    GENERIC @enum(value: 0)
+    LITURGY_PART @enum(value: 1)
+    LITURGY_PERIOD @enum(value: 2)
+    SAINTS @enum(value: 3)
+    HISTORY_PERIOD @enum(value: 10)
+    INSTRUMENTATION @enum(value: 50)
+    GENRE @enum(value: 100)
+}
+
+enum Taggable {
+    SONG_LYRIC @enum(value: "App\\SongLyric")
+    AUTHOR @enum(value: "App\\Author")
+    EXTERNAL @enum(value: "App\\External")
+    FILE @enum(value: "App\\File")
+}
+
+extend type Mutation {
+    delete_tag(id: ID!): Tag @delete
+
+    sync_create_tags(input: SyncCreateTagsRelation!, tags_type: TagType!, taggable: Taggable!, taggable_id: Int!): [Tag]
+    # sync_tags(input: SyncTagsRelation!, type: Int!, taggable: String!, taggable_id: Int!)
+}
+
+
+
+input SyncTagsRelation {
+    sync: [ID!]
+}
+
+input SyncCreateTagsRelation {
+    create: [CreateTagInput!]
+    sync: [ID!]
+}
+
+input CreateTagInput {
+    name: String!
+}

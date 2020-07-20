@@ -1,0 +1,7 @@
+type LilypondOutput {
+    svg: String
+}
+
+extend type Query @middleware(checks: ["auth:api"]) {
+    lilypond_parse(lilypond: String): LilypondOutput 
+}
