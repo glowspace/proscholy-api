@@ -34,7 +34,7 @@
         "lodash": "^4.17.11",
         "materialize-css": "^1.0.0-rc.2",
         "nosleep.js": "^0.9.0",
-        "npm": "^6.4.0",
+        "npm": "^6.14.6",
         "popper.js": "^1.12",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.2",
