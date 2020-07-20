@@ -92,7 +92,7 @@ services:
         ports:
             - 8090:8080
         networks:
-            - bcloud-network-staging
+            - bcloud-network
 
 networks:
     bcloud-network:
