@@ -29,7 +29,7 @@ if cd ${DATESTAMP} ; then
     chgrp -R www-data storage bootstrap/cache
     chmod -R ug+rwx storage bootstrap/cache
 
-    mv .env.production .env
+    cp ${LARAVEL}/.env ${LARAVEL}/releases/${DATESTAMP}/.env
 
     echo "Installing composer and yarn"
     composer install --optimize-autoloader --no-dev
