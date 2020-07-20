@@ -15,8 +15,8 @@ fi
 
 DATESTAMP=`date +"%Y-%m-%d-%H-%M-%S"`
 
-git clone --depth 1 'git@gitlab.com:proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
-    git clone --depth 1 'https://gitlab.com/proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP}
+git clone --depth 1 'git@github.com:proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
+    git clone --depth 1 'https://github.com/proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP}
 
 if cd ${DATESTAMP} ; then 
     git reset --hard master
