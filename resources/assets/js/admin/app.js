@@ -97,6 +97,19 @@ Vue.use(Vuetify, {
         warning: '#ff9800',
         info: '#2196f3',
         success: '#4caf50'
+    },
+    lang: {
+        locales: {
+            cs: {
+                dataIterator: {
+                    pageText: "{0}–{1} z {2}"
+                },
+                dataTable: {
+                    rowsPerPageText: "Počet řádků na stránce:"
+                }
+            }
+        },
+        current: 'cs'
     }
 });
 

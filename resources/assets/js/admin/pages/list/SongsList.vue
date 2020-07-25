@@ -53,6 +53,10 @@
                             25,
                             { text: 'Vše', value: -1 }
                         ]"
+                        :loading="$apollo.loading"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : 'Data nejsou k dispozici.'"
+                        :no-results-text="'Nic nebylo nalezeno. Zkuste zkontrolovat vyhledávaný řetězec.'"
+                        :locale="'cs'"
                         class="users-list"
                     >
                         <template v-slot:items="props">
@@ -87,10 +91,10 @@
                                         .join(', ') ||
                                         (props.item.has_anonymous_author
                                             ? '(anonymní)'
-                                            : '-')
+                                            : '–')
                                 }}
                             </td>
-                            <td>{{ props.item.updated_at }}</td>
+                            <td>{{ new Date(props.item.updated_at).toLocaleString() }}</td>
                             <td>
                                 <span v-if="props.item.is_published">Ano</span>
                                 <span v-else>Ne</span>
@@ -103,10 +107,15 @@
                             </td>
                             <td>
                                 <a
-                                    href="#"
-                                    style="color:red"
+                                    class="text-secondary mr-2"
+                                    :href="
+                                        '/admin/song/' + props.item.id + '/edit'
+                                    "
+                                    ><i class="fas fa-pen"></i></a
+                                ><a
+                                    class="text-secondary"
                                     v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
+                                    ><i class="fas fa-trash"></i></a
                                 >
                             </td>
                         </template>
@@ -178,11 +187,11 @@ export default {
             headers: [
                 { text: 'Název písničky', value: 'name' },
                 { text: 'Typ', value: 'type' },
-                { text: 'Autoři', value: 'only_regenschori' },
+                { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
                 { text: 'Publikováno', value: 'is_published' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',
             filter_mode: 'no-filter'
