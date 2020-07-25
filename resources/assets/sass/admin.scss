@@ -66,8 +66,8 @@ textarea.form-control
     padding: 0.4rem 0.8rem;
 
     @include media-breakpoint-up(lg) {
-      width:    100%;
-      padding:    0.66875rem 1rem;
+      width: 100%;
+      padding: 0.66875rem 1rem 0.66875rem calc(1rem + 22px);
     }
 
     margin:     0;
@@ -81,7 +81,11 @@ textarea.form-control
 
     // Fontawesome icon
     i {
-      width: 20px;
+      width: 22px;
+
+      @include media-breakpoint-up(lg) {
+        margin-left: -22px;
+      }
     }
 
     .badge {
@@ -188,4 +192,9 @@ textarea.form-control
 
 .application--wrap {
     min-height: initial !important;
+
+    & > .container {
+        padding: 0;
+        padding-right: 15px;
+    }
 }
