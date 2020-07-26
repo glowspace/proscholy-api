@@ -70,7 +70,7 @@
                         ></items-combo-box>
                     </v-form>
                 </v-flex>
-                <v-flex xs12 md6 class="edit-description">
+                <v-flex xs12 md6 class="edit-description pl-md-4">
                     <h5>Seznam autorských písní</h5>
                     <v-btn
                         v-for="song_lyric in model.song_lyrics"

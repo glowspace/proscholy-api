@@ -211,7 +211,7 @@
                 ></v-checkbox> -->
               </v-form>
             </v-flex>
-            <v-flex xs12 md5 offset-md1 class="edit-description">
+            <v-flex xs12 md6 class="edit-description pl-md-4">
               <h5>Název (povinná položka)</h5>
               <p>
                 Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje
@@ -247,7 +247,7 @@
                 ref="textarea"
                 v-model="model.lyrics"
               ></v-textarea>
-              <number-input 
+              <number-input
                 label="Kapodastr"
                 v-model="model.capo"
                 vv-name="input.capo"
@@ -389,7 +389,7 @@
                 v-bind:key="arrangement.id"
                 class="text-none"
                 @click="goToAdminPage('song/' + arrangement.id + '/edit')"
-              >{{ arrangement.name }} 
+              >{{ arrangement.name }}
               <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
               </v-btn>
             </v-flex>
@@ -504,7 +504,7 @@ const CREATE_ARRANGEMENT = gql`
 `;
 
 const FETCH_LILYPOND = gql`
-  query ($lilypond: String) { 
+  query ($lilypond: String) {
     lilypond_parse (lilypond: $lilypond) {
       svg
     }
@@ -621,11 +621,11 @@ export default {
     }
   },
   mounted() {
-    // send blocking info 
+    // send blocking info
     setInterval(() => {
         // $.get( "/refresh-updating/song-lyric/" + this.presetId );
     }, 5000);
-  },  
+  },
 
   computed: {
     thumbnailables() {
@@ -651,7 +651,7 @@ export default {
 
     is_original() {
       if (this.model && this.model.song) {
-        const song_lyric_type = this.model.song.song_lyrics.find(sl => 
+        const song_lyric_type = this.model.song.song_lyrics.find(sl =>
           sl.id == this.model.id
         ).type;
 

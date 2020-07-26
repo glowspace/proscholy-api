@@ -62,7 +62,7 @@
                         >
                     </v-form>
                 </v-flex>
-                <v-flex xs12 md6 class="edit-description">
+                <v-flex xs12 md6 class="edit-description pl-md-4">
                     <h5>Seznam písní ve zpěvníku</h5>
                     <v-radio-group
                         v-if="model.songs_count"
