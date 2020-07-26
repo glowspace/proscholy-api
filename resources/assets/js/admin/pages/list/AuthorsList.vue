@@ -15,6 +15,7 @@
                         v-model="search_string"
                         label="Vyhledávání"
                         prepend-icon="search"
+                        :clearable="true"
                     ></v-text-field>
                 </v-flex>
             </v-layout>

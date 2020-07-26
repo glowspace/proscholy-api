@@ -49,14 +49,32 @@ textarea.form-control
   }
 }
 
+.admin-logo {
+    padding: 0 10px 0 0;
+    width: 60px;
+}
+
 // admin sidebar
 .sidebar {
   @include media-breakpoint-up(lg) {
-    min-height: calc(100vh - 66px);
+    height: calc(100% + 1rem + 60px);
+    min-height: calc(100vh + 0.5rem);
+
+    & > div {
+        margin-top: calc(-60px - 1rem);
+        position: sticky;
+        top: 0;
+        max-height: 100vh;
+        overflow: auto;
+    }
   }
 
   @include media-breakpoint-down(md) {
     margin-right: -15px;
+
+    .navbar-brand {
+        display: none;
+    }
   }
 
   height: 100%;

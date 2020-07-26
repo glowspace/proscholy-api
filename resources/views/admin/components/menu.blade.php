@@ -53,7 +53,7 @@
 
 {{-- <div class="navbar-label material-shadow text-success">Úprava položek</div> --}}
 
-<div class="mt-3"></div>
+<div class="mt-lg-3"></div>
 
 @include('admin.components.menu-item', [
     'route' => 'admin.song.index',

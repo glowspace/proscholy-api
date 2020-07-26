@@ -9,14 +9,16 @@
             prepend-icon="add"
             class="w-100"
             style="max-width:600px"
+            @keydown.enter="submit(true)"
+            id="create-model-text-field"
         ></v-text-field>
-        <div class="text-nowrap">
-            <v-btn :disabled="attribute_value == ''" @click="submit(true)" color="primary" style="margin-left:33px"
+        <div class="text-nowrap mt-1">
+            <v-btn :disabled="attribute_value == '' || saving" @click="submit(true)" color="primary" style="margin-left:33px"
                 >Vytvořit a upravit</v-btn
             >
             <v-btn
                 v-if="!forceEdit"
-                :disabled="attribute_value == ''"
+                :disabled="attribute_value == '' || saving"
                 @click="submit(false)"
                 >Vytvořit</v-btn
             >
@@ -41,12 +43,14 @@ export default {
 
     data() {
         return {
-            attribute_value: ''
+            attribute_value: '',
+            saving: false
         };
     },
 
     methods: {
         submit(redir) {
+            this.saving = true;
             this.$apollo
                 .mutate({
                     mutation: CREATE_MODEL_MUTATION,
@@ -58,6 +62,7 @@ export default {
                     }
                 })
                 .then(result => {
+                    this.saving = false;
                     this.$notify({
                         title: 'Hotovo :)',
                         text: this.successMsg,
@@ -70,9 +75,11 @@ export default {
                     } else {
                         this.$emit('saved');
                         this.attribute_value = '';
+                        document.getElementById('create-model-text-field').focus();
                     }
                 })
                 .catch(error => {
+                    this.saving = false;
                     if (
                         !error.graphQLErrors ||
                         error.graphQLErrors.length == 0

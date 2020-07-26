@@ -5,7 +5,7 @@
 @section('navbar')
     <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top">
         <div>
-            <a class="navbar-brand" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
+            <a class="navbar-brand" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" class="admin-logo">
                 ProScholy & Regenschori
                 <span style="color: #ffffff3d">– po ruce všem, kteří se chtějí modlit hudbou</span>
             </a>
@@ -17,8 +17,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-2">
-                <div class="sidebar bg-dark material-shadow" id="navbarNav">
-                    @include('admin.components.menu')
+                <div class="sidebar bg-dark material-shadow">
+                    <div>
+                        <a class="navbar-brand py-2" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" class="admin-logo"></a>
+                        @include('admin.components.menu')
+                    </div>
                 </div>
             </div>
             <div class="col-lg-10" style="position: static">
