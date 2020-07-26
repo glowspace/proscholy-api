@@ -107,34 +107,15 @@
                                     :multiple="false"
                                     :enable-custom="true"
                                     create-label="Potvrďte enterem a vytvořte novou píseň"
+                                    :no-label="true"
                                 ></items-combo-box>
                             </td>
                             <td>
                                 <a
-                                    class="as-link"
-                                    v-if="
-                                        props.item.song_lyric &&
-                                            props.item.song_lyric.hasOwnProperty(
-                                                'id'
-                                            )
-                                    "
-                                    @click.middle="
-                                        goToAdminPage(
-                                            'song/' +
-                                                props.item.song_lyric.id +
-                                                '/edit',
-                                            true,
-                                            true
-                                        )
-                                    "
-                                    @click.left="
-                                        goToAdminPage(
-                                            'song/' +
-                                                props.item.song_lyric.id +
-                                                '/edit'
-                                        )
-                                    "
-                                    >Upravit píseň</a
+                                    v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
+                                    class="text-secondary"
+                                    :href="'/admin/song/' + props.item.song_lyric.id + '/edit'"
+                                    ><i class="fas fa-pen"></i></a
                                 >
                             </td>
                         </template>

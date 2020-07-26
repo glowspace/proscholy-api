@@ -41,9 +41,7 @@
                         <template v-slot:items="props">
                             <td>
                                 <a
-                                    :href="
-                                        '/admin/file/' + props.item.id + '/edit'
-                                    "
+                                    :href="'/admin/file/' + props.item.id + '/edit'"
                                     >{{ props.item.public_name }}</a
                                 >
                             </td>
@@ -62,15 +60,20 @@
                                         .join(', ') || '–'
                                 }}
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 <a
-                                    href="#"
-                                    style="color:red"
+                                    class="text-secondary mr-3"
+                                    :href="props.item.download_url"
+                                    ><i class="fas fa-download"></i></a
+                                ><a
+                                    class="text-secondary mr-3"
+                                    :href="'/admin/file/' + props.item.id + '/edit'"
+                                    ><i class="fas fa-pen"></i></a
+                                ><a
+                                    class="text-secondary"
                                     v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
+                                    ><i class="fas fa-trash"></i></a
                                 >
-                                &nbsp;
-                                <a :href="props.item.download_url">Stáhnout</a>
                             </td>
                         </template>
                     </v-data-table>

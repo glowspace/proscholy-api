@@ -48,11 +48,7 @@
                         <template v-slot:items="props">
                             <td>
                                 <a
-                                    :href="
-                                        '/admin/external/' +
-                                            props.item.id +
-                                            '/edit'
-                                    "
+                                    :href="'/admin/external/' + props.item.id + '/edit'"
                                     >{{ getShortUrl(props.item.url) }}</a
                                 >
                             </td>
@@ -71,12 +67,15 @@
                                         .join(', ') || '–'
                                 }}
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 <a
-                                    href="#"
-                                    style="color:red"
+                                    class="text-secondary mr-3"
+                                    :href="'/admin/external/' + props.item.id + '/edit'"
+                                    ><i class="fas fa-pen"></i></a
+                                ><a
+                                    class="text-secondary"
                                     v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
+                                    ><i class="fas fa-trash"></i></a
                                 >
                             </td>
                         </template>

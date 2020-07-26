@@ -42,7 +42,7 @@
                             <td>{{ props.item.type_string }}</td>
                             <td class="text-nowrap">
                                 <a
-                                    class="text-secondary mr-2"
+                                    class="text-secondary mr-3"
                                     :href="'/admin/author/' + props.item.id + '/edit'"
                                     ><i class="fas fa-pen"></i></a
                                 ><a

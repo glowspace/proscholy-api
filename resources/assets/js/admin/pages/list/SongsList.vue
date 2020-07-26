@@ -59,9 +59,7 @@
                         <template v-slot:items="props">
                             <td>
                                 <a
-                                    :href="
-                                        '/admin/song/' + props.item.id + '/edit'
-                                    "
+                                    :href="'/admin/song/' + props.item.id + '/edit'"
                                     >{{ props.item.name }}</a
                                 >
                             </td>
@@ -104,7 +102,7 @@
                             </td>
                             <td class="text-nowrap">
                                 <a
-                                    class="text-secondary mr-2"
+                                    class="text-secondary mr-3"
                                     :href="'/admin/song/' + props.item.id + '/edit'"
                                     ><i class="fas fa-pen"></i></a
                                 ><a

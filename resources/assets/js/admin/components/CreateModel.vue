@@ -1,22 +1,27 @@
 <template>
-    <div>
+    <v-layout row wrap>
         <v-text-field
             :label="label"
             required
             v-model="attribute_value"
             data-vv-name="required_attribute"
             :error-messages="errors.collect('required_attribute')"
+            prepend-icon="add"
+            class="w-100"
+            style="max-width:600px"
         ></v-text-field>
-        <v-btn
-            v-if="!forceEdit"
-            :disabled="attribute_value == ''"
-            @click="submit(false)"
-            >Vytvořit</v-btn
-        >
-        <v-btn :disabled="attribute_value == ''" @click="submit(true)"
-            >Vytvořit a editovat</v-btn
-        >
-    </div>
+        <div class="text-nowrap">
+            <v-btn :disabled="attribute_value == ''" @click="submit(true)" color="primary" style="margin-left:33px"
+                >Vytvořit a upravit</v-btn
+            >
+            <v-btn
+                v-if="!forceEdit"
+                :disabled="attribute_value == ''"
+                @click="submit(false)"
+                >Vytvořit</v-btn
+            >
+        </div>
+    </v-layout>
 </template>
 
 <script>
