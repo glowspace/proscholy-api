@@ -9,35 +9,36 @@
                 success-msg="Píseň úspěšně vytvořena"
                 @saved="$apollo.queries.song_lyrics.refetch()"
             ></create-model>
-            <v-layout row>
-                <v-flex xs7>
-                    <v-radio-group v-model="filter_mode">
+            <v-layout row wrap>
+                <v-flex xs12 md8>
+                    <v-radio-group v-model="filter_mode" row>
                         <v-radio
                             label="Všechny písně"
                             value="no-filter"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez textu"
+                            label="Bez textu"
                             value="no-lyrics"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez akordů"
+                            label="Bez akordů"
                             value="no-chords"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez autora"
+                            label="Bez autora"
                             value="no-author"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez štítků"
+                            label="Bez štítků"
                             value="no-tags"
                         ></v-radio>
                     </v-radio-group>
                 </v-flex>
-                <v-flex xs5>
+                <v-flex xs12 md4>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -49,15 +50,11 @@
                         :search="search_string"
                         :custom-filter="customFilter"
                         :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
+                            50,
+                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
                         :loading="$apollo.loading"
-                        :no-data-text="$apollo.loading ? 'Načítám…' : 'Data nejsou k dispozici.'"
-                        :no-results-text="'Nic nebylo nalezeno. Zkuste zkontrolovat vyhledávaný řetězec.'"
-                        :locale="'cs'"
-                        class="users-list"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
                     >
                         <template v-slot:items="props">
                             <td>
@@ -105,7 +102,7 @@
                                 >
                                 <span v-else>R + PS</span>
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 <a
                                     class="text-secondary mr-2"
                                     :href="

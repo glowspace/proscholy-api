@@ -102,11 +102,14 @@ Vue.use(Vuetify, {
         locales: {
             cs: {
                 dataIterator: {
-                    pageText: "{0}–{1} z {2}"
+                    rowsPerPageAll: "∞",
+                    pageText: "{0}–{1} z {2}",
+                    noResultsText: "Nic nebylo nalezeno. Zkuste zkontrolovat vyhledávaný řetězec.",
                 },
                 dataTable: {
                     rowsPerPageText: "Počet řádků na stránce:"
-                }
+                },
+                noDataText: "Data nejsou k dispozici."
             }
         },
         current: 'cs'
