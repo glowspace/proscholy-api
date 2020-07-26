@@ -105,9 +105,7 @@
                             <td class="text-nowrap">
                                 <a
                                     class="text-secondary mr-2"
-                                    :href="
-                                        '/admin/song/' + props.item.id + '/edit'
-                                    "
+                                    :href="'/admin/song/' + props.item.id + '/edit'"
                                     ><i class="fas fa-pen"></i></a
                                 ><a
                                     class="text-secondary"

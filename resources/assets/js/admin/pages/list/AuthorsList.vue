@@ -10,10 +10,11 @@
                 @saved="$apollo.queries.authors.refetch()"
             ></create-model>
             <v-layout row>
-                <v-flex xs5 offset-xs7 md3 offset-md9>
+                <v-flex xs12 md4 offset-md8>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -25,29 +26,29 @@
                         :search="search_string"
                         :custom-filter="customFilter"
                         :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
+                            50,
+                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
+                        :loading="$apollo.loading"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
                     >
                         <template v-slot:items="props">
                             <td>
                                 <a
-                                    :href="
-                                        '/admin/author/' +
-                                            props.item.id +
-                                            '/edit'
-                                    "
+                                    :href="'/admin/author/' + props.item.id + '/edit'"
                                     >{{ props.item.name }}</a
                                 >
                             </td>
                             <td>{{ props.item.type_string }}</td>
-                            <td>
+                            <td class="text-nowrap">
                                 <a
-                                    href="#"
-                                    style="color:red"
+                                    class="text-secondary mr-2"
+                                    :href="'/admin/author/' + props.item.id + '/edit'"
+                                    ><i class="fas fa-pen"></i></a
+                                ><a
+                                    class="text-secondary"
                                     v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
+                                    ><i class="fas fa-trash"></i></a
                                 >
                             </td>
                         </template>
@@ -61,8 +62,8 @@
 <style scope>
 input {
     border: none;
-}</style
->fetch_items
+}
+</style>
 
 <script>
 import gql from 'graphql-tag';
@@ -100,7 +101,7 @@ export default {
             headers: [
                 { text: 'Jméno', value: 'name' },
                 { text: 'Typ', value: 'type_string' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: ''
         };

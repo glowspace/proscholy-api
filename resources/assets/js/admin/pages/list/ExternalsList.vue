@@ -10,8 +10,8 @@
                 @saved="$apollo.queries.externals.refetch()"
                 :force-edit="true"
             ></create-model>
-            <v-layout row>
-                <v-flex xs7>
+            <v-layout row wrap>
+                <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">
                         <v-radio
                             label="Všechny externí odkazy"
@@ -23,10 +23,11 @@
                         ></v-radio>
                     </v-radio-group>
                 </v-flex>
-                <v-flex xs5>
+                <v-flex xs12 md4>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -38,10 +39,11 @@
                         :search="search_string"
                         :custom-filter="customFilter"
                         :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
+                            50,
+                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
+                        :loading="$apollo.loading"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
                     >
                         <template v-slot:items="props">
                             <td>
@@ -59,14 +61,14 @@
                                 {{
                                     props.item.song_lyric
                                         ? props.item.song_lyric.name
-                                        : '-'
+                                        : '–'
                                 }}
                             </td>
                             <td>
                                 {{
                                     props.item.authors
                                         .map(a => a.name)
-                                        .join(', ') || '-'
+                                        .join(', ') || '–'
                                 }}
                             </td>
                             <td>
@@ -133,7 +135,7 @@ export default {
                 { text: 'Typ', value: 'type_string' },
                 { text: 'Píseň', value: 'song_lyric' },
                 { text: 'Autoři', value: 'authors' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',
             filter_mode: 'no-filter'

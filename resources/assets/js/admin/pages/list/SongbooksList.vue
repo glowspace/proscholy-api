@@ -11,10 +11,11 @@
                 :force-edit="true"
             ></create-model>
             <v-layout row>
-                <v-flex xs5 offset-xs7 md3 offset-md9>
+                <v-flex xs12 md4 offset-md8>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -26,10 +27,11 @@
                         :search="search_string"
                         :filter="formFilter"
                         :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
+                            50,
+                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
+                        :loading="$apollo.loading"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
                     >
                         <template v-slot:items="props">
                             <td>
@@ -114,8 +116,8 @@ export default {
                 { text: 'Jméno', value: 'name' },
                 { text: 'Zkratka', value: 'shortcut' },
                 { text: 'Typ', value: 'is_private' },
-                { text: 'Počet záznamů', value: 'n_records' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Počet záznamů', value: 'records.length' },
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: ''
         };

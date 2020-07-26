@@ -82,10 +82,11 @@
                         :items="recordsWithEmpty"
                         class="mb-4"
                         :rows-per-page-items="[
-                            20,
-                            40,
-                            { text: 'Vše', value: -1 }
+                            50,
+                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
+                        :loading="$apollo.loading"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
                     >
                         <template v-slot:items="props">
                             <td>{{ props.item.number }}</td>
@@ -214,7 +215,7 @@ export default {
             records_headers: [
                 { text: 'Číslo', value: 'number' },
                 { text: 'Píseň', value: 'name' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             hide_empty: false,
             fragment: Songbook.fragment
