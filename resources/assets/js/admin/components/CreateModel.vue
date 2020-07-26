@@ -1,5 +1,5 @@
 <template>
-    <v-layout row wrap>
+    <div class="card d-inline-flex flex-row flex-wrap px-4 py-3">
         <v-text-field
             :label="label"
             required
@@ -7,12 +7,13 @@
             data-vv-name="required_attribute"
             :error-messages="errors.collect('required_attribute')"
             prepend-icon="add"
-            class="w-100"
-            style="max-width:600px"
+            class="mt-0 pb-3"
+            style="max-width:600px;width:50vw"
             @keydown.enter="submit(true)"
             id="create-model-text-field"
+            :hide-details="true"
         ></v-text-field>
-        <div class="text-nowrap mt-1">
+        <div class="text-nowrap pt-1">
             <v-btn :disabled="attribute_value == '' || saving" @click="submit(true)" color="primary" style="margin-left:33px"
                 >Vytvořit a upravit</v-btn
             >
@@ -23,7 +24,7 @@
                 >Vytvořit</v-btn
             >
         </div>
-    </v-layout>
+    </div>
 </template>
 
 <script>

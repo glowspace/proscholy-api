@@ -80,7 +80,7 @@
                     <v-data-table
                         :headers="records_headers"
                         :items="recordsWithEmpty"
-                        class="mb-4"
+                        class="mb-4 card"
                         :rows-per-page-items="[
                             50,
                             { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }

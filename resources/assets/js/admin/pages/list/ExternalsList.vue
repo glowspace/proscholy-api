@@ -45,6 +45,7 @@
                         ]"
                         :loading="$apollo.loading"
                         :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                        class="card"
                     >
                         <template v-slot:items="props">
                             <td>
