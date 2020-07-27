@@ -16,6 +16,8 @@
                         label="Vyhledávání"
                         prepend-icon="search"
                         :clearable="true"
+                        id="search"
+                        autofocus
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -120,6 +122,12 @@ export default {
             result(result) {
                 this.buildSearchIndex();
             }
+        }
+    },
+
+    mounted() {
+        if (location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
         }
     },
 

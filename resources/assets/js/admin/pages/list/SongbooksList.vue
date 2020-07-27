@@ -17,6 +17,8 @@
                         label="Vyhledávání"
                         prepend-icon="search"
                         :clearable="true"
+                        id="search"
+                        autofocus
                     ></v-text-field>
                 </v-flex>
             </v-layout>
@@ -127,6 +129,12 @@ export default {
     apollo: {
         songbooks: {
             query: fetch_items
+        }
+    },
+
+    mounted() {
+        if (location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
         }
     },
 

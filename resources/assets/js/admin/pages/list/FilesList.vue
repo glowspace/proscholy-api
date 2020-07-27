@@ -22,6 +22,8 @@
                         label="Vyhledávání"
                         prepend-icon="search"
                         :clearable="true"
+                        id="search"
+                        autofocus
                     ></v-text-field>
                 </v-flex>
             </v-layout>
