@@ -1,6 +1,16 @@
 @extends('layout.master')
 
-@section('title', 'Administrace ProScholy & Regenschori')
+@if(View::hasSection('title-edit'))
+    @section('title')
+    ● @yield('title-edit') – administrace ProScholy & Regenschori
+    @endsection
+@elseif(View::hasSection('title-suffixed'))
+    @section('title')
+    @yield('title-suffixed') – administrace ProScholy & Regenschori
+    @endsection
+@else
+    @section('title', 'Administrace ProScholy & Regenschori')
+@endif
 
 @section('navbar')
     <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top">
@@ -25,7 +35,7 @@
                 </div>
             </div>
             <div class="col-lg-10" style="position: static">
-                @yield("content-withmenu")
+                @yield('content-withmenu')
             </div>
         </div>
     </div>

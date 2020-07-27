@@ -1,8 +1,10 @@
 @extends('layout.admin')
 
+@section('title-edit', 'Odkaz '.$external->id)
+
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h2>Úprava externího zdroje</h2>
+        <h1 class="h2">Úprava externího zdroje</h1>
         <external-edit preset-id="{{ $external->id }}"></external-edit>
         {{-- <div class="row">
             <div class="col-sm-6">

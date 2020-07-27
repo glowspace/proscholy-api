@@ -1,10 +1,12 @@
 @extends('layout.admin')
 
+@section('title-edit', $file->name ? $file->name : $file->filename)
+
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h2>Úprava nahraného souboru</h2>
+        <h1 class="h2">Úprava nahraného souboru</h1>
         <file-edit preset-id="{{ $file->id }}"></file-edit>
-        
+
         {{-- <div class="row">
             <div class="col-sm-6">
                 <form action="{{route('admin.file.update', ['file' => $file->id])}}" method="post">

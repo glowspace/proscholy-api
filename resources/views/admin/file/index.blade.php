@@ -1,8 +1,10 @@
 @extends('layout.admin')
 
+@section('title-suffixed', 'Seznam souborů')
+
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h2>{{ $title ?? "Seznam souborů"}}</h2>
+        <h1 class="h2">{{ $title ?? "Seznam souborů"}}</h1>
         <a class="btn btn-outline-primary" href="{{route('admin.file.create')}}">+ Nahrát nový soubor</a>
 
         @if ($type == "show-all")
