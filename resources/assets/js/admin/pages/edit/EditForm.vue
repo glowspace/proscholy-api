@@ -81,7 +81,7 @@ export default {
                         .getAttribute('value');
                     window.location.href = base_url + '/' + url;
                 }
-            }, 500);
+            }, 50);
         },
 
         goToAdminPage(url, save = true) {
