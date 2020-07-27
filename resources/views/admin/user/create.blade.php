@@ -8,7 +8,7 @@
                 <form action="{{route('admin.user.store')}}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input required class="form-control" autofocus name="email" type="email" placeholder="email"><br>
+                        <input required class="form-control" autofocus name="email" type="email" placeholder="E-mail"><br>
                     </div>
 
                     {{-- <div class="input-group"> --}}
