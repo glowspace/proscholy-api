@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-lg-2">
                 <div class="sidebar bg-dark material-shadow">
-                    <div>
+                    <div class="overflow-hidden">
                         <a class="navbar-brand py-2" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" class="admin-logo"></a>
                         @include('admin.components.menu')
                     </div>

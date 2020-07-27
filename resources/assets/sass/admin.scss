@@ -216,3 +216,17 @@ textarea.form-control
         padding-right: 15px;
     }
 }
+
+.v-datatable td:first-child a {
+    display: inline-block;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        bottom: -4px;
+        left: -24px;
+        right: -48px;
+    }
+}
