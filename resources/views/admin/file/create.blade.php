@@ -4,13 +4,11 @@
 
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h1 class="h2">Nahrát nový soubor</h1>
+        <h1 class="h2 mb-3">Nahrát nový soubor</h1>
 
         <div class="row">
             <div class="col-sm-6">
-
                 <a href="{{route('admin.file.index')}}">Zpět do administrace</a>
-                {{-- <a href="{{route('admin.todo')}}">Zpět na TO-DO list</a> --}}
 
                 <form action="{{route('admin.file.store')}}" method="post" enctype="multipart/form-data">
                     @csrf

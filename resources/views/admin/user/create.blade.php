@@ -4,7 +4,7 @@
 
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h1 class="h2">Nový uživatel</h1>
+        <h1 class="h2 mb-3">Nový uživatel</h1>
         <div class="row">
             <div class="col-sm-12">
                 <form action="{{route('admin.user.store')}}" method="post">
@@ -12,10 +12,7 @@
                     <div class="input-group mb-3">
                         <input required class="form-control" autofocus name="email" type="email" placeholder="E-mail"><br>
                     </div>
-
-                    {{-- <div class="input-group"> --}}
-                        <button type="submit" class="btn btn-outline-primary" name="redirect" value="edit">Uložit a upravit</button>
-                    {{-- </div> --}}
+                    <button type="submit" class="btn btn-outline-primary" name="redirect" value="edit">Uložit a upravit</button>
                 </form>
             </div>
         </div>

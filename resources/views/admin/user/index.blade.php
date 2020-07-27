@@ -1,10 +1,10 @@
 @extends('layout.admin')
 
-@section('title-suffixed', 'Seznam uživatelů')
+@section('title-suffixed', 'Uživatelé')
 
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h1 class="h2">Seznam uživatelů</h1>
+        <h1 class="h2 mb-3">Uživatelé</h1>
         <a class="btn btn-outline-primary" href="{{route('admin.user.create')}}">+ Nový uživatel</a>
         <div class="row mt-3">
             <div class="col-xs-12 col-md-8">
@@ -31,4 +31,3 @@
         </div>
     </div>
 @endsection
-
