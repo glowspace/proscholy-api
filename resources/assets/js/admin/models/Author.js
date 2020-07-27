@@ -7,6 +7,7 @@ const fragment = gql`
         name
         type
         description
+        public_url
         members {
             id
             name

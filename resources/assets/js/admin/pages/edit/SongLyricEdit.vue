@@ -411,7 +411,8 @@
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
-      <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+      <v-btn :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+      <v-btn :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
       <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
       <br>
       <br>
@@ -700,10 +701,6 @@ export default {
             type: "error"
           });
         });
-    },
-
-    show() {
-      window.location.href = this.model_database.public_url;
     },
 
     onTabChange() {

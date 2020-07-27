@@ -50,7 +50,7 @@
                         <v-btn @click="submit" :disabled="!isDirty"
                             >Uložit</v-btn
                         >
-                        <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
+                        <!-- <v-btn :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
                         <br />
                         <br />
                         <delete-model-dialog
@@ -281,13 +281,6 @@ export default {
 
                     this.handleValidationErrors(error);
                 });
-        },
-
-        show() {
-            var base_url = document
-                .querySelector('#baseUrl')
-                .getAttribute('value');
-            window.location.href = base_url + '/autor/' + this.model.id;
         },
 
         updateRecordItem(song_lyric, number) {
