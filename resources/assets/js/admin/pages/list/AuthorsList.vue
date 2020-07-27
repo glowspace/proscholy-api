@@ -15,6 +15,8 @@
                         v-model="search_string"
                         label="Vyhledávání"
                         prepend-icon="search"
+                        @click:prepend="$refs.search.focus()"
+                        ref="search"
                         :clearable="true"
                         id="search"
                         autofocus
@@ -126,9 +128,14 @@ export default {
     },
 
     mounted() {
-        if (location.hash == '#n' && document.getElementById('create-model-text-field')) {
-            document.getElementById('create-model-text-field').focus();
-        }
+        document.getElementsByTagName("body")[0].onhashchange = function hashChanged() {
+            if (location.hash == '#n' && document.getElementById('create-model-text-field')) {
+                document.getElementById('create-model-text-field').focus();
+            } else if (document.getElementById('search')) {
+                document.getElementById('search').focus();
+            }
+        };
+        document.getElementsByTagName("body")[0].onhashchange();
     },
 
     methods: {

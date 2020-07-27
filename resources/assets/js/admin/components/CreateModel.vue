@@ -7,6 +7,8 @@
             data-vv-name="required_attribute"
             :error-messages="errors.collect('required_attribute')"
             prepend-icon="add"
+            @click:prepend="$refs.cmtf.focus()"
+            ref="cmtf"
             class="mt-0 pb-3"
             style="max-width:600px;width:50vw"
             @keydown.enter="submit(true)"

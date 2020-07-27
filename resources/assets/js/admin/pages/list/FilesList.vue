@@ -21,6 +21,8 @@
                         v-model="search_string"
                         label="Vyhledávání"
                         prepend-icon="search"
+                        @click:prepend="$refs.search.focus()"
+                        ref="search"
                         :clearable="true"
                         id="search"
                         autofocus
