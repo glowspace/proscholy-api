@@ -10,7 +10,7 @@
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
-      <v-tabs color="transparent" v-on:change="onTabChange">
+      <v-tabs color="transparent">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab>Lilypond (beta)</v-tab>
@@ -72,7 +72,7 @@
 
                   <v-card-text class="p-0">
                     <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
-                      <v-flex xs12 sm5>
+                      <v-flex xs12 sm8>
                         <items-combo-box
                           v-model="author_pivot.author"
                           v-bind:p-items="authors"
@@ -83,12 +83,12 @@
                           :disabled="model.has_anonymous_author"
                         ></items-combo-box>
                       </v-flex>
-                      <v-flex xs7 sm4>
+                      <v-flex xs10 sm3>
                         <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
                         <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
                         <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
                       </v-flex>
-                      <v-flex xs5 sm2>
+                      <v-flex xs2 sm1>
                         <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
                         <v-btn icon @click="removeAuthor(i)" :disabled="model.has_anonymous_author" class="text-secondary"><i class="fas fa-trash"></i></v-btn>
                       </v-flex>
@@ -245,7 +245,7 @@
               <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile"> -->
 
               <v-textarea
-                auto-grow
+                class="auto-grow-alt"
                 outline
                 name="input-7-4"
                 label="Text"
@@ -298,7 +298,7 @@
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-textarea
-                auto-grow
+                class="auto-grow-alt"
                 outline
                 name="input-7-4"
                 label="Notový zápis ve formátu Lilypond"
@@ -414,19 +414,26 @@
           </v-layout>
         </v-tab-item>
       </v-tabs>
-      <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
-      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
-      <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
-      <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
-      <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
-      <br>
-      <br>
-      <delete-model-dialog
-        class-name="SongLyric"
-        :model-id="model.id"
-        @deleted="is_deleted = true"
-        delete-msg="Opravdu chcete vymazat tuto píseň?"
-      >Vymazat</delete-model-dialog>
+      <div class="position-sticky fixed-bottom body-bg ml-n3 mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
+        <v-tooltip top>
+            <template v-slot:activator="{ on }">
+                <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on">Uložit</v-btn>
+            </template>
+            <span>Ctrl + S</span>
+        </v-tooltip>
+        <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+      </div>
+      <div class="mt-2 mb-4 ml-n3 p-2">
+        <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
+        <delete-model-dialog
+          class-name="SongLyric"
+          :model-id="model.id"
+          @deleted="is_deleted = true"
+          delete-msg="Opravdu chcete vymazat tuto píseň?"
+        >Vymazat</delete-model-dialog>
+      </div>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
         <v-card>
@@ -721,16 +728,6 @@ export default {
             type: "error"
           });
         });
-    },
-
-    onTabChange() {
-      // it is needed to refresh the textareas manually
-      if (this.$refs.textarea) {
-        // somehow it doesn"t work without settimeout, not even with Vue.nexttick
-        setTimeout(() => {
-          this.$refs.textarea.calculateInputHeight();
-        }, 1);
-      }
     },
 
     isDirtyChecker() {

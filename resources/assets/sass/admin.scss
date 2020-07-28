@@ -230,3 +230,15 @@ textarea.form-control
         right: -48px;
     }
 }
+
+div.theme--light.application {
+    background: transparent;
+}
+
+.body-bg {
+    background-color: $body-bg;
+}
+
+.auto-grow-alt textarea {
+    height: 60vh;
+}

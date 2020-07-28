@@ -56,14 +56,12 @@
                             :enable-custom="true"
                         ></items-combo-box>
                         <v-textarea
-                            auto-grow
+                            outline
                             name="input-7-4"
                             label="Popis autora"
                             v-model="model.description"
                             data-vv-name="input.description"
-                            :error-messages="
-                                errors.collect('input.description')
-                            "
+                            :error-messages="errors.collect('input.description')"
                         ></v-textarea>
                         <items-combo-box
                             v-bind:p-items="tags_period"

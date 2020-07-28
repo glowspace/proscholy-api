@@ -55,7 +55,10 @@ export default {
                     continue;
                 }
 
-                if (!_.isEqual(this.model[field], this.model_database[field])) {
+                let model_field = this.model[field];
+                model_field = (model_field === '') ? null : model_field;
+
+                if (!_.isEqual(model_field, this.model_database[field])) {
                     console.log('Dirty check found mismatch on the field ' + field);
                     return true;
                 }
@@ -95,6 +98,12 @@ export default {
                 e.returnValue = '';
             }
         };
+
+        document.addEventListener("keydown", this.doSave);
+    },
+
+    beforeDestroy() {
+        document.removeEventListener("keydown", this.doSave);
     },
 
     $_veeValidate: {
@@ -102,6 +111,15 @@ export default {
     },
 
     methods: {
+        doSave(e) {
+            if (!(e.keyCode === 83 && e.ctrlKey)) {
+                return;
+            }
+
+            e.preventDefault();
+            this.submit();
+        },
+
         goToPage(url, save = true) {
             if (this.isDirty && save) {
                 this.submit();

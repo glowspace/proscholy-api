@@ -88,7 +88,7 @@
                     </external-view>
                 </v-flex>
             </v-layout>
-            <v-btn @click="submit(false)" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
             <v-btn @click="submit(true)"><span :style="isDirty ? '' : 'opacity:0.3'">Uložit a</span>&nbsp;nahrát další soubor</v-btn>
             <v-btn
                 v-if="model.song_lyric"
@@ -252,7 +252,7 @@ export default {
                         type: 'success'
                     });
 
-                    if (redir) {
+                    if (redir === true) {
                         if (this.model.song_lyric && this.model.song_lyric.id) {
                             this.goToAdminPage('file/new-for-song/' + this.model.song_lyric.id);
                         } else {
