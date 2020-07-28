@@ -1,10 +1,12 @@
 <template>
   <v-app>
     <notifications/>
-    <!-- todo: position this loader to look good -->
-    <!-- <v-container fluid v-show="$apollo.loading"><v-progress-circular
+    <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
       indeterminate
-    ></v-progress-circular></v-container> -->
+      color="info"
+      :height="4"
+      class="m-0"
+    ></v-progress-linear></div>
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
@@ -411,8 +413,8 @@
       </v-tabs>
       <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
       <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
-      <v-btn :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
-      <v-btn :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+      <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+      <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
       <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
       <br>
       <br>

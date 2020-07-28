@@ -1,6 +1,12 @@
 <template>
     <v-app>
         <notifications />
+        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
+            indeterminate
+            color="info"
+            :height="4"
+            class="m-0"
+        ></v-progress-linear></div>
         <v-container fluid grid-list-xs>
             <v-layout row wrap>
                 <v-flex xs12 md6>
