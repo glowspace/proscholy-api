@@ -56,7 +56,7 @@ class FileController extends Controller
 
         $filename = pathinfo($fullname, PATHINFO_FILENAME);
         $extension = pathinfo($fullname, PATHINFO_EXTENSION);
-        
+
         $slugified = str_slug($filename, '-').'.'.$extension;
 
         $type = 3; // default is sheet music
@@ -74,6 +74,14 @@ class FileController extends Controller
         if ($request->has('song_lyric_id')) {
             $file->song_lyric()->associate(Song::find($request->song_lyric_id));
             $file->save();
+        }
+
+        if ($request->redirect == 'create') {
+            if ($request->has('song_lyric_id')) {
+                return redirect()->route('admin.file.create_for_song', $request->song_lyric_id);
+            }
+
+            return redirect()->route('admin.file.create');
         }
 
         return redirect()->route('admin.file.edit', $file);
@@ -124,12 +132,12 @@ class FileController extends Controller
                 return is_numeric($value);
             });
             $file->authors()->sync($saved_authors);
-    
+
             // new authors to create - a string NAME is passed
             $new_authors = Arr::where($request->assigned_authors, function ($value, $key) {
                 return !is_numeric($value);
             });
-    
+
             // create new authors and associate to current file model
             foreach ($new_authors as $author) {
                 $file->authors()->create(['name' => $author]);

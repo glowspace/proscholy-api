@@ -89,7 +89,7 @@
                 </v-flex>
             </v-layout>
             <v-btn @click="submit(false)" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn @click="submit(true)" :disabled="!isDirty">Uložit a nahrát nový soubor</v-btn>
+            <v-btn @click="submit(true)"><span :style="isDirty ? '' : 'opacity:0.3'">Uložit a</span>&nbsp;nahrát další soubor</v-btn>
             <v-btn
                 v-if="model.song_lyric"
                 :disabled="isDirty"
@@ -117,7 +117,7 @@
                         >Soubor byl vymazán</v-card-title
                     >
                     <v-card-text>Soubor byl vymazán z databáze.</v-card-text>
-                    <v-card-actions>
+                    <v-card-actions class="d-block">
                         <v-spacer></v-spacer>
                         <v-btn
                             color="green darken-1"
@@ -253,11 +253,15 @@ export default {
                     });
 
                     if (redir) {
-                        this.goToAdminPage('file/create');
+                        if (this.model.song_lyric && this.model.song_lyric.id) {
+                            this.goToAdminPage('file/new-for-song/' + this.model.song_lyric.id);
+                        } else {
+                            this.goToAdminPage('file/create');
+                        }
                     }
                 })
                 .catch(error => {
-                    if (error.graphQLErrors.length == 0) {
+                    if (error.graphQLErrors && error.graphQLErrors.length == 0) {
                         // unknown error happened
                         this.$notify({
                             title: 'Chyba při ukládání',

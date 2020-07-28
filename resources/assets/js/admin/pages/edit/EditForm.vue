@@ -117,12 +117,14 @@ export default {
         },
 
         handleValidationErrors(error) {
-            let errorFields = error.graphQLErrors[0].extensions.validation;
+            if (error.graphQLErrors) {
+                let errorFields = error.graphQLErrors[0].extensions.validation;
 
-            // clear the old errors and (add new ones if exist)
-            this.$validator.errors.clear();
-            for (const [key, value] of Object.entries(errorFields)) {
-                this.$validator.errors.add({ field: key, msg: value });
+                // clear the old errors and (add new ones if exist)
+                this.$validator.errors.clear();
+                for (const [key, value] of Object.entries(errorFields)) {
+                    this.$validator.errors.add({ field: key, msg: value });
+                }
             }
         },
 
