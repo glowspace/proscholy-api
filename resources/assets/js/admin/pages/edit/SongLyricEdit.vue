@@ -30,7 +30,7 @@
                   v-on:input="onNameChange"
                 ></v-text-field>
 
-                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0">
+                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
                     label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
                     :value="false"
@@ -41,10 +41,9 @@
                   ></v-radio>
                 </v-radio-group>
 
-                <v-layout row mb-2>
+                <v-layout row mb-2 v-if="is_arrangement_layout">
                   <v-flex xs12 lg6>
                     <items-combo-box
-                      v-if="is_arrangement_layout"
                       v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
                       v-model="model.arrangement_source"
                       disabled
@@ -56,7 +55,7 @@
                     ></items-combo-box>
                   </v-flex>
                   <v-flex xs12 lg6>
-                    <v-btn v-if="is_arrangement_layout"
+                    <v-btn
                           @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
                           :disabled="!model.arrangement_source"
                           color="info" outline
@@ -64,7 +63,7 @@
                   </v-flex>
                 </v-layout>
 
-                <v-card class="mb-5 px-4">
+                <v-card class="mb-4 px-4">
                   <v-card-title class="p-0">
                     <h3>Autoři<span v-if="is_arrangement_layout"> aranže</span>
                     <span v-if="!is_original"> překladu</span>
@@ -136,14 +135,14 @@
                   </v-flex>
                 </v-layout> -->
 
-                <v-card v-if="model.song && model_database.song" class="mb-3">
-                  <v-card-title><h3>Skupina písní</h3></v-card-title>
+                <v-card v-if="model.song && model_database.song" class="mb-3 px-4">
+                  <v-card-title class="p-0"><h3>Skupina písní</h3></v-card-title>
 
-                  <v-card-text>
-                  <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
+                  <v-card-text class="py-0 px-2">
+                    <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
                   </v-card-text>
 
-                  <v-card-actions>
+                  <v-card-actions class="px-0 py-3">
                     <v-btn
                       color="error"
                       outline
@@ -152,8 +151,7 @@
                     >Odstranit píseň ze skupiny</v-btn>
                     <select-song-group-dialog
                       outline
-                      v-if="model_database.song.song_lyrics.length == 1 &&
-                  model.song.song_lyrics.length == 1"
+                      v-if="model_database.song.song_lyrics.length == 1 && model.song.song_lyrics.length == 1"
                       v-on:submit="addToGroup"
                     ></select-song-group-dialog>
                   </v-card-actions>
