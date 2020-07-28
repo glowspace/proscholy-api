@@ -88,11 +88,13 @@
                         :items="recordsWithEmpty"
                         class="mb-4 card"
                         :rows-per-page-items="[
+                            10,
                             50,
                             { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
                         :loading="$apollo.loading"
                         :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                        :custom-sort="customSort"
                     >
                         <template v-slot:items="props">
                             <td>{{ props.item.number }}</td>
@@ -300,6 +302,62 @@ export default {
             } else {
                 this.$set(record, 'song_lyric', song_lyric);
             }
+        },
+
+        customSort(items, index, isDesc) {
+            items.sort((a, b) => {
+                if (index == 'number') {
+                    if (!isDesc) {
+                        return this.orderNumber(a, b);
+                    } else {
+                        return this.orderNumber(a, b) * -1;
+                    }
+                }
+                else {
+                    if (!a.song_lyric && !b.song_lyric) {
+                        return 0;
+                    } else if (!a.song_lyric) {
+                        return 1
+                    } else if (!b.song_lyric) {
+                        return -1;
+                    } else if (!isDesc) {
+                        return a.song_lyric.name.toLowerCase()
+                        .localeCompare(b.song_lyric.name.toLowerCase());
+                    }
+                    else {
+                        return b.song_lyric.name.toLowerCase()
+                        .localeCompare(a.song_lyric.name.toLowerCase());
+                    }
+                }
+            });
+            return items;
+        },
+
+        orderNumber(a, b) {
+            let on = 0;
+
+            if (!a.number) {
+                on = -1;
+            } else if (!b.number) {
+                on = 1;
+            } else {
+                let aNumber = parseInt(a.number.replace(/\D+/g, ''));
+                let bNumber = parseInt(b.number.replace(/\D+/g, ''));
+                let aString = a.number.replace(/\d+/g, '');
+                let bString = b.number.replace(/\d+/g, '');
+
+                if (aNumber > bNumber) {
+                    on = 1;
+                } else if (bNumber > aNumber) {
+                    on = -1;
+                } else if (aString > bString) {
+                    on = 1;
+                } else if (bString > aString) {
+                    on = -1;
+                }
+            }
+
+            return on;
         }
     }
 };
