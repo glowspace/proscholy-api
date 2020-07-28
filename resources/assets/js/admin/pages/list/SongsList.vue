@@ -205,7 +205,7 @@ export default {
                     has_lyrics:
                         this.filter_mode == 'no-lyrics' ? false : undefined,
                     has_authors:
-                        this.filter_mode == 'no-authors' ? false : undefined,
+                        this.filter_mode == 'no-author' ? false : undefined,
                     has_chords:
                         this.filter_mode == 'no-chords' ? false : undefined,
                     has_tags: this.filter_mode == 'no-tags' ? false : undefined

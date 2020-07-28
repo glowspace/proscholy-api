@@ -37,10 +37,26 @@ export default {
             //   if (!this.model.url) return true;
 
             for (let field of this._getFieldsFromFragment(this.fragment)) {
+                if (field === 'authors_pivot') {
+                    let model_authors = this.model[field];
+                    let ml_db_authors = this.model_database[field];
+                    model_authors = model_authors.filter((el) => el.author != null);
+                    ml_db_authors = ml_db_authors.filter((el) => el.author != null);
+                    model_authors.sort((a,b) => (a.author.name > b.author.name) ? 1 : ((b.author.name > a.author.name) ? -1 : 0));
+                    ml_db_authors.sort((a,b) => (a.author.name > b.author.name) ? 1 : ((b.author.name > a.author.name) ? -1 : 0));
+                    model_authors.forEach(function(v){delete v.id; delete v.__typename;});
+                    ml_db_authors.forEach(function(v){delete v.id; delete v.__typename;});
+
+                    if (!_.isEqual(model_authors, ml_db_authors)) {
+                        console.log('Dirty check found mismatch on the field ' + field);
+                        return true;
+                    }
+
+                    continue;
+                }
+
                 if (!_.isEqual(this.model[field], this.model_database[field])) {
-                    console.log(
-                        'Dirty check found mismatch on the field ' + field
-                    );
+                    console.log('Dirty check found mismatch on the field ' + field);
                     return true;
                 }
             }
@@ -160,7 +176,7 @@ export default {
             let fieldNames = fieldDefs.map(field =>
                 field.alias ? field.alias.value : field.name.value
             );
-            console.log(fieldNames);
+            // console.log(fieldNames);
 
             if (!options.includeId)
                 fieldNames = fieldNames.filter(field => field != 'id');
