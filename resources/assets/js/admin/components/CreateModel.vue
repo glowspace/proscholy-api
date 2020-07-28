@@ -9,11 +9,11 @@
             prepend-icon="add"
             @click:prepend="$refs.cmtf.focus()"
             ref="cmtf"
-            class="mt-0 pb-3"
+            class="mt-0 pb-0 pt-3"
             style="max-width:600px;width:50vw"
             @keydown.enter="submit(true)"
+            @input="$validator.errors.clear()"
             id="create-model-text-field"
-            :hide-details="true"
         ></v-text-field>
         <div class="text-nowrap pt-1">
             <v-btn :disabled="attribute_value == '' || saving" @click="submit(true)" color="primary" style="margin-left:33px"
@@ -102,7 +102,8 @@ export default {
                     // clear the old errors and (add new ones if exist)
                     this.$validator.errors.clear();
                     for (const [key, value] of Object.entries(errorFields)) {
-                        this.$validator.errors.add({ field: key, msg: value });
+                        let _value = Array.isArray(value) ? value[0] : value;
+                        this.$validator.errors.add({ field: key, msg: _value });
                     }
                 });
         }
