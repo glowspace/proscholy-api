@@ -24,6 +24,12 @@
 export default {
     props: ['preset-id'],
 
+    data() {
+        return {
+            redirUrl: ''
+        }
+    },
+
     computed: {
         isDirty() {
             if (this.is_deleted) return false;
@@ -44,6 +50,15 @@ export default {
             }
 
             return false;
+        }
+    },
+
+    watch: {
+        isDirty: function(val) {
+            if (!val && this.redirUrl) {
+                this.goToPage(this.redirUrl, false);
+                this.redirUrl = '';
+            }
         }
     },
 
@@ -71,21 +86,18 @@ export default {
     },
 
     methods: {
-        async goToPage(url, save = true) {
-            if (this.isDirty && save) await this.submit();
-
-            setTimeout(() => {
-                if (!(this.isDirty && save)) {
-                    var base_url = document
-                        .querySelector('#baseUrl')
-                        .getAttribute('value');
-                    window.location.href = base_url + '/' + url;
-                }
-            }, 50);
+        goToPage(url, save = true) {
+            if (this.isDirty && save) {
+                this.submit();
+                this.redirUrl = url;
+            } else {
+                var base_url = document.querySelector('#baseUrl').getAttribute('value');
+                window.location.href = base_url + '/' + url;
+            }
         },
 
         goToAdminPage(url, save = true) {
-            this.goToPage('/admin/' + url, save);
+            this.goToPage('admin/' + url, save);
         },
 
         handleValidationErrors(error) {

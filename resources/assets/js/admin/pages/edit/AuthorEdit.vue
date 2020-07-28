@@ -43,7 +43,7 @@
                             v-if="model.type !== 0"
                             v-bind:p-items="authors"
                             v-model="model.members"
-                            label="Členové - autoři"
+                            label="Členové – autoři"
                             header-label="Vyberte autora z nabídky nebo vytvořte nového"
                             create-label="Potvrďte enterem a vytvořte nového autora"
                             :multiple="true"

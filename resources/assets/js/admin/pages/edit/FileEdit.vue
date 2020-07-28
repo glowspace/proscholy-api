@@ -7,11 +7,7 @@
                     <v-form ref="form">
                         <v-text-field
                             label="Zobrazovaný název"
-                            :placeholder="
-                                '(stejný jako jméno souboru - ' +
-                                    model.filename +
-                                    ')'
-                            "
+                            :placeholder="model.filename ? '(stejný jako jméno souboru – ' + model.filename + ')' : ''"
                             required
                             v-model="model.name"
                             data-vv-name="input.name"
@@ -86,7 +82,8 @@
                     </external-view>
                 </v-flex>
             </v-layout>
-            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn @click="submit(false)" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn @click="submit(true)" :disabled="!isDirty">Uložit a nahrát nový soubor</v-btn>
             <v-btn
                 v-if="model.song_lyric"
                 :disabled="isDirty"
@@ -235,7 +232,7 @@ export default {
     },
 
     methods: {
-        submit() {
+        submit(redir) {
             this.$apollo
                 .mutate({
                     mutation: File.MUTATION,
@@ -248,6 +245,10 @@ export default {
                         text: 'Soubor byl úspěšně uložen',
                         type: 'success'
                     });
+
+                    if (redir) {
+                        this.goToAdminPage('file/create');
+                    }
                 })
                 .catch(error => {
                     if (error.graphQLErrors.length == 0) {

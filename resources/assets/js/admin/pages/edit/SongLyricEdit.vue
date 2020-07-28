@@ -259,7 +259,7 @@
                 <ul>
                   <li>text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E]</b>, <b>[C#m]</b> nebo <b>[Cism]</b>, <b>[Fmaj7]</b> apod.</li>
                   <li>akordy pište českými značkami – H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b></li>
-                  <li>akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
+                  <li>akordy v pozdějších slokách nepište přímo – můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
                   <li>sloky označujte číslicí, tečkou a mezerou: <b>1. Text první sloky</b></li>
                   <li>refrén velkým R, dvojtečkou a mezerou – <b>R: Text refrénu</b> (při opakování už nepsat znovu text)</li>
                   <li>pokud je naprosto zřejmé, že na dané místo patří refrén (např. se opakuje po každé sloce písně), umisťuje se R: do závorky – <b>(R:)</b></li>
