@@ -417,12 +417,12 @@
       <div class="position-sticky fixed-bottom body-bg ml-n3 mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
         <v-tooltip top>
             <template v-slot:activator="{ on }">
-                <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on">Uložit</v-btn>
+                <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on"><i class="fas fa-save mr-2"></i> Uložit</v-btn>
             </template>
             <span>Ctrl + S</span>
         </v-tooltip>
-        <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
-        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+        <v-btn @click="reset" :disabled="!isDirty"><i class="fas fa-undo mr-2"></i> Vrátit změny do stavu posledního uložení</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="far fa-eye mr-2"></i> Zobrazit ve zpěvníku</v-btn>
         <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
       </div>
       <div class="mt-2 mb-4 ml-n3 p-2">
@@ -432,7 +432,7 @@
           :model-id="model.id"
           @deleted="is_deleted = true"
           delete-msg="Opravdu chcete vymazat tuto píseň?"
-        >Vymazat</delete-model-dialog>
+        ><i class="fas fa-trash mr-2"></i> Vymazat</delete-model-dialog>
       </div>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
