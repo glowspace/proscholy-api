@@ -8,8 +8,6 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <a href="{{route('admin.file.index')}}">Zpět do administrace</a>
-
                 <form action="{{route('admin.file.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="input-group mb-3">
