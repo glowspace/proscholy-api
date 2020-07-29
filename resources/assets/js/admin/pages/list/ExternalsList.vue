@@ -50,6 +50,7 @@
                         :loading="$apollo.loading"
                         :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
                         class="card"
+                        :pagination.sync="dtPagination"
                     >
                         <template v-slot:items="props">
                             <td>
@@ -143,8 +144,15 @@ export default {
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',
-            filter_mode: 'no-filter'
+            filter_mode: 'no-filter',
+            dtPagination: {}
         };
+    },
+
+    watch: {
+        filter_mode() {
+            this.dtPagination.page = 1;
+        }
     },
 
     apollo: {
