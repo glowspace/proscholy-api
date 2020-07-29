@@ -30,4 +30,5 @@
 
 @pushonce('scripts:magicsuggest')
     <script src="{{asset('_admin/js/magicsuggest.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 @endpushonce
