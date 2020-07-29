@@ -13,4 +13,4 @@
 
 </table>
 
-@include('admin.components.datatable', ['table_id' => $id])
+{{-- @include('admin.components.datatable', ['table_id' => $id]) --}}

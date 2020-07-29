@@ -142,7 +142,8 @@ export default {
     },
 
     watch: {
-        filter_mode() {
+        filter_mode(val) {
+            window.location.hash = val != 'no-filter' ? val : '';
             this.dtPagination.page = 1;
         }
     },
@@ -159,6 +160,18 @@ export default {
             result(result) {
                 this.buildSearchIndex();
             }
+        }
+    },
+
+    mounted() {
+        if (window.location.hash.length > 2 && this.filter_mode) {
+            this.filter_mode = window.location.hash.replace('#', '');
+        }
+
+        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
+        } else if (document.getElementById('search')) {
+            document.getElementById('search').focus();
         }
     },
 

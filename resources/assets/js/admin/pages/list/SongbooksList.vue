@@ -135,14 +135,15 @@ export default {
     },
 
     mounted() {
-        document.getElementsByTagName("body")[0].onhashchange = function hashChanged() {
-            if (location.hash == '#n' && document.getElementById('create-model-text-field')) {
-                document.getElementById('create-model-text-field').focus();
-            } else if (document.getElementById('search')) {
-                document.getElementById('search').focus();
-            }
-        };
-        document.getElementsByTagName("body")[0].onhashchange();
+        if (window.location.hash.length > 2 && this.filter_mode) {
+            this.filter_mode = window.location.hash.replace('#', '');
+        }
+
+        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
+        } else if (document.getElementById('search')) {
+            document.getElementById('search').focus();
+        }
     },
 
     methods: {
