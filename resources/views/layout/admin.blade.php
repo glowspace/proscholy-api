@@ -54,7 +54,7 @@
 @endsection
 
 @push('scripts')
-<script>
+    <script>
         // Mobile viewport soft keyboard fix
         setTimeout(function () {
             var viewheight = $(window).height();
@@ -63,4 +63,5 @@
             viewport.attr("content", "height=" + viewheight + "px, width=" +
                 viewwidth + "px, initial-scale=1.0");
         }, 300);
+    </script>
 @endpush
