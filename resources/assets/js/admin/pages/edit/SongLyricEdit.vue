@@ -10,6 +10,8 @@
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
+      <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
+      <h1 class="h2 mb-3" v-else>Úprava písně</h1>
       <v-tabs color="transparent">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>

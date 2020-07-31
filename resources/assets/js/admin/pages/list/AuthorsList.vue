@@ -3,6 +3,7 @@
     <v-app>
         <notifications />
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Autoři</h1>
             <create-model
                 class-name="Author"
                 label="Zadejte jméno nového autora"

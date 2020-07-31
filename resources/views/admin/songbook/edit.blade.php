@@ -3,8 +3,5 @@
 @section('title-edit', $songbook->name)
 
 @section('content-withmenu')
-    <div class="content-padding">
-        <h1 class="h2 mb-3">Úprava zpěvníku</h1>
-        <songbook-edit preset-id="{{ $songbook->id }}"></songbook-edit>
-    </div>
+    <songbook-edit preset-id="{{ $songbook->id }}"></songbook-edit>
 @endsection
