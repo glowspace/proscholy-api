@@ -1,5 +1,5 @@
 <template>
-    <div class="card d-inline-flex flex-row flex-wrap px-4 py-3">
+    <div class="v-card mb-3 d-inline-flex flex-row flex-wrap px-4 py-3">
         <v-text-field
             :label="label"
             required
