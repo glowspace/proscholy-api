@@ -48,14 +48,9 @@ class SongController extends Controller
         $title = "Seznam písní ke schválení autorem";
         return view('admin.song.index', compact('song_lyrics', 'title'));
     }
-    
+
     public function edit(SongLyric $song_lyric)
     {
-        if ($song_lyric->isLocked()) {
-            return view('admin.lockerror', compact('song_lyric'));
-        }
-
-        $song_lyric->lock();
         return view('admin.song.edit', compact('song_lyric'));
     }
 

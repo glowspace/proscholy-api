@@ -226,13 +226,6 @@ export default {
         }
     },
 
-    mounted() {
-        // send blocking info
-        setInterval(() => {
-            // $.get( "/refresh-updating/songbook/" + this.presetId );
-        }, 20000);
-    },
-
     computed: {
         recordsWithEmpty() {
             if (this.hide_empty || !this.model.songs_count) {

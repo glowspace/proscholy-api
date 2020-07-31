@@ -633,12 +633,6 @@ export default {
       }
     }
   },
-  mounted() {
-    // send blocking info
-    setInterval(() => {
-        // $.get( "/refresh-updating/song-lyric/" + this.presetId );
-    }, 5000);
-  },
 
   computed: {
     thumbnailables() {

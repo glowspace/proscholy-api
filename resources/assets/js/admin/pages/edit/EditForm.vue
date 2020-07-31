@@ -26,7 +26,8 @@ export default {
 
     data() {
         return {
-            redirUrl: ''
+            redirUrl: '',
+            isLocked: false,
         }
     },
 
@@ -78,6 +79,31 @@ export default {
                 this.goToPage(this.redirUrl, false);
                 this.redirUrl = '';
             }
+        },
+
+        isLocked: function(val) {
+            if (val && !document.getElementById('locked')) {
+                document.getElementsByClassName('container')[0].setAttribute('style', 'display:none');
+                var lockedDiv = document.createElement('div');
+                lockedDiv.id = 'locked';
+                lockedDiv.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="h3">Je třeba chvilku počkat…</h2>
+                            <p>
+                                Vypadá to, že tenhle záznam právě upravuje někdo jiný.
+                                <br>Abychom předešli možným problémům, dočasně jsme režim úprav uzamkli.
+                                <br><br><button type="button" class="btn btn-outline-primary" @click="refreshUpdating()">Zkusit znovu</button>
+                                <br><br><img src="https://thumbs.gfycat.com/FoolishHonorableArgentinehornedfrog-size_restricted.gif" alt="You shall not pass">
+                            </p>
+                        </div>
+                    </div>
+                `;
+                document.getElementsByClassName('application--wrap')[0].appendChild(lockedDiv);
+            } else if (document.getElementById('locked')) {
+                document.getElementsByClassName('container')[0].removeAttribute('style');
+                document.getElementById('locked').remove();
+            }
         }
     },
 
@@ -100,6 +126,9 @@ export default {
         };
 
         document.addEventListener("keydown", this.doSave);
+
+        setInterval(this.refreshUpdating, 15000);
+        this.refreshUpdating();
     },
 
     beforeDestroy() {
@@ -202,6 +231,18 @@ export default {
                 fieldNames = fieldNames.filter(field => field != 'id');
 
             return fieldNames;
+        },
+
+        refreshUpdating() {
+            let pathnameSplit = window.location.pathname.split('/');
+            let currentModel = pathnameSplit[pathnameSplit.length-3];
+            let models = ['song', 'songbook'];
+
+            if (models.indexOf(currentModel) != -1) {
+                axios
+                    .get('/refresh-updating/' + currentModel + '/' + this.presetId)
+                    .then(response => (this.isLocked = response.data == 'Locked'));
+            }
         }
     }
 };

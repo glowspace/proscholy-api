@@ -62,12 +62,12 @@ Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExt
 Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
-    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () 
+    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function ()
     {
         Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
         Route::resource('external', 'ExternalController')->except(['show', 'update', 'store', 'create']);
-        
+
 
         Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
         // todo
@@ -101,8 +101,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 });
 
 // refreshing
-Route::get('/refresh-updating/song-lyric/{song_lyric}', 'Api\LockController@refresh_updating_song_lyric');
-Route::get('/refresh-updating/songbook/{songbook}', 'Api\LockController@refresh_updating_songbook');
+Route::get('/refresh-updating/{type}/{id}', 'Api\LockController@refresh_updating');
 
 Route::get('/ucet', function() {
     return view('client.account');

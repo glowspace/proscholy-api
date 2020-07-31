@@ -8,16 +8,28 @@ use App\SongLyric;
 
 class LockController extends Controller
 {
-    public function refresh_updating_song_lyric(SongLyric $song_lyric)
+    public function refresh_updating($type, $id)
     {
-        \Log::info($song_lyric);
-        $song_lyric->lock(true);
-        return response('OK', 200);
-    }
+        $models = array(
+            'song' => 'App\SongLyric',
+            'songbook' => 'App\Songbook'
+        );
 
-    public function refresh_updating_songbook(Songbook $songbook)
-    {
-        $songbook->lock(true);
-        return response('OK', 200);
+        if (!isset($models[$type])) {
+            return response('Class not found', 404)->header('Content-Type', 'text/plain');
+        }
+
+        $model = $models[$type]::find($id);
+
+        if (!isset($model)) {
+            return response('Model not found', 404)->header('Content-Type', 'text/plain');
+        }
+
+        if ($model->isLocked()) {
+            return response('Locked', 200)->header('Content-Type', 'text/plain');
+        }
+
+        $model->lock(true);
+        return response('OK', 200)->header('Content-Type', 'text/plain');
     }
 }
