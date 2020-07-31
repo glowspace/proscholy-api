@@ -21,13 +21,6 @@ class FileController extends Controller
         return view('admin.file.index', ['type' => 'show-all']);
     }
 
-    public function todoAuthors(){
-        $type = "show-todo";
-
-        $title = "Seznam souborů bez přiřazeného autora nebo písně";
-        return view('admin.file.index', compact('type', 'title'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *

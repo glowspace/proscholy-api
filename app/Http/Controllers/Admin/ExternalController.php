@@ -30,13 +30,6 @@ class ExternalController extends Controller
         return view('admin.external.index', ['type' => 'show-all']);
     }
 
-    public function todoAuthors(){
-        $type = 'show-todo';
-
-        $title = "Seznam externích odkazů bez přiřazeného autora nebo písně";
-        return view('admin.external.index', compact('type', 'title'));
-    }
-
     public function create_for_song(Request $request, SongLyric $song_lyric)
     {
         // shortcut for directly editing with an empty url and an assigned song_lyric
@@ -51,7 +44,7 @@ class ExternalController extends Controller
     {
         $assigned_authors = $external->authors;
         $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
-        
+
         // this field needs to be saved as a singleton array or empty array
         // if passed just as [$external->song_lyric] then the result is [{}] if there is nothing
         $assigned_song_lyrics = $external->song_lyric ? [$external->song_lyric] : [];
