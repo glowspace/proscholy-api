@@ -50,77 +50,78 @@
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
-                    <v-data-table
-                        :headers="headers"
-                        :items="song_lyrics"
-                        :search="search_string"
-                        :custom-filter="customFilter"
-                        :rows-per-page-items="[
-                            50,
-                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
-                        ]"
-                        :loading="$apollo.loading"
-                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
-                        class="card"
-                        :pagination.sync="dtPagination"
-                    >
-                        <template v-slot:items="props">
-                            <td>
-                                <a
-                                    :href="'/admin/song/' + props.item.id + '/edit'"
-                                    >{{ props.item.name }}</a
-                                >
-                            </td>
-                            <td>
-                                <span v-if="props.item.type === 0"
-                                    >Originál</span
-                                >
-                                <span v-if="props.item.type === 1"
-                                    >Překlad</span
-                                >
-                                <span v-if="props.item.type === 2"
-                                    >Autorizovaný překlad</span
-                                >
-                                <span v-if="props.item.is_arrangement === true">
-                                    Aranž<br />{{
-                                        props.item.arrangement_source.name
+                    <v-card>
+                        <v-data-table
+                            :headers="headers"
+                            :items="song_lyrics"
+                            :search="search_string"
+                            :custom-filter="customFilter"
+                            :rows-per-page-items="[
+                                50,
+                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            ]"
+                            :loading="$apollo.loading"
+                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :pagination.sync="dtPagination"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <a
+                                        :href="'/admin/song/' + props.item.id + '/edit'"
+                                        >{{ props.item.name }}</a
+                                    >
+                                </td>
+                                <td>
+                                    <span v-if="props.item.type === 0"
+                                        >Originál</span
+                                    >
+                                    <span v-if="props.item.type === 1"
+                                        >Překlad</span
+                                    >
+                                    <span v-if="props.item.type === 2"
+                                        >Autorizovaný překlad</span
+                                    >
+                                    <span v-if="props.item.is_arrangement === true">
+                                        Aranž<br />{{
+                                            props.item.arrangement_source.name
+                                        }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{
+                                        props.item.authors
+                                            .map(a => a.name)
+                                            .join(', ') ||
+                                            (props.item.has_anonymous_author
+                                                ? '(anonymní)'
+                                                : '–')
                                     }}
-                                </span>
-                            </td>
-                            <td>
-                                {{
-                                    props.item.authors
-                                        .map(a => a.name)
-                                        .join(', ') ||
-                                        (props.item.has_anonymous_author
-                                            ? '(anonymní)'
-                                            : '–')
-                                }}
-                            </td>
-                            <td>{{ new Date(props.item.updated_at).toLocaleString() }}</td>
-                            <td>
-                                <span v-if="props.item.is_published">Ano</span>
-                                <span v-else>Ne</span>
-                            </td>
-                            <td>
-                                <span v-if="props.item.only_regenschori"
-                                    >jen R</span
-                                >
-                                <span v-else>R + PS</span>
-                            </td>
-                            <td class="text-nowrap">
-                                <a
-                                    class="text-secondary mr-3"
-                                    :href="'/admin/song/' + props.item.id + '/edit'"
-                                    ><i class="fas fa-pen"></i></a
-                                ><a
-                                    class="text-secondary"
-                                    v-on:click="askForm(props.item.id)"
-                                    ><i class="fas fa-trash"></i></a
-                                >
-                            </td>
-                        </template>
-                    </v-data-table>
+                                </td>
+                                <td>{{ new Date(props.item.updated_at).toLocaleString() }}</td>
+                                <td>
+                                    <span v-if="props.item.is_published">Ano</span>
+                                    <span v-else>Ne</span>
+                                </td>
+                                <td>
+                                    <span v-if="props.item.only_regenschori"
+                                        >jen R</span
+                                    >
+                                    <span v-else>R + PS</span>
+                                </td>
+                                <td class="text-nowrap">
+                                    <a
+                                        class="text-secondary mr-3"
+                                        :href="'/admin/song/' + props.item.id + '/edit'"
+                                        ><i class="fas fa-pen"></i></a
+                                    ><a
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i></a
+                                    >
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>

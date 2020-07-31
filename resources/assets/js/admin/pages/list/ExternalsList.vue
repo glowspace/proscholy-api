@@ -39,55 +39,56 @@
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
-                    <v-data-table
-                        :headers="headers"
-                        :items="externals"
-                        :search="search_string"
-                        :custom-filter="customFilter"
-                        :rows-per-page-items="[
-                            50,
-                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
-                        ]"
-                        :loading="$apollo.loading"
-                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
-                        class="card"
-                        :pagination.sync="dtPagination"
-                    >
-                        <template v-slot:items="props">
-                            <td>
-                                <a
-                                    :href="'/admin/external/' + props.item.id + '/edit'"
-                                    >{{ getShortUrl(props.item.url) }}</a
-                                >
-                            </td>
-                            <td>{{ props.item.type_string }}</td>
-                            <td>
-                                {{
-                                    props.item.song_lyric
-                                        ? props.item.song_lyric.name
-                                        : '–'
-                                }}
-                            </td>
-                            <td>
-                                {{
-                                    props.item.authors
-                                        .map(a => a.name)
-                                        .join(', ') || '–'
-                                }}
-                            </td>
-                            <td class="text-nowrap">
-                                <a
-                                    class="text-secondary mr-3"
-                                    :href="'/admin/external/' + props.item.id + '/edit'"
-                                    ><i class="fas fa-pen"></i></a
-                                ><a
-                                    class="text-secondary"
-                                    v-on:click="askForm(props.item.id)"
-                                    ><i class="fas fa-trash"></i></a
-                                >
-                            </td>
-                        </template>
-                    </v-data-table>
+                    <v-card>
+                        <v-data-table
+                            :headers="headers"
+                            :items="externals"
+                            :search="search_string"
+                            :custom-filter="customFilter"
+                            :rows-per-page-items="[
+                                50,
+                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            ]"
+                            :loading="$apollo.loading"
+                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :pagination.sync="dtPagination"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <a
+                                        :href="'/admin/external/' + props.item.id + '/edit'"
+                                        >{{ getShortUrl(props.item.url) }}</a
+                                    >
+                                </td>
+                                <td>{{ props.item.type_string }}</td>
+                                <td>
+                                    {{
+                                        props.item.song_lyric
+                                            ? props.item.song_lyric.name
+                                            : '–'
+                                    }}
+                                </td>
+                                <td>
+                                    {{
+                                        props.item.authors
+                                            .map(a => a.name)
+                                            .join(', ') || '–'
+                                    }}
+                                </td>
+                                <td class="text-nowrap">
+                                    <a
+                                        class="text-secondary mr-3"
+                                        :href="'/admin/external/' + props.item.id + '/edit'"
+                                        ><i class="fas fa-pen"></i></a
+                                    ><a
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i></a
+                                    >
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>

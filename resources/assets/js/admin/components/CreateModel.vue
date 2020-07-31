@@ -1,5 +1,5 @@
 <template>
-    <div class="v-card mb-3 d-inline-flex flex-row flex-wrap px-4 py-3">
+    <v-card class="mb-3 d-inline-flex flex-row flex-wrap px-4 py-3">
         <v-text-field
             :label="label"
             required
@@ -26,7 +26,7 @@
                 >Vytvořit</v-btn
             >
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>

@@ -27,48 +27,49 @@
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
-                    <v-data-table
-                        :headers="headers"
-                        :items="songbooks"
-                        :search="search_string"
-                        :filter="formFilter"
-                        :rows-per-page-items="[
-                            50,
-                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
-                        ]"
-                        :loading="$apollo.loading"
-                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
-                        class="card"
-                    >
-                        <template v-slot:items="props">
-                            <td>
-                                <a
-                                    :href="'/admin/songbook/' + props.item.id +'/edit'"
-                                    >{{ props.item.name }}</a
-                                >
-                            </td>
-                            <td>{{ props.item.shortcut }}</td>
-                            <td>
-                                {{
-                                    props.item.is_private
-                                        ? 'interní'
-                                        : 'veřejný'
-                                }}
-                            </td>
-                            <td>{{ props.item.records.length }}</td>
-                            <td class="text-nowrap">
-                                <a
-                                    class="text-secondary mr-3"
-                                    :href="'/admin/songbook/' + props.item.id + '/edit'"
-                                    ><i class="fas fa-pen"></i></a
-                                ><a
-                                    class="text-secondary"
-                                    v-on:click="askForm(props.item.id)"
-                                    ><i class="fas fa-trash"></i></a
-                                >
-                            </td>
-                        </template>
-                    </v-data-table>
+                    <v-card>
+                        <v-data-table
+                            :headers="headers"
+                            :items="songbooks"
+                            :search="search_string"
+                            :filter="formFilter"
+                            :rows-per-page-items="[
+                                50,
+                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            ]"
+                            :loading="$apollo.loading"
+                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <a
+                                        :href="'/admin/songbook/' + props.item.id +'/edit'"
+                                        >{{ props.item.name }}</a
+                                    >
+                                </td>
+                                <td>{{ props.item.shortcut }}</td>
+                                <td>
+                                    {{
+                                        props.item.is_private
+                                            ? 'interní'
+                                            : 'veřejný'
+                                    }}
+                                </td>
+                                <td>{{ props.item.records.length }}</td>
+                                <td class="text-nowrap">
+                                    <a
+                                        class="text-secondary mr-3"
+                                        :href="'/admin/songbook/' + props.item.id + '/edit'"
+                                        ><i class="fas fa-pen"></i></a
+                                    ><a
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i></a
+                                    >
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
