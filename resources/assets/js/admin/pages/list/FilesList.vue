@@ -4,7 +4,7 @@
         <notifications />
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Nahrané soubory</h1>
-            <a class="btn btn-outline-primary" href="/admin/file/create">+ Nahrát nový soubor</a>
+            <v-btn href="/admin/file/create" class="ml-0 text-decoration-none primary">+ Nahrát nový soubor</v-btn>
             <v-layout row wrap>
                 <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">

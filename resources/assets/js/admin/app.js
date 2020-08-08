@@ -32,6 +32,8 @@ Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
 Vue.component('file-edit', require('Admin/pages/edit/FileEdit.vue'));
 Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
 
+Vue.component('file-create', require('Admin/pages/create/FileCreate.vue'));
+
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 
 import { ApolloClient } from 'apollo-client';

@@ -526,7 +526,6 @@ const FETCH_LILYPOND = gql`
   }
 `;
 export default {
-  props: ["csrf"],
   components: {
     ItemsComboBox,
     SongLyricsGroup,
@@ -672,6 +671,10 @@ export default {
 
     authors_pivot_comp() {
       return this.model.authors_pivot;
+    },
+
+    csrf() {
+      return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     }
   },
 

@@ -70,7 +70,7 @@ class FileController extends Controller
         }
 
         if ($request->redirect == 'create') {
-            if ($request->has('song_lyric_id')) {
+            if ($request->has('song_lyric_id') && !empty($request->song_lyric_id)) {
                 return redirect()->route('admin.file.create_for_song', $request->song_lyric_id);
             }
 

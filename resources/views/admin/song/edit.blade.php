@@ -3,5 +3,5 @@
 @section('title-edit', $song_lyric->name)
 
 @section('content-withmenu')
-    <song-lyric-edit preset-id="{{ $song_lyric->id }}" csrf="{{ csrf_token() }}"></song-lyric-edit>
+    <song-lyric-edit preset-id="{{ $song_lyric->id }}"></song-lyric-edit>
 @endsection
