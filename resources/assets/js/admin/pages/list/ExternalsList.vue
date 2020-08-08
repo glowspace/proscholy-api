@@ -3,6 +3,7 @@
     <v-app>
         <notifications />
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Externí odkazy</h1>
             <create-model
                 class-name="External"
                 label="Zadejte adresu nového externího odkazu"
@@ -10,7 +11,6 @@
                 @saved="$apollo.queries.externals.refetch()"
                 :force-edit="true"
             ></create-model>
-            <h1 class="h2 mb-3">Externí odkazy</h1>
             <v-layout row wrap>
                 <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">
