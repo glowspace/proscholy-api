@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :dark="$root.dark">
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Nahrát nový soubor
                 <span v-if="songLyric">

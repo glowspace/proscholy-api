@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :dark="$root.dark">
     <notifications/>
     <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
       indeterminate

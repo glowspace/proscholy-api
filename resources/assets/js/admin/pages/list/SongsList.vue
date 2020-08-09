@@ -1,6 +1,6 @@
 <template>
     <!-- v-app must wrap all the components -->
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Písně</h1>

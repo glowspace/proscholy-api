@@ -19,6 +19,7 @@
                 ProScholy & Regenschori
                 <span style="color: #ffffff3d">– po ruce všem, kteří se chtějí modlit hudbou</span>
             </a>
+            <a class="btn btn-secondary" id="dark-mode-button" onclick="toggleDarkMode();" ><i class="fas fa-{{ $_COOKIE['dark'] == 'true' ? 'sun' : 'moon' }}"></i> {{ $_COOKIE['dark'] == 'true' ? 'Světlý' : 'Tmavý' }} režim</a>
         </div>
     </nav>
 @endsection
@@ -47,6 +48,21 @@
 @section('app-css')
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('_admin/css/admin.css') }}">
+    @if ($_COOKIE['dark'] == 'true')
+    <style id="darkStyle">
+        .theme--light {opacity: 0; transition: .7s;}
+        .theme--dark {opacity: 1; transition: .7s;}
+    </style>
+    <script>
+        var dom_observer = new MutationObserver(function(mutation) {
+            // this runs (multiple times but most importantly), before the body is rendered
+            document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
+        });
+        var container = document.documentElement || document.body;
+        var config = { attributes: true, childList: true, characterData: true };
+        dom_observer.observe(container, config);
+    </script>
+    @endif
 @endsection
 
 @section('app-js')
@@ -72,6 +88,49 @@
                 bar.innerHTML = '<div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="v-progress-linear m-0" style="height: 4px;"><div class="v-progress-linear__background info" style="height: 4px; opacity: 0.3; width: 100%;"></div><div class="v-progress-linear__bar"><div class="v-progress-linear__bar__indeterminate v-progress-linear__bar__indeterminate--active"><div class="v-progress-linear__bar__indeterminate long info"></div><div class="v-progress-linear__bar__indeterminate short info"></div></div></div></div>';
                 document.getElementsByTagName('body')[0].appendChild(bar);
             };
+        }
+
+        // dark mode
+        function setCookie(cname,cvalue,exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        function toggleDarkMode(dontToggle) {
+            let dark = (getCookie('dark') === 'true') ? true : false;
+            if (!dontToggle) {
+                dark = !dark;
+                setCookie('dark', dark, 30);
+            }
+            if (dark) {
+                document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
+                document.getElementById('dark-mode-button').innerHTML = '<i class="fas fa-sun"></i> Světlý režim';
+                app.__vue__.$root.dark = true;
+            } else {
+                document.getElementsByTagName('body')[0].removeAttribute('class');
+                document.getElementById('dark-mode-button').innerHTML = '<i class="fas fa-moon"></i> Tmavý režim';
+                app.__vue__.$root.dark = false;
+            }
+        }
+        toggleDarkMode(true);
+        if (document.getElementById('darkStyle')) {
+            document.getElementById('darkStyle').remove();
         }
     </script>
 @endpush
