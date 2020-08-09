@@ -55,7 +55,7 @@
 
 @push('scripts')
     <script>
-        // Mobile viewport soft keyboard fix
+        // mobile viewport soft keyboard fix
         setTimeout(function () {
             var viewheight = $(window).height();
             var viewwidth = $(window).width();
@@ -63,5 +63,15 @@
             viewport.attr("content", "height=" + viewheight + "px, width=" +
                 viewwidth + "px, initial-scale=1.0");
         }, 300);
+
+        // progress bar
+        if (!window.onbeforeunload) {
+            window.onbeforeunload = function showProgressBar() {
+                var bar = document.createElement('div');
+                bar.className = 'fixed-top';
+                bar.innerHTML = '<div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="v-progress-linear m-0" style="height: 4px;"><div class="v-progress-linear__background info" style="height: 4px; opacity: 0.3; width: 100%;"></div><div class="v-progress-linear__bar"><div class="v-progress-linear__bar__indeterminate v-progress-linear__bar__indeterminate--active"><div class="v-progress-linear__bar__indeterminate long info"></div><div class="v-progress-linear__bar__indeterminate short info"></div></div></div></div>';
+                document.getElementsByTagName('body')[0].appendChild(bar);
+            };
+        }
     </script>
 @endpush
