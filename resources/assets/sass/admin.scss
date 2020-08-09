@@ -82,19 +82,28 @@ textarea.form-control {
 
     a {
         padding: 0.4rem 0.8rem;
+        margin: 0;
+        color: white !important;
+        text-align: left;
+        will-change: initial;
 
         @include media-breakpoint-up(lg) {
             width: 100%;
             padding: 0.66875rem 1rem 0.66875rem calc(1rem + 22px);
+            margin-left: 0 !important;
+            border-radius: 0;
         }
-
-        margin:     0;
-
-        color:      white !important;
-        text-align: left;
 
         &:hover {
             color: white;
+        }
+
+        &.active {
+            background-color: rgba(153, 153, 153, 0.2) !important;
+
+            &:hover {
+                background-color: rgba(153, 153, 153, 0.4) !important;
+            }
         }
 
         // Fontawesome icon
