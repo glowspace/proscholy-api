@@ -1,13 +1,11 @@
-textarea.form-control
-{
+textarea.form-control {
     line-height: 1.8;
     padding: 10px;
     background-image: none;
     box-shadow: 0 0 70px -25px inset;
 }
 
-.edit-description h5
-{
+.edit-description h5 {
     font-weight: 600;
     padding-bottom: 8px;
     border-bottom: 1px #bec0c1 solid;
@@ -22,192 +20,197 @@ textarea.form-control
     margin-bottom: 0;
 }
 
-
+// old frontend admin controls (replaced by pen button in Nuxt)
 .admin-controls {
-  position: fixed;
-  top: 30vh;
-  left: 0.3125rem;
-  z-index: 20;
-  a:nth-of-type(odd) {
-    i {
-      width: 16px;
-    }
-  }
-  a:nth-of-type(odd) + a {
-    padding-left: 5px;
-    padding-right: 10px;
-    display: none;
-    background: rgba(248, 250, 252, 0.8);
-    border-radius: 10px;
-    .dark & {
-      background: rgba(0, 0, 0, 0.8);
-    }
-  }
+    position: fixed;
+    top: 30vh;
+    left: 0.3125rem;
+    z-index: 20;
 
-  a:nth-of-type(odd):hover + a {
-    display: inline-block;
-  }
+    a:nth-of-type(odd) {
+        i {
+            width: 16px;
+        }
+    }
+
+    a:nth-of-type(odd) + a {
+        padding-left: 5px;
+        padding-right: 10px;
+        display: none;
+        background: rgba(248, 250, 252, 0.8);
+        border-radius: 10px;
+        .dark & {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    }
+
+    a:nth-of-type(odd):hover + a {
+        display: inline-block;
+    }
 }
 
+// admin sidebar and logo
 .admin-logo {
     padding: 0 10px 0 0;
     width: 60px;
 }
 
-// admin sidebar
 .sidebar {
-  @include media-breakpoint-up(lg) {
-    height: calc(100% + 1rem + 60px);
-    min-height: calc(100vh + 0.5rem);
-
-    & > div {
-        margin-top: calc(-60px - 1rem);
-        position: sticky;
-        top: 0;
-        max-height: 100vh;
-        overflow: auto;
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-    margin-right: -15px;
-
-    .navbar-brand {
-        display: none;
-    }
-  }
-
-  height: 100%;
-  margin-left: -15px;
-
-  a {
-    padding: 0.4rem 0.8rem;
-
     @include media-breakpoint-up(lg) {
-      width: 100%;
-      padding: 0.66875rem 1rem 0.66875rem calc(1rem + 22px);
+        height: calc(100% + 1rem + 60px);
+        min-height: calc(100vh + 0.5rem);
+
+        & > div {
+            margin-top: calc(-60px - 1rem);
+            position: sticky;
+            top: 0;
+            max-height: 100vh;
+            overflow: auto;
+        }
     }
 
-    margin:     0;
+    @include media-breakpoint-down(md) {
+        margin-right: -15px;
 
-    color:      white !important;
-    text-align: left;
-
-    &:hover {
-      color: white;
+        .navbar-brand {
+            display: none;
+        }
     }
 
-    // Fontawesome icon
-    i {
-      width: 22px;
+    height: 100%;
+    margin-left: -15px;
 
-      @include media-breakpoint-up(lg) {
-        margin-left: -22px;
-      }
+    a {
+        padding: 0.4rem 0.8rem;
+
+        @include media-breakpoint-up(lg) {
+            width: 100%;
+            padding: 0.66875rem 1rem 0.66875rem calc(1rem + 22px);
+        }
+
+        margin:     0;
+
+        color:      white !important;
+        text-align: left;
+
+        &:hover {
+            color: white;
+        }
+
+        // Fontawesome icon
+        i {
+            width: 22px;
+
+            @include media-breakpoint-up(lg) {
+                margin-left: -22px;
+            }
+        }
+
+        .badge {
+            float:            right;
+
+            position:         relative;
+            top:              3px;
+
+            background-color: #36c374;
+            color:            black;
+        }
     }
-
-    .badge {
-      float:            right;
-
-      position:         relative;
-      top:              3px;
-
-      background-color: #36c374;
-      color:            black;
-    }
-  }
 }
 
+// dashboard
 .dash {
-  padding-right: 5px;
-  padding-left: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
 
-  h5.card-title {
-		font-size: 1.1rem;
-		margin-bottom: 0.25rem;
-  }
-
-  & > .card {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-	a {
-		flex: 0 0 calc(100% / 3 - 20px) !important;
-		margin-left: 10px;
-		margin-right: 10px;
-    margin-bottom: 20px;
-
-    @include media-breakpoint-between(md, lg) {
-      flex: 0 0 calc(100% / 2 - 20px) !important;
+    h5.card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
     }
 
-    @include media-breakpoint-between(xs, sm) {
-      flex: 0 0 calc(100% - 20px) !important;
+    & > .card {
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
-    img, .img-icon {
-      transition: opacity 0.2s;
+    a {
+        flex: 0 0 calc(100% / 3 - 20px) !important;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+
+        @include media-breakpoint-between(md, lg) {
+            flex: 0 0 calc(100% / 2 - 20px) !important;
+        }
+
+        @include media-breakpoint-between(xs, sm) {
+            flex: 0 0 calc(100% - 20px) !important;
+        }
+
+        img, .img-icon {
+            transition: opacity 0.2s;
+        }
+
+        &:hover {
+            text-decoration: none;
+
+            img, .img-icon {
+                color: #1d6dab;
+                opacity: 0.75;
+            }
+        }
+
+        .card {
+            height: 100%;
+            flex-direction: row;
+            transition: border 0.2s;
+
+            img, .img-icon {
+                height: auto;
+                text-align: center;
+                font-size: calc(60px - 1.5rem);
+                line-height: 1;
+                width: 60px;
+                margin: auto 0;
+                padding: 1rem 0 1rem 1.5rem;
+            }
+
+            .fa-phone-square {
+                transform: scaleX(-1);
+            }
+
+            .card-body {
+                flex: 1;
+                margin: auto 0;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
     }
-
-    &:hover {
-      text-decoration: none;
-
-      img, .img-icon {
-        color: #1d6dab;
-        opacity: 0.75;
-      }
-    }
-
-    .card {
-      height: 100%;
-      flex-direction: row;
-      transition: border 0.2s;
-
-      img, .img-icon {
-        height: auto;
-        text-align: center;
-        font-size: calc(60px - 1.5rem);
-        line-height: 1;
-        width: 60px;
-        margin: auto 0;
-        padding: 1rem 0 1rem 1.5rem;
-      }
-
-      .fa-phone-square {
-        transform: scaleX(-1);
-      }
-
-      .card-body {
-        flex: 1;
-        margin: auto 0;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-    }
-	}
-}
-
-.btn.admin-report {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  color: #292929;
-  opacity: 0.5;
-  transition: 0.2s;
-}
-
-.btn.admin-report:hover {
-  color: #292929;
-  opacity: 1;
 }
 
 .statistics-table {
-  td:not(:first-child) {
-    text-align: right;
-  }
+    td:not(:first-child) {
+        text-align: right;
+    }
 }
 
+// admin report button
+.btn.admin-report {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    color: #292929;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.btn.admin-report:hover {
+    color: #292929;
+    opacity: 1;
+}
+
+// vuetify fixes
 .application--wrap {
     min-height: initial !important;
 
@@ -235,14 +238,15 @@ div.theme--light.application {
     background: transparent;
 }
 
+div.application {
+    font-family: inherit;
+}
+
+// custom css
 .body-bg {
     background-color: $body-bg;
 }
 
 .auto-grow-alt textarea {
     height: 60vh;
-}
-
-div.application {
-    font-family: inherit;
 }
