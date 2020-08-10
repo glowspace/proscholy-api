@@ -121,11 +121,11 @@
             if (dark) {
                 document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
                 document.getElementById('dark-mode-button').innerHTML = '<i class="fas fa-sun"></i> Světlý režim';
-                app.__vue__.$root.dark = true;
+                VueApp.$root.dark = true;
             } else {
                 document.getElementsByTagName('body')[0].removeAttribute('class');
                 document.getElementById('dark-mode-button').innerHTML = '<i class="fas fa-moon"></i> Tmavý režim';
-                app.__vue__.$root.dark = false;
+                VueApp.$root.dark = false;
             }
         }
         toggleDarkMode(true);
