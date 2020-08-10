@@ -104,14 +104,15 @@ Vue.use(Vuetify, {
         locales: {
             cs: {
                 dataIterator: {
-                    rowsPerPageAll: "∞",
-                    pageText: "{0}–{1} z {2}",
-                    noResultsText: "Nic nebylo nalezeno. Zkuste zkontrolovat vyhledávaný řetězec.",
+                    rowsPerPageAll: '∞',
+                    pageText: '{0}–{1} z {2}',
+                    noResultsText:
+                        'Nic nebylo nalezeno. Zkuste zkontrolovat vyhledávaný řetězec.'
                 },
                 dataTable: {
-                    rowsPerPageText: "Počet řádků na stránce:"
+                    rowsPerPageText: 'Počet řádků na stránce:'
                 },
-                noDataText: "Data nejsou k dispozici."
+                noDataText: 'Data nejsou k dispozici.'
             }
         },
         current: 'cs'
@@ -132,3 +133,5 @@ const app = new Vue({
     }
     // render: h => h(App)
 });
+
+window.VueApp = app;
