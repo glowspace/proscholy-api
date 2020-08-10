@@ -19,7 +19,7 @@
                 ProScholy & Regenschori
                 <span style="color: #ffffff3d">– po ruce všem, kteří se chtějí modlit hudbou</span>
             </a>
-            <a class="btn btn-secondary" id="dark-mode-button" onclick="toggleDarkMode();" ><i class="fas fa-{{ request()->cookie('dark') == 'true' ? 'sun' : 'moon' }}"></i> {{ request()->cookie('dark') == 'true' ? 'Světlý' : 'Tmavý' }} režim</a>
+            <a class="btn btn-secondary" id="dark-mode-button" onclick="toggleDarkMode();" ><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }} režim</a>
         </div>
     </nav>
 @endsection
@@ -48,7 +48,7 @@
 @section('app-css')
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('_admin/css/admin.css') }}">
-    @if (request()->cookie('dark') == 'true')
+    @if (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true')
     <style id="darkStyle">
         .theme--light {opacity: 0; transition: .7s;}
         .theme--dark {opacity: 1; transition: .7s;}
