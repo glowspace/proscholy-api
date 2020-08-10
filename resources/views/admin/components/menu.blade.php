@@ -28,7 +28,7 @@
     'text' => 'Odhlásit se'
 ])
 
-{{-- 
+{{--
 @can('access todo')
     <div class="navbar-label material-shadow text-danger">Plnění obsahem</div>
 @endcan --}}
@@ -51,30 +51,36 @@
     ])
 @endcan --}}
 
-<div class="navbar-label material-shadow text-success">Úprava položek</div>
+{{-- <div class="navbar-label material-shadow text-success">Úprava položek</div> --}}
+
+<div class="mt-lg-3"></div>
 
 @include('admin.components.menu-item', [
     'route' => 'admin.song.index',
     'icon' => 'music',
-    'text' => 'Písně'
+    'text' => 'Písně',
+    'plus' => true
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.author.index',
     'icon' => 'pen',
-    'text' => 'Autoři'
+    'text' => 'Autoři',
+    'plus' => true
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.external.index',
     'icon' => 'link',
-    'text' => 'Externí odkazy'
+    'text' => 'Externí odkazy',
+    'plus' => true
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.file.index',
     'icon' => 'file',
-    'text' => 'Nahrané soubory'
+    'text' => 'Nahrané soubory',
+    'plus_route' => 'admin.file.create'
 ])
 
 {{-- @include('admin.components.menu-item', [
@@ -86,13 +92,15 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.songbook.index',
     'icon' => 'book',
-    'text' => 'Zpěvníky'
+    'text' => 'Zpěvníky',
+    'plus' => true
 ])
 
 @can('manage users')
     @include('admin.components.menu-item', [
         'route' => 'admin.user.index',
         'icon' => 'user',
-        'text' => 'Uživatelé'
+        'text' => 'Uživatelé',
+        'plus_route' => 'admin.user.create'
     ])
 @endcan

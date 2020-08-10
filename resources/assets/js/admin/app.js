@@ -32,6 +32,8 @@ Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
 Vue.component('file-edit', require('Admin/pages/edit/FileEdit.vue'));
 Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
 
+Vue.component('file-create', require('Admin/pages/create/FileCreate.vue'));
+
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 
 import { ApolloClient } from 'apollo-client';
@@ -97,6 +99,23 @@ Vue.use(Vuetify, {
         warning: '#ff9800',
         info: '#2196f3',
         success: '#4caf50'
+    },
+    lang: {
+        locales: {
+            cs: {
+                dataIterator: {
+                    rowsPerPageAll: '∞',
+                    pageText: '{0}–{1} z {2}',
+                    noResultsText:
+                        'Nic nebylo nalezeno. Zkuste zkontrolovat vyhledávaný řetězec.'
+                },
+                dataTable: {
+                    rowsPerPageText: 'Počet řádků na stránce:'
+                },
+                noDataText: 'Data nejsou k dispozici.'
+            }
+        },
+        current: 'cs'
     }
 });
 
@@ -108,6 +127,11 @@ Vue.use(VeeValidate);
 
 const app = new Vue({
     el: '#app',
-    apolloProvider
+    apolloProvider,
+    data: {
+        dark: false
+    }
     // render: h => h(App)
 });
+
+window.VueApp = app;

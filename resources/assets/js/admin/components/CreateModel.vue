@@ -1,22 +1,32 @@
 <template>
-    <div>
+    <v-card class="mb-3 d-inline-flex flex-row flex-wrap px-4 py-3">
         <v-text-field
             :label="label"
             required
             v-model="attribute_value"
             data-vv-name="required_attribute"
             :error-messages="errors.collect('required_attribute')"
+            prepend-icon="add"
+            @click:prepend="$refs.cmtf.focus()"
+            ref="cmtf"
+            class="mt-0 pb-0 pt-3"
+            style="max-width:600px;width:50vw"
+            @keydown.enter="submit(true)"
+            @input="$validator.errors.clear()"
+            id="create-model-text-field"
         ></v-text-field>
-        <v-btn
-            v-if="!forceEdit"
-            :disabled="attribute_value == ''"
-            @click="submit(false)"
-            >Vytvořit</v-btn
-        >
-        <v-btn :disabled="attribute_value == ''" @click="submit(true)"
-            >Vytvořit a editovat</v-btn
-        >
-    </div>
+        <div class="text-nowrap pt-1">
+            <v-btn :disabled="attribute_value == '' || saving" @click="submit(true)" color="primary" style="margin-left:33px"
+                >Vytvořit a upravit</v-btn
+            >
+            <v-btn
+                v-if="!forceEdit"
+                :disabled="attribute_value == '' || saving"
+                @click="submit(false)"
+                >Vytvořit</v-btn
+            >
+        </div>
+    </v-card>
 </template>
 
 <script>
@@ -36,12 +46,14 @@ export default {
 
     data() {
         return {
-            attribute_value: ''
+            attribute_value: '',
+            saving: false
         };
     },
 
     methods: {
         submit(redir) {
+            this.saving = true;
             this.$apollo
                 .mutate({
                     mutation: CREATE_MODEL_MUTATION,
@@ -53,6 +65,7 @@ export default {
                     }
                 })
                 .then(result => {
+                    this.saving = false;
                     this.$notify({
                         title: 'Hotovo :)',
                         text: this.successMsg,
@@ -65,9 +78,11 @@ export default {
                     } else {
                         this.$emit('saved');
                         this.attribute_value = '';
+                        document.getElementById('create-model-text-field').focus();
                     }
                 })
                 .catch(error => {
+                    this.saving = false;
                     if (
                         !error.graphQLErrors ||
                         error.graphQLErrors.length == 0
@@ -87,7 +102,8 @@ export default {
                     // clear the old errors and (add new ones if exist)
                     this.$validator.errors.clear();
                     for (const [key, value] of Object.entries(errorFields)) {
-                        this.$validator.errors.add({ field: key, msg: value });
+                        let _value = Array.isArray(value) ? value[0] : value;
+                        this.$validator.errors.add({ field: key, msg: _value });
                     }
                 });
         }

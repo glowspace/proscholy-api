@@ -1,8 +1,9 @@
 <template>
     <!-- v-app must wrap all the components -->
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Autoři</h1>
             <create-model
                 class-name="Author"
                 label="Zadejte jméno nového autora"
@@ -10,48 +11,56 @@
                 @saved="$apollo.queries.authors.refetch()"
             ></create-model>
             <v-layout row>
-                <v-flex xs5 offset-xs7 md3 offset-md9>
+                <v-flex xs12 md4 offset-md8>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
+                        @click:prepend="$refs.search.focus()"
+                        ref="search"
+                        :clearable="true"
+                        id="search"
+                        autofocus
                     ></v-text-field>
                 </v-flex>
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
-                    <v-data-table
-                        :headers="headers"
-                        :items="authors"
-                        :search="search_string"
-                        :custom-filter="customFilter"
-                        :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
-                        ]"
-                    >
-                        <template v-slot:items="props">
-                            <td>
-                                <a
-                                    :href="
-                                        '/admin/author/' +
-                                            props.item.id +
-                                            '/edit'
-                                    "
-                                    >{{ props.item.name }}</a
-                                >
-                            </td>
-                            <td>{{ props.item.type_string }}</td>
-                            <td>
-                                <a
-                                    href="#"
-                                    style="color:red"
-                                    v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
-                                >
-                            </td>
-                        </template>
-                    </v-data-table>
+                    <v-card>
+                        <v-data-table
+                            :headers="headers"
+                            :items="authors"
+                            :search="search_string"
+                            :custom-filter="customFilter"
+                            :rows-per-page-items="[
+                                50,
+                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            ]"
+                            :loading="$apollo.loading"
+                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <a
+                                        :href="'/admin/author/' + props.item.id + '/edit'"
+                                        >{{ props.item.name }}</a
+                                    >
+                                </td>
+                                <td>{{ props.item.type_string }}</td>
+                                <td class="text-nowrap">
+                                    <a
+                                        class="text-secondary mr-3"
+                                        :href="'/admin/author/' + props.item.id + '/edit'"
+                                        ><i class="fas fa-pen"></i></a
+                                    ><a
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i></a
+                                    >
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -61,8 +70,8 @@
 <style scope>
 input {
     border: none;
-}</style
->fetch_items
+}
+</style>
 
 <script>
 import gql from 'graphql-tag';
@@ -100,7 +109,7 @@ export default {
             headers: [
                 { text: 'Jméno', value: 'name' },
                 { text: 'Typ', value: 'type_string' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: ''
         };
@@ -117,6 +126,18 @@ export default {
             result(result) {
                 this.buildSearchIndex();
             }
+        }
+    },
+
+    mounted() {
+        if (window.location.hash.length > 2 && this.filter_mode) {
+            this.filter_mode = window.location.hash.replace('#', '');
+        }
+
+        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
+        } else if (document.getElementById('search')) {
+            document.getElementById('search').focus();
         }
     },
 

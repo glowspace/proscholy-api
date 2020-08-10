@@ -5,7 +5,7 @@
 @section('navbar')
     <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top d-block">
         <div class="w-100 text-center">
-            <a class="navbar-brand mr-4" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
+            <a class="navbar-brand mr-4" href="{{route('client.home')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
                 ProScholy & Regenschori
             </a>
         </div>

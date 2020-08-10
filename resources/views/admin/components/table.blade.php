@@ -1,4 +1,4 @@
-<table class="table table-bordered" id="{{ $id }}">
+<table class="table table-bordered {{ $class ?? '' }}" id="{{ $id }}" style="font-size:13px">
     <thead>
         <tr>
             @foreach ($columns as $column)
@@ -10,7 +10,7 @@
     <tbody>
         {{ $slot }}
     </tbody>
-        
+
 </table>
 
 @include('admin.components.datatable', ['table_id' => $id])

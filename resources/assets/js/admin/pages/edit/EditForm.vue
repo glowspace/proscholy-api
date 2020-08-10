@@ -24,6 +24,13 @@
 export default {
     props: ['preset-id'],
 
+    data() {
+        return {
+            redirUrl: '',
+            isLocked: false,
+        }
+    },
+
     computed: {
         isDirty() {
             if (this.is_deleted) return false;
@@ -31,10 +38,29 @@ export default {
             //   if (!this.model.url) return true;
 
             for (let field of this._getFieldsFromFragment(this.fragment)) {
-                if (!_.isEqual(this.model[field], this.model_database[field])) {
-                    console.log(
-                        'Dirty check found mismatch on the field ' + field
-                    );
+                if (field === 'authors_pivot') {
+                    let model_authors = this.model[field];
+                    let ml_db_authors = this.model_database[field];
+                    model_authors = model_authors.filter((el) => el.author != null);
+                    ml_db_authors = ml_db_authors.filter((el) => el.author != null);
+                    model_authors.sort((a,b) => (a.author.name > b.author.name) ? 1 : ((b.author.name > a.author.name) ? -1 : 0));
+                    ml_db_authors.sort((a,b) => (a.author.name > b.author.name) ? 1 : ((b.author.name > a.author.name) ? -1 : 0));
+                    model_authors.forEach(function(v){delete v.id; delete v.__typename;});
+                    ml_db_authors.forEach(function(v){delete v.id; delete v.__typename;});
+
+                    if (!_.isEqual(model_authors, ml_db_authors)) {
+                        console.log('Dirty check found mismatch on the field ' + field);
+                        return true;
+                    }
+
+                    continue;
+                }
+
+                let model_field = this.model[field];
+                model_field = (model_field === '') ? null : model_field;
+
+                if (!_.isEqual(model_field, this.model_database[field])) {
+                    console.log('Dirty check found mismatch on the field ' + field);
                     return true;
                 }
             }
@@ -44,6 +70,40 @@ export default {
             }
 
             return false;
+        }
+    },
+
+    watch: {
+        isDirty: function(val) {
+            if (!val && this.redirUrl) {
+                this.goToPage(this.redirUrl, false);
+                this.redirUrl = '';
+            }
+        },
+
+        isLocked: function(val) {
+            if (val && !document.getElementById('locked')) {
+                document.getElementsByClassName('container')[0].setAttribute('style', 'display:none');
+                var lockedDiv = document.createElement('div');
+                lockedDiv.id = 'locked';
+                lockedDiv.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="h3">Je třeba chvilku počkat…</h2>
+                            <p>
+                                Vypadá to, že tenhle záznam právě upravuje někdo jiný.
+                                <br>Abychom předešli možným problémům, dočasně jsme režim úprav uzamkli.
+                                <br><br><button type="button" class="btn btn-outline-primary" @click="refreshUpdating()">Zkusit znovu</button>
+                                <br><br><img src="https://thumbs.gfycat.com/FoolishHonorableArgentinehornedfrog-size_restricted.gif" alt="You shall not pass">
+                            </p>
+                        </div>
+                    </div>
+                `;
+                document.getElementsByClassName('application--wrap')[0].appendChild(lockedDiv);
+            } else if (document.getElementById('locked')) {
+                document.getElementsByClassName('container')[0].removeAttribute('style');
+                document.getElementById('locked').remove();
+            }
         }
     },
 
@@ -64,6 +124,15 @@ export default {
                 e.returnValue = '';
             }
         };
+
+        document.addEventListener("keydown", this.doSave);
+
+        setInterval(this.refreshUpdating, 15000);
+        this.refreshUpdating();
+    },
+
+    beforeDestroy() {
+        document.removeEventListener("keydown", this.doSave);
     },
 
     $_veeValidate: {
@@ -71,30 +140,38 @@ export default {
     },
 
     methods: {
-        async goToPage(url, save = true) {
-            if (this.isDirty && save) await this.submit();
+        doSave(e) {
+            if (!(e.keyCode === 83 && e.ctrlKey)) {
+                return;
+            }
 
-            setTimeout(() => {
-                if (!(this.isDirty && save)) {
-                    var base_url = document
-                        .querySelector('#baseUrl')
-                        .getAttribute('value');
-                    window.location.href = base_url + '/' + url;
-                }
-            }, 500);
+            e.preventDefault();
+            this.submit();
+        },
+
+        goToPage(url, save = true) {
+            if (this.isDirty && save) {
+                this.submit();
+                this.redirUrl = url;
+            } else {
+                var base_url = document.querySelector('#baseUrl').getAttribute('value');
+                window.location.href = base_url + '/' + url;
+            }
         },
 
         goToAdminPage(url, save = true) {
-            this.goToPage('/admin/' + url, save);
+            this.goToPage('admin/' + url, save);
         },
 
         handleValidationErrors(error) {
-            let errorFields = error.graphQLErrors[0].extensions.validation;
+            if (error.graphQLErrors) {
+                let errorFields = error.graphQLErrors[0].extensions.validation;
 
-            // clear the old errors and (add new ones if exist)
-            this.$validator.errors.clear();
-            for (const [key, value] of Object.entries(errorFields)) {
-                this.$validator.errors.add({ field: key, msg: value });
+                // clear the old errors and (add new ones if exist)
+                this.$validator.errors.clear();
+                for (const [key, value] of Object.entries(errorFields)) {
+                    this.$validator.errors.add({ field: key, msg: value });
+                }
             }
         },
 
@@ -148,12 +225,24 @@ export default {
             let fieldNames = fieldDefs.map(field =>
                 field.alias ? field.alias.value : field.name.value
             );
-            console.log(fieldNames);
+            // console.log(fieldNames);
 
             if (!options.includeId)
                 fieldNames = fieldNames.filter(field => field != 'id');
 
             return fieldNames;
+        },
+
+        refreshUpdating() {
+            let pathnameSplit = window.location.pathname.split('/');
+            let currentModel = pathnameSplit[pathnameSplit.length-3];
+            let models = ['song', 'songbook'];
+
+            if (models.indexOf(currentModel) != -1) {
+                axios
+                    .get('/refresh-updating/' + currentModel + '/' + this.presetId)
+                    .then(response => (this.isLocked = response.data == 'Locked'));
+            }
         }
     }
 };

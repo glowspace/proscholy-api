@@ -1,17 +1,20 @@
 <template>
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
+        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
+            indeterminate
+            color="info"
+            :height="4"
+            class="m-0"
+        ></v-progress-linear></div>
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Úprava nahraného souboru</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
                         <v-text-field
                             label="Zobrazovaný název"
-                            :placeholder="
-                                '(stejný jako jméno souboru - ' +
-                                    model.filename +
-                                    ')'
-                            "
+                            :placeholder="model.filename ? '(stejný jako jméno souboru – ' + model.filename + ')' : ''"
                             required
                             v-model="model.name"
                             data-vv-name="input.name"
@@ -87,6 +90,7 @@
                 </v-flex>
             </v-layout>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+            <v-btn @click="submit(true)"><span :style="isDirty ? '' : 'opacity:0.3'">Uložit a</span>&nbsp;nahrát další soubor</v-btn>
             <v-btn
                 v-if="model.song_lyric"
                 :disabled="isDirty"
@@ -114,7 +118,7 @@
                         >Soubor byl vymazán</v-card-title
                     >
                     <v-card-text>Soubor byl vymazán z databáze.</v-card-text>
-                    <v-card-actions>
+                    <v-card-actions class="d-block">
                         <v-spacer></v-spacer>
                         <v-btn
                             color="green darken-1"
@@ -235,7 +239,7 @@ export default {
     },
 
     methods: {
-        submit() {
+        submit(redir) {
             this.$apollo
                 .mutate({
                     mutation: File.MUTATION,
@@ -248,9 +252,17 @@ export default {
                         text: 'Soubor byl úspěšně uložen',
                         type: 'success'
                     });
+
+                    if (redir === true) {
+                        if (this.model.song_lyric && this.model.song_lyric.id) {
+                            this.goToAdminPage('file/new-for-song/' + this.model.song_lyric.id);
+                        } else {
+                            this.goToAdminPage('file/create');
+                        }
+                    }
                 })
                 .catch(error => {
-                    if (error.graphQLErrors.length == 0) {
+                    if (error.graphQLErrors && error.graphQLErrors.length == 0) {
                         // unknown error happened
                         this.$notify({
                             title: 'Chyba při ukládání',

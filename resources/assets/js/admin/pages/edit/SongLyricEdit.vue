@@ -1,14 +1,18 @@
 <template>
-  <v-app>
+  <v-app :dark="$root.dark">
     <notifications/>
-    <!-- todo: position this loader to look good -->
-    <!-- <v-container fluid v-show="$apollo.loading"><v-progress-circular
+    <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
       indeterminate
-    ></v-progress-circular></v-container> -->
+      color="info"
+      :height="4"
+      class="m-0"
+    ></v-progress-linear></div>
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
-      <v-tabs color="transparent" v-on:change="onTabChange">
+      <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
+      <h1 class="h2 mb-3" v-else>Úprava písně</h1>
+      <v-tabs color="transparent">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab>Lilypond (beta)</v-tab>
@@ -28,7 +32,7 @@
                   v-on:input="onNameChange"
                 ></v-text-field>
 
-                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0">
+                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
                     label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
                     :value="false"
@@ -39,10 +43,9 @@
                   ></v-radio>
                 </v-radio-group>
 
-                <v-layout row mb-2>
+                <v-layout row mb-2 v-if="is_arrangement_layout">
                   <v-flex xs12 lg6>
                     <items-combo-box
-                      v-if="is_arrangement_layout"
                       v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
                       v-model="model.arrangement_source"
                       disabled
@@ -54,7 +57,7 @@
                     ></items-combo-box>
                   </v-flex>
                   <v-flex xs12 lg6>
-                    <v-btn v-if="is_arrangement_layout"
+                    <v-btn
                           @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
                           :disabled="!model.arrangement_source"
                           color="info" outline
@@ -62,58 +65,61 @@
                   </v-flex>
                 </v-layout>
 
-                <v-card class="mb-5">
-                  <v-card-title>
+                <v-card class="mb-4 px-4">
+                  <v-card-title class="p-0">
                     <h3>Autoři<span v-if="is_arrangement_layout"> aranže</span>
                     <span v-if="!is_original"> překladu</span>
                     </h3>
                   </v-card-title>
 
-                  <v-card-text v-if="model.authors_pivot.length">
+                  <v-card-text class="p-0">
                     <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
-                      <v-flex xs12 sm5>
+                      <v-flex xs12 sm8>
                         <items-combo-box
                           v-model="author_pivot.author"
                           v-bind:p-items="authors"
                           item-text="name"
-                          label="Autor"
+                          label="Jméno autora"
                           :multiple="false"
                           :enable-custom="true"
+                          :disabled="model.has_anonymous_author"
                         ></items-combo-box>
                       </v-flex>
-                      <v-flex xs7 sm4>
+                      <v-flex xs10 sm3>
                         <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                        <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
-                        <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora"></v-select>
+                        <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
+                        <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
                       </v-flex>
-                      <v-flex xs5 sm2>
+                      <v-flex xs2 sm1>
                         <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                        <v-btn color="error" outline @click="removeAuthor(i)">Odstranit</v-btn>
+                        <v-btn icon @click="removeAuthor(i)" :disabled="model.has_anonymous_author" class="text-secondary"><i class="fas fa-trash"></i></v-btn>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
-                  <v-card-text v-else>
+
+                  <v-card-text class="p-0" v-if="model.authors_pivot.filter((el) => el.author != null).length === 0">
                     <span v-if="!model.has_anonymous_author">
-                      Zatím k písni nikdo nepřiřadil autora (u písně je označení "autor<span v-if="!is_original"> překladu </span> neznámý")
+                      Zatím k písni nikdo nepřiřadil autora (u písně je označení „autor<span v-if="!is_original"> překladu </span> neznámý“).
                     </span>
-                    <span v-else>U písně je označení "anonymní autor"</span>
+                    <span v-else>U písně je označení „anonymní autor“.</span>
                   </v-card-text>
 
-                  <v-card-actions>
-                      <v-flex shrink mr-1>
+                  <v-card-actions class="p-0">
+                      <!-- <v-flex shrink mr-1>
                         <v-btn
                           :disabled="model.has_anonymous_author"
                           color="info"
                           outline
                           @click="addEmptyAuthor()"
                         >Přidat autora</v-btn>
-                      </v-flex>
-                      <v-flex grow mt-3>
+                      </v-flex> -->
+                      <v-flex grow mb-3>
                          <v-checkbox
-                          :disabled="model.authors_pivot.length > 0"
+                          :disabled="model.authors_pivot.filter((el) => el.author != null).length > 0"
                           class="mt-1"
                           v-model="model.has_anonymous_author"
                           label="Píseň má anonymního autora"
+                          :hide-details="true"
                         ></v-checkbox>
                       </v-flex>
                   </v-card-actions>
@@ -131,14 +137,14 @@
                   </v-flex>
                 </v-layout> -->
 
-                <v-card v-if="model.song && model_database.song" class="mb-3">
-                  <v-card-title><h3>Skupina písní</h3></v-card-title>
+                <v-card v-if="model.song && model_database.song" class="mb-3 px-4">
+                  <v-card-title class="p-0"><h3>Skupina písní</h3></v-card-title>
 
-                  <v-card-text>
-                  <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
+                  <v-card-text class="py-0 px-2">
+                    <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
                   </v-card-text>
 
-                  <v-card-actions>
+                  <v-card-actions class="px-0 py-3">
                     <v-btn
                       color="error"
                       outline
@@ -147,8 +153,7 @@
                     >Odstranit píseň ze skupiny</v-btn>
                     <select-song-group-dialog
                       outline
-                      v-if="model_database.song.song_lyrics.length == 1 &&
-                  model.song.song_lyrics.length == 1"
+                      v-if="model_database.song.song_lyrics.length == 1 && model.song.song_lyrics.length == 1"
                       v-on:submit="addToGroup"
                     ></select-song-group-dialog>
                   </v-card-actions>
@@ -211,17 +216,19 @@
                 ></v-checkbox> -->
               </v-form>
             </v-flex>
-            <v-flex xs12 md5 offset-md1 class="edit-description">
+            <v-flex xs12 md6 class="edit-description pl-md-4">
               <h5>Název (povinná položka)</h5>
               <p>
-                Název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název). Může obsahovat název interpreta v závorkách, pokud existuje
-                více písní se stejným názvem.
+                Zadejte název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název).
+                <br>Může obsahovat název interpreta v závorkách, pokud existuje více písní se stejným názvem.
                 <br>Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
               </p>
 
-              <h5>Autoři</h5>
+              <h5 class="mt-4">Autoři</h5>
               <p>
-                Po kliknutí na Přidat autora začněte zadávat jméno autora, pokud se nenachází ve vyskakovací nabídce, tak stačí napsat celé jméno, odentrovat a přidá se (zeleně označený) nový autor. Změna v databázi se provede až po uložení celé písně.
+                Po kliknutí do pole Jméno autora začněte zadávat autorovo jméno. Pokud se nenachází ve vyskakovací nabídce,
+                stačí napsat jeho celé jméno a stisknout Enter. Tak se přidá nový autor (zeleně označený).
+                Změna v databázi (tzn. samotné vytvoření autora) se provede až po uložení celé písně.
               </p>
             </v-flex>
           </v-layout>
@@ -240,14 +247,14 @@
               <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile"> -->
 
               <v-textarea
-                auto-grow
+                class="auto-grow-alt"
                 outline
                 name="input-7-4"
                 label="Text"
                 ref="textarea"
                 v-model="model.lyrics"
               ></v-textarea>
-              <number-input 
+              <number-input
                 label="Kapodastr"
                 v-model="model.capo"
                 vv-name="input.capo"
@@ -259,7 +266,7 @@
                 <ul>
                   <li>text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E]</b>, <b>[C#m]</b> nebo <b>[Cism]</b>, <b>[Fmaj7]</b> apod.</li>
                   <li>akordy pište českými značkami – H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b></li>
-                  <li>akordy v pozdějších slokách nepište přímo - můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
+                  <li>akordy v pozdějších slokách nepište přímo – můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
                   <li>sloky označujte číslicí, tečkou a mezerou: <b>1. Text první sloky</b></li>
                   <li>refrén velkým R, dvojtečkou a mezerou – <b>R: Text refrénu</b> (při opakování už nepsat znovu text)</li>
                   <li>pokud je naprosto zřejmé, že na dané místo patří refrén (např. se opakuje po každé sloce písně), umisťuje se R: do závorky – <b>(R:)</b></li>
@@ -293,7 +300,7 @@
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-textarea
-                auto-grow
+                class="auto-grow-alt"
                 outline
                 name="input-7-4"
                 label="Notový zápis ve formátu Lilypond"
@@ -304,7 +311,7 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" style="max-height: 70vh; overflow: scroll;"></div>
                 <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>
@@ -389,7 +396,7 @@
                 v-bind:key="arrangement.id"
                 class="text-none"
                 @click="goToAdminPage('song/' + arrangement.id + '/edit')"
-              >{{ arrangement.name }} 
+              >{{ arrangement.name }}
               <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
               </v-btn>
             </v-flex>
@@ -409,18 +416,26 @@
           </v-layout>
         </v-tab-item>
       </v-tabs>
-      <v-btn @click="submit" :disabled="!isDirty" class="success">Uložit</v-btn>
-      <v-btn @click="reset" :disabled="!isDirty">Vrátit změny do stavu posledního uložení</v-btn>
-      <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
-      <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
-      <br>
-      <br>
-      <delete-model-dialog
-        class-name="SongLyric"
-        :model-id="model.id"
-        @deleted="is_deleted = true"
-        delete-msg="Opravdu chcete vymazat tuto píseň?"
-      >Vymazat</delete-model-dialog>
+      <div class="position-sticky fixed-bottom body-bg ml-n3 mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
+        <v-tooltip top>
+            <template v-slot:activator="{ on }">
+                <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on"><i class="fas fa-save mr-2"></i> Uložit</v-btn>
+            </template>
+            <span>Ctrl + S</span>
+        </v-tooltip>
+        <v-btn @click="reset" :disabled="!isDirty"><i class="fas fa-undo mr-2"></i> Vrátit změny do stavu posledního uložení</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="far fa-eye mr-2"></i> Zobrazit ve zpěvníku</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+      </div>
+      <div class="mt-2 mb-4 ml-n3 p-2">
+        <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
+        <delete-model-dialog
+          class-name="SongLyric"
+          :model-id="model.id"
+          @deleted="is_deleted = true"
+          delete-msg="Opravdu chcete vymazat tuto píseň?"
+        ><i class="fas fa-trash mr-2"></i> Vymazat</delete-model-dialog>
+      </div>
       <!-- model deleted dialog -->
       <v-dialog v-model="is_deleted" persistent max-width="290">
         <v-card>
@@ -504,14 +519,13 @@ const CREATE_ARRANGEMENT = gql`
 `;
 
 const FETCH_LILYPOND = gql`
-  query ($lilypond: String) { 
+  query ($lilypond: String) {
     lilypond_parse (lilypond: $lilypond) {
       svg
     }
   }
 `;
 export default {
-  props: ["csrf"],
   components: {
     ItemsComboBox,
     SongLyricsGroup,
@@ -620,12 +634,6 @@ export default {
       }
     }
   },
-  mounted() {
-    // send blocking info 
-    setInterval(() => {
-        // $.get( "/refresh-updating/song-lyric/" + this.presetId );
-    }, 5000);
-  },  
 
   computed: {
     thumbnailables() {
@@ -651,7 +659,7 @@ export default {
 
     is_original() {
       if (this.model && this.model.song) {
-        const song_lyric_type = this.model.song.song_lyrics.find(sl => 
+        const song_lyric_type = this.model.song.song_lyrics.find(sl =>
           sl.id == this.model.id
         ).type;
 
@@ -659,6 +667,25 @@ export default {
       }
 
       return true;
+    },
+
+    authors_pivot_comp() {
+      return this.model.authors_pivot;
+    },
+
+    csrf() {
+      return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    }
+  },
+
+  watch: {
+    authors_pivot_comp: {
+      handler(val) {
+        if (!val.length || val[val.length-1].author !== null) {
+          this.addEmptyAuthor();
+        }
+      },
+      deep: true
     }
   },
 
@@ -700,20 +727,6 @@ export default {
             type: "error"
           });
         });
-    },
-
-    show() {
-      window.location.href = this.model_database.public_url;
-    },
-
-    onTabChange() {
-      // it is needed to refresh the textareas manually
-      if (this.$refs.textarea) {
-        // somehow it doesn"t work without settimeout, not even with Vue.nexttick
-        setTimeout(() => {
-          this.$refs.textarea.calculateInputHeight();
-        }, 1);
-      }
     },
 
     isDirtyChecker() {

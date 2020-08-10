@@ -1,7 +1,14 @@
 <template>
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
+        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
+            indeterminate
+            color="info"
+            :height="4"
+            class="m-0"
+        ></v-progress-linear></div>
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Úprava autora</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
@@ -43,21 +50,19 @@
                             v-if="model.type !== 0"
                             v-bind:p-items="authors"
                             v-model="model.members"
-                            label="Členové - autoři"
+                            label="Členové – autoři"
                             header-label="Vyberte autora z nabídky nebo vytvořte nového"
                             create-label="Potvrďte enterem a vytvořte nového autora"
                             :multiple="true"
                             :enable-custom="true"
                         ></items-combo-box>
                         <v-textarea
-                            auto-grow
+                            outline
                             name="input-7-4"
                             label="Popis autora"
                             v-model="model.description"
                             data-vv-name="input.description"
-                            :error-messages="
-                                errors.collect('input.description')
-                            "
+                            :error-messages="errors.collect('input.description')"
                         ></v-textarea>
                         <items-combo-box
                             v-bind:p-items="tags_period"
@@ -70,7 +75,7 @@
                         ></items-combo-box>
                     </v-form>
                 </v-flex>
-                <v-flex xs12 md6 class="edit-description">
+                <v-flex xs12 md6 class="edit-description pl-md-4">
                     <h5>Seznam autorských písní</h5>
                     <v-btn
                         v-for="song_lyric in model.song_lyrics"
@@ -103,9 +108,8 @@
                 </v-flex>
             </v-layout>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn @click="show" :disabled="isDirty"
-                >Zobrazit ve zpěvníku</v-btn
-            >
+            <v-btn :href="model.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
+            <v-btn :href="model.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
             <br /><br />
             <delete-model-dialog
                 class-name="Author"
@@ -254,13 +258,6 @@ export default {
 
                     this.handleValidationErrors(error);
                 });
-        },
-
-        show() {
-            var base_url = document
-                .querySelector('#baseUrl')
-                .getAttribute('value');
-            window.location.href = base_url + '/autor/' + this.model.id;
         }
     }
 };

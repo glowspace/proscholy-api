@@ -1,10 +1,12 @@
 <template>
     <!-- v-app must wrap all the components -->
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
-            <v-layout row>
-                <v-flex xs7>
+            <h1 class="h2 mb-3">Nahrané soubory</h1>
+            <v-btn href="/admin/file/create" class="ml-0 text-decoration-none primary">+ Nahrát nový soubor</v-btn>
+            <v-layout row wrap>
+                <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">
                         <v-radio
                             label="Všechny soubory"
@@ -16,62 +18,75 @@
                         ></v-radio>
                     </v-radio-group>
                 </v-flex>
-                <v-flex xs5>
+                <v-flex xs12 md4>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
+                        @click:prepend="$refs.search.focus()"
+                        ref="search"
+                        :clearable="true"
+                        id="search"
+                        autofocus
                     ></v-text-field>
                 </v-flex>
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
-                    <v-data-table
-                        :headers="headers"
-                        :items="files"
-                        :search="search_string"
-                        :custom-filter="customFilter"
-                        :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
-                        ]"
-                    >
-                        <template v-slot:items="props">
-                            <td>
-                                <a
-                                    :href="
-                                        '/admin/file/' + props.item.id + '/edit'
-                                    "
-                                    >{{ props.item.public_name }}</a
-                                >
-                            </td>
-                            <td>{{ props.item.type_string }}</td>
-                            <td>
-                                {{
-                                    props.item.song_lyric
-                                        ? props.item.song_lyric.name
-                                        : '-'
-                                }}
-                            </td>
-                            <td>
-                                {{
-                                    props.item.authors
-                                        .map(a => a.name)
-                                        .join(', ') || '-'
-                                }}
-                            </td>
-                            <td>
-                                <a
-                                    href="#"
-                                    style="color:red"
-                                    v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
-                                >
-                                &nbsp;
-                                <a :href="props.item.download_url">Stáhnout</a>
-                            </td>
-                        </template>
-                    </v-data-table>
+                    <v-card>
+                        <v-data-table
+                            :headers="headers"
+                            :items="files"
+                            :search="search_string"
+                            :custom-filter="customFilter"
+                            :rows-per-page-items="[
+                                50,
+                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            ]"
+                            :loading="$apollo.loading"
+                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :pagination.sync="dtPagination"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <a
+                                        :href="'/admin/file/' + props.item.id + '/edit'"
+                                        >{{ props.item.public_name }}</a
+                                    >
+                                </td>
+                                <td>{{ props.item.type_string }}</td>
+                                <td>
+                                    {{
+                                        props.item.song_lyric
+                                            ? props.item.song_lyric.name
+                                            : '–'
+                                    }}
+                                </td>
+                                <td>
+                                    {{
+                                        props.item.authors
+                                            .map(a => a.name)
+                                            .join(', ') || '–'
+                                    }}
+                                </td>
+                                <td class="text-nowrap">
+                                    <a
+                                        class="text-secondary mr-3"
+                                        :href="props.item.download_url"
+                                        ><i class="fas fa-download"></i></a
+                                    ><a
+                                        class="text-secondary mr-3"
+                                        :href="'/admin/file/' + props.item.id + '/edit'"
+                                        ><i class="fas fa-pen"></i></a
+                                    ><a
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i></a
+                                    >
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -121,11 +136,19 @@ export default {
                 { text: 'Typ', value: 'type_string' },
                 { text: 'Píseň', value: 'song_lyric' },
                 { text: 'Autoři', value: 'authors' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',
-            filter_mode: 'no-filter'
+            filter_mode: 'no-filter',
+            dtPagination: {}
         };
+    },
+
+    watch: {
+        filter_mode(val) {
+            window.location.hash = val != 'no-filter' ? val : '';
+            this.dtPagination.page = 1;
+        }
     },
 
     apollo: {
@@ -140,6 +163,18 @@ export default {
             result(result) {
                 this.buildSearchIndex();
             }
+        }
+    },
+
+    mounted() {
+        if (window.location.hash.length > 2 && this.filter_mode) {
+            this.filter_mode = window.location.hash.replace('#', '');
+        }
+
+        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
+        } else if (document.getElementById('search')) {
+            document.getElementById('search').focus();
         }
     },
 

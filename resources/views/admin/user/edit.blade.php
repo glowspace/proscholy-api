@@ -1,8 +1,10 @@
 @extends('layout.admin')
 
+@section('title-edit', $user->name)
+
 @section('content-withmenu')
     <div class="__container-fluid">
-    <h2>Úprava uživatele</h2>
+    <h1 class="h2 mb-3">Úprava uživatele</h1>
         <div class="row">
             <div class="col-sm-6">
                 <form action="{{ route('admin.user.update', $user) }}" method="post">
@@ -51,7 +53,7 @@
                         'allow_free_entries' => false,
                         'disabled' => false
                     ])
-                    
+
                     <br/>
 
                     <div class="input-group">
@@ -68,4 +70,3 @@
         </div>
     </div>
 @endsection
-

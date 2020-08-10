@@ -30,32 +30,8 @@ class SongController extends Controller
         return view('admin.song.index');
     }
 
-
-    public function todoPublish(Request $request) {
-        $query = SongLyric::where('is_published', 0)->orderBy('name');
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        $title = "Seznam písní k publikování";
-        return view('admin.song.index', compact('song_lyrics', 'title'));
-    }
-
-    // author account todo
-    public function todoApprove(Request $request)
-    {
-        $query = SongLyric::restricted()->where('is_approved_by_author', 0)->orderBy('name');
-        $song_lyrics = $this->apply_request_filters($query, $request)->get();
-
-        $title = "Seznam písní ke schválení autorem";
-        return view('admin.song.index', compact('song_lyrics', 'title'));
-    }
-    
     public function edit(SongLyric $song_lyric)
     {
-        if ($song_lyric->isLocked()) {
-            return view('admin.lockerror', compact('song_lyric'));
-        }
-
-        $song_lyric->lock();
         return view('admin.song.edit', compact('song_lyric'));
     }
 

@@ -11,6 +11,7 @@
         :multiple="multiple"
         small-chips
         :disabled="disabled"
+        :single-line="noLabel ? true : false"
     >
         <template v-slot:no-data v-if="enableCustom">
             <v-list-tile>
@@ -78,7 +79,8 @@ export default {
         'create-label',
         'multiple',
         'enable-custom',
-        'disabled'
+        'disabled',
+        'no-label'
     ],
 
     data: () => ({

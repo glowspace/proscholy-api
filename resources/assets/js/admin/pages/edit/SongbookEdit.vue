@@ -1,7 +1,14 @@
 <template>
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
+        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
+            indeterminate
+            color="info"
+            :height="4"
+            class="m-0"
+        ></v-progress-linear></div>
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Úprava zpěvníku</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
@@ -50,7 +57,7 @@
                         <v-btn @click="submit" :disabled="!isDirty"
                             >Uložit</v-btn
                         >
-                        <!-- <v-btn @click="show" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
+                        <!-- <v-btn :disabled="isDirty">Zobrazit ve zpěvníku</v-btn> -->
                         <br />
                         <br />
                         <delete-model-dialog
@@ -62,7 +69,7 @@
                         >
                     </v-form>
                 </v-flex>
-                <v-flex xs12 md6 class="edit-description">
+                <v-flex xs12 md6 class="edit-description pl-md-4">
                     <h5>Seznam písní ve zpěvníku</h5>
                     <v-radio-group
                         v-if="model.songs_count"
@@ -80,12 +87,15 @@
                     <v-data-table
                         :headers="records_headers"
                         :items="recordsWithEmpty"
-                        class="mb-4"
+                        class="mb-4 card"
                         :rows-per-page-items="[
-                            20,
-                            40,
-                            { text: 'Vše', value: -1 }
+                            10,
+                            50,
+                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
                         ]"
+                        :loading="$apollo.loading"
+                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                        :custom-sort="customSort"
                     >
                         <template v-slot:items="props">
                             <td>{{ props.item.number }}</td>
@@ -106,34 +116,15 @@
                                     :multiple="false"
                                     :enable-custom="true"
                                     create-label="Potvrďte enterem a vytvořte novou píseň"
+                                    :no-label="true"
                                 ></items-combo-box>
                             </td>
                             <td>
                                 <a
-                                    class="as-link"
-                                    v-if="
-                                        props.item.song_lyric &&
-                                            props.item.song_lyric.hasOwnProperty(
-                                                'id'
-                                            )
-                                    "
-                                    @click.middle="
-                                        goToAdminPage(
-                                            'song/' +
-                                                props.item.song_lyric.id +
-                                                '/edit',
-                                            true,
-                                            true
-                                        )
-                                    "
-                                    @click.left="
-                                        goToAdminPage(
-                                            'song/' +
-                                                props.item.song_lyric.id +
-                                                '/edit'
-                                        )
-                                    "
-                                    >Upravit píseň</a
+                                    v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
+                                    class="text-secondary"
+                                    :href="'/admin/song/' + props.item.song_lyric.id + '/edit'"
+                                    ><i class="fas fa-pen"></i></a
                                 >
                             </td>
                         </template>
@@ -214,7 +205,7 @@ export default {
             records_headers: [
                 { text: 'Číslo', value: 'number' },
                 { text: 'Píseň', value: 'name' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             hide_empty: false,
             fragment: Songbook.fragment
@@ -234,13 +225,6 @@ export default {
         song_lyrics: {
             query: FETCH_SONG_LYRICS
         }
-    },
-
-    mounted() {
-        // send blocking info
-        setInterval(() => {
-            // $.get( "/refresh-updating/songbook/" + this.presetId );
-        }, 20000);
     },
 
     computed: {
@@ -301,13 +285,6 @@ export default {
                 });
         },
 
-        show() {
-            var base_url = document
-                .querySelector('#baseUrl')
-                .getAttribute('value');
-            window.location.href = base_url + '/autor/' + this.model.id;
-        },
-
         updateRecordItem(song_lyric, number) {
             let record = this.model.records.filter(r => r.number == number)[0];
 
@@ -319,6 +296,62 @@ export default {
             } else {
                 this.$set(record, 'song_lyric', song_lyric);
             }
+        },
+
+        customSort(items, index, isDesc) {
+            items.sort((a, b) => {
+                if (index == 'number') {
+                    if (!isDesc) {
+                        return this.orderNumber(a, b);
+                    } else {
+                        return this.orderNumber(a, b) * -1;
+                    }
+                }
+                else {
+                    if (!a.song_lyric && !b.song_lyric) {
+                        return 0;
+                    } else if (!a.song_lyric) {
+                        return 1
+                    } else if (!b.song_lyric) {
+                        return -1;
+                    } else if (!isDesc) {
+                        return a.song_lyric.name.toLowerCase()
+                        .localeCompare(b.song_lyric.name.toLowerCase());
+                    }
+                    else {
+                        return b.song_lyric.name.toLowerCase()
+                        .localeCompare(a.song_lyric.name.toLowerCase());
+                    }
+                }
+            });
+            return items;
+        },
+
+        orderNumber(a, b) {
+            let on = 0;
+
+            if (!a.number) {
+                on = -1;
+            } else if (!b.number) {
+                on = 1;
+            } else {
+                let aNumber = parseInt(a.number.replace(/\D+/g, ''));
+                let bNumber = parseInt(b.number.replace(/\D+/g, ''));
+                let aString = a.number.replace(/\d+/g, '');
+                let bString = b.number.replace(/\d+/g, '');
+
+                if (aNumber > bNumber) {
+                    on = 1;
+                } else if (bNumber > aNumber) {
+                    on = -1;
+                } else if (aString > bString) {
+                    on = 1;
+                } else if (bString > aString) {
+                    on = -1;
+                }
+            }
+
+            return on;
         }
     }
 };

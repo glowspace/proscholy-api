@@ -1,116 +1,127 @@
 <template>
     <!-- v-app must wrap all the components -->
-    <v-app>
+    <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
+            <h1 class="h2 mb-3">Písně</h1>
             <create-model
                 class-name="SongLyric"
                 label="Zadejte jméno nové písně"
                 success-msg="Píseň úspěšně vytvořena"
                 @saved="$apollo.queries.song_lyrics.refetch()"
             ></create-model>
-            <v-layout row>
-                <v-flex xs7>
-                    <v-radio-group v-model="filter_mode">
+            <v-layout row wrap>
+                <v-flex xs12 md8>
+                    <v-radio-group v-model="filter_mode" row>
                         <v-radio
                             label="Všechny písně"
                             value="no-filter"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez textu"
+                            label="Bez textu"
                             value="no-lyrics"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez akordů"
+                            label="Bez akordů"
                             value="no-chords"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez autora"
+                            label="Bez autora"
                             value="no-author"
                         ></v-radio>
                         <v-radio
-                            label="Písně bez štítků"
+                            label="Bez štítků"
                             value="no-tags"
                         ></v-radio>
                     </v-radio-group>
                 </v-flex>
-                <v-flex xs5>
+                <v-flex xs12 md4>
                     <v-text-field
                         v-model="search_string"
                         label="Vyhledávání"
+                        prepend-icon="search"
+                        @click:prepend="$refs.search.focus()"
+                        ref="search"
+                        :clearable="true"
+                        id="search"
+                        autofocus
                     ></v-text-field>
                 </v-flex>
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
-                    <v-data-table
-                        :headers="headers"
-                        :items="song_lyrics"
-                        :search="search_string"
-                        :custom-filter="customFilter"
-                        :rows-per-page-items="[
-                            10,
-                            25,
-                            { text: 'Vše', value: -1 }
-                        ]"
-                        class="users-list"
-                    >
-                        <template v-slot:items="props">
-                            <td>
-                                <a
-                                    :href="
-                                        '/admin/song/' + props.item.id + '/edit'
-                                    "
-                                    >{{ props.item.name }}</a
-                                >
-                            </td>
-                            <td>
-                                <span v-if="props.item.type === 0"
-                                    >Originál</span
-                                >
-                                <span v-if="props.item.type === 1"
-                                    >Překlad</span
-                                >
-                                <span v-if="props.item.type === 2"
-                                    >Autorizovaný překlad</span
-                                >
-                                <span v-if="props.item.is_arrangement === true">
-                                    Aranž<br />{{
-                                        props.item.arrangement_source.name
+                    <v-card>
+                        <v-data-table
+                            :headers="headers"
+                            :items="song_lyrics"
+                            :search="search_string"
+                            :custom-filter="customFilter"
+                            :rows-per-page-items="[
+                                50,
+                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            ]"
+                            :loading="$apollo.loading"
+                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :pagination.sync="dtPagination"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <a
+                                        :href="'/admin/song/' + props.item.id + '/edit'"
+                                        >{{ props.item.name }}</a
+                                    >
+                                </td>
+                                <td>
+                                    <span v-if="props.item.type === 0"
+                                        >Originál</span
+                                    >
+                                    <span v-if="props.item.type === 1"
+                                        >Překlad</span
+                                    >
+                                    <span v-if="props.item.type === 2"
+                                        >Autorizovaný překlad</span
+                                    >
+                                    <span v-if="props.item.is_arrangement === true">
+                                        Aranž<br />{{
+                                            props.item.arrangement_source.name
+                                        }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{
+                                        props.item.authors
+                                            .map(a => a.name)
+                                            .join(', ') ||
+                                            (props.item.has_anonymous_author
+                                                ? '(anonymní)'
+                                                : '–')
                                     }}
-                                </span>
-                            </td>
-                            <td>
-                                {{
-                                    props.item.authors
-                                        .map(a => a.name)
-                                        .join(', ') ||
-                                        (props.item.has_anonymous_author
-                                            ? '(anonymní)'
-                                            : '-')
-                                }}
-                            </td>
-                            <td>{{ props.item.updated_at }}</td>
-                            <td>
-                                <span v-if="props.item.is_published">Ano</span>
-                                <span v-else>Ne</span>
-                            </td>
-                            <td>
-                                <span v-if="props.item.only_regenschori"
-                                    >jen R</span
-                                >
-                                <span v-else>R + PS</span>
-                            </td>
-                            <td>
-                                <a
-                                    href="#"
-                                    style="color:red"
-                                    v-on:click="askForm(props.item.id)"
-                                    >Vymazat</a
-                                >
-                            </td>
-                        </template>
-                    </v-data-table>
+                                </td>
+                                <td>{{ new Date(props.item.updated_at).toLocaleString() }}</td>
+                                <td>
+                                    <span v-if="props.item.is_published">Ano</span>
+                                    <span v-else>Ne</span>
+                                </td>
+                                <td>
+                                    <span v-if="props.item.only_regenschori"
+                                        >jen R</span
+                                    >
+                                    <span v-else>R + PS</span>
+                                </td>
+                                <td class="text-nowrap">
+                                    <a
+                                        class="text-secondary mr-3"
+                                        :href="'/admin/song/' + props.item.id + '/edit'"
+                                        ><i class="fas fa-pen"></i></a
+                                    ><a
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i></a
+                                    >
+                                </td>
+                            </template>
+                        </v-data-table>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -178,15 +189,23 @@ export default {
             headers: [
                 { text: 'Název písničky', value: 'name' },
                 { text: 'Typ', value: 'type' },
-                { text: 'Autoři', value: 'only_regenschori' },
+                { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
                 { text: 'Publikováno', value: 'is_published' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
-                { text: 'Akce', value: 'action' }
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',
-            filter_mode: 'no-filter'
+            filter_mode: 'no-filter',
+            dtPagination: {}
         };
+    },
+
+    watch: {
+        filter_mode(val) {
+            window.location.hash = val != 'no-filter' ? val : '';
+            this.dtPagination.page = 1;
+        }
     },
 
     apollo: {
@@ -197,7 +216,7 @@ export default {
                     has_lyrics:
                         this.filter_mode == 'no-lyrics' ? false : undefined,
                     has_authors:
-                        this.filter_mode == 'no-authors' ? false : undefined,
+                        this.filter_mode == 'no-author' ? false : undefined,
                     has_chords:
                         this.filter_mode == 'no-chords' ? false : undefined,
                     has_tags: this.filter_mode == 'no-tags' ? false : undefined
@@ -206,6 +225,18 @@ export default {
             result(result) {
                 this.buildSearchIndex();
             }
+        }
+    },
+
+    mounted() {
+        if (window.location.hash.length > 2 && this.filter_mode) {
+            this.filter_mode = window.location.hash.replace('#', '');
+        }
+
+        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+            document.getElementById('create-model-text-field').focus();
+        } else if (document.getElementById('search')) {
+            document.getElementById('search').focus();
         }
     },
 

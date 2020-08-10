@@ -5,6 +5,7 @@ namespace App\Services;
 use Log;
 use App\Author;
 use App\SongLyric;
+use App\Song;
 use GuzzleHttp\Client;
 use Exception;
 
