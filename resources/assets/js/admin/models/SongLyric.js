@@ -272,11 +272,9 @@ export default {
         ),
         genericTagsInput: belongsToManyMutator(vueModel.tags_generic),
         saintsTagsInput: belongsToManyMutator(vueModel.tags_saints),
-        musicalFormTagsInput: belongsToManyMutator(vueModel.tags_musical_form,
-            {
-                disableCreate: true
-            }
-        )),
+        musicalFormTagsInput: belongsToManyMutator(vueModel.tags_musical_form, {
+            disableCreate: true
+        }),
         taggable_id: vueModel.id
     })
 };
