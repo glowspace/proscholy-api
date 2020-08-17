@@ -207,7 +207,7 @@
                   label="Hudební forma"
                   header-label="Vyberte odpovídající hudební (liturgické) formy"
                   :multiple="true"
-                  :enable-custom="true"
+                  :enable-custom="false"
                 ></items-combo-box>
                 <!-- todo: remove from model -->
                 <!-- <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="!is_arrangement_layout"></v-select> -->
