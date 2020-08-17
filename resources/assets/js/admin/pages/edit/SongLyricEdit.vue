@@ -201,7 +201,16 @@
                   :multiple="true"
                   :enable-custom="false"
                 ></items-combo-box>
-                <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="!is_arrangement_layout"></v-select>
+                <items-combo-box
+                  v-bind:p-items="tags_musical_form"
+                  v-model="model.tags_musical_form"
+                  label="Hudební forma"
+                  header-label="Vyberte odpovídající hudební (liturgické) formy"
+                  :multiple="true"
+                  :enable-custom="true"
+                ></items-combo-box>
+                <!-- todo: remove from model -->
+                <!-- <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="!is_arrangement_layout"></v-select> -->
 
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
@@ -506,6 +515,10 @@ const FETCH_DATA = gql`
       id
       name
     }
+    tags_musical_form: tags_enum(type: MUSICAL_FORM) {
+      id
+      name
+    }
   }
 `;
 
@@ -550,6 +563,7 @@ export default {
         tags_liturgy_period: [],
         tags_history_period: [],
         tags_saints: [],
+        tags_musical_form: [],
         authors_pivot: [],
         externals: [],
         files: [],
@@ -618,6 +632,9 @@ export default {
       query: FETCH_DATA
     },
     tags_saints: {
+      query: FETCH_DATA
+    },
+    tags_musical_form: {
       query: FETCH_DATA
     },
     songbooks: {

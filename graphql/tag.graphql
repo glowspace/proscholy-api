@@ -22,6 +22,7 @@ enum TagType {
     HISTORY_PERIOD @enum(value: 10)
     INSTRUMENTATION @enum(value: 50)
     GENRE @enum(value: 100)
+    MUSICAL_FORM @enum(value: 4)
 }
 
 enum Taggable {

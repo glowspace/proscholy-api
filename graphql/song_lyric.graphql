@@ -125,6 +125,7 @@ type SongLyric {
     tags_history_period: [Tag]
         @morphMany(relation: "tags", scopes: ["historyPeriod"])
     tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
+    tags_musical_form: [Tag] @morphMany(relation: "tags", scopes: ["musicalForm"])
 
     arrangements: [SongLyric] @hasMany
     arrangement_source: SongLyric @belongsTo

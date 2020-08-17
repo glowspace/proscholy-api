@@ -60,6 +60,11 @@ const fragment = gql`
             name
         }
 
+        tags_musical_form {
+            id
+            name
+        }
+
         capo
         liturgy_approval_status
         missa_type
@@ -130,6 +135,7 @@ const MUTATION = gql`
         $historyPeriodTagsInput: SyncCreateTagsRelation!
         $liturgyPeriodTagsInput: SyncCreateTagsRelation!
         $saintsTagsInput: SyncCreateTagsRelation!
+        $musicalFormTagsInput: SyncCreateTagsRelation!
         $taggable_id: Int!
     ) {
         sync_tags_liturgy_part: sync_create_tags(
@@ -175,6 +181,16 @@ const MUTATION = gql`
         sync_tags_saints: sync_create_tags(
             input: $saintsTagsInput
             tags_type: SAINTS
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+
+        sync_tags_musical_form: sync_create_tags(
+            input: $musicalFormTagsInput
+            tags_type: MUSICAL_FORM
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
@@ -256,6 +272,7 @@ export default {
         ),
         genericTagsInput: belongsToManyMutator(vueModel.tags_generic),
         saintsTagsInput: belongsToManyMutator(vueModel.tags_saints),
+        musicalFormTagsInput: belongsToManyMutator(vueModel.tags_musical_form),
         taggable_id: vueModel.id
     })
 };
