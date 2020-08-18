@@ -148,7 +148,6 @@ class SongLyric extends Model
         'visits',
         'liturgy_approval_status',
         'arrangement_of',
-        'missa_type',
         'lilypond',
         'lilypond_svg',
         'song_number'
@@ -176,12 +175,6 @@ class SongLyric extends Model
         1 => 'schváleno ČBK pro liturgii',
         // 2 => 'schváleno ČBK pro dětskou mši',
         // 3 => 'neschváleno ČBK pro liturgii',
-    ];
-
-    private static $missa_type_string_values = [
-        'NONE' => 'píseň',
-        'ORDINARIUM' => 'ordinárium',
-        'PROPRIUM' => 'proprium',
     ];
 
     public function getPublicUrlAttribute()
@@ -267,16 +260,6 @@ class SongLyric extends Model
     public function getLiturgyApprovalStatusStringValuesAttribute()
     {
         return self::$liturgy_approval_status_string_values;
-    }
-
-    public function getMissaTypeStringAttribute()
-    {
-        return self::$missa_type_string_values[$this->missa_type];
-    }
-
-    public function getMissaTypeStringValuesAttribute()
-    {
-        return self::$missa_type_string_values;
     }
 
     // helper method, so this can be included in graphql schema
