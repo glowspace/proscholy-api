@@ -38,7 +38,7 @@
                     :value="false"
                   ></v-radio>
                   <v-radio
-                    label="Píseň pouze pro Regenschori.cz"
+                    label="Skladba pouze pro Regenschori.cz"
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
