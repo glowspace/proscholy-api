@@ -209,9 +209,6 @@
                   :multiple="true"
                   :enable-custom="false"
                 ></items-combo-box>
-                <!-- todo: remove from model -->
-                <!-- <v-select :items="enums.missa_type" v-model="model.missa_type" label="Liturgický typ" v-if="!is_arrangement_layout"></v-select> -->
-
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
 
@@ -572,7 +569,6 @@ export default {
         capo: undefined,
         liturgy_approval_status: undefined,
         arrangement_source: undefined,
-        missa_type: undefined,
         lilypond: ""
       },
 
@@ -587,7 +583,6 @@ export default {
       enums: {
         lang: [],
         liturgy_approval_status: [],
-        missa_type: [],
         authorship_type: []
       }
     };
@@ -603,7 +598,6 @@ export default {
         this.loadModelDataFromResult(result);
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
-        this.loadEnumJsonFromResult(result, "missa_type_string_values", this.enums.missa_type);
         this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
 
         // if there are any thumbnailables, then select the first one

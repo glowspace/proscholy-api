@@ -67,7 +67,6 @@ const fragment = gql`
 
         capo
         liturgy_approval_status
-        missa_type
 
         arrangement_source {
             id
@@ -85,7 +84,6 @@ const QUERY = gql`
 
             lang_string_values
             liturgy_approval_status_string_values
-            missa_type_string_values
             authorship_type_string_values
 
             is_arrangement
@@ -226,7 +224,6 @@ export default {
             song: vueModel.song,
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
-            missa_type: vueModel.missa_type,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot
