@@ -155,6 +155,7 @@ type SongLyricPaginator {
 
 extend type Query {
     song_lyric(id: ID! @eq): SongLyric @find
+    song_lyric_number(song_number: Int! @eq): SongLyric @find
 
     song_lyrics(
         only_apk: Boolean
