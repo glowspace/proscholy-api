@@ -6,6 +6,7 @@ type Songbook {
     songs_count: Int
     is_private: Boolean
     color: String
+    color_text: String
 }
 
 extend type Query {
@@ -32,6 +33,8 @@ input UpdateSongbookInput {
         integer: "Zadejte číselnou hodnotu"})
     is_private: Boolean
     color: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: {
+        regex: "Zadejte barvu v hexadecimálním formátu"})
+    color_text: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: {
         regex: "Zadejte barvu v hexadecimálním formátu"})
 }
 

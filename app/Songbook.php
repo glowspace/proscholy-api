@@ -23,14 +23,14 @@ use App\Traits\Lockable;
 class Songbook extends Model
 {
     use Lockable;
-    
-    protected $fillable = ['name', 'shortcut', 'songs_count', 'is_private', 'color'];
 
-    public function records() : BelongsToMany
+    protected $fillable = ['name', 'shortcut', 'songs_count', 'is_private', 'color', 'color_text'];
+
+    public function records(): BelongsToMany
     {
         return $this->belongsToMany(SongLyric::class, "songbook_records")
-                    ->withPivot('number', 'placeholder', 'id')
-                    ->using(SongbookRecord::class);
+            ->withPivot('number', 'placeholder', 'id')
+            ->using(SongbookRecord::class);
     }
 
     public function scopePublic($query)

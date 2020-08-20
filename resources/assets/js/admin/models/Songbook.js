@@ -16,6 +16,7 @@ const fragment = gql`
         songs_count
         is_private
         color
+        color_text
     }
 `;
 
@@ -54,6 +55,7 @@ export default {
             songs_count: vueModel.songs_count,
             is_private: vueModel.is_private,
             color: vueModel.color,
+            color_text: vueModel.color_text,
             records: {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null

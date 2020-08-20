@@ -1,12 +1,14 @@
 <template>
     <v-app :dark="$root.dark">
         <notifications />
-        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
-            indeterminate
-            color="info"
-            :height="4"
-            class="m-0"
-        ></v-progress-linear></div>
+        <div v-show="$apollo.loading" class="fixed-top">
+            <v-progress-linear
+                indeterminate
+                color="info"
+                :height="4"
+                class="m-0"
+            ></v-progress-linear>
+        </div>
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Úprava zpěvníku</h1>
             <v-layout row wrap>
@@ -54,6 +56,13 @@
                             :error-messages="errors.collect('input.color')"
                         ></v-text-field>
 
+                        <v-text-field
+                            label="Barva textu"
+                            v-model="model.color_text"
+                            data-vv-name="input.color_text"
+                            :error-messages="errors.collect('input.color_text')"
+                        ></v-text-field>
+
                         <v-btn @click="submit" :disabled="!isDirty"
                             >Uložit</v-btn
                         >
@@ -91,10 +100,15 @@
                         :rows-per-page-items="[
                             10,
                             50,
-                            { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                            {
+                                text: '$vuetify.dataIterator.rowsPerPageAll',
+                                value: -1
+                            }
                         ]"
                         :loading="$apollo.loading"
-                        :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                        :no-data-text="
+                            $apollo.loading ? 'Načítám…' : '$vuetify.noDataText'
+                        "
                         :custom-sort="customSort"
                     >
                         <template v-slot:items="props">
@@ -121,11 +135,20 @@
                             </td>
                             <td>
                                 <a
-                                    v-if="props.item.song_lyric && props.item.song_lyric.hasOwnProperty('id')"
+                                    v-if="
+                                        props.item.song_lyric &&
+                                            props.item.song_lyric.hasOwnProperty(
+                                                'id'
+                                            )
+                                    "
                                     class="text-secondary"
-                                    :href="'/admin/song/' + props.item.song_lyric.id + '/edit'"
-                                    ><i class="fas fa-pen"></i></a
-                                >
+                                    :href="
+                                        '/admin/song/' +
+                                            props.item.song_lyric.id +
+                                            '/edit'
+                                    "
+                                    ><i class="fas fa-pen"></i
+                                ></a>
                             </td>
                         </template>
                     </v-data-table>
@@ -199,7 +222,8 @@ export default {
                 records: [],
                 songs_count: undefined,
                 is_private: undefined,
-                color: undefined
+                color: undefined,
+                color_text: undefined
             },
             is_deleted: false,
             records_headers: [
@@ -306,21 +330,21 @@ export default {
                     } else {
                         return this.orderNumber(a, b) * -1;
                     }
-                }
-                else {
+                } else {
                     if (!a.song_lyric && !b.song_lyric) {
                         return 0;
                     } else if (!a.song_lyric) {
-                        return 1
+                        return 1;
                     } else if (!b.song_lyric) {
                         return -1;
                     } else if (!isDesc) {
-                        return a.song_lyric.name.toLowerCase()
-                        .localeCompare(b.song_lyric.name.toLowerCase());
-                    }
-                    else {
-                        return b.song_lyric.name.toLowerCase()
-                        .localeCompare(a.song_lyric.name.toLowerCase());
+                        return a.song_lyric.name
+                            .toLowerCase()
+                            .localeCompare(b.song_lyric.name.toLowerCase());
+                    } else {
+                        return b.song_lyric.name
+                            .toLowerCase()
+                            .localeCompare(a.song_lyric.name.toLowerCase());
                     }
                 }
             });
