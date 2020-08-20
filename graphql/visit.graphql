@@ -19,6 +19,6 @@ enum VisitType {
 }
 
 extend type Mutation {
-    visit_song(is_mobile: Boolean, visit_type: VisitType!, song_lyric_id: Int!, source: VisitSource!): Visited
+    visit_song(is_mobile: Boolean, visit_type: VisitType!, song_lyric_id: Int!, source: VisitSource!): Visited 
     visit_song_number(is_mobile: Boolean, visit_type: VisitType!, song_lyric_number: Int!, source: VisitSource!): Visited
 }
