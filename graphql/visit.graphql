@@ -1,0 +1,23 @@
+type Visited {
+    """
+    Dummy field, not relevant really cause otherwise gql would throw an error 
+    """
+    confirmed: Boolean
+}
+
+enum VisitSource {
+    PROSCHOLY @enum(value: 0)
+    REGENSCHORI @enum(value: 1)
+    # APP_ANDROID @enum(value: 2)
+    # APP_IOS @enum(value: 3)
+}
+
+enum VisitType {
+    GENERIC @enum(value: 0)
+    LONG @enum(value: 1)
+    DOWNLOAD @enum(value: 2)
+}
+
+extend type Mutation {
+    visit_song(is_mobile: Boolean, visit_type: VisitType!, song_lyric_id: Int!, source: VisitSource!): Visited
+}
