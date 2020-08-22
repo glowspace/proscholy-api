@@ -1,0 +1,20 @@
+type NewsItem {
+    text: String
+    fa_icon_class: String
+    link: String
+    type: LinkType
+}
+
+extend type Query {
+    news: [NewsItem]
+}
+
+enum LinkType {
+    NORMAL @enum(value: 0)
+    BLANK @enum(value: 1)
+    NUXTLINK @enum(value: 2)
+    IMAGE @enum(value: 3)
+    YOUTUBE @enum(value: 4)
+    VIDEO @enum(value: 5)
+    IFRAME @enum(value: 6)
+}
