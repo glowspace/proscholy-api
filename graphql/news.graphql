@@ -17,4 +17,5 @@ enum LinkType {
     YOUTUBE @enum(value: 4)
     VIDEO @enum(value: 5)
     IFRAME @enum(value: 6)
+    PDF @enum(value: 7)
 }
