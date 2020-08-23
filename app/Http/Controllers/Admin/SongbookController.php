@@ -11,12 +11,18 @@ class SongbookController extends Controller
 {
     public function index()
     {
-        // $songbooks = Songbook::>get();
-        return view('admin.songbook.index');
+        return view('admin.form.index', [
+            'model_name' => 'songbook',
+            'title' => 'Seznam zpěvníků'
+        ]);
     }
 
-    public function edit(Songbook $songbook)
+    public function edit(Request $request, Songbook $songbook)
     {
-        return view('admin.songbook.edit', compact('songbook'));
+        return view('admin.form.edit', [
+            'model_name' => 'songbook',
+            'model_id' => $songbook->id,
+            'title' => 'Zpěvník ' . $songbook->name
+        ]);
     }
 }

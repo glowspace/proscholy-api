@@ -17,8 +17,12 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-        return view('admin.file.index', ['type' => 'show-all']);
+    public function index()
+    {
+        return view('admin.form.index', [
+            'model_name' => 'file',
+            'title' => 'Nahrané soubory'
+        ]);
     }
 
     /**
@@ -50,7 +54,7 @@ class FileController extends Controller
         $filename = pathinfo($fullname, PATHINFO_FILENAME);
         $extension = pathinfo($fullname, PATHINFO_EXTENSION);
 
-        $slugified = str_slug($filename, '-').'.'.$extension;
+        $slugified = str_slug($filename, '-') . '.' . $extension;
 
         $type = 3; // default is sheet music
 
@@ -86,19 +90,13 @@ class FileController extends Controller
      * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function edit(File $file)
+    public function edit(Request $request, File $file)
     {
-        $assigned_authors = $file->authors;
-        $all_authors      = Author::select(['id', 'name'])->orderBy('name')->get();
-
-        $assigned_song_lyrics = $file->song_lyric ? [$file->song_lyric] : [];
-        $all_song_lyrics      = SongLyric::restricted()->select(['id', 'name'])->orderBy('name')->get();
-
-        return view('admin.file.edit', compact(
-            'file',
-            'assigned_authors', 'all_authors',
-            'assigned_song_lyrics', 'all_song_lyrics'
-        ));
+        return view('admin.form.edit', [
+            'model_name' => 'file',
+            'model_id' => $file->id,
+            'title' => 'Soubor #' . $file->id
+        ]);
     }
 
     /**
@@ -142,13 +140,10 @@ class FileController extends Controller
         }
 
         // no song lyric set, delete if there had been any association
-        if ($request->assigned_song_lyrics == null)
-        {
+        if ($request->assigned_song_lyrics == null) {
             $file->song_lyric()->dissociate();
             $file->save();
-        }
-        else
-        {
+        } else {
             $song_lyric_identification = $request->assigned_song_lyrics[0];
 
             $song_lyric = SongLyric::getByIdOrCreateWithName($song_lyric_identification);
@@ -176,8 +171,7 @@ class FileController extends Controller
     {
         $file->delete();
 
-        if ($request->has("redirect"))
-        {
+        if ($request->has("redirect")) {
             return redirect($request->redirect);
         }
 

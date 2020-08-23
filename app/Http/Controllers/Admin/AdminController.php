@@ -21,11 +21,11 @@ class AdminController extends Controller
             'songs_w_text_count' => SongLyric::where('lyrics', '!=', '')->count(),
             'songs_w_all_count' => SongLyric::where('lyrics', '!=', '')
                 ->where('has_chords', '=', true)
-                ->where(function($query) {
+                ->where(function ($query) {
                     $query->whereHas('authors', null)->orWhere('has_anonymous_author', 1);
                 })->whereHas('tags')->count(),
             'songs_w_just_title_count' => SongLyric::whereNull('lyrics')
-                ->where(function($query) {
+                ->where(function ($query) {
                     $query->whereDoesntHave('authors', null)->where('has_anonymous_author', 0);
                 })
                 ->whereDoesntHave('tags', null)
