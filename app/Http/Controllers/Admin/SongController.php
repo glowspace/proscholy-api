@@ -17,7 +17,7 @@ class SongController extends Controller
     {
         $res_query = $query;
         if ($request->has('filter_author_id')) {
-            $res_query = $res_query->whereHas('authors', function($q) use ($request) {
+            $res_query = $res_query->whereHas('authors', function ($q) use ($request) {
                 $q->where('authors.id', $request['filter_author_id']);
             });
         }
@@ -27,12 +27,19 @@ class SongController extends Controller
 
     public function index()
     {
-        return view('admin.song.index');
+        return view('admin.form.index', [
+            'model_name' => 'song',
+            'title' => 'Písně'
+        ]);
     }
 
-    public function edit(SongLyric $song_lyric)
+    public function edit(Request $request, SongLyric $song_lyric)
     {
-        return view('admin.song.edit', compact('song_lyric'));
+        return view('admin.form.edit', [
+            'model_name' => 'song-lyric',
+            'model_id' => $song_lyric->id,
+            'title' => 'Píseň ' . $song_lyric->name
+        ]);
     }
 
     public function destroy(Request $request, SongLyric $song_lyric)

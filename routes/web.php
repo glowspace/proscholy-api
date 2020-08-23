@@ -61,25 +61,21 @@ Route::get('/preview/{file}/{filename?}', 'DownloadController@previewFile')->nam
 Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExternal')->name('external.thumbnail');
 Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
-    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function ()
-    {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () {
         Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
-        Route::resource('external', 'ExternalController')->except(['show', 'update', 'store', 'create']);
-        Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
+        Route::resource('external', 'ExternalController')->only(['index', 'edit']);
+        Route::resource('author', 'AuthorController')->only(['index', 'edit']);
+        Route::resource('songbook', 'SongbookController')->only(['index', 'edit']);
 
         Route::get('/songs', 'SongController@index')->name('song.index');
         Route::get('/song/{song_lyric}/edit', 'SongController@edit')->name('song.edit');
-
-        Route::resource('author', 'AuthorController')->except(['show', 'update', 'store', 'create']);
 
         Route::resource('file', 'FileController')->except(['show']);
         Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('file.create_for_song');
 
         Route::resource('tag', 'TagController')->except(['show']);
-
-        Route::resource('songbook', 'SongbookController')->except(['show', 'update', 'store', 'create']);
 
         Route::group(['middleware' => ['permission:manage users']], function () {
             Route::resource('user', 'UserController')->except(['show']);
@@ -90,15 +86,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 // refreshing
 Route::get('/refresh-updating/{type}/{id}', 'Api\LockController@refresh_updating');
 
-Route::get('/ucet', function() {
+Route::get('/ucet', function () {
     return view('client.account');
 })->name('client.account');
 
 // routes for propagation
-Route::get('/advent', function() { return redirect(url('/?stitky=24')); });
-Route::get('/vanoce', function() { return redirect(url('/?stitky=22')); });
-Route::get('/velikonoce', function() { return redirect(url('/?stitky=23')); });
-Route::get('/postni-doba', function() { return redirect(url('/?stitky=25')); });
+Route::get('/advent', function () {
+    return redirect(url('/?stitky=24'));
+});
+Route::get('/vanoce', function () {
+    return redirect(url('/?stitky=22'));
+});
+Route::get('/velikonoce', function () {
+    return redirect(url('/?stitky=23'));
+});
+Route::get('/postni-doba', function () {
+    return redirect(url('/?stitky=25'));
+});
 
 
 // Route::get('/firebase-auth/me', function(Request $request) {
