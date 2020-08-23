@@ -115,7 +115,7 @@
                             <v-btn
                                 color="green darken-1"
                                 flat
-                                @click="goToAdminPage('external', false)"
+                                @click="goToAdminPage('news-item', false)"
                                 >Přejít na seznam novinek</v-btn
                             >
                         </div>
@@ -128,9 +128,7 @@
 
 <script>
 import gql from 'graphql-tag';
-// import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
-// import ExternalView from 'Public/components/ExternalView.vue';
 
 import EditForm from './EditForm';
 import NewsItem from 'Admin/models/NewsItem';
