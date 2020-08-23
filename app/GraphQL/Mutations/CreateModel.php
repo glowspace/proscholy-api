@@ -14,6 +14,7 @@ use App\Author;
 use App\SongLyric;
 use App\Song;
 use App\External;
+use App\NewsItem;
 use App\Songbook;
 
 class CreateModel
@@ -36,7 +37,7 @@ class CreateModel
         // this is needed for proper returning of validation errors
         // as for usage, see Nuwave\Lighthouse\Schema\Factories\FieldFactory
         $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
-        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context,'root' => $rootValue];
+        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context, 'root' => $rootValue];
 
         // until we check the data with Validator, store the return data here
         $returnValue;
@@ -44,16 +45,16 @@ class CreateModel
 
         if ($input["class_name"] == "Author") {
             $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors'], ['unique' => 'Autor se stejným jménem již existuje'], $validatorCustomAttributes);
-            if (!$validator->fails()){
+            if (!$validator->fails()) {
                 $author = Author::create(['name' => $attr]);
-    
+
                 $returnValue = [
                     "id" => $author->id,
                     "class_name" => "Author",
                     "edit_url" => route("admin.author.edit", $author)
                 ];
             }
-        } elseif($input["class_name"] == "External") {
+        } elseif ($input["class_name"] == "External") {
             $external = External::create(['url' => $attr]);
 
             $returnValue = [
@@ -61,22 +62,20 @@ class CreateModel
                 "class_name" => "External",
                 "edit_url" => route("admin.external.edit", $external)
             ];
-
-        } elseif($input["class_name"] == "Songbook") {
+        } elseif ($input["class_name"] == "Songbook") {
             $validator = Validator::make(['name' => $attr], ['name' => 'unique:songbooks'], ['unique' => 'Zpěvník se stejným jménem již existuje'], $validatorCustomAttributes);
-            if (!$validator->fails()){
+            if (!$validator->fails()) {
                 $songbook = Songbook::create(['name' => $attr]);
-    
+
                 $returnValue = [
                     "id" => $songbook->id,
                     "class_name" => "Songbook",
                     "edit_url" => route("admin.songbook.edit", $songbook)
                 ];
             }
-
         } elseif ($input["class_name"] == "SongLyric") {
             $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
-            if (!$validator->fails()){
+            if (!$validator->fails()) {
                 $song       = Song::create(['name' => $attr]);
                 $song_lyric = SongLyric::create([
                     'name' => $attr,
@@ -84,13 +83,21 @@ class CreateModel
                     // 'is_published' => Auth::user()->can('publish songs'),
                     // 'user_creator_id' => Auth::user()->id
                 ]);
-    
+
                 $returnValue = [
                     "id" => $song_lyric->id,
                     "class_name" => "SongLyric",
                     "edit_url" => route("admin.song.edit", $song_lyric)
                 ];
             }
+        } elseif ($input["class_name"] == "NewsItem") {
+            $news_item = NewsItem::create(['link' => $attr]);
+
+            $returnValue = [
+                "id" => $news_item->id,
+                "class_name" => "NewsItem",
+                "edit_url" => route("admin.news-item.edit", $news_item)
+            ];
         } else {
             // todo throw an error?
             return;
@@ -109,7 +116,7 @@ class CreateModel
                     }
                 }
             }
-    
+
             $path = implode('.', $resolveInfo->path);
             $validationErrorBuffer->flush(
                 "Validation failed for the field [$path]."

@@ -11,6 +11,7 @@ use App\External;
 use App\File;
 use App\Tag;
 use App\Songbook;
+use App\NewsItem;
 
 class DeleteModel
 {
@@ -41,6 +42,8 @@ class DeleteModel
             $succ = Tag::destroy($id);
         } elseif ($input["class_name"] == "Songbook") {
             $succ = Songbook::destroy($id);
+        } elseif ($input["class_name"] == "NewsItem") {
+            $succ = NewsItem::destroy($id);
         } else {
             // todo throw an error
             return;

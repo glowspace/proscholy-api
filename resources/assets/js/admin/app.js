@@ -25,12 +25,14 @@ Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
 Vue.component('files-list', require('Admin/pages/list/FilesList.vue'));
 Vue.component('authors-list', require('Admin/pages/list/AuthorsList.vue'));
 Vue.component('songbooks-list', require('Admin/pages/list/SongbooksList.vue'));
+Vue.component('news-items-list', require('Admin/pages/list/NewsItemsList.vue'));
 
 Vue.component('author-edit', require('Admin/pages/edit/AuthorEdit.vue'));
 Vue.component('external-edit', require('Admin/pages/edit/ExternalEdit.vue'));
 Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
 Vue.component('file-edit', require('Admin/pages/edit/FileEdit.vue'));
 Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
+Vue.component('news-item-edit', require('Admin/pages/edit/NewsItemEdit.vue'));
 
 Vue.component('file-create', require('Admin/pages/create/FileCreate.vue'));
 

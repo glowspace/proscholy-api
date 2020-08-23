@@ -27,8 +27,8 @@ export default {
     data() {
         return {
             redirUrl: '',
-            isLocked: false,
-        }
+            isLocked: false
+        };
     },
 
     computed: {
@@ -41,15 +41,39 @@ export default {
                 if (field === 'authors_pivot') {
                     let model_authors = this.model[field];
                     let ml_db_authors = this.model_database[field];
-                    model_authors = model_authors.filter((el) => el.author != null);
-                    ml_db_authors = ml_db_authors.filter((el) => el.author != null);
-                    model_authors.sort((a,b) => (a.author.name > b.author.name) ? 1 : ((b.author.name > a.author.name) ? -1 : 0));
-                    ml_db_authors.sort((a,b) => (a.author.name > b.author.name) ? 1 : ((b.author.name > a.author.name) ? -1 : 0));
-                    model_authors.forEach(function(v){delete v.id; delete v.__typename;});
-                    ml_db_authors.forEach(function(v){delete v.id; delete v.__typename;});
+                    model_authors = model_authors.filter(
+                        el => el.author != null
+                    );
+                    ml_db_authors = ml_db_authors.filter(
+                        el => el.author != null
+                    );
+                    model_authors.sort((a, b) =>
+                        a.author.name > b.author.name
+                            ? 1
+                            : b.author.name > a.author.name
+                            ? -1
+                            : 0
+                    );
+                    ml_db_authors.sort((a, b) =>
+                        a.author.name > b.author.name
+                            ? 1
+                            : b.author.name > a.author.name
+                            ? -1
+                            : 0
+                    );
+                    model_authors.forEach(function(v) {
+                        delete v.id;
+                        delete v.__typename;
+                    });
+                    ml_db_authors.forEach(function(v) {
+                        delete v.id;
+                        delete v.__typename;
+                    });
 
                     if (!_.isEqual(model_authors, ml_db_authors)) {
-                        console.log('Dirty check found mismatch on the field ' + field);
+                        console.log(
+                            'Dirty check found mismatch on the field ' + field
+                        );
                         return true;
                     }
 
@@ -57,10 +81,12 @@ export default {
                 }
 
                 let model_field = this.model[field];
-                model_field = (model_field === '') ? null : model_field;
+                model_field = model_field === '' ? null : model_field;
 
                 if (!_.isEqual(model_field, this.model_database[field])) {
-                    console.log('Dirty check found mismatch on the field ' + field);
+                    console.log(
+                        'Dirty check found mismatch on the field ' + field
+                    );
                     return true;
                 }
             }
@@ -83,7 +109,9 @@ export default {
 
         isLocked: function(val) {
             if (val && !document.getElementById('locked')) {
-                document.getElementsByClassName('container')[0].setAttribute('style', 'display:none');
+                document
+                    .getElementsByClassName('container')[0]
+                    .setAttribute('style', 'display:none');
                 var lockedDiv = document.createElement('div');
                 lockedDiv.id = 'locked';
                 lockedDiv.innerHTML = `
@@ -99,9 +127,13 @@ export default {
                         </div>
                     </div>
                 `;
-                document.getElementsByClassName('application--wrap')[0].appendChild(lockedDiv);
+                document
+                    .getElementsByClassName('application--wrap')[0]
+                    .appendChild(lockedDiv);
             } else if (document.getElementById('locked')) {
-                document.getElementsByClassName('container')[0].removeAttribute('style');
+                document
+                    .getElementsByClassName('container')[0]
+                    .removeAttribute('style');
                 document.getElementById('locked').remove();
             }
         }
@@ -125,14 +157,14 @@ export default {
             }
         };
 
-        document.addEventListener("keydown", this.doSave);
+        document.addEventListener('keydown', this.doSave);
 
         setInterval(this.refreshUpdating, 15000);
         this.refreshUpdating();
     },
 
     beforeDestroy() {
-        document.removeEventListener("keydown", this.doSave);
+        document.removeEventListener('keydown', this.doSave);
     },
 
     $_veeValidate: {
@@ -154,7 +186,9 @@ export default {
                 this.submit();
                 this.redirUrl = url;
             } else {
-                var base_url = document.querySelector('#baseUrl').getAttribute('value');
+                var base_url = document
+                    .querySelector('#baseUrl')
+                    .getAttribute('value');
                 window.location.href = base_url + '/' + url;
             }
         },
@@ -212,6 +246,15 @@ export default {
             }
         },
 
+        transformFields(fields, getter_func) {
+            for (let field of fields) {
+                this.model[field] = getter_func(this.model[field]);
+                this.model_database[field] = getter_func(
+                    this.model_database[field]
+                );
+            }
+        },
+
         _getFieldsFromFragment(fragment, options = { includeId: true }) {
             if (!fragment) {
                 throw new Error('Expected a fragment, but got none.');
@@ -235,13 +278,20 @@ export default {
 
         refreshUpdating() {
             let pathnameSplit = window.location.pathname.split('/');
-            let currentModel = pathnameSplit[pathnameSplit.length-3];
+            let currentModel = pathnameSplit[pathnameSplit.length - 3];
             let models = ['song', 'songbook'];
 
             if (models.indexOf(currentModel) != -1) {
                 axios
-                    .get('/refresh-updating/' + currentModel + '/' + this.presetId)
-                    .then(response => (this.isLocked = response.data == 'Locked'));
+                    .get(
+                        '/refresh-updating/' +
+                            currentModel +
+                            '/' +
+                            this.presetId
+                    )
+                    .then(
+                        response => (this.isLocked = response.data == 'Locked')
+                    );
             }
         }
     }
