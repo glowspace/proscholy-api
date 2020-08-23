@@ -1,20 +1,28 @@
 <template>
     <v-app :dark="$root.dark">
         <notifications />
-        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
-            indeterminate
-            color="info"
-            :height="4"
-            class="m-0"
-        ></v-progress-linear></div>
+        <div v-show="$apollo.loading" class="fixed-top">
+            <v-progress-linear
+                indeterminate
+                color="info"
+                :height="4"
+                class="m-0"
+            ></v-progress-linear>
+        </div>
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Úprava nahraného souboru</h1>
             <v-layout row wrap>
-                <v-flex xs12 md6>
+                <v-flex xs12 md5>
                     <v-form ref="form">
                         <v-text-field
                             label="Zobrazovaný název"
-                            :placeholder="model.filename ? '(stejný jako jméno souboru – ' + model.filename + ')' : ''"
+                            :placeholder="
+                                model.filename
+                                    ? '(stejný jako jméno souboru – ' +
+                                      model.filename +
+                                      ')'
+                                    : ''
+                            "
                             required
                             v-model="model.name"
                             data-vv-name="input.name"
@@ -80,17 +88,25 @@
                         ></v-text-field>
                     </v-form>
                 </v-flex>
-                <v-flex xs12 md6>
+                <v-flex xs12 md6 offset-md1>
                     <external-view
                         v-if="model_database"
                         :url="model_database.url"
                         :type="model_database.external_type"
                     >
                     </external-view>
+                    <p>Odkaz na soubor:</p>
+                    <p>{{ model_database.url }}</p>
+                    <v-btn @click="copyToClipboard(model_database.url)"
+                        >Zkopírovat odkaz</v-btn
+                    >
                 </v-flex>
             </v-layout>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn @click="submit(true)"><span :style="isDirty ? '' : 'opacity:0.3'">Uložit a</span>&nbsp;nahrát další soubor</v-btn>
+            <v-btn @click="submit(true)"
+                ><span :style="isDirty ? '' : 'opacity:0.3'">Uložit a</span
+                >&nbsp;nahrát další soubor</v-btn
+            >
             <v-btn
                 v-if="model.song_lyric"
                 :disabled="isDirty"
@@ -255,14 +271,19 @@ export default {
 
                     if (redir === true) {
                         if (this.model.song_lyric && this.model.song_lyric.id) {
-                            this.goToAdminPage('file/new-for-song/' + this.model.song_lyric.id);
+                            this.goToAdminPage(
+                                'file/new-for-song/' + this.model.song_lyric.id
+                            );
                         } else {
                             this.goToAdminPage('file/create');
                         }
                     }
                 })
                 .catch(error => {
-                    if (error.graphQLErrors && error.graphQLErrors.length == 0) {
+                    if (
+                        error.graphQLErrors &&
+                        error.graphQLErrors.length == 0
+                    ) {
                         // unknown error happened
                         this.$notify({
                             title: 'Chyba při ukládání',
@@ -278,6 +299,15 @@ export default {
 
         showSong() {
             window.location.href = this.model_database.song_lyric.public_url;
+        },
+
+        async copyToClipboard(text) {
+            await window.navigator.clipboard.writeText(text);
+
+            this.$notify({
+                title: 'Odkaz zkopírován',
+                type: 'success'
+            });
         }
     }
 };
