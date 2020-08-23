@@ -1,12 +1,35 @@
 type NewsItem {
+    id: ID
     text: String
-    fa_icon_class: String
+    fa_icon: String
     link: String
-    type: LinkType
+    link_type: LinkType
+    link_type_string_values: JSON
+    starts_at: DateTime
+    expires_at: DateTime
+    is_published: Boolean
 }
 
 extend type Query {
-    news: [NewsItem]
+    news_item(id: ID! @eq): NewsItem @find
+    news_items(active: Boolean @scope(name: "active")): [NewsItem] @all
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    update_news_item(input: UpdateNewsItemInput! @spread): NewsItem @update
+    delete_news_item(id: ID!): NewsItem @delete
+}
+
+input UpdateNewsItemInput {
+    id: ID!
+    text: String @rules(apply: ["required"], messages: {
+        required: "Prosím vyplňte krátký popisek"})
+    fa_icon: String
+    link: String
+    link_type: LinkType!
+    starts_at: DateTime
+    expires_at: DateTime
+    is_published: Boolean
 }
 
 enum LinkType {

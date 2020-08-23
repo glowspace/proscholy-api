@@ -11,7 +11,7 @@ class News
         return [
             [
                 'text' => 'dummy text',
-                'fa_icon_class' => 'fa fa-key',
+                'fa_icon' => 'fa fa-key',
                 'link' => '/o-zpevniku',
                 'type' => 2
             ]

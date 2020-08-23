@@ -96,6 +96,13 @@
     'plus' => true
 ])
 
+@include('admin.components.menu-item', [
+    'route' => 'admin.news-item.index',
+    'icon' => 'info-circle',
+    'text' => 'Novinky',
+    'plus' => true
+])
+
 @can('manage users')
     @include('admin.components.menu-item', [
         'route' => 'admin.user.index',
