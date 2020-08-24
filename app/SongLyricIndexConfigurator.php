@@ -48,7 +48,9 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                     "type" => "edge_ngram",
                     "max_gram" => 10,
                     "token_chars" => [
-                        "letter"
+                        "letter",
+                        "digit",
+                        "whitespace"
                     ]
                 ]
             ]
