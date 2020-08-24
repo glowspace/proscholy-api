@@ -47,8 +47,6 @@ class SongLyrics
 		if (isset($args['updated_after']))
 			$query = $query->where('updated_at', '>', $args['updated_after']);
 
-		Log::info($query->toSql());
-
 		return $query->get();
 	}
 }
