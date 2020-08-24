@@ -478,7 +478,8 @@ class SongLyric extends Model
         $songbook_records = $this->songbook_records()->get()->map(function ($sb) {
             return [
                 'songbook_id' => $sb->id,
-                'songbook_number' => $sb->pivot->number
+                'songbook_number' => $sb->pivot->number,
+                'songbook_full_number' => $sb->pivot->songbook->shortcut . $sb->pivot->number
             ];
         });
 
