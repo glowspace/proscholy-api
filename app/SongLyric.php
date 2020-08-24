@@ -116,6 +116,9 @@ class SongLyric extends Model
             ],
             'tag_period_ids' => [
                 'type' => 'keyword'
+            ],
+            'song_number' => [
+                'type' => 'keyword'
             ]
         ]
     ];
@@ -511,6 +514,7 @@ class SongLyric extends Model
         $arr = [
             'name' => $this->name,
             'name_keyword' => $this->name,
+            'song_number' => $this->song_number,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
