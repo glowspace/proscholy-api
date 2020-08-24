@@ -22,20 +22,19 @@
                             :error-messages="errors.collect('input.text')"
                         ></v-text-field>
                         <v-text-field
-                            label="Třída ikony (z FontAwesome, např. 'fas fa-address-card')"
+                            label="Třída ikony (z Font Awesome, např. 'fas fa-address-card')"
                             required
                             v-model="model.fa_icon"
                             data-vv-name="input.fa_icon"
                             :error-messages="errors.collect('input.fa_icon')"
-                            class="mb-0"
+                            class="mb-1"
+                            :hide-details="true"
                         ></v-text-field>
-                        <div class="subheading mb-4">
-                            ---->
+                        <div class="subheading mb-3">
                             <a
                                 href="https://fontawesome.com/icons?d=gallery&m=free"
                                 target="_blank"
-                                >Seznam ikon (třída se zobrazí v detailu
-                                ikonky)</a
+                                >Seznam ikon Font Awesome (třída se zobrazí v detailu ikonky)</a
                             >
                         </div>
                         <v-text-field
