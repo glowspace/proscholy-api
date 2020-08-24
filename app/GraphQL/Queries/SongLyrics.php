@@ -7,13 +7,13 @@ use Log;
 
 class SongLyrics
 {
-    public function resolve($rootValue, array $args)
-    {
-        $query = SongLyric::query();
+	public function resolve($rootValue, array $args)
+	{
+		$query = SongLyric::query();
 
 		if (isset($args['search_string']))
 			return SongLyric::search($args['search_string'])->get();
-		
+
 		if (isset($args['is_published']))
 			$query = $query->where('is_published', $args['is_published']);
 
@@ -43,12 +43,12 @@ class SongLyrics
 
 		if (isset($args['order_abc']))
 			$query = $query->orderBy('name', 'asc');
-			
+
 		if (isset($args['updated_after']))
 			$query = $query->where('updated_at', '>', $args['updated_after']);
 
-        Log::info($query->toSql());
+		Log::info($query->toSql());
 
 		return $query->get();
-    }
+	}
 }
