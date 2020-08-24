@@ -6,7 +6,7 @@
 
 @section('google-analytics')
      <!-- Google Analytics -->
-     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94042414-8"></script>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTBZFXNL2E"></script>
      <script>
          window.dataLayer = window.dataLayer || [];
  
@@ -16,7 +16,7 @@
  
          gtag('js', new Date());
  
-         gtag('config', 'UA-94042414-8');
+         gtag('config', 'G-CTBZFXNL2E');
      </script>
 @endsection
 
