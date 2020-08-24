@@ -97,7 +97,7 @@ class SongLyric extends Model
                         'type' => 'keyword'
                     ],
                     'songbook_full_number' => [
-                        'type' => 'keyword',
+                        'type' => 'text',
                         'analyzer' => 'songbook_full_number_analyzer'
                     ]
                 ]
