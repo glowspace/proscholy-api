@@ -75,7 +75,7 @@
                                 <td>
                                     <i
                                         v-if="props.item.fa_icon"
-                                        :class="`fa fa-${props.item.fa_icon}`"
+                                        :class="props.item.fa_icon"
                                     ></i>
                                     {{ props.item.text }}
                                 </td>
