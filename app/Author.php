@@ -73,7 +73,7 @@ class Author extends Model
         'properties' => [
             'name' => [
                 'type' => 'text',
-                'analyzer' => 'my_tokenizer',
+                'analyzer' => 'name_analyzer',
             ]
         ]
     ];
