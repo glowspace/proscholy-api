@@ -22,7 +22,7 @@
                             :error-messages="errors.collect('input.text')"
                         ></v-text-field>
                         <v-text-field
-                            label="Název ikony (z FontAwesome, např. 'address-card')"
+                            label="Třída ikony (z FontAwesome, např. 'fas fa-address-card')"
                             required
                             v-model="model.fa_icon"
                             data-vv-name="input.fa_icon"
@@ -34,7 +34,8 @@
                             <a
                                 href="https://fontawesome.com/icons?d=gallery&m=free"
                                 target="_blank"
-                                >Seznam ikon</a
+                                >Seznam ikon (třída se zobrazí v detailu
+                                ikonky)</a
                             >
                         </div>
                         <v-text-field
