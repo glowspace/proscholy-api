@@ -54,7 +54,7 @@ class SongLyricType extends GraphQLType
 			],
 			'lang' => [
 				'type' => Type::string(),
-				'description' => "A language code, possible values: ".json_encode(collect(SongLyric::$lang_string)->keys())
+				'description' => "A language code, possible values: " . json_encode(collect(SongLyric::$lang_string)->keys())
 			],
 			'updated_at' => [
 				'type' => Type::string(),
@@ -113,8 +113,8 @@ class SongLyricType extends GraphQLType
 				'description' => 'Song externals'
 			],
 			'song' => [
-			    'type' => GraphQL::type('song'),
-			    'description' => "An abstract Song model that has one or more child SongLyric models"
+				'type' => GraphQL::type('song'),
+				'description' => "An abstract Song model that has one or more child SongLyric models"
 			],
 		];
 	}
@@ -149,4 +149,3 @@ class SongLyricType extends GraphQLType
 		return $query->get();
 	}
 }
-
