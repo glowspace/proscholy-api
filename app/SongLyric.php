@@ -94,8 +94,7 @@ class SongLyric extends Model
                         'type' => 'keyword'
                     ],
                     'songbook_number' => [
-                        'type' => 'keyword',
-                        'fielddata' => true
+                        'type' => 'keyword'
                     ],
                     'songbook_full_number' => [
                         'type' => 'text',
