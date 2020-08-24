@@ -25,7 +25,8 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                 ],
                 'remove_spaces' => [
                     'type' => 'pattern_replace',
-                    'pattern' => '\s'
+                    'pattern' => ' ',
+                    'replace' => ''
                 ]
             ],
             'analyzer' => [
