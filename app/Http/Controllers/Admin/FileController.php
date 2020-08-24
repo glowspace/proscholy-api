@@ -9,6 +9,7 @@ use App\Author;
 use App\Song;
 use App\SongLyric;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
@@ -54,7 +55,7 @@ class FileController extends Controller
         $filename = pathinfo($fullname, PATHINFO_FILENAME);
         $extension = pathinfo($fullname, PATHINFO_EXTENSION);
 
-        $slugified = str_slug($filename, '-') . '.' . $extension;
+        $slugified = Str::slug($filename, '-') . '.' . $extension;
 
         $type = 3; // default is sheet music
 
