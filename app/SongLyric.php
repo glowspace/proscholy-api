@@ -529,12 +529,12 @@ class SongLyric extends Model
             'songbook_records' => $songbook_records,
             'lang' => $this->lang,
             'is_arrangement' => $this->is_arrangement,
-            'only_regenschori' => $this->only_regenschori,
+            'only_regenschori' => (bool)$this->only_regenschori,
             'tag_ids' => $tag_ids,
             'has_media_files_externals' => $this->externals()->media()->count() + $this->files()->audio()->count() > 0,
             'has_score_files_externals' => $this->scoreExternals()->count() + $this->scoreFiles()->count() > 0,
             'has_lyrics' => $this->has_lyrics, // a computed attribute
-            'has_chords' => $this->has_chords, // an actual field precomputed in SongLyricSaved event
+            'has_chords' => (bool)$this->has_chords, // an actual field precomputed in SongLyricSaved event
         ];
 
         return $arr;
