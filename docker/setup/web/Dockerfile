@@ -1,8 +1,10 @@
-FROM php:7.2-fpm
+FROM php:7.3-fpm
 
 # I need libicu-dev in order to install intl extension
 RUN apt-get update && \
     apt-get install -y git zip libicu-dev libpng-dev
+
+RUN apt-get install -y libzip-dev
 
 # I need the intl extension so that Bagisto works (class NumberFormatter)
 # ....... ok this is copied here from another project, so just let this be here, after all why shouldn't I keep it?
