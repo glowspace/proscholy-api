@@ -479,7 +479,7 @@ import SongLyric from 'Admin/models/SongLyric'
 
 const FETCH_DATA = gql`
   query {
-    authors {
+    authors(order_last_associated: true) {
       id
       name
     }

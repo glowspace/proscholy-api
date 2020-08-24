@@ -24,7 +24,7 @@ type Author {
 }
 
 extend type Query {
-    authors(search_string: String, order_abc: Boolean, type: Int): [Author!]! #  see App/GraphQL/Queries/Authors.php
+    authors(search_string: String, order_abc: Boolean, type: Int, order_last_associated: Boolean): [Author!]! #  see App/GraphQL/Queries/Authors.php
     author(id: ID! @eq): Author @find
 }
 
