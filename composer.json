@@ -12,19 +12,20 @@
         "algolia/algoliasearch-client-php": "^2.7",
         "babenkoivan/scout-elasticsearch-driver": "^4.0",
         "doctrine/dbal": "2.9",
-        "erjanmx/laravel-migrate-check": "^1.2",
+        "erjanmx/laravel-migrate-check": "^2.0",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
         "kreait/firebase-tokens": "^1.9",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^7.0",
         "laravel/scout": "^7.1",
-        "laravel/tinker": "^1.0",
-        "mll-lab/graphql-php-scalars": "^2.1",
-        "mll-lab/laravel-graphql-playground": "^1.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.0",
+        "mll-lab/graphql-php-scalars": "^3.0",
+        "mll-lab/laravel-graphql-playground": "^2.3",
         "nuwave/lighthouse": "^4.10",
         "sentry/sentry-laravel": "^1.8",
         "spatie/laravel-backup": "^6.9",
-        "spatie/laravel-permission": "^2.33",
+        "spatie/laravel-permission": "^3.0",
         "venturecraft/revisionable": "^1.30"
     },
     "require-dev": {
@@ -35,8 +36,8 @@
         "haydenpierce/class-finder": "^0.4.0",
         "laravel/dusk": "^5.0",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^2.0",
-        "phpunit/phpunit": "^7.0"
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "classmap": [
