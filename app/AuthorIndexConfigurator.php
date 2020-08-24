@@ -21,12 +21,23 @@ class AuthorIndexConfigurator extends IndexConfigurator
                 ],
             ],
             'analyzer' => [
-                'rebuilt_czech' => [
-                    'tokenizer' => 'standard',
+                'name_analyzer' => [
+                    'tokenizer' => 'my_tokenizer',
                     'filter' => [
                         'czech_stemmer',
                         'asciifolding',
-                        'lowercase',
+                        'lowercase'
+                    ]
+                ]
+            ],
+            'tokenizer' => [
+                "my_tokenizer" => [
+                    "type" => "edge_ngram",
+                    "max_gram" => 6,
+                    "token_chars" => [
+                        "letter",
+                        "digit",
+                        "whitespace"
                     ]
                 ]
             ]
