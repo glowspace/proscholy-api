@@ -128,24 +128,6 @@ type SongLyric {
     arrangements: [SongLyric] @hasMany
     arrangement_source: SongLyric @belongsTo
     is_arrangement: Boolean
-
-    """
-    Available only in search_song_lyrics query, used for better query performance
-    """
-    media_externals_count: Int
-    """
-    Available only in search_song_lyrics query, used for better query performance 
-    """
-    media_files_count: Int
-    """
-    Available only in search_song_lyrics query, used for better query performance 
-    """
-    score_externals_count: Int
-    """
-    Available only in search_song_lyrics query, used for better query performance 
-    """
-    score_files_count: Int
-
     
     type: Int @deprecated(reason: "Use the `type_enum` field instead")
     is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")

@@ -29,10 +29,7 @@ class SearchSongLyrics
             // Elastic disabled by .env, return all songs
             // return SongLyric::paginate($args['per_page'], 'page', $args['page']);
 
-            $query = SongLyric::take(40);
-            $this->loadWithRelations($query);
-
-            $paginator = (new LengthAwarePaginator($query->get(), max(SongLyric::count(), 40), $args['per_page'], $args['page'], [
+            $paginator = (new LengthAwarePaginator(SongLyric::take(40)->get(), max(SongLyric::count(), 40), $args['per_page'], $args['page'], [
                 'path' => Paginator::resolveCurrentPath(),
                 'pageName' => 'page',
             ]));
@@ -57,28 +54,10 @@ class SearchSongLyrics
             return $client->search($payload);
         });
 
-        $this->loadWithRelations($query);
+        $query->with('songbook_records');
+        // $query->with('externals');
+        // $query->with('files');
 
         return $query->paginate($args['per_page'], 'page', $args['page']);
-    }
-
-    private function loadWithRelations($query)
-    {
-        $query->with('songbook_records');
-
-        $query->withCount([
-            'externals as media_externals_count' => function ($ext_q) {
-                $ext_q->media();
-            },
-            'files as media_files_count' => function ($file_q) {
-                $file_q->audio();
-            },
-            'externals as score_externals_count' => function ($ext_q) {
-                $ext_q->scores();
-            },
-            'files as score_files_count' => function ($file_q) {
-                $file_q->scores();
-            },
-        ]);
     }
 }
