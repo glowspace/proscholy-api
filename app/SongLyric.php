@@ -119,6 +119,9 @@ class SongLyric extends Model
             ],
             'song_number' => [
                 'type' => 'keyword'
+            ],
+            'only_regenschori' => [
+                'type' => 'boolean'
             ]
         ]
     ];
@@ -520,6 +523,7 @@ class SongLyric extends Model
             'songbook_records' => $songbook_records,
             'lang' => $this->lang,
             'is_arrangement' => $this->is_arrangement,
+            'only_regenschori' => $this->only_regenschori,
             'tag_ids' => $tag_ids,
         ];
 
