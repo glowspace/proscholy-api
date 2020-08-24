@@ -15,8 +15,8 @@ fi
 
 DATESTAMP=`date +"%Y-%m-%d-%H-%M-%S"`
 
-git clone --depth 1 'git@github.com:proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
-    git clone --depth 1 'https://github.com/proscholy/proscholy.cz.git' ${LARAVEL}/releases/${DATESTAMP}
+git clone --depth 1 'git@github.com:proscholy/api.regenschori.cz.git' ${LARAVEL}/releases/${DATESTAMP} || 
+    git clone --depth 1 'https://github.com/proscholy/api.regenschori.cz.git' ${LARAVEL}/releases/${DATESTAMP}
 
 if cd ${DATESTAMP} ; then 
     git reset --hard master
@@ -45,8 +45,8 @@ if cd ${DATESTAMP} ; then
     php artisan route:cache
     php artisan cache:clear
     php artisan view:clear
-    php artisan lighthouse:clear-cache
     php artisan migrate --force
+    php artisan lighthouse:clear-cache
     php artisan up
 
     ln -nfs ${LARAVEL}/releases/${DATESTAMP} ${LARAVEL}/current
