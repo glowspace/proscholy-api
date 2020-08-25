@@ -125,6 +125,9 @@ class SongLyric extends Model
                 'type' => 'keyword'
             ],
             'song_number' => [
+                'type' => 'keyword'
+            ],
+            'song_number_integer' => [
                 'type' => 'integer'
             ],
             'only_regenschori' => [
