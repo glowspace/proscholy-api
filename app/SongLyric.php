@@ -536,6 +536,7 @@ class SongLyric extends Model
             'name' => $this->name,
             'name_keyword' => $this->name,
             'song_number' => $this->song_number,
+            'song_number_integer' => (int)$this->song_number,
             'lyrics' => $this->lyrics_no_chords,
             'authors' => $all_authors->pluck('name'),
             'songbook_records' => $songbook_records,
