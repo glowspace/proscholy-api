@@ -47,6 +47,7 @@ if cd ${DATESTAMP} ; then
     php artisan view:clear
     php artisan migrate --force
     php artisan lighthouse:clear-cache
+    php artisan lighthouse:cache
     php artisan up
 
     ln -nfs ${LARAVEL}/releases/${DATESTAMP} ${LARAVEL}/current
