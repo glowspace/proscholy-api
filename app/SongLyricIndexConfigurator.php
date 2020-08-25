@@ -22,11 +22,6 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                 'czech_stemmer' => [
                     'type' => 'stemmer',
                     'language' => 'czech'
-                ],
-                'remove_spaces' => [
-                    'type' => 'pattern_replace',
-                    'pattern' => ' ',
-                    'replace' => ''
                 ]
             ],
             'analyzer' => [
@@ -46,10 +41,6 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                         'asciifolding',
                         'lowercase'
                     ]
-                ],
-                'songbook_full_number_analyzer' => [
-                    'tokenizer' => 'keyword',
-                    'filter' => 'remove_spaces'
                 ]
             ],
             'tokenizer' => [
