@@ -100,8 +100,7 @@ class SongLyric extends Model
                         'type' => 'integer'
                     ],
                     'songbook_full_number' => [
-                        'type' => 'text',
-                        'analyzer' => 'songbook_full_number_analyzer'
+                        'type' => 'keyword'
                     ]
                 ]
             ],
@@ -486,7 +485,7 @@ class SongLyric extends Model
                 'songbook_id' => $sb->id,
                 'songbook_number' => $sb->pivot->number,
                 'songbook_number_integer' => (int)preg_replace('/\D/', '', $sb->pivot->number),
-                'songbook_full_number' => $sb->pivot->songbook->shortcut . $sb->pivot->number,
+                'songbook_full_number' => [$sb->pivot->songbook->shortcut . $sb->pivot->number,  $sb->pivot->songbook->shortcut . ' ' . $sb->pivot->number],
             ];
         });
 
