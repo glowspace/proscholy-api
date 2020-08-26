@@ -66,6 +66,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/', 'AdminController@renderDash')->name('dashboard');
 
         Route::resource('external', 'ExternalController')->only(['index', 'edit']);
+        Route::get('/external/new-for-song/{song_lyric}', 'ExternalController@create_for_song')->name('external.create_for_song');
+
         Route::resource('author', 'AuthorController')->only(['index', 'edit']);
         Route::resource('songbook', 'SongbookController')->only(['index', 'edit']);
         Route::resource('news-item', 'NewsItemController')->only(['index', 'edit']);
