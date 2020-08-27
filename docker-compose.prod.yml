@@ -1,14 +1,15 @@
-version: '3'
+version: "3"
 services:
     web:
         build:
             context: ./docker/setup/web
             dockerfile: Dockerfile
         volumes:
-            - '.:/var/www/html'
-            - './docker/config/cron.d:/etc/cron.d'
-            - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
-        entrypoint: 'bash ./docker/setup/web/entrypoint_web_prod.sh'
+            - ".:/var/www/html"
+            - "./docker/config/cron.d:/etc/cron.d"
+            - "./docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini"
+            - "./docker/config/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini"
+        entrypoint: "bash ./docker/setup/web/entrypoint_web_prod.sh"
         networks:
             - bcloud-network
         restart: always
@@ -22,19 +23,19 @@ services:
         image: mysql:5.7
         restart: always
         environment:
-            MYSQL_DATABASE: 'proscholy'
+            MYSQL_DATABASE: "proscholy"
             # So you don't have to use root, but you can if you like
-            MYSQL_USER: 'zpevnik'
+            MYSQL_USER: "zpevnik"
             # You can use whatever password you like
-            MYSQL_PASSWORD: 'zpev123'
+            MYSQL_PASSWORD: "zpev123"
             # Password for root access
-            MYSQL_ROOT_PASSWORD: 'zpzpzp123'
+            MYSQL_ROOT_PASSWORD: "zpzpzp123"
         ports:
             # <Port exposed> : < MySQL Port running inside container>
-            - '3306:3306'
+            - "3306:3306"
         expose:
             # Opens port 3306 on the container
-            - '3306'
+            - "3306"
             # Where our data will be persisted
         volumes:
             - ./docker/data/databases:/var/databases
@@ -43,16 +44,16 @@ services:
             - bcloud-network
 
     nginx:
-        image: 'nginx:1.17.3'
+        image: "nginx:1.17.3"
         ports:
-            - '80:80'
-            - '443:443'
+            - "80:80"
+            - "443:443"
         links:
-            - 'web'
+            - "web"
         volumes:
-            - '.:/var/www/html'
-            - './docker/config/nginx_prod:/etc/nginx/conf.d'
-            - './docker/logs/nginx:/var/log/nginx'
+            - ".:/var/www/html"
+            - "./docker/config/nginx_prod:/etc/nginx/conf.d"
+            - "./docker/logs/nginx:/var/log/nginx"
         networks:
             - bcloud-network
         restart: always
@@ -77,7 +78,7 @@ services:
             - ./data/elastic:/etc/elasticsearch/data
             - ./config/elastic/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
         ports:
-            - '9200:9200'
+            - "9200:9200"
         networks:
             - bcloud-network
         restart: always

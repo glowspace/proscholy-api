@@ -41,15 +41,17 @@ RUN apt-get install -y gnupg2
 
 RUN echo "php_admin_flag[log_errors] = On">>/usr/local/etc/php-fpm.conf
 
-# XDebug
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
-RUN echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-# any device can connect to xdebug
-RUN echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-# RUN echo "xdebug.remote_host=192.168.88.170" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-# RUN echo "xdebug.idekey=mertblog.net" >> /usr/local/etc/php/conf.d/docker-ph
+# # XDebug
+# RUN pecl install xdebug
+# RUN docker-php-ext-enable xdebug
+# RUN echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# RUN echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# RUN echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# # any device can connect to xdebug
+# RUN echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# # RUN echo "xdebug.remote_host=192.168.88.170" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# RUN echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# # RUN echo "xdebug.idekey=mertblog.net" >> /usr/local/etc/php/conf.d/docker-ph
+
+RUN docker-php-ext-install opcache

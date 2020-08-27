@@ -31,6 +31,9 @@ if cd ${DATESTAMP} ; then
 
     cp ${LARAVEL}/.env ${LARAVEL}/releases/${DATESTAMP}/.env
 
+    echo "Resetting OPcache"
+    curl nginx/reset-cache
+
     echo "Installing composer and yarn"
     composer install --optimize-autoloader --no-dev
     composer dump-auto

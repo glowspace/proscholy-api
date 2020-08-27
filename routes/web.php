@@ -107,6 +107,14 @@ Route::get('/postni-doba', function () {
     return redirect(url('/?stitky=25'));
 });
 
+Route::get('/reset-cache', function () {
+    if (opcache_reset()) {
+        return response("OPCache successfully reset\n");
+    } else {
+        return response("OPCache was ***not*** reset\n");
+    }
+});
+
 
 // Route::get('/firebase-auth/me', function(Request $request) {
 //     return (array) $request->public_user();
