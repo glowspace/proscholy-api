@@ -1,0 +1,4 @@
+# todo: only for authenticated
+extend type Mutation {
+  upload_file(file: Upload!): String
+}
