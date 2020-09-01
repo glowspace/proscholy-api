@@ -39,7 +39,7 @@ Vue.component('file-create', require('Admin/pages/create/FileCreate.vue'));
 Vue.component('external-view', require('Public/components/ExternalView.vue'));
 
 import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
+import { createUploadLink } from 'apollo-upload-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 
@@ -66,7 +66,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 });
 
 // HTTP connexion to the API
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
     // You should use an absolute URL here
     uri: base_url + '/graphql'
 });

@@ -21,6 +21,7 @@
         "apollo-client": "^2.5.1",
         "apollo-link": "^1.2.11",
         "apollo-link-http": "^1.5.14",
+        "apollo-upload-client": "^14.1.1",
         "axios": "^0.18",
         "bootstrap": "4.2.1",
         "bootstrap-material-design": "4.1.1",
