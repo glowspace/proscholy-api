@@ -266,3 +266,9 @@ body.admin-dark {
         background-color: #303030 !important;
     }
 }
+
+// grey text overflow
+.navbar {
+    max-width: 100%;
+    overflow: hidden;
+}
