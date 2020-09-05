@@ -49,10 +49,26 @@ textarea.form-control {
     }
 }
 
-// admin sidebar and logo
+// admin sidebar, logo and motto
 .admin-logo {
     padding: 0 10px 0 0;
     width: 60px;
+    height: 50px;
+}
+
+.navbar-motto {
+    color: #ffffff3d;
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+        display: inline;
+    }
+}
+
+.navbar .btn.btn-secondary {
+    &, &:hover {
+        color: #aaa;
+    }
 }
 
 .sidebar {
@@ -265,10 +281,4 @@ body.admin-dark {
     &, .body-bg {
         background-color: #303030 !important;
     }
-}
-
-// grey text overflow
-.navbar {
-    max-width: 100%;
-    overflow: hidden;
 }
