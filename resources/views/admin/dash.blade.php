@@ -4,7 +4,7 @@
     <div class="__container-fluid">
         <h1>Administrace</h1>
 
-        <div class="row">
+        <div class="row align-items-start">
             <div class="col-sm-8 dash d-flex flex-wrap">
                 <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CCC2UEP1A" target="_blank">
                     <div class="card">
@@ -37,7 +37,7 @@
                     <div class="card">
                         <img src="{{asset('img/icons/sheets.png')}}" class="card-img-top" />
                         <div class="card-body">
-                            <h5 class="card-title">Redakce</h5>
+                            <h5 class="card-title">Data, kontakty</h5>
                             <p class="card-text text-muted">seznam zpěvníků, autorů</p>
                         </div>
                     </div>
@@ -46,8 +46,8 @@
                     <div class="card">
                         <img src="{{asset('img/icons/drive.png')}}" class="card-img-top" />
                         <div class="card-body">
-                            <h5 class="card-title">Materiály do zpěvníku</h5>
-                            <p class="card-text text-muted"></p>
+                            <h5 class="card-title">Redakce</h5>
+                            <p class="card-text text-muted">sdílená složka</p>
                         </div>
                     </div>
                 </a>
@@ -60,15 +60,33 @@
                         </div>
                     </div>
                 </a>
-
-                <div class="card">
-                    <div class="card-header">Instruktážní videa od Janey</div>
-                    <div class="card-body p-0">
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=PLXLfC_XTiu7qWXgsf-18mPu-IWFZ5o2xn" frameborder="0" allow=encrypted-media" allowfullscreen></iframe>
+                <a href="https://www.youtube.com/watch?list=PLXLfC_XTiu7qWXgsf-18mPu-IWFZ5o2xn&v=yZC-_uYhdvI" target="_blank">
+                    <div class="card">
+                        <img src="{{asset('img/icons/youtube.png')}}" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">Instruktážní videa</h5>
+                            <p class="card-text text-muted">od Janey</p>
                         </div>
                     </div>
-                </div>
+                </a>
+                <a href="https://discord.gg/KDK64kr" target="_blank">
+                    <div class="card">
+                        <img src="{{asset('img/icons/discord.svg')}}" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">Discord server</h5>
+                            <p class="card-text text-muted">místo pravidelných virtuálních setkání</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://trello.com/b/IzNkczwd/redakce-proscholycz" target="_blank">
+                    <div class="card">
+                        <img src="{{asset('img/icons/trello.svg')}}" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">Trello</h5>
+                            <p class="card-text text-muted">nástroj k rozdělování úkolů</p>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             <div class="col-sm-4">
