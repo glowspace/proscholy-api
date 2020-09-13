@@ -5,7 +5,7 @@
         <h1>Administrace</h1>
 
         <div class="row align-items-start">
-            <div class="col-sm-8 dash d-flex flex-wrap">
+            <div class="col-md-8 dash d-flex flex-wrap">
                 <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CCC2UEP1A" target="_blank">
                     <div class="card">
                         <img src="{{asset('img/icons/slack.svg')}}" class="card-img-top" />
@@ -89,10 +89,23 @@
                 </a>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">Statistika</div>
-                    <div class="card-body">
+                    <div class="card-body mb-0 h4">
+                        @if (Auth::check())
+                            <i class="fas fa-user pr-2"></i>
+                            <span>
+                                {{ Auth::user()->name }}
+
+                                @if (Auth::user()->roles()->count() > 0)
+                                    ({{Auth::user()->roles()->first()->name}})
+                                @endif
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body p-0">
                         <table class="table table-bordered mb-0 statistics-table">
                             <tr>
                                 <td>Písně s&nbsp;textem</td>
@@ -110,14 +123,15 @@
                                 <td><b class="text-warning">{{$songs_w_just_title_count}}</b></td>
                             </tr>
                             <tr>
-                                <td colspan="2">Písně celkem</td>
+                                <td colspan="2"><a href="{{route('admin.song.index')}}">Písně celkem</a></td>
                                 <td><b class="text-primary">{{$songs_count}}</b></td>
                             </tr>
                             <tr>
-                                <td colspan="2">Autoři</td>
+                                <td colspan="2"><a href="{{route('admin.author.index')}}">Autoři</a></td>
                                 <td><b>{{$authors_count}}</b></td>
-                            </tr><tr>
-                                <td colspan="2">Externí odkazy</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><a href="{{route('admin.external.index')}}">Externí odkazy</a></td>
                                 <td><b>{{$externals_count}}</b></td>
                             </tr>
                         </table>

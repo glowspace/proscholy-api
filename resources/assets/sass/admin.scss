@@ -151,6 +151,7 @@ textarea.form-control {
     h5.card-title {
         font-size: 1.1rem;
         margin-bottom: 0.25rem;
+        font-weight: normal;
     }
 
     & > .card {
@@ -164,11 +165,11 @@ textarea.form-control {
         margin-right: 10px;
         margin-bottom: 20px;
 
-        @include media-breakpoint-between(md, lg) {
+        @include media-breakpoint-between(sm, lg) {
             flex: 0 0 calc(100% / 2 - 20px) !important;
         }
 
-        @include media-breakpoint-between(xs, sm) {
+        @include media-breakpoint-only(xs) {
             flex: 0 0 calc(100% - 20px) !important;
         }
 
@@ -176,8 +177,12 @@ textarea.form-control {
             transition: opacity 0.2s;
         }
 
-        &:hover {
+        &:hover, &:focus {
             text-decoration: none;
+
+            .card-title {
+                text-decoration: underline;
+            }
 
             img, .img-icon {
                 color: #1d6dab;
@@ -218,6 +223,14 @@ textarea.form-control {
     td:not(:first-child) {
         text-align: right;
     }
+
+    td {
+        padding: 0.75rem 1.25rem;
+    }
+}
+
+a:focus {
+    text-decoration: underline;
 }
 
 // admin report button
