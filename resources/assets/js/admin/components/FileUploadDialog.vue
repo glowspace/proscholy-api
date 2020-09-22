@@ -8,10 +8,9 @@
             <v-card-title class="headline">Nahrát soubor</v-card-title>
             <v-card-text>
                 <v-text-field
-                    :label="file ? 'Název souboru' : 'Zvolit soubor...'"
+                    label="Název souboru"
                     v-model="filename"
                     prepend-icon="attach_file"
-                    style="cursor: hand"
                 ></v-text-field>
                 <p v-if="file">
                     Velikost souboru: {{ prettyBytes(file.size) }}
@@ -30,13 +29,6 @@
                 <v-btn color="green darken-1" flat @click="onCancel"
                     >Zrušit</v-btn
                 >
-                <!-- <v-btn
-                    color="green darken-1"
-                    :disabled="song == undefined || song.id == undefined"
-                    flat
-                    @click="onSubmit"
-                    >OK</v-btn
-                > -->
 
                 <v-btn @click="onSubmit" class="primary" :disabled="!file"
                     >Nahrát soubor</v-btn
@@ -62,7 +54,8 @@ export default {
         return {
             dialog: false,
             file: null,
-            filename: ''
+            filename: '',
+            baseUrl: document.querySelector('#baseUrl').getAttribute('value')
         };
     },
 
@@ -75,11 +68,12 @@ export default {
             await this.uploadSelectedFile();
 
             this.dialog = false;
-            this.$emit('submit', this.filename);
+            this.$emit('submit', this.baseUrl + '/soubor/' + this.filename);
         },
 
         onFilePicked({ target: { files = [] } }) {
             if (!files.length) {
+                this.onCancel();
                 return;
             }
 
