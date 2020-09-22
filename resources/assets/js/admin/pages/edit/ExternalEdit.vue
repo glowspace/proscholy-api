@@ -1,24 +1,37 @@
 <template>
     <v-app :dark="$root.dark">
         <notifications />
-        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
-            indeterminate
-            color="info"
-            :height="4"
-            class="m-0"
-        ></v-progress-linear></div>
+        <div v-show="$apollo.loading" class="fixed-top">
+            <v-progress-linear
+                indeterminate
+                color="info"
+                :height="4"
+                class="m-0"
+            ></v-progress-linear>
+        </div>
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Úprava externího odkazu</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
-                        <v-text-field
-                            label="Url odkaz"
-                            required
-                            v-model="model.url"
-                            data-vv-name="input.url"
-                            :error-messages="errors.collect('input.url')"
-                        ></v-text-field>
+                        <v-layout row>
+                            <v-flex grow>
+                                <v-text-field
+                                    label="Url odkaz"
+                                    required
+                                    v-model="model.url"
+                                    data-vv-name="input.url"
+                                    :error-messages="
+                                        errors.collect('input.url')
+                                    "
+                                ></v-text-field>
+                            </v-flex>
+                            <v-flex shrink>
+                                <FileUploadDialog
+                                    v-on:submit="onFileDialogSubmit"
+                                ></FileUploadDialog>
+                            </v-flex>
+                        </v-layout>
                         <v-select
                             :items="enums.type"
                             v-model="model.type"
@@ -149,6 +162,7 @@ import gql from 'graphql-tag';
 import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
 import ExternalView from 'Public/components/ExternalView.vue';
+import FileUploadDialog from 'Admin/components/FileUploadDialog.vue';
 
 import EditForm from './EditForm';
 import External from 'Admin/models/External';
@@ -184,7 +198,8 @@ export default {
     components: {
         ItemsComboBox,
         DeleteModelDialog,
-        ExternalView
+        ExternalView,
+        FileUploadDialog
     },
     extends: EditForm,
 
@@ -282,6 +297,10 @@ export default {
 
                     this.handleValidationErrors(error);
                 });
+        },
+
+        onFileDialogSubmit(url) {
+            this.model.url = url;
         },
 
         showSong() {

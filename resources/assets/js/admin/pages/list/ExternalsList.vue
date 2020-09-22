@@ -10,6 +10,7 @@
                 success-msg="Externí odkaz úspěšně vytvořen"
                 @saved="$apollo.queries.externals.refetch()"
                 :force-edit="true"
+                :enable-file-upload="true"
             ></create-model>
             <v-layout row wrap>
                 <v-flex xs12 md8>
@@ -47,16 +48,28 @@
                             :custom-filter="customFilter"
                             :rows-per-page-items="[
                                 50,
-                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                                {
+                                    text:
+                                        '$vuetify.dataIterator.rowsPerPageAll',
+                                    value: -1
+                                }
                             ]"
                             :loading="$apollo.loading"
-                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :no-data-text="
+                                $apollo.loading
+                                    ? 'Načítám…'
+                                    : '$vuetify.noDataText'
+                            "
                             :pagination.sync="dtPagination"
                         >
                             <template v-slot:items="props">
                                 <td>
                                     <a
-                                        :href="'/admin/external/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/external/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         >{{ getShortUrl(props.item.url) }}</a
                                     >
                                 </td>
@@ -78,13 +91,17 @@
                                 <td class="text-nowrap">
                                     <a
                                         class="text-secondary mr-3"
-                                        :href="'/admin/external/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/external/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         ><i class="fas fa-pen"></i></a
                                     ><a
                                         class="text-secondary"
                                         v-on:click="askForm(props.item.id)"
-                                        ><i class="fas fa-trash"></i></a
-                                    >
+                                        ><i class="fas fa-trash"></i
+                                    ></a>
                                 </td>
                             </template>
                         </v-data-table>
@@ -178,7 +195,10 @@ export default {
             this.filter_mode = window.location.hash.replace('#', '');
         }
 
-        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+        if (
+            window.location.hash == '#n' &&
+            document.getElementById('create-model-text-field')
+        ) {
             document.getElementById('create-model-text-field').focus();
         } else if (document.getElementById('search')) {
             document.getElementById('search').focus();

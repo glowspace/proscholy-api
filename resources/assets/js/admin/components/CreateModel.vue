@@ -1,36 +1,54 @@
 <template>
-    <v-card class="mb-3 d-inline-flex flex-row flex-wrap px-4 py-3">
-        <v-text-field
-            :label="label"
-            required
-            v-model="attribute_value"
-            data-vv-name="required_attribute"
-            :error-messages="errors.collect('required_attribute')"
-            prepend-icon="add"
-            @click:prepend="$refs.cmtf.focus()"
-            ref="cmtf"
-            class="mt-0 pb-0 pt-3"
-            style="max-width:600px;width:50vw"
-            @keydown.enter="submit(true)"
-            @input="$validator.errors.clear()"
-            id="create-model-text-field"
-        ></v-text-field>
-        <div class="text-nowrap pt-1">
-            <v-btn :disabled="attribute_value == '' || saving" @click="submit(true)" color="primary" style="margin-left:33px"
-                >Vytvořit a upravit</v-btn
-            >
-            <v-btn
-                v-if="!forceEdit"
-                :disabled="attribute_value == '' || saving"
-                @click="submit(false)"
-                >Vytvořit</v-btn
-            >
-        </div>
+    <v-card class="mb-3 px-4 py-3">
+        <v-layout row>
+            <v-inline-flex>
+                <v-text-field
+                    :label="label"
+                    required
+                    v-model="attribute_value"
+                    data-vv-name="required_attribute"
+                    :error-messages="errors.collect('required_attribute')"
+                    prepend-icon="add"
+                    @click:prepend="$refs.cmtf.focus()"
+                    ref="cmtf"
+                    class="mt-0 pb-0 pt-3"
+                    style="max-width:600px;width:50vw"
+                    @keydown.enter="submit(true)"
+                    @input="$validator.errors.clear()"
+                    id="create-model-text-field"
+                ></v-text-field>
+            </v-inline-flex>
+            <v-inline-flex>
+                <div class="text-nowrap pt-1">
+                    <v-btn
+                        :disabled="attribute_value == '' || saving"
+                        @click="submit(true)"
+                        color="primary"
+                        style="margin-left:33px"
+                        >Vytvořit a upravit</v-btn
+                    >
+                    <v-btn
+                        v-if="!forceEdit"
+                        :disabled="attribute_value == '' || saving"
+                        @click="submit(false)"
+                        >Vytvořit</v-btn
+                    >
+                </div>
+            </v-inline-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex>
+                <FileUploadDialog
+                    v-on:submit="onFileDialogSubmit"
+                ></FileUploadDialog>
+            </v-flex>
+        </v-layout>
     </v-card>
 </template>
 
 <script>
 import gql, { disableFragmentWarnings } from 'graphql-tag';
+import FileUploadDialog from 'Admin/components/FileUploadDialog';
 
 const CREATE_MODEL_MUTATION = gql`
     mutation($input: CreateModelInput!) {
@@ -42,7 +60,15 @@ const CREATE_MODEL_MUTATION = gql`
 `;
 
 export default {
-    props: ['class-name', 'label', 'success-msg', 'force-edit'],
+    props: [
+        'class-name',
+        'label',
+        'success-msg',
+        'force-edit',
+        'enable-file-upload'
+    ],
+
+    components: { FileUploadDialog },
 
     data() {
         return {
@@ -78,7 +104,9 @@ export default {
                     } else {
                         this.$emit('saved');
                         this.attribute_value = '';
-                        document.getElementById('create-model-text-field').focus();
+                        document
+                            .getElementById('create-model-text-field')
+                            .focus();
                     }
                 })
                 .catch(error => {
@@ -106,6 +134,11 @@ export default {
                         this.$validator.errors.add({ field: key, msg: _value });
                     }
                 });
+        },
+
+        onFileDialogSubmit(url) {
+            this.attribute_value = url;
+            this.submit(this.forceEdit);
         }
     },
 
