@@ -2,6 +2,8 @@
 
 namespace App\GraphQL\Mutations;
 
+use Illuminate\Support\Str;
+
 class UploadFile
 {
     /**
@@ -14,10 +16,24 @@ class UploadFile
     public function __invoke($root, array $args): ?string
     {
         /** @var \Illuminate\Http\UploadedFile $file */
-        $file = $args['file'];
+        // file stored in tmp/tempname
+        $tempfile = $args['file'];
 
-        logger($file);
+        $fname = $this->getSlugifiedName($tempfile);
 
-        return $file->storePublicly('uploads');
+        if (isset($args['filename'])) {
+            $fname = $args['filename'];
+        }
+
+        return $tempfile->storePubliclyAs('public_files', $fname);
+    }
+
+    private function getSlugifiedName($file)
+    {
+        $fullname = $file->getClientOriginalName();
+        $filename = pathinfo($fullname, PATHINFO_FILENAME);
+        $extension = pathinfo($fullname, PATHINFO_EXTENSION);
+
+        return Str::slug($filename, '-') . '.' . $extension;
     }
 }
