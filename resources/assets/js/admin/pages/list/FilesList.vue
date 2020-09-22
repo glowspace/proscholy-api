@@ -2,6 +2,7 @@
     <!-- v-app must wrap all the components -->
     <v-app :dark="$root.dark">
         <notifications />
+        <FileUpload></FileUpload>
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Nahrané soubory</h1>
             <v-btn
