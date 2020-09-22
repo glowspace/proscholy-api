@@ -55,6 +55,7 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 Auth::routes(['register' => false]);
 
 // Downloading
+// todo: use only for backwards compatibility - find the file based on filename
 Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
 Route::get('/preview/{file}/{filename?}', 'DownloadController@previewFile')->name('preview.file');
 // Thumbnails for pdf files
