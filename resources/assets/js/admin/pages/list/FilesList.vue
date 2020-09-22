@@ -2,7 +2,6 @@
     <!-- v-app must wrap all the components -->
     <v-app :dark="$root.dark">
         <notifications />
-        <FileUploadDialog></FileUploadDialog>
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Nahrané soubory</h1>
             <v-btn
@@ -121,8 +120,6 @@ input {
 </style>
 <script>
 import gql from 'graphql-tag';
-
-import FileUploadDialog from 'Admin/components/FileUploadDialog';
 import removeDiacritics from 'Admin/helpers/removeDiacritics';
 
 const fetch_items = gql`
@@ -151,8 +148,6 @@ const delete_item = gql`
 `;
 
 export default {
-    components: { FileUploadDialog },
-
     data() {
         return {
             headers: [
