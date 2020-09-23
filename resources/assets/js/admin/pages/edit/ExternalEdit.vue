@@ -40,12 +40,12 @@
                         <v-combobox
                             :items="enums.media_type.map(i => i.text)"
                             v-model="model.media_type"
-                            label="Media Typ"
+                            label="Typ odkazu/souboru"
                         ></v-combobox>
                         <v-select
                             :items="enums.content_type"
                             v-model="model.content_type"
-                            label="Content Typ"
+                            label="Typ obsahu"
                         ></v-select>
                         <items-combo-box
                             v-bind:p-items="authors"
