@@ -65,6 +65,7 @@ export default {
         },
 
         async onSubmit() {
+            // todo: catch exceptions
             await this.uploadSelectedFile();
 
             this.dialog = false;
@@ -82,7 +83,7 @@ export default {
         },
 
         uploadSelectedFile() {
-            this.$apollo.mutate({
+            return this.$apollo.mutate({
                 mutation: FILE_UPLOAD,
                 variables: {
                     file: this.file,
