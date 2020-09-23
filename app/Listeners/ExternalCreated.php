@@ -7,6 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Events\ExternalCreated as ExternalCreatedEvent;
 
+use Illuminate\Support\Str;
+
 class ExternalCreated
 {
     /**
@@ -28,7 +30,8 @@ class ExternalCreated
     public function handle(ExternalCreatedEvent $event)
     {
         $event->external->update([
-            'type' => $event->external->guessType()
+            'type' => $event->external->guessType(),
+            'is_uploaded' => Str::contains($event->external->url, url(''))
         ]);
     }
 }
