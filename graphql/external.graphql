@@ -30,12 +30,10 @@ type External {
 
 enum ContentType {
     UNDEFINED @enum(value: 0)
-    MUSIC @enum(value: 1)
-    MUSIC_VIDEO @enum(value: 2)
-    WEBSITE @enum(value: 3)
-    SHEET_MUSIC @enum(value: 4)
-    LYRICS @enum(value: 5)
-    LYRICS_CHORDS @enum(value: 6)
+    RECORDING @enum(value: 1)
+    SCORE @enum(value: 2)
+    LYRICS @enum(value: 3)
+    WEBSITE @enum(value: 4)
     # PHOTO @enum(value: 7)
     # SOCIAL @enum(value: 8)
 }

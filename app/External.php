@@ -65,25 +65,25 @@ class External extends Model implements ISource
     = [
         'spotify',
         'soundcloud',
-        'youtube/link',
+        'youtube',
         'file/mp3',
         'file/wav',
         'file/aac',
         'file/flac',
         'file/pdf',
         'file/jpg',
-        'file/jpeg'
+        'file/jpeg',
+        'file/doc',
+        'file/docx'
     ];
 
     private $content_type_string_values
     = [
         'UNDEFINED' => 'neurčeno',
-        'MUSIC' => 'hudba',
-        'MUSIC_VIDEO' => '(hudební) video',
+        'RECORDING' => 'audio/video nahrávka',
         'WEBSITE' => 'externí webová stránka',
-        'SHEET_MUSIC' => 'noty',
-        'LYRICS' => 'text',
-        'LYRICS_CHORDS' => 'text s akordy',
+        'SCORE' => 'noty',
+        'LYRICS' => 'text'
         // 'PHOTO' => 'fotka' // this should not be available for generic Externals (only for specific-purpose stuff)
         // 'SOCIAL' => 'profil na sociální síti' // this should not be available for generic Externals (only for specific-purpose stuff)
     ];
@@ -352,23 +352,23 @@ class External extends Model implements ISource
         // external services
         if ($this->urlAsSpotify($this->url)) return "spotify";
         if ($this->urlAsSoundcloud($this->url)) return "soundcloud";
-        if ($this->urlAsYoutube($this->url)) return "youtube/link";
+        if ($this->urlAsYoutube($this->url)) return "youtube";
 
         return "";
     }
 
     public function guessContentType($media_type)
     {
-        if (Arr::has(['spotify', 'soundcloud', 'file/mp3', 'file/wav', 'file/aac', 'file/flac'], $media_type)) {
+        if (Arr::has(['spotify', 'soundcloud', 'file/mp3', 'file/wav', 'file/aac', 'file/flac', 'youtube', 'file/mp4', 'file/mkv'], $media_type)) {
             return 1;
         }
 
-        if (Arr::has(['youtube/link', 'file/mp4', 'file/mkv'], $media_type)) {
+        if (Arr::has(['file/pdf', 'file/jpg', 'file/jpeg', 'file/musx'], $media_type)) {
             return 2;
         }
 
-        if (Arr::has(['file/pdf', 'file/jpg', 'file/jpeg'], $media_type)) {
-            return 4;
+        if (Arr::has(['file/doc', 'file/docx'], $media_type)) {
+            return 3;
         }
 
         return 0;
