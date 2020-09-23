@@ -13,6 +13,8 @@ use App\Tag;
 use App\Songbook;
 use App\NewsItem;
 
+use Illuminate\Support\Facades\Storage;
+
 class DeleteModel
 {
     /**

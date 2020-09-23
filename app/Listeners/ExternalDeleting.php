@@ -6,9 +6,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Illuminate\Support\Facades\Storage;
-use App\Events\FileDeleting as FileDeletingEvent;
+use App\Events\ExternalDeleting as ExternalDeletingEvent;
 
-class FileDeleting
+class ExternalDeleting
 {
     /**
      * Create the event listener.
@@ -26,9 +26,11 @@ class FileDeleting
      * @param  object  $event
      * @return void
      */
-    public function handle(FileDeletingEvent $event)
+    public function handle(ExternalDeletingEvent $event)
     {
-        Storage::delete($event->file->filename);
-        \Log::info("deleted file ".$event->file->filename);
+        if ($event->external->is_uploaded) {
+            Storage::delete($event->external->filepath);
+            logger("deleted file associated with external at path: " . $event->external->filepath);
+        }
     }
 }

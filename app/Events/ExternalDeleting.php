@@ -10,22 +10,22 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-use App\File;
+use App\External;
 
-class FileDeleting
+class ExternalDeleting
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $file;
+    public $external;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(File $file)
+    public function __construct(External $external)
     {
-        $this->file = $file;
+        $this->external = $external;
     }
 
     /**

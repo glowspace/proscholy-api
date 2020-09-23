@@ -61,6 +61,7 @@ class External extends Model implements ISource
 
     protected $dispatchesEvents = [
         'created' => \App\Events\ExternalCreated::class,
+        'deleting' => \App\Events\ExternalDeleting::class,
     ];
 
     public function getTypeStringAttribute()
