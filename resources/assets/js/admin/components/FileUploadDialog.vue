@@ -65,11 +65,22 @@ export default {
         },
 
         async onSubmit() {
-            // todo: catch exceptions
-            await this.uploadSelectedFile();
-
-            this.dialog = false;
-            this.$emit('submit', this.baseUrl + '/soubor/' + this.filename);
+            this.uploadSelectedFile()
+                .then(result => {
+                    this.dialog = false;
+                    this.$emit(
+                        'submit',
+                        this.baseUrl + '/soubor/' + this.filename
+                    );
+                })
+                .catch(error => {
+                    this.$notify({
+                        title: 'Chyba při nahrávání souboru',
+                        text: 'Soubor se nepodařilo nahrát',
+                        type: 'error'
+                    });
+                    return;
+                });
         },
 
         onFilePicked({ target: { files = [] } }) {
