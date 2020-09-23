@@ -36,7 +36,8 @@ enum ContentType {
     SHEET_MUSIC @enum(value: 4)
     LYRICS @enum(value: 5)
     LYRICS_CHORDS @enum(value: 6)
-    PHOTO @enum(value: 7)
+    # PHOTO @enum(value: 7)
+    # SOCIAL @enum(value: 8)
 }
 
 extend type Query  {

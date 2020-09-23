@@ -84,7 +84,8 @@ class External extends Model implements ISource
         'SHEET_MUSIC' => 'noty',
         'LYRICS' => 'text',
         'LYRICS_CHORDS' => 'text s akordy',
-        'PHOTO' => 'fotka'
+        // 'PHOTO' => 'fotka' // this should not be available for generic Externals (only for specific-purpose stuff)
+        // 'SOCIAL' => 'profil na sociální síti' // this should not be available for generic Externals (only for specific-purpose stuff)
     ];
 
     protected $dispatchesEvents = [
