@@ -36,7 +36,7 @@
                 </div>
             </v-inline-flex>
         </v-layout>
-        <v-layout row>
+        <v-layout row v-if="enableFileUpload">
             <v-flex>
                 <FileUploadDialog
                     v-on:submit="onFileDialogSubmit"
