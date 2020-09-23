@@ -354,7 +354,7 @@ class External extends Model implements ISource
         if ($this->urlAsSoundcloud($this->url)) return "soundcloud";
         if ($this->urlAsYoutube($this->url)) return "youtube/link";
 
-        return false;
+        return "";
     }
 
     public function guessContentType($media_type)
