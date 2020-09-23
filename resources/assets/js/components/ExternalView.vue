@@ -69,7 +69,8 @@ export default {
         thumbnailUrl: String,
         mediaId: String,
         authors: Array,
-        height: Number
+        height: Number,
+        isUploaded: Boolean
     },
 
     data() {
@@ -101,6 +102,12 @@ export default {
 
     computed: {
         iframeSrc() {
+            let previewUrl = this.url;
+            if (this.isUploaded) {
+                // see DownloadController.php
+                previewUrl = this.url + '?nahled=true';
+            }
+
             if (this.type == 1) {
                 return 'https://open.spotify.com/embed/track/' + this.mediaId;
             } else if (this.type == 2) {
@@ -115,12 +122,12 @@ export default {
                 // pdf file
                 // decide if the browser can display that directly in iframe
                 if (this.browser.satisfies(this.supportPdfIframesCondition)) {
-                    return this.url;
+                    return previewUrl;
                 } else {
                     return 'https://docs.google.com/viewer?url=' + this.url;
                 }
             } else {
-                return this.url;
+                return previewUrl;
             }
         },
 

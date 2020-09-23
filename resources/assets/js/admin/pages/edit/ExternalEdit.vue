@@ -93,8 +93,8 @@
                         v-if="model_database"
                         :url="model_database.url"
                         :type="model_database.type"
-                        :thumbnail-url="model_database.thumbnail_url"
                         :media-id="model_database.media_id"
+                        :is-uploaded="model_database.is_uploaded"
                     ></external-view>
                 </v-flex>
             </v-layout>
