@@ -17,12 +17,16 @@ class DownloadController extends Controller
         return $this->downloadFile($filename);
     }
 
-    public function downloadFile($filename)
+    public function downloadFile(Request $request, $filename)
     {
         $path = Storage::path("public_files/$filename");
 
         if (!file_exists($path)) {
             return response("Soubor nebyl nalezen", 404);
+        }
+
+        if ($request->get('nahled')) {
+            return response()->file($path);
         }
 
         return response()->download($path, $filename);
