@@ -11,6 +11,9 @@
                     label="Název souboru"
                     v-model="filename"
                     prepend-icon="attach_file"
+                    data-vv-name="input.filename"
+                    :error-messages="errors.collect('input.filename')"
+                    @input="$validator.errors.clear()"
                 ></v-text-field>
                 <p v-if="file">
                     Velikost souboru: {{ prettyBytes(file.size) }}
@@ -26,7 +29,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat @click="onCancel"
+                <v-btn color="red darken-1" flat @click="onCancel"
                     >Zrušit</v-btn
                 >
 
@@ -59,6 +62,10 @@ export default {
         };
     },
 
+    $_veeValidate: {
+        validator: 'new'
+    },
+
     methods: {
         onCancel() {
             this.dialog = false;
@@ -79,7 +86,24 @@ export default {
                         text: 'Soubor se nepodařilo nahrát',
                         type: 'error'
                     });
-                    return;
+
+                    if (error.graphQLErrors) {
+                        console.log(error.graphQLErrors);
+
+                        let errorFields =
+                            error.graphQLErrors[0].extensions.validation;
+
+                        // clear the old errors and (add new ones if exist)
+                        this.$validator.errors.clear();
+                        for (const [key, value] of Object.entries(
+                            errorFields
+                        )) {
+                            this.$validator.errors.add({
+                                field: key,
+                                msg: value
+                            });
+                        }
+                    }
                 });
         },
 
