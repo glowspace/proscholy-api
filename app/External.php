@@ -347,7 +347,7 @@ class External extends Model implements ISource
             return "file/$groups[1]";
         }
 
-        // if not, we could try to get the info from header response
+        // todo: if not, we could try to get the info from header response
 
         // external services
         if ($this->urlAsSpotify($this->url)) return "spotify";
