@@ -29,9 +29,14 @@ class ExternalCreated
      */
     public function handle(ExternalCreatedEvent $event)
     {
+        $media_type = $event->external->guessMediaType();
+
         $event->external->update([
+            // todo remove type
             'type' => $event->external->guessType(),
-            'is_uploaded' => Str::contains($event->external->url, url(''))
+            'is_uploaded' => Str::contains($event->external->url, url('')),
+            'media_type' => $media_type,
+            'content_type' => $event->external->guessContentType($media_type)
         ]);
     }
 }

@@ -1,9 +1,6 @@
 type External {
     id: ID!
     public_name: String
-    type: Int
-    type_string: String
-    type_string_values: JSON
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     url: String
@@ -18,6 +15,28 @@ type External {
 
     # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
     tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
+
+    media_type: String
+    media_type_string: String
+    media_type_string_values: JSON
+    content_type: ContentType
+    content_type_string: String
+    content_type_string_values: JSON
+
+    type: Int @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
+    type_string: String @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
+    type_string_values: JSON @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
+}
+
+enum ContentType {
+    UNDEFINED @enum(value: 0)
+    MUSIC @enum(value: 1)
+    MUSIC_VIDEO @enum(value: 2)
+    WEBSITE @enum(value: 3)
+    SHEET_MUSIC @enum(value: 4)
+    LYRICS @enum(value: 5)
+    LYRICS_CHORDS @enum(value: 6)
+    PHOTO @enum(value: 7)
 }
 
 extend type Query  {
@@ -49,6 +68,8 @@ input UpdateExternalInput {
     published_by: String
     caption: String
     is_uploaded: Boolean
+    content_type: ContentType
+    media_type: String
 }
 
 input SyncSongLyricRelation {

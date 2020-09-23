@@ -10,6 +10,8 @@ use Spatie\PdfToImage\Pdf;
 use Hash;
 use App\Interfaces\ISource;
 
+use Illuminate\Support\Arr;
+
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -39,7 +41,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  */
 class External extends Model implements ISource
 {
-    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption'];
+    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption', 'media_type', 'content_type'];
 
     private $type_string_values
     = [
@@ -59,6 +61,32 @@ class External extends Model implements ISource
         13 => 'fotka',
     ];
 
+    private $media_type_string_values
+    = [
+        'spotify',
+        'soundcloud',
+        'youtube/link',
+        'file/mp3',
+        'file/wav',
+        'file/aac',
+        'file/flac',
+        'file/pdf',
+        'file/jpg',
+        'file/jpeg'
+    ];
+
+    private $content_type_string_values
+    = [
+        'UNDEFINED' => 'neurčeno',
+        'MUSIC' => 'hudba',
+        'MUSIC_VIDEO' => '(hudební) video',
+        'WEBSITE' => 'externí webová stránka',
+        'SHEET_MUSIC' => 'noty',
+        'LYRICS' => 'text',
+        'LYRICS_CHORDS' => 'text s akordy',
+        'PHOTO' => 'fotka'
+    ];
+
     protected $dispatchesEvents = [
         'created' => \App\Events\ExternalCreated::class,
         'deleting' => \App\Events\ExternalDeleting::class,
@@ -72,6 +100,26 @@ class External extends Model implements ISource
     public function getTypeStringValuesAttribute()
     {
         return $this->type_string_values;
+    }
+
+    public function getMediaTypeStringAttribute()
+    {
+        return $this->media_type_string_values[$this->media_type];
+    }
+
+    public function getMediaTypeStringValuesAttribute()
+    {
+        return $this->media_type_string_values;
+    }
+
+    public function getContentTypeStringAttribute()
+    {
+        return $this->content_type_string_values[$this->content_type];
+    }
+
+    public function getContentTypeStringValuesAttribute()
+    {
+        return $this->content_type_string_values;
     }
 
     public function scopeScores($query)
@@ -142,7 +190,7 @@ class External extends Model implements ISource
         //     &color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
     }
 
-    // helper getter
+    // todo: refactor to use media_type
     public function getMediaIdAttribute()
     {
         if ($this->type == 1) return self::urlAsSpotify($this->url);
@@ -152,6 +200,7 @@ class External extends Model implements ISource
         return false;
     }
 
+    // todo: deprecate
     public function guessType()
     {
         if ($this->urlAsSpotify($this->url)) return 1;
@@ -288,5 +337,39 @@ class External extends Model implements ISource
         $path = str_replace('soubor', 'public_files', $path);
 
         return $path;
+    }
+
+    public function guessMediaType()
+    {
+        // has the url a file extension..?
+        if (preg_match("/\/.*\.(\w+)/", $this->url, $groups)) {
+            return "file/$groups[1]";
+        }
+
+        // if not, we could try to get the info from header response
+
+        // external services
+        if ($this->urlAsSpotify($this->url)) return "spotify";
+        if ($this->urlAsSoundcloud($this->url)) return "soundcloud";
+        if ($this->urlAsYoutube($this->url)) return "youtube/link";
+
+        return false;
+    }
+
+    public function guessContentType($media_type)
+    {
+        if (Arr::has(['spotify', 'soundcloud', 'file/mp3', 'file/wav', 'file/aac', 'file/flac'], $media_type)) {
+            return 1;
+        }
+
+        if (Arr::has(['youtube/link', 'file/mp4', 'file/mkv'], $media_type)) {
+            return 2;
+        }
+
+        if (Arr::has(['file/pdf', 'file/jpg', 'file/jpeg'], $media_type)) {
+            return 4;
+        }
+
+        return 0;
     }
 }

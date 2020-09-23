@@ -26,6 +26,8 @@ const fragment = gql`
         published_by
         caption
         is_uploaded
+        media_type
+        content_type
     }
 `;
 
@@ -34,6 +36,8 @@ const QUERY = gql`
         model_database: external(id: $id) {
             ...ExternalFillableFragment
             type_string_values
+            media_type_string_values
+            content_type_string_values
         }
     }
     ${fragment}
@@ -75,6 +79,8 @@ export default {
             id: vueModel.id,
             url: vueModel.url,
             type: vueModel.type,
+            media_type: vueModel.media_type,
+            content_type: vueModel.content_type,
             copyright: vueModel.copyright,
             editor: vueModel.editor,
             published_by: vueModel.published_by,

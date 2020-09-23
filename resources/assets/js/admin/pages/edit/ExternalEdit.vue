@@ -42,6 +42,16 @@
                             v-model="model.type"
                             label="Typ"
                         ></v-select>
+                        <v-combobox
+                            :items="enums.media_type.map(i => i.text)"
+                            v-model="model.media_type"
+                            label="Media Typ"
+                        ></v-combobox>
+                        <v-select
+                            :items="enums.content_type"
+                            v-model="model.content_type"
+                            label="Content Typ"
+                        ></v-select>
                         <items-combo-box
                             v-bind:p-items="authors"
                             v-model="model.authors"
@@ -223,10 +233,14 @@ export default {
                 editor: undefined,
                 published_by: undefined,
                 is_uploaded: undefined,
-                caption: undefined
+                caption: undefined,
+                media_type: undefined,
+                content_type: undefined
             },
             enums: {
-                type: []
+                type: [],
+                media_type: [],
+                content_type: []
             },
             fragment: External.fragment,
             is_deleted: false
@@ -246,6 +260,16 @@ export default {
                     result,
                     'type_string_values',
                     this.enums.type
+                );
+                this.loadEnumJsonFromResult(
+                    result,
+                    'media_type_string_values',
+                    this.enums.media_type
+                );
+                this.loadEnumJsonFromResult(
+                    result,
+                    'content_type_string_values',
+                    this.enums.content_type
                 );
             }
         },
