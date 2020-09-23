@@ -13,6 +13,8 @@ type External {
     copyright: String
     editor: String
     published_by: String
+    caption: String
+    is_uploaded: Boolean
 
     # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
     tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
@@ -45,6 +47,8 @@ input UpdateExternalInput {
     copyright: String
     editor: String
     published_by: String
+    caption: String
+    is_uploaded: Boolean
 }
 
 input SyncSongLyricRelation {

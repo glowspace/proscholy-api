@@ -24,6 +24,7 @@
                                     :error-messages="
                                         errors.collect('input.url')
                                     "
+                                    :disabled="model.is_uploaded"
                                 ></v-text-field>
                             </v-flex>
                             <v-flex shrink>
@@ -32,6 +33,10 @@
                                 ></FileUploadDialog>
                             </v-flex>
                         </v-layout>
+                        <v-text-field
+                            label="Zobrazovaný název"
+                            v-model="model.caption"
+                        ></v-text-field>
                         <v-select
                             :items="enums.type"
                             v-model="model.type"
@@ -216,7 +221,9 @@ export default {
                 catalog_number: undefined,
                 copyright: undefined,
                 editor: undefined,
-                published_by: undefined
+                published_by: undefined,
+                is_uploaded: undefined,
+                caption: undefined
             },
             enums: {
                 type: []
@@ -301,6 +308,7 @@ export default {
 
         onFileDialogSubmit(url) {
             this.model.url = url;
+            this.model.is_uploaded = true;
         },
 
         showSong() {

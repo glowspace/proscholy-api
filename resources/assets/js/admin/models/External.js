@@ -24,6 +24,8 @@ const fragment = gql`
         copyright
         editor
         published_by
+        caption
+        is_uploaded
     }
 `;
 
@@ -77,6 +79,8 @@ export default {
             editor: vueModel.editor,
             published_by: vueModel.published_by,
             catalog_number: vueModel.catalog_number,
+            caption: vueModel.caption,
+            is_uploaded: vueModel.is_uploaded,
             song_lyric: belongsToMutator(vueModel.song_lyric),
             authors: belongsToManyMutator(vueModel.authors)
         },

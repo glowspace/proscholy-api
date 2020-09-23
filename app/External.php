@@ -39,25 +39,25 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  */
 class External extends Model implements ISource
 {
-    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by'];
+    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption'];
 
     private $type_string_values
-        = [
-            0 => 'odkaz',
-            1 => 'spotify URI',
-            2 => 'soundcloud',
-            3 => 'youtube',
-            4 => 'noty',
-            5 => 'webová stránka autora',
-            6 => 'youtube kanál',
-            7 => 'audio soubor',
-            8 => 'text s akordy (pdf)',
-            9 => 'text (pdf)',
-            10 => 'facebook',
-            11 => 'instagram',
-            12 => 'profilová fotka',
-            13 => 'fotka',
-        ];
+    = [
+        0 => 'odkaz',
+        1 => 'spotify URI',
+        2 => 'soundcloud',
+        3 => 'youtube',
+        4 => 'noty',
+        5 => 'webová stránka autora',
+        6 => 'youtube kanál',
+        7 => 'audio soubor',
+        8 => 'text s akordy (pdf)',
+        9 => 'text (pdf)',
+        10 => 'facebook',
+        11 => 'instagram',
+        12 => 'profilová fotka',
+        13 => 'fotka',
+    ];
 
     protected $dispatchesEvents = [
         'created' => \App\Events\ExternalCreated::class,
@@ -116,7 +116,7 @@ class External extends Model implements ISource
     {
         $short = preg_quote("https://youtu.be/", '/');
         $long = preg_quote("https://www.youtube.com/watch?v=", '/');
-        
+
         if (!preg_match("/($short|$long)(.+)/", $url, $groups)) {
             return false;
         }
@@ -162,7 +162,7 @@ class External extends Model implements ISource
 
     // IMPLEMENTING INTERFACE ISOURCE
 
-    public function getSourceType() : int
+    public function getSourceType(): int
     {
         return $this->type;
     }
@@ -203,7 +203,7 @@ class External extends Model implements ISource
     //     if (file_exists(Storage::path($relative))) {
     //         return $relative;
     //     }
-        
+
     //     // create a new thumbnail file
     //     $pdf = new Pdf($this->url);
     //     $pdf->setCompressionQuality(20)
@@ -224,17 +224,17 @@ class External extends Model implements ISource
     //     ]);
     // }
 
-    public function authors() : BelongsToMany
+    public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function song_lyric() : BelongsTo
+    public function song_lyric(): BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
     }
 
-    public function tags() : MorphToMany
+    public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
@@ -242,9 +242,9 @@ class External extends Model implements ISource
     public function scopeRestricted($query)
     {
         if (Auth::user()->hasRole('autor')) {
-            return $query->whereHas('author', function($q) {
+            return $query->whereHas('author', function ($q) {
                 $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
-            })->orWhereHas('song_lyric', function($q) {
+            })->orWhereHas('song_lyric', function ($q) {
                 $q->restricted();
             });
         } else {
@@ -266,7 +266,7 @@ class External extends Model implements ISource
             $info .= " | ";
         }
 
-        $info .= $this->authors->implode('name',', ');
+        $info .= $this->authors->implode('name', ', ');
 
         if ($info !== "") {
             $info = "($info)";
@@ -275,5 +275,17 @@ class External extends Model implements ISource
         }
 
         return "$type $info";
+    }
+
+    public function getFilepathAttribute()
+    {
+        // only available when External `is_uploaded`
+        if (!$this->is_uploaded)
+            return null;
+
+        $path = str_replace(url('') . '/', "", $this->url);
+        $path = str_replace('soubor', 'public_files', $path);
+
+        return $path;
     }
 }
