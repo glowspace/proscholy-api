@@ -9,31 +9,37 @@ use App\External;
 
 class DownloadController extends Controller
 {
-    public function downloadFile(File $file)
+    public function downloadFileOld($db_file_id, $filename)
     {
-        $file->downloads = $file->downloads + 1;
-        $file->save();
+        // the $db_file_id references to and old table `files`, no longer being used
+        // $filename should match the name of the stored file in public_files folder
 
-        $fullPath = Storage::path($file->path);
+        return $this->downloadFile($filename);
+    }
 
-        if (!file_exists($fullPath)) {
+    public function downloadFile($filename)
+    {
+        $path = Storage::path("public_files/$filename");
+
+        if (!file_exists($path)) {
             return response("Soubor nebyl nalezen", 404);
         }
 
-        return response()->download($fullPath, $file->filename);
+        return response()->download($path, $filename);
     }
 
-    public function previewFile(File $file)
-    {
-        $fullPath = Storage::path($file->path);
+    // public function previewFile(File $file)
+    // {
+    //     $fullPath = Storage::path($file->path);
 
-        if (!file_exists($fullPath)) {
-            return response("Soubor nebyl nalezen", 404);
-        }
+    //     if (!file_exists($fullPath)) {
+    //         return response("Soubor nebyl nalezen", 404);
+    //     }
 
-        return response()->file($fullPath);
-    }
+    //     return response()->file($fullPath);
+    // }
 
+    // todo: remove
     public function getThumbnailFile(File $file)
     {
         if (!$file->canHaveThumbnail()) {
@@ -47,14 +53,4 @@ class DownloadController extends Controller
         }
         return response()->file($fullPath);
     }
-
-    // public function getThumbnailExternal(External $external)
-    // {
-    //     if (!$external->canHaveThumbnail()) {
-    //         return response('No thumbnail available', 404);
-    //     }
-
-    //     $fullPath = Storage::path($external->getThumbnailPath());
-    //     return response()->file($fullPath);
-    // }
 }
