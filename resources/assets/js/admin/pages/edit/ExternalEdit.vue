@@ -37,11 +37,6 @@
                             label="Zobrazovaný název"
                             v-model="model.caption"
                         ></v-text-field>
-                        <v-select
-                            :items="enums.type"
-                            v-model="model.type"
-                            label="Typ"
-                        ></v-select>
                         <v-combobox
                             :items="enums.media_type.map(i => i.text)"
                             v-model="model.media_type"
@@ -224,7 +219,6 @@ export default {
                 // here goes the definition of model attributes
                 id: undefined,
                 url: undefined,
-                type: undefined,
                 authors: [],
                 song_lyric: undefined,
                 tags_instrumentation: [],
@@ -238,7 +232,6 @@ export default {
                 content_type: undefined
             },
             enums: {
-                type: [],
                 media_type: [],
                 content_type: []
             },
@@ -256,11 +249,6 @@ export default {
 
             result(result) {
                 this.loadModelDataFromResult(result);
-                this.loadEnumJsonFromResult(
-                    result,
-                    'type_string_values',
-                    this.enums.type
-                );
                 this.loadEnumJsonFromResult(
                     result,
                     'media_type_string_values',
