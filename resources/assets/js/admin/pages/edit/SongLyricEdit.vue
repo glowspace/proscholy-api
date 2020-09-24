@@ -721,13 +721,14 @@ export default {
     },
 
     "model.bible_refs_src": function() {
-      if (!this.model.bible_refs_src)
-        return;
-
-      const lines = this.model.bible_refs_src.split("\n");
-      const lines_osis = lines.map(line => this.bcv_parser.parse(line).osis());
-
-      this.model.bible_refs_osis = lines_osis.join(",");
+      if (this.model.bible_refs_src) {
+        const lines = this.model.bible_refs_src.split("\n");
+        const lines_osis = lines.map(line => this.bcv_parser.parse(line).osis());
+  
+        this.model.bible_refs_osis = lines_osis.join(",");
+      } else {
+        this.model.bible_refs_osis = "";
+      }
     }
   },
 
