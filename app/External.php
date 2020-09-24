@@ -152,7 +152,7 @@ class External extends Model
     public function getMediaIdAttribute()
     {
         if (!$this->url) {
-            return false;
+            return;
         }
 
         $media_link = new ExternalMediaLink($this->url);
@@ -161,7 +161,11 @@ class External extends Model
         if ($this->media_type == 'soundcloud') return $media_link->urlAsSoundcloud();
         if ($this->media_type == 'youtube') return $media_link->urlAsYoutube();
 
-        return false;
+        if ($this->is_uploaded) {
+            return str_replace('public_files/', '', $this->filepath);
+        }
+
+        return;
     }
 
     // protected static function getThubmnailsFolder()
