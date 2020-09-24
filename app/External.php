@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  */
 class External extends Model
 {
-    protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption', 'media_type', 'content_type'];
+    protected $fillable = ['url', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption', 'media_type', 'content_type'];
 
     private $type_string_values
     = [
@@ -272,5 +272,24 @@ class External extends Model
         $path = str_replace('soubor', 'public_files', $path);
 
         return $path;
+    }
+
+    // legacy method for a deprecated attribute
+    public function getTypeAttribute()
+    {
+        $arr = [
+            'spotify' => 1,
+            'soundcloud' => 2,
+            'youtube' => 3,
+            'file/mp3' => 7,
+            'file/pdf' => 4,
+            'file/jpg' => 4
+        ];
+
+        if (array_key_exists($this->media_type, $arr)) {
+            return $arr[$this->media_type];
+        }
+
+        return 0;
     }
 }
