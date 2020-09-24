@@ -631,11 +631,16 @@ export default {
 
   computed: {
     thumbnailables() {
+      if (!this.model_database) {
+        return [];
+      }
+
+      const hasSupportedContent = content_type => ['SCORE', 'LYRICS', 'WEBSITE'].includes(content_type);
+      const hasSupportedFileFormat = media_type => !['file/musx'].includes(media_type);
+
       // externals that can have thumbnail
-      return this.model.externals
-        .filter(ext => {
-          return [0, 4, 8, 9].includes(ext.type);
-        });
+      return this.model_database.externals
+        .filter(ext => hasSupportedContent(ext.content_type) && hasSupportedFileFormat(ext.media_type));
     },
 
     is_arrangement_layout() {

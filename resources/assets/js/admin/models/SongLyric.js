@@ -92,7 +92,8 @@ const QUERY = gql`
                 id
                 public_name
                 url
-                type
+                media_type
+                content_type
             }
             files {
                 id
