@@ -72,6 +72,9 @@ const fragment = gql`
             id
             name
         }
+
+        bible_refs_src
+        bible_refs_osis
     }
 `;
 
@@ -225,6 +228,8 @@ export default {
             song: vueModel.song,
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
+            bible_refs_src: vueModel.bible_refs_src,
+            bible_refs_osis: vueModel.bible_refs_osis,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot

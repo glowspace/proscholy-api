@@ -134,6 +134,9 @@ type SongLyric {
     is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
     # has_sheet_music: Boolean @with(relation: "externals")
     # has_media: Boolean @with(relation: "files")
+
+    bible_refs_src: String
+    bible_refs_osis: String
 }
 
 enum SongType {
@@ -207,6 +210,8 @@ input UpdateSongLyricInput {
     capo: Int
     liturgy_approval_status: Int
     arrangement_source: SyncSongLyricArrangementRelation
+    bible_refs_osis: String
+    bible_refs_src: String
 }
 
 input SyncOfficialTagsRelation {
