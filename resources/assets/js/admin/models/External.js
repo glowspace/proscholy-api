@@ -5,7 +5,6 @@ const fragment = gql`
     fragment ExternalFillableFragment on External {
         id
         url
-        type
         media_id
         authors {
             id
@@ -35,7 +34,7 @@ const QUERY = gql`
     query($id: ID!) {
         model_database: external(id: $id) {
             ...ExternalFillableFragment
-            type_string_values
+            type
             media_type_values
             content_type_string_values
         }
@@ -78,7 +77,6 @@ export default {
         input: {
             id: vueModel.id,
             url: vueModel.url,
-            type: vueModel.type,
             media_type: vueModel.media_type,
             content_type: vueModel.content_type,
             copyright: vueModel.copyright,

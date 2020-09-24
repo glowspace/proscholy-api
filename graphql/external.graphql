@@ -58,7 +58,6 @@ input UpdateExternalInput {
     id: ID!
     url: String @rules(apply: ["required"], messages: {
         required: "Url odkazu nesmí být prázdná"})
-    type: Int!
     authors: SyncAuthorsRelation
     song_lyric: SyncSongLyricRelation
     catalog_number: String
