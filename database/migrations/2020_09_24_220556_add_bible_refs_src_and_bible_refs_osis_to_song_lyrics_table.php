@@ -14,8 +14,8 @@ class AddBibleRefsSrcAndBibleRefsOsisToSongLyricsTable extends Migration
     public function up()
     {
         Schema::table('song_lyrics', function (Blueprint $table) {
-            $table->text('bible_refs_src');
-            $table->text('bible_refs_osis');
+            $table->text('bible_refs_src')->nullable();
+            $table->text('bible_refs_osis')->nullable();
         });
     }
 
