@@ -93,11 +93,13 @@ class External extends Model
         'deleting' => \App\Events\ExternalDeleting::class,
     ];
 
+    // todo: deprecate
     public function getTypeStringAttribute()
     {
         return $this->type_string_values[$this->type];
     }
 
+    // todo: deprecate
     public function getTypeStringValuesAttribute()
     {
         return $this->type_string_values;
@@ -125,17 +127,18 @@ class External extends Model
 
     public function scopeScores($query)
     {
-        return $query->where('type', 4)->orWhere('type', 8)->orWhere('type', 9);
+        return $query->where('content_type', 2);
     }
 
+    // todo: deprecate
     public function scopeAudio($query)
     {
-        return $query->where('type', 1)->orWhere('type', 2);
+        return $query->media()->where('media_type', '!=', 'youtube');
     }
 
     public function scopeMedia($query)
     {
-        return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
+        return $query->where('content_type', 1);
     }
 
     public function scopeTodo($query)
@@ -148,6 +151,10 @@ class External extends Model
     // todo: check
     public function getMediaIdAttribute()
     {
+        if (!$this->url) {
+            return false;
+        }
+
         $media_link = new ExternalMediaLink($this->url);
 
         if ($this->media_type == 'spotify') return $media_link->urlAsSpotify();
