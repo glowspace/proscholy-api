@@ -73,7 +73,7 @@
                                         >{{ getShortUrl(props.item.url) }}</a
                                     >
                                 </td>
-                                <td>{{ props.item.type_string }}</td>
+                                <td>{{ props.item.content_type_string }}</td>
                                 <td>
                                     {{
                                         props.item.song_lyric
@@ -129,7 +129,7 @@ const fetch_items = gql`
         externals(is_todo: $is_todo) {
             id
             url
-            type_string
+            content_type_string
             song_lyric {
                 name
             }
@@ -157,7 +157,7 @@ export default {
         return {
             headers: [
                 { text: 'Adresa', value: 'url' },
-                { text: 'Typ', value: 'type_string' },
+                { text: 'Typ obsahu', value: 'content_type_string' },
                 { text: 'Píseň', value: 'song_lyric' },
                 { text: 'Autoři', value: 'authors' },
                 { text: 'Akce', value: 'actions', sortable: false }
@@ -254,7 +254,7 @@ export default {
                         item.url,
                         authors,
                         item.song_lyric ? item.song_lyric.name : '',
-                        item.type_string
+                        item.content_type_string
                     ].join(' ')
                 ).toLowerCase();
 
