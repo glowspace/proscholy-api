@@ -76,13 +76,6 @@
     'plus' => true
 ])
 
-@include('admin.components.menu-item', [
-    'route' => 'admin.file.index',
-    'icon' => 'file',
-    'text' => 'Nahrané soubory',
-    'plus_route' => 'admin.file.create'
-])
-
 {{-- @include('admin.components.menu-item', [
     'route' => 'admin.tag.index',
     'icon' => 'tag',

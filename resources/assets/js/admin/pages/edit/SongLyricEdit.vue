@@ -285,8 +285,7 @@
               </p>
             </v-flex>
             <v-flex xs12 md6>
-              <!-- externals and files view -->
-              <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
+              <!-- externals view -->
               <template v-if="thumbnailables">
                 <v-select
                   :items="thumbnailables"
@@ -324,7 +323,7 @@
         </v-tab-item>
         <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
-            <v-flex xs12 md6>
+            <v-flex xs12>
               <h5>Externí odkazy:</h5>
               <v-btn
                 v-for="external in model_database.externals"
@@ -338,21 +337,6 @@
                 outline
                 @click="goToAdminPage('external/new-for-song/' + model.id)"
               >Přidat nový externí odkaz</v-btn>
-            </v-flex>
-            <v-flex xs12 md6>
-              <h5>Soubory:</h5>
-              <v-btn
-                v-for="file in model_database.files"
-                v-bind:key="file.id"
-                class="text-none"
-                @click="goToAdminPage('file/' + file.id + '/edit')"
-              >{{ file.public_name }}</v-btn>
-              <br>
-              <v-btn
-                color="info"
-                outline
-                @click="goToAdminPage('file/new-for-song/' + model.id)"
-              >Přidat nový soubor</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -563,7 +547,6 @@ export default {
         tags_musical_form: [],
         authors_pivot: [],
         externals: [],
-        files: [],
         songbook_records: [],
         song: undefined,
         capo: undefined,
@@ -648,16 +631,11 @@ export default {
 
   computed: {
     thumbnailables() {
-      // mix the externals and files that can have thumbnail
+      // externals that can have thumbnail
       return this.model.externals
         .filter(ext => {
           return [0, 4, 8, 9].includes(ext.type);
-        })
-        .concat(
-          this.model.files.filter(file => {
-            return [1, 2, 3].includes(file.type);
-          })
-        );
+        });
     },
 
     is_arrangement_layout() {

@@ -79,9 +79,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::get('/songs', 'SongController@index')->name('song.index');
         Route::get('/song/{song_lyric}/edit', 'SongController@edit')->name('song.edit');
 
-        Route::resource('file', 'FileController')->except(['show']);
-        Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('file.create_for_song');
-
         Route::resource('tag', 'TagController')->except(['show']);
 
         Route::group(['middleware' => ['permission:manage users']], function () {
