@@ -720,6 +720,9 @@ export default {
     },
 
     "model.bible_refs_src": function() {
+      if (!this.model.bible_refs_src)
+        return;
+
       const lines = this.model.bible_refs_src.split("\n");
       const lines_osis = lines.map(line => this.bcv_parser.parse(line).osis());
 
