@@ -97,7 +97,7 @@
                     <external-view
                         v-if="model_database"
                         :url="model_database.url"
-                        :type="model_database.type"
+                        :media-type="model_database.media_type"
                         :media-id="model_database.media_id"
                         :is-uploaded="model_database.is_uploaded"
                     ></external-view>
