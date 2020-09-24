@@ -248,6 +248,7 @@ class External extends Model
         }
     }
 
+    // todo: refactor to use new types (and caption)
     public function getPublicNameAttribute()
     {
         $type = $this->type_string_values[$this->type];
