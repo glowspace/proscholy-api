@@ -83,7 +83,8 @@ class External extends Model
         'RECORDING' => 'nahrávka',
         'WEBSITE' => 'externí webová stránka',
         'SCORE' => 'noty',
-        'LYRICS' => 'text'
+        'LYRICS' => 'text',
+        // 'LICENSE' => 'licence'
         // 'PHOTO' => 'fotka' // this should not be available for generic Externals (only for specific-purpose stuff)
         // 'SOCIAL' => 'profil na sociální síti' // this should not be available for generic Externals (only for specific-purpose stuff)
     ];
@@ -117,7 +118,8 @@ class External extends Model
             1 => 'RECORDING',
             2 => 'SCORE',
             3 => 'LYRICS',
-            4 => 'WEBSITE'
+            4 => 'WEBSITE',
+            5 => 'LICENSE'
         ];
 
         return $this->content_type_string_values[$graphql_enum_table[$this->content_type]];

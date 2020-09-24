@@ -34,8 +34,9 @@ enum ContentType {
     SCORE @enum(value: 2)
     LYRICS @enum(value: 3)
     WEBSITE @enum(value: 4)
-    # PHOTO @enum(value: 7)
-    # SOCIAL @enum(value: 8)
+    LICENSE @enum(value: 5)
+    PHOTO @enum(value: 10)
+    SOCIAL @enum(value: 11)
 }
 
 extend type Query  {
