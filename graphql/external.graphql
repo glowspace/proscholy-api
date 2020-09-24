@@ -17,8 +17,7 @@ type External {
     tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
 
     media_type: String
-    media_type_string: String
-    media_type_string_values: JSON
+    media_type_values: JSON
     content_type: ContentType
     content_type_string: String
     content_type_string_values: JSON
@@ -28,6 +27,7 @@ type External {
     type_string_values: JSON @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
 }
 
+# need to be reflected in App/External / getContentTypeStringAttribute
 enum ContentType {
     UNDEFINED @enum(value: 0)
     RECORDING @enum(value: 1)

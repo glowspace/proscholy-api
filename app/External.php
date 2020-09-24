@@ -80,7 +80,7 @@ class External extends Model
     private $content_type_string_values
     = [
         'UNDEFINED' => 'neurčeno',
-        'RECORDING' => 'audio/video nahrávka',
+        'RECORDING' => 'nahrávka',
         'WEBSITE' => 'externí webová stránka',
         'SCORE' => 'noty',
         'LYRICS' => 'text'
@@ -105,19 +105,22 @@ class External extends Model
         return $this->type_string_values;
     }
 
-    public function getMediaTypeStringAttribute()
-    {
-        return $this->media_type_string_values[$this->media_type];
-    }
-
-    public function getMediaTypeStringValuesAttribute()
+    public function getMediaTypeValuesAttribute()
     {
         return $this->media_type_string_values;
     }
 
     public function getContentTypeStringAttribute()
     {
-        return $this->content_type_string_values[$this->content_type];
+        $graphql_enum_table = [
+            0 => 'UNDEFINED',
+            1 => 'RECORDING',
+            2 => 'SCORE',
+            3 => 'LYRICS',
+            4 => 'WEBSITE'
+        ];
+
+        return $this->content_type_string_values[$graphql_enum_table[$this->content_type]];
     }
 
     public function getContentTypeStringValuesAttribute()
