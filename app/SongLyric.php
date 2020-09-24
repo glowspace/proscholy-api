@@ -425,17 +425,17 @@ class SongLyric extends Model
      */
     public function spotifyTracks()
     {
-        return $this->externals()->where('type', 1)->orderBy('is_featured', 'desc');
+        return $this->externals()->where('media_type', 'spotify')->orderBy('is_featured', 'desc');
     }
 
     public function soundcloudTracks()
     {
-        return $this->externals()->where('type', 2)->orderBy('is_featured', 'desc');
+        return $this->externals()->where('media_type', 'soundcloud')->orderBy('is_featured', 'desc');
     }
 
     public function youtubeVideos()
     {
-        return $this->externals()->where('type', 3)->orderBy('is_featured', 'desc');
+        return $this->externals()->where('media_type', 'youtube')->orderBy('is_featured', 'desc');
     }
 
     public function audioFiles()
@@ -445,12 +445,12 @@ class SongLyric extends Model
 
     public function scoreExternals()
     {
-        return $this->externals()->scores()->orderBy('is_featured', 'desc')->orderBy('type', 'asc');
+        return $this->externals()->scores()->orderBy('is_featured', 'desc');
     }
 
     public function scoreFiles()
     {
-        return $this->files()->scores()->orderBy('type', 'desc');
+        return $this->files()->scores();
     }
 
     // the reason for existence of the domestic characteristic
