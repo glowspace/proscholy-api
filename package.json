@@ -23,6 +23,7 @@
         "apollo-link-http": "^1.5.14",
         "apollo-upload-client": "^14.1.1",
         "axios": "^0.18",
+        "bible-passage-reference-parser": "^2.0.1",
         "bootstrap": "4.2.1",
         "bootstrap-material-design": "4.1.1",
         "bowser": "^2.4.0",
