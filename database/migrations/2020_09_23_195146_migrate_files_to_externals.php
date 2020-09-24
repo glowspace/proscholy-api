@@ -51,5 +51,6 @@ class MigrateFilesToExternals extends Migration
      */
     public function down()
     {
+        DB::table('externals')->where('is_uploaded', true)->delete();
     }
 }
