@@ -17,8 +17,8 @@
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
-        <v-tab>Lilypond (beta)</v-tab>
         <v-tab>Biblické reference</v-tab>
+        <v-tab>Lilypond (beta)</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
@@ -359,26 +359,6 @@
         </v-tab-item>
         <v-tab-item>
           <v-layout row wrap class="pt-2">
-            <v-flex xs12 md6>
-              <v-textarea
-                class="auto-grow-alt"
-                outline
-                name="input-7-4"
-                label="Notový zápis ve formátu Lilypond"
-                ref="textarea"
-                v-model="model.lilypond"
-                v-on:keydown.tab.prevent="preventTextareaTab($event)"
-                style="font-family: monospace; tab-size: 2;"
-              ></v-textarea>
-            </v-flex>
-            <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" style="max-height: 70vh; overflow: scroll;"></div>
-                <div v-else>Náhled lilypondu není dostupný</div>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item>
-          <v-layout row wrap class="pt-2">
             <v-flex xs12 md6 class="pr-2">
               <v-textarea
                 class="auto-grow-alt"
@@ -395,6 +375,26 @@
               <div style="font-size: 1.3em">
                 <span v-for="(interval, i) in model.bible_refs_osis.split(',')" :key="i">{{ interval }}<br/></span>
               </div>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row wrap class="pt-2">
+            <v-flex xs12 md6>
+              <v-textarea
+                class="auto-grow-alt"
+                outline
+                name="input-7-4"
+                label="Notový zápis ve formátu Lilypond"
+                ref="textarea"
+                v-model="model.lilypond"
+                v-on:keydown.tab.prevent="preventTextareaTab($event)"
+                style="font-family: monospace; tab-size: 2;"
+              ></v-textarea>
+            </v-flex>
+            <v-flex xs12 md6>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>
         </v-tab-item>
