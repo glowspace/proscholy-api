@@ -73,7 +73,7 @@ export default {
     props: {
         url: String,
         downloadUrl: String,
-        mediaType: Number,
+        mediaType: String,
         thumbnailUrl: String,
         mediaId: String,
         authors: Array,
