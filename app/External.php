@@ -10,7 +10,7 @@ use Spatie\PdfToImage\Pdf;
 use Hash;
 use App\Interfaces\ISource;
 
-use Illuminate\Support\Arr;
+use App\Helpers\ExternalMediaLink;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property-read \App\SongLyric|null $songLyric
  * @method static \Illuminate\Database\Eloquent\Builder|\App\External whereVisits($value)
  */
-class External extends Model implements ISource
+class External extends Model
 {
     protected $fillable = ['url', 'type', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption', 'media_type', 'content_type'];
 
@@ -145,82 +145,16 @@ class External extends Model implements ISource
         })->orDoesntHave('song_lyric');
     }
 
-    public static function urlAsSpotify($url)
-    {
-        // spotify:track:3X7QBr7rq6NIzLmEXbiXAS
-        $uri_prefix = "spotify:track:";
-        // https://open.spotify.com/track/2nwCO1PqpvyoFIvq3Vrj8N?si=kpz8FS1zSYG7dKv12kU1kA
-        $link_prefix = preg_quote("https://open.spotify.com/track/", "/");
-
-        // check if it's a valid Spotify URI or link
-        if (!preg_match("/($uri_prefix|$link_prefix)([^\?]+)/", $url, $groups)) {
-            return false;
-        }
-
-        return $groups[2];
-
-        // return "https://open.spotify.com/embed/track/$groups[2]";
-    }
-
-    public static function urlAsYoutube($url)
-    {
-        $short = preg_quote("https://youtu.be/", '/');
-        $long = preg_quote("https://www.youtube.com/watch?v=", '/');
-
-        if (!preg_match("/($short|$long)(.+)/", $url, $groups)) {
-            return false;
-        }
-
-        $code = str_replace("t=", "start=", $groups[2]);
-
-        return $code;
-
-        // return "https://www.youtube.com/embed/$groups[2]";
-    }
-
-    public static function urlAsSoundcloud($url)
-    {
-        $prefix = preg_quote("https://soundcloud.com/", "/");
-        if (!preg_match("/$prefix(.+)/", $url)) {
-            return false;
-        }
-
-        return $url;
-
-        // return "https://w.soundcloud.com/player/?url=$this->url
-        //     &color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
-    }
-
-    // todo: refactor to use media_type
+    // todo: check
     public function getMediaIdAttribute()
     {
-        if ($this->type == 1) return self::urlAsSpotify($this->url);
-        if ($this->type == 2) return self::urlAsSoundcloud($this->url);
-        if ($this->type == 3) return self::urlAsYoutube($this->url);
+        $media_link = new ExternalMediaLink($this->url);
+
+        if ($this->media_type == 'spotify') return $media_link->urlAsSpotify();
+        if ($this->media_type == 'soundcloud') return $media_link->urlAsSoundcloud();
+        if ($this->media_type == 'youtube') return $media_link->urlAsYoutube();
 
         return false;
-    }
-
-    // todo: deprecate
-    public function guessType()
-    {
-        if ($this->urlAsSpotify($this->url)) return 1;
-        if ($this->urlAsSoundcloud($this->url)) return 2;
-        if ($this->urlAsYoutube($this->url)) return 3;
-
-        return 0;
-    }
-
-    // IMPLEMENTING INTERFACE ISOURCE
-
-    public function getSourceType(): int
-    {
-        return $this->type;
-    }
-
-    public function getMediaId()
-    {
-        return $this->media_id;
     }
 
     // protected static function getThubmnailsFolder()
@@ -338,39 +272,5 @@ class External extends Model implements ISource
         $path = str_replace('soubor', 'public_files', $path);
 
         return $path;
-    }
-
-    public function guessMediaType()
-    {
-        // has the url a file extension..?
-        if (preg_match("/\/.*\.(\w+)/", $this->url, $groups)) {
-            return "file/$groups[1]";
-        }
-
-        // todo: if not, we could try to get the info from header response
-
-        // external services
-        if ($this->urlAsSpotify($this->url)) return "spotify";
-        if ($this->urlAsSoundcloud($this->url)) return "soundcloud";
-        if ($this->urlAsYoutube($this->url)) return "youtube";
-
-        return "";
-    }
-
-    public function guessContentType($media_type)
-    {
-        if (Arr::has(['spotify', 'soundcloud', 'file/mp3', 'file/wav', 'file/aac', 'file/flac', 'youtube', 'file/mp4', 'file/mkv'], $media_type)) {
-            return 1;
-        }
-
-        if (Arr::has(['file/pdf', 'file/jpg', 'file/jpeg', 'file/musx'], $media_type)) {
-            return 2;
-        }
-
-        if (Arr::has(['file/doc', 'file/docx'], $media_type)) {
-            return 3;
-        }
-
-        return 0;
     }
 }
