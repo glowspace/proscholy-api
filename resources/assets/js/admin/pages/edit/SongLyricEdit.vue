@@ -663,7 +663,8 @@ export default {
           sequence_combination_strategy: 'separate',
           consecutive_combination_strategy: 'separate',
           osis_compaction_strategy: 'bcv'
-      });
+    });
+    this.bcv_parser.include_apocrypha(true);
   },
 
   computed: {
