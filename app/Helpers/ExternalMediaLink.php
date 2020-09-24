@@ -61,17 +61,19 @@ class ExternalMediaLink
 
     public function getExternalMediaType()
     {
-        // has the url a file extension..?
-        if (preg_match("/\/.*\.(\w+)/", $this->url, $groups)) {
-            return "file/$groups[1]";
-        }
-
-        // todo: if not, we could try to get the info from header response
-
         // external services
         if ($this->urlAsSpotify($this->url)) return "spotify";
         if ($this->urlAsSoundcloud($this->url)) return "soundcloud";
         if ($this->urlAsYoutube($this->url)) return "youtube";
+
+        // has the url a file extension..?
+        if (preg_match("/\/.*\.(\w+)$/", $this->url, $groups)) {
+            if (!in_array($groups[1], ['com', 'cz', 'sk', 'org'])) {
+                return "file/$groups[1]";
+            }
+        }
+
+        // todo: we could try to get the info from header response
 
         return "";
     }
