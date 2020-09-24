@@ -251,7 +251,7 @@ export default {
                 this.loadModelDataFromResult(result);
                 this.loadEnumJsonFromResult(
                     result,
-                    'media_type_string_values',
+                    'media_type_values',
                     this.enums.media_type
                 );
                 this.loadEnumJsonFromResult(

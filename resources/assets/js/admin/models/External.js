@@ -36,7 +36,7 @@ const QUERY = gql`
         model_database: external(id: $id) {
             ...ExternalFillableFragment
             type_string_values
-            media_type_string_values
+            media_type_values
             content_type_string_values
         }
     }
