@@ -22,7 +22,7 @@
         "apollo-link": "^1.2.11",
         "apollo-link-http": "^1.5.14",
         "axios": "^0.18",
-        "bible-passage-reference-parser": "^2.0.1",
+        "bible-reference": "https://github.com/proscholy/bible-reference#1.0.1",
         "bootstrap": "4.2.1",
         "bootstrap-material-design": "4.1.1",
         "bowser": "^2.4.0",

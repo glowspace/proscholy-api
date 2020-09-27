@@ -389,7 +389,7 @@
               <h4 class="mb-0">Strojově interpretované reference:</h4>
               <p>(jednotný anglický formát, slouží pro ověření správného zadání referencí)</p>
               <div style="font-size: 1.3em">
-                <span v-for="(interval, i) in model.bible_refs_osis.split(',')" :key="i">{{ interval }}<br/></span>
+                <span v-for="(interval, i) in model.bible_refs_osis" :key="i">{{ interval }}<br/></span>
               </div>
             </v-flex>
           </v-layout>
@@ -499,7 +499,8 @@ import NumberInput from "Admin/components/NumberInput.vue";
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
 
-import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
+// import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
+import BibleReference from "bible-reference/bible_reference";
 
 const FETCH_DATA = gql`
   query {
@@ -595,7 +596,7 @@ export default {
         arrangement_source: undefined,
         lilypond: "",
         bible_refs_src: "",
-        bible_refs_osis: ""
+        bible_refs_osis: []
       },
 
       selected_thumbnail_url: undefined,
@@ -610,9 +611,7 @@ export default {
         lang: [],
         liturgy_approval_status: [],
         authorship_type: []
-      },
-
-      bcv_parser: new bcv_parser
+      }
     };
   },
 
@@ -674,16 +673,6 @@ export default {
     }
   },
 
-  mounted() {
-    this.bcv_parser.set_options({
-          punctuation_strategy: 'eu',
-          sequence_combination_strategy: 'separate',
-          consecutive_combination_strategy: 'separate',
-          osis_compaction_strategy: 'bcv'
-    });
-    this.bcv_parser.include_apocrypha(true);
-  },
-
   computed: {
     thumbnailables() {
       // mix the externals and files that can have thumbnail
@@ -740,11 +729,11 @@ export default {
     "model.bible_refs_src": function() {
       if (this.model.bible_refs_src) {
         const lines = this.model.bible_refs_src.split("\n");
-        const lines_osis = lines.map(line => this.bcv_parser.parse(line).osis());
+        const lines_osis = lines.flatMap(line => BibleReference.fromEuropean(line).toCzechStrings());
   
-        this.model.bible_refs_osis = lines_osis.join(",");
+        this.model.bible_refs_osis = lines_osis;
       } else {
-        this.model.bible_refs_osis = "";
+        this.model.bible_refs_osis = [];
       }
     }
   },
