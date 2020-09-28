@@ -373,7 +373,9 @@
               <h4 class="mb-0">Strojově interpretované reference:</h4>
               <p>(jednotný formát, slouží pro ověření správného zadání referencí)</p>
               <div style="font-size: 1.3em">
-                <span v-for="(reference, i) in bible_refs_czech" :key="i">{{ reference }}<br/></span>
+                <span v-for="(reference, i) in bible_refs_czech" :key="i">
+                  <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
+                </span>
               </div>
             </v-flex>
           </v-layout>
