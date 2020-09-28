@@ -31,9 +31,6 @@ if cd ${DATESTAMP} ; then
 
     cp ${LARAVEL}/.env ${LARAVEL}/releases/${DATESTAMP}/.env
 
-    echo "Resetting OPcache"
-    curl nginx/reset-cache
-
     echo "Installing composer and yarn"
     composer install --optimize-autoloader --no-dev
     composer dump-auto
@@ -52,6 +49,9 @@ if cd ${DATESTAMP} ; then
     php artisan lighthouse:clear-cache
     php artisan lighthouse:cache
     php artisan up
+
+    echo "Resetting OPcache"
+    curl nginx/reset-cache
 
     ln -nfs ${LARAVEL}/releases/${DATESTAMP} ${LARAVEL}/current
 else

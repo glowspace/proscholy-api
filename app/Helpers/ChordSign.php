@@ -4,7 +4,8 @@ namespace App\Helpers;
 
 use Log;
 
-class ChordSign{
+class ChordSign
+{
     protected $baseNote;
     protected $baseNoteAccidental;
     protected $variant; // "", "mi", "m", "dim"
@@ -13,9 +14,15 @@ class ChordSign{
     protected $bassNoteAccidental;
     protected $optional;
 
-    protected function __construct($baseNote, $baseNoteAccidental, $variant, $extension, 
-                                    $bassNote, $bassNoteAccidental, $optional = false)
-    {
+    protected function __construct(
+        $baseNote,
+        $baseNoteAccidental,
+        $variant,
+        $extension,
+        $bassNote,
+        $bassNoteAccidental,
+        $optional = false
+    ) {
         $this->baseNote = $baseNote;
         $this->baseNoteAccidental = $baseNoteAccidental;
         $this->variant = $variant;
@@ -25,23 +32,28 @@ class ChordSign{
         $this->optional = $optional;
     }
 
-    public function getBase(){
-        return $this->baseNote.$this->baseNoteAccidental;
+    public function getBase()
+    {
+        return $this->baseNote . $this->baseNoteAccidental;
     }
 
-    public function getVariant(){
+    public function getVariant()
+    {
         return $this->variant;
     }
 
-    public function getExtension(){
+    public function getExtension()
+    {
         return $this->extension;
     }
 
-    public function getBassNote(){
-        return $this->bassNote.$this->bassNoteAccidental;
+    public function getBassNote()
+    {
+        return $this->bassNote . $this->bassNoteAccidental;
     }
 
-    public function isOptional(){
+    public function isOptional()
+    {
         return $this->optional;
     }
 
@@ -54,10 +66,10 @@ class ChordSign{
             $optional = true;
         }
 
-        $p_baseNote = "([A-H])(\#|b|is)?"; // base note with accidental
+        $p_baseNote = "([A-H])(\#|b|is|es|s)?"; // base note with accidental
         $p_variant = "(mi|m|dim|\+)?";
         $p_ext = "([^\/]*)"; // everything but '/'
-        $p_bass = "(\/([A-H])(\#|b|is)?)?"; // bass note with accidental
+        $p_bass = "(\/([A-H47])(\#|b|is|es|s)?)?"; // bass note with accidental, or special case of chords 4/7 7/4 (this is handled later on)
 
         preg_match("/$p_baseNote$p_variant$p_ext$p_bass/", $text, $matches);
 
@@ -67,10 +79,16 @@ class ChordSign{
             return self::EMPTY();
         }
 
+        // handle /4 and /7 chords
+        if (count($matches) > 6 && is_numeric($matches[6])) {
+            $matches[4] .= '/' . $matches[6];
+            $matches[6] = "";
+        }
+
         // handle 'maj' "irregular" exception
         if ($matches[3] == "m" && strlen($matches[4]) > 0 && substr_compare($matches[4], "aj", 0, 2) == 0) {
             $matches[3] = "";
-            $matches[4] = "m".$matches[4];
+            $matches[4] = "m" . $matches[4];
         }
 
         // rewrite 'Xis' to 'X#'
@@ -80,18 +98,26 @@ class ChordSign{
         if (count($matches) > 7 && $matches[7] == "is") {
             $matches[7] = "#";
         }
+        // rewrite 'Xes' to 'Xb'
+        if ($matches[2] == "es" || $matches[2] == "s") {
+            $matches[2] = "b";
+        }
+        if (count($matches) > 7 && ($matches[7] == "es" || $matches[2] == "s")) {
+            $matches[7] = "b";
+        }
 
         $_bn = $matches[1];
         $_bna = $matches[2];
         $_v = $matches[3];
         $_e = $matches[4];
-        $_bsn = count($matches) > 6 ? $matches[6] : ""; 
-        $_bsna = count($matches) > 7 ? $matches[7] : ""; 
+        $_bsn = count($matches) > 6 ? $matches[6] : "";
+        $_bsna = count($matches) > 7 ? $matches[7] : "";
 
         return new ChordSign($_bn, $_bna, $_v, $_e, $_bsn, $_bsna, $optional);
     }
 
-    public static function EMPTY(){
+    public static function EMPTY()
+    {
         return new ChordSign("", "", "", "", "", "");
     }
 }
