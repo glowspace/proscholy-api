@@ -15,9 +15,10 @@
       <v-tabs color="transparent">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
-        <v-tab>Lilypond (beta)</v-tab>
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
+        <v-tab>Biblické reference</v-tab>
+        <v-tab>Lilypond (beta)</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item>
           <v-layout row wrap pt-2>
@@ -303,26 +304,6 @@
           </v-layout>
         </v-tab-item>
         <v-tab-item>
-          <v-layout row wrap>
-            <v-flex xs12 md6>
-              <v-textarea
-                class="auto-grow-alt"
-                outline
-                name="input-7-4"
-                label="Notový zápis ve formátu Lilypond"
-                ref="textarea"
-                v-model="model.lilypond"
-                v-on:keydown.tab.prevent="preventTextareaTab($event)"
-                style="font-family: monospace; tab-size: 2;"
-              ></v-textarea>
-            </v-flex>
-            <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" style="max-height: 70vh; overflow: scroll;"></div>
-                <div v-else>Náhled lilypondu není dostupný</div>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12 md6>
               <h5>Externí odkazy:</h5>
@@ -389,6 +370,50 @@
                 outline
                 @click="addSongbookRecord()"
               >Přidat nový záznam ve zpěvníku</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row wrap class="pt-2">
+            <v-flex xs12 md6 class="pr-2">
+              <v-textarea
+                class="auto-grow-alt"
+                outline
+                name="input-bible"
+                label="Biblické reference (v běžném formátu)"
+                ref="textarea-bible"
+                v-model="model.bible_refs_src"
+              ></v-textarea>
+            </v-flex>
+            <v-flex xs12 md6>
+              <h4 class="mb-0">Strojově interpretované reference:</h4>
+              <p>- jednotný formát, slouží pro ověření správného zadání referencí<br/>
+                - klikem na odkaz se otevře bibleserver.com s daným úryvkem</p>
+              <div style="font-size: 1.3em">
+                <span v-for="(reference, i) in bible_refs_czech" :key="i">
+                  <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
+                </span>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-tab-item>
+        <v-tab-item>
+          <v-layout row wrap class="pt-2">
+            <v-flex xs12 md6>
+              <v-textarea
+                class="auto-grow-alt"
+                outline
+                name="input-7-4"
+                label="Notový zápis ve formátu Lilypond"
+                ref="textarea"
+                v-model="model.lilypond"
+                v-on:keydown.tab.prevent="preventTextareaTab($event)"
+                style="font-family: monospace; tab-size: 2;"
+              ></v-textarea>
+            </v-flex>
+            <v-flex xs12 md6>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -475,7 +500,10 @@ import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
 
 import EditForm from './EditForm';
-import SongLyric from 'Admin/models/SongLyric'
+import SongLyric from 'Admin/models/SongLyric';
+
+// import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
+import BibleReference from "bible-reference/bible_reference";
 
 const FETCH_DATA = gql`
   query {
@@ -569,13 +597,17 @@ export default {
         capo: undefined,
         liturgy_approval_status: undefined,
         arrangement_source: undefined,
-        lilypond: ""
+        lilypond: "",
+        bible_refs_src: "",
+        bible_refs_osis: ""
       },
 
       selected_thumbnail_url: undefined,
       is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
+      // only for displaying parsed references
+      bible_refs_czech: [],
 
       new_arrangement_name: "",
       created_arrangements: [],
@@ -697,6 +729,21 @@ export default {
         }
       },
       deep: true
+    },
+
+    "model.bible_refs_src": function() {
+      if (this.model.bible_refs_src) {
+        const lines = this.model.bible_refs_src.split("\n");
+        const bib_refs = lines.map(l => BibleReference.fromEuropean(l));
+        const lines_osis = bib_refs.map(r => r.toString()).join(',');
+        const lines_cz = bib_refs.flatMap(r => r.toCzechStrings());
+  
+        this.model.bible_refs_osis = lines_osis;
+        this.bible_refs_czech = lines_cz;
+      } else {
+        this.model.bible_refs_osis = "";
+        this.bible_refs_czech = [];
+      }
     }
   },
 
