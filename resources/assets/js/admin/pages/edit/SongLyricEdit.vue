@@ -387,9 +387,9 @@
             </v-flex>
             <v-flex xs12 md6>
               <h4 class="mb-0">Strojově interpretované reference:</h4>
-              <p>(jednotný anglický formát, slouží pro ověření správného zadání referencí)</p>
+              <p>(jednotný formát, slouží pro ověření správného zadání referencí)</p>
               <div style="font-size: 1.3em">
-                <span v-for="(interval, i) in model.bible_refs_osis" :key="i">{{ interval }}<br/></span>
+                <span v-for="(reference, i) in bible_refs_czech" :key="i">{{ reference }}<br/></span>
               </div>
             </v-flex>
           </v-layout>
@@ -596,13 +596,15 @@ export default {
         arrangement_source: undefined,
         lilypond: "",
         bible_refs_src: "",
-        bible_refs_osis: []
+        bible_refs_osis: ""
       },
 
       selected_thumbnail_url: undefined,
       is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
+      // only for displaying parsed references
+      bible_refs_czech: [],
 
       new_arrangement_name: "",
       created_arrangements: [],
@@ -729,11 +731,15 @@ export default {
     "model.bible_refs_src": function() {
       if (this.model.bible_refs_src) {
         const lines = this.model.bible_refs_src.split("\n");
-        const lines_osis = lines.flatMap(line => BibleReference.fromEuropean(line).toCzechStrings());
+        const bib_refs = lines.map(l => BibleReference.fromEuropean(l));
+        const lines_osis = bib_refs.map(r => r.toString()).join(',');
+        const lines_cz = bib_refs.flatMap(r => r.toCzechStrings());
   
         this.model.bible_refs_osis = lines_osis;
+        this.bible_refs_czech = lines_cz;
       } else {
-        this.model.bible_refs_osis = [];
+        this.model.bible_refs_osis = "";
+        this.bible_refs_czech = [];
       }
     }
   },
