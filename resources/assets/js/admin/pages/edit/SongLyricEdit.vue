@@ -371,7 +371,8 @@
             </v-flex>
             <v-flex xs12 md6>
               <h4 class="mb-0">Strojově interpretované reference:</h4>
-              <p>(jednotný formát, slouží pro ověření správného zadání referencí)</p>
+              <p>- jednotný formát, slouží pro ověření správného zadání referencí<br/>
+                - klikem na odkaz se otevře bibleserver.com s daným úryvkem</p>
               <div style="font-size: 1.3em">
                 <span v-for="(reference, i) in bible_refs_czech" :key="i">
                   <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
