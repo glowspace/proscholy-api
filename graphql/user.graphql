@@ -2,6 +2,7 @@ type User {
     id: ID!
     name: String
     public_user: PublicUser
+    stats_json: JSON
 }
 
 extend type Query {
