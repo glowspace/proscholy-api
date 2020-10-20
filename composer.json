@@ -24,6 +24,7 @@
         "mll-lab/laravel-graphql-playground": "^2.3",
         "nuwave/lighthouse": "^4.10",
         "sentry/sentry-laravel": "^1.8",
+        "spatie/flysystem-dropbox": "^1.2",
         "spatie/laravel-backup": "^6.9",
         "spatie/laravel-permission": "^3.0",
         "venturecraft/revisionable": "^1.30"
