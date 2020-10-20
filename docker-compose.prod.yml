@@ -95,5 +95,15 @@ services:
         networks:
             - bcloud-network
 
+    cron:
+        build:
+            context: ./docker/setup/cron
+            dockerfile: Dockerfile
+        volumes:
+            - ./docker/logs:/var/log
+        networks:
+            - bcloud-network-staging
+        restart: always
+
 networks:
     bcloud-network:
