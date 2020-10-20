@@ -68,6 +68,8 @@ services:
         volumes:
             - ./docker/logs:/var/log
             - '.:/var/www/html'
+        networks:
+            - bcloud-network-staging
 
     elasticsearch:
         build:
