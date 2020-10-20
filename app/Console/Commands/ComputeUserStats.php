@@ -62,8 +62,6 @@ class ComputeUserStats extends Command
         // +"visits_short": "9"
         // +"visits_long": "9"
 
-        logger($name);
-        logger($results);
 
         foreach ($results as $result) {
             $this->storeUserResult($result->user_id, $name, [
