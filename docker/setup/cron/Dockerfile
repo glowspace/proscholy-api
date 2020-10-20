@@ -2,10 +2,7 @@ FROM php:7.3-fpm
 
 # Install cron
 RUN apt-get update
-RUN apt-get install -y cron
-
-RUN docker-php-ext-install mbstring pdo pdo_mysql
-RUN docker-php-ext-install mysqli 
+RUN apt-get install -y cron curl
 
 ADD crontab /etc/cron.d/laravel-cron
 

@@ -67,9 +67,9 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./docker/logs:/var/log
-            - '.:/var/www/html'
         networks:
             - bcloud-network-staging
+        restart: always
 
     elasticsearch:
         build:
