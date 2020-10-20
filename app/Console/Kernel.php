@@ -27,6 +27,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('compute:stats')
             ->everyTenMinutes()
             ->appendOutputTo(storage_path('logs/schedule.log'));
+
+        $schedule->command('backup:run')
+            ->weekly()
+            ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
     /**
