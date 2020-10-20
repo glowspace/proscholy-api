@@ -1,5 +1,5 @@
 # mysql/*
 
-logs/nginx/*
+logs/*
 data/mysql/*
 data/mysql_old
