@@ -116,7 +116,7 @@ Route::get('/reset-cache', function () {
 });
 
 Route::get('/run-schedule', function () {
-    Artisan::run('schedule:run');
+    Artisan::call('schedule:run --no-ansi');
     return response("Scheduled tasks have run");
 });
 
