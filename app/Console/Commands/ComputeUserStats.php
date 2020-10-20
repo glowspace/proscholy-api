@@ -91,8 +91,8 @@ class ComputeUserStats extends Command
             "SELECT 
                 users.name, 
                 users.id as user_id,
-                sum(case when visit_type = 0 then 1 end) as visits_short,
-                sum(case when visit_type = 1 then 1 end) as visits_long from 
+                ifnull(sum(case when visit_type = 0 then 1 end), 0) as visits_short,
+                ifnull(sum(case when visit_type = 1 then 1 end), 0) as visits_long from 
                     (SELECT distinct 
                         revisionable_id,
                         user_id, 
@@ -103,8 +103,8 @@ class ComputeUserStats extends Command
                         revisionable_type FROM `revisions`
                     join `visits` on visitable_id = revisionable_id and visitable = revisionable_type and visits.created_at > revisions.created_at
                     where revisions.created_at > :datetime) as stats
-                join users on user_id = users.id
-                group by user_id
+                right join users on user_id = users.id
+                group by users.id
                 order by count(*) desc"
         ), [
             'datetime' => $min_dt->format('Y-m-d H:i:s'),
