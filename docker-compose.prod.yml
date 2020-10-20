@@ -102,7 +102,7 @@ services:
         volumes:
             - ./docker/logs:/var/log
         networks:
-            - bcloud-network-staging
+            - bcloud-network
         restart: always
 
 networks:
