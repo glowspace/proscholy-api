@@ -144,6 +144,16 @@ textarea.form-control {
 }
 
 // dashboard
+.dashboard-container {
+    .card {
+        transition: color .2s, box-shadow .2s;
+
+        &:hover {
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        }
+    }
+}
+
 .dash {
     padding-right: 5px;
     padding-left: 5px;
@@ -183,17 +193,11 @@ textarea.form-control {
             .card-title {
                 text-decoration: underline;
             }
-
-            img, .img-icon {
-                color: #1d6dab;
-                opacity: 0.75;
-            }
         }
 
         .card {
             height: 100%;
             flex-direction: row;
-            transition: border 0.2s;
 
             img, .img-icon {
                 height: auto;
@@ -226,6 +230,14 @@ textarea.form-control {
 
     td {
         padding: 0.75rem 1.25rem;
+    }
+
+    tr {
+        transition: background-color .1s;
+
+        &:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+        }
     }
 }
 
