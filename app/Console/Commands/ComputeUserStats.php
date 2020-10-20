@@ -40,12 +40,14 @@ class ComputeUserStats extends Command
      */
     public function handle()
     {
+        $start = new Carbon('2020-09-01 0:0:0');
+
         $this->info('Running SQL query - since 09/01/2020');
         $res_start = $this->getResults(new Carbon('2020-09-01 0:0:0'));
         $this->info('Running SQL query - a month ago');
         $res_month = $this->getResults(Carbon::now()->subWeeks(4));
         $this->info('Running SQL query - two months ago');
-        $res_twomonths = $this->getResults(Carbon::now()->subWeeks(8));
+        $res_twomonths = $this->getResults(max(Carbon::now()->subWeeks(8), $start));
 
         $this->info('Storing results to DB');
         $this->storeResults($res_start, 'from_start');
