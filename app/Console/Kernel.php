@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('compute:stats')
-            ->everyMinute()
+            ->everyTenMinutes()
             ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
