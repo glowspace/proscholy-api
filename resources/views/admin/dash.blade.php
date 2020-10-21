@@ -89,68 +89,63 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body p-0">
-                            <table class="table table-bordered mb-0 statistics-table">
-                                <tr>
-                                    <td colspan="3"><b>Počty písní, autorů a odkazů ve Zpěvníku</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Písně s&nbsp;textem</td>
-                                    <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
-                                    <td><b>{{$songs_w_text_count}}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
-                                    <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>
-                                    <td><b class="text-success">{{$songs_w_all_count}}</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Písně pouze s&nbsp;názvem</td>
-                                    <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>
-                                    <td><b class="text-warning">{{$songs_w_just_title_count}}</b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><a href="{{route('admin.song.index')}}">Písně celkem</a></td>
-                                    <td><b class="text-primary">{{$songs_count}}</b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><a href="{{route('admin.author.index')}}">Autoři</a></td>
-                                    <td><b>{{$authors_count}}</b></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><a href="{{route('admin.external.index')}}">Externí odkazy</a></td>
-                                    <td><b>{{$externals_count}}</b></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body" style="padding:1rem 2rem;font-size:3rem">
-                            Díky, že pomáháš!
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body mb-0 h4">
-                        @if (Auth::check())
-                            <i class="fas fa-user pr-2"></i>
-                            <span>
-                                {{ Auth::user()->name }}
-
-                                @if (Auth::user()->roles()->count() > 0)
-                                    ({{Auth::user()->roles()->first()->name}})
-                                @endif
-                            </span>
-                        @endif
+                        <i class="fas fa-heart pr-2"></i>
+                        <span>Díky, že pomáháš!</span>
                     </div>
                 </div>
-                <user-stats user-id="{{ Auth::user()->id }}"></user-stats>
+                <div class="card">
+                    <div class="card-body p-0">
+                        <table class="table table-bordered mb-0 statistics-table">
+                            <tr>
+                                <td colspan="3"><b>Počty písní, autorů a odkazů ve Zpěvníku</b></td>
+                            </tr>
+                            <tr>
+                                <td>Písně s&nbsp;textem</td>
+                                <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
+                                <td><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
+                                <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>
+                                <td><b class="text-success">{{number_format($songs_w_all_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>Písně pouze s&nbsp;názvem</td>
+                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>
+                                <td><b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><a href="{{route('admin.song.index')}}">Písně celkem</a></td>
+                                <td><b class="text-primary">{{number_format($songs_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><a href="{{route('admin.author.index')}}">Autoři</a></td>
+                                <td><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><a href="{{route('admin.external.index')}}">Externí odkazy</a></td>
+                                <td><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                @if (Auth::check())
+                <div class="card">
+                    <div class="card-body mb-0 h4">
+                        <i class="fas fa-user pr-2"></i>
+                        <span>{{ Auth::user()->name }}</span>
+                        @if (Auth::user()->roles()->count() > 0)
+                        <span>({{Auth::user()->roles()->first()->name}})</span>
+                        @endif
+                        <span class="mx-2 text-secondary"><user-stats user-id="{{ Auth::user()->id }}" :embedded="true"></user-stats></span>
+                    </div>
+                </div>
+                <user-stats user-id="{{ Auth::user()->id }}" :embedded="false"></user-stats>
+                @endif
             </div>
         </div>
     </div>
