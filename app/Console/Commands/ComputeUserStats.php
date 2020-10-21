@@ -47,12 +47,12 @@ class ComputeUserStats extends Command
         $this->info('Running SQL query - a month ago');
         $res_month = $this->getResults(Carbon::now()->subWeeks(4));
         $this->info('Running SQL query - two months ago');
-        $res_twomonths = $this->getResults(max(Carbon::now()->subWeeks(8), $start));
+        $res_prev_month = $this->getResults(max(Carbon::now()->subWeeks(8), $start), Carbon::now()->subWeeks(4));
 
         $this->info('Storing results to DB');
         $this->storeResults($res_start, 'from_start');
         $this->storeResults($res_month, 'month');
-        $this->storeResults($res_twomonths, 'two_months');
+        $this->storeResults($res_prev_month, 'prev_month');
 
         return 1;
     }
@@ -89,6 +89,10 @@ class ComputeUserStats extends Command
 
     private function getResults(Carbon $min_dt, ?Carbon $max_dt = null)
     {
+        if (!$max_dt) {
+            $max_dt = Carbon::now();
+        }
+
         return DB::select(DB::raw(
             "SELECT 
                 users.name, 
@@ -104,12 +108,14 @@ class ComputeUserStats extends Command
                         visitable,
                         revisionable_type FROM `revisions`
                     join `visits` on visitable_id = revisionable_id and visitable = revisionable_type and visits.created_at > revisions.created_at
-                    where revisions.created_at > :datetime) as stats
+                    where revisions.created_at > :datetime and visits.created_at < :datetime_max
+                ) as stats
                 right join users on user_id = users.id
                 group by users.id
                 order by count(*) desc"
         ), [
             'datetime' => $min_dt->format('Y-m-d H:i:s'),
+            'datetime_max' => $max_dt->format('Y-m-d H:i:s'),
         ]);
     }
 }

@@ -14,8 +14,8 @@
                     :style="{textDecoration: [row.id == userId ? 'underline dotted' : 'none']}"
                     :title="[row.id == userId ? 'to jsi ty' : '']">{{ row.name }}</span><i v-if="!key" class="fas fa-fish pl-2" style="color:gold;-webkit-text-stroke:black 1px"></i></td>
                     <td>{{ our(row.month).toLocaleString() }}</td>
-                    <td :class="'text-' + change(our(row.month), our(row.two_months), true)">{{
-                        change(our(row.month), our(row.two_months)) }}</td>
+                    <td :class="'text-' + change(our(row.month), our(row.prev_month), true)">{{
+                        change(our(row.month), our(row.prev_month)) }}</td>
                 </tr>
             </table>
         </div>
@@ -53,7 +53,7 @@ export default {
                 if (!userJson) {
                     userJson = {};
                     userJson.month = {visits_short: 0, visits_long: 0};
-                    userJson.two_months = {visits_short: 0, visits_long: 0};
+                    userJson.prev_month = {visits_short: 0, visits_long: 0};
                     userJson.from_start = {visits_short: 0, visits_long: 0};
                 }
 
@@ -71,10 +71,10 @@ export default {
 
                     if (userJson) {
                         user.month = userJson.month;
-                        user.two_months = userJson.two_months;
+                        user.prev_month = userJson.prev_month;
                     } else {
                         user.month = {visits_short: 0, visits_long: 0};
-                        user.two_months = {visits_short: 0, visits_long: 0};
+                        user.prev_month = {visits_short: 0, visits_long: 0};
                     }
 
                     topUsers[i] = user;
@@ -87,8 +87,8 @@ export default {
     },
 
     methods: {
-        change(last, lastTwo, retClass) {
-            let number = last - (lastTwo - last);
+        change(last, prev, retClass) {
+            let number = last - prev;
 
             if (number > 0) {
                 return retClass ? 'success' : '+ ' + number.toLocaleString();
