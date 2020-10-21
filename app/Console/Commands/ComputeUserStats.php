@@ -99,7 +99,7 @@ class ComputeUserStats extends Command
                         revisionable_id,
                         user_id, 
                         revisions.created_at as revision_time,
-                        date(visits.created_at) as visit_time,
+                        date(visits.created_at) as visit_time, # date() strips timestamp, which effectively unifies edits on the same song from the same day (SELECT DISTINCT)
                         visit_type,
                         visitable,
                         revisionable_type FROM `revisions`
