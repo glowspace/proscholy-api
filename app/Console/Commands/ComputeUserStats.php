@@ -67,7 +67,7 @@ class ComputeUserStats extends Command
 
         foreach ($results as $result) {
             $this->storeUserResult($result->user_id, $name, [
-                'visits_short' => $result->visits_short,
+                'visits_short' => (int)$result->visits_short,
                 'visits_long' => (int)$result->visits_long
             ]);
         }
