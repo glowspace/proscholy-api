@@ -1,49 +1,19 @@
 <template>
-    <!-- v-app must wrap all the components -->
-    <v-app :dark="$root.dark">
+    <span v-if="embedded" title="dosah od 1. září 2020">{{
+        me ? our(me.from_start).toLocaleString() : '…' }}</span>
+    <v-app v-else :dark="$root.dark">
         <div class="card">
-            <table v-if="me" class="table table-bordered mb-0 statistics-table">
+            <table class="table table-bordered mb-0 statistics-table">
                 <tr>
-                    <td><b>Návštěvy tvých úprav</b></td>
-                    <td>za poslední 4 týdny</td>
-                    <td title="oproti předchozím 4 týdnům" style="text-decoration:underline dotted">změna</td>
-                    <td>od 1. září 2020</td>
-                </tr>
-                <tr>
-                    <td>Krátké návštěvy</td>
-                    <td>{{ me.month.visits_short }}</td>
-                    <td :class="'text-' + change(me.month.visits_short, me.two_months.visits_short, true)">{{
-                        change(me.month.visits_short, me.two_months.visits_short) }}</td>
-                    <td>{{ me.from_start.visits_short }}</td>
-                </tr>
-                <tr>
-                    <td>Dlouhé návštěvy</td>
-                    <td>{{ me.month.visits_long }}</td>
-                    <td :class="'text-' + change(me.month.visits_long, me.two_months.visits_long, true)">{{
-                        change(me.month.visits_long, me.two_months.visits_long) }}</td>
-                    <td>{{ me.from_start.visits_long }}</td>
-                </tr>
-                <tr>
-                    <td title="kombinace krátkých a dlouhých návštěv (k + 3d)" style="text-decoration:underline dotted">Zpěvníkové návštěvy</td>
-                    <td>{{ our(me.month) }}</td>
-                    <td :class="'text-' + change(our(me.month), our(me.two_months), true)">{{
-                        change(our(me.month), our(me.two_months)) }}</td>
-                    <td>{{ our(me.from_start) }}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="card">
-            <table v-if="top" class="table table-bordered mb-0 statistics-table">
-                <tr>
-                    <td><b>Nejlepší redaktoři</b> za poslední 4 týdny</td>
-                    <td title="kombinace krátkých a dlouhých návštěv (k + 3d)" style="text-decoration:underline dotted">Zpěvníkové návštěvy</td>
+                    <td><b>Nejlepší redaktoři</b></td>
+                    <td>dosah za poslední 4 týdny</td>
                     <td title="oproti předchozím 4 týdnům" style="text-decoration:underline dotted">změna</td>
                 </tr>
-                <tr v-for="(row, key) in top" :key="row.id">
+                <tr v-for="(row, key) in top" :key="row.id" v-if="top && (key < 5 || row.id == userId)">
                     <td>{{ key + 1 }}. <span
                     :style="{textDecoration: [row.id == userId ? 'underline dotted' : 'none']}"
-                    :title="[row.id == userId ? 'to jsi ty' : '']">{{ row.name }}</span></td>
-                    <td>{{ our(row.month) }}</td>
+                    :title="[row.id == userId ? 'to jsi ty' : '']">{{ row.name }}</span><i v-if="!key" class="fas fa-fish pl-2" style="color:gold;-webkit-text-stroke:black 1px"></i></td>
+                    <td>{{ our(row.month).toLocaleString() }}</td>
                     <td :class="'text-' + change(our(row.month), our(row.two_months), true)">{{
                         change(our(row.month), our(row.two_months)) }}</td>
                 </tr>
@@ -66,7 +36,7 @@ const fetch_items = gql`
 `;
 
 export default {
-    props: ['user-id'],
+    props: ['user-id', 'embedded'],
 
     apollo: {
         users: {
@@ -111,7 +81,7 @@ export default {
                 }
 
                 topUsers.sort((a,b) => (this.our(a.month) > this.our(b.month)) ? -1 : ((this.our(b.month) > this.our(a.month)) ? 1 : 0));
-                return topUsers.slice(0, 5);
+                return topUsers;
             }
         }
     },
@@ -121,11 +91,11 @@ export default {
             let number = last - (lastTwo - last);
 
             if (number > 0) {
-                return retClass ? 'success' : '+ ' + number;
+                return retClass ? 'success' : '+ ' + number.toLocaleString();
             } else if (number == 0) {
                 return retClass ? '' : '–';
             } else {
-                return retClass ? 'warning' : '− ' + (number * -1);
+                return retClass ? 'warning' : '− ' + (number * -1).toLocaleString();
             }
         },
 
