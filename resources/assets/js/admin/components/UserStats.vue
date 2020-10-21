@@ -24,7 +24,7 @@
                     <td>{{ me.from_start.visits_long }}</td>
                 </tr>
                 <tr>
-                    <td title="kombinace krátkých a dlouhých návštěv" style="text-decoration:underline dotted">Zpěvníkové návštěvy</td>
+                    <td title="kombinace krátkých a dlouhých návštěv (k + 3d)" style="text-decoration:underline dotted">Zpěvníkové návštěvy</td>
                     <td>{{ our(me.month) }}</td>
                     <td :class="'text-' + change(our(me.month), our(me.two_months), true)">{{
                         change(our(me.month), our(me.two_months)) }}</td>
@@ -36,7 +36,7 @@
             <table v-if="top" class="table table-bordered mb-0 statistics-table">
                 <tr>
                     <td><b>Nejlepší redaktoři</b> za poslední 4 týdny</td>
-                    <td>Zpěvníkové návštěvy</td>
+                    <td title="kombinace krátkých a dlouhých návštěv (k + 3d)" style="text-decoration:underline dotted">Zpěvníkové návštěvy</td>
                     <td title="oproti předchozím 4 týdnům" style="text-decoration:underline dotted">změna</td>
                 </tr>
                 <tr v-for="(row, key) in top" :key="row.id">
