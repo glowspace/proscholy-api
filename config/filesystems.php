@@ -64,6 +64,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'dropbox' => [
+            'authorization_token' => env('DROPBOX_API_KEY'),
+            'driver' => 'dropbox'
+        ]
+
     ],
 
     /*

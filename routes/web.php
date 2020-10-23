@@ -116,6 +116,10 @@ Route::get('/reset-cache', function () {
     }
 });
 
+Route::get('/run-schedule', function () {
+    Artisan::call('schedule:run --no-ansi');
+    return response("Scheduled tasks have run");
+});
 
 // Route::get('/firebase-auth/me', function(Request $request) {
 //     return (array) $request->public_user();

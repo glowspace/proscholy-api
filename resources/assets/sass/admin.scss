@@ -66,7 +66,8 @@ textarea.form-control {
 }
 
 .navbar .btn.btn-secondary {
-    &, &:hover {
+    &,
+    &:hover {
         color: #aaa;
     }
 }
@@ -117,7 +118,8 @@ textarea.form-control {
         &.active {
             background-color: rgba(153, 153, 153, 0.2) !important;
 
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
                 background-color: rgba(153, 153, 153, 0.4) !important;
             }
         }
@@ -132,18 +134,29 @@ textarea.form-control {
         }
 
         .badge {
-            float:            right;
+            float: right;
 
-            position:         relative;
-            top:              3px;
+            position: relative;
+            top: 3px;
 
             background-color: #36c374;
-            color:            black;
+            color: black;
         }
     }
 }
 
 // dashboard
+.dashboard-container {
+    .card {
+        transition: color 0.2s, box-shadow 0.2s;
+
+        &:hover {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+                0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+    }
+}
+
 .dash {
     padding-right: 5px;
     padding-left: 5px;
@@ -173,18 +186,21 @@ textarea.form-control {
             flex: 0 0 calc(100% - 20px) !important;
         }
 
-        img, .img-icon {
+        img,
+        .img-icon {
             transition: opacity 0.2s;
         }
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             text-decoration: none;
 
             .card-title {
                 text-decoration: underline;
             }
 
-            img, .img-icon {
+            img,
+            .img-icon {
                 color: #1d6dab;
                 opacity: 0.75;
             }
@@ -193,9 +209,9 @@ textarea.form-control {
         .card {
             height: 100%;
             flex-direction: row;
-            transition: border 0.2s;
 
-            img, .img-icon {
+            img,
+            .img-icon {
                 height: auto;
                 text-align: center;
                 font-size: calc(60px - 1.5rem);
@@ -226,6 +242,14 @@ textarea.form-control {
 
     td {
         padding: 0.75rem 1.25rem;
+    }
+
+    tr {
+        transition: background-color 0.1s;
+
+        &:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+        }
     }
 }
 
@@ -291,7 +315,8 @@ div.application {
 
 // dark mode
 body.admin-dark {
-    &, .body-bg {
+    &,
+    .body-bg {
         background-color: #303030 !important;
     }
 }
