@@ -76,11 +76,10 @@ type SongLyric {
         id: Int @eq
         type: Int @eq
         orderBy: [OrderByClause!] @orderBy
+        media_type: String @eq
+        content_type: ContentType @eq
+        is_uploaded: Boolean @eq
     ): [External] @hasMany
-    """
-    Files uploaded on our servers (mp3, pdf, ...) 
-    """
-    files(id: Int @eq, type: Int @eq): [File] @hasMany
     tags(type: Int @eq): [Tag] @morphMany
     """
     Pivotal relation of song to its records in songbooks (currently reflects only printed songbooks)
@@ -129,6 +128,7 @@ type SongLyric {
     arrangement_source: SongLyric @belongsTo
     is_arrangement: Boolean
     
+    files(id: Int @eq, type: Int @eq): [File] @hasMany @deprecated("Files have moved under Extrernals")
     type: Int @deprecated(reason: "Use the `type_enum` field instead")
     is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
     is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
