@@ -264,7 +264,7 @@ class External extends Model
             $info .= $this->song_lyric->name;
         }
 
-        if ($this->song_lyric && $this->authors()->count() > 0) {
+        if ($this->song_lyric && $this->authors->count() > 0) {
             $info .= " | ";
         }
 

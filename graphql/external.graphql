@@ -1,6 +1,6 @@
 type External {
     id: ID!
-    public_name: String
+    public_name: String @with(relation: "authors") @with(relation: "song_lyric")
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     url: String
