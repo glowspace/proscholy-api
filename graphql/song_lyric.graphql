@@ -128,7 +128,7 @@ type SongLyric {
     arrangement_source: SongLyric @belongsTo
     is_arrangement: Boolean
     
-    files(id: Int @eq, type: Int @eq): [File] @hasMany @deprecated("Files have moved under Extrernals")
+    files(id: Int @eq, type: Int @eq): [File] @hasMany @deprecated(reason:"Files have moved under Extrernals")
     type: Int @deprecated(reason: "Use the `type_enum` field instead")
     is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
     is_authorized: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
