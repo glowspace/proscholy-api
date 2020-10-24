@@ -24,8 +24,14 @@ class Externals
   {
     $query = External::query();
 
-    if (Arr::has($args, 'type'))
-      $query = $query->where('type', $args['type']);
+    if (Arr::has($args, 'media_type') && $args['media_type'])
+      $query = $query->where('media_type', $args['media_type']);
+
+    if (Arr::has($args, 'content_type') && $args['content_type'])
+      $query = $query->where('content_type', $args['content_type']);
+
+    if (Arr::has($args, 'is_uploaded') && $args['is_uploaded'])
+      $query = $query->where('is_uploaded', $args['is_uploaded']);
 
     if (Arr::has($args, 'is_todo') && $args['is_todo'])
       $query = $query->todo();

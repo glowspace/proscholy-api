@@ -41,9 +41,11 @@ enum ContentType {
 
 extend type Query  {
     externals (
-        type: Int
         is_todo: Boolean
         orderBy: [OrderByClause!] @orderBy
+        media_type: String
+        content_type: ContentType
+        is_uploaded: Boolean
     ): [External!]! # see App/GraphQL/Queries/Externals.php
 
     external(id: ID! @eq): External @find
