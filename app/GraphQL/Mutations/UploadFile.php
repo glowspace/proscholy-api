@@ -30,6 +30,13 @@ class UploadFile
         $fname = $this->getSlugifiedName($tempfile);
 
         if (isset($args['filename'])) {
+            if (!preg_match('/^[A-Za-z0-9_.-]+$/', $args['filename'])) {
+                $validationErrorBuffer->push("Název souboru musí obsahovat pouze písmena, čísla a znaky ',', '_', '.' (bez mezer)", "input.filename");
+                $validationErrorBuffer->flush(
+                    "Validation failed for the field [input.filename]"
+                );
+            }
+
             $fname = $args['filename'];
         }
 
