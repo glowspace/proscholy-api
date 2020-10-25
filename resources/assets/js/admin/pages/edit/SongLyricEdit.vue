@@ -305,19 +305,14 @@
         <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12>
-              <h5>Materiály:</h5>
-              <v-btn
-                v-for="external in model_database.externals"
-                v-bind:key="external.id"
-                class="text-none"
-                @click="goToAdminPage('external/' + external.id + '/edit')"
-              >{{ external.public_name }}</v-btn>
-              <br>
-              <v-btn
-                color="info"
-                outline
-                @click="goToAdminPage('external/new-for-song/' + model.id)"
-              >Přidat nový materiál</v-btn>
+              <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
+
+              <h5>Přiřazené materiály:</h5>
+              <v-layout v-for="(external, i) in [...model_database.externals, ...created_externals]" :key="i">
+                <v-flex>
+                  {{ external.url }}
+                </v-flex>
+              </v-layout>
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -482,6 +477,7 @@ import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
 import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
+import CreateExternal from "Admin/components/CreateExternal.vue";
 
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
@@ -553,7 +549,8 @@ export default {
     SongLyricsGroup,
     SelectSongGroupDialog,
     DeleteModelDialog,
-    NumberInput
+    NumberInput,
+    CreateExternal
   },
   extends: EditForm,
 
@@ -594,6 +591,7 @@ export default {
 
       new_arrangement_name: "",
       created_arrangements: [],
+      created_externals: [],
 
       enums: {
         lang: [],
@@ -671,7 +669,7 @@ export default {
       const hasSupportedFileFormat = media_type => !['file/musx'].includes(media_type);
 
       // externals that can have thumbnail
-      return this.model_database.externals
+      return [...this.model_database.externals, ...this.created_externals]
         .filter(ext => hasSupportedContent(ext.content_type) && hasSupportedFileFormat(ext.media_type));
     },
 
@@ -842,6 +840,10 @@ export default {
           Vue.set(song_lyric, "name", name);
         }
       }
+    },
+
+    onExternalCreated(external) {
+      this.created_externals.push(external);
     },
 
     addSongbookRecord() {

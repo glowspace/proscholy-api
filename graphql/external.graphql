@@ -52,9 +52,21 @@ extend type Query  {
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
+    create_external(input: CreateExternalInput! @spread): External @create
     update_external(input: UpdateExternalInput! @spread): External @update
 
     delete_external(id: ID!): External @delete
+}
+
+input CreateExternalInput {
+    url: String @rules(apply: ["required"], messages: {
+        required: "Url odkazu nesmí být prázdná"})
+    authors: SyncAuthorsRelation
+    song_lyric: CreateSongLyricRelation
+}
+
+input CreateSongLyricRelation {
+    connect: ID
 }
 
 input UpdateExternalInput {
