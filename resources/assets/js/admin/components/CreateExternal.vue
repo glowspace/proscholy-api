@@ -122,6 +122,9 @@ export default {
                     });
 
                     this.$emit('create', result.data.create_external);
+
+                    this.new_external.url = '';
+                    this.new_external.authors = [];
                 })
                 .catch(error => {
                     this.$notify({
