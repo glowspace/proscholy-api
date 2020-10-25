@@ -1,4 +1,3 @@
-# todo: only for authenticated
-extend type Mutation {
+extend type Mutation @middleware(checks: ["auth:api"]) {
   upload_file(file: Upload!, filename: String): String
 }
