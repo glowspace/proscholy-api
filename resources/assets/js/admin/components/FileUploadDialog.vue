@@ -48,8 +48,8 @@ import prettyBytes from 'pretty-bytes';
 import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const FILE_UPLOAD = gql`
-    mutation($file: Upload!) {
-        upload_file(file: $file)
+    mutation($file: Upload!, $filename: String!) {
+        upload_file(file: $file, filename: $filename)
     }
 `;
 

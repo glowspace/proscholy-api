@@ -35,7 +35,7 @@ class UploadFile
 
         if (file_exists(Storage::path("public_files/$fname"))) {
             // the file already exists, return error
-            $validationErrorBuffer->push("Soubor s daným jménem již existuje", "input.filename");
+            $validationErrorBuffer->push("Soubor s daným jménem již existuje, prosím použijte jiné jméno", "input.filename");
             $validationErrorBuffer->flush(
                 "Validation failed for the field [input.filename]"
             );
