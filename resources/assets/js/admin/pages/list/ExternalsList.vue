@@ -3,7 +3,7 @@
     <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
-            <h1 class="h2 mb-3">Externí odkazy</h1>
+            <h1 class="h2 mb-3">Materiály</h1>
             <create-model
                 class-name="External"
                 label="Zadejte adresu nového externího odkazu"
@@ -16,11 +16,11 @@
                 <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">
                         <v-radio
-                            label="Všechny externí odkazy"
+                            label="Všechny materiály"
                             value="no-filter"
                         ></v-radio>
                         <v-radio
-                            label="Externí odkazy bez autora / přiřazené písničky"
+                            label="Materiály bez autora / přiřazené písničky"
                             value="filter-todo"
                         ></v-radio>
                     </v-radio-group>

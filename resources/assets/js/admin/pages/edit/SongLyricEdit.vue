@@ -305,7 +305,7 @@
         <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12>
-              <h5>Externí odkazy:</h5>
+              <h5>Materiály:</h5>
               <v-btn
                 v-for="external in model_database.externals"
                 v-bind:key="external.id"
@@ -317,7 +317,7 @@
                 color="info"
                 outline
                 @click="goToAdminPage('external/new-for-song/' + model.id)"
-              >Přidat nový externí odkaz</v-btn>
+              >Přidat nový materiál</v-btn>
             </v-flex>
           </v-layout>
         </v-tab-item>

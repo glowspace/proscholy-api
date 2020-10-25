@@ -72,7 +72,7 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.external.index',
     'icon' => 'link',
-    'text' => 'Externí odkazy',
+    'text' => 'Materiály',
     'plus' => true
 ])
 
