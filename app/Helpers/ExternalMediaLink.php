@@ -89,7 +89,7 @@ class ExternalMediaLink
             return 1;
         }
 
-        if (in_array($media_type, ['file/pdf', 'file/jpg', 'file/musx'])) {
+        if (in_array($media_type, ['file/pdf', 'file/jpg', 'file/png', 'file/gif', 'file/musx'])) {
             return 2;
         }
 
