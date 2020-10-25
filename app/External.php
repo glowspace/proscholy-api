@@ -72,7 +72,6 @@ class External extends Model
         'file/flac',
         'file/pdf',
         'file/jpg',
-        'file/jpeg',
         'file/doc',
         'file/docx'
     ];
