@@ -9,12 +9,12 @@ use App\External;
 
 class DownloadController extends Controller
 {
-    public function downloadFileOld($db_file_id, $filename)
+    public function downloadFileOld(Request $request, $db_file_id, $filename)
     {
         // the $db_file_id references to and old table `files`, no longer being used
         // $filename should match the name of the stored file in public_files folder
 
-        return $this->downloadFile($filename);
+        return $this->downloadFile($request, $filename);
     }
 
     public function downloadFile(Request $request, $filename)
@@ -32,16 +32,6 @@ class DownloadController extends Controller
         return response()->file($path);
     }
 
-    // public function previewFile(File $file)
-    // {
-    //     $fullPath = Storage::path($file->path);
-
-    //     if (!file_exists($fullPath)) {
-    //         return response("Soubor nebyl nalezen", 404);
-    //     }
-
-    //     return response()->file($fullPath);
-    // }
 
     // todo: remove
     public function getThumbnailFile(File $file)
