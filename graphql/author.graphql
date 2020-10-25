@@ -11,7 +11,6 @@ type Author {
     public_route: String
     song_lyrics: [SongLyric] @belongsToMany
     externals: [External] @belongsToMany
-    files: [File] @belongsToMany
     members: [Author] @belongsToMany
     memberships: [Author] @belongsToMany
 

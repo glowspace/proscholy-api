@@ -14,7 +14,6 @@ scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload
 #import songbook.graphql
 #import songbook_record.graphql
 #import song.graphql
-#import file.graphql
 #import external.graphql
 #import tag.graphql
 #import playlist.graphql
