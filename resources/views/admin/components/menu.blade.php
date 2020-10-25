@@ -10,11 +10,11 @@
     'text' => 'Zpěvník pro scholy'
 ])
 
-{{-- @include('admin.components.menu-item', [
-    'route' => 'client.home',
+@include('admin.components.menu-item', [
+    'route' => 'client.regenschori',
     'icon' => 'church',
     'text' => 'Regenschori'
-]) --}}
+])
 
 {{-- @include('admin.components.menu-item', [
     'route' => 'client.home',

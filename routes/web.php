@@ -121,6 +121,10 @@ Route::get('/run-schedule', function () {
     return response("Scheduled tasks have run");
 });
 
+Route::get('/regenschori', function () {
+    return redirect('https://regenschori.cz');
+})->name('client.regenschori');
+
 // Route::get('/firebase-auth/me', function(Request $request) {
 //     return (array) $request->public_user();
 // })->middleware('auth:web_firebase');
