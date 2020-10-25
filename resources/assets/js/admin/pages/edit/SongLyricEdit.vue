@@ -309,9 +309,9 @@
 
               <h4>Nahrávky:</h4>
               <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4>Noty, texty:</h4>
-              <ExternalListItem v-for="ext in externals_scores_lyrics" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4>Ostatní materiály (nezobrazují se na zpěvníku):</h4>
+              <h4>Noty:</h4>
+              <ExternalListItem v-for="ext in externals_scores" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+              <h4>Ostatní materiály:</h4>
               <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
 
             </v-flex>
@@ -706,13 +706,13 @@ export default {
     },
 
     externals_others() {
-      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['UNDEFINED', 'WEBSITE'].includes(ext.content_type));
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['UNDEFINED', 'WEBSITE', 'LYRICS'].includes(ext.content_type));
     },
     externals_recordings() {
       return [...this.model_database.externals, ...this.created_externals].filter(ext => ['RECORDING'].includes(ext.content_type));
     },
-    externals_scores_lyrics(){
-      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE', 'LYRICS'].includes(ext.content_type));
+    externals_scores(){
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE'].includes(ext.content_type));
     },
   },
 
