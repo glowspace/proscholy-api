@@ -5,19 +5,21 @@
         </v-card-title>
         <v-card-text class="p-0">
             <v-layout row wrap>
-                <v-flex xs4>
+                <v-flex>
                     <v-text-field
                         label="URL"
                         v-model="new_external.url"
                     ></v-text-field>
                 </v-flex>
-                <v-flex xs2>
+                <v-flex xs5 md3>
                     nebo
                     <FileUploadDialog
                         v-on:submit="onFileDialogSubmit"
                     ></FileUploadDialog>
                 </v-flex>
-                <v-flex>
+            </v-layout>
+            <v-layout>
+                <v-flex xs8>
                     <items-combo-box
                         v-model="new_external.authors"
                         v-bind:p-items="authors"

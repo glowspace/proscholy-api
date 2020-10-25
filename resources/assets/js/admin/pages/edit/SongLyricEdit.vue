@@ -308,11 +308,11 @@
               <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
 
               <h4>Nahrávky:</h4>
-              <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext"/>
+              <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
               <h4>Noty, texty:</h4>
-              <ExternalListItem v-for="ext in externals_scores_lyrics" :key="ext.id" :external="ext"/>
+              <ExternalListItem v-for="ext in externals_scores_lyrics" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
               <h4>Ostatní materiály:</h4>
-              <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext"/>
+              <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
 
             </v-flex>
           </v-layout>
@@ -858,6 +858,20 @@ export default {
 
     onExternalCreated(external) {
       this.created_externals.push(external);
+    },
+
+    onExternalDeleted(id) {
+      const indexOfExtId = (externals, id) => externals.map(ex => ex.id).indexOf(id);
+      // External can be stored either in model_database or in created_externals,
+      // we need to figure out where
+      const i_mdb = indexOfExtId(this.model_database.externals, id);
+      const i_created = indexOfExtId(this.created_externals, id);
+
+      if (i_mdb) {
+        Vue.delete(this.model_database.externals, i_mdb);
+      } else if (i_created) {
+        Vue.delete(this.created_externals, i_created);
+      }
     },
 
     addSongbookRecord() {
