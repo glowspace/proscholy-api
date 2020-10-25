@@ -307,12 +307,13 @@
             <v-flex xs12>
               <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
 
-              <h5>Přiřazené materiály:</h5>
-              <v-layout v-for="(external, i) in [...model_database.externals, ...created_externals]" :key="i">
-                <v-flex>
-                  {{ external.url }}
-                </v-flex>
-              </v-layout>
+              <h4>Nahrávky:</h4>
+              <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext"/>
+              <h4>Noty, texty:</h4>
+              <ExternalListItem v-for="ext in externals_scores_lyrics" :key="ext.id" :external="ext"/>
+              <h4>Ostatní materiály:</h4>
+              <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext"/>
+
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -321,6 +322,7 @@
             <v-flex xs12>
               <h5>Přiřazené zpěvníky:</h5>
             </v-flex>
+            
           </v-layout>
 
           <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
@@ -478,6 +480,7 @@ import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
 import CreateExternal from "Admin/components/CreateExternal.vue";
+import ExternalListItem from "Admin/components/ExternalListItem.vue";
 
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
@@ -550,7 +553,8 @@ export default {
     SelectSongGroupDialog,
     DeleteModelDialog,
     NumberInput,
-    CreateExternal
+    CreateExternal,
+    ExternalListItem
   },
   extends: EditForm,
 
@@ -699,7 +703,17 @@ export default {
 
     csrf() {
       return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    }
+    },
+
+    externals_others() {
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['UNDEFINED', 'WEBSITE'].includes(ext.content_type));
+    },
+    externals_recordings() {
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['RECORDING'].includes(ext.content_type));
+    },
+    externals_scores_lyrics(){
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE', 'LYRICS'].includes(ext.content_type));
+    },
   },
 
   watch: {

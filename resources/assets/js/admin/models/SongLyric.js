@@ -81,10 +81,12 @@ const fragment = gql`
 const external_fragment = gql`
     fragment ExternalFragment on External {
         id
-        public_name
         url
         media_type
         content_type
+        authors {
+            name
+        }
     }
 `;
 
