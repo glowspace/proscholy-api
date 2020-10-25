@@ -80,7 +80,7 @@ class External extends Model
         'file/aac',
         'file/flac',
         'file/pdf',
-        'file/jpg',
+        'file/jpeg',
         'file/png',
         'file/gif',
         'file/doc',
@@ -310,7 +310,7 @@ class External extends Model
             'youtube' => 3,
             'file/mp3' => 7,
             'file/pdf' => 4,
-            'file/jpg' => 4
+            'file/jpeg' => 4
         ];
 
         if (array_key_exists($this->media_type, $arr)) {
@@ -318,5 +318,9 @@ class External extends Model
         }
 
         return 0;
+    }
+
+    public function getMimetypeAttribute()
+    {
     }
 }

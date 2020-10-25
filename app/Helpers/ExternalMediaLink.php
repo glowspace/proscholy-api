@@ -69,7 +69,7 @@ class ExternalMediaLink
         // has the url a file extension..?
         if (preg_match("/\/.*\.(\w+)$/", $this->url, $groups)) {
             $extension = $groups[1];
-            $extension = str_replace('jpeg', 'jpg', $extension);
+            $extension = str_replace('jpg', 'jpeg', $extension);
 
             if (!in_array($groups[1], ['com', 'cz', 'sk', 'org'])) {
                 return "file/$groups[1]";
@@ -89,7 +89,7 @@ class ExternalMediaLink
             return 1;
         }
 
-        if (in_array($media_type, ['file/pdf', 'file/jpg', 'file/png', 'file/gif', 'file/musx'])) {
+        if (in_array($media_type, ['file/pdf', 'file/jpeg', 'file/png', 'file/gif', 'file/musx'])) {
             return 2;
         }
 
