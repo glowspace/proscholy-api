@@ -101,7 +101,7 @@ export default {
             let previewUrl = this.url;
             if (this.isUploaded) {
                 // see DownloadController.php
-                previewUrl = this.url + '?nahled=true';
+                previewUrl = this.url;
             }
 
             if (this.mediaType == 'spotify')

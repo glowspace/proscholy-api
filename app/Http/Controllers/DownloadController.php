@@ -25,11 +25,11 @@ class DownloadController extends Controller
             return response("Soubor nebyl nalezen", 404);
         }
 
-        if ($request->get('nahled')) {
-            return response()->file($path);
+        if ($request->get('stahnout') || $request->get('download') || $request->get('s') || $request->get('d')) {
+            return response()->download($path, $filename);
         }
 
-        return response()->download($path, $filename);
+        return response()->file($path);
     }
 
     // public function previewFile(File $file)
