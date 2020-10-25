@@ -60,6 +60,8 @@ Route::get('/preview/{file}/{filename?}', 'DownloadController@downloadFileOld')-
 // todo: create a preview route..?
 Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download');
 
+Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('external.proxy');
+
 
 // Thumbnails for pdf files
 Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExternal')->name('external.thumbnail');

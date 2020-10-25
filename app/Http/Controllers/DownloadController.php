@@ -32,19 +32,24 @@ class DownloadController extends Controller
         return response()->file($path);
     }
 
-
-    // todo: remove
-    public function getThumbnailFile(File $file)
+    public function proxyExternal(External $external)
     {
-        if (!$file->canHaveThumbnail()) {
-            return response('No thumbnail available', 404);
+        // todo check if media type is fine
+
+        // return response()->download()
+        if ($external->is_uploaded) {
+            return response()->file($external->filepath);
         }
 
-        $fullPath = Storage::path($file->getThumbnailPath());
+        // todo: use proper mime types
+        $headers = [
+            'Content-Type' => str_replace('file', 'application', $external->media_type),
+            'Content-Disposition' => 'inline; filename=' . str_replace('file/', 'nahled.', $external->media_type) . ';'
+        ];
 
-        if (!file_exists($fullPath)) {
-            return response("Soubor nebyl nalezen", 404);
-        }
-        return response()->file($fullPath);
+        // "stream download" the response
+        return response()->stream(function () use ($external) {
+            echo file_get_contents($external->url);
+        }, 200, $headers);
     }
 }
