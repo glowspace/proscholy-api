@@ -127,18 +127,16 @@
                 class-name="External"
                 :model-id="model.id || null"
                 @deleted="is_deleted = true"
-                delete-msg="Opravdu chcete vymazat tento externí odkaz?"
+                delete-msg="Opravdu chcete vymazat tento materiál?"
                 >Vymazat</delete-model-dialog
             >
             <!-- model deleted dialog -->
             <v-dialog v-model="is_deleted" persistent max-width="320">
                 <v-card>
                     <v-card-title class="headline"
-                        >Externí odkaz byl vymazán</v-card-title
+                        >Materiál byl vymazán</v-card-title
                     >
-                    <v-card-text
-                        >Externí odkaz byl vymazán z databáze.</v-card-text
-                    >
+                    <v-card-text>Materiál byl vymazán z databáze.</v-card-text>
                     <v-card-actions
                         class="d-flex flex-column justify-content-end"
                     >
@@ -148,7 +146,7 @@
                                 color="green darken-1"
                                 flat
                                 @click="goToAdminPage('external', false)"
-                                >Přejít na seznam externích odkazů</v-btn
+                                >Přejít na seznam materiálů</v-btn
                             >
                         </div>
                         <div>
@@ -305,7 +303,7 @@ export default {
                     this.$validator.errors.clear();
                     this.$notify({
                         title: 'Úspěšně uloženo :)',
-                        text: 'Externí odkaz byl úspěšně uložen',
+                        text: 'Materiál byl úspěšně uložen',
                         type: 'success'
                     });
                 })
@@ -314,7 +312,7 @@ export default {
                         // unknown error happened
                         this.$notify({
                             title: 'Chyba při ukládání',
-                            text: 'Externí odkaz nebyl uložen',
+                            text: 'Materiál nebyl uložen',
                             type: 'error'
                         });
                         return;

@@ -292,7 +292,7 @@
                   :items="thumbnailables"
                   item-value="url"
                   item-text="url"
-                  label="Náhled not (volba souboru/externího odkazu)"
+                  label="Náhled not (volba materiálu)"
                   v-model="selected_thumbnail_url"
                 ></v-select>
 

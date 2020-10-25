@@ -6,8 +6,8 @@
             <h1 class="h2 mb-3">Materiály</h1>
             <create-model
                 class-name="External"
-                label="Zadejte adresu nového externího odkazu"
-                success-msg="Externí odkaz úspěšně vytvořen"
+                label="Zadejte adresu nového materiálu"
+                success-msg="Materiál úspěšně vytvořen"
                 @saved="$apollo.queries.externals.refetch()"
                 :force-edit="true"
                 :enable-file-upload="true"
