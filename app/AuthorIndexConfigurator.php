@@ -33,11 +33,10 @@ class AuthorIndexConfigurator extends IndexConfigurator
             'tokenizer' => [
                 "my_tokenizer" => [
                     "type" => "edge_ngram",
-                    "max_gram" => 6,
+                    "max_gram" => 10,
                     "token_chars" => [
                         "letter",
-                        "digit",
-                        "whitespace"
+                        "digit"
                     ]
                 ]
             ]
