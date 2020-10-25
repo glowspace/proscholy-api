@@ -291,7 +291,7 @@
                 <v-select
                   :items="thumbnailables"
                   item-value="url"
-                  item-text="public_name"
+                  item-text="url"
                   label="Náhled not (volba souboru/externího odkazu)"
                   v-model="selected_thumbnail_url"
                 ></v-select>
@@ -311,7 +311,7 @@
               <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
               <h4>Noty, texty:</h4>
               <ExternalListItem v-for="ext in externals_scores_lyrics" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4>Ostatní materiály:</h4>
+              <h4>Ostatní materiály (nezobrazují se na zpěvníku):</h4>
               <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
 
             </v-flex>
