@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
+use Venturecraft\Revisionable\RevisionableTrait;
+
 /**
  * App\External
  *
@@ -41,6 +43,13 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  */
 class External extends Model
 {
+    use RevisionableTrait;
+    protected $revisionCleanup = true;
+    protected $historyLimit = 200;
+    protected $revisionCreationsEnabled = true;
+    protected $dontKeepRevisionOf = ['is_uploaded', 'media_type', 'content_type'];
+
+
     protected $fillable = ['url', 'is_featured', 'has_anonymous_author', 'catalog_number', 'copyright', 'editor', 'published_by', 'is_uploaded', 'caption', 'media_type', 'content_type'];
 
     private $type_string_values
