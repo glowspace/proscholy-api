@@ -36,7 +36,14 @@
                 >
 
                 <v-btn @click="onSubmit" class="primary" :disabled="!file"
-                    >Nahrát soubor</v-btn
+                    ><span v-if="is_uploading">
+                        <span
+                            class="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                        ></span>
+                        Nahrávání... </span
+                    ><span v-else>Nahrát soubor</span></v-btn
                 >
             </v-card-actions>
         </v-card>
@@ -68,7 +75,8 @@ export default {
             dialog: false,
             file: null,
             filename: '',
-            baseUrl: document.querySelector('#baseUrl').getAttribute('value')
+            baseUrl: document.querySelector('#baseUrl').getAttribute('value'),
+            is_uploading: false
         };
     },
 
@@ -82,6 +90,8 @@ export default {
         },
 
         async onSubmit() {
+            this.is_uploading = true;
+
             this.uploadSelectedFile()
                 .then(result => {
                     this.dialog = false;
@@ -100,6 +110,7 @@ export default {
                     if (error.graphQLErrors) {
                         graphqlErrorsToValidator(this.$validator, error);
                     }
+                    this.is_uploading = false;
                 });
         },
 
@@ -137,6 +148,10 @@ export default {
     watch: {
         dialog() {
             if (this.dialog) {
+                this.file = null;
+                this.filename = '';
+                this.is_uploading = false;
+                this.$validator.errors.clear();
                 this.$refs.fileInput.click();
             }
         }
