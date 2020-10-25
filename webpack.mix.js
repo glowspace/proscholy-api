@@ -36,6 +36,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
+    .copyDirectory('resources/assets/vendor/ViewerJS', 'public/js/ViewerJS')
     .browserSync({
         // proxy settings for php artisan serve
         // if you are using docker then change proxy to 'nginx:80'
