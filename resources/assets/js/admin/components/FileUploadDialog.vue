@@ -45,6 +45,7 @@
 import gql from 'graphql-tag';
 import slugify from 'slugify';
 import prettyBytes from 'pretty-bytes';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const FILE_UPLOAD = gql`
     mutation($file: Upload!) {
@@ -88,21 +89,7 @@ export default {
                     });
 
                     if (error.graphQLErrors) {
-                        console.log(error.graphQLErrors);
-
-                        let errorFields =
-                            error.graphQLErrors[0].extensions.validation;
-
-                        // clear the old errors and (add new ones if exist)
-                        this.$validator.errors.clear();
-                        for (const [key, value] of Object.entries(
-                            errorFields
-                        )) {
-                            this.$validator.errors.add({
-                                field: key,
-                                msg: value
-                            });
-                        }
+                        graphqlErrorsToValidator(this.$validator, error);
                     }
                 });
         },

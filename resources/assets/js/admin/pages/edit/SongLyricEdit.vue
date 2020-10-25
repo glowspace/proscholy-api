@@ -484,6 +484,8 @@ import ExternalListItem from "Admin/components/ExternalListItem.vue";
 
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
+
 
 // import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
 import BibleReference from "bible-reference/bible_reference";
@@ -771,7 +773,7 @@ export default {
             return;
           }
 
-          this.handleValidationErrors(error);
+          graphqlErrorsToValidator(this.$validator, error);
 
           this.$notify({
             title: "Chyba při ukládání",
@@ -854,6 +856,8 @@ export default {
           Vue.set(song_lyric, "name", name);
         }
       }
+
+      this.$validator.errors.clear();
     },
 
     onExternalCreated(external) {

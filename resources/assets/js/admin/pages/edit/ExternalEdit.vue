@@ -176,6 +176,7 @@ import FileUploadDialog from 'Admin/components/FileUploadDialog.vue';
 
 import EditForm from './EditForm';
 import External from 'Admin/models/External';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const FETCH_AUTHORS = gql`
     query {
@@ -314,7 +315,7 @@ export default {
                         return;
                     }
 
-                    this.handleValidationErrors(error);
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
         },
 

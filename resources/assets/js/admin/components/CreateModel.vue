@@ -49,6 +49,7 @@
 <script>
 import gql, { disableFragmentWarnings } from 'graphql-tag';
 import FileUploadDialog from 'Admin/components/FileUploadDialog';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const CREATE_MODEL_MUTATION = gql`
     mutation($input: CreateModelInput!) {
@@ -124,15 +125,7 @@ export default {
                         return;
                     }
 
-                    let errorFields =
-                        error.graphQLErrors[0].extensions.validation;
-
-                    // clear the old errors and (add new ones if exist)
-                    this.$validator.errors.clear();
-                    for (const [key, value] of Object.entries(errorFields)) {
-                        let _value = Array.isArray(value) ? value[0] : value;
-                        this.$validator.errors.add({ field: key, msg: _value });
-                    }
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
         },
 

@@ -197,18 +197,6 @@ export default {
             this.goToPage('admin/' + url, save);
         },
 
-        handleValidationErrors(error) {
-            if (error.graphQLErrors) {
-                let errorFields = error.graphQLErrors[0].extensions.validation;
-
-                // clear the old errors and (add new ones if exist)
-                this.$validator.errors.clear();
-                for (const [key, value] of Object.entries(errorFields)) {
-                    this.$validator.errors.add({ field: key, msg: value });
-                }
-            }
-        },
-
         reset() {
             for (let field of this._getFieldsFromFragment(this.fragment, {
                 includeId: false
