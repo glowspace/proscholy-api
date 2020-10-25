@@ -34,16 +34,16 @@ class DownloadController extends Controller
 
     public function proxyExternal(External $external)
     {
-        // todo check if media type is fine
+        if ($external->mime_type == "") {
+            return response()->redirect($external->url);
+        }
 
-        // return response()->download()
         if ($external->is_uploaded) {
             return response()->file(Storage::path($external->filepath));
         }
 
-        // todo: use proper mime types
         $headers = [
-            'Content-Type' => str_replace('file', 'application', $external->media_type),
+            'Content-Type' => $external->mime_type,
             'Content-Disposition' => 'inline; filename=' . str_replace('file/', 'nahled.', $external->media_type) . ';'
         ];
 

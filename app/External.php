@@ -10,6 +10,8 @@ use Spatie\PdfToImage\Pdf;
 use Hash;
 use App\Interfaces\ISource;
 
+use Illuminate\Support\Arr;
+
 use App\Helpers\ExternalMediaLink;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -320,7 +322,26 @@ class External extends Model
         return 0;
     }
 
-    public function getMimetypeAttribute()
+    public function getMimeTypeAttribute()
     {
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+        $table = [
+            'file/mp3' => 'audio/mpeg',
+            'file/wav' => 'audio/wav',
+            'file/aac' => 'audio/aac',
+            'file/flac' => 'audio/flac',
+            'file/pdf' => 'application/pdf',
+            'file/jpeg' => 'image/jpeg',
+            'file/png' => 'image/png',
+            'file/gif' => 'image/gif',
+            'file/doc' => 'application/msword',
+            'file/docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ];
+
+        if (Arr::has($table, $this->media_type)) {
+            return $table[$this->media_type];
+        }
+
+        return "";
     }
 }

@@ -21,6 +21,7 @@ type External {
     content_type: ContentType
     content_type_string: String
     content_type_string_values: JSON
+    mime_type: String
 
     type: Int @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
     type_string: String @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
