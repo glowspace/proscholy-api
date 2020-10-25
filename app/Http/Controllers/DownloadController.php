@@ -38,7 +38,7 @@ class DownloadController extends Controller
 
         // return response()->download()
         if ($external->is_uploaded) {
-            return response()->file($external->filepath);
+            return response()->file(Storage::path($external->filepath));
         }
 
         // todo: use proper mime types
