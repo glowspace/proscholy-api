@@ -1,7 +1,9 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn outline color="primary" dark v-on="on">Nahrát soubor</v-btn>
+            <v-btn outline color="primary" dark v-on="on">{{
+                btnCaption
+            }}</v-btn>
         </template>
 
         <v-card>
@@ -54,6 +56,13 @@ const FILE_UPLOAD = gql`
 `;
 
 export default {
+    props: {
+        btnCaption: {
+            type: String,
+            default: 'Nahrát soubor'
+        }
+    },
+
     data() {
         return {
             dialog: false,

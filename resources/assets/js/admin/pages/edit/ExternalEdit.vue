@@ -10,7 +10,7 @@
             ></v-progress-linear>
         </div>
         <v-container fluid grid-list-xs>
-            <h1 class="h2 mb-3">Úprava externího odkazu</h1>
+            <h1 class="h2 mb-3">Úprava materiálu</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
@@ -30,6 +30,11 @@
                             <v-flex shrink>
                                 <FileUploadDialog
                                     v-on:submit="onFileDialogSubmit"
+                                    :btn-caption="
+                                        model.is_uploaded
+                                            ? 'Nahradit jiným souborem'
+                                            : 'Nahradit souborem'
+                                    "
                                 ></FileUploadDialog>
                             </v-flex>
                         </v-layout>
