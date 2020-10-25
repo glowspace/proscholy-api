@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\FileDeleting' => [
-            'App\Listeners\FileDeleting'
+        'App\Events\ExternalDeleting' => [
+            'App\Listeners\ExternalDeleting'
         ],
         'App\Events\SongLyricSaved' => [
             'App\Listeners\SongLyricSaved'

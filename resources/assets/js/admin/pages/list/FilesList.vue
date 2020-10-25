@@ -4,7 +4,11 @@
         <notifications />
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Nahrané soubory</h1>
-            <v-btn href="/admin/file/create" class="ml-0 text-decoration-none primary">+ Nahrát nový soubor</v-btn>
+            <v-btn
+                href="/admin/file/create"
+                class="ml-0 text-decoration-none primary"
+                >+ Nahrát nový soubor</v-btn
+            >
             <v-layout row wrap>
                 <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">
@@ -41,16 +45,28 @@
                             :custom-filter="customFilter"
                             :rows-per-page-items="[
                                 50,
-                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                                {
+                                    text:
+                                        '$vuetify.dataIterator.rowsPerPageAll',
+                                    value: -1
+                                }
                             ]"
                             :loading="$apollo.loading"
-                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :no-data-text="
+                                $apollo.loading
+                                    ? 'Načítám…'
+                                    : '$vuetify.noDataText'
+                            "
                             :pagination.sync="dtPagination"
                         >
                             <template v-slot:items="props">
                                 <td>
                                     <a
-                                        :href="'/admin/file/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/file/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         >{{ props.item.public_name }}</a
                                     >
                                 </td>
@@ -76,13 +92,17 @@
                                         ><i class="fas fa-download"></i></a
                                     ><a
                                         class="text-secondary mr-3"
-                                        :href="'/admin/file/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/file/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         ><i class="fas fa-pen"></i></a
                                     ><a
                                         class="text-secondary"
                                         v-on:click="askForm(props.item.id)"
-                                        ><i class="fas fa-trash"></i></a
-                                    >
+                                        ><i class="fas fa-trash"></i
+                                    ></a>
                                 </td>
                             </template>
                         </v-data-table>
@@ -100,7 +120,6 @@ input {
 </style>
 <script>
 import gql from 'graphql-tag';
-
 import removeDiacritics from 'Admin/helpers/removeDiacritics';
 
 const fetch_items = gql`
@@ -171,7 +190,10 @@ export default {
             this.filter_mode = window.location.hash.replace('#', '');
         }
 
-        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+        if (
+            window.location.hash == '#n' &&
+            document.getElementById('create-model-text-field')
+        ) {
             document.getElementById('create-model-text-field').focus();
         } else if (document.getElementById('search')) {
             document.getElementById('search').focus();

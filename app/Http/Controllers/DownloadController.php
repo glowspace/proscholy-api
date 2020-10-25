@@ -9,52 +9,47 @@ use App\External;
 
 class DownloadController extends Controller
 {
-    public function downloadFile(File $file)
+    public function downloadFileOld(Request $request, $db_file_id, $filename)
     {
-        $file->downloads = $file->downloads + 1;
-        $file->save();
+        // the $db_file_id references to and old table `files`, no longer being used
+        // $filename should match the name of the stored file in public_files folder
 
-        $fullPath = Storage::path($file->path);
+        return $this->downloadFile($request, $filename);
+    }
 
-        if (!file_exists($fullPath)) {
+    public function downloadFile(Request $request, $filename)
+    {
+        $path = Storage::path("public_files/$filename");
+
+        if (!file_exists($path)) {
             return response("Soubor nebyl nalezen", 404);
         }
 
-        return response()->download($fullPath, $file->filename);
+        if ($request->get('stahnout') || $request->get('download') || $request->get('s') || $request->get('d')) {
+            return response()->download($path, $filename);
+        }
+
+        return response()->file($path);
     }
 
-    public function previewFile(File $file)
+    public function proxyExternal(External $external)
     {
-        $fullPath = Storage::path($file->path);
-
-        if (!file_exists($fullPath)) {
-            return response("Soubor nebyl nalezen", 404);
+        if ($external->mime_type == "") {
+            return response()->redirect($external->url);
         }
 
-        return response()->file($fullPath);
+        if ($external->is_uploaded) {
+            return response()->file(Storage::path($external->filepath));
+        }
+
+        $headers = [
+            'Content-Type' => $external->mime_type,
+            'Content-Disposition' => 'inline; filename=' . str_replace('file/', 'nahled.', $external->media_type) . ';'
+        ];
+
+        // "stream download" the response
+        return response()->stream(function () use ($external) {
+            echo file_get_contents($external->url);
+        }, 200, $headers);
     }
-
-    public function getThumbnailFile(File $file)
-    {
-        if (!$file->canHaveThumbnail()) {
-            return response('No thumbnail available', 404);
-        }
-
-        $fullPath = Storage::path($file->getThumbnailPath());
-
-        if (!file_exists($fullPath)) {
-            return response("Soubor nebyl nalezen", 404);
-        }
-        return response()->file($fullPath);
-    }
-
-    // public function getThumbnailExternal(External $external)
-    // {
-    //     if (!$external->canHaveThumbnail()) {
-    //         return response('No thumbnail available', 404);
-    //     }
-
-    //     $fullPath = Storage::path($external->getThumbnailPath());
-    //     return response()->file($fullPath);
-    // }
 }

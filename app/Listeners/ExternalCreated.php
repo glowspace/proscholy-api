@@ -6,6 +6,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Events\ExternalCreated as ExternalCreatedEvent;
+use App\Helpers\ExternalMediaLink;
+use Illuminate\Support\Str;
 
 class ExternalCreated
 {
@@ -27,8 +29,12 @@ class ExternalCreated
      */
     public function handle(ExternalCreatedEvent $event)
     {
+        $media_link = new ExternalMediaLink($event->external->url);
+
         $event->external->update([
-            'type' => $event->external->guessType()
+            'is_uploaded' => Str::contains($event->external->url, url('')),
+            'media_type' => $media_link->getExternalMediaType(),
+            'content_type' => $media_link->getExternalContentType()
         ]);
     }
 }

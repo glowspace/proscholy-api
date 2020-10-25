@@ -166,6 +166,7 @@ import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
 import ExternalView from 'Public/components/ExternalView.vue';
 import EditForm from './EditForm';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 import File from 'Admin/models/File';
 
@@ -293,7 +294,7 @@ export default {
                         return;
                     }
 
-                    this.handleValidationErrors(error);
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
         },
 

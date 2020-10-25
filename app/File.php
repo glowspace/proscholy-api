@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model; 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,20 +41,15 @@ class File extends Model implements ISource
 {
     protected $fillable = ['filename', 'type', 'description', 'path', 'name', 'has_anonymous_author', 'downloads', 'catalog_number', 'copyright', 'editor', 'published_by'];
 
-    // See App/Listeners/FileDeleting where the deleting actually happens
-    protected $dispatchesEvents = [
-        'deleting' => \App\Events\FileDeleting::class,
-    ];
-
     private $type_string_values
-        = [
-            0 => 'soubor',
-            1 => 'text',
-            2 => 'text/akordy',
-            3 => 'noty',
-            4 => 'audio nahrávka',
-            5 => 'fotka',
-        ];
+    = [
+        0 => 'soubor',
+        1 => 'text',
+        2 => 'text/akordy',
+        3 => 'noty',
+        4 => 'audio nahrávka',
+        5 => 'fotka',
+    ];
 
     public function getPublicNameAttribute()
     {
@@ -85,13 +80,13 @@ class File extends Model implements ISource
     {
         if (!$this->canHaveThumbnail())
             return;
-            
+
         return route('file.thumbnail', [
             'file' => $this->id,
         ]);
     }
 
-    public function getTypeStringAttribute() 
+    public function getTypeStringAttribute()
     {
         return $this->type_string_values[$this->type];
     }
@@ -123,16 +118,16 @@ class File extends Model implements ISource
             return;
 
         // get the path of a thumbnail file
-        $relative = self::getThubmnailsFolder().
-            '/'.
-            pathinfo($this->path, PATHINFO_FILENAME).
+        $relative = self::getThubmnailsFolder() .
+            '/' .
+            pathinfo($this->path, PATHINFO_FILENAME) .
             '.jpg';
 
         // if already exists, do not create new one
         if (file_exists(Storage::path($relative))) {
             return $relative;
         }
-        
+
         // create a new thumbnail file
         $pdf = new Pdf(Storage::path($this->path));
         $pdf->setCompressionQuality(20)
@@ -146,9 +141,9 @@ class File extends Model implements ISource
     public function scopeRestricted($query)
     {
         if (Auth::user()->hasRole('autor')) {
-            return $query->whereHas('author', function($q) {
+            return $query->whereHas('author', function ($q) {
                 $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
-            })->orWhereHas('song_lyric', function($q) {
+            })->orWhereHas('song_lyric', function ($q) {
                 $q->restricted();
             });
         } else {
@@ -156,7 +151,7 @@ class File extends Model implements ISource
         }
     }
 
-    public function scopeScores($query) 
+    public function scopeScores($query)
     {
         return $query->where('type', 1)->orWhere('type', 2)->orWhere('type', 3);
     }
@@ -177,24 +172,24 @@ class File extends Model implements ISource
             ->orWhere('song_lyric_id', null);
     }
 
-    public function authors() : BelongsToMany
+    public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class);
     }
 
-    public function song_lyric() : BelongsTo
+    public function song_lyric(): BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
     }
 
-    public function tags() : MorphToMany
+    public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
     // IMPLEMENTING INTERFACE ISOURCE
 
-    public function getSourceType() : int
+    public function getSourceType(): int
     {
         $converter = [
             0 => 0,

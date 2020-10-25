@@ -1,9 +1,6 @@
 type External {
     id: ID!
-    public_name: String
-    type: Int
-    type_string: String
-    type_string_values: JSON
+    public_name: String @with(relation: "authors") @with(relation: "song_lyric")
     authors: [Author] @belongsToMany
     song_lyric: SongLyric @belongsTo
     url: String
@@ -13,38 +10,80 @@ type External {
     copyright: String
     editor: String
     published_by: String
+    caption: String
+    is_uploaded: Boolean
 
     # tags_scoped_genre: [Tag] @morphMany(relation: "tags", scopes: ["genre"])
     tags_instrumentation: [Tag] @morphMany(relation: "tags", scopes: ["instrumentation"])
+
+    media_type: String
+    media_type_values: JSON
+    content_type: ContentType
+    content_type_string: String
+    content_type_string_values: JSON
+    mime_type: String
+
+    type: Int @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
+    type_string: String @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
+    type_string_values: JSON @deprecated(reason: "Use the `media_type` and `content_type` fields instead")
+}
+
+# need to be reflected in App/External / getContentTypeStringAttribute
+enum ContentType {
+    UNDEFINED @enum(value: 0)
+    RECORDING @enum(value: 1)
+    SCORE @enum(value: 2)
+    LYRICS @enum(value: 3)
+    WEBSITE @enum(value: 4)
+    LICENSE @enum(value: 5)
+    PHOTO @enum(value: 10)
+    SOCIAL @enum(value: 11)
 }
 
 extend type Query  {
     externals (
-        type: Int
         is_todo: Boolean
         orderBy: [OrderByClause!] @orderBy
+        media_type: String
+        content_type: ContentType
+        is_uploaded: Boolean
     ): [External!]! # see App/GraphQL/Queries/Externals.php
 
     external(id: ID! @eq): External @find
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
+    create_external(input: CreateExternalInput! @spread): External @create
     update_external(input: UpdateExternalInput! @spread): External @update
 
     delete_external(id: ID!): External @delete
+}
+
+input CreateExternalInput {
+    url: String @rules(apply: ["required"], messages: {
+        required: "Url odkazu nesmí být prázdná"})
+    authors: SyncAuthorsRelation
+    song_lyric: CreateSongLyricRelation
+}
+
+input CreateSongLyricRelation {
+    connect: ID
 }
 
 input UpdateExternalInput {
     id: ID!
     url: String @rules(apply: ["required"], messages: {
         required: "Url odkazu nesmí být prázdná"})
-    type: Int!
     authors: SyncAuthorsRelation
     song_lyric: SyncSongLyricRelation
     catalog_number: String
     copyright: String
     editor: String
     published_by: String
+    caption: String
+    is_uploaded: Boolean
+    content_type: ContentType
+    media_type: String
 }
 
 input SyncSongLyricRelation {

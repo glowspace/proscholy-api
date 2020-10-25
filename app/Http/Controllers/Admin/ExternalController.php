@@ -26,7 +26,7 @@ class ExternalController extends Controller
     {
         return view('admin.form.index', [
             'model_name' => 'external',
-            'title' => 'Externí odkazy'
+            'title' => 'Materiály'
         ]);
     }
 
@@ -35,7 +35,7 @@ class ExternalController extends Controller
         return view('admin.form.edit', [
             'model_name' => 'external',
             'model_id' => $external->id,
-            'title' => 'Odkaz ' . $external->id
+            'title' => 'Materiál #' . $external->id
         ]);
     }
 

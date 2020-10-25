@@ -1,10 +1,9 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-01-01 13:00:00`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-
 "A date string with format `Y-m-d`, e.g. `2011-05-23`."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
-
 scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
+scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 "Import graphql schema files"
 #import author_song_lyric.graphql
@@ -15,7 +14,6 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 #import songbook.graphql
 #import songbook_record.graphql
 #import song.graphql
-#import file.graphql
 #import external.graphql
 #import tag.graphql
 #import playlist.graphql
@@ -24,6 +22,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 #import lilypond.graphql
 #import visit.graphql
 #import news.graphql
+#import upload_file.graphql
 
 
 union SearchResult = SongLyric | Author

@@ -3,23 +3,24 @@
     <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
-            <h1 class="h2 mb-3">Externí odkazy</h1>
+            <h1 class="h2 mb-3">Materiály</h1>
             <create-model
                 class-name="External"
-                label="Zadejte adresu nového externího odkazu"
-                success-msg="Externí odkaz úspěšně vytvořen"
+                label="Zadejte adresu nového materiálu"
+                success-msg="Materiál úspěšně vytvořen"
                 @saved="$apollo.queries.externals.refetch()"
                 :force-edit="true"
+                :enable-file-upload="true"
             ></create-model>
             <v-layout row wrap>
                 <v-flex xs12 md8>
                     <v-radio-group v-model="filter_mode">
                         <v-radio
-                            label="Všechny externí odkazy"
+                            label="Všechny materiály"
                             value="no-filter"
                         ></v-radio>
                         <v-radio
-                            label="Externí odkazy bez autora / přiřazené písničky"
+                            label="Materiály bez autora / přiřazené písničky"
                             value="filter-todo"
                         ></v-radio>
                     </v-radio-group>
@@ -47,20 +48,32 @@
                             :custom-filter="customFilter"
                             :rows-per-page-items="[
                                 50,
-                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                                {
+                                    text:
+                                        '$vuetify.dataIterator.rowsPerPageAll',
+                                    value: -1
+                                }
                             ]"
                             :loading="$apollo.loading"
-                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :no-data-text="
+                                $apollo.loading
+                                    ? 'Načítám…'
+                                    : '$vuetify.noDataText'
+                            "
                             :pagination.sync="dtPagination"
                         >
                             <template v-slot:items="props">
                                 <td>
                                     <a
-                                        :href="'/admin/external/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/external/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         >{{ getShortUrl(props.item.url) }}</a
                                     >
                                 </td>
-                                <td>{{ props.item.type_string }}</td>
+                                <td>{{ props.item.content_type_string }}</td>
                                 <td>
                                     {{
                                         props.item.song_lyric
@@ -78,13 +91,17 @@
                                 <td class="text-nowrap">
                                     <a
                                         class="text-secondary mr-3"
-                                        :href="'/admin/external/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/external/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         ><i class="fas fa-pen"></i></a
                                     ><a
                                         class="text-secondary"
                                         v-on:click="askForm(props.item.id)"
-                                        ><i class="fas fa-trash"></i></a
-                                    >
+                                        ><i class="fas fa-trash"></i
+                                    ></a>
                                 </td>
                             </template>
                         </v-data-table>
@@ -112,7 +129,7 @@ const fetch_items = gql`
         externals(is_todo: $is_todo) {
             id
             url
-            type_string
+            content_type_string
             song_lyric {
                 name
             }
@@ -140,7 +157,7 @@ export default {
         return {
             headers: [
                 { text: 'Adresa', value: 'url' },
-                { text: 'Typ', value: 'type_string' },
+                { text: 'Typ obsahu', value: 'content_type_string' },
                 { text: 'Píseň', value: 'song_lyric' },
                 { text: 'Autoři', value: 'authors' },
                 { text: 'Akce', value: 'actions', sortable: false }
@@ -178,7 +195,10 @@ export default {
             this.filter_mode = window.location.hash.replace('#', '');
         }
 
-        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
+        if (
+            window.location.hash == '#n' &&
+            document.getElementById('create-model-text-field')
+        ) {
             document.getElementById('create-model-text-field').focus();
         } else if (document.getElementById('search')) {
             document.getElementById('search').focus();
@@ -234,7 +254,7 @@ export default {
                         item.url,
                         authors,
                         item.song_lyric ? item.song_lyric.name : '',
-                        item.type_string
+                        item.content_type_string
                     ].join(' ')
                 ).toLowerCase();
 

@@ -1,6 +1,6 @@
 <template>
     <div class="card card-green" style="margin-bottom: 1em;">
-        <div class="card-header py-2" v-if="![4, 8, 9].includes(this.type)">
+        <div class="card-header py-2" v-if="mediaType !== 'file/pdf'">
             <a :href="mediaLink" target="_blank" title="Otevřít v novém okně"
                 ><i :class="typeClass"></i
             ></a>
@@ -17,7 +17,7 @@
             ></a>
         </div>
         <iframe
-            v-if="type == 1"
+            v-if="mediaType == 'spotify'"
             :src="iframeSrc"
             width="100%"
             height="80"
@@ -27,7 +27,7 @@
         ></iframe>
 
         <iframe
-            v-else-if="type == 2"
+            v-else-if="mediaType == 'soundcloud'"
             width="100%"
             height="120"
             scrolling="no"
@@ -38,13 +38,21 @@
 
         <div
             class="embed-responsive embed-responsive-16by9"
-            v-else-if="type == 3"
+            v-else-if="mediaType == 'youtube'"
         >
             <iframe :src="iframeSrc" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <!-- audio soubor -->
-        <audio controls :src="iframeSrc" v-else-if="type == 7">
+        <audio
+            controls
+            :src="iframeSrc"
+            v-else-if="
+                ['file/mp3', 'file/wav', 'file/flac', 'file/aac'].includes(
+                    mediaType
+                )
+            "
+        >
             Váš prohlížeč bohužel nepodporuje přehrávání nahraných souborů.
         </audio>
 
@@ -65,27 +73,16 @@ export default {
     props: {
         url: String,
         downloadUrl: String,
-        type: Number,
+        mediaType: String,
         thumbnailUrl: String,
         mediaId: String,
         authors: Array,
-        height: Number
+        height: Number,
+        isUploaded: Boolean
     },
 
     data() {
         return {
-            types: {
-                0: 'link',
-                1: 'spotify',
-                2: 'soundcloud',
-                3: 'youtube',
-                4: 'score',
-                5: 'webpage',
-                6: 'youtube_channel',
-                7: 'audio',
-                8: 'pdf/text_chords',
-                9: 'pdf/text'
-            },
             browser: Bowser.getParser(window.navigator.userAgent),
             supportPdfIframesCondition: {
                 mobile: {
@@ -101,62 +98,52 @@ export default {
 
     computed: {
         iframeSrc() {
-            if (this.type == 1) {
-                return 'https://open.spotify.com/embed/track/' + this.mediaId;
-            } else if (this.type == 2) {
-                return (
-                    'https://w.soundcloud.com/player/?url=' +
-                    this.mediaId +
-                    '&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true'
-                );
-            } else if (this.type == 3) {
-                return 'https://www.youtube.com/embed/' + this.mediaId;
-            } else if ([4, 8, 9].includes(this.type)) {
-                // pdf file
-                // decide if the browser can display that directly in iframe
-                if (this.browser.satisfies(this.supportPdfIframesCondition)) {
-                    return this.url;
-                } else {
-                    return 'https://docs.google.com/viewer?url=' + this.url;
-                }
-            } else {
-                return this.url;
+            let previewUrl = this.url;
+            if (this.isUploaded) {
+                // see DownloadController.php
+                previewUrl = this.url;
             }
+
+            if (this.mediaType == 'spotify')
+                return 'https://open.spotify.com/embed/track/' + this.mediaId;
+
+            if (this.mediaType == 'soundcloud')
+                return `https://w.soundcloud.com/player/?url=${this.mediaId}
+                    &color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`;
+
+            if (this.mediaType == 'youtube')
+                return 'https://www.youtube.com/embed/' + this.mediaId;
+
+            if (this.mediaType == 'file/pdf') {
+                // decide if the browser can display that directly in iframe
+                if (this.browser.satisfies(this.supportPdfIframesCondition))
+                    return previewUrl;
+
+                return 'https://docs.google.com/viewer?url=' + this.url;
+            }
+
+            return previewUrl;
         },
 
         mediaLink() {
-            if (this.type == 1) {
+            if (this.mediaType == 'spotify')
                 return 'https://open.spotify.com/track/' + this.mediaId;
-            } else {
-                return this.url;
-            }
-        },
 
-        typeString() {
-            return this.types[this.type];
+            return this.url;
         },
 
         typeClass() {
-            switch (this.type) {
-                case 1:
+            switch (this.mediaType) {
+                case 'spotify':
                     return 'fab fa-spotify';
-                    break;
-
-                case 2:
+                case 'soundcloud':
                     return 'fab fa-soundcloud';
-                    break;
-
-                case 3:
+                case 'youtube':
                     return 'fab fa-youtube';
-                    break;
-
-                case 4:
+                case 'file/pdf':
                     return 'fas fa-file-pdf';
-                    break;
-
                 default:
                     return 'fas fa-music';
-                    break;
             }
         }
     }

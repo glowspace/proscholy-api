@@ -1,12 +1,14 @@
 <template>
     <v-app :dark="$root.dark">
         <notifications />
-        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
-            indeterminate
-            color="info"
-            :height="4"
-            class="m-0"
-        ></v-progress-linear></div>
+        <div v-show="$apollo.loading" class="fixed-top">
+            <v-progress-linear
+                indeterminate
+                color="info"
+                :height="4"
+                class="m-0"
+            ></v-progress-linear>
+        </div>
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Úprava autora</h1>
             <v-layout row wrap>
@@ -62,7 +64,9 @@
                             label="Popis autora"
                             v-model="model.description"
                             data-vv-name="input.description"
-                            :error-messages="errors.collect('input.description')"
+                            :error-messages="
+                                errors.collect('input.description')
+                            "
                         ></v-textarea>
                         <items-combo-box
                             v-bind:p-items="tags_period"
@@ -108,8 +112,19 @@
                 </v-flex>
             </v-layout>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn :href="model.public_url" class="text-decoration-none mr-0" :disabled="isDirty">Zobrazit ve zpěvníku</v-btn>
-            <v-btn :href="model.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+            <v-btn
+                :href="model.public_url"
+                class="text-decoration-none mr-0"
+                :disabled="isDirty"
+                >Zobrazit ve zpěvníku</v-btn
+            >
+            <v-btn
+                :href="model.public_url"
+                class="text-decoration-none ml-0"
+                target="_blank"
+                icon
+                ><i class="fas fa-external-link-alt"></i
+            ></v-btn>
             <br /><br />
             <delete-model-dialog
                 class-name="Author"
@@ -170,6 +185,7 @@ const FETCH_TAGS_PERIOD = gql`
 `;
 
 import EditForm from './EditForm';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 export default {
     extends: EditForm,
@@ -256,7 +272,7 @@ export default {
                         return;
                     }
 
-                    this.handleValidationErrors(error);
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
         }
     }

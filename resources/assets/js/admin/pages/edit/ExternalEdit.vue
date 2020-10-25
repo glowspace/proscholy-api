@@ -1,28 +1,56 @@
 <template>
     <v-app :dark="$root.dark">
         <notifications />
-        <div v-show="$apollo.loading" class="fixed-top"><v-progress-linear
-            indeterminate
-            color="info"
-            :height="4"
-            class="m-0"
-        ></v-progress-linear></div>
+        <div v-show="$apollo.loading" class="fixed-top">
+            <v-progress-linear
+                indeterminate
+                color="info"
+                :height="4"
+                class="m-0"
+            ></v-progress-linear>
+        </div>
         <v-container fluid grid-list-xs>
-            <h1 class="h2 mb-3">Úprava externího odkazu</h1>
+            <h1 class="h2 mb-3">Úprava materiálu</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
+                        <v-layout row>
+                            <v-flex grow>
+                                <v-text-field
+                                    label="Url odkaz"
+                                    required
+                                    v-model="model.url"
+                                    data-vv-name="input.url"
+                                    :error-messages="
+                                        errors.collect('input.url')
+                                    "
+                                    :disabled="model.is_uploaded"
+                                ></v-text-field>
+                            </v-flex>
+                            <v-flex shrink>
+                                <FileUploadDialog
+                                    v-on:submit="onFileDialogSubmit"
+                                    :btn-caption="
+                                        model.is_uploaded
+                                            ? 'Nahradit jiným souborem'
+                                            : 'Nahradit souborem'
+                                    "
+                                ></FileUploadDialog>
+                            </v-flex>
+                        </v-layout>
                         <v-text-field
-                            label="Url odkaz"
-                            required
-                            v-model="model.url"
-                            data-vv-name="input.url"
-                            :error-messages="errors.collect('input.url')"
+                            label="Zobrazovaný název"
+                            v-model="model.caption"
                         ></v-text-field>
+                        <v-combobox
+                            :items="enums.media_type.map(i => i.text)"
+                            v-model="model.media_type"
+                            label="Typ odkazu/souboru"
+                        ></v-combobox>
                         <v-select
-                            :items="enums.type"
-                            v-model="model.type"
-                            label="Typ"
+                            :items="enums.content_type"
+                            v-model="model.content_type"
+                            label="Typ obsahu"
                         ></v-select>
                         <items-combo-box
                             v-bind:p-items="authors"
@@ -74,9 +102,9 @@
                     <external-view
                         v-if="model_database"
                         :url="model_database.url"
-                        :type="model_database.type"
-                        :thumbnail-url="model_database.thumbnail_url"
+                        :media-type="model_database.media_type"
                         :media-id="model_database.media_id"
+                        :is-uploaded="model_database.is_uploaded"
                     ></external-view>
                 </v-flex>
             </v-layout>
@@ -99,18 +127,16 @@
                 class-name="External"
                 :model-id="model.id || null"
                 @deleted="is_deleted = true"
-                delete-msg="Opravdu chcete vymazat tento externí odkaz?"
+                delete-msg="Opravdu chcete vymazat tento materiál?"
                 >Vymazat</delete-model-dialog
             >
             <!-- model deleted dialog -->
             <v-dialog v-model="is_deleted" persistent max-width="320">
                 <v-card>
                     <v-card-title class="headline"
-                        >Externí odkaz byl vymazán</v-card-title
+                        >Materiál byl vymazán</v-card-title
                     >
-                    <v-card-text
-                        >Externí odkaz byl vymazán z databáze.</v-card-text
-                    >
+                    <v-card-text>Materiál byl vymazán z databáze.</v-card-text>
                     <v-card-actions
                         class="d-flex flex-column justify-content-end"
                     >
@@ -120,7 +146,7 @@
                                 color="green darken-1"
                                 flat
                                 @click="goToAdminPage('external', false)"
-                                >Přejít na seznam externích odkazů</v-btn
+                                >Přejít na seznam materiálů</v-btn
                             >
                         </div>
                         <div>
@@ -149,9 +175,11 @@ import gql from 'graphql-tag';
 import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
 import ExternalView from 'Public/components/ExternalView.vue';
+import FileUploadDialog from 'Admin/components/FileUploadDialog.vue';
 
 import EditForm from './EditForm';
 import External from 'Admin/models/External';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const FETCH_AUTHORS = gql`
     query {
@@ -184,7 +212,8 @@ export default {
     components: {
         ItemsComboBox,
         DeleteModelDialog,
-        ExternalView
+        ExternalView,
+        FileUploadDialog
     },
     extends: EditForm,
 
@@ -194,17 +223,21 @@ export default {
                 // here goes the definition of model attributes
                 id: undefined,
                 url: undefined,
-                type: undefined,
                 authors: [],
                 song_lyric: undefined,
                 tags_instrumentation: [],
                 catalog_number: undefined,
                 copyright: undefined,
                 editor: undefined,
-                published_by: undefined
+                published_by: undefined,
+                is_uploaded: undefined,
+                caption: undefined,
+                media_type: undefined,
+                content_type: undefined
             },
             enums: {
-                type: []
+                media_type: [],
+                content_type: []
             },
             fragment: External.fragment,
             is_deleted: false
@@ -222,8 +255,13 @@ export default {
                 this.loadModelDataFromResult(result);
                 this.loadEnumJsonFromResult(
                     result,
-                    'type_string_values',
-                    this.enums.type
+                    'media_type_values',
+                    this.enums.media_type
+                );
+                this.loadEnumJsonFromResult(
+                    result,
+                    'content_type_string_values',
+                    this.enums.content_type
                 );
             }
         },
@@ -265,7 +303,7 @@ export default {
                     this.$validator.errors.clear();
                     this.$notify({
                         title: 'Úspěšně uloženo :)',
-                        text: 'Externí odkaz byl úspěšně uložen',
+                        text: 'Materiál byl úspěšně uložen',
                         type: 'success'
                     });
                 })
@@ -274,14 +312,19 @@ export default {
                         // unknown error happened
                         this.$notify({
                             title: 'Chyba při ukládání',
-                            text: 'Externí odkaz nebyl uložen',
+                            text: 'Materiál nebyl uložen',
                             type: 'error'
                         });
                         return;
                     }
 
-                    this.handleValidationErrors(error);
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
+        },
+
+        onFileDialogSubmit(url) {
+            this.model.url = url;
+            this.model.is_uploaded = true;
         },
 
         showSong() {

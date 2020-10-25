@@ -55,8 +55,14 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 Auth::routes(['register' => false]);
 
 // Downloading
-Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFile')->name('download.file');
-Route::get('/preview/{file}/{filename?}', 'DownloadController@previewFile')->name('preview.file');
+Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFileOld')->name('download.file');
+Route::get('/preview/{file}/{filename?}', 'DownloadController@downloadFileOld')->name('preview.file');
+// todo: create a preview route..?
+Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download');
+
+Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('external.proxy');
+
+
 // Thumbnails for pdf files
 Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExternal')->name('external.thumbnail');
 Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');
@@ -74,9 +80,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
         Route::get('/songs', 'SongController@index')->name('song.index');
         Route::get('/song/{song_lyric}/edit', 'SongController@edit')->name('song.edit');
-
-        Route::resource('file', 'FileController')->except(['show']);
-        Route::get('/file/new-for-song/{song_lyric}', 'FileController@create_for_song')->name('file.create_for_song');
 
         Route::resource('tag', 'TagController')->except(['show']);
 
@@ -119,6 +122,10 @@ Route::get('/run-schedule', function () {
     Artisan::call('schedule:run --no-ansi');
     return response("Scheduled tasks have run");
 });
+
+Route::get('/regenschori', function () {
+    return redirect('https://regenschori.cz');
+})->name('client.regenschori');
 
 // Route::get('/firebase-auth/me', function(Request $request) {
 //     return (array) $request->public_user();

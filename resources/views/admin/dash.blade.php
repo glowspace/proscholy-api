@@ -127,7 +127,7 @@
                                 <td><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><a href="{{route('admin.external.index')}}">Externí odkazy</a></td>
+                                <td colspan="2"><a href="{{route('admin.external.index')}}">Materiály</a></td>
                                 <td><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
                             </tr>
                         </table>

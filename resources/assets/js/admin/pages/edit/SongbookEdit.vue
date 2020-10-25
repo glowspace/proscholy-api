@@ -194,6 +194,7 @@ import NumberInput from 'Admin/components/NumberInput.vue';
 
 import EditForm from './EditForm';
 import Songbook from 'Admin/models/Songbook';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const FETCH_SONG_LYRICS = gql`
     query {
@@ -305,7 +306,7 @@ export default {
                         return;
                     }
 
-                    this.handleValidationErrors(error);
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
         },
 

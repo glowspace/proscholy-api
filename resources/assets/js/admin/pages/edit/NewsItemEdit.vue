@@ -34,7 +34,8 @@
                             <a
                                 href="https://fontawesome.com/icons?d=gallery&m=free"
                                 target="_blank"
-                                >Seznam ikon Font Awesome (třída se zobrazí v detailu ikonky)</a
+                                >Seznam ikon Font Awesome (třída se zobrazí v
+                                detailu ikonky)</a
                             >
                         </div>
                         <v-text-field
@@ -132,6 +133,7 @@ import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
 
 import EditForm from './EditForm';
 import NewsItem from 'Admin/models/NewsItem';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 export default {
     components: {
@@ -218,7 +220,7 @@ export default {
                         return;
                     }
 
-                    this.handleValidationErrors(error);
+                    graphqlErrorsToValidator(this.$validator, error);
                 });
         },
 

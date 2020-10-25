@@ -78,6 +78,18 @@ const fragment = gql`
     }
 `;
 
+const external_fragment = gql`
+    fragment ExternalFragment on External {
+        id
+        url
+        media_type
+        content_type
+        authors {
+            name
+        }
+    }
+`;
+
 const QUERY = gql`
     query($id: ID!) {
         model_database: song_lyric(id: $id) {
@@ -92,32 +104,14 @@ const QUERY = gql`
             is_arrangement
 
             externals {
-                id
-                public_name
-                url
-                type
-            }
-            files {
-                id
-                public_name
-                url
-                type
+                ...ExternalFragment
             }
 
             arrangements {
                 id
                 name
                 externals {
-                    id
-                    public_name
-                    url
-                    type
-                }
-                files {
-                    id
-                    public_name
-                    url
-                    type
+                    ...ExternalFragment
                 }
                 authors {
                     name
@@ -126,6 +120,7 @@ const QUERY = gql`
         }
     }
     ${fragment}
+    ${external_fragment}
 `;
 
 const MUTATION = gql`
@@ -208,6 +203,7 @@ const MUTATION = gql`
 
 export default {
     fragment,
+    external_fragment,
     QUERY,
     MUTATION,
 

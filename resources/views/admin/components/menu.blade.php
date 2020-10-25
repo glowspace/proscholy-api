@@ -10,11 +10,11 @@
     'text' => 'Zpěvník pro scholy'
 ])
 
-{{-- @include('admin.components.menu-item', [
-    'route' => 'client.home',
+@include('admin.components.menu-item', [
+    'route' => 'client.regenschori',
     'icon' => 'church',
     'text' => 'Regenschori'
-]) --}}
+])
 
 {{-- @include('admin.components.menu-item', [
     'route' => 'client.home',
@@ -72,15 +72,8 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.external.index',
     'icon' => 'link',
-    'text' => 'Externí odkazy',
+    'text' => 'Materiály',
     'plus' => true
-])
-
-@include('admin.components.menu-item', [
-    'route' => 'admin.file.index',
-    'icon' => 'file',
-    'text' => 'Nahrané soubory',
-    'plus_route' => 'admin.file.create'
 ])
 
 {{-- @include('admin.components.menu-item', [

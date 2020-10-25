@@ -286,14 +286,13 @@
               </p>
             </v-flex>
             <v-flex xs12 md6>
-              <!-- externals and files view -->
-              <!-- <p v-for="file in model.files" v-bind:key="file.id">{{ file.public_name }}</p> -->
+              <!-- externals view -->
               <template v-if="thumbnailables">
                 <v-select
                   :items="thumbnailables"
                   item-value="url"
-                  item-text="public_name"
-                  label="Náhled not (volba souboru/externího odkazu)"
+                  item-text="url"
+                  label="Náhled not (volba materiálu)"
                   v-model="selected_thumbnail_url"
                 ></v-select>
 
@@ -305,35 +304,16 @@
         </v-tab-item>
         <v-tab-item>
           <v-layout row wrap mb-4 v-if="model_database">
-            <v-flex xs12 md6>
-              <h5>Externí odkazy:</h5>
-              <v-btn
-                v-for="external in model_database.externals"
-                v-bind:key="external.id"
-                class="text-none"
-                @click="goToAdminPage('external/' + external.id + '/edit')"
-              >{{ external.public_name }}</v-btn>
-              <br>
-              <v-btn
-                color="info"
-                outline
-                @click="goToAdminPage('external/new-for-song/' + model.id)"
-              >Přidat nový externí odkaz</v-btn>
-            </v-flex>
-            <v-flex xs12 md6>
-              <h5>Soubory:</h5>
-              <v-btn
-                v-for="file in model_database.files"
-                v-bind:key="file.id"
-                class="text-none"
-                @click="goToAdminPage('file/' + file.id + '/edit')"
-              >{{ file.public_name }}</v-btn>
-              <br>
-              <v-btn
-                color="info"
-                outline
-                @click="goToAdminPage('file/new-for-song/' + model.id)"
-              >Přidat nový soubor</v-btn>
+            <v-flex xs12>
+              <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
+
+              <h4>Nahrávky:</h4>
+              <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+              <h4>Noty:</h4>
+              <ExternalListItem v-for="ext in externals_scores" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+              <h4>Ostatní materiály:</h4>
+              <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+
             </v-flex>
           </v-layout>
         </v-tab-item>
@@ -342,6 +322,7 @@
             <v-flex xs12>
               <h5>Přiřazené zpěvníky:</h5>
             </v-flex>
+            
           </v-layout>
 
           <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
@@ -498,9 +479,13 @@ import SongLyricsGroup from "Admin/components/SongLyricsGroup.vue";
 import SelectSongGroupDialog from "Admin/components/SelectSongGroupDialog.vue";
 import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
+import CreateExternal from "Admin/components/CreateExternal.vue";
+import ExternalListItem from "Admin/components/ExternalListItem.vue";
 
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
+import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
+
 
 // import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
 import BibleReference from "bible-reference/bible_reference";
@@ -569,7 +554,9 @@ export default {
     SongLyricsGroup,
     SelectSongGroupDialog,
     DeleteModelDialog,
-    NumberInput
+    NumberInput,
+    CreateExternal,
+    ExternalListItem
   },
   extends: EditForm,
 
@@ -591,7 +578,6 @@ export default {
         tags_musical_form: [],
         authors_pivot: [],
         externals: [],
-        files: [],
         songbook_records: [],
         song: undefined,
         capo: undefined,
@@ -611,6 +597,7 @@ export default {
 
       new_arrangement_name: "",
       created_arrangements: [],
+      created_externals: [],
 
       enums: {
         lang: [],
@@ -680,16 +667,16 @@ export default {
 
   computed: {
     thumbnailables() {
-      // mix the externals and files that can have thumbnail
-      return this.model.externals
-        .filter(ext => {
-          return [0, 4, 8, 9].includes(ext.type);
-        })
-        .concat(
-          this.model.files.filter(file => {
-            return [1, 2, 3].includes(file.type);
-          })
-        );
+      if (!this.model_database) {
+        return [];
+      }
+
+      const hasSupportedContent = content_type => ['SCORE', 'LYRICS', 'WEBSITE'].includes(content_type);
+      const hasSupportedFileFormat = media_type => !['file/musx'].includes(media_type);
+
+      // externals that can have thumbnail
+      return [...this.model_database.externals, ...this.created_externals]
+        .filter(ext => hasSupportedContent(ext.content_type) && hasSupportedFileFormat(ext.media_type));
     },
 
     is_arrangement_layout() {
@@ -718,7 +705,17 @@ export default {
 
     csrf() {
       return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    }
+    },
+
+    externals_others() {
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['UNDEFINED', 'WEBSITE', 'LYRICS'].includes(ext.content_type));
+    },
+    externals_recordings() {
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['RECORDING'].includes(ext.content_type));
+    },
+    externals_scores(){
+      return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE'].includes(ext.content_type));
+    },
   },
 
   watch: {
@@ -776,7 +773,7 @@ export default {
             return;
           }
 
-          this.handleValidationErrors(error);
+          graphqlErrorsToValidator(this.$validator, error);
 
           this.$notify({
             title: "Chyba při ukládání",
@@ -858,6 +855,26 @@ export default {
         if (song_lyric.id == this.model.id) {
           Vue.set(song_lyric, "name", name);
         }
+      }
+
+      this.$validator.errors.clear();
+    },
+
+    onExternalCreated(external) {
+      this.created_externals.push(external);
+    },
+
+    onExternalDeleted(id) {
+      const indexOfExtId = (externals, id) => externals.map(ex => ex.id).indexOf(id);
+      // External can be stored either in model_database or in created_externals,
+      // we need to figure out where
+      const i_mdb = indexOfExtId(this.model_database.externals, id);
+      const i_created = indexOfExtId(this.created_externals, id);
+
+      if (i_mdb) {
+        Vue.delete(this.model_database.externals, i_mdb);
+      } else if (i_created) {
+        Vue.delete(this.created_externals, i_created);
       }
     },
 
