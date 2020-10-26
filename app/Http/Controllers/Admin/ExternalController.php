@@ -38,14 +38,4 @@ class ExternalController extends Controller
             'title' => 'Materiál #' . $external->id
         ]);
     }
-
-    public function create_for_song(Request $request, SongLyric $song_lyric)
-    {
-        // shortcut for directly editing with an empty url and an assigned song_lyric
-        $external = External::create();
-        $external->song_lyric()->associate($song_lyric);
-        $external->save();
-
-        return $this->edit($request, $external);
-    }
 }

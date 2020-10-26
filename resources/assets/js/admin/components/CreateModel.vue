@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mb-3 px-4 py-3">
+    <v-card class="mb-2 px-4 py-3 d-inline-block">
         <v-layout row>
             <div class="text-nowrap pt-1" v-if="enableFileUpload">
                 <FileUploadDialog
@@ -13,27 +13,34 @@
                 v-model="attribute_value"
                 data-vv-name="required_attribute"
                 :error-messages="errors.collect('required_attribute')"
-                prepend-icon="add"
+                prepend-icon="search"
                 @click:prepend="$refs.cmtf.focus()"
                 ref="cmtf"
                 class="mt-0 pb-0 pt-3"
                 style="max-width:600px;width:50vw"
-                @keydown.enter="submit(true)"
                 @input="$validator.errors.clear()"
-                id="create-model-text-field"
+                id="search"
+                :clearable="true"
             ></v-text-field>
             <div class="text-nowrap pt-1">
-                <v-btn
-                    :disabled="attribute_value == '' || saving"
-                    @click="submit(true)"
-                    color="primary"
-                    style="margin-left:33px"
-                    >Vytvořit a upravit</v-btn
-                >
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            :disabled="attribute_value == '' || saving"
+                            @click="submit(true)"
+                            color="primary"
+                            style="margin-left:33px"
+                            v-on="on"
+                            >Vytvořit a upravit</v-btn
+                        >
+                        </template>
+                    <span>Tab, Enter</span>
+                </v-tooltip>
                 <v-btn
                     v-if="!forceEdit"
                     :disabled="attribute_value == '' || saving"
                     @click="submit(false)"
+                    v-on="on2"
                     >Vytvořit</v-btn
                 >
             </div>
@@ -61,16 +68,27 @@ export default {
         'label',
         'success-msg',
         'force-edit',
-        'enable-file-upload'
+        'enable-file-upload',
+        'value'
     ],
 
     components: { FileUploadDialog },
 
     data() {
         return {
-            attribute_value: '',
             saving: false
         };
+    },
+
+    computed: {
+        attribute_value: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit('input', val);
+            }
+        }
     },
 
     methods: {
@@ -101,7 +119,7 @@ export default {
                         this.$emit('saved');
                         this.attribute_value = '';
                         document
-                            .getElementById('create-model-text-field')
+                            .getElementById('search')
                             .focus();
                     }
                 })

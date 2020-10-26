@@ -303,6 +303,12 @@ div.application {
     font-family: inherit;
 }
 
+.theme--dark {
+    .primary--text, .accent--text {
+        color: #4dc0b5 !important;
+    }
+}
+
 // custom css
 .body-bg {
     background-color: $body-bg;

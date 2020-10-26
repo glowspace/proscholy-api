@@ -12,7 +12,7 @@
     <v-container fluid grid-list-xs>
       <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 class="h2 mb-3" v-else>Úprava písně</h1>
-      <v-tabs color="transparent">
+      <v-tabs color="transparent" v-model="active">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
@@ -307,22 +307,21 @@
             <v-flex xs12>
               <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
 
-              <h4>Nahrávky:</h4>
+              <h4 v-if="externals_recordings.length">Nahrávky</h4>
               <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4>Noty:</h4>
+              <h4 v-if="externals_scores.length">Noty</h4>
               <ExternalListItem v-for="ext in externals_scores" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4>Ostatní materiály:</h4>
+              <h4 v-if="externals_others.length">Ostatní materiály</h4>
               <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-
             </v-flex>
           </v-layout>
         </v-tab-item>
         <v-tab-item>
           <v-layout row wrap>
             <v-flex xs12>
-              <h5>Přiřazené zpěvníky:</h5>
+              <h4 v-if="(model.songbook_records || []).length">Přiřazené zpěvníky</h4>
             </v-flex>
-            
+
           </v-layout>
 
           <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
@@ -401,7 +400,7 @@
         <v-tab-item v-if="!is_arrangement_layout && model_database">
           <v-layout row wrap mb-4>
             <v-flex xs12>
-              <h5>Přidružené aranže:</h5>
+              <h4 v-if="[...model_database.arrangements, ...created_arrangements].length">Přidružené aranže</h4>
 
               <v-btn
                 v-for="arrangement in [...model_database.arrangements, ...created_arrangements]"
@@ -603,7 +602,9 @@ export default {
         lang: [],
         liturgy_approval_status: [],
         authorship_type: []
-      }
+      },
+
+      active: 0
     };
   },
 
@@ -662,6 +663,12 @@ export default {
       variables() {
         return { lilypond: this.model.lilypond }
       }
+    }
+  },
+
+  mounted() {
+    if (window.location.hash.length) {
+      this.active = window.location.hash.replace('#', '') - 0;
     }
   },
 
@@ -734,13 +741,17 @@ export default {
         const bib_refs = lines.map(l => BibleReference.fromEuropean(l));
         const lines_osis = bib_refs.map(r => r.toString()).join(',');
         const lines_cz = bib_refs.flatMap(r => r.toCzechStrings());
-  
+
         this.model.bible_refs_osis = lines_osis;
         this.bible_refs_czech = lines_cz;
       } else {
         this.model.bible_refs_osis = "";
         this.bible_refs_czech = [];
       }
+    },
+
+    active(val) {
+      window.location.hash = val ? val : '';
     }
   },
 

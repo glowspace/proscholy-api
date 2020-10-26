@@ -5,48 +5,35 @@
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Písně</h1>
             <create-model
+                v-model="search_string"
                 class-name="SongLyric"
-                label="Zadejte jméno nové písně"
+                label="Název písně"
                 success-msg="Píseň úspěšně vytvořena"
                 @saved="$apollo.queries.song_lyrics.refetch()"
             ></create-model>
             <v-layout row wrap>
-                <v-flex xs12 md8>
-                    <v-radio-group v-model="filter_mode" row>
-                        <v-radio
-                            label="Všechny písně"
-                            value="no-filter"
-                        ></v-radio>
-                        <v-radio
-                            label="Bez textu"
-                            value="no-lyrics"
-                        ></v-radio>
-                        <v-radio
-                            label="Bez akordů"
-                            value="no-chords"
-                        ></v-radio>
-                        <v-radio
-                            label="Bez autora"
-                            value="no-author"
-                        ></v-radio>
-                        <v-radio
-                            label="Bez štítků"
-                            value="no-tags"
-                        ></v-radio>
-                    </v-radio-group>
-                </v-flex>
-                <v-flex xs12 md4>
-                    <v-text-field
-                        v-model="search_string"
-                        label="Vyhledávání"
-                        prepend-icon="search"
-                        @click:prepend="$refs.search.focus()"
-                        ref="search"
-                        :clearable="true"
-                        id="search"
-                        autofocus
-                    ></v-text-field>
-                </v-flex>
+                <v-radio-group v-model="filter_mode" row>
+                    <v-radio
+                        label="Všechny písně"
+                        value="no-filter"
+                    ></v-radio>
+                    <v-radio
+                        label="Bez textu"
+                        value="no-lyrics"
+                    ></v-radio>
+                    <v-radio
+                        label="Bez akordů"
+                        value="no-chords"
+                    ></v-radio>
+                    <v-radio
+                        label="Bez autora"
+                        value="no-author"
+                    ></v-radio>
+                    <v-radio
+                        label="Bez štítků"
+                        value="no-tags"
+                    ></v-radio>
+                </v-radio-group>
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
@@ -233,9 +220,7 @@ export default {
             this.filter_mode = window.location.hash.replace('#', '');
         }
 
-        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
-            document.getElementById('create-model-text-field').focus();
-        } else if (document.getElementById('search')) {
+        if (document.getElementById('search')) {
             document.getElementById('search').focus();
         }
     },

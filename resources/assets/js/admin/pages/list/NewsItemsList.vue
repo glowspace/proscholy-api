@@ -5,37 +5,24 @@
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Novinky</h1>
             <create-model
+                v-model="search_string"
                 class-name="NewsItem"
-                label="Zadejte url adresu nové položky v novinkách"
+                label="URL adresa položky"
                 success-msg="Novinka úspěšně vytvořena"
                 @saved="$apollo.queries.news_items.refetch()"
                 :force-edit="true"
             ></create-model>
             <v-layout row wrap>
-                <v-flex xs12 md8>
-                    <v-radio-group v-model="filter_mode">
-                        <v-radio
-                            label="Všechny novinky"
-                            value="no-filter"
-                        ></v-radio>
-                        <v-radio
-                            label="Pouze aktivní"
-                            value="filter-active"
-                        ></v-radio>
-                    </v-radio-group>
-                </v-flex>
-                <v-flex xs12 md4>
-                    <v-text-field
-                        v-model="search_string"
-                        label="Vyhledávání"
-                        prepend-icon="search"
-                        @click:prepend="$refs.search.focus()"
-                        ref="search"
-                        :clearable="true"
-                        id="search"
-                        autofocus
-                    ></v-text-field>
-                </v-flex>
+                <v-radio-group v-model="filter_mode" row>
+                    <v-radio
+                        label="Všechny novinky"
+                        value="no-filter"
+                    ></v-radio>
+                    <v-radio
+                        label="Pouze aktivní"
+                        value="filter-active"
+                    ></v-radio>
+                </v-radio-group>
             </v-layout>
             <v-layout row>
                 <v-flex xs12>
@@ -200,12 +187,7 @@ export default {
             this.filter_mode = window.location.hash.replace('#', '');
         }
 
-        if (
-            window.location.hash == '#n' &&
-            document.getElementById('create-model-text-field')
-        ) {
-            document.getElementById('create-model-text-field').focus();
-        } else if (document.getElementById('search')) {
+        if (document.getElementById('search')) {
             document.getElementById('search').focus();
         }
     },

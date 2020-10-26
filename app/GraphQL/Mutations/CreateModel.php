@@ -55,13 +55,16 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "External") {
-            $external = External::create(['url' => $attr]);
+            $validator = Validator::make(['url' => $attr], ['url' => 'unique:externals'], ['unique' => 'Materiál s daným URL již existuje'], $validatorCustomAttributes);
+            if (!$validator->fails()) {
+                $external = External::create(['url' => $attr]);
 
-            $returnValue = [
-                "id" => $external->id,
-                "class_name" => "External",
-                "edit_url" => route("admin.external.edit", $external)
-            ];
+                $returnValue = [
+                    "id" => $external->id,
+                    "class_name" => "External",
+                    "edit_url" => route("admin.external.edit", $external)
+                ];
+            }
         } elseif ($input["class_name"] == "Songbook") {
             $validator = Validator::make(['name' => $attr], ['name' => 'unique:songbooks'], ['unique' => 'Zpěvník se stejným jménem již existuje'], $validatorCustomAttributes);
             if (!$validator->fails()) {
@@ -74,7 +77,7 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "SongLyric") {
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics,name,NULL,id,deleted_at,NULL'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
             if (!$validator->fails()) {
                 $song       = Song::create(['name' => $attr]);
                 $song_lyric = SongLyric::create([
