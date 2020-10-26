@@ -17,7 +17,7 @@
                         <v-layout row>
                             <v-flex grow>
                                 <v-text-field
-                                    label="Url odkaz"
+                                    label="URL adresa"
                                     required
                                     v-model="model.url"
                                     data-vv-name="input.url"

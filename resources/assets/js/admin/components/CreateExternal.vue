@@ -1,23 +1,20 @@
 <template>
-    <v-card class="mb-4 px-4">
+    <v-card class="mb-4 px-4 py-3">
         <v-card-title class="p-0">
             <h3>Rychlé přidání materiálu</h3>
         </v-card-title>
         <v-card-text class="p-0">
-            <v-layout row wrap>
-                <v-flex>
-                    <v-text-field
-                        label="URL"
-                        v-model="new_external.url"
-                    ></v-text-field>
-                </v-flex>
-                <v-flex xs5 md3>
-                    nebo
-                    <FileUploadDialog
-                        v-on:submit="onFileDialogSubmit"
-                    ></FileUploadDialog>
-                </v-flex>
-            </v-layout>
+            <div class="d-sm-table">
+                <FileUploadDialog
+                    v-on:submit="onFileDialogSubmit"
+                ></FileUploadDialog>
+                <span class="d-table-cell align-center">nebo</span>
+                <v-text-field
+                    label="URL adresa"
+                    v-model="new_external.url"
+                    class="d-table-cell pl-3 w-100"
+                ></v-text-field>
+            </div>
             <v-layout>
                 <v-flex xs8>
                     <items-combo-box
