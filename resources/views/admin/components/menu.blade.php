@@ -58,22 +58,19 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.song.index',
     'icon' => 'music',
-    'text' => 'Písně',
-    'plus' => true
+    'text' => 'Písně'
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.author.index',
     'icon' => 'pen',
-    'text' => 'Autoři',
-    'plus' => true
+    'text' => 'Autoři'
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.external.index',
     'icon' => 'link',
-    'text' => 'Materiály',
-    'plus' => true
+    'text' => 'Materiály'
 ])
 
 {{-- @include('admin.components.menu-item', [
@@ -85,22 +82,19 @@
 @include('admin.components.menu-item', [
     'route' => 'admin.songbook.index',
     'icon' => 'book',
-    'text' => 'Zpěvníky',
-    'plus' => true
+    'text' => 'Zpěvníky'
 ])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.news-item.index',
     'icon' => 'info-circle',
-    'text' => 'Novinky',
-    'plus' => true
+    'text' => 'Novinky'
 ])
 
 @can('manage users')
     @include('admin.components.menu-item', [
         'route' => 'admin.user.index',
         'icon' => 'user',
-        'text' => 'Uživatelé',
-        'plus_route' => 'admin.user.create'
+        'text' => 'Uživatelé'
     ])
 @endcan

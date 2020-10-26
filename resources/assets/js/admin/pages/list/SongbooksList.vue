@@ -5,26 +5,13 @@
         <v-container fluid grid-list-xs>
             <h1 class="h2 mb-3">Zpěvníky</h1>
             <create-model
+                v-model="search_string"
                 class-name="Songbook"
-                label="Zadejte jméno nového zpěvníku"
+                label="Název zpěvníku"
                 success-msg="Zpěvník úspěšně vytvořen"
                 @saved="$apollo.queries.songbooks.refetch()"
                 :force-edit="true"
             ></create-model>
-            <v-layout row>
-                <v-flex xs12 md4 offset-md8>
-                    <v-text-field
-                        v-model="search_string"
-                        label="Vyhledávání"
-                        prepend-icon="search"
-                        @click:prepend="$refs.search.focus()"
-                        ref="search"
-                        :clearable="true"
-                        id="search"
-                        autofocus
-                    ></v-text-field>
-                </v-flex>
-            </v-layout>
             <v-layout row>
                 <v-flex xs12>
                     <v-card>
@@ -141,9 +128,7 @@ export default {
             this.filter_mode = window.location.hash.replace('#', '');
         }
 
-        if (window.location.hash == '#n' && document.getElementById('create-model-text-field')) {
-            document.getElementById('create-model-text-field').focus();
-        } else if (document.getElementById('search')) {
+        if (document.getElementById('search')) {
             document.getElementById('search').focus();
         }
     },
