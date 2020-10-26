@@ -12,7 +12,7 @@
     <v-container fluid grid-list-xs>
       <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 class="h2 mb-3" v-else>Úprava písně</h1>
-      <v-tabs color="transparent">
+      <v-tabs color="transparent" v-model="active">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
         <v-tab>Materiály</v-tab>
@@ -602,7 +602,9 @@ export default {
         lang: [],
         liturgy_approval_status: [],
         authorship_type: []
-      }
+      },
+
+      active: 0
     };
   },
 
@@ -661,6 +663,12 @@ export default {
       variables() {
         return { lilypond: this.model.lilypond }
       }
+    }
+  },
+
+  mounted() {
+    if (window.location.hash.length) {
+      this.active = window.location.hash.replace('#', '') - 0;
     }
   },
 
@@ -740,6 +748,10 @@ export default {
         this.model.bible_refs_osis = "";
         this.bible_refs_czech = [];
       }
+    },
+
+    active(val) {
+      window.location.hash = val ? val : '';
     }
   },
 
