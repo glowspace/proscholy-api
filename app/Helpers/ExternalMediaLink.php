@@ -39,7 +39,11 @@ class ExternalMediaLink
             return false;
         }
 
-        $code = str_replace("t=", "start=", $groups[2]);
+        $code = $groups[2];
+        $code = preg_replace("/\?list=[\d\w]+/", "", $code);
+        // https://youtu.be/9RRz_pVENdc?list=UUKPH8WUNM5Nk870o9v6OReQ
+
+        $code = str_replace("t=", "start=", $code);
 
         return $code;
 
