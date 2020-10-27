@@ -28,6 +28,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@bit/proscholy.utilities.external@^1.0.10":
+  version "1.0.10"
+  resolved "https://node.bit.dev/proscholy.utilities.external/-/proscholy.utilities.external-1.0.10.tgz#8c0e86669ce1f744b96c6c34581bd0bc07746c76"
+  integrity sha1-jA6GZpzh90S5bGw0WBvQvAd0bHY=
+  dependencies:
+    bowser "^2.4.0"
+
 "@firebase/analytics-types@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@firebase/analytics-types/-/analytics-types-0.2.2.tgz#d442d0cda78dd5a43fe08441423d391b713987c8"

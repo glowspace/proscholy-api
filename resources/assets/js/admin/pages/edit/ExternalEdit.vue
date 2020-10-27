@@ -99,13 +99,10 @@
                     </v-form>
                 </v-flex>
                 <v-flex xs12 md6>
-                    <external-view
+                    <external-component
                         v-if="model_database"
-                        :url="model_database.url"
-                        :media-type="model_database.media_type"
-                        :media-id="model_database.media_id"
-                        :is-uploaded="model_database.is_uploaded"
-                    ></external-view>
+                        :external="model_database"
+                    ></external-component>
                 </v-flex>
             </v-layout>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
@@ -174,7 +171,7 @@
 import gql from 'graphql-tag';
 import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
-import ExternalView from 'Public/components/ExternalView.vue';
+import ExternalComponent from '@bit/proscholy.utilities.external/External.vue';
 import FileUploadDialog from 'Admin/components/FileUploadDialog.vue';
 
 import EditForm from './EditForm';
@@ -212,7 +209,7 @@ export default {
     components: {
         ItemsComboBox,
         DeleteModelDialog,
-        ExternalView,
+        ExternalComponent,
         FileUploadDialog
     },
     extends: EditForm,
