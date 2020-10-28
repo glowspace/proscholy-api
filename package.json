@@ -15,6 +15,7 @@
         "browser-sync-webpack-plugin": "^2.0.1"
     },
     "dependencies": {
+        "@bit/proscholy.utilities.external": "^1.0.10",
         "apollo-boost": "^0.3.1",
         "apollo-cache-inmemory": "^1.6.2",
         "apollo-cache-persist": "^0.1.1",
@@ -23,7 +24,7 @@
         "apollo-link-http": "^1.5.14",
         "apollo-upload-client": "^14.1.1",
         "axios": "^0.18",
-        "bible-reference": "https://github.com/proscholy/bible-reference#1.0.1",
+        "bible-reference": "https://github.com/proscholy/bible-reference#1.0.3",
         "bootstrap": "4.2.1",
         "bootstrap-material-design": "4.1.1",
         "bowser": "^2.4.0",

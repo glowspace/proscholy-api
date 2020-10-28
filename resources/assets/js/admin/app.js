@@ -34,8 +34,6 @@ Vue.component('news-item-edit', require('Admin/pages/edit/NewsItemEdit.vue'));
 
 Vue.component('user-stats', require('Admin/components/UserStats.vue'));
 
-Vue.component('external-view', require('Public/components/ExternalView.vue'));
-
 import { ApolloClient } from 'apollo-client';
 import { createUploadLink } from 'apollo-upload-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';

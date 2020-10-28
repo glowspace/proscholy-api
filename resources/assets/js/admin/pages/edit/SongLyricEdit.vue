@@ -290,11 +290,17 @@
               <template v-if="thumbnailables">
                 <v-select
                   :items="thumbnailables"
-                  item-value="url"
+                  return-object
                   item-text="url"
                   label="Náhled not (volba materiálu)"
-                  v-model="selected_thumbnail_url"
+                  v-model="selected_thumbnail_external"
                 ></v-select>
+
+                <external-component
+                  v-if="selected_thumbnail_external"
+                  :external="selected_thumbnail_external"
+                  height="55vh"
+                ></external-component>
 
                 <!-- <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img> -->
                 <!-- <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe> -->
@@ -480,6 +486,7 @@ import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
 import CreateExternal from "Admin/components/CreateExternal.vue";
 import ExternalListItem from "Admin/components/ExternalListItem.vue";
+import ExternalComponent from '@bit/proscholy.utilities.external/External.vue';
 
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
@@ -555,7 +562,8 @@ export default {
     DeleteModelDialog,
     NumberInput,
     CreateExternal,
-    ExternalListItem
+    ExternalListItem,
+    ExternalComponent
   },
   extends: EditForm,
 
@@ -587,7 +595,7 @@ export default {
         bible_refs_osis: ""
       },
 
-      selected_thumbnail_url: undefined,
+      selected_thumbnail_external: undefined,
       is_loading: true,
       is_deleted: false,
       fragment: SongLyric.fragment,
@@ -622,7 +630,7 @@ export default {
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
-          this.selected_thumbnail_url = this.thumbnailables[0].url;
+          this.selected_thumbnail_external = this.thumbnailables[0];
         }
 
         this.is_loading = false;

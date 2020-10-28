@@ -102,13 +102,6 @@
                         "
                         >{{ external.public_name }}</v-btn
                     >
-                    <v-btn
-                        v-for="file in model.files"
-                        v-bind:key="file.id"
-                        class="text-none"
-                        @click="goToAdminPage('file/' + file.id + '/edit')"
-                        >{{ file.public_name }}</v-btn
-                    >
                 </v-flex>
             </v-layout>
             <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
@@ -205,7 +198,6 @@ export default {
                 description: undefined,
                 song_lyrics: [],
                 externals: [],
-                files: [],
                 members: [],
                 memberships: [],
                 tags_period: []
