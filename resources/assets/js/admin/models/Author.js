@@ -25,10 +25,6 @@ const fragment = gql`
             url
             public_name
         }
-        files {
-            id
-            public_name
-        }
         tags_period {
             id
             name
