@@ -629,7 +629,7 @@ export default {
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
-          this.selected_thumbnail_url = this.thumbnailables[0];
+          this.selected_thumbnail_external = this.thumbnailables[0];
         }
 
         this.is_loading = false;
