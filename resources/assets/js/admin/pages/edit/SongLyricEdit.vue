@@ -297,9 +297,10 @@
                 ></v-select>
 
                 <external-component
-                        v-if="selected_thumbnail_external"
-                        :external="selected_thumbnail_external"
-                    ></external-component>
+                  v-if="selected_thumbnail_external"
+                  :external="selected_thumbnail_external"
+                  height="55vh"
+                ></external-component>
 
                 <!-- <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img> -->
                 <!-- <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe> -->

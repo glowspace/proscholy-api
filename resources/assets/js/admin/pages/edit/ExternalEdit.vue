@@ -102,6 +102,7 @@
                     <external-component
                         v-if="model_database"
                         :external="model_database"
+                        height="55vh"
                     ></external-component>
                 </v-flex>
             </v-layout>
