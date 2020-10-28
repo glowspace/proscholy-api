@@ -1519,9 +1519,9 @@ bible-passage-reference-parser@^2.0.1:
   resolved "https://registry.yarnpkg.com/bible-passage-reference-parser/-/bible-passage-reference-parser-2.0.1.tgz#1f2339645a88c4a52bea45ae36b4745be539085b"
   integrity sha1-HyM5ZFqIxKUr6kWuNrR0W+U5CFs=
 
-"bible-reference@https://github.com/proscholy/bible-reference#1.0.1":
-  version "1.0.1"
-  resolved "https://github.com/proscholy/bible-reference#4a8b1fea0a676be426e03ac7e4e41630da0d3f2c"
+"bible-reference@https://github.com/proscholy/bible-reference#1.0.3":
+  version "1.0.3"
+  resolved "https://github.com/proscholy/bible-reference#43f14bdf8cd8bc691bee1c720bb8565143b397f5"
   dependencies:
     bible-passage-reference-parser "^2.0.1"
 
