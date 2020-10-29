@@ -4,7 +4,7 @@ type LiturgicalReference {
     type: String
     cycle: String
     reading: String
-    date: DateTime
+    date: Date
 }
 
 extend type Query {
