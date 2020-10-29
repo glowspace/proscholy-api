@@ -1,0 +1,12 @@
+type LiturgicalReference {
+    id: ID
+    song_lyric: SongLyric
+    type: String
+    cycle: String
+    reading: String
+    date: DateTime
+}
+
+extend type Query {
+    liturgical_references(): [LiturgicalReference] @all
+}
