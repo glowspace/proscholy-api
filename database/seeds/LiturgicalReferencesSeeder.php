@@ -26,7 +26,7 @@ class LiturgicalReferencesSeeder extends Seeder
             'cycle' => 'A',
             'reading' => 'Mt 13,47-52  (naznačené ze společných textů)',
             'date' => Carbon::now()->addDays(2),
-            'song_lyric_id' => 2
+            'song_lyric_id' => 4
         ]);
 
         App\LiturgicalReference::create([
