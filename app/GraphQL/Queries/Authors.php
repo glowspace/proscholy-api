@@ -13,7 +13,7 @@ class Authors
 
         if (isset($args['order_last_associated'])) {
             $query->select("authors.*")
-                ->join("author_song_lyric as asl", "asl.author_id", "=", "authors.id")
+                ->leftJoin("author_song_lyric as asl", "asl.author_id", "=", "authors.id")
                 ->orderByRaw("MAX(asl.id) desc")
                 ->groupBy("authors.id");
         }
