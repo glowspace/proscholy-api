@@ -30,6 +30,20 @@ services:
     networks:
       - bcloud-network
 
+  # bible-matcher:
+  #   build:
+  #     context: ./docker/setup/bible_matcher_node
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./.env:/var/www/html/.env
+  #     - ./docker/setup/bible_matcher_node:/var/www/html
+  #   environment:
+  #     - HOST=0.0.0.0
+  #   ports:
+  #     - "3333:3000"
+  #   tty: true
+  #   entrypoint: "sh -c 'yarn && ls -als'"
+
   # lilypond:
   #   build:
   #     context: ./docker/setup/lilypond
