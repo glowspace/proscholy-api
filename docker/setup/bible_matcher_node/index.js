@@ -16,7 +16,23 @@ function getLoadedSongReferences(songs) {
 }
 
 function getLoadedLiturgicalYearReadingReferences(liturgical_year_readings) {
+  for (let r of liturgical_year_readings) {
+    mergeReadings(r);
+  }
+
   return liturgical_year_readings.flatMap(litYearReferenceConverter);
+}
+
+function mergeReadings(lit_ref_db) 
+{
+  if (lit_ref_db.reference_1 !== null && lit_ref_db.reference_1 == lit_ref_db.reference_2) {
+    if (lit_ref_db.reference_1 == lit_ref_db.reference_3) {
+      lit_ref_db.reference_2 = null;
+      lit_ref_db.reference_3 = null;
+    } else if (lit_ref_db.reference_3 == null) {
+      lit_ref_db.reference_2 = null;
+    } 
+  }
 }
 
 const litYearReferenceConverter = lit_year => {
