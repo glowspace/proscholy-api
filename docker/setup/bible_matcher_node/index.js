@@ -3,9 +3,6 @@ var mysql = require('mysql2/promise');
 
 const BibleReference = require('bible-reference/bible_reference');
 
-function matchReferences(db_res) {
-
-}
 
 function getMatchings(refs, reference) {
   return refs.filter(r => r.ref.intersectsWith(reference));
@@ -21,13 +18,6 @@ function getLoadedSongReferences(songs) {
 function getLoadedLiturgicalYearReadingReferences(liturgical_year_readings) {
   return liturgical_year_readings.flatMap(litYearReferenceConverter);
 }
-
-// function getLoadedLiturgicalYearReadingReferences(liturgical_year_readings) {
-//   return liturgical_year_readings.filter(r => r.reference_1).map(r => [r.reference_1, r.reference_2, r.reference_3, r.references_others]).map(reference_str => ({
-//     id: r.id,
-//     ref: BibleReference.fromOsis(reference_str)
-//   }));
-// }
 
 const litYearReferenceConverter = lit_year => {
   const common = {
@@ -99,45 +89,33 @@ async function doJob() {
   }
 
   // extract all song_lyrics 
-  let [rows, fields] = await connection.execute('SELECT id, bible_refs_osis from song_lyrics');
+  let [rows] = await connection.execute('SELECT id, bible_refs_osis from song_lyrics');
   db_res.song_lyrics = rows;
 
   // extract liturgical references
-  [rows, fields] = await connection.execute('SELECT id, date, reference_type, reference_1, reference_2, reference_3, references_others from liturgical_year_readings');
+  [rows] = await connection.execute('SELECT id, DATE_FORMAT(date,"%Y-%m-%d") as date, reference_type, reference_1, reference_2, reference_3, references_others from liturgical_year_readings');
   db_res.liturgical_year_readings = rows;
 
-  // console.log(getLoadedSongReferences(db_res.song_lyrics).splice(0, 10));
 
   const loaded_song_references = getLoadedSongReferences(db_res.song_lyrics);
   const loaded_liturgical_year_readings = getLoadedLiturgicalYearReadingReferences(db_res.liturgical_year_readings);
 
-  // console.log(loaded_liturgical_year_readings);
-
-  // for (const abc of loaded_liturgical_year_readings.splice(0,1)) {
-  //   console.log(abc);
-  // }
-
-  // const matching_ids = [];
+  await connection.execute('TRUNCATE liturgical_references');
 
   for (const song_ref of loaded_song_references) {
     const lit_matchings = getMatchings(loaded_liturgical_year_readings, song_ref.ref);
     
-    if (lit_matchings) {
-      console.log(song_ref.ref.toString());
-      console.log(lit_matchings);
-      // break;
+    for (const lit_matching of lit_matchings){
+      // console.log(lit_matching);
+      await connection.execute(`INSERT into liturgical_references (song_lyric_id, type, cycle, reading, date) values (
+        ${song_ref.id},
+        "${lit_matching.type}",
+        "${lit_matching.cycle}",
+        "${lit_matching.ref.toString()}",
+        "${lit_matching.date}"
+      )`);
     }
   }
-
-  // const matching_ids = getMatchingIds(loaded_liturgical_year_readings, BibleReference.fromEuropean('1 Jan, 1-10'));
-  // const matching_ids = getMatchingIds(loaded_song_references, BibleReference.fromEuropean('Mat 11, 10-28'));
-
-  // console.log(matching_ids.map(id => ));
-
-  // console.log(matching_ids);
-
-  // [rows, fields] = await connection.execute(`SELECT id, reference_1 from liturgical_year_readings where id in (${matching_ids.join(',')})`)
-  // console.log(rows);
 
   connection.end(function(err) {
     if (err) throw error;
