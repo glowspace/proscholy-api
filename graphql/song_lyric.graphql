@@ -177,6 +177,16 @@ extend type Query {
         page: Int
         per_page: Int
     ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
+
+    song_lyrics_bible_reference(
+        reference_str: String!
+        reference_type: BibleReferenceType
+    ): [SongLyric!]!
+}
+
+enum BibleReferenceType {
+    EUROPEAN @enum(value: 1)
+    OSIS @enum(value: 2)
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
