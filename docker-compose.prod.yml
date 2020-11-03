@@ -105,5 +105,25 @@ services:
             - bcloud-network
         restart: always
 
+    bible-matcher:
+        build:
+            context: ./docker/setup/bible_matcher_node
+            dockerfile: Dockerfile
+        volumes:
+        - ./docker/setup/bible_matcher_node:/var/www/html
+        environment:
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_DATABASE: ${DB_DATABASE}
+        ports:
+            - "3333:3000"
+        entrypoint: "sh -c 'yarn && node index.js'"
+        networks:
+            - bcloud-network
+        restart: always
+
+
 networks:
     bcloud-network:
