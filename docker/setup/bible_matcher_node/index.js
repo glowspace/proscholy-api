@@ -3,16 +3,25 @@ const app = express();
 const port = 3000;
 
 app.get('/match-songs', async (req, res) => {
-  await matchSongsToLiturgicalReadings();
-  res.send('Matched');
+  try {
+    await matchSongsToLiturgicalReadings();
+    res.send('Matched');
+  }
+  catch (e) {
+    res.status(400).send({message: e.message});
+  }
 });
 
 app.get('/get-songs', async(req, res) => {
   const booleanGET = param => (param === undefined || param.toLowerCase() === 'false' ? false : true);
 
-  const ids = await getSongsIdsMatchingToReference(req.query.reference_str, booleanGET(req.query.is_osis));
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(ids));
+  try {
+    const ids = await getSongsIdsMatchingToReference(req.query.reference_str, booleanGET(req.query.is_osis));
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(ids));
+  } catch (e) {
+    res.status(400).send({message: e.message});
+  }
 });
 
 
