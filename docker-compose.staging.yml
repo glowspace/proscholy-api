@@ -116,7 +116,7 @@ services:
             - "3333:3000"
         entrypoint: "sh -c 'yarn && node index.js'"
         networks:
-            - bcloud-network
+            - bcloud-network-staging
         restart: always
 
     # kibana:
