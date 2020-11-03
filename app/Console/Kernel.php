@@ -31,6 +31,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')
             ->weekly()
             ->appendOutputTo(storage_path('logs/schedule.log'));
+
+        $schedule->exec('curl ' . config('bible-matcher.host') . ':' . config('bible-matcher.port') . '/match-songs')
+            ->everyFiveMinutes();
     }
 
     /**
