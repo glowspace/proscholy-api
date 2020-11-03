@@ -3,8 +3,16 @@ const app = express();
 const port = 3000;
 
 app.get('/match-songs', async (req, res) => {
-  await doJob();
+  await matchSongsToLiturgicalReadings();
   res.send('Matched');
+});
+
+app.get('/get-songs', async(req, res) => {
+  const booleanGET = param => (param === undefined || param.toLowerCase() === 'false' ? false : true);
+
+  const ids = await getSongsIdsMatchingToReference(req.query.reference_str, booleanGET(req.query.is_osis));
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(ids));
 });
 
 
@@ -13,9 +21,7 @@ app.listen(port, () => {
 });
 
 
-// very code
-
-
+// the very logic
 require('dotenv').config()
 var mysql = require('mysql2/promise');
 
@@ -107,15 +113,40 @@ const litYearReferenceConverter = lit_year => {
   }]
 }
 
-
-async function doJob() {
-  var connection = await mysql.createConnection({
+function getDbConnection() {
+  return mysql.createConnection({
     host     : process.env.DB_HOST,
     user     : process.env.DB_USERNAME,
     password : process.env.DB_PASSWORD,
     database : process.env.DB_DATABASE,
     port: process.env.DB_PORT
   });
+}
+
+async function getSongsIdsMatchingToReference(reference_str, is_osis = false) {
+    const connection = await getDbConnection();
+    
+    let reference;
+
+    if (is_osis) {
+      reference = BibleReference.fromOsis(reference_str);
+    } else {
+      reference = BibleReference.fromEuropean(reference_str);
+    }
+
+    console.log(is_osis);
+
+    // extract all song_lyrics 
+    let [rows] = await connection.execute('SELECT id, bible_refs_osis from song_lyrics');
+    const loaded_song_references = getLoadedSongReferences(rows);
+
+    const matchings = getMatchings(loaded_song_references, reference);
+    return matchings.map(m => m.id);
+}
+
+
+async function matchSongsToLiturgicalReadings() {
+  const connection = await getDbConnection();
 
   var db_res = {
     song_lyrics: [],
