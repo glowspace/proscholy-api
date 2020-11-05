@@ -4,9 +4,10 @@ namespace App\Helpers;
 
 use Log;
 
-class SongLine {
+class SongLine
+{
 
-    protected $text = ""; 
+    protected $text = "";
     protected $chords = [];
     protected $ch_queue;
 
@@ -20,11 +21,13 @@ class SongLine {
 
     private function processChords()
     {
+        $chord_max_words = 3;
+
         $currentChordText = "";
         $line = trim($this->text);
 
         for ($i = 0; $i < strlen($line); $i++) {
-            if ($line[$i] == "[") {
+            if ($line[$i] == "[" || count(explode(' ', $currentChordText)) == $chord_max_words) {
                 if ($currentChordText != "")
                     $this->chords[] = Chord::parseFromText($currentChordText, $this->ch_queue);
                 $currentChordText = "";
@@ -55,7 +58,7 @@ class SongLine {
         if (isset($songPartTag)) {
             $html .= '<song-part-tag>' . $songPartTag . '</song-part-tag>';
         }
-        
+
         foreach ($this->chords as $ch) {
             $html .= $ch->toHTML();
         }
