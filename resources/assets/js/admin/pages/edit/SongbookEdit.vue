@@ -63,6 +63,20 @@
                             :error-messages="errors.collect('input.color_text')"
                         ></v-text-field>
 
+                        <div class="d-sm-table">
+                            <v-text-field
+                                label="URL adresa obrázku"
+                                v-model="model.songbook_img_url"
+                                class="d-table-cell w-100"
+                            ></v-text-field>
+                            <span class="pl-3 d-table-cell align-center"
+                                >nebo</span
+                            >
+                            <FileUploadDialog
+                                v-on:submit="onFileDialogSubmit"
+                            ></FileUploadDialog>
+                        </div>
+
                         <v-btn @click="submit" :disabled="!isDirty"
                             >Uložit</v-btn
                         >
@@ -191,6 +205,7 @@ import gql from 'graphql-tag';
 import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
 import NumberInput from 'Admin/components/NumberInput.vue';
+import FileUploadDialog from 'Admin/components/FileUploadDialog';
 
 import EditForm from './EditForm';
 import Songbook from 'Admin/models/Songbook';
@@ -209,7 +224,8 @@ export default {
     components: {
         ItemsComboBox,
         DeleteModelDialog,
-        NumberInput
+        NumberInput,
+        FileUploadDialog
     },
     extends: EditForm,
 
@@ -224,7 +240,8 @@ export default {
                 songs_count: undefined,
                 is_private: undefined,
                 color: undefined,
-                color_text: undefined
+                color_text: undefined,
+                songbook_img_url: undefined
             },
             is_deleted: false,
             records_headers: [
@@ -377,6 +394,10 @@ export default {
             }
 
             return on;
+        },
+
+        onFileDialogSubmit(url) {
+            this.model.songbook_img_url = url;
         }
     }
 };
