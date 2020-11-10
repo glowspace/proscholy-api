@@ -91,6 +91,13 @@ class ChordSign
             $matches[4] = "m" . $matches[4];
         }
 
+        // handle 'sus' irregular exception 
+        // - case Asus4 e.g. is not As + us4, but A + sus4
+        if ($matches[2] == 's' && strlen($matches[4]) > 0 && substr_compare($matches[4], 'us', 0, 2) == 0) {
+            $matches[2] = '';
+            $matches[4] = 's' . $matches[4];
+        }
+
         // rewrite 'Xis' to 'X#'
         if ($matches[2] == "is") {
             $matches[2] = "#";
