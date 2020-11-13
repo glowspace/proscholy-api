@@ -179,7 +179,9 @@ class SongLyric extends Model
         'lilypond_svg',
         'song_number',
         'bible_refs_src',
-        'bible_refs_osis'
+        'bible_refs_osis',
+        'secondary_name_1',
+        'secondary_name_2',
     ];
 
     private static $lang_string_values = [
@@ -534,8 +536,13 @@ class SongLyric extends Model
             );
         }
 
+        $fullname = $this->name;
+        if ($this->secondary_name_1) $fullname .= ' ' . $this->secondary_name_1;
+        if ($this->secondary_name_2) $fullname .= ' ' . $this->secondary_name_2;
+
         $arr = [
-            'name' => $this->name,
+            'name' => $fullname,
+            // name_keyword is used for sorting
             'name_keyword' => $this->name,
             'song_number' => $this->song_number,
             'song_number_integer' => (int)$this->song_number,

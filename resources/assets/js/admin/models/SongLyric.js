@@ -5,6 +5,8 @@ const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
         id
         name
+        secondary_name_1
+        secondary_name_2
         authors_pivot {
             id
             authorship_type
@@ -215,6 +217,8 @@ export default {
         input: {
             id: vueModel.id,
             name: vueModel.name,
+            secondary_name_1: vueModel.secondary_name_1,
+            secondary_name_2: vueModel.secondary_name_2,
             lang: vueModel.lang,
             has_anonymous_author: vueModel.has_anonymous_author,
             only_regenschori: vueModel.only_regenschori,

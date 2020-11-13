@@ -33,6 +33,22 @@
                   v-on:input="onNameChange"
                 ></v-text-field>
 
+                <span>pokud má píseň alternativní názvy nebo označení (např. Hymna CSM Ždár 2012), zadejte je zde:</span>
+                <v-layout row wrap>
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      label="2. název písně"
+                      v-model="model.secondary_name_1"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      label="3. název písně"
+                      v-model="model.secondary_name_2"
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
+
                 <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
                     label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
@@ -573,6 +589,8 @@ export default {
         // here goes the definition of model attributes
         id: undefined,
         name: undefined,
+        secondary_name_1: undefined,
+        secondary_name_2: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,

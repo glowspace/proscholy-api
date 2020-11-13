@@ -6,6 +6,8 @@ type SongLyric {
     Ex.: Tvůj Plamen - SBM (aranž písně Tvůj plamen, autoři: ..., ...)
     """
     rich_name: String @with(relation: "authors")
+    secondary_name_1: String
+    secondary_name_2: String
     """
     Full url of the song page
     """
@@ -207,6 +209,8 @@ input UpdateSongLyricInput {
             apply: ["required"]
             messages: { required: "Jméno písně nesmí zůstat prázdné" }
         )
+    secondary_name_1: String
+    secondary_name_2: String
     has_anonymous_author: Boolean
     lang: String
     authors: SyncAuthorsSongLyricRelation
