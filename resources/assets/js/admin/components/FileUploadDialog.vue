@@ -35,7 +35,10 @@
                     >Zrušit</v-btn
                 >
 
-                <v-btn @click="onSubmit" class="primary" :disabled="!file"
+                <v-btn
+                    @click="onSubmit(show_overwrite_btn)"
+                    class="primary"
+                    :disabled="!file"
                     ><span v-if="is_uploading">
                         <span
                             class="spinner-border spinner-border-sm"
@@ -43,7 +46,13 @@
                             aria-hidden="true"
                         ></span>
                         Nahrávání... </span
-                    ><span v-else>Nahrát soubor</span></v-btn
+                    ><span v-else>
+                        {{
+                            show_overwrite_btn
+                                ? 'Nahrát soubor (a přepsat starý)'
+                                : 'Nahrát soubor'
+                        }}
+                    </span></v-btn
                 >
             </v-card-actions>
         </v-card>
@@ -57,8 +66,12 @@ import prettyBytes from 'pretty-bytes';
 import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 const FILE_UPLOAD = gql`
-    mutation($file: Upload!, $filename: String!) {
-        upload_file(file: $file, filename: $filename)
+    mutation($file: Upload!, $filename: String!, $allow_overwrite: Boolean!) {
+        upload_file(
+            file: $file
+            filename: $filename
+            allow_overwrite: $allow_overwrite
+        )
     }
 `;
 
@@ -76,7 +89,8 @@ export default {
             file: null,
             filename: '',
             baseUrl: document.querySelector('#baseUrl').getAttribute('value'),
-            is_uploading: false
+            is_uploading: false,
+            show_overwrite_btn: false
         };
     },
 
@@ -89,10 +103,10 @@ export default {
             this.dialog = false;
         },
 
-        async onSubmit() {
+        async onSubmit(allow_overwrite = false) {
             this.is_uploading = true;
 
-            this.uploadSelectedFile()
+            this.uploadSelectedFile(allow_overwrite)
                 .then(result => {
                     this.dialog = false;
                     this.$emit(
@@ -109,6 +123,21 @@ export default {
 
                     if (error.graphQLErrors) {
                         graphqlErrorsToValidator(this.$validator, error);
+
+                        console.log(
+                            error.graphQLErrors[0].extensions.validation
+                        );
+
+                        if (
+                            error.graphQLErrors[0].extensions.validation[
+                                'input.filename'
+                            ] ==
+                            'Soubor s daným jménem již existuje, prosím použijte jiné jméno, nebo přepište starý soubor'
+                        ) {
+                            this.show_overwrite_btn = true;
+                        }
+
+                        // assume the
                     }
                     this.is_uploading = false;
                 });
@@ -124,12 +153,13 @@ export default {
             this.filename = this.sluggedName(files[0].name);
         },
 
-        uploadSelectedFile() {
+        uploadSelectedFile(allow_overwrite) {
             return this.$apollo.mutate({
                 mutation: FILE_UPLOAD,
                 variables: {
                     file: this.file,
-                    filename: this.filename
+                    filename: this.filename,
+                    allow_overwrite: allow_overwrite
                 }
             });
         },

@@ -20,6 +20,8 @@ class UploadFile
      */
     public function __invoke($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): ?string
     {
+        $allow_owerwrite = isset($args['allow_overwrite']) && $args['allow_overwrite'];
+
         $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
         // // $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context, 'root' => $root];
 
@@ -40,12 +42,17 @@ class UploadFile
             $fname = $args['filename'];
         }
 
+
         if (file_exists(Storage::path("public_files/$fname"))) {
-            // the file already exists, return error
-            $validationErrorBuffer->push("Soubor s daným jménem již existuje, prosím použijte jiné jméno", "input.filename");
-            $validationErrorBuffer->flush(
-                "Validation failed for the field [input.filename]"
-            );
+            if ($allow_owerwrite) {
+                Storage::delete(Storage::path("public_files/$fname"));
+            } else {
+                // the file already exists, return error
+                $validationErrorBuffer->push("Soubor s daným jménem již existuje, prosím použijte jiné jméno, nebo přepište starý soubor", "input.filename");
+                $validationErrorBuffer->flush(
+                    "Validation failed for the field [input.filename]"
+                );
+            }
         }
 
         return $tempfile->storePubliclyAs('public_files', $fname);
