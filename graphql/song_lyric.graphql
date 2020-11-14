@@ -185,6 +185,8 @@ extend type Query {
         reference_str: String!
         reference_type: BibleReferenceType
     ): [SongLyric!]!
+
+    song_lyric_songbook_number(number: String!): SongLyric # App/GraphQL/Queries/SongLyricSongbookNumber.php
 }
 
 enum BibleReferenceType {
