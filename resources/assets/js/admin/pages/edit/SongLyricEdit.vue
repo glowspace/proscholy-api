@@ -12,6 +12,15 @@
     <v-container fluid grid-list-xs>
       <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 class="h2 mb-3" v-else>Úprava písně</h1>
+
+      <v-textarea
+        label="Prostor pro interní poznámku"
+        v-model="model.admin_note"
+        rows="1"
+        auto-grow="1"
+        :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
+      ></v-textarea>
+
       <v-tabs color="transparent" v-model="active">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
@@ -610,7 +619,8 @@ export default {
         arrangement_source: undefined,
         lilypond: "",
         bible_refs_src: "",
-        bible_refs_osis: ""
+        bible_refs_osis: "",
+        admin_note: undefined
       },
 
       selected_thumbnail_external: undefined,

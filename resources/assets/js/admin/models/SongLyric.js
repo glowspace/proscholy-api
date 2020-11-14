@@ -77,6 +77,8 @@ const fragment = gql`
 
         bible_refs_src
         bible_refs_osis
+
+        admin_note
     }
 `;
 
@@ -229,6 +231,7 @@ export default {
             liturgy_approval_status: vueModel.liturgy_approval_status,
             bible_refs_src: vueModel.bible_refs_src,
             bible_refs_osis: vueModel.bible_refs_osis,
+            admin_note: vueModel.admin_note,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot

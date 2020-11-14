@@ -139,6 +139,7 @@ type SongLyric {
 
     bible_refs_src: String
     bible_refs_osis: String
+    admin_note: String
 }
 
 enum SongType {
@@ -226,6 +227,7 @@ input UpdateSongLyricInput {
     arrangement_source: SyncSongLyricArrangementRelation
     bible_refs_osis: String
     bible_refs_src: String
+    admin_note: String
 }
 
 input SyncOfficialTagsRelation {

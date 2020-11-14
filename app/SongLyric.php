@@ -182,6 +182,7 @@ class SongLyric extends Model
         'bible_refs_osis',
         'secondary_name_1',
         'secondary_name_2',
+        'admin_note'
     ];
 
     private static $lang_string_values = [
