@@ -11,6 +11,7 @@ type SongPart {
 
 type SongLine {
     chords: [Chord]
+    is_comment: Boolean
 }
 
 type Chord {

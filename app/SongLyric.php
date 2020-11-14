@@ -225,8 +225,8 @@ class SongLyric extends Model
     public function getLyricsNoChordsAttribute()
     {
         $str = preg_replace(
-            array('/-/', '/\[[^\]]+\]/', '/@[^\s]+/'),
-            array("", "", ""),
+            array('/-/',    '/\[[^\]]+\]/', '/@[^\s]+/',    '/^\s*#.*/m'),
+            array("",       "",             "",             ""),
             $this->lyrics
         );
 

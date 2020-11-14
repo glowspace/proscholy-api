@@ -6,10 +6,10 @@ use Log;
 
 class SongLine
 {
-
     protected $text = "";
     protected $chords = [];
     protected $ch_queue;
+    protected $is_comment = false;
 
     function __construct($text, ChordQueue $ch_queue)
     {
@@ -26,6 +26,15 @@ class SongLine
         $currentChordText = "";
         $line = trim($this->text);
 
+        // this line is a comment (starting with #)
+        if (strlen($line) > 0 && $line[0] == '#') {
+            $this->is_comment = true;
+
+            // chord text needs to end with a space (otherwise a hyphen shows)
+            $this->chords[] = Chord::parseFromText(ltrim(substr($this->text, 1)) . ' ');
+            return;
+        }
+
         for ($i = 0; $i < strlen($line); $i++) {
             if ($line[$i] == "[" || count(explode(' ', $currentChordText)) == $chord_max_words) {
                 if ($currentChordText != "")
@@ -37,17 +46,16 @@ class SongLine
         }
 
         $this->chords[] = Chord::parseFromText($currentChordText, $this->ch_queue);
-
-        // $string = "";
-        // foreach ($chords as $chord)
-        //     $string .= $chord->toHTML();
-
-        // return $string;
     }
 
     public function getChords()
     {
         return $this->chords;
+    }
+
+    public function getIsComment()
+    {
+        return $this->is_comment;
     }
 
     // todo: make obsolete
