@@ -17,6 +17,7 @@ const fragment = gql`
         is_private
         color
         color_text
+        songbook_img_url
     }
 `;
 
@@ -56,6 +57,7 @@ export default {
             is_private: vueModel.is_private,
             color: vueModel.color,
             color_text: vueModel.color_text,
+            songbook_img_url: vueModel.songbook_img_url,
             records: {
                 // first let's filter out records that had been assigned a song_lyric but
                 // it was then set to null

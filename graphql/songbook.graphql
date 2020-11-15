@@ -7,6 +7,7 @@ type Songbook {
     is_private: Boolean
     color: String
     color_text: String
+    songbook_img_url: String
 }
 
 extend type Query {
@@ -36,6 +37,7 @@ input UpdateSongbookInput {
         regex: "Zadejte barvu v hexadecimálním formátu"})
     color_text: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: {
         regex: "Zadejte barvu v hexadecimálním formátu"})
+    songbook_img_url: String
 }
 
 input SyncSongbookRecordsForSongbookRelation {

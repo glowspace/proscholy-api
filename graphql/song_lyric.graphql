@@ -6,6 +6,8 @@ type SongLyric {
     Ex.: Tvůj Plamen - SBM (aranž písně Tvůj plamen, autoři: ..., ...)
     """
     rich_name: String @with(relation: "authors")
+    secondary_name_1: String
+    secondary_name_2: String
     """
     Full url of the song page
     """
@@ -137,6 +139,7 @@ type SongLyric {
 
     bible_refs_src: String
     bible_refs_osis: String
+    admin_note: String
 }
 
 enum SongType {
@@ -177,6 +180,18 @@ extend type Query {
         page: Int
         per_page: Int
     ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
+
+    song_lyrics_bible_reference(
+        reference_str: String!
+        reference_type: BibleReferenceType
+    ): [SongLyric!]!
+
+    song_lyric_songbook_number(number: String!): SongLyric # App/GraphQL/Queries/SongLyricSongbookNumber.php
+}
+
+enum BibleReferenceType {
+    EUROPEAN @enum(value: 1)
+    OSIS @enum(value: 2)
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
@@ -197,6 +212,8 @@ input UpdateSongLyricInput {
             apply: ["required"]
             messages: { required: "Jméno písně nesmí zůstat prázdné" }
         )
+    secondary_name_1: String
+    secondary_name_2: String
     has_anonymous_author: Boolean
     lang: String
     authors: SyncAuthorsSongLyricRelation
@@ -212,6 +229,7 @@ input UpdateSongLyricInput {
     arrangement_source: SyncSongLyricArrangementRelation
     bible_refs_osis: String
     bible_refs_src: String
+    admin_note: String
 }
 
 input SyncOfficialTagsRelation {

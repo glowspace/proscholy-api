@@ -12,6 +12,15 @@
     <v-container fluid grid-list-xs>
       <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 class="h2 mb-3" v-else>Úprava písně</h1>
+
+      <v-textarea
+        label="Prostor pro interní poznámku"
+        v-model="model.admin_note"
+        rows="1"
+        auto-grow="1"
+        :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
+      ></v-textarea>
+
       <v-tabs color="transparent" v-model="active">
         <v-tab>Údaje o písni</v-tab>
         <v-tab>Text</v-tab>
@@ -32,6 +41,22 @@
                   :error-messages="errors.collect('input.name')"
                   v-on:input="onNameChange"
                 ></v-text-field>
+
+                <span>pokud má píseň alternativní názvy nebo označení (např. Hymna CSM Ždár 2012), zadejte je zde:</span>
+                <v-layout row wrap>
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      label="2. název písně"
+                      v-model="model.secondary_name_1"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      label="3. název písně"
+                      v-model="model.secondary_name_2"
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
 
                 <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
@@ -573,6 +598,8 @@ export default {
         // here goes the definition of model attributes
         id: undefined,
         name: undefined,
+        secondary_name_1: undefined,
+        secondary_name_2: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -592,7 +619,8 @@ export default {
         arrangement_source: undefined,
         lilypond: "",
         bible_refs_src: "",
-        bible_refs_osis: ""
+        bible_refs_osis: "",
+        admin_note: undefined
       },
 
       selected_thumbnail_external: undefined,

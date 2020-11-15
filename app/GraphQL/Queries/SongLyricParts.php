@@ -41,7 +41,8 @@ class SongLyricParts
 										];
 									},
 									$line->getChords()
-								)
+								),
+								'is_comment' => $line->getIsComment()
 							];
 						},
 						$part->getSongLines()

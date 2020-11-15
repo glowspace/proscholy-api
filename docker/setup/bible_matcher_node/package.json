@@ -1,0 +1,13 @@
+{
+    "name": "bible_matcher_node",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Miroslav Sery",
+    "license": "MIT",
+    "dependencies": {
+        "bible-reference": "https://github.com/proscholy/bible-reference#1.0.4",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mysql2": "^2.2.5"
+    }
+}

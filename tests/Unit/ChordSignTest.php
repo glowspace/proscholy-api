@@ -42,4 +42,12 @@ class ChordSignTest extends TestCase
             ChordSign::parseFromText('C#4/7')->getBassNote()
         );
     }
+
+    public function testSus()
+    {
+        $this->assertEquals(
+            'A',
+            ChordSign::parseFromText('Asus4')->getBase()
+        );
+    }
 }

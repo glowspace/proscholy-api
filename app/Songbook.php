@@ -24,7 +24,7 @@ class Songbook extends Model
 {
     use Lockable;
 
-    protected $fillable = ['name', 'shortcut', 'songs_count', 'is_private', 'color', 'color_text'];
+    protected $fillable = ['name', 'shortcut', 'songs_count', 'is_private', 'color', 'color_text', 'songbook_img_url'];
 
     public function records(): BelongsToMany
     {
