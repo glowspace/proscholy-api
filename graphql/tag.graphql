@@ -6,13 +6,19 @@ type Tag {
     parent_tag: Tag @belongsTo @deprecated
     child_tags: [Tag] @hasMany @deprecated
     description: String
+    hide_in_liturgy: Boolean
+
+    is_for_songs: Boolean
+    is_for_externals: Boolean
+    is_for_files: Boolean
+    is_for_authors: Boolean
 }
 
 extend type Query {
     tag(id: ID! @eq): Tag @find
     tags(type: Int @eq): [Tag] @all @deprecated
 
-    tags_enum(type: TagType @eq): [Tag] @all
+    tags_enum(type: TagType @eq, hide_in_liturgy: Boolean @eq): [Tag] @all
 }
 
 enum TagType {
@@ -61,4 +67,5 @@ input UpdateTagInput {
     name: String @rules(apply: ["required"], messages: {
         required: "Jméno štítku nesmí zůstat prázdné"})
     description: String
+    hide_in_liturgy: Boolean
 }

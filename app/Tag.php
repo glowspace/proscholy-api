@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
-    protected $fillable = ['name', 'description', 'type'];
+    protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy'];
 
     // todo: make obsolete???
     public static $type_string_values = [
@@ -118,6 +118,23 @@ class Tag extends Model
     public function authors(): MorphToMany
     {
         return $this->morphedByMany(Author::class, 'taggable');
+    }
+
+    public function getIsForSongsAttribute()
+    {
+        return in_array($this->type, self::$song_lyric_types);
+    }
+    public function getIsForExternalsAttribute()
+    {
+        return in_array($this->type, self::$external_types);
+    }
+    public function getIsForFilesAttribute()
+    {
+        return in_array($this->type, self::$file_types);
+    }
+    public function getIsForAuthorsAttribute()
+    {
+        return in_array($this->type, self::$author_types);
     }
 
 

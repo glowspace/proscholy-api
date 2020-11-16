@@ -6,6 +6,7 @@ const fragment = gql`
         id
         name
         description
+        hide_in_liturgy
     }
 `;
 
@@ -13,7 +14,8 @@ const QUERY = gql`
     query($id: ID!) {
         model_database: tag(id: $id) {
             ...TagFillableFragment
-            type_enum
+            type_enum   
+            is_for_songs
         }
     }
     ${fragment}

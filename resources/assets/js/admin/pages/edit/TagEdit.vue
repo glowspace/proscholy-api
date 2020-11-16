@@ -32,6 +32,12 @@
                                 errors.collect('input.description')
                             "
                         ></v-textarea>
+
+                        <v-checkbox
+                            v-if="model_database && model_database.is_for_songs"
+                            v-model="model.hide_in_liturgy"
+                            label="Skrýt ve filtrech pro liturgické doporučení"
+                        ></v-checkbox>
                     </v-form>
                 </v-flex>
                 <v-flex xs12 md6>
@@ -95,7 +101,8 @@ export default {
                 // here goes the definition of model attributes
                 id: undefined,
                 name: undefined,
-                description: undefined
+                description: undefined,
+                hide_in_liturgy: undefined
             },
             fragment: Tag.fragment,
             is_deleted: false
