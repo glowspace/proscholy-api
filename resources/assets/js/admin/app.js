@@ -23,11 +23,13 @@ window.Vue = require('vue');
 Vue.component('songs-list', require('Admin/pages/list/SongsList.vue'));
 Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
 Vue.component('authors-list', require('Admin/pages/list/AuthorsList.vue'));
+Vue.component('tags-list', require('Admin/pages/list/TagsList.vue'));
 Vue.component('songbooks-list', require('Admin/pages/list/SongbooksList.vue'));
 Vue.component('news-items-list', require('Admin/pages/list/NewsItemsList.vue'));
 
 Vue.component('author-edit', require('Admin/pages/edit/AuthorEdit.vue'));
 Vue.component('external-edit', require('Admin/pages/edit/ExternalEdit.vue'));
+Vue.component('tag-edit', require('Admin/pages/edit/TagEdit.vue'));
 Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
 Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
 Vue.component('news-item-edit', require('Admin/pages/edit/NewsItemEdit.vue'));

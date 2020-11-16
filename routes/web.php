@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
         Route::resource('external', 'ExternalController')->only(['index', 'edit']);
         Route::resource('author', 'AuthorController')->only(['index', 'edit']);
+        Route::resource('tag', 'TagController')->only(['index', 'edit']);
         Route::resource('songbook', 'SongbookController')->only(['index', 'edit']);
         Route::resource('news-item', 'NewsItemController')->only(['index', 'edit']);
 

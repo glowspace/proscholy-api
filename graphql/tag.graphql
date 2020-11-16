@@ -9,6 +9,7 @@ type Tag {
 }
 
 extend type Query {
+    tag(id: ID! @eq): Tag @find
     tags(type: Int @eq): [Tag] @all @deprecated
 
     tags_enum(type: TagType @eq): [Tag] @all
@@ -33,6 +34,7 @@ enum Taggable {
 }
 
 extend type Mutation {
+    update_tag(input: UpdateTagInput! @spread): Tag @update
     delete_tag(id: ID!): Tag @delete
 
     sync_create_tags(input: SyncCreateTagsRelation!, tags_type: TagType!, taggable: Taggable!, taggable_id: Int!): [Tag]
@@ -52,4 +54,11 @@ input SyncCreateTagsRelation {
 
 input CreateTagInput {
     name: String!
+}
+
+input UpdateTagInput {
+    id: ID!
+    name: String @rules(apply: ["required"], messages: {
+        required: "Jméno štítku nesmí zůstat prázdné"})
+    description: String
 }
