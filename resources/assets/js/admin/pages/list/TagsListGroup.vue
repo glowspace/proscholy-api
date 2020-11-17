@@ -9,7 +9,7 @@
                 label="Název štítku"
                 success-msg="Štítek úspěšně vytvořen"
                 :tag-type="typeEnum"
-                @saved="$apollo.queries.tags_enum.refetch()"
+                @saved="$apollo.queries.tags.refetch()"
             ></create-model>
             <v-layout row>
                 <v-flex xs12>
@@ -149,12 +149,7 @@ export default {
             this.$apollo
                 .mutate({
                     mutation: delete_item,
-                    variables: { id },
-                    refetchQueries: [
-                        {
-                            query: FETCH_TAGS
-                        }
-                    ]
+                    variables: { id }
                 })
                 .then(result => {
                     this.$notify({
@@ -162,6 +157,7 @@ export default {
                         text: 'Štítek byl úspěšně vymazán z databáze',
                         type: 'info'
                     });
+                    this.$apollo.queries.tags.refetch();
                 })
                 .catch(error => {
                     console.log('error');
