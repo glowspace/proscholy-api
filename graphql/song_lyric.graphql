@@ -139,7 +139,7 @@ type SongLyric {
 
     bible_refs_src: String
     bible_refs_osis: String
-    admin_note: String
+    admin_note: String @guard
 }
 
 enum SongType {
