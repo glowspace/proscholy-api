@@ -3,13 +3,14 @@
     <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
-            <!-- <create-model
+            <create-model
                 v-model="search_string"
-                class-name="Štítek"
+                class-name="Tag"
                 label="Název štítku"
                 success-msg="Štítek úspěšně vytvořen"
+                :tag-type="typeEnum"
                 @saved="$apollo.queries.tags_enum.refetch()"
-            ></create-model> -->
+            ></create-model>
             <v-layout row>
                 <v-flex xs12>
                     <v-card>
