@@ -51,8 +51,6 @@ class UpdateSongLyric
         if ($input["lilypond"] !== $song_lyric->lilypond) {
             try {
                 $input['lilypond_svg'] = $this->sl_service->getLilypondSvg($input['lilypond']);
-                logger($input['lilypond']);
-                logger($input['lilypond_svg']);
             } catch (\Exception $e) {
                 logger($e);
             }

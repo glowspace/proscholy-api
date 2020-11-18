@@ -16,7 +16,7 @@ class SongLyricHelper
             // determine wheter the line starts with a sequence matching a new song part
             // e.g. R:, B:, 2: etc.
             $line = trim($l);
-        
+
             // prelude or interlude
             if (strlen($line) > 0 && $line[0] == '@') {
                 if ($pos = strpos(strtolower($line), 'předehra:')) {
@@ -45,7 +45,6 @@ class SongLyricHelper
                 $p = new SongPart($matches[1], $chQueue);
                 $p->appendLine($matches[2]);
                 $parts[] = $p;
-                \Log::info($p);
                 continue;
             }
 
