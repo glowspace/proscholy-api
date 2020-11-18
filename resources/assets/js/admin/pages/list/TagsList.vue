@@ -4,13 +4,19 @@
         <notifications />
         <h1 class="h2 mb-3">Štítky</h1>
 
-        <template v-for="(tag_group, i) in tag_groups">
-            <h2 :key="i">
-                {{ tag_group.name }}
-                <i v-if="tag_group.regenschori"> (regenschori)</i>
-            </h2>
-            <TagsListGroup :key="i" :type-enum="tag_group.enum" />
-        </template>
+        <div v-if="tag">
+            <template v-for="(tag_group, i) in tag.groups_info">
+                <h2 :key="i">
+                    {{ tag_group.name }}
+                    <i v-if="tag_group.is_regenschori"> (regenschori)</i>
+                </h2>
+                <TagsListGroup
+                    :key="i + 100"
+                    :type-enum="tag_group.type"
+                    :allow-create="tag_group.is_editable"
+                />
+            </template>
+        </div>
     </v-app>
 </template>
 
@@ -19,52 +25,28 @@ import gql from 'graphql-tag';
 
 import TagsListGroup from './TagsListGroup.vue';
 
+const FETCH_GROUPS = gql`
+    query {
+        tag(id: 1) {
+            groups_info {
+                name
+                type
+                is_editable
+                is_regenschori
+            }
+        }
+    }
+`;
+
 export default {
     components: {
         TagsListGroup
     },
 
-    data() {
-        return {
-            tag_groups: [
-                {
-                    name: 'obecné',
-                    enum: 'GENERIC'
-                },
-                {
-                    name: 'část liturgie',
-                    enum: 'LITURGY_PART'
-                },
-                {
-                    name: 'liturgické období',
-                    enum: 'LITURGY_PERIOD'
-                },
-                {
-                    name: 'svatí',
-                    enum: 'SAINTS'
-                },
-                {
-                    name: 'historické období',
-                    enum: 'HISTORY_PERIOD',
-                    regenschori: true
-                },
-                {
-                    name: 'instrumentace',
-                    enum: 'INSTRUMENTATION',
-                    regenschori: true
-                },
-                {
-                    name: 'žánr',
-                    enum: 'GENRE',
-                    regenschori: true
-                },
-                {
-                    name: 'hudební forma',
-                    enum: 'MUSICAL_FORM',
-                    regenschori: true
-                }
-            ]
-        };
+    apollo: {
+        tag: {
+            query: FETCH_GROUPS
+        }
     }
 };
 </script>

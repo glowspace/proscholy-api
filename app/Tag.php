@@ -12,6 +12,58 @@ class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy'];
 
+    protected static $groups_info = [
+        0 => [
+            'name' => 'příležitosti',
+            'type' => 0,
+            'is_editable' => true,
+            'is_regenschori' => false
+        ],
+        1 => [
+            'name' => 'litugie (část)',
+            'type' => 1,
+            'is_editable' => false,
+            'is_regenschori' => false
+        ],
+        2 => [
+            'name' => 'liturgická doba',
+            'type' => 2,
+            'is_editable' => false,
+            'is_regenschori' => false
+        ],
+        3 => [
+            'name' => 'ke svatým',
+            'type' => 3,
+            'is_editable' => true,
+            'is_regenschori' => false
+
+        ],
+        4 => [
+            'name' => 'hudební forma',
+            'type' => 4,
+            'is_editable' => true,
+            'is_regenschori' => true
+        ],
+        10 => [
+            'name' => 'historické období',
+            'type' => 10,
+            'is_editable' => true,
+            'is_regenschori' => true
+        ],
+        50 => [
+            'name' => 'instrumentace',
+            'type' => 50,
+            'is_editable' => true,
+            'is_regenschori' => true
+        ],
+        100 => [
+            'name' => 'žánr',
+            'type' => 100,
+            'is_editable' => true,
+            'is_regenschori' => true
+        ]
+    ];
+
     // todo: make obsolete???
     public static $type_string_values = [
         0 => 'příležitosti',
@@ -37,6 +89,11 @@ class Tag extends Model
     public function getTypeStringValuesAttribute()
     {
         return $this->type_string_values;
+    }
+
+    public function getGroupsInfoAttribute()
+    {
+        return self::$groups_info;
     }
 
     public function scopeSongLyricsTags($query)

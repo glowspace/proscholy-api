@@ -50,7 +50,6 @@
                     v-if="!forceEdit"
                     :disabled="attribute_value == '' || saving"
                     @click="submit(false)"
-                    v-on="on2"
                     >Vytvořit</v-btn
                 >
             </div>

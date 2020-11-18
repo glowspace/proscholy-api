@@ -12,6 +12,15 @@ type Tag {
     is_for_externals: Boolean
     is_for_files: Boolean
     is_for_authors: Boolean
+
+    groups_info: [TagTypeGroupInfo]
+}
+
+type TagTypeGroupInfo {
+    name: String
+    type: TagType
+    is_editable: Boolean
+    is_regenschori: Boolean
 }
 
 extend type Query {

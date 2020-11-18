@@ -4,6 +4,7 @@
         <notifications />
         <v-container fluid grid-list-xs>
             <create-model
+                v-if="allowCreate"
                 v-model="search_string"
                 class-name="Tag"
                 label="Název štítku"
@@ -54,6 +55,7 @@
                                         "
                                         ><i class="fas fa-pen"></i></a
                                     ><a
+                                        v-if="allowCreate"
                                         class="text-secondary"
                                         v-on:click="askForm(props.item.id)"
                                         ><i class="fas fa-trash"></i
@@ -98,7 +100,15 @@ const delete_item = gql`
 `;
 
 export default {
-    props: ['type-enum'],
+    props: {
+        typeEnum: {
+            type: String
+        },
+        allowCreate: {
+            type: Boolean,
+            default: true
+        }
+    },
 
     components: {
         CreateModel

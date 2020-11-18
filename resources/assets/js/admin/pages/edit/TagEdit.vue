@@ -48,6 +48,7 @@
             <br />
             <br />
             <delete-model-dialog
+                v-if="canDelete"
                 class-name="Tag"
                 :model-id="model.id || null"
                 @deleted="is_deleted = true"
@@ -150,6 +151,17 @@ export default {
 
                     graphqlErrorsToValidator(this.$validator, error);
                 });
+        }
+    },
+
+    computed: {
+        canDelete() {
+            if (!this.model_database) return false;
+
+            const group = this.model_database.groups_info.find(
+                g => g.type == this.model_database.type_enum
+            );
+            return group.is_editable;
         }
     }
 };

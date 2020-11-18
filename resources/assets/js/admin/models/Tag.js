@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+// import { belongsToManyMutator, belongsToMutator } from './relations';
 
 const fragment = gql`
     fragment TagFillableFragment on Tag {
@@ -15,6 +16,11 @@ const QUERY = gql`
             ...TagFillableFragment
             type_enum   
             is_for_songs
+
+            groups_info {
+                type
+                is_editable
+            }
         }
     }
     ${fragment}
