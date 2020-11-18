@@ -9,6 +9,10 @@ type SongLyric {
     secondary_name_1: String
     secondary_name_2: String
     """
+    The Creative Commons specified license type (see https://www.creativecommons.cz/licence-cc/varianty-licence)
+    """
+    licence_type_cc: LicenseTypeCC
+    """
     Full url of the song page
     """
     public_url: String
@@ -108,6 +112,7 @@ type SongLyric {
     liturgy_approval_status: Int
     liturgy_approval_status_string_values: JSON
     authorship_type_string_values: JSON
+    licence_type_cc_string_values: JSON
 
     tags_official: [Tag]
         @morphMany(relation: "tags", scopes: ["liturgyPart"])
@@ -146,6 +151,16 @@ enum SongType {
     ORIGINAL @enum(value: 0)
     TRANSLATION @enum(value: 1)
     AUTHORIZED_TRANSLATION @enum(value: 2)
+}
+
+enum LicenseTypeCC {
+    UNSET @enum(value: 0)
+    BY @enum(value: 1)
+    BY_SA @enum(value: 2)
+    BY_ND @enum(value: 3)
+    BY_NC @enum(value: 4)
+    BY_NC_SA @enum(value: 5)
+    BY_NC_ND @enum(value: 6)
 }
 
 type SongLyricPaginator {
@@ -214,6 +229,7 @@ input UpdateSongLyricInput {
         )
     secondary_name_1: String
     secondary_name_2: String
+    licence_type_cc: LicenseTypeCC
     has_anonymous_author: Boolean
     lang: String
     authors: SyncAuthorsSongLyricRelation

@@ -182,6 +182,7 @@ class SongLyric extends Model
         'bible_refs_osis',
         'secondary_name_1',
         'secondary_name_2',
+        'licence_type_cc',
         'admin_note'
     ];
 
@@ -208,6 +209,16 @@ class SongLyric extends Model
         1 => 'schváleno ČBK pro liturgii',
         // 2 => 'schváleno ČBK pro dětskou mši',
         // 3 => 'neschváleno ČBK pro liturgii',
+    ];
+
+    private static $licence_type_cc_string_values = [
+        'UNSET' => 'neuvedeno',
+        'BY' => 'BY',
+        'BY_SA' => 'BY-SA',
+        'BY_ND' => 'BY-ND',
+        'BY_NC' => 'BY-NC',
+        'BY_NC_SA' => 'BY-NC-SA',
+        'BY_NC_ND' => 'BY-NC-ND'
     ];
 
     public function getPublicUrlAttribute()
@@ -299,6 +310,11 @@ class SongLyric extends Model
     public function getAuthorshipTypeStringValuesAttribute()
     {
         return AuthorSongLyric::$authorship_type_string_values;
+    }
+
+    public function getLicenceTypeCCStringValuesAttribute()
+    {
+        return self::$licence_type_cc_string_values;
     }
 
     public function song(): BelongsTo

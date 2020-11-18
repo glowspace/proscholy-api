@@ -69,6 +69,8 @@
                   ></v-radio>
                 </v-radio-group>
 
+                <v-select :items="enums.licence_type_cc" v-model="model.licence_type_cc" label="Licence"></v-select>
+
                 <v-layout row mb-2 v-if="is_arrangement_layout">
                   <v-flex xs12 lg6>
                     <items-combo-box
@@ -600,6 +602,7 @@ export default {
         name: undefined,
         secondary_name_1: undefined,
         secondary_name_2: undefined,
+        licence_type_cc: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -637,7 +640,8 @@ export default {
       enums: {
         lang: [],
         liturgy_approval_status: [],
-        authorship_type: []
+        authorship_type: [],
+        licence_type_cc: []
       },
 
       active: 0
@@ -655,6 +659,7 @@ export default {
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
         this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
+        this.loadEnumJsonFromResult(result, "licence_type_cc_string_values", this.enums.licence_type_cc);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
