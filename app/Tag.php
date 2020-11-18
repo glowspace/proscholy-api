@@ -185,10 +185,6 @@ class Tag extends Model
     {
         return in_array($this->type, self::$external_types);
     }
-    public function getIsForFilesAttribute()
-    {
-        return in_array($this->type, self::$file_types);
-    }
     public function getIsForAuthorsAttribute()
     {
         return in_array($this->type, self::$author_types);
