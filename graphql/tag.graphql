@@ -8,6 +8,10 @@ type Tag {
     description: String
     hide_in_liturgy: Boolean
 
+    song_lyrics_count: Int @count(relation: "song_lyrics")
+    externals_count: Int @count(relation: "externals")
+    authors_count: Int @count(relation: "authors")
+
     is_for_songs: Boolean
     is_for_externals: Boolean
     is_for_authors: Boolean

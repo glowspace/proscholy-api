@@ -45,6 +45,13 @@
                                         >{{ props.item.name }}</a
                                     >
                                 </td>
+                                <td>
+                                    {{
+                                        props.item.song_lyrics_count +
+                                            props.item.externals_count +
+                                            props.item.authors_count
+                                    }}
+                                </td>
                                 <td class="text-nowrap">
                                     <a
                                         class="text-secondary mr-3"
@@ -87,6 +94,9 @@ const FETCH_TAGS = gql`
         tags: tags_enum(type: $type) {
             id
             name
+            song_lyrics_count
+            externals_count
+            authors_count
         }
     }
 `;
@@ -118,6 +128,7 @@ export default {
         return {
             headers: [
                 { text: 'Název', value: 'name' },
+                { text: 'Počet položek', value: 'count' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: ''
