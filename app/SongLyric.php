@@ -475,16 +475,6 @@ class SongLyric extends Model
         return $this->files()->scores();
     }
 
-    // the reason for existence of the domestic characteristic
-    // is the case when there are multiple SongLyrics under one Song and no original one
-    // which is permitted when the original is unknown
-    // TODO: make obsolete
-    public function isDomestic()
-    {
-        return $this->name === $this->song->name;
-    }
-
-
     public function getSiblings()
     {
         return $this->song->song_lyrics()->where('id', '!=', $this->id)->get();

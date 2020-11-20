@@ -41,7 +41,7 @@ class Song extends Model
     /**
      * Returns all SongLyrics instances
      */
-    public function song_lyrics() : HasMany
+    public function song_lyrics(): HasMany
     {
         return $this->hasMany(SongLyric::class);
     }
@@ -49,11 +49,6 @@ class Song extends Model
     public function translations()
     {
         return $this->song_lyrics()->where('type', '!=', 0);
-    }
-
-    public function getDomesticSongLyric($id_exclude)
-    {
-        return $this->song_lyrics()->where('name', $this->name)->where('id', '!=', $id_exclude)->first();
     }
 
     public function getOriginalSongLyric()
