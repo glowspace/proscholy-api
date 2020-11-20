@@ -210,8 +210,11 @@
                   label="Části liturgie"
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
-                  :disabled="model.liturgy_approval_status == 3"
+                  :disabled="model.liturgy_approval_status == 1"
                 ></items-combo-box>
+                <p class="mt-0" v-if="model.liturgy_approval_status == 1">
+                  <i>lit. štítky nelze upravovat, když je písnička označená jako schválená ČBK pro liturgii (viz níže)</i>
+                </p>
                 <items-combo-box
                   v-if="!is_arrangement_layout"
                   v-bind:p-items="tags_liturgy_period"
@@ -239,15 +242,6 @@
                 ></items-combo-box>
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
-
-                <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_liturgy_part.length > 0">
-                  Stávající liturgické šítky budou po uložení odstraněny
-                </p>
-                <!-- <v-checkbox :disabled="model.tags_liturgy_part.length == 0"
-                  class="mt-0"
-                  v-model="model.liturgy_approval_status"
-                  label="Schváleno pro použití v liturgii"
-                ></v-checkbox> -->
               </v-form>
             </v-flex>
             <v-flex xs12 md6 class="edit-description pl-md-4">
