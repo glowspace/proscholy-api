@@ -13,13 +13,23 @@
       <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 class="h2 mb-3" v-else>Úprava písně</h1>
 
-      <v-textarea
-        label="Prostor pro interní poznámku"
-        v-model="model.admin_note"
-        rows="1"
-        auto-grow="1"
-        :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
-      ></v-textarea>
+      <v-layout row wrap>
+        <v-flex grow>
+          <v-textarea
+            label="Prostor pro interní poznámku"
+            v-model="model.admin_note"
+            rows="1"
+            auto-grow="1"
+            :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
+          ></v-textarea>
+        </v-flex>
+        <v-flex xs12 sm2>
+            <v-checkbox
+            v-model="model.is_sealed"
+            label="Zapečetit píseň"
+          ></v-checkbox>
+        </v-flex>
+      </v-layout>
 
       <v-tabs color="transparent" v-model="active">
         <v-tab>Údaje o písni</v-tab>
@@ -29,7 +39,7 @@
         <v-tab>Biblické reference</v-tab>
         <v-tab>Lilypond (beta)</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
               <v-form ref="form">
@@ -266,7 +276,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!is_arrangement_layout"></v-select>
@@ -334,7 +344,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12>
               <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
@@ -348,7 +358,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap>
             <v-flex xs12>
               <h4 v-if="(model.songbook_records || []).length">Přiřazené zpěvníky</h4>
@@ -385,7 +395,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap class="pt-2">
             <v-flex xs12 md6 class="pr-2">
               <v-textarea
@@ -409,7 +419,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap class="pt-2">
             <v-flex xs12 md6>
               <v-textarea
@@ -502,6 +512,13 @@
     <!-- </v-fade-transition> -->
   </v-app>
 </template>
+
+<style>
+  .sealed {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+</style>
 
 <script>
 import gql from "graphql-tag";

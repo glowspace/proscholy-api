@@ -80,6 +80,7 @@ const fragment = gql`
         bible_refs_osis
 
         admin_note
+        is_sealed
     }
 `;
 
@@ -235,6 +236,7 @@ export default {
             bible_refs_osis: vueModel.bible_refs_osis,
             admin_note: vueModel.admin_note,
             licence_type_cc: vueModel.licence_type_cc,
+            is_sealed: vueModel.is_sealed,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot

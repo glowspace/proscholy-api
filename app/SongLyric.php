@@ -183,7 +183,8 @@ class SongLyric extends Model
         'secondary_name_1',
         'secondary_name_2',
         'licence_type_cc',
-        'admin_note'
+        'admin_note',
+        'is_sealed'
     ];
 
     private static $lang_string_values = [
