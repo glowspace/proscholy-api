@@ -78,22 +78,17 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "SongLyric") {
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics,name,NULL,id,deleted_at,NULL'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
-            if (!$validator->fails()) {
-                $song       = Song::create(['name' => $attr]);
-                $song_lyric = SongLyric::create([
-                    'name' => $attr,
-                    'song_id' => $song->id,
-                    // 'is_published' => Auth::user()->can('publish songs'),
-                    // 'user_creator_id' => Auth::user()->id
-                ]);
+            $song       = Song::create(['name' => $attr]);
+            $song_lyric = SongLyric::create([
+                'name' => $attr,
+                'song_id' => $song->id
+            ]);
 
-                $returnValue = [
-                    "id" => $song_lyric->id,
-                    "class_name" => "SongLyric",
-                    "edit_url" => route("admin.song.edit", $song_lyric)
-                ];
-            }
+            $returnValue = [
+                "id" => $song_lyric->id,
+                "class_name" => "SongLyric",
+                "edit_url" => route("admin.song.edit", $song_lyric)
+            ];
         } elseif ($input["class_name"] == "NewsItem") {
             $news_item = NewsItem::create(['link' => $attr]);
 
