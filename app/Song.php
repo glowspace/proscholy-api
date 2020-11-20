@@ -32,12 +32,6 @@ class Song extends Model
 
     protected $fillable = ['name'];
 
-    public function authors()
-    {
-        // TODO: return all authors of the SongLyrics combined ... but rather not necessary
-        Log::error("get authors not implemented");
-    }
-
     /**
      * Returns all SongLyrics instances
      */
