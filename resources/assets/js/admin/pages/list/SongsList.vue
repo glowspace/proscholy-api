@@ -85,10 +85,10 @@
                                     }}
                                 </td>
                                 <td>{{ new Date(props.item.updated_at).toLocaleString() }}</td>
-                                <td>
+                                <!-- <td>
                                     <span v-if="props.item.is_published">Ano</span>
                                     <span v-else>Ne</span>
-                                </td>
+                                </td> -->
                                 <td>
                                     <span v-if="props.item.only_regenschori"
                                         >jen R</span
@@ -178,7 +178,7 @@ export default {
                 { text: 'Typ', value: 'type' },
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
-                { text: 'Publikováno', value: 'is_published' },
+                // { text: 'Publikováno', value: 'is_published' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
