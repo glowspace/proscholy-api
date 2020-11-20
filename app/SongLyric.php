@@ -208,8 +208,7 @@ class SongLyric extends Model
     private static $liturgy_approval_status_string_values = [
         0 => 'bez vyjádření ČBK',
         1 => 'schváleno ČBK pro liturgii',
-        // 2 => 'schváleno ČBK pro dětskou mši',
-        // 3 => 'neschváleno ČBK pro liturgii',
+        2 => 'nevhodné pro liturgii (neveřejné)',
     ];
 
     private static $licence_type_cc_string_values = [
