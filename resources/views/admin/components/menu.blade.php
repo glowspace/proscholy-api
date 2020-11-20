@@ -73,11 +73,11 @@
     'text' => 'Materiály'
 ])
 
-{{-- @include('admin.components.menu-item', [
+@include('admin.components.menu-item', [
     'route' => 'admin.tag.index',
     'icon' => 'tag',
-    'text' => 'Štítky/Kategorie písniček'
-]) --}}
+    'text' => 'Štítky'
+])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.songbook.index',

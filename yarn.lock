@@ -35,6 +35,11 @@
   dependencies:
     bowser "^2.4.0"
 
+"@bit/proscholy.utilities.song-name@^1.0.0":
+  version "1.0.0"
+  resolved "https://node.bit.dev/proscholy.utilities.song-name/-/proscholy.utilities.song-name-1.0.0.tgz#e7a4c38bc34f01c5a165c9851164045a4073da87"
+  integrity sha1-56TDi8NPAcWhZcmFEWQEWkBz2oc=
+
 "@firebase/analytics-types@0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@firebase/analytics-types/-/analytics-types-0.4.0.tgz#d6716f9fa36a6e340bc0ecfe68af325aa6f60508"

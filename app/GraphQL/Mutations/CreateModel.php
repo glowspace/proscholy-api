@@ -16,6 +16,7 @@ use App\Song;
 use App\External;
 use App\NewsItem;
 use App\Songbook;
+use App\Tag;
 
 class CreateModel
 {
@@ -77,22 +78,17 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "SongLyric") {
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:song_lyrics,name,NULL,id,deleted_at,NULL'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
-            if (!$validator->fails()) {
-                $song       = Song::create(['name' => $attr]);
-                $song_lyric = SongLyric::create([
-                    'name' => $attr,
-                    'song_id' => $song->id,
-                    // 'is_published' => Auth::user()->can('publish songs'),
-                    // 'user_creator_id' => Auth::user()->id
-                ]);
+            $song       = Song::create(['name' => $attr]);
+            $song_lyric = SongLyric::create([
+                'name' => $attr,
+                'song_id' => $song->id
+            ]);
 
-                $returnValue = [
-                    "id" => $song_lyric->id,
-                    "class_name" => "SongLyric",
-                    "edit_url" => route("admin.song.edit", $song_lyric)
-                ];
-            }
+            $returnValue = [
+                "id" => $song_lyric->id,
+                "class_name" => "SongLyric",
+                "edit_url" => route("admin.song.edit", $song_lyric)
+            ];
         } elseif ($input["class_name"] == "NewsItem") {
             $news_item = NewsItem::create(['link' => $attr]);
 
@@ -100,6 +96,21 @@ class CreateModel
                 "id" => $news_item->id,
                 "class_name" => "NewsItem",
                 "edit_url" => route("admin.news-item.edit", $news_item)
+            ];
+        } elseif ($input["class_name"] == "Tag") {
+            if (Tag::where('type', $input['tag_type'])->where('name', $attr)->count() > 0) {
+                $validationErrorBuffer->push("Jméno štítku už je obsazené v rámci kategorie", "required_attribute");
+                $validationErrorBuffer->flush(
+                    "Validation failed for the field [input.required_attribute]."
+                );
+            }
+
+            $tag = Tag::create(['name' => $attr, 'type' => $input["tag_type"]]);
+
+            $returnValue = [
+                "id" => $tag->id,
+                "class_name" => "Tag",
+                "edit_url" => route("admin.tag.edit", $tag)
             ];
         } else {
             // todo throw an error?

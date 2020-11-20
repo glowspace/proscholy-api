@@ -43,7 +43,6 @@ class SongLyricService
             if (!$song_lyric->hasSiblings() && $sl_group->count() > 1) {
                 // add this song to that foreign group - aka change the song_id
                 // todo: check that there are only two different song ids
-                Log::info("situation 1");
 
                 foreach ($sl_group as $sl_object) {
                     $new_sibling = SongLyric::find($sl_object["id"]);
@@ -56,7 +55,6 @@ class SongLyricService
             // 2. case: song was in a group and now is alone
             elseif ($song_lyric->hasSiblings() && $sl_group->count() == 1) {
                 // create new song and associate this song_lyric to that one
-                Log::info("situation 2");
 
                 $sl_object = $sl_group[0];
 

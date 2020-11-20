@@ -81,7 +81,6 @@ class ComputeUserStats extends Command
             $data = [];
         }
         $data[$key] = $values;
-        logger($data);
         $user->update([
             'stats_json' => json_encode($data)
         ]);

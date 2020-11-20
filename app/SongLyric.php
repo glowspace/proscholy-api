@@ -182,7 +182,9 @@ class SongLyric extends Model
         'bible_refs_osis',
         'secondary_name_1',
         'secondary_name_2',
-        'admin_note'
+        'licence_type_cc',
+        'admin_note',
+        'is_sealed'
     ];
 
     private static $lang_string_values = [
@@ -206,8 +208,18 @@ class SongLyric extends Model
     private static $liturgy_approval_status_string_values = [
         0 => 'bez vyjádření ČBK',
         1 => 'schváleno ČBK pro liturgii',
-        // 2 => 'schváleno ČBK pro dětskou mši',
-        // 3 => 'neschváleno ČBK pro liturgii',
+        2 => 'nevhodné pro liturgii (neveřejné)',
+    ];
+
+    private static $licence_type_cc_string_values = [
+        'UNSET' => 'neuvedeno',
+        'BY' => 'BY (uveďte původ)',
+        'BY_SA' => 'BY-SA (uv. původ, zachovejte licenci)',
+        'BY_ND' => 'BY-ND (uv. původ, nezpracovávejte)',
+        'BY_NC' => 'BY-NC (uv. původ, neužívejte komerčně)',
+        'BY_NC_SA' => 'BY-NC-SA (uv. původ, ne-komerčně, zach. licenci)',
+        'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
+        'PROPRIETARY' => 'proprietární (smlouva s MS)',
     ];
 
     public function getPublicUrlAttribute()
@@ -299,6 +311,11 @@ class SongLyric extends Model
     public function getAuthorshipTypeStringValuesAttribute()
     {
         return AuthorSongLyric::$authorship_type_string_values;
+    }
+
+    public function getLicenceTypeCCStringValuesAttribute()
+    {
+        return self::$licence_type_cc_string_values;
     }
 
     public function song(): BelongsTo
@@ -458,16 +475,6 @@ class SongLyric extends Model
     {
         return $this->files()->scores();
     }
-
-    // the reason for existence of the domestic characteristic
-    // is the case when there are multiple SongLyrics under one Song and no original one
-    // which is permitted when the original is unknown
-    // TODO: make obsolete
-    public function isDomestic()
-    {
-        return $this->name === $this->song->name;
-    }
-
 
     public function getSiblings()
     {

@@ -7,6 +7,7 @@ const fragment = gql`
         name
         secondary_name_1
         secondary_name_2
+        licence_type_cc
         authors_pivot {
             id
             authorship_type
@@ -79,6 +80,7 @@ const fragment = gql`
         bible_refs_osis
 
         admin_note
+        is_sealed
     }
 `;
 
@@ -104,6 +106,7 @@ const QUERY = gql`
             lang_string_values
             liturgy_approval_status_string_values
             authorship_type_string_values
+            licence_type_cc_string_values
 
             is_arrangement
 
@@ -232,6 +235,8 @@ export default {
             bible_refs_src: vueModel.bible_refs_src,
             bible_refs_osis: vueModel.bible_refs_osis,
             admin_note: vueModel.admin_note,
+            licence_type_cc: vueModel.licence_type_cc,
+            is_sealed: vueModel.is_sealed,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot

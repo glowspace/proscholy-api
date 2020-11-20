@@ -28,7 +28,7 @@ class UpdateSongbook
         $songbook = Songbook::find($input["id"]);
 
         $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
-        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context,'root' => $rootValue];
+        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context, 'root' => $rootValue];
 
         // update the fillable attributes
         $songbook->update($input);
@@ -42,14 +42,12 @@ class UpdateSongbook
             }
             $songbook->records()->sync($syncModels);
         }
-        
+
         if (isset($input["records"]["create"])) {
             foreach ($input["records"]["create"] as $record) {
                 $validator = Validator::make(['name' => $record["song_lyric_name"]], ['name' => 'unique:song_lyrics'], ['unique' => 'Jméno písně už je obsazené'], $validatorCustomAttributes);
-                
-                // \Log::info($record);
 
-                if (!$validator->fails()){
+                if (!$validator->fails()) {
                     $song       = Song::create(['name' => $record["song_lyric_name"]]);
                     $song_lyric = SongLyric::create([
                         'name' => $record["song_lyric_name"],
@@ -75,7 +73,7 @@ class UpdateSongbook
                     }
                 }
             }
-    
+
             $path = implode('.', $resolveInfo->path);
             $validationErrorBuffer->flush(
                 "Validation failed for the field [$path]."

@@ -37,22 +37,9 @@ class UpdateSongLyric
 
         $song_lyric = SongLyric::find($input["id"]);
 
-        // TODO as an event
-        if ($input["name"] !== $song_lyric->name) {
-            // to be domestic means to have a same name as the parent song
-            // this invariant needs to be preserved in order to stay domestic
-            if ($song_lyric->isDomestic()) {
-                $song_lyric->song->update([
-                    'name' => $input["name"]
-                ]);
-            }
-        }
-
         if ($input["lilypond"] !== $song_lyric->lilypond) {
             try {
                 $input['lilypond_svg'] = $this->sl_service->getLilypondSvg($input['lilypond']);
-                logger($input['lilypond']);
-                logger($input['lilypond_svg']);
             } catch (\Exception $e) {
                 logger($e);
             }

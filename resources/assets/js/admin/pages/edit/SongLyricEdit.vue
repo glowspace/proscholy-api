@@ -13,13 +13,23 @@
       <h1 class="h2 mb-3" v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 class="h2 mb-3" v-else>Úprava písně</h1>
 
-      <v-textarea
-        label="Prostor pro interní poznámku"
-        v-model="model.admin_note"
-        rows="1"
-        auto-grow="1"
-        :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
-      ></v-textarea>
+      <v-layout row wrap>
+        <v-flex grow>
+          <v-textarea
+            label="Prostor pro interní poznámku"
+            v-model="model.admin_note"
+            rows="1"
+            auto-grow="1"
+            :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
+          ></v-textarea>
+        </v-flex>
+        <v-flex xs12 sm2>
+            <v-checkbox
+            v-model="model.is_sealed"
+            label="Zapečetit píseň"
+          ></v-checkbox>
+        </v-flex>
+      </v-layout>
 
       <v-tabs color="transparent" v-model="active">
         <v-tab>Údaje o písni</v-tab>
@@ -29,7 +39,7 @@
         <v-tab>Biblické reference</v-tab>
         <v-tab>Lilypond (beta)</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap pt-2>
             <v-flex xs12 md6>
               <v-form ref="form">
@@ -68,6 +78,8 @@
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
+
+                <v-select :items="enums.licence_type_cc" v-model="model.licence_type_cc" label="Licence"></v-select>
 
                 <v-layout row mb-2 v-if="is_arrangement_layout">
                   <v-flex xs12 lg6>
@@ -208,8 +220,11 @@
                   label="Části liturgie"
                   header-label="Vyberte část liturgie z nabídky"
                   :multiple="true"
-                  :disabled="model.liturgy_approval_status == 3"
+                  :disabled="model.liturgy_approval_status == 1"
                 ></items-combo-box>
+                <p class="mt-0" v-if="model.liturgy_approval_status == 1">
+                  <i>lit. štítky nelze upravovat, když je písnička označená jako schválená ČBK pro liturgii (viz níže)</i>
+                </p>
                 <items-combo-box
                   v-if="!is_arrangement_layout"
                   v-bind:p-items="tags_liturgy_period"
@@ -237,15 +252,6 @@
                 ></items-combo-box>
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
-
-                <p class="mt-0" style="color:red" v-if="model.liturgy_approval_status == 3 && model.tags_liturgy_part.length > 0">
-                  Stávající liturgické šítky budou po uložení odstraněny
-                </p>
-                <!-- <v-checkbox :disabled="model.tags_liturgy_part.length == 0"
-                  class="mt-0"
-                  v-model="model.liturgy_approval_status"
-                  label="Schváleno pro použití v liturgii"
-                ></v-checkbox> -->
               </v-form>
             </v-flex>
             <v-flex xs12 md6 class="edit-description pl-md-4">
@@ -262,10 +268,15 @@
                 stačí napsat jeho celé jméno a stisknout Enter. Tak se přidá nový autor (zeleně označený).
                 Změna v databázi (tzn. samotné vytvoření autora) se provede až po uložení celé písně.
               </p>
+              <h5 class="mt-4">Licence</h5>
+              <p>
+                Typ licence podle vzoru <a href="https://www.creativecommons.cz/licence-cc/varianty-licence/">Creative Commons</a>, případně proprietární smlouva.
+                Pole s licencí vyplňte, pokud máte k dispozici písemný souhlas s konkrétní podobou otevřené licence, popř. podepsanou smlouvu s Musica Sacra.
+              </p>
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap>
             <v-flex xs12 md6>
               <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!is_arrangement_layout"></v-select>
@@ -333,7 +344,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap mb-4 v-if="model_database">
             <v-flex xs12>
               <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
@@ -347,7 +358,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap>
             <v-flex xs12>
               <h4 v-if="(model.songbook_records || []).length">Přiřazené zpěvníky</h4>
@@ -384,7 +395,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap class="pt-2">
             <v-flex xs12 md6 class="pr-2">
               <v-textarea
@@ -408,7 +419,7 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap class="pt-2">
             <v-flex xs12 md6>
               <v-textarea
@@ -501,6 +512,13 @@
     <!-- </v-fade-transition> -->
   </v-app>
 </template>
+
+<style>
+  .sealed {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+</style>
 
 <script>
 import gql from "graphql-tag";
@@ -600,6 +618,7 @@ export default {
         name: undefined,
         secondary_name_1: undefined,
         secondary_name_2: undefined,
+        licence_type_cc: undefined,
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
@@ -637,7 +656,8 @@ export default {
       enums: {
         lang: [],
         liturgy_approval_status: [],
-        authorship_type: []
+        authorship_type: [],
+        licence_type_cc: []
       },
 
       active: 0
@@ -655,6 +675,7 @@ export default {
         this.loadEnumJsonFromResult(result, "lang_string_values", this.enums.lang);
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
         this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
+        this.loadEnumJsonFromResult(result, "licence_type_cc_string_values", this.enums.licence_type_cc);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {

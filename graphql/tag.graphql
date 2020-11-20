@@ -6,12 +6,31 @@ type Tag {
     parent_tag: Tag @belongsTo @deprecated
     child_tags: [Tag] @hasMany @deprecated
     description: String
+    hide_in_liturgy: Boolean
+
+    song_lyrics_count: Int @count(relation: "song_lyrics")
+    externals_count: Int @count(relation: "externals")
+    authors_count: Int @count(relation: "authors")
+
+    is_for_songs: Boolean
+    is_for_externals: Boolean
+    is_for_authors: Boolean
+
+    groups_info: [TagTypeGroupInfo]
+}
+
+type TagTypeGroupInfo {
+    name: String
+    type: TagType
+    is_editable: Boolean
+    is_regenschori: Boolean
 }
 
 extend type Query {
+    tag(id: ID! @eq): Tag @find
     tags(type: Int @eq): [Tag] @all @deprecated
 
-    tags_enum(type: TagType @eq): [Tag] @all
+    tags_enum(type: TagType @eq, hide_in_liturgy: Boolean @eq): [Tag] @all
 }
 
 enum TagType {
@@ -33,6 +52,7 @@ enum Taggable {
 }
 
 extend type Mutation {
+    update_tag(input: UpdateTagInput! @spread): Tag @update
     delete_tag(id: ID!): Tag @delete
 
     sync_create_tags(input: SyncCreateTagsRelation!, tags_type: TagType!, taggable: Taggable!, taggable_id: Int!): [Tag]
@@ -52,4 +72,12 @@ input SyncCreateTagsRelation {
 
 input CreateTagInput {
     name: String!
+}
+
+input UpdateTagInput {
+    id: ID!
+    name: String @rules(apply: ["required"], messages: {
+        required: "Jméno štítku nesmí zůstat prázdné"})
+    description: String
+    hide_in_liturgy: Boolean
 }

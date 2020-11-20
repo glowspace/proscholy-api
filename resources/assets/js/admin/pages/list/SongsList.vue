@@ -13,26 +13,11 @@
             ></create-model>
             <v-layout row wrap>
                 <v-radio-group v-model="filter_mode" row>
-                    <v-radio
-                        label="Všechny písně"
-                        value="no-filter"
-                    ></v-radio>
-                    <v-radio
-                        label="Bez textu"
-                        value="no-lyrics"
-                    ></v-radio>
-                    <v-radio
-                        label="Bez akordů"
-                        value="no-chords"
-                    ></v-radio>
-                    <v-radio
-                        label="Bez autora"
-                        value="no-author"
-                    ></v-radio>
-                    <v-radio
-                        label="Bez štítků"
-                        value="no-tags"
-                    ></v-radio>
+                    <v-radio label="Všechny písně" value="no-filter"></v-radio>
+                    <v-radio label="Bez textu" value="no-lyrics"></v-radio>
+                    <v-radio label="Bez akordů" value="no-chords"></v-radio>
+                    <v-radio label="Bez autora" value="no-author"></v-radio>
+                    <v-radio label="Bez štítků" value="no-tags"></v-radio>
                 </v-radio-group>
             </v-layout>
             <v-layout row>
@@ -45,18 +30,30 @@
                             :custom-filter="customFilter"
                             :rows-per-page-items="[
                                 50,
-                                { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
+                                {
+                                    text:
+                                        '$vuetify.dataIterator.rowsPerPageAll',
+                                    value: -1
+                                }
                             ]"
                             :loading="$apollo.loading"
-                            :no-data-text="$apollo.loading ? 'Načítám…' : '$vuetify.noDataText'"
+                            :no-data-text="
+                                $apollo.loading
+                                    ? 'Načítám…'
+                                    : '$vuetify.noDataText'
+                            "
                             :pagination.sync="dtPagination"
                         >
                             <template v-slot:items="props">
                                 <td>
                                     <a
-                                        :href="'/admin/song/' + props.item.id + '/edit'"
-                                        >{{ props.item.name }}</a
-                                    >
+                                        :href="
+                                            '/admin/song/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
+                                        ><song-name :song="props.item"
+                                    /></a>
                                 </td>
                                 <td>
                                     <span v-if="props.item.type === 0"
@@ -68,7 +65,11 @@
                                     <span v-if="props.item.type === 2"
                                         >Autorizovaný překlad</span
                                     >
-                                    <span v-if="props.item.is_arrangement === true">
+                                    <span
+                                        v-if="
+                                            props.item.is_arrangement === true
+                                        "
+                                    >
                                         Aranž<br />{{
                                             props.item.arrangement_source.name
                                         }}
@@ -84,11 +85,17 @@
                                                 : '–')
                                     }}
                                 </td>
-                                <td>{{ new Date(props.item.updated_at).toLocaleString() }}</td>
                                 <td>
+                                    {{
+                                        new Date(
+                                            props.item.updated_at
+                                        ).toLocaleString()
+                                    }}
+                                </td>
+                                <!-- <td>
                                     <span v-if="props.item.is_published">Ano</span>
                                     <span v-else>Ne</span>
-                                </td>
+                                </td> -->
                                 <td>
                                     <span v-if="props.item.only_regenschori"
                                         >jen R</span
@@ -98,13 +105,17 @@
                                 <td class="text-nowrap">
                                     <a
                                         class="text-secondary mr-3"
-                                        :href="'/admin/song/' + props.item.id + '/edit'"
+                                        :href="
+                                            '/admin/song/' +
+                                                props.item.id +
+                                                '/edit'
+                                        "
                                         ><i class="fas fa-pen"></i></a
                                     ><a
                                         class="text-secondary"
                                         v-on:click="askForm(props.item.id)"
-                                        ><i class="fas fa-trash"></i></a
-                                    >
+                                        ><i class="fas fa-trash"></i
+                                    ></a>
                                 </td>
                             </template>
                         </v-data-table>
@@ -126,6 +137,7 @@ import gql from 'graphql-tag';
 
 import removeDiacritics from 'Admin/helpers/removeDiacritics';
 import CreateModel from 'Admin/components/CreateModel.vue';
+import SongName from '@bit/proscholy.utilities.song-name/SongName.vue';
 
 const fetch_items = gql`
     query FetchSongLyrics(
@@ -142,6 +154,8 @@ const fetch_items = gql`
         ) {
             id
             name
+            secondary_name_1
+            secondary_name_2
             updated_at
             type
             is_published
@@ -166,9 +180,16 @@ const delete_item = gql`
     }
 `;
 
+const stringToSearchString = string => {
+    return removeDiacritics(string)
+        .toLowerCase()
+        .replace(/[^a-zA-Z0-9 ]/g, '');
+};
+
 export default {
     components: {
-        CreateModel
+        CreateModel,
+        SongName
     },
 
     data() {
@@ -178,7 +199,7 @@ export default {
                 { text: 'Typ', value: 'type' },
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
-                { text: 'Publikováno', value: 'is_published' },
+                // { text: 'Publikováno', value: 'is_published' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
@@ -257,6 +278,8 @@ export default {
 
                 let searchableItems = [
                     item.name,
+                    item.secondary_name_1,
+                    item.secondary_name_2,
                     item.authors.map(a => a.name).join(' ') ||
                         (item.has_anonymous_author ? 'anonymni' : ''), // authors
                     types[item.type]
@@ -267,16 +290,14 @@ export default {
                     searchableItems.push(item.arrangement_source.name);
                 }
 
-                const str = removeDiacritics(
-                    searchableItems.join(' ')
-                ).toLowerCase();
+                const str = stringToSearchString(searchableItems.join(' '));
 
                 this.$set(item, 'search_index', str);
             }
         },
 
         customFilter(items, search) {
-            const needle = removeDiacritics(search).toLowerCase();
+            const needle = stringToSearchString(search);
 
             return items.filter(
                 item => item.search_index.indexOf(needle) !== -1
