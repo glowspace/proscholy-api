@@ -264,6 +264,11 @@
                 stačí napsat jeho celé jméno a stisknout Enter. Tak se přidá nový autor (zeleně označený).
                 Změna v databázi (tzn. samotné vytvoření autora) se provede až po uložení celé písně.
               </p>
+              <h5 class="mt-4">Licence</h5>
+              <p>
+                Typ licence podle vzoru <a href="https://www.creativecommons.cz/licence-cc/varianty-licence/">Creative Commons</a>, případně proprietární smlouva.
+                Pole s licencí vyplňte, pokud máte k dispozici písemný souhlas s konkrétní podobou otevřené licence, popř. podepsanou smlouvu s Musica Sacra.
+              </p>
             </v-flex>
           </v-layout>
         </v-tab-item>

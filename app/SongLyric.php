@@ -213,12 +213,13 @@ class SongLyric extends Model
 
     private static $licence_type_cc_string_values = [
         'UNSET' => 'neuvedeno',
-        'BY' => 'BY',
-        'BY_SA' => 'BY-SA',
-        'BY_ND' => 'BY-ND',
-        'BY_NC' => 'BY-NC',
-        'BY_NC_SA' => 'BY-NC-SA',
-        'BY_NC_ND' => 'BY-NC-ND'
+        'BY' => 'BY (uveďte původ)',
+        'BY_SA' => 'BY-SA (uv. původ, zachovejte licenci)',
+        'BY_ND' => 'BY-ND (uv. původ, nezpracovávejte)',
+        'BY_NC' => 'BY-NC (uv. původ, neužívejte komerčně)',
+        'BY_NC_SA' => 'BY-NC-SA (uv. původ, ne-komerčně, zach. licenci)',
+        'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
+        'PROPRIETARY' => 'proprietární (smlouva s MS)',
     ];
 
     public function getPublicUrlAttribute()

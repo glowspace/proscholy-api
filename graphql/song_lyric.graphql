@@ -161,6 +161,7 @@ enum LicenseTypeCC {
     BY_NC @enum(value: 4)
     BY_NC_SA @enum(value: 5)
     BY_NC_ND @enum(value: 6)
+    PROPRIETARY @enum(value: 7)
 }
 
 type SongLyricPaginator {
