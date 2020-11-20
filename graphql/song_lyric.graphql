@@ -109,8 +109,10 @@ type SongLyric {
     capo: Int
     visits: Int
     has_lyrics: Boolean
-    liturgy_approval_status: Int
-    liturgy_approval_status_string_values: JSON
+    is_approved_for_liturgy: Boolean
+
+    liturgy_approval_status: Int @guard
+    liturgy_approval_status_string_values: JSON @guard
     authorship_type_string_values: JSON
     licence_type_cc_string_values: JSON
 
