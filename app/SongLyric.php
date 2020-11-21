@@ -307,6 +307,11 @@ class SongLyric extends Model
         return self::$liturgy_approval_status_string_values;
     }
 
+    public function getIsApprovedForLiturgyAttribute()
+    {
+        return $this->liturgy_approval_status == 1;
+    }
+
     // helper method, so this can be included in graphql schema
     public function getAuthorshipTypeStringValuesAttribute()
     {
