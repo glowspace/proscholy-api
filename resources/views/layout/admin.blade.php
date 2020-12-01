@@ -72,7 +72,6 @@
             <div>
                 <a class="navbar-brand" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" class="admin-logo">
                     Regenschori Administrace
-                    <span class="navbar-motto">– po ruce všem, kteří se chtějí modlit hudbou</span>
                 </a>
                 <a class="btn btn-secondary" id="dark-mode-button" onclick="toggleDarkMode();" ><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }} režim</a>
             </div>
@@ -96,9 +95,6 @@
         <a class="btn btn-secondary mb-0 admin-report bg-transparent" target="_blank" title="Nahlásit chybu" href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CGHL024DD">
             <i class="fas fa-exclamation-triangle p-0"></i>
         </a>
-
-        {{-- Side navbar --}}
-        @yield('sidebar')
     </div>
 
     {{-- Main JS built with Laravel's mix --}}
