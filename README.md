@@ -11,7 +11,7 @@ API server databáze projektu Regenschori. Ze serveru čerpají webové frontend
 - MySQL databáze
 - zpracování LilyPond not a ChordPro akordů
 - zpracování biblických souřadnic a liturgického kalendáře pro doporučení Co hrát na mši
-- webová administrace pro redakční práci a správu databáze
+- webová administrace ve Vue.js pro redakční práci a správu databáze
 
 ## Informace k vývoji
 Vývoj probíhá v rámci týmu projektu ProScholy.cz pomocí projektového slacku.
