@@ -54,24 +54,24 @@
                                     / {{number_format($songs_count, 0, ',', ' ')}}</b>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Prázdné písně</td>
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 20px">
-                                        <div class="progress-bar rounded bg-danger"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_just_title_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_just_title_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>
-                                <td>
-                                    <b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b>
-                                </td>
-                            </tr>
+{{--                            <tr>--}}
+{{--                                <td>Prázdné písně</td>--}}
+{{--                                <td style="width: 50%">--}}
+{{--                                    <div class="progress rounded"--}}
+{{--                                         style="height: 20px">--}}
+{{--                                        <div class="progress-bar rounded bg-danger"--}}
+{{--                                             role="progressbar"--}}
+{{--                                             style="width: {{round(($songs_w_just_title_count/$songs_count)*100)}}%;"--}}
+{{--                                             aria-valuenow="{{round(($songs_w_just_title_count/$songs_count)*100)}}"--}}
+{{--                                             aria-valuemin="0"--}}
+{{--                                             aria-valuemax="100"></div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>--}}
+{{--                                <td>--}}
+{{--                                    <b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
 
                             <tr>
                                 <td><a href="{{route('admin.author.index')}}">Autoři</a></td>
