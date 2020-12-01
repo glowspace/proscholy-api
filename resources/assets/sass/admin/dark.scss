@@ -1,0 +1,99 @@
+body.dark {
+  background-color: #000;
+
+  h1 {
+    color: white;
+  }
+
+  .container {
+    color: #ccc;
+  }
+
+  .card-body,
+  .chord-text,
+  .card {
+    background-color: #111;
+    color: #ccc;
+  }
+
+  .card-header,
+  .card-footer,
+  .bg-light,
+  .tag {
+    background-color: #222 !important;
+    color: #ccc;
+  }
+
+  .tag {
+    border: #555 1px solid;
+  }
+
+  .song-tags .songbook-tag .songbook-number {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .border {
+    border-color: #222 !important;
+  }
+
+  .background-home {
+    background-image: url("/img/bg_center_dark.svg");
+    background-color: transparent;
+  }
+
+  .search-home {
+    background-color: black;
+    color: white;
+    border: 1px #999 solid;
+    border-right: 0;
+  }
+
+  .search-submit {
+    background-color: black;
+    color: white;
+    border: 1px #999 solid;
+    border-left: 0;
+  }
+
+  .filter-active {
+    background-color: #666;
+  }
+
+  .filter-open {
+    background-color: #333;
+  }
+
+  .text-very-muted {
+    color: #222;
+  }
+
+  .chord-sign {
+    color: #4dc0b5;
+  }
+
+  .chord-bass {
+    color: #45a99f;
+  }
+
+  .chosen .btn,
+  .btn.chosen,
+  .dark-mode-button {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  a, .btn.btn-primary, .btn-primary.custom-file-control::before {
+    color: #4dc0b5;
+
+    &:hover {
+      color: #328e85;
+    }
+  }
+
+  .tag-selected {
+    border-color: black;
+  }
+
+  .tag:hover {
+    color: white;
+  }
+}

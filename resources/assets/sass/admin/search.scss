@@ -1,0 +1,115 @@
+
+$search-wrapper-height: 47px;
+
+.search-wrapper {
+  border-radius: 8px;
+  display: flex;
+}
+
+.search-balance, .search-column {
+  transition: 0.4s;
+}
+
+.search-home {
+  display:          inline-block;
+  padding:          10px 20px;
+  font-size:        16px;
+  transition:       0.3s;
+  height:           $search-wrapper-height;
+  border:           none;
+  background-color: white;
+  border-radius:    8px 0 0 8px;
+  border: 1px #ccc solid;
+  border-right: 0;
+  width: calc(100% - 70px);
+  
+  @include media-breakpoint-down(xs) {
+    .home-init & {
+      width: calc(100% - 20px);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.search-submit {
+  cursor:           pointer;
+  transition:       0.3s;
+  height:           $search-wrapper-height;
+  border:           none;
+  background-color: white;
+  border-radius:    0 8px 8px 0;
+  border: 1px #ccc solid;
+  border-left: 0;
+  width: 70px;
+
+  @include media-breakpoint-down(xs) {
+    .home-init & {
+      width: 20px;
+    }
+  }
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+body.dark .btn.display-all-songs {
+  background-color: rgba(255, 255, 255, 0.15);
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+}
+
+.btn.btn-outline-light.display-all-songs {
+  border-radius: 8px;
+  background-color: rgba(218, 57, 38, 0.5);
+  &:hover {
+    background-color: rgba(218, 57, 38, 0.6);
+  }
+}
+
+.filter-active {
+  background-color: #bbb;
+  color: white;
+}
+
+.filter-open {
+  background-color: #ddd;
+  color: black;
+}
+
+.filter-panel {
+  max-height: calc(100vh - 47px - 3rem);
+  overflow: auto;
+}
+
+.desktop-filter-container {
+  .position-sticky {
+    top: calc(47px + 4rem);
+  }
+  .song-tags {
+    max-height: calc(100vh - 47px - 3.5rem - 66px);
+    overflow: auto;
+    margin-bottom: 0; // chrome fix
+    padding-bottom: 0; // chrome fix of firefox fix
+    a:last-child {
+      margin-bottom: 1em; // firefox fix
+    }
+  }
+}
+
+/**
+View: Search results
+ */
+.search-basic {
+  max-width:   500px;
+  display: inline-block;
+}
+
+.result-table {
+  width: auto;
+}

@@ -33,9 +33,7 @@ mix.webpackConfig({
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    .js('resources/assets/js/admin/app.js', 'public/_admin/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css')
     .copyDirectory('resources/assets/vendor/ViewerJS', 'public/js/ViewerJS')
     .browserSync({
         // proxy settings for php artisan serve
@@ -52,6 +50,13 @@ mix.js('resources/assets/js/app.js', 'public/js')
             'resources/lang/**/*',
         ],
     });
+
+/**
+ * Administration
+ */
+mix.sass('resources/assets/sass/admin/admin-ui.scss', 'public/_admin/css')
+    .js('resources/assets/js/admin/app.js', 'public/_admin/js')
+    .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css');
 
 mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/_admin/css');
 mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js');

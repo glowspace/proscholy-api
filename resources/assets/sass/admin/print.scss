@@ -1,0 +1,48 @@
+@media print {
+    @page {
+      margin: 2cm;
+    }
+  
+    .container, .col-lg-9 {
+      max-width: 100%;
+      flex: none;
+    }
+    
+    .container, .col-lg-9, .card-body, .p-1.overflow-hidden, .card-footer, .px-3.py-2.d-inline-block {
+      padding: 0 !important;
+    }
+  
+    .card-footer {
+      padding-top: 10px !important;
+      margin-top: 10px;
+    }
+  
+    .row {
+      margin: 0 !important;
+    }
+  
+    .card-lyrics .card-header, .position-sticky, .btn, .col-lg-3 {
+      display: none;
+    }
+  
+    body, .card-footer, .tag, .container {
+      background-color: #fff !important;
+      min-width: initial !important;
+    }
+  
+    .card.card-lyrics, .col-lg-9, #preloadPlaceholder {
+      display: block !important;
+    }
+  
+    .row {
+      display: none;
+    }
+  
+    .flex-md-row {
+      flex-direction: column !important;
+    }
+  
+    .justify-content-md-end {
+      justify-content: flex-start !important;
+    }
+  }
