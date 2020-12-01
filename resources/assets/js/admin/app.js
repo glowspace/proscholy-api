@@ -5,11 +5,6 @@
  */
 require('./bootstrap');
 
-// /**
-//  * Materialise.css
-//  */
-// require('materialize-css');
-
 window.Vue = require('vue');
 
 /**
@@ -17,8 +12,6 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-// import SongsList from "Pages/list/SongsList";
 
 Vue.component('songs-list', require('Admin/pages/list/SongsList.vue'));
 Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
