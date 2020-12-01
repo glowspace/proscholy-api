@@ -2,7 +2,12 @@
 
 @section('content-withmenu')
     <div class="__container-fluid dashboard-container">
-        <h1>Administrace</h1>
+
+        <div class="content-header">
+            <h1>Administrace</h1>
+        </div>
+
+
 
         <div class="row align-items-start">
             <div class="col-md-8 d-flex flex-wrap p-0">
