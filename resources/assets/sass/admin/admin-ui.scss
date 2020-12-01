@@ -3,20 +3,34 @@ Imports
  */
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+/**
+SASS variables config
+ */
 @import "variables";
-$main-red: #d83027;
-$main-blue: #3961ad;
-$main-green: #098845;
+
+$main-red:    #d83027;
+$main-blue:   #3961ad;
+$main-green:  #098845;
 $main-yellow: #faa61b;
 
-// @import 'admin';
+/**
+CSS imports
+ */
 @import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
 @import "dark";
 @import "navbar";
+@import "sidebar";
 @import "print";
 @import "search";
 @import "song";
 
+/**
+
+ */
+
+body {
+    -webkit-font-smoothing: antialiased;
+}
 
 h1,
 h2,
@@ -27,7 +41,7 @@ h4 {
 
 .material-shadow {
     -webkit-box-shadow: #1a1f21c2 2px 2px 6px;
-    box-shadow: #1a1f21c2 2px 2px 6px;
+    box-shadow:         #1a1f21c2 2px 2px 6px;
 }
 
 .material-shadow-text {
@@ -36,11 +50,11 @@ h4 {
 
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none;
+    -webkit-user-select:   none; /* Safari */
+    -khtml-user-select:    none; /* Konqueror HTML */
+    -moz-user-select:      none; /* Firefox */
+    -ms-user-select:       none; /* Internet Explorer/Edge */
+    user-select:           none;
     /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
@@ -54,7 +68,7 @@ Layout
 
 html,
 body {
-    height: 100%;
+    height:     100%;
     overflow-x: visible;
 }
 
@@ -72,10 +86,10 @@ input::placeholder {
 }
 
 .navbar {
-    z-index: 200;
+    z-index:          200;
     background-color: #292929;
-    min-height: 66px;
-    font-family: "Nunito", sans-serif;
+    min-height:       66px;
+    font-family:      "Nunito", sans-serif;
 }
 
 a.navbar-brand {
@@ -83,49 +97,19 @@ a.navbar-brand {
 }
 
 .navbar-label {
-    padding: 3px 10px;
+    padding:          3px 10px;
 
     background-color: #292929;
-    color: white;
+    color:            white;
 }
-
-// .content {
-// height:     calc(100% - 66px);
-// width:      calc(100% - #{$sidebar-width});
-
-// margin-top: 66px;
-
-// @include media-breakpoint-up(lg) {
-//   margin-left: 300px;
-// }
-
-// // On md and above navbar is hidden
-// @include media-breakpoint-down(md) {
-//   width:               100%;
-
-//   background-position: -290.5px -11px;
-// }
-
-// padding:    0;
-
-// overflow-x: hidden;
-// }
-
-// .content-padding {
-//   padding: 0 30px 20px;
-// }
-
-// .content-padding-top {
-//   padding-top: 30px;
-// }
 
 /**
 Home page specific elements
  */
 
 .home {
-    min-height: 100%;
-    display: flex;
+    min-height:     100%;
+    display:        flex;
     flex-direction: column;
 
     .card {
@@ -135,28 +119,28 @@ Home page specific elements
 
 .home .home-init {
     .search-balance {
-        max-width: 0;
-        padding: 0;
+        max-width:  0;
+        padding:    0;
         visibility: hidden;
     }
 }
 
 .home .home-afterinit {
     .logo-wrapper {
-        opacity: 0;
-        height: 0;
-        margin-top: 0;
+        opacity:       0;
+        height:        0;
+        margin-top:    0;
         margin-bottom: 0;
     }
 }
 
 .background-home {
-    background-image: url("/img/bg_center.svg");
-    background-color: #da3926;
-    background-repeat: no-repeat;
+    background-image:      url("/img/bg_center.svg");
+    background-color:      #da3926;
+    background-repeat:     no-repeat;
     background-attachment: fixed;
-    background-size: cover;
-    flex: 1;
+    background-size:       cover;
+    flex:                  1;
     // min-height: 450px;
 
     @include media-breakpoint-down(sm) {
@@ -165,69 +149,69 @@ Home page specific elements
 }
 
 .logo-wrapper {
-    text-align: center;
-    margin-top: 130px;
-    transition: 0.5s;
-    height: 160px;
+    text-align:   center;
+    margin-top:   130px;
+    transition:   0.5s;
+    height:       160px;
     margin-right: -15px;
-    margin-left: -15px;
+    margin-left:  -15px;
 
     @include media-breakpoint-down(sm) {
-        margin-top: 110px;
+        margin-top:    110px;
         margin-bottom: -50px;
-        height: 90px;
+        height:        90px;
     }
 
     @include media-breakpoint-down(xs) {
-        margin-top: 90px;
+        margin-top:    90px;
         margin-bottom: -70px;
-        height: 70x;
+        height:        70x;
     }
 
     .logo {
-        height: 130px;
-        width: 130px;
+        height:              130px;
+        width:               130px;
 
-        display: inline-block;
-        position: relative;
-        top: 27px;
+        display:             inline-block;
+        position:            relative;
+        top:                 27px;
 
-        background-image: url(/img/logo_bubble.svg);
+        background-image:    url(/img/logo_bubble.svg);
         background-position: center;
-        background-size: 149%;
+        background-size:     149%;
 
         @include media-breakpoint-down(sm) {
-            top: 2px;
-            height: 50px;
-            width: 50px;
+            top:          2px;
+            height:       50px;
+            width:        50px;
 
             margin-right: 6px;
         }
 
         @include media-breakpoint-down(xs) {
-            top: 0;
-            height: 30px;
-            width: 30px;
+            top:          0;
+            height:       30px;
+            width:        30px;
 
             margin-right: 3px;
         }
     }
 
     .caption {
-        font-size: 118px;
-        color: white;
+        font-size:   118px;
+        color:       white;
 
         line-height: 160px;
 
         font-family: "Cocogoose", "Arial Black", sans-serif;
 
         @include media-breakpoint-down(sm) {
-            font-size: 60px;
+            font-size:   60px;
             line-height: 60px;
         }
 
         @include media-breakpoint-down(xs) {
-            font-size: 40px;
+            font-size:   40px;
             line-height: 40px;
         }
     }
@@ -235,14 +219,15 @@ Home page specific elements
 
 .card-blue {
     border-radius: 3px;
+
     .card-header {
-        color: white;
+        color:            white;
         background-color: $main-blue !important;
 
-        border-radius: 3px 3px 0 0;
+        border-radius:    3px 3px 0 0;
 
         a {
-            color: white;
+            color:       white;
             font-weight: bold;
         }
     }
@@ -254,11 +239,12 @@ Home page specific elements
 
 .card-green {
     border-radius: 3px;
+
     .card-header {
-        color: white;
+        color:            white;
         background-color: $main-green !important;
 
-        border-radius: 3px 3px 0 0;
+        border-radius:    3px 3px 0 0;
 
         a,
         a:hover {
@@ -273,11 +259,12 @@ Home page specific elements
 
 .card-red {
     border-radius: 3px;
+
     .card-header {
-        color: white;
+        color:            white;
         background-color: $main-red !important;
 
-        border-radius: 3px 3px 0 0;
+        border-radius:    3px 3px 0 0;
 
         a {
             color: white;
@@ -310,12 +297,12 @@ Home page specific elements
 }
 
 .error {
-    color: white;
+    color:      white;
     text-align: center;
 
     h1 {
-        font-size: calc(4vw + 50px);
-        font-weight: bold;
+        font-size:     calc(4vw + 50px);
+        font-weight:   bold;
         margin-bottom: 0;
     }
 
@@ -329,29 +316,29 @@ Home page specific elements
 }
 
 .stretched-link {
-    position: static;
+    position:    static;
     will-change: initial;
 }
 
 .stretched-link::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    pointer-events: auto;
-    content: "";
-    background-color: rgba(0,0,0,0);
+    position:         absolute;
+    top:              0;
+    right:            0;
+    bottom:           0;
+    left:             0;
+    z-index:          1;
+    pointer-events:   auto;
+    content:          "";
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .center-container {
-    display: flex;
+    display:         flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    width: 100%;
+    align-items:     center;
+    margin-top:      5vh;
+    margin-bottom:   5vh;
+    width:           100%;
 }
 
 .minw-45 {
@@ -375,8 +362,8 @@ Home page specific elements
         margin: 0 -10px;
 
         .card {
-            flex: 0 0 calc(100% / 3 - 20px);
-            margin-left: 10px;
+            flex:         0 0 calc(100% / 3 - 20px);
+            margin-left:  10px;
             margin-right: 10px;
             @include media-breakpoint-between(sm, md) {
                 flex: 0 0 calc(100% / 2 - 20px);
@@ -394,18 +381,17 @@ Home page specific elements
 }
 
 
-
 textarea.form-control {
-    line-height: 1.8;
-    padding: 10px;
+    line-height:      1.8;
+    padding:          10px;
     background-image: none;
-    box-shadow: 0 0 70px -25px inset;
+    box-shadow:       0 0 70px -25px inset;
 }
 
 .edit-description h5 {
-    font-weight: 600;
+    font-weight:    600;
     padding-bottom: 8px;
-    border-bottom: 1px #bec0c1 solid;
+    border-bottom:  1px #bec0c1 solid;
 }
 
 // vuetify tabs height not updating bug fix, see issue #6962
@@ -420,9 +406,9 @@ textarea.form-control {
 // old frontend admin controls (replaced by pen button in Nuxt)
 .admin-controls {
     position: fixed;
-    top: 30vh;
-    left: 0.3125rem;
-    z-index: 20;
+    top:      30vh;
+    left:     0.3125rem;
+    z-index:  20;
 
     a:nth-of-type(odd) {
         i {
@@ -431,11 +417,12 @@ textarea.form-control {
     }
 
     a:nth-of-type(odd) + a {
-        padding-left: 5px;
+        padding-left:  5px;
         padding-right: 10px;
-        display: none;
-        background: rgba(248, 250, 252, 0.8);
+        display:       none;
+        background:    rgba(248, 250, 252, 0.8);
         border-radius: 10px;
+
         .dark & {
             background: rgba(0, 0, 0, 0.8);
         }
@@ -449,12 +436,12 @@ textarea.form-control {
 // admin sidebar, logo and motto
 .admin-logo {
     padding: 0 10px 0 0;
-    width: 60px;
-    height: 50px;
+    width:   60px;
+    height:  50px;
 }
 
 .navbar-motto {
-    color: #ffffff3d;
+    color:   #ffffff3d;
     display: none;
 
     @include media-breakpoint-up(lg) {
@@ -466,85 +453,6 @@ textarea.form-control {
     &,
     &:hover {
         color: #aaa;
-    }
-}
-
-/**
-Sidebar
- */
-.sidebar {
-    //border-right: 1px solid #e2e2e2;
-
-    @include media-breakpoint-up(lg) {
-        height: calc(100% + 1rem + 60px);
-        min-height: calc(100vh + 0.5rem);
-
-        & > div {
-            margin-top: calc(-60px - 1rem);
-            position: sticky;
-            top: 0;
-            max-height: 100vh;
-            overflow: auto;
-        }
-    }
-
-    @include media-breakpoint-down(md) {
-        margin-right: -15px;
-
-        .navbar-brand {
-            display: none;
-        }
-    }
-
-    height: 100%;
-    margin-left: -15px;
-
-    a {
-        padding: 0.4rem 0.8rem;
-        margin: 0;
-        color: rgba(0,0,0,.85) !important;
-        text-align: left;
-        will-change: initial;
-
-        @include media-breakpoint-up(lg) {
-            width: 100%;
-            padding: 0.66875rem 1rem 0.66875rem calc(1rem + 22px);
-            margin-left: 0 !important;
-            border-radius: 0;
-        }
-
-        //&:hover {
-        //    color: white;
-        //}
-
-        &.active {
-
-            background-color: rgba(153, 153, 153, 0.2) !important;
-
-            &:hover,
-            &:focus {
-                background-color: rgba(153, 153, 153, 0.4) !important;
-            }
-        }
-
-        // Fontawesome icon
-        i {
-            width: 22px;
-
-            @include media-breakpoint-up(lg) {
-                margin-left: -22px;
-            }
-        }
-
-        .badge {
-            float: right;
-
-            position: relative;
-            top: 3px;
-
-            background-color: #36c374;
-            color: black;
-        }
     }
 }
 
@@ -562,23 +470,23 @@ Sidebar
 
 .dash {
     padding-right: 5px;
-    padding-left: 5px;
+    padding-left:  5px;
 
     h5.card-title {
-        font-size: 1.1rem;
+        font-size:     1.1rem;
         margin-bottom: 0.25rem;
-        font-weight: normal;
+        font-weight:   normal;
     }
 
     & > .card {
-        margin-left: 10px;
+        margin-left:  10px;
         margin-right: 10px;
     }
 
     a {
-        flex: 0 0 calc(100% / 3 - 20px) !important;
-        margin-left: 10px;
-        margin-right: 10px;
+        flex:          0 0 calc(100% / 3 - 20px) !important;
+        margin-left:   10px;
+        margin-right:  10px;
         margin-bottom: 20px;
 
         @include media-breakpoint-between(sm, lg) {
@@ -601,26 +509,27 @@ Sidebar
             .card-title {
                 text-decoration: underline;
             }
+
             img,
             .img-icon {
-                color: #1d6dab;
+                color:   #1d6dab;
                 opacity: 0.75;
             }
         }
 
         .card {
-            height: 100%;
+            height:         100%;
             flex-direction: row;
 
             img,
             .img-icon {
-                height: auto;
-                text-align: center;
-                font-size: calc(60px - 1.5rem);
+                height:      auto;
+                text-align:  center;
+                font-size:   calc(60px - 1.5rem);
                 line-height: 1;
-                width: 60px;
-                margin: auto 0;
-                padding: 1rem 0 1rem 1.5rem;
+                width:       60px;
+                margin:      auto 0;
+                padding:     1rem 0 1rem 1.5rem;
             }
 
             .fa-phone-square {
@@ -628,9 +537,9 @@ Sidebar
             }
 
             .card-body {
-                flex: 1;
-                margin: auto 0;
-                padding-top: 0;
+                flex:           1;
+                margin:         auto 0;
+                padding-top:    0;
                 padding-bottom: 0;
             }
         }
@@ -661,16 +570,16 @@ a:focus {
 
 // admin report button
 .btn.admin-report {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    color: #292929;
-    opacity: 0.5;
+    position:   fixed;
+    bottom:     0;
+    right:      0;
+    color:      #292929;
+    opacity:    0.5;
     transition: 0.2s;
 }
 
 .btn.admin-report:hover {
-    color: #292929;
+    color:   #292929;
     opacity: 1;
 }
 
@@ -679,22 +588,22 @@ a:focus {
     min-height: initial !important;
 
     & > .container {
-        padding: 0;
+        padding:       0;
         padding-right: 15px;
     }
 }
 
 .v-datatable td:first-child a {
-    display: inline-block;
+    display:  inline-block;
     position: relative;
 
     &::before {
-        content: '';
+        content:  '';
         position: absolute;
-        top: -4px;
-        bottom: -4px;
-        left: -24px;
-        right: -48px;
+        top:      -4px;
+        bottom:   -4px;
+        left:     -24px;
+        right:    -48px;
     }
 }
 
