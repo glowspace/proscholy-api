@@ -13,12 +13,12 @@ class ExternalTagSeeder extends Seeder
      */
     public function run()
     {
-        foreach (Tag::$external_types as $sl_type) {
-            foreach (External::all()->random(20) as $external) {
-                $external->tags()->sync(
-                    Tag::whereType($sl_type)->get()->random(2)
-                );
-            }
-        }
+//        foreach (Tag::$external_types as $sl_type) {
+//            foreach (External::all()->random(20) as $external) {
+//                $external->tags()->sync(
+//                    Tag::whereType($sl_type)->get()->random(2)
+//                );
+//            }
+//        }
     }
 }

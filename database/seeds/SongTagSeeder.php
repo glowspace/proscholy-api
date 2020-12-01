@@ -13,12 +13,12 @@ class SongTagSeeder extends Seeder
      */
     public function run()
     {
-        foreach (Tag::$song_lyric_types as $sl_type) {
-            foreach (SongLyric::all()->random(20) as $song_lyric) {
-                $song_lyric->tags()->sync(
-                    Tag::whereType($sl_type)->get()->random(2)
-                );
-            }
-        }
+//        foreach (Tag::$song_lyric_types as $sl_type) {
+//            foreach (SongLyric::all()->random(20) as $song_lyric) {
+//                $song_lyric->tags()->sync(
+//                    Tag::whereType($sl_type)->get()->random(2)
+//                );
+//            }
+//        }
     }
 }
