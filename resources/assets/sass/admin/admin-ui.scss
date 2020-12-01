@@ -20,6 +20,7 @@ $main-grey-border: #dadce0;
 CSS imports
  */
 @import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
+@import "layout";
 @import "dark";
 @import "navbar";
 @import "sidebar";
@@ -27,6 +28,5 @@ CSS imports
 @import "search";
 @import "cards";
 @import "elements";
-@import "layout";
 @import "forms";
 @import "dashboard";

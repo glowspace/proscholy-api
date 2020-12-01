@@ -84,7 +84,12 @@ Admin homepage (dashboard) custom CSS.
 /**
 Homepage user stats.
  */
+
 .statistics-table {
+    .rounded {
+        border-radius: 50px !important;
+    }
+
     td:not(:first-child) {
         text-align: right;
     }

@@ -7,10 +7,86 @@
             <h1>Nástěnka administrace</h1>
         </div>
 
-        <div class="content-label">Důležité odkazy</div>
 
-        <div class="row align-items-start">
-            <div class="col-md-8 d-flex flex-wrap p-0">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="content-label">Statistika</div>
+
+                <div class="card">
+                    <div class="card-body p-0">
+                        <table class="table table-bordered mb-0 statistics-table">
+                            <tr>
+                                <td>Písně s textem</td>
+                                <td style="width: 50%">
+                                    <div class="progress rounded"
+                                         style="height: 20px">
+                                        <div class="progress-bar rounded bg-success"
+                                             role="progressbar"
+                                             style="width: {{round(($songs_w_text_count/$songs_count)*100)}}%;"
+                                             aria-valuenow="{{round(($songs_w_text_count/$songs_count)*100)}}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+
+                                <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
+
+                                <td><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}
+                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
+
+                            </tr>
+                            <tr>
+                                <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
+                                <td style="width: 50%">
+                                    <div class="progress rounded"
+                                         style="height: 20px">
+                                        <div class="progress-bar rounded bg-success"
+                                             role="progressbar"
+                                             style="width: {{round(($songs_w_all_count/$songs_count)*100)}}%;"
+                                             aria-valuenow="{{round(($songs_w_all_count/$songs_count)*100)}}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>
+                                <td>
+                                    <b>{{number_format($songs_w_all_count, 0, ',', ' ')}}
+                                    / {{number_format($songs_count, 0, ',', ' ')}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Prázdné písně</td>
+                                <td style="width: 50%">
+                                    <div class="progress rounded"
+                                         style="height: 20px">
+                                        <div class="progress-bar rounded bg-danger"
+                                             role="progressbar"
+                                             style="width: {{round(($songs_w_just_title_count/$songs_count)*100)}}%;"
+                                             aria-valuenow="{{round(($songs_w_just_title_count/$songs_count)*100)}}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>
+                                <td>
+                                    <b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><a href="{{route('admin.author.index')}}">Autoři</a></td>
+                                <td colspan="3"><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                            <tr>
+                                <td><a href="{{route('admin.external.index')}}">Materiály</a></td>
+                                <td colspan="3"><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-label">Důležité odkazy</div>
+
                 <div class="dash d-flex flex-wrap">
                     <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CCC2UEP1A"
                        target="_blank">
@@ -117,59 +193,21 @@
                         <span>Díky, že pomáháš!</span>
                     </div>
                 </div>
+
+
                 <div class="card">
-                    <div class="card-body p-0">
-                        <table class="table table-bordered mb-0 statistics-table">
-                            <tr>
-                                <td colspan="3"><b>Počty písní, autorů a odkazů ve Zpěvníku</b></td>
-                            </tr>
-                            <tr>
-                                <td>Písně s&nbsp;textem</td>
-                                <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
-                                <td><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}</b></td>
-                            </tr>
-                            <tr>
-                                <td>Písně s&nbsp;textem, autorem, akordy i&nbsp;štítky</td>
-                                <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>
-                                <td><b class="text-success">{{number_format($songs_w_all_count, 0, ',', ' ')}}</b></td>
-                            </tr>
-                            <tr>
-                                <td>Písně pouze s&nbsp;názvem</td>
-                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>
-                                <td>
-                                    <b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><a href="{{route('admin.song.index')}}">Písně celkem</a></td>
-                                <td><b class="text-primary">{{number_format($songs_count, 0, ',', ' ')}}</b></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><a href="{{route('admin.author.index')}}">Autoři</a></td>
-                                <td><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><a href="{{route('admin.external.index')}}">Materiály</a></td>
-                                <td><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
-                            </tr>
-                        </table>
+                    <div class="card-body mb-0 h4">
+                        <i class="fas fa-user pr-2"></i>
+                        <span>{{ Auth::user()->name }}</span>
+                        @if (Auth::user()->roles()->count() > 0)
+                            <span>({{Auth::user()->roles()->first()->name}})</span>
+                        @endif
+                        <span class="mx-2 text-secondary"><user-stats user-id="{{ Auth::user()->id }}"
+                                                                      :embedded="true"></user-stats></span>
                     </div>
                 </div>
-                @if (Auth::check())
-                    <div class="card">
-                        <div class="card-body mb-0 h4">
-                            <i class="fas fa-user pr-2"></i>
-                            <span>{{ Auth::user()->name }}</span>
-                            @if (Auth::user()->roles()->count() > 0)
-                                <span>({{Auth::user()->roles()->first()->name}})</span>
-                            @endif
-                            <span class="mx-2 text-secondary"><user-stats user-id="{{ Auth::user()->id }}"
-                                                                          :embedded="true"></user-stats></span>
-                        </div>
-                    </div>
-                    <user-stats user-id="{{ Auth::user()->id }}"
-                                :embedded="false"></user-stats>
-                @endif
+                <user-stats user-id="{{ Auth::user()->id }}"
+                            :embedded="false"></user-stats>
             </div>
         </div>
     </div>
