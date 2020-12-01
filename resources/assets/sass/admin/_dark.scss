@@ -97,3 +97,13 @@ body.dark {
     color: white;
   }
 }
+
+
+// dark mode
+body.admin-dark {
+    &,
+    .body-bg {
+        background-color: #303030 !important;
+    }
+}
+

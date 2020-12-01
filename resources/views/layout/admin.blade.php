@@ -112,7 +112,7 @@
                href="{{route('admin.dashboard')}}">
                 <img src="{{asset('img/logo_v2.png')}}"
                      class="admin-logo">
-                Regenschori - Administrace
+                <span class="navbar-title">REGENSCHORI</span> - správa databáze
             </a>
 
             <div>
