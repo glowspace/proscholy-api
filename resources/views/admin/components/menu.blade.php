@@ -1,20 +1,9 @@
-@include('admin.components.menu-item', [
-    'route' => 'admin.dashboard',
-    'icon' => 'tachometer-alt',
-    'text' => 'Nástěnka'
-])
+{{--@include('admin.components.menu-item', [--}}
+{{--    'route' => 'admin.dashboard',--}}
+{{--    'icon' => 'tachometer-alt',--}}
+{{--    'text' => 'Nástěnka'--}}
+{{--])--}}
 
-@include('admin.components.menu-item', [
-    'route' => 'client.home',
-    'icon' => 'guitar',
-    'text' => 'Zpěvník pro scholy'
-])
-
-@include('admin.components.menu-item', [
-    'route' => 'client.regenschori',
-    'icon' => 'church',
-    'text' => 'Regenschori'
-])
 
 {{-- @include('admin.components.menu-item', [
     'route' => 'client.home',
@@ -22,11 +11,7 @@
     'text' => 'Můj účet'
 ]) --}}
 
-@include('admin.components.menu-item', [
-    'route' => 'auth.logout',
-    'icon' => 'lock',
-    'text' => 'Odhlásit se'
-])
+
 
 {{--
 @can('access todo')
@@ -54,6 +39,12 @@
 {{-- <div class="navbar-label material-shadow text-success">Úprava položek</div> --}}
 
 <div class="mt-lg-3"></div>
+
+@include('admin.components.menu-item', [
+    'route' => 'admin.dashboard',
+    'icon' => 'home',
+    'text' => 'Nástěnka'
+])
 
 @include('admin.components.menu-item', [
     'route' => 'admin.song.index',
@@ -98,3 +89,9 @@
         'text' => 'Uživatelé'
     ])
 @endcan
+
+@include('admin.components.menu-item', [
+    'route' => 'auth.logout',
+    'icon' => 'lock',
+    'text' => 'Odhlásit se'
+])
