@@ -7,6 +7,8 @@
             <h1>Nástěnka administrace</h1>
         </div>
 
+        <div class="content-label">Důležité odkazy</div>
+
         <div class="row align-items-start">
             <div class="col-md-8 d-flex flex-wrap p-0">
                 <div class="dash d-flex flex-wrap">

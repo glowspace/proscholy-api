@@ -23,12 +23,24 @@ body {
 
         .content-header {
             border-bottom: 1px solid #dadce0;
-            margin:        1.3rem 0 2rem;
+            margin:        1.3rem 0 1rem;
 
             h1 {
-                font-weight: 400;
-                font-size:   18px;
+                padding-left: 4px;
+                font-weight:  400;
+                font-size:    18px;
             }
+        }
+
+        .content-label {
+            margin:                 0.8rem 0 0.8rem;
+            padding-left:           4px;
+
+            font-weight:            500;
+            font-size:              14px;
+            font-variant-ligatures: no-contextual;
+
+            color:                  rgb(95, 99, 104);
         }
     }
 }
