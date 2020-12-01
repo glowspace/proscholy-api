@@ -68,7 +68,7 @@
 </head>
 <body>
     <div id="app" class="@yield('wrapper-classes', 'page')">
-        <nav class="navbar navbar-admin navbar-expand-lg navbar-light justify-content-between absolute-top">
+        <nav class="navbar navbar-admin navbar-expand-lg navbar-light justify-content-between">
             <div>
                 <a class="navbar-brand" href="{{route('admin.dashboard')}}"><img src="{{asset('img/logo_v2.png')}}" class="admin-logo">
                     Regenschori Administrace
