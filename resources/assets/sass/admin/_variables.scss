@@ -1,0 +1,27 @@
+
+// Body
+$body-bg:          #ffffff;
+
+// Typography
+$font-family-base: Nunito, Arial, sans-serif;
+$font-size-base:   0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue:             #3490dc;
+$indigo:           #6574cd;
+$purple:           #9561e2;
+$pink: #f66D9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+$theme-colors: (
+  "primary": #1d6dab,
+);
+
+$bmd-invalid-underline: #3961ad;
+$bmd-label-color-focus: #098845;
