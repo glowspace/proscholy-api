@@ -123,7 +123,7 @@
 
                 <a class="btn btn-primary"
                    href="{{route('auth.logout')}}">
-                    <i class="fas fa-logout"></i> Odhlásit se</a>
+                    <i class="fas fa-logout"></i>{{Auth::user()->name}} - Odhlásit se</a>
             </div>
 
         </nav>
