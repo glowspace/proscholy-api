@@ -4,7 +4,7 @@
     <div class="__container-fluid dashboard-container">
 
         <div class="content-header">
-            <h1>Administrace</h1>
+            <h1>Nástěnka administrace</h1>
         </div>
 
         <div class="row align-items-start">

@@ -3,7 +3,9 @@
     <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
-            <h1 class="h2 mb-3">Autoři</h1>
+            <div class="content-header">
+                <h1>Autoři</h1>
+            </div>
             <create-model
                 v-model="search_string"
                 class-name="Author"
