@@ -1,0 +1,155 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select:   none; /* Safari */
+    -khtml-user-select:    none; /* Konqueror HTML */
+    -moz-user-select:      none; /* Firefox */
+    -ms-user-select:       none; /* Internet Explorer/Edge */
+    user-select:           none;
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+input::placeholder {
+    line-height: inherit;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.search-home,
+.form-control {
+    line-height: calc((2.3775rem + 2px) / 1.5);
+}
+
+
+.text-very-muted {
+    color: #efefef;
+}
+
+
+.no-left-padding {
+    padding-left: 2px !important;
+}
+
+.author-secondary-links a {
+    color: #6c757d !important;
+}
+
+.navbar-dark .navbar-text.user-logged-in-btn {
+    color: #aaa;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.error {
+    color:      white;
+    text-align: center;
+
+    h1 {
+        font-size:     calc(4vw + 50px);
+        font-weight:   bold;
+        margin-bottom: 0;
+    }
+
+    p {
+        font-size: calc(2vw + 10px);
+    }
+
+    .display-all-songs {
+        font-size: calc(1vw + 10px);
+    }
+}
+
+.stretched-link {
+    position:    static;
+    will-change: initial;
+}
+
+.stretched-link::after {
+    position:         absolute;
+    top:              0;
+    right:            0;
+    bottom:           0;
+    left:             0;
+    z-index:          1;
+    pointer-events:   auto;
+    content:          "";
+    background-color: rgba(0, 0, 0, 0);
+}
+
+// vuetify tabs height not updating bug fix, see issue #6962
+.v-tabs .v-window__container {
+    height: auto !important;
+}
+
+.v-label {
+    margin-bottom: 0;
+}
+
+textarea.form-control {
+    line-height:      1.8;
+    padding:          10px;
+    background-image: none;
+    box-shadow:       0 0 70px -25px inset;
+}
+
+.edit-description h5 {
+    font-weight:    600;
+    padding-bottom: 8px;
+    border-bottom:  1px #bec0c1 solid;
+}
+
+
+// admin report button
+.btn.admin-report {
+    position:   fixed;
+    bottom:     0;
+    right:      0;
+    color:      #292929;
+    opacity:    0.5;
+    transition: 0.2s;
+}
+
+
+.btn.admin-report:hover {
+    color:   #292929;
+    opacity: 1;
+}
+
+
+// vuetify fixes
+.application--wrap {
+    min-height: initial !important;
+
+    & > .container {
+        padding:       0;
+        padding-right: 15px;
+    }
+}
+
+
+
+.v-datatable td:first-child a {
+    display:  inline-block;
+    position: relative;
+
+    &::before {
+        content:  '';
+        position: absolute;
+        top:      -4px;
+        bottom:   -4px;
+        left:     -24px;
+        right:    -48px;
+    }
+}
+
+.minw-45 {
+    min-width: 45%;
+}
+
+.w-min {
+    width: 1%;
+}
+

@@ -1,0 +1,49 @@
+html,
+body {
+    height:     100vh;
+    max-height: 100vh;
+
+    overflow: hidden;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+// Content under navbar (sidebar + content)
+.layout-body {
+    max-height: calc(100vh - 75px);
+    height: calc(100vh - 75px);
+    //overflow: hidden;
+}
+
+.admin-content {
+    overflow-y: scroll;
+    max-height: calc(100vh - 70px);
+}
+
+
+/**
+Scrollbar design
+ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.2);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,.2);
+}
+

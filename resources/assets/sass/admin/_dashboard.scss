@@ -1,0 +1,103 @@
+/**
+Admin homepage (dashboard) custom CSS.
+ */
+.dash {
+    padding-right: 5px;
+    padding-left:  5px;
+
+
+
+    h5.card-title {
+        font-size:     1.1rem;
+        margin-bottom: 0.25rem;
+        font-weight:   normal;
+    }
+
+    & > .card {
+        margin-left:  10px;
+        margin-right: 10px;
+    }
+
+    a {
+        flex:          0 0 calc(100% / 3 - 20px) !important;
+        margin-left:   10px;
+        margin-right:  10px;
+        margin-bottom: 20px;
+
+        @include media-breakpoint-between(sm, lg) {
+            flex: 0 0 calc(100% / 2 - 20px) !important;
+        }
+
+        @include media-breakpoint-only(xs) {
+            flex: 0 0 calc(100% - 20px) !important;
+        }
+
+        img,
+        .img-icon {
+            transition: opacity 0.2s;
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+
+            .card-title {
+                text-decoration: underline;
+            }
+
+            img,
+            .img-icon {
+                color:   #1d6dab;
+                opacity: 0.75;
+            }
+        }
+
+        .card {
+            height:         100%;
+            flex-direction: row;
+
+            img,
+            .img-icon {
+                height:      auto;
+                text-align:  center;
+                font-size:   calc(60px - 1.5rem);
+                line-height: 1;
+                width:       60px;
+                margin:      auto 0;
+                padding:     1rem 0 1rem 1.5rem;
+            }
+
+            .fa-phone-square {
+                transform: scaleX(-1);
+            }
+
+            .card-body {
+                flex:           1;
+                margin:         auto 0;
+                padding-top:    0;
+                padding-bottom: 0;
+            }
+        }
+    }
+}
+
+/**
+Homepage user stats.
+ */
+.statistics-table {
+    td:not(:first-child) {
+        text-align: right;
+    }
+
+    td {
+        padding: 0.75rem 1.25rem;
+    }
+
+    tr {
+        transition: background-color 0.1s;
+
+        &:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+        }
+    }
+}
