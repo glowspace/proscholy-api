@@ -2,8 +2,8 @@
 Admin homepage (dashboard) custom CSS.
  */
 .dash {
-    padding-right: 5px;
-    padding-left:  5px;
+    //padding-right: 5px;
+    //padding-left:  5px;
 
 
 
@@ -20,8 +20,8 @@ Admin homepage (dashboard) custom CSS.
 
     a {
         flex:          0 0 calc(100% / 3 - 20px) !important;
-        margin-left:   10px;
-        margin-right:  10px;
+        //margin-left:   10px;
+        //margin-right:  10px;
         margin-bottom: 20px;
 
         @include media-breakpoint-between(sm, lg) {
