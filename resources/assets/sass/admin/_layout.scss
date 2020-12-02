@@ -74,3 +74,8 @@ Scrollbar design
     height: 100%;
 }
 
+/** Vue background overwrite */
+.theme--light.application {
+    background: transparent !important;
+}
+
