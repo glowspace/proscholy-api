@@ -116,12 +116,12 @@
             </a>
 
             <div>
-                <a class="btn btn-primary"
-                   id="dark-mode-button"
-                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}
-                    režim</a>
+{{--                <a class="btn btn-primary"--}}
+{{--                   id="dark-mode-button"--}}
+{{--                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}--}}
+{{--                    režim</a>--}}
 
-                <a class="btn btn-primary"
+                <a class="btn btn-secondary"
                    href="{{route('auth.logout')}}">
                     <i class="fas fa-logout"></i>{{Auth::user()->name}} - Odhlásit se</a>
             </div>

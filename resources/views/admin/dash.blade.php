@@ -7,6 +7,8 @@
             <h1>Nástěnka administrace</h1>
         </div>
 
+        {{--        <p>Vítej v administraci hudební databáze Regenschori.</p>--}}
+
 
         <div class="row">
             <div class="col-md-8">
@@ -51,27 +53,27 @@
                                 <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>
                                 <td>
                                     <b>{{number_format($songs_w_all_count, 0, ',', ' ')}}
-                                    / {{number_format($songs_count, 0, ',', ' ')}}</b>
+                                        / {{number_format($songs_count, 0, ',', ' ')}}</b>
                                 </td>
                             </tr>
-{{--                            <tr>--}}
-{{--                                <td>Prázdné písně</td>--}}
-{{--                                <td style="width: 50%">--}}
-{{--                                    <div class="progress rounded"--}}
-{{--                                         style="height: 20px">--}}
-{{--                                        <div class="progress-bar rounded bg-danger"--}}
-{{--                                             role="progressbar"--}}
-{{--                                             style="width: {{round(($songs_w_just_title_count/$songs_count)*100)}}%;"--}}
-{{--                                             aria-valuenow="{{round(($songs_w_just_title_count/$songs_count)*100)}}"--}}
-{{--                                             aria-valuemin="0"--}}
-{{--                                             aria-valuemax="100"></div>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>--}}
-{{--                                <td>--}}
-{{--                                    <b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
+                            {{--                            <tr>--}}
+                            {{--                                <td>Prázdné písně</td>--}}
+                            {{--                                <td style="width: 50%">--}}
+                            {{--                                    <div class="progress rounded"--}}
+                            {{--                                         style="height: 20px">--}}
+                            {{--                                        <div class="progress-bar rounded bg-danger"--}}
+                            {{--                                             role="progressbar"--}}
+                            {{--                                             style="width: {{round(($songs_w_just_title_count/$songs_count)*100)}}%;"--}}
+                            {{--                                             aria-valuenow="{{round(($songs_w_just_title_count/$songs_count)*100)}}"--}}
+                            {{--                                             aria-valuemin="0"--}}
+                            {{--                                             aria-valuemax="100"></div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </td>--}}
+                            {{--                                <td>{{round(($songs_w_just_title_count/$songs_count)*100)}}&nbsp;%</td>--}}
+                            {{--                                <td>--}}
+                            {{--                                    <b class="text-warning">{{number_format($songs_w_just_title_count, 0, ',', ' ')}}</b>--}}
+                            {{--                                </td>--}}
+                            {{--                            </tr>--}}
 
                             <tr>
                                 <td><a href="{{route('admin.author.index')}}">Autoři</a></td>
@@ -187,25 +189,36 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body mb-0 h4">
-                        <i class="fas fa-heart pr-2"></i>
-                        <span>Díky, že pomáháš!</span>
-                    </div>
-                </div>
 
 
                 <div class="card">
-                    <div class="card-body mb-0 h4">
-                        <i class="fas fa-user pr-2"></i>
-                        <span>{{ Auth::user()->name }}</span>
-                        @if (Auth::user()->roles()->count() > 0)
-                            <span>({{Auth::user()->roles()->first()->name}})</span>
-                        @endif
-                        <span class="mx-2 text-secondary"><user-stats user-id="{{ Auth::user()->id }}"
-                                                                      :embedded="true"></user-stats></span>
+                    <div class="card-body text-center">
+                        <img src="{{asset('img/profile.jpg')}}"
+                             style="width: 150px"
+                             class="rounded-circle"
+                             alt="avatar">
+
+                        <br>
+
+                        <h3>{{ Auth::user()->name }}</h3>
+                        {{--                        @if (Auth::user()->roles()->count() > 0)--}}
+                        {{--                            <span>({{Auth::user()->roles()->first()->name}})</span>--}}
+                        {{--                        @endif--}}
+                        <h4 class="mx-2 text-secondary"></h4>
+
+
+                        <div class="card">
+                            <div class="card-body mb-0">
+
+                                <span>Díky za dobře odvedenou práci!</span>
+                                <br>Tvoje příspěvky si zobrazilo
+                                <b><user-stats user-id="{{ Auth::user()->id }}"
+                                            :embedded="true"></user-stats> lidí</b>.
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <user-stats user-id="{{ Auth::user()->id }}"
                             :embedded="false"></user-stats>
             </div>
