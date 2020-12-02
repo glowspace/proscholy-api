@@ -19,7 +19,7 @@ body {
 
     .admin-content {
         overflow-y: scroll;
-        max-height: calc(100vh - 70px);
+        height: calc(100vh - 70px);
 
         .content-header {
             border-bottom: 1px solid #dadce0;
@@ -68,5 +68,9 @@ Scrollbar design
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, .2);
+}
+
+.container-login {
+    height: 100%;
 }
 

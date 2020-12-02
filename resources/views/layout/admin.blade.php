@@ -116,29 +116,41 @@
             </a>
 
             <div>
-{{--                <a class="btn btn-primary"--}}
-{{--                   id="dark-mode-button"--}}
-{{--                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}--}}
-{{--                    režim</a>--}}
+                {{--                <a class="btn btn-primary"--}}
+                {{--                   id="dark-mode-button"--}}
+                {{--                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}--}}
+                {{--                    režim</a>--}}
 
-                <a class="btn btn-secondary"
-                   href="{{route('auth.logout')}}">
-                    <i class="fas fa-logout"></i>{{Auth::user()->name}} - Odhlásit se</a>
+                @auth
+                    <a class="btn btn-secondary"
+                       href="{{route('auth.logout')}}">
+                        <i class="fas fa-logout"></i>{{Auth::user()->name}} - Odhlásit se</a>
+                @endauth
             </div>
 
         </nav>
 
         <div class="container-fluid layout-body">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="sidebar">
-                        @include('admin.components.menu')
+
+            @auth
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <div class="sidebar">
+                            @include('admin.components.menu')
+                        </div>
+                    </div>
+
+                    <div class="col-lg-10 admin-content">
+                        @yield('content-withmenu')
                     </div>
                 </div>
-                <div class="col-lg-10 admin-content">
+            @else
+                <div class="admin-content">
                     @yield('content-withmenu')
                 </div>
-            </div>
+            @endauth
+
         </div>
         <a class="btn btn-secondary mb-0 admin-report bg-transparent"
            target="_blank"

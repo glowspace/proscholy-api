@@ -13,6 +13,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
+
 Vue.component('songs-list', require('Admin/pages/list/SongsList.vue'));
 Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
 Vue.component('authors-list', require('Admin/pages/list/AuthorsList.vue'));
