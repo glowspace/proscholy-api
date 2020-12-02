@@ -90,7 +90,7 @@
                 <div class="content-label">Důležité odkazy</div>
 
                 <div class="dash">
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-sm-4">
                             <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CCC2UEP1A"
                                target="_blank">
@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-sm-4">
                             <a href="https://docs.google.com/spreadsheets/d/1iE38u0TeK9nWgYKUZQt4YxnRPP-nL4ogLiplh4TJgk4/edit?usp=sharing"
                                target="_blank">

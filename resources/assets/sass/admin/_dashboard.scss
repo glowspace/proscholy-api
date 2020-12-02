@@ -6,7 +6,6 @@ Admin homepage (dashboard) custom CSS.
     //padding-left:  5px;
 
 
-
     h5.card-title {
         font-size:     1.1rem;
         margin-bottom: 0.25rem;
@@ -19,18 +18,7 @@ Admin homepage (dashboard) custom CSS.
     }
 
     a {
-        flex:          0 0 calc(100% / 3 - 20px) !important;
-        //margin-left:   10px;
-        //margin-right:  10px;
         margin-bottom: 20px;
-
-        @include media-breakpoint-between(sm, lg) {
-            flex: 0 0 calc(100% / 2 - 20px) !important;
-        }
-
-        @include media-breakpoint-only(xs) {
-            flex: 0 0 calc(100% - 20px) !important;
-        }
 
         img,
         .img-icon {
@@ -53,8 +41,10 @@ Admin homepage (dashboard) custom CSS.
         }
 
         .card {
-            height:         100%;
+            //height:         100%;
             flex-direction: row;
+
+            margin-bottom: 2em;
 
             img,
             .img-icon {
