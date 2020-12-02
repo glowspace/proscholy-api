@@ -240,7 +240,7 @@
                             <div class="card-body mb-0">
 
                                 <span>Díky za dobře odvedenou práci!</span>
-                                <br>Tvoje příspěvky si zobrazilo
+                                <br>Tvé příspěvky si zobrazilo
                                 <b>
                                     <user-stats user-id="{{ Auth::user()->id }}"
                                                 :embedded="true"></user-stats>
