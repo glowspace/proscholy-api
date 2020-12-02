@@ -89,9 +89,3 @@
         'text' => 'Uživatelé'
     ])
 @endcan
-
-@include('admin.components.menu-item', [
-    'route' => 'auth.logout',
-    'icon' => 'lock',
-    'text' => 'Odhlásit se'
-])
