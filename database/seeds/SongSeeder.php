@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Song;
 
 class SongSeeder extends Seeder
 {
@@ -11,8 +12,6 @@ class SongSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Song::class, 100)->create()->each(function ($song) {
-            $song->song_lyrics()->save(factory(App\SongLyric::class)->make());
-        });
+        Song::factory()->count(100)->hasSongLyrics(1)->create();
     }
 }

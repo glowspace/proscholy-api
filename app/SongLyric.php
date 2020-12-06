@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\SongLyricHelper;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\SongLyric
@@ -64,7 +65,8 @@ class SongLyric extends Model
         // Lockable Trait for enabling to "lock" the model while editing
         Lockable,
         SoftDeletes,
-        RevisionableTrait;
+        RevisionableTrait,
+        HasFactory;
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
@@ -483,7 +485,7 @@ class SongLyric extends Model
 
     public function getSiblings()
     {
-        return $this->song->song_lyrics()->where('id', '!=', $this->id)->get();
+        return $this->song->songLyrics()->where('id', '!=', $this->id)->get();
     }
 
     public function hasSiblings()

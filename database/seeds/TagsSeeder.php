@@ -26,6 +26,9 @@ class TagsSeeder extends Seeder
             3 => [
                 "Sv. Gorazd", "Sv. Discord"
             ],
+            4 => [
+                "evangelijní moteto", "státní hymna"
+            ],
             10 => [
                 "Doba kamenná", "Doba bronzová", "Velký třesk"
             ],

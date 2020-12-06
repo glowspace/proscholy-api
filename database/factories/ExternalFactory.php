@@ -1,14 +1,28 @@
 <?php
 
-use Faker\Generator as Faker;
-use Faker\Provider\Internet;
+namespace Database\Factories;
 
+use App\External;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\External::class, function (Faker $faker) {
-    $faker->addProvider(new Internet($faker));
+class ExternalFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = External::class;
 
-    return [
-        'url' => $faker->url(),
-        'type' => collect([1,4,8,9])->random(1)[0] // generate only some
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'url' => $this->faker->url,
+        ];
+    }
+}

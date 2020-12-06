@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\External
@@ -45,7 +46,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
  */
 class External extends Model
 {
-    use RevisionableTrait;
+    use RevisionableTrait, HasFactory;
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;

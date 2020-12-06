@@ -13,6 +13,6 @@ class ExternalsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\External::class, 50)->create();
+        External::factory()->times(50)->create();
     }
 }

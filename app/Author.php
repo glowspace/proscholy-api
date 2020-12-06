@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Author
@@ -49,7 +50,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
 class Author extends Model
 {
     // Laravel Scout Trait used for full-text searching
-    use Searchable, RevisionableTrait;
+    use Searchable, RevisionableTrait, HasFactory;
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['visits'];
 

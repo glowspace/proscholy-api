@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Author;
 
 class AuthorSeeder extends Seeder
 {
@@ -11,8 +12,6 @@ class AuthorSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Author::class, 30)->create()->each(function ($author) {
-            // $song->song_lyrics()->save(factory(App\SongLyric::class)->make());
-        });
+        Author::factory()->times(30)->create();
     }
 }

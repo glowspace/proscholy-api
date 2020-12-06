@@ -1,15 +1,28 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Song::class, function (Faker $faker) {
-    return [
-        'name' => $faker->firstNameFemale(),
-    ];
-});
+use App\Song;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-// can be done in the seeder, so not needed here
+class SongFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Song::class;
 
-// $factory->afterCreating(App\Song::class, function ($song, $faker) {
-//     $song->song_lyrics()->save(factory(App\SongLyric::class)->make());
-// });
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->firstNameFemale,
+        ];
+    }
+}
