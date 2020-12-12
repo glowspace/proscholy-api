@@ -1,0 +1,24 @@
+.navbar {
+    box-shadow:    none;
+    border-bottom: 1px solid $main-grey-border;
+
+    .navbar-brand {
+        color:       grey !important;
+        font-family: Nunito, Arial, sans-serif;
+
+        .admin-logo {
+            width:   47px;
+        }
+
+        .navbar-title {
+            position:    relative;
+            top:         2px;
+
+            color:       #343434;
+            font-weight: 600;
+            font-size:   20px;
+
+            font-family: Nunito, Arial, sans-serif;
+        }
+    }
+}

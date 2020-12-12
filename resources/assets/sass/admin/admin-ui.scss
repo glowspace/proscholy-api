@@ -1,0 +1,33 @@
+/**
+Imports
+ */
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+/**
+SASS variables config
+ */
+@import "variables";
+
+$main-red:    #d83027;
+$main-blue:   #3961ad;
+$main-green:  #098845;
+$main-yellow: #faa61b;
+
+$main-grey-border: #dadce0;
+
+/**
+CSS imports
+ */
+@import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
+@import "layout";
+@import "dark";
+@import "navbar";
+@import "sidebar";
+@import "print";
+@import "search";
+@import "cards";
+@import "elements";
+@import "forms";
+@import "dashboard";

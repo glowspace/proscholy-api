@@ -1,0 +1,200 @@
+// better preload song
+
+.row ~ #preloadPlaceholder {
+  display: none;
+}
+
+.song-line {
+  display: none;
+}
+
+.card-lyrics {
+  .card-header,
+  .card-footer {
+    background-color: #f1f4f9;
+  }
+
+  .card-body {
+    border-bottom: #7f97ab;
+  }
+
+  .song-line {
+    display: block;
+  }
+}
+
+.song-title {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.song-number {
+  color: #9a9a9a;
+}
+
+.song-links {
+  a {
+    margin-bottom: 0;
+  }
+}
+
+$indent-space: 1.5em;
+
+.song-part {
+  margin-left: $indent-space;
+}
+
+.song-line {
+  position: relative;
+}
+
+span.song-part-tag {
+  min-width: $indent-space;
+  margin-left: -$indent-space;
+}
+
+.zindex-lower {
+  z-index: 199;
+}
+
+.chosen .btn,
+.btn.chosen {
+  background-color: rgba(0, 0, 0, 0.133);
+}
+
+.media-card {
+  max-height: 50vh;
+}
+
+.media-opener {
+  border-top: 1px #eee solid;
+  .dark & {
+    border-top: 1px #222 solid;
+  }
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  &:first-of-type, &:nth-of-type(2) {
+    border-top: none;
+  }
+  i {
+    padding-right: 5px;
+    width: 20px;
+    text-align: center;
+  }
+}
+
+.controls {
+  z-index: 199;
+
+  .btn {
+    margin-bottom: 0;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .btn.btn-secondary.transpose-window {
+    width: 4em;
+  }
+
+  a span {
+    padding-left: 5px;
+  }
+}
+
+.song-tags {
+  padding: 1em;
+  display: block;
+
+  a.tag {
+    cursor: pointer;
+  }
+
+  .tag {
+    padding: 0.1em 0.7em;
+    margin-bottom: 0.3em;
+    margin-right: 7px;
+    border-radius: 1em;
+    color: black;
+    text-align: center;
+    display: inline-block;
+    transition: 0.2s;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.tag-selected {
+      opacity: 1 !important;
+    }
+
+    border: #bfbfbf 1px solid;
+    background-color: #ffffff;
+  }
+
+  .tag-blue {
+    &:hover {
+      background-color: lighten($main-blue, 40%);
+    }
+
+    &.tag-selected {
+      background-color: $main-blue !important;
+      color: white !important;
+    }
+  }
+
+  .tag-green {
+    &:hover {
+      background-color: lighten($main-green, 60%);
+    }
+
+    &.tag-selected {
+      background-color: $main-green !important;
+      color: white !important;
+    }
+  }
+
+  .tag-yellow {
+    &:hover {
+      background-color: lighten($main-yellow, 20%);
+    }
+
+    &.tag-selected {
+      background-color: $main-yellow !important;
+      color: black !important;
+    }
+  }
+
+  .tag-red {
+    &:hover {
+      background-color: lighten($main-red, 20%);
+    }
+
+    &.tag-selected {
+      background-color: $main-red !important;
+      color: white !important;
+    }
+  }
+
+  .songbook-tag {
+    padding: 0;
+    display: flex;
+    
+    .songbook-name {
+      padding: 0.1em 0.7em;
+      padding-right: 0.6em;
+    }
+
+    .songbook-number {
+      padding: 0.1em 0.7em;
+      padding-left: 0.6em;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 0 1em 1em 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+

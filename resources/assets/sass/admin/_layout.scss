@@ -1,0 +1,81 @@
+html,
+body {
+    height:                 100vh;
+    max-height:             100vh;
+
+    overflow:               hidden;
+
+    -webkit-font-smoothing: antialiased;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// Content under navbar (sidebar + content)
+.layout-body {
+    max-height: calc(100vh - 75px);
+    height:     calc(100vh - 75px);
+
+    .admin-content {
+        overflow-y: scroll;
+        height: calc(100vh - 70px);
+
+        .content-header {
+            border-bottom: 1px solid #dadce0;
+            margin:        1.3rem 0 1rem;
+
+            h1 {
+                padding-left: 4px;
+                font-weight:  400;
+                font-size:    18px;
+            }
+        }
+
+        .content-label {
+            margin:                 0.8rem 0 0.8rem;
+            padding-left:           4px;
+
+            font-family: 'Open Sans', sans-serif;
+
+            font-weight:            600;
+            font-size:              14px;
+            font-variant-ligatures: no-contextual;
+
+            color:                  rgb(95, 99, 104);
+        }
+    }
+}
+
+
+/**
+Scrollbar design
+ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .2);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, .2);
+}
+
+.container-login {
+    height: 100%;
+}
+
+/** Vue background overwrite */
+.theme--light.application {
+    background: transparent !important;
+}
+

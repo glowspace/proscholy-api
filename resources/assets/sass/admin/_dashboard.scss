@@ -1,0 +1,98 @@
+/**
+Admin homepage (dashboard) custom CSS.
+ */
+.dash {
+    //padding-right: 5px;
+    //padding-left:  5px;
+
+
+    h5.card-title {
+        font-size:     1.1rem;
+        margin-bottom: 0.25rem;
+        font-weight:   normal;
+    }
+
+    & > .card {
+        margin-left:  10px;
+        margin-right: 10px;
+    }
+
+    a {
+        margin-bottom: 20px;
+
+        img,
+        .img-icon {
+            transition: opacity 0.2s;
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+
+            .card-title {
+                text-decoration: underline;
+            }
+
+            img,
+            .img-icon {
+                color:   #1d6dab;
+                opacity: 0.75;
+            }
+        }
+
+        .card {
+            //height:         100%;
+            flex-direction: row;
+
+            margin-bottom: 2em;
+
+            img,
+            .img-icon {
+                height:      auto;
+                text-align:  center;
+                font-size:   calc(60px - 1.5rem);
+                line-height: 1;
+                width:       60px;
+                margin:      auto 0;
+                padding:     1rem 0 1rem 1.5rem;
+            }
+
+            .fa-phone-square {
+                transform: scaleX(-1);
+            }
+
+            .card-body {
+                flex:           1;
+                margin:         auto 0;
+                padding-top:    0;
+                padding-bottom: 0;
+            }
+        }
+    }
+}
+
+/**
+Homepage user stats.
+ */
+
+.statistics-table {
+    .rounded {
+        border-radius: 50px !important;
+    }
+
+    td:not(:first-child) {
+        text-align: right;
+    }
+
+    td {
+        padding: 0.75rem 1.25rem;
+    }
+
+    tr {
+        transition: background-color 0.1s;
+
+        &:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+        }
+    }
+}

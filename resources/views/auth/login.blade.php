@@ -1,29 +1,17 @@
-@extends('layout.client')
-
-@section('title', 'Administrace ProScholy & Regenschori')
-
-@section('navbar')
-    <nav class="navbar navbar-admin navbar-expand-lg navbar-dark justify-content-between absolute-top d-block">
-        <div class="w-100 text-center">
-            <a class="navbar-brand mr-4" href="{{route('client.home')}}"><img src="{{asset('img/logo_v2.png')}}" style="padding: 0 10px 0 0;" width="60">
-                ProScholy & Regenschori
-            </a>
-        </div>
-    </nav>
-@endsection
+@extends('layout.admin')
 
 @push('scripts')
     <script>document.getElementById('email').focus();</script>
 @endpush
 
-@section('content')
-    <div class="center-container">
+@section('content-withmenu')
+    <div class="container-login d-flex justify-content-center align-items-center">
         <div class="w-100" style="max-width:400px">
             <div class="card text-white bg-info mb-3 text-center">
                 <div class="card-body">
-                    <p class="card-text">Dál už můžeme jenom my, <br>redaktoři projektů ProScholy a&nbsp;Regenschori.</p>
+                    <p class="card-text">Přihlášení pro autorizované členy týmu projektu ProScholy.</p>
                     <p class="card-text">
-                        Chceš se stát jedním z&nbsp;nás?
+                        Chceš se podílet na tvorbě projektu?
                         <br>Napiš na <a class="text-white" href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a>.
                     </p>
                 </div>
