@@ -141,7 +141,8 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-10 admin-content">
+                    {{-- position: unset; is a quick fix for vuetify dropdown boxes after css redesign - probably should be handled in a better way :/ --}}
+                    <div class="col-lg-10 admin-content" style="position: unset">
                         @yield('content-withmenu')
                     </div>
                 </div>
