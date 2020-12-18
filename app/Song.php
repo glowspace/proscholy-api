@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Song
@@ -28,25 +28,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Song extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $fillable = ['name'];
 
-    /**
-     * Returns all SongLyrics instances
-     */
-    public function song_lyrics(): HasMany
+    // a copy of song_lyrics.. 
+    public function songLyrics(): HasMany
     {
         return $this->hasMany(SongLyric::class);
     }
 
     public function translations()
     {
-        return $this->song_lyrics()->where('type', '!=', 0);
+        return $this->songLyrics()->where('type', '!=', 0);
     }
 
     public function getOriginalSongLyric()
     {
-        return $this->song_lyrics()->where('type', 0)->get()->first();
+        return $this->songLyrics()->where('type', 0)->get()->first();
     }
 }

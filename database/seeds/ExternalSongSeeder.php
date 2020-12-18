@@ -14,12 +14,12 @@ class ExternalSongSeeder extends Seeder
      */
     public function run()
     {
-//        foreach (SongLyric::all() as $song_lyric)
-//        {
-//            // Attach every song to 1-3 externals
-//            $song_lyric->externals()->saveMany(
-//                External::all()->random(rand(1,3))
-//            );
-//        }
+        foreach (SongLyric::all() as $song_lyric)
+        {
+            // Attach every song to 1-3 externals
+            $song_lyric->externals()->saveMany(
+                External::all()->random(rand(1,3))
+            );
+        }
     }
 }

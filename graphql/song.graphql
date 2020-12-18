@@ -1,7 +1,7 @@
 type Song {
     id: ID!
     name: String
-    song_lyrics(type: Int @eq): [SongLyric] @hasMany
+    song_lyrics(type: Int @eq): [SongLyric] @hasMany(relation: "songLyrics")
 }
 
 extend type Query  {

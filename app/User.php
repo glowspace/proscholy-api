@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\PublicModels\PublicUser;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\User
@@ -41,7 +42,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, HasFactory;
 
     /**
      * The attributes that are mass assignable.

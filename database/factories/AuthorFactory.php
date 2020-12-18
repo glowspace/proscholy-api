@@ -1,10 +1,29 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Author::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name(),
-        'description' => $faker->text()
-    ];
-});
+use App\Author;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class AuthorFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Author::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name,
+            'description' => $this->faker->text
+        ];
+    }
+}

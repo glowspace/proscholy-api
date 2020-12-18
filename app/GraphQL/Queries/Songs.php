@@ -8,6 +8,6 @@ class Songs
 {
     public function resolve($rootValue, array $args)
     {
-        return Song::whereHas('song_lyrics')->get();
+        return Song::whereHas('songLyrics')->get();
     }
 }
