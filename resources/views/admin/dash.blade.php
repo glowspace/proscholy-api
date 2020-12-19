@@ -35,6 +35,9 @@
 
                                 <td><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
+                                <td>
+                                    <a href="/admin/songs#no-lyrics">doplnit</a>
+                                </td>
 
                             </tr>
 
@@ -57,6 +60,10 @@
                                 <td><b>{{number_format($songs_w_chords_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
 
+                                <td>
+                                    <a href="/admin/songs#no-chords">doplnit</a>
+                                </td>
+
                             </tr>
 
                             <tr>
@@ -77,6 +84,8 @@
 
                                 <td><b>{{number_format($songs_w_score_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
+
+                                <td></td>
 
                             </tr>
 
@@ -103,11 +112,11 @@
 
                             <tr>
                                 <td><a href="{{route('admin.author.index')}}">Autoři</a></td>
-                                <td colspan="3"><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
+                                <td colspan="4"><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
                             </tr>
                             <tr>
                                 <td><a href="{{route('admin.external.index')}}">Materiály</a></td>
-                                <td colspan="3"><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
+                                <td colspan="4"><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
                             </tr>
                         </table>
                     </div>
@@ -248,7 +257,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <img src="{{asset('img/profile.jpg')}}"
+                        <img src="{{asset('img/icons/profile.jpg')}}"
                              style="width: 150px"
                              class="rounded-circle"
                              alt="avatar">
