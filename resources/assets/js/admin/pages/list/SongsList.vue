@@ -100,6 +100,9 @@
                                     <span v-else>Ne</span>
                                 </td> -->
                                 <td>
+                                    <span>{{ props.item.visits }}</span>
+                                </td>
+                                <td>
                                     <span v-if="props.item.only_regenschori"
                                         >jen R</span
                                     >
@@ -160,6 +163,7 @@ const fetch_items = gql`
             secondary_name_1
             secondary_name_2
             updated_at
+            visits
             type
             is_published
             authors {
@@ -203,6 +207,7 @@ export default {
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
                 // { text: 'Publikováno', value: 'is_published' },
+                { text: 'Zobrazení', value: 'visits' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
