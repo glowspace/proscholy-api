@@ -1,140 +1,76 @@
-version: '3'
+version: "3"
 services:
-    web:
-        build:
-            context: ./docker/setup/web
-            dockerfile: Dockerfile
-        volumes:
-            - '.:/var/www/html'
-            - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
-        entrypoint: 'bash ./docker/setup/web/entrypoint_web_prod.sh'
-        networks:
-            - bcloud-network-staging
-        restart: always
-        depends_on:
-            - db
-        dns:
-            - 8.8.8.8
-            - 4.4.4.4
+  web:
+    extends:
+      file: docker/server.yml
+      service: web
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - bcloud-network-staging
 
-    db:
-        image: mysql:5.7
-        restart: always
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_USER: ${DB_USERNAME}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-        ports:
-            # <Port exposed> : < MySQL Port running inside container>
-            - '23306:3306'
-        expose:
-            # Opens port 3306 on the container
-            - '23306'
-            # Where our data will be persisted
-        volumes:
-            - ./docker/data/databases:/var/databases
-            - ./docker/data/mysql:/var/lib/mysql
-        networks:
-            - bcloud-network-staging
+  nginx:
+    extends:
+      file: docker/server.yml
+      service: nginx
+    restart: always
+    links:
+      - web
+    networks:
+      - bcloud-network-staging
+    ports:
+      - 8001:80
 
-    nginx:
-        image: 'nginx:1.17.3'
-        ports:
-            - '20085:80'
-            - '20443:443'
-        links:
-            - 'web'
-        volumes:
-            - '.:/var/www/html'
-            - './docker/config/nginx_dev:/etc/nginx/conf.d'
-            - './docker/logs/nginx:/var/log/nginx'
-        networks:
-            - bcloud-network-staging
-        restart: always
+  db:
+    extends:
+      file: docker/database.yml
+      service: db
+    restart: always
+    networks:
+      - bcloud-network-staging
 
-    adminer:
-        image: adminer
-        restart: always
-        ports:
-            - 28080:8080
-        networks:
-            - bcloud-network-staging
+  adminer:
+    extends:
+      file: docker/database.yml
+      service: adminer
+    restart: always
+    networks:
+      - bcloud-network-staging
+    ports:
+      - 8201:9200
 
-    cron:
-        build:
-            context: ./docker/setup/cron
-            dockerfile: Dockerfile
-        volumes:
-            - ./docker/logs:/var/log
-        networks:
-            - bcloud-network-staging
-        restart: always
+  elastic:
+    extends:
+      file: docker/elastic.yml
+      service: elasticsearch
+    restart: always
+    networks:
+      - bcloud-network-staging
 
-    elasticsearch:
-        build:
-            context: ./docker/setup/elastic
-            dockerfile: Dockerfile
-        environment:
-            - http.host=0.0.0.0
-            - transport.host=127.0.0.1
-            - xpack.security.enabled=false
-        volumes:
-            - ./data/elastic:/etc/elasticsearch/data
-            - ./config/elastic/elasticsearch.yml:/var/zpevnik/elasticsearch/elasticsearch.yml
-        ports:
-            - '29200:9200'
-        networks:
-            - bcloud-network-staging
-        restart: always
+  cron:
+    extends:
+      file: docker/addons.yml
+      service: cron
+    restart: always
+    networks:
+      - bcloud-network-staging
 
-    lilypond:
-        build:
-            context: ./docker/setup/lilypond
-            dockerfile: Dockerfile
-        tty: true
-        volumes:
-            - ./data/lilypond:/scores
-        ports:
-            - 1234:8080
-        networks:
-            - bcloud-network-staging
+  lilypond:
+    extends:
+      file: docker/addons.yml
+      service: lilypond
+    restart: always
+    networks:
+      - bcloud-network-staging
 
-    bible-matcher:
-        build:
-            context: ./docker/setup/bible_matcher_node
-            dockerfile: Dockerfile
-        volumes:
-        - ./docker/setup/bible_matcher_node:/var/www/html
-        environment:
-            DB_HOST: ${DB_HOST}
-            DB_PORT: ${DB_PORT}
-            DB_USERNAME: ${DB_USERNAME}
-            DB_PASSWORD: ${DB_PASSWORD}
-            DB_DATABASE: ${DB_DATABASE}
-        ports:
-            - "3333:3000"
-        entrypoint: "sh -c 'yarn && node index.js'"
-        networks:
-            - bcloud-network-staging
-        restart: always
-
-    # kibana:
-    #   image: docker.elastic.co/kibana/kibana:7.2.0
-    #   ports:
-    #     - "25601:5601"
-    #   networks:
-    #     - bcloud-network-staging
-    #   depends_on:
-    #     - elasticsearch
-    # cerebro:
-    #   image: yannart/cerebro:0.8.1
-    #   ports:
-    #     - "9000:9000"
-    #   networks:
-    #     - bcloud-network-staging
-    #   depends_on:
-    #     - elasticsearch
+  bible-matcher:
+    extends:
+      file: docker/addons.yml
+      service: bible-matcher
+    restart: always
+    networks:
+      - bcloud-network-staging
 
 networks:
-    bcloud-network-staging:
+  bcloud-network-staging:
