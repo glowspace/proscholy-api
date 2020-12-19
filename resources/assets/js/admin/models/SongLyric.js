@@ -68,6 +68,11 @@ const fragment = gql`
             name
         }
 
+        tags_liturgy_day {
+            id
+            name
+        }
+
         capo
         liturgy_approval_status
 
@@ -139,6 +144,7 @@ const MUTATION = gql`
         $liturgyPeriodTagsInput: SyncCreateTagsRelation!
         $saintsTagsInput: SyncCreateTagsRelation!
         $musicalFormTagsInput: SyncCreateTagsRelation!
+        $liturgyDayTagsInput: SyncCreateTagsRelation!
         $taggable_id: Int!
     ) {
         sync_tags_liturgy_part: sync_create_tags(
@@ -194,6 +200,16 @@ const MUTATION = gql`
         sync_tags_musical_form: sync_create_tags(
             input: $musicalFormTagsInput
             tags_type: MUSICAL_FORM
+            taggable: SONG_LYRIC
+            taggable_id: $taggable_id
+        ) {
+            id
+            name
+        }
+
+        sync_tags_liturgy_day: sync_create_tags(
+            input: $liturgyDayTagsInput
+            tags_type: LITURGY_DAY
             taggable: SONG_LYRIC
             taggable_id: $taggable_id
         ) {
@@ -283,6 +299,9 @@ export default {
         genericTagsInput: belongsToManyMutator(vueModel.tags_generic),
         saintsTagsInput: belongsToManyMutator(vueModel.tags_saints),
         musicalFormTagsInput: belongsToManyMutator(vueModel.tags_musical_form, {
+            disableCreate: true
+        }),
+        liturgyDayTagsInput: belongsToManyMutator(vueModel.tags_liturgy_day, {
             disableCreate: true
         }),
         taggable_id: vueModel.id
