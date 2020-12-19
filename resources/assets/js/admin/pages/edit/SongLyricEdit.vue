@@ -236,6 +236,14 @@
                   :multiple="true"
                 ></items-combo-box>
                 <items-combo-box
+                  v-if="!is_arrangement_layout"
+                  v-bind:p-items="tags_liturgy_day"
+                  v-model="model.tags_liturgy_day"
+                  label="Dny liturgického kalendáře"
+                  header-label="Vyberte dny liturgického kalendáře"
+                  :multiple="true"
+                ></items-combo-box>
+                <items-combo-box
                   v-bind:p-items="tags_history_period"
                   v-model="model.tags_history_period"
                   label="Historické období (pro Regenschori)"
@@ -580,6 +588,10 @@ const FETCH_DATA = gql`
       id
       name
     }
+    tags_liturgy_day: tags_enum(type: LITURGY_DAY) {
+      id
+      name
+    }
   }
 `;
 
@@ -631,6 +643,7 @@ export default {
         tags_history_period: [],
         tags_saints: [],
         tags_musical_form: [],
+        tags_liturgy_day: [],
         authors_pivot: [],
         externals: [],
         songbook_records: [],
@@ -708,6 +721,9 @@ export default {
       query: FETCH_DATA
     },
     tags_musical_form: {
+      query: FETCH_DATA
+    },
+    tags_liturgy_day: {
       query: FETCH_DATA
     },
     songbooks: {
