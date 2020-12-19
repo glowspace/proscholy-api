@@ -93,7 +93,7 @@ services:
         ports:
             - 8090:8080
         networks:
-            - bcloud-network¨
+            - bcloud-network
         restart: always
 
     cron:
