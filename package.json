@@ -3,11 +3,11 @@
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
-        "watch": "npm watch",
+        "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix",
+        "production": "mix --production",
         "pretty": "prettier --write \"./resources/**/*.{js,jsx,json,vue}\""
     },
     "devDependencies": {
