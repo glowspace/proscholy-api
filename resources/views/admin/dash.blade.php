@@ -257,7 +257,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <img src="{{asset('img/profile.jpg')}}"
+                        <img src="{{asset('img/icons/profile.jpg')}}"
                              style="width: 150px"
                              class="rounded-circle"
                              alt="avatar">
