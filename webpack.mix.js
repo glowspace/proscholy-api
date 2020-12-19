@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -18,21 +19,22 @@ mix.webpackConfig({
         rules: [
             {
                 test: /\.(graphql|gql)$/,
-                loader: 'graphql-tag/loader',
-            },
-        ],
+                loader: 'graphql-tag/loader'
+            }
+        ]
     },
     resolve: {
         alias: {
             '@': __dirname,
-            'Admin': path.resolve(__dirname, 'resources/assets/js/admin/'),
-            'Public': path.resolve(__dirname, 'resources/assets/js/'),
-            'Fragments': path.resolve(__dirname, 'graphql/client/'),
-        },
-    },
+            Admin: path.resolve(__dirname, 'resources/assets/js/admin/'),
+            Public: path.resolve(__dirname, 'resources/assets/js/'),
+            Fragments: path.resolve(__dirname, 'graphql/client/')
+        }
+    }
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .vue()
     .sass('resources/assets/sass/app.scss', 'public/css')
     .copyDirectory('resources/assets/vendor/ViewerJS', 'public/js/ViewerJS')
     .browserSync({
@@ -47,8 +49,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
             'app/**/*',
             'routes/**/*',
             'resources/views/**/*',
-            'resources/lang/**/*',
-        ],
+            'resources/lang/**/*'
+        ]
     });
 
 /**
@@ -56,10 +58,17 @@ mix.js('resources/assets/js/app.js', 'public/js')
  */
 mix.sass('resources/assets/sass/admin/admin-ui.scss', 'public/_admin/css')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
+    .vue()
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css');
 
-mix.sass('resources/assets/vendor/magicsuggest/magicsuggest.scss', 'public/_admin/css');
-mix.js('resources/assets/vendor/magicsuggest/magicsuggest.js', 'public/_admin/js');
+mix.sass(
+    'resources/assets/vendor/magicsuggest/magicsuggest.scss',
+    'public/_admin/css'
+);
+mix.js(
+    'resources/assets/vendor/magicsuggest/magicsuggest.js',
+    'public/_admin/js'
+);
 
 if (mix.inProduction()) {
     mix.version();
