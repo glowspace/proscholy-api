@@ -50,6 +50,18 @@ class Tag extends Model
             'is_editable' => true,
             'is_regenschori' => true
         ],
+        // 40 => [
+        //     'name' => 'liturgický kalendář',
+        //     'type' => 40,
+        //     'is_editable' => false,
+        //     'is_regenschori' => true
+        // ],
+        // 41 => [
+        //     'name' => 'atribut svatého',
+        //     'type' => 41,
+        //     'is_editable' => false,
+        //     'is_regenschori' => true
+        // ],
         50 => [
             'name' => 'instrumentace',
             'type' => 50,
@@ -72,11 +84,14 @@ class Tag extends Model
         3 => 'ke svatým',
         4 => 'hudební forma',
         10 => 'historické období',
+        40 => 'liturgický den',
+        // these will be connected only to other tags (of type 40)
+        // 41 => 'atribut svatého',
         50 => 'instrumentace',
         100 => 'žánr'
     ];
 
-    public static $song_lyric_types = [0, 1, 2, 3, 4, 10];
+    public static $song_lyric_types = [0, 1, 2, 3, 4, 10, 40];
     public static $external_types = [50];
     public static $file_types = [50];
     public static $author_types = [10];
@@ -155,6 +170,11 @@ class Tag extends Model
     public function scopeMusicalForm($query)
     {
         return $query->where('type', 4);
+    }
+
+    public function scopeLiturgyDay($query)
+    {
+        return $query->where('type', 40);
     }
 
     public function song_lyrics(): MorphToMany
