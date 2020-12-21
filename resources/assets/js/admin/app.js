@@ -7,29 +7,46 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Recaptcha from 'Public/pages/Login/Recaptcha.vue';
+
+// import Recaptcha from 'Public/pages/Login/Recaptcha.vue';
+
+import SongsList from 'Admin/pages/list/SongsList.vue';
+import ExternalsList from 'Admin/pages/list/ExternalsList.vue';
+import AuthorsList from 'Admin/pages/list/AuthorsList.vue';
+import TagsList from 'Admin/pages/list/TagsList.vue';
+import SongbooksList from 'Admin/pages/list/SongbooksList.vue';
+import NewsItemsList from 'Admin/pages/list/NewsItemsList.vue';
+import AuthorEdit from 'Admin/pages/edit/AuthorEdit.vue';
+import ExternalEdit from 'Admin/pages/edit/ExternalEdit.vue';
+import TagEdit from 'Admin/pages/edit/TagEdit.vue';
+import SongLyricEdit from 'Admin/pages/edit/SongLyricEdit.vue';
+import SongbookEdit from 'Admin/pages/edit/SongbookEdit.vue';
+import NewsItemEdit from 'Admin/pages/edit/NewsItemEdit.vue';
+
+Vue.component('recaptcha', Recaptcha);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
+Vue.component('songs-list', SongsList);
+Vue.component('externals-list', ExternalsList);
+Vue.component('authors-list', AuthorsList);
+Vue.component('tags-list', TagsList);
+Vue.component('songbooks-list', SongbooksList);
+Vue.component('news-items-list', NewsItemsList);
 
-Vue.component('songs-list', require('Admin/pages/list/SongsList.vue'));
-Vue.component('externals-list', require('Admin/pages/list/ExternalsList.vue'));
-Vue.component('authors-list', require('Admin/pages/list/AuthorsList.vue'));
-Vue.component('tags-list', require('Admin/pages/list/TagsList.vue'));
-Vue.component('songbooks-list', require('Admin/pages/list/SongbooksList.vue'));
-Vue.component('news-items-list', require('Admin/pages/list/NewsItemsList.vue'));
+Vue.component('author-edit', AuthorEdit);
+Vue.component('external-edit', ExternalEdit);
+Vue.component('tag-edit', TagEdit);
+Vue.component('song-lyric-edit', SongLyricEdit);
+Vue.component('songbook-edit', SongbookEdit);
+Vue.component('news-item-edit', NewsItemEdit);
 
-Vue.component('author-edit', require('Admin/pages/edit/AuthorEdit.vue'));
-Vue.component('external-edit', require('Admin/pages/edit/ExternalEdit.vue'));
-Vue.component('tag-edit', require('Admin/pages/edit/TagEdit.vue'));
-Vue.component('song-lyric-edit', require('Admin/pages/edit/SongLyricEdit.vue'));
-Vue.component('songbook-edit', require('Admin/pages/edit/SongbookEdit.vue'));
-Vue.component('news-item-edit', require('Admin/pages/edit/NewsItemEdit.vue'));
-
-Vue.component('user-stats', require('Admin/components/UserStats.vue'));
+Vue.component('user-stats', UserStats);
 
 import { ApolloClient } from 'apollo-client';
 import { createUploadLink } from 'apollo-upload-client';
