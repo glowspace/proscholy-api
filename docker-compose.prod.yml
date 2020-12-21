@@ -119,7 +119,7 @@ services:
             DB_PASSWORD: ${DB_PASSWORD}
             DB_DATABASE: ${DB_DATABASE}
         ports:
-            - "3333:3000"
+            - "4321:3000"
         entrypoint: "sh -c 'yarn && node index.js'"
         networks:
             - bcloud-network
