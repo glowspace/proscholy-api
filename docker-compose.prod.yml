@@ -39,7 +39,7 @@ services:
     networks:
       - bcloud-network
     ports:
-      - 8200:9200
+      - 8200:8080
 
   elastic:
     extends:
