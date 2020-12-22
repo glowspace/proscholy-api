@@ -6,21 +6,23 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('chord', require('Public/pages/Song/Chord.vue'));
-Vue.component('song-part-tag', require('Public/pages/Song/SongPartTag.vue'));
-Vue.component('external-view', require('Public/components/ExternalView.vue'));
-Vue.component(
-    'dark-mode-button',
-    require('Public/components/DarkModeButton.vue')
-);
-Vue.component('search', require('Public/pages/Search/Search.vue'));
-Vue.component('song-view', require('Public/pages/Song/SongView.vue'));
-Vue.component('recaptcha', require('Public/pages/Login/Recaptcha.vue'));
+import Chord from 'Public/pages/Song/Chord.vue';
+import SongPartTag from 'Public/pages/Song/SongPartTag.vue';
+import ExternalView from 'Public/components/ExternalView.vue';
+import DarkModeButton from 'Public/components/DarkModeButton.vue';
+import Search from 'Public/pages/Search/Search.vue';
+import SongView from 'Public/pages/Song/SongView.vue';
+import Recaptcha from 'Public/pages/Login/Recaptcha.vue';
+import UserAccount from 'Public/pages/UserAccount/UserAccount.vue';
 
-Vue.component(
-    'user-account',
-    require('Public/pages/UserAccount/UserAccount.vue')
-);
+Vue.component('chord', Chord);
+Vue.component('song-part-tag', SongPartTag);
+Vue.component('external-view', ExternalView);
+Vue.component('dark-mode-button', DarkModeButton);
+Vue.component('search', Search);
+Vue.component('song-view', SongView);
+Vue.component('recaptcha', Recaptcha);
+Vue.component('user-account', UserAccount);
 
 // firebase firestore plugin for vue
 // import { firestorePlugin } from 'vuefire'

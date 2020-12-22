@@ -1,97 +1,54 @@
 version: "3"
 services:
   db:
-    image: mysql:5.7
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      # So you don't have to use root, but you can if you like
-      MYSQL_USER: ${DB_USERNAME}
-      # You can use whatever password you like
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    ports:
-      # <Port exposed> : < MySQL Port running inside container>
-      - "8003:3306"
-    expose:
-      # Opens port 3306 on the container
-      - "8003"
-      # Where our data will be persisted
-    volumes:
-      # - ./databases:/var/databases
-      - ./docker/data/mysql:/var/lib/mysql
+    extends:
+      file: docker/database.yml
+      service: db
     networks:
       - bcloud-network
+    ports:
+      - 3306:3306
 
   adminer:
-    image: adminer
+    extends:
+      file: docker/database.yml
+      service: adminer
+    networks:
+      - bcloud-network
     ports:
       - 8001:8080
+  cron:
+    extends:
+      file: docker/addons.yml
+      service: cron
     networks:
       - bcloud-network
-
-  bible-matcher:
-    build:
-      context: ./docker/setup/bible_matcher_node
-      dockerfile: Dockerfile
-    volumes:
-      - ./docker/setup/bible_matcher_node:/var/www/html
-    environment:
-      DB_HOST: ${DB_HOST_DOCKER}
-      DB_PORT: ${DB_PORT_DOCKER}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
+  lilypond:
+    extends:
+      file: docker/addons.yml
+      service: lilypond
+    networks:
+      - bcloud-network
     ports:
-      - "3333:3000"
-    entrypoint: "sh -c 'yarn && node index.js'"
+      - 3100:8080
+  bible-matcher:
+    extends:
+      file: docker/addons.yml
+      service: bible-matcher
     networks:
       - bcloud-network
+    ports:
+      - 3200:3000
 
-  # lilypond:
-  #   build:
-  #     context: ./docker/setup/lilypond
-  #     dockerfile: Dockerfile
-  #   tty: true
-  #   volumes:
-  #     - ./data/lilypond:/scoresl
+  # elastic:
+  #   extends:
+  #     file: docker/elastic.yml
+  #     service: elasticsearch
+  #   restart: always
+  #   networks:
+  #     - bcloud-network
   #   ports:
-  #     - 1234:8080
-
-# web:
-#   build:
-#     context: ./docker/setup/web
-#     dockerfile: Dockerfile
-#   volumes:
-#     - '.:/var/www/html'
-#     - './docker/config/cron.d:/etc/cron.d'
-#     - './docker/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini'
-#   entrypoint: 'bash ./docker/setup/web/entrypoint_web_test.sh'
-#   networks:
-#     - bcloud-network
-#   depends_on:
-#     - db
-#   dns:
-#     - 8.8.8.8
-#     - 4.4.4.4
-#   # expose browsersync ports
-#   ports:
-#     - '3000:3000'
-#     - '3001:3001'
-
-# nginx:
-#   image: 'nginx:1.17.3'
-#   ports:
-#     - '8000:80'
-#     - '443:443'
-#   links:
-#     - 'web'
-#   volumes:
-#     - '.:/var/www/html'
-#     - './docker/config/nginx_dev:/etc/nginx/conf.d'
-#     - './docker/logs/nginx:/var/log/nginx'
-#   networks:
-#     - bcloud-network
+  #     - 9200:9200
 
 networks:
   bcloud-network:
