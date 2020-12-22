@@ -38,7 +38,7 @@ services:
     networks:
       - bcloud-network-staging
     ports:
-      - 8201:9200
+      - 8201:8080
 
   elastic:
     extends:
