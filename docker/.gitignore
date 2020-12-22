@@ -1,5 +1,4 @@
 # mysql/*
 
 logs/*
-data/mysql/*
-data/mysql_old
+data/*

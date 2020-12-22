@@ -34,7 +34,6 @@ mix.webpackConfig({
 });
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    .vue()
     .sass('resources/assets/sass/app.scss', 'public/css')
     .copyDirectory('resources/assets/vendor/ViewerJS', 'public/js/ViewerJS')
     .browserSync({
@@ -58,7 +57,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
  */
 mix.sass('resources/assets/sass/admin/admin-ui.scss', 'public/_admin/css')
     .js('resources/assets/js/admin/app.js', 'public/_admin/js')
-    .vue()
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css');
 
 mix.sass(
