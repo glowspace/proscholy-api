@@ -16,7 +16,7 @@ services:
     networks:
       - bcloud-network
     ports:
-      - 8001:9200
+      - 8001:8080
   cron:
     extends:
       file: docker/addons.yml
