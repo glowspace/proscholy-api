@@ -23,6 +23,7 @@ import TagEdit from 'Admin/pages/edit/TagEdit.vue';
 import SongLyricEdit from 'Admin/pages/edit/SongLyricEdit.vue';
 import SongbookEdit from 'Admin/pages/edit/SongbookEdit.vue';
 import NewsItemEdit from 'Admin/pages/edit/NewsItemEdit.vue';
+import UserStats from 'Admin/components/UserStats.vue';
 
 Vue.component('recaptcha', Recaptcha);
 
