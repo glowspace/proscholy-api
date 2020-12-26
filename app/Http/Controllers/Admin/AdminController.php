@@ -90,7 +90,7 @@ class AdminController extends Controller
      */
     private function countSongsWithLicense(): int
     {
-        return SongLyric::where('licence_type', '!=', null) # or song has lilypond score
+        return SongLyric::where('licence_type_cc', '!=', 0) # or song has lilypond score
         ->count();
     }
 
