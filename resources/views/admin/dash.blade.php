@@ -163,7 +163,7 @@
                                 <td><b>{{number_format($songs_w_tags_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
 
-                                <td></td>
+                                <td><a href="/admin/songs#no-tags">doplnit</a></td>
 
                             </tr>
 
