@@ -33,7 +33,7 @@
                                     </div>
                                 </td>
 
-                                <td style="width: 100px"><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}
+                                <td><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
                                 <td>
                                     <a href="/admin/songs#no-lyrics">doplnit</a>
