@@ -7,7 +7,7 @@
             <h1>Nástěnka administrace</h1>
         </div>
 
-        <p>Vítej v administraci hudební databáze Regenschori.</p>
+        <p>Vítej v administraci hudební databáze ProScholy.cz.</p>
 
 
         <div class="row">
@@ -303,8 +303,7 @@
                                     <img src="{{asset('img/icons/docs.png')}}"
                                          class="card-img-top"/>
                                     <div class="card-body">
-                                        <h5 class="card-title">Regenschori</h5>
-                                        <p class="card-text text-muted">informace o projektu</p>
+                                        <h5 class="card-title">Informace o&nbsp;projektu</h5>
                                     </div>
                                 </div>
                             </a>

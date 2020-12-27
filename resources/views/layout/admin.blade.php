@@ -33,6 +33,9 @@
     <meta id="baseUrl"
           name="baseUrl"
           value="{{url('')}}">
+    <meta id="regenschoriUrl"
+          name="regenschoriUrl"
+          value="{{config('url.regenschori')}}">
     <meta id="userToken"
           name="userToken"
           value="{{ Auth::check() ? Auth::user()->getApiToken() : ''}}">
@@ -42,14 +45,14 @@
     <title>
         @if(View::hasSection('title-edit'))
 
-            ● @yield('title-edit') – Regenschori administrace
+            ● @yield('title-edit') – administrace ProScholy.cz
 
         @elseif(View::hasSection('title-suffixed'))
 
-            @yield('title-suffixed') – Regenschori administrace
+            @yield('title-suffixed') – administrace ProScholy.cz
 
         @else
-            Regenschori - administrace
+            Administrace ProScholy.cz
         @endif
     </title>
 
@@ -112,7 +115,7 @@
                href="{{route('admin.dashboard')}}">
                 <img src="{{asset('img/logo_v2.png')}}"
                      class="admin-logo">
-                <span class="navbar-title">REGENSCHORI</span> - administrace
+                <span class="navbar-title">Administrace ProScholy.cz</span>
             </a>
 
             <div>

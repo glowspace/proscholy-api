@@ -107,6 +107,7 @@ const QUERY = gql`
             ...SongLyricFillableFragment
 
             public_url
+            public_route
 
             lang_string_values
             liturgy_approval_status_string_values

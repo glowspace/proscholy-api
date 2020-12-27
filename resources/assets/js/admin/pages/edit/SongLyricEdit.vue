@@ -21,7 +21,6 @@
             label="Prostor pro interní poznámku"
             v-model="model.admin_note"
             rows="1"
-            auto-grow="1"
             :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
           ></v-textarea>
         </v-flex>
@@ -72,11 +71,11 @@
 
                 <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
-                    label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
+                    label="Píseň určená pro Zpěvník ProScholy.cz + Regenschori"
                     :value="false"
                   ></v-radio>
                   <v-radio
-                    label="Skladba pouze pro Regenschori.cz"
+                    label="Skladba pouze pro Regenschori"
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
@@ -487,8 +486,10 @@
             <span>Ctrl + S</span>
         </v-tooltip>
         <v-btn @click="reset" :disabled="!isDirty"><i class="fas fa-undo mr-2"></i> Vrátit změny do stavu posledního uložení</v-btn>
-        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="far fa-eye mr-2"></i> Zobrazit ve zpěvníku</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="fas fa-guitar mr-2"></i> Zpěvník</v-btn>
         <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="text-decoration-none mr-0" :disabled="isDirty"><i class="fas fa-church mr-2"></i> Regenschori</v-btn>
+        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
       </div>
       <div class="mt-2 mb-4 ml-n3 p-2">
         <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
@@ -675,7 +676,9 @@ export default {
         licence_type_cc: []
       },
 
-      active: 0
+      active: 0,
+
+      regenschori_url: ''
     };
   },
 
@@ -744,6 +747,10 @@ export default {
   mounted() {
     if (window.location.hash.length) {
       this.active = window.location.hash.replace('#', '') - 0;
+    }
+
+    if (document.getElementById('regenschoriUrl')) {
+        this.regenschori_url = document.getElementById('regenschoriUrl').getAttribute('value');
     }
   },
 
