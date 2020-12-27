@@ -77,6 +77,7 @@ class Tag extends Model
     ];
 
     // todo: make obsolete???
+    // when updating this, do not forget to update TagSeeder.php
     public static $type_string_values = [
         0 => 'příležitosti',
         1 => 'litugie (část)',
