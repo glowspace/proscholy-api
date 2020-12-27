@@ -60,13 +60,13 @@
                                 </td>
                                 <td>
                                     <span v-if="props.item.type === 0"
-                                        >Originál</span
+                                        >Orig.</span
                                     >
                                     <span v-if="props.item.type === 1"
-                                        >Překlad</span
+                                        >Překl.</span
                                     >
                                     <span v-if="props.item.type === 2"
-                                        >Autorizovaný překlad</span
+                                        >Aut.&nbsp;p.</span
                                     >
                                     <span
                                         v-if="
@@ -108,6 +108,7 @@
                                     >
                                     <span v-else>R + PS</span>
                                 </td>
+                                <td><span v-if="props.item.is_sealed">✓</span></td>
                                 <td class="text-nowrap">
                                     <a
                                         class="text-secondary mr-3"
@@ -170,6 +171,7 @@ const fetch_items = gql`
                 name
             }
             only_regenschori
+            is_sealed
             has_anonymous_author
             is_arrangement
             arrangement_source {
@@ -209,6 +211,7 @@ export default {
                 // { text: 'Publikováno', value: 'is_published' },
                 { text: 'Zobrazení', value: 'visits' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
+                { text: 'Pečeť', value: 'is_sealed' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',

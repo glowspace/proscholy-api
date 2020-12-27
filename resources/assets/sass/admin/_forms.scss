@@ -105,11 +105,12 @@ textarea.form-control {
 // admin report button
 .btn.admin-report {
     position:   fixed;
-    bottom:     0;
-    right:      0;
+    bottom:     5px;
+    right:      20px;
     color:      #292929;
     opacity:    0.5;
     transition: 0.2s;
+    padding:    0;
 }
 
 
@@ -131,17 +132,33 @@ textarea.form-control {
 
 
 
-.v-datatable td:first-child a {
-    display:  inline-block;
-    position: relative;
+.v-datatable {
+    tr:not(.v-datatable__progress) {
+        td, th {
+            padding: 0 0.5rem !important;
 
-    &::before {
-        content:  '';
-        position: absolute;
-        top:      -4px;
-        bottom:   -4px;
-        left:     -24px;
-        right:    -48px;
+            &:last-child {
+                padding-right: 1.5rem !important;
+            }
+
+            &:first-child {
+                position: relative;
+                padding-left: 1.5rem !important;
+
+                a {
+                    display:  inline-block;
+
+                    &::before {
+                        content:  '';
+                        position: absolute;
+                        top:      0;
+                        bottom:   0;
+                        left:     0;
+                        right:    0;
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -418,8 +418,10 @@
             </v-flex>
             <v-flex xs12 md6>
               <h4 class="mb-0">Strojově interpretované reference:</h4>
-              <p>- jednotný formát, slouží pro ověření správného zadání referencí<br/>
-                - klikem na odkaz se otevře bibleserver.com s daným úryvkem</p>
+              <p>
+                – jednotný formát, slouží pro ověření správného zadání referencí<br/>
+                – klikem na odkaz se otevře bibleserver.com s daným úryvkem
+              </p>
               <div style="font-size: 1.3em">
                 <span v-for="(reference, i) in bible_refs_czech" :key="i">
                   <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
@@ -478,7 +480,7 @@
           </v-layout>
         </v-tab-item>
       </v-tabs>
-      <div class="position-sticky fixed-bottom body-bg ml-n3 mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
+      <div class="position-sticky fixed-bottom body-bg mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
         <v-tooltip top>
             <template v-slot:activator="{ on }">
                 <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on"><i class="fas fa-save mr-2"></i> Uložit</v-btn>

@@ -124,10 +124,18 @@
                 {{--                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}--}}
                 {{--                    režim</a>--}}
 
+                <a class="btn btn-secondary border mr-2" href="{{route('client.home')}}">
+                    <i class="fas fa-guitar pr-2"></i>Zpěvník pro scholy
+                </a>
+                <a class="btn btn-secondary border mr-2" href="{{route('client.regenschori')}}">
+                    <i class="fas fa-church pr-2"></i>Regenschori
+                </a>
+
                 @auth
-                    <a class="btn btn-secondary"
-                       href="{{route('auth.logout')}}">
-                        <i class="fas fa-logout"></i>{{Auth::user()->name}} - Odhlásit se</a>
+                    <a class="btn btn-secondary border d-inline-flex align-items-center" href="{{route('auth.logout')}}">
+                        <img src="{{asset('img/icons/profile.jpg')}}" style="width:1rem" class="rounded-circle mr-2">
+                        <span>{{Auth::user()->name}} – odhlásit se</span>
+                    </a>
                 @endauth
             </div>
 
