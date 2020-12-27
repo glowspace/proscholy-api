@@ -100,7 +100,7 @@ export default {
         },
 
         our(timeObject) {
-            return timeObject.visits_short + 3*timeObject.visits_long;
+            return timeObject ? (timeObject.visits_short + 3*timeObject.visits_long) : 0;
         }
     }
 };
