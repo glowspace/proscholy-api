@@ -3,11 +3,11 @@
 @section('content-withmenu')
     <div class="__container-fluid dashboard-container">
 
-        <div class="content-header">
+        <div class="content-header content-header--bordered">
             <h1>Nástěnka administrace</h1>
         </div>
 
-        <p>Vítej v administraci hudební databáze ProScholy.cz.</p>
+        <p>Vítej v administraci hudební databáze ProScholy.</p>
 
 
         <div class="row">

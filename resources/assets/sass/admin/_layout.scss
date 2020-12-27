@@ -22,7 +22,6 @@ body {
         height: calc(100vh - 70px);
 
         .content-header {
-            border-bottom: 1px solid #dadce0;
             margin:        1.3rem 0 1rem;
 
             h1 {
@@ -30,6 +29,10 @@ body {
                 font-weight:  400;
                 font-size:    18px;
             }
+        }
+
+        .content-header--bordered {
+            border-bottom: 1px solid #dadce0;
         }
 
         .content-label {
