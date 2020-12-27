@@ -3,7 +3,7 @@ body {
     height:                 100vh;
     max-height:             100vh;
 
-    overflow:               hidden;
+    overflow:               hidden !important;
 
     -webkit-font-smoothing: antialiased;
 
@@ -77,5 +77,30 @@ Scrollbar design
 /** Vue background overwrite */
 .theme--light.application {
     background: transparent !important;
+}
+
+.theme--dark {
+    .primary--text,
+    .accent--text {
+        color: #4dc0b5 !important;
+    }
+}
+
+// custom css
+.body-bg {
+    background-color: $body-bg;
+}
+
+.auto-grow-alt textarea {
+    height: 60vh;
+}
+
+// dark mode
+body.admin-dark {
+
+    &,
+    .body-bg {
+        background-color: #303030 !important;
+    }
 }
 
