@@ -44,21 +44,20 @@ input::placeholder {
 }
 
 .error {
-    color:      white;
     text-align: center;
 
     h1 {
-        font-size:     calc(4vw + 50px);
+        font-size:     calc(2vw + 50px);
         font-weight:   bold;
         margin-bottom: 0;
     }
 
     p {
-        font-size: calc(2vw + 10px);
+        font-size: calc(1vw + 10px);
     }
 
-    .display-all-songs {
-        font-size: calc(1vw + 10px);
+    .btn {
+        font-size: calc(0.7vw + 10px);
     }
 }
 
