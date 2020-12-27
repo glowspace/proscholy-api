@@ -25,7 +25,7 @@ if getopts "p" arg; then
 elif getopts "s" arg; then
     docker-compose -f docker-compose.staging.yml up --build -d
     docker-compose -f docker-compose.staging.yml exec web bash -c "echo 'docker-ed in staging env' \ 
-    composer install --optimize-autoloader --no-dev
+    composer install
     
     yarn install
     yarn run dev
