@@ -22,11 +22,9 @@ CSS imports
  */
 @import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
 @import "layout";
-@import "dark";
+// @import "dark";
 @import "navbar";
 @import "sidebar";
-@import "print";
-@import "search";
 @import "cards";
 @import "elements";
 @import "forms";
