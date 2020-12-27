@@ -8,7 +8,13 @@ class LiturgicalReferences
 {
     public function resolve($rootValue, array $args)
     {
-        $refs = LiturgicalReference::with('song_lyric')->get()->groupBy(['date', 'song_lyric_id']);
+        $q = LiturgicalReference::with('song_lyric');
+
+        if (isset($args['date'])) {
+            $q = $q->where('date', $args['date']);
+        }
+
+        $refs = $q->get()->groupBy(['date', 'song_lyric_id']);
 
         $res = $refs->flatMap(function ($group_date) {
             return $group_date->map(function ($group_song) {

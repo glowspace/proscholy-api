@@ -12,5 +12,5 @@ type Reading {
 }
 
 extend type Query {
-    liturgical_references: [LiturgicalReference]
+    liturgical_references(date: Date): [LiturgicalReference]
 }
