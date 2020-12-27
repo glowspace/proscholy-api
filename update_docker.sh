@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-# git checkout master
-# git pull origin master
-
 if getopts "p" arg; then
     # echo "Updating docker using file $OPTARG"
+    git checkout master
+    git pull origin master
 
     docker-compose -f docker-compose.prod.yml up --build -d
     docker-compose -f docker-compose.prod.yml exec web bash -c "echo 'docker-ed in production env' \ 
@@ -23,6 +22,9 @@ if getopts "p" arg; then
 
     curl nginx/reset-cache"
 elif getopts "s" arg; then
+    git checkout develop
+    git pull origin develop
+
     docker-compose -f docker-compose.staging.yml up --build -d
     docker-compose -f docker-compose.staging.yml exec web bash -c "echo 'docker-ed in staging env' \ 
     composer install
