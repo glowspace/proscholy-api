@@ -7,10 +7,6 @@ services:
     restart: always
     depends_on:
       - db
-    volumes:
-      # this causes node_modules to be ignored from mount
-      - "/var/www/html/node_modules"
-      - "/var/www/html/vendor"
     networks:
       - bcloud-network
 
@@ -23,9 +19,6 @@ services:
       - web
     networks:
       - bcloud-network
-    volumes:
-      - "/var/www/html/node_modules"
-      - "/var/www/html/vendor"
     ports:
       - 8000:80
       - 443:443
