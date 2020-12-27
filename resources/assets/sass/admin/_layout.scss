@@ -97,13 +97,3 @@ Scrollbar design
 .auto-grow-alt textarea {
     height: 60vh;
 }
-
-// dark mode
-body.admin-dark {
-
-    &,
-    .body-bg {
-        background-color: #303030 !important;
-    }
-}
-

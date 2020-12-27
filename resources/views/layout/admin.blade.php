@@ -94,7 +94,9 @@
         <script>
             var dom_observer = new MutationObserver(function (mutation) {
                 // this runs (multiple times but most importantly), before the body is rendered
-                document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
+                if (document.getElementsByTagName('body')[0]) {
+                    document.getElementsByTagName('body')[0].setAttribute('class', 'dark');
+                }
             });
             var container = document.documentElement || document.body;
             var config = {attributes: true, childList: true, characterData: true};
@@ -110,20 +112,20 @@
     <div id="app"
          class="@yield('wrapper-classes', 'page')">
         <nav class="navbar justify-content-between">
-
-            <a class="navbar-brand"
-               href="{{route('admin.dashboard')}}">
-                <img src="{{asset('img/logo_v2.png')}}"
-                     class="admin-logo">
-                <span class="navbar-title">Administrace ProScholy.cz</span>
-            </a>
-
             <div>
-                {{--                <a class="btn btn-primary"--}}
-                {{--                   id="dark-mode-button"--}}
-                {{--                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}--}}
-                {{--                    režim</a>--}}
-
+                <a class="navbar-brand"
+                href="{{route('admin.dashboard')}}">
+                    <img src="{{asset('img/logo_v2.png')}}"
+                        class="admin-logo">
+                    <span class="navbar-title">Administrace ProScholy.cz</span>
+                </a>
+                <button class="btn btn-secondary border ml-3" id="dark-mode-button" onclick="toggleDarkMode();">
+                    <i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i>
+                    {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}
+                    režim
+                </button>
+            </div>
+            <div>
                 <a class="btn btn-secondary border mr-2" href="{{route('client.home')}}">
                     <i class="fas fa-guitar pr-2"></i>Zpěvník pro scholy
                 </a>
@@ -138,7 +140,6 @@
                     </a>
                 @endauth
             </div>
-
         </nav>
 
         <div class="container-fluid layout-body">
@@ -230,7 +231,7 @@
                 setCookie('dark', dark, 30);
             }
             if (dark) {
-                document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
+                document.getElementsByTagName('body')[0].setAttribute('class', 'dark');
                 document.getElementById('dark-mode-button').innerHTML = '<i class="fas fa-sun"></i> Světlý režim';
                 VueApp.$root.dark = true;
             }
