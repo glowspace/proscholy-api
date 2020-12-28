@@ -3,10 +3,10 @@
         me ? our(me.from_start).toLocaleString() : '…' }}</span>
     <v-app v-else :dark="$root.dark">
         <div class="card">
-            <table class="table table-bordered mb-0 statistics-table">
+            <table class="table mb-0 statistics-table">
                 <tr>
                     <td><b>Nejlepší redaktoři</b></td>
-                    <td>dosah za poslední 4 týdny</td>
+                    <td>dosah za poslední 4&nbsp;týdny</td>
                     <td title="oproti předchozím 4 týdnům" style="text-decoration:underline dotted">změna</td>
                 </tr>
                 <tr v-for="(row, key) in top" :key="row.id" v-if="top && (key < 5 || row.id == userId)">

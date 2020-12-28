@@ -1,18 +1,21 @@
 @extends('layout.admin')
 
+@section('title-suffixed', 'Přihlášení')
+@section('wrapper-classes', 'hide-report')
+
 @push('scripts')
     <script>document.getElementById('email').focus();</script>
 @endpush
 
 @section('content-withmenu')
-    <div class="container-login d-flex justify-content-center align-items-center">
+    <div class="container-login d-flex justify-content-center">
         <div class="w-100" style="max-width:400px">
-            <div class="card text-white bg-info mb-3 text-center">
+            <div class="card border-primary bg-primary-light mb-3 text-center" style="font-size:110%">
                 <div class="card-body">
-                    <p class="card-text">Přihlášení pro autorizované členy týmu projektu ProScholy.</p>
+                    <p class="card-text">Přihlášení pro autorizované členy týmu ProScholy.</p>
                     <p class="card-text">
                         Chceš se podílet na tvorbě projektu?
-                        <br>Napiš na <a class="text-white" href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a>.
+                        <br>Napiš na <a href="mailto:redakce@proscholy.cz">redakce@proscholy.cz</a>.
                     </p>
                 </div>
             </div>
@@ -42,26 +45,22 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-11 offset-1">
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                        @if ($errors->has('email') || $errors->has('password'))
+                            <div class="form-group row">
+                                <div class="col-11 offset-1">
+                                    <span class="text-danger d-block" role="alert">
+                                        <strong>
+                                            {{ $errors->has('email') ? $errors->first('email') : $errors->first('password') }}
+                                        </strong>
                                     </span>
-                                @endif
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="form-group row">
                             <div class="col-11 offset-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ !old() || old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
                                         Zapamatovat si přihlášení

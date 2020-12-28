@@ -2,10 +2,7 @@
     <!-- v-app must wrap all the components -->
     <v-app :dark="$root.dark">
         <notifications />
-        <div class="content-header content-header--bordered">
-            <h1>Štítky</h1>
-        </div>
-
+        <h1 class="h1--bordered">Štítky</h1>
         <div v-if="tag">
             <template v-for="(tag_group, i) in tag.groups_info">
                 <h2 :key="i">

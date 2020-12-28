@@ -1,9 +1,7 @@
 html,
 body {
     height:                 100vh;
-    max-height:             100vh;
-
-    overflow:               hidden !important;
+    overflow:               initial !important;
 
     -webkit-font-smoothing: antialiased;
 
@@ -14,37 +12,31 @@ body {
 
 // Content under navbar (sidebar + content)
 .layout-body {
-    max-height: calc(100vh - 75px);
-    height:     calc(100vh - 75px);
+    height: calc(100vh - 75px);
 
     .admin-content {
         overflow-y: scroll;
-        height: calc(100vh - 70px);
+        height: calc(100vh - (47px + 1px + 1.64rem));
 
-        .content-header {
-            margin:        1.3rem 0 1rem;
-
-            h1 {
-                padding-left: 4px;
-                font-weight:  400;
-                font-size:    18px;
-            }
-        }
-
-        .content-header--bordered {
+        :not(.error) > h1 {
+            margin: 1.3rem 0 1rem;
+            padding-bottom: 0.7em;
+            font-weight: 400;
+            font-size: 18px;
             border-bottom: 1px solid $main-grey-border;
+
+            .list &:not(.h1--bordered) {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
         }
 
         .content-label {
             margin:                 0.8rem 0 0.8rem;
-            padding-left:           4px;
-
-            font-family: 'Open Sans', sans-serif;
-
+            font-family:            'Open Sans', sans-serif;
             font-weight:            600;
             font-size:              14px;
             font-variant-ligatures: no-contextual;
-
             color:                  rgb(95, 99, 104);
         }
     }
@@ -74,7 +66,35 @@ Scrollbar design
 }
 
 .container-login {
-    height: 100%;
+    padding: 1.5rem;
+
+    input.form-control {
+        background: none;
+    }
+
+    .form-group.flex-nowrap {
+        border: 1px solid $main-grey-border;
+        border-radius: 5px;
+        margin-right: 1rem;
+        margin-left: 1rem;
+        transition: 0.2s border;
+
+        &:focus-within {
+            border-color: theme-color();
+        }
+
+        body.dark & {
+            border-color: $main-grey-border-dark;
+
+            &:focus-within {
+                border-color: $teal;
+            }
+        }
+    }
+
+    .bg-primary-light {
+        background-color: lighten(theme-color(), 45%);
+    }
 }
 
 /** Vue background overwrite */
@@ -85,7 +105,7 @@ Scrollbar design
 .theme--dark {
     .primary--text,
     .accent--text {
-        color: #4dc0b5 !important;
+        color: $teal !important;
     }
 }
 

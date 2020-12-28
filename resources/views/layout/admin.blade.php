@@ -109,32 +109,31 @@
     @stack('head_links')
 </head>
 <body>
-    <div id="app"
-         class="@yield('wrapper-classes', 'page')">
-        <nav class="navbar justify-content-between">
+    <div id="app" class="@yield('wrapper-classes', 'page')">
+        <nav class="navbar justify-content-between align-items-center overflow-hidden">
             <div>
-                <a class="navbar-brand"
+                <a class="navbar-brand mr-4"
                 href="{{route('admin.dashboard')}}">
-                    <img src="{{asset('img/logo_v2.png')}}"
+                    <img src="{{asset('img/icons/logo.svg')}}"
                         class="admin-logo">
                     <span class="navbar-title">Administrace ProScholy.cz</span>
                 </a>
-                <button class="btn btn-secondary border ml-3" id="dark-mode-button" onclick="toggleDarkMode();">
+                <button class="btn btn-secondary mr-3" id="dark-mode-button" onclick="toggleDarkMode();">
                     <i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i>
                     {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}
                     režim
                 </button>
             </div>
             <div>
-                <a class="btn btn-secondary border mr-2" href="{{route('client.home')}}">
+                <a class="btn btn-secondary mr-2" href="{{route('client.home')}}">
                     <i class="fas fa-guitar pr-2"></i>Zpěvník pro scholy
                 </a>
-                <a class="btn btn-secondary border mr-2" href="{{route('client.regenschori')}}">
+                <a class="btn btn-secondary mr-2" href="{{route('client.regenschori')}}">
                     <i class="fas fa-church pr-2"></i>Regenschori
                 </a>
 
                 @auth
-                    <a class="btn btn-secondary border d-inline-flex align-items-center" href="{{route('auth.logout')}}">
+                    <a class="btn btn-secondary d-inline-flex align-items-center" href="{{route('auth.logout')}}">
                         <img src="{{asset('img/icons/profile.jpg')}}" style="width:1rem" class="rounded-circle mr-2">
                         <span>{{Auth::user()->name}} – odhlásit se</span>
                     </a>
@@ -159,7 +158,7 @@
                     </div>
                 </div>
             @else
-                <div class="admin-content" style="margin:0 -15px;overflow:initial">
+                <div class="admin-content" style="margin:0 -15px;overflow:auto">
                     @yield('content-withmenu')
                 </div>
             @endauth

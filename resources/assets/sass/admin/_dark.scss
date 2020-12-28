@@ -9,19 +9,21 @@ body.dark {
     h1,
     .navbar-title,
     .content-label,
-    .table thead th {
+    .table thead th,
+    .form-control {
         color: #eee !important;
     }
 
     .card-body,
     .chord-text,
-    .card {
-        background-color: #111;
+    .card,
+    .btn {
+        background-color: #222;
         color: #ccc;
     }
 
-    .border {
-        border-color: #222 !important;
+    .btn-secondary {
+        border-color: $main-grey-border-dark !important;
     }
 
     .text-very-muted {
@@ -32,7 +34,7 @@ body.dark {
     .btn.btn-primary,
     .btn-primary.custom-file-control::before,
     .sidebar a.active {
-        color: #4dc0b5;
+        color: $teal;
 
         &:hover {
         color: #328e85;
@@ -54,8 +56,19 @@ body.dark {
     }
 
     .navbar,
-    .content-header--bordered,
-    .edit-description h5 {
+    h1,
+    .edit-description h5,
+    .sidebar {
         border-bottom-color: $main-grey-border-dark !important;
+    }
+
+    .primary,
+    .accent {
+        background-color: $teal !important;
+        border-color: $teal !important;
+    }
+
+    .border-primary {
+        border-color: $teal !important;
     }
 }
