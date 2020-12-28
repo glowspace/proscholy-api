@@ -1,233 +1,74 @@
 @extends('layout.admin')
 
+@php ($loading_text = 'Načítání…')
+
 @section('content-withmenu')
     <div class="__container-fluid dashboard-container">
-
-        <div class="content-header content-header--bordered">
-            <h1>Nástěnka administrace</h1>
-        </div>
-
+        <h1>Nástěnka administrace</h1>
         <p>Vítej v administraci hudební databáze ProScholy.</p>
-
-
         <div class="row">
             <div class="col-md-8">
                 <div class="content-label">Statistika</div>
-
                 <div class="card">
                     <div class="card-body p-0">
                         <table class="table  mb-0 statistics-table">
-                            <tr class="position-relative">
-                                <td>Písně s textem</td>
-                                <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
-
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 15px">
-                                        <div class="progress-bar rounded"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_text_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_text_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-
-                                <td style="width: 100px"><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}
-                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
-                                <td>
-                                    <a href="/admin/songs#no-lyrics" class="stretched-link">doplnit</a>
-                                </td>
-
-                            </tr>
-
-                            <tr class="position-relative">
-                                <td>Písně s akordy</td>
-                                <td>{{round(($songs_w_chords_count/$songs_count)*100)}}&nbsp;%</td>
-
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 15px">
-                                        <div class="progress-bar rounded"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_chords_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_chords_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-
-
-
-                                <td><b>{{number_format($songs_w_chords_count, 0, ',', ' ')}}
-                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
-
-                                <td>
-                                    <a href="/admin/songs#no-chords" class="stretched-link">doplnit</a>
-                                </td>
-
-                            </tr>
-
-                            <tr class="position-relative">
-                                <td>Písně s notami</td>
-                                <td>{{round(($songs_w_score_count/$songs_count)*100)}}&nbsp;%</td>
-
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 15px">
-                                        <div class="progress-bar rounded"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_score_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_score_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-
-
-
-                                <td><b>{{number_format($songs_w_score_count, 0, ',', ' ')}}
-                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
-
-                                <td></td>
-
-                            </tr>
-
-                            <tr class="position-relative">
-                                <td>LilyPond noty</td>
-                                <td>{{round(($songs_w_lilypond_count/$songs_count)*100)}}&nbsp;%</td>
-
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 15px">
-                                        <div class="progress-bar rounded"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_lilypond_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_lilypond_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-
-
-
-                                <td><b>{{number_format($songs_w_lilypond_count, 0, ',', ' ')}}
-                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
-
-                                <td></td>
-
-                            </tr>
-
-                            <tr class="position-relative">
-                                <td>Písně s licencí</td>
-                                <td>{{round(($songs_w_license_count/$songs_count)*100)}}&nbsp;%</td>
-
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 15px">
-                                        <div class="progress-bar rounded"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_license_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_license_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-
-
-
-                                <td><b>{{number_format($songs_w_license_count, 0, ',', ' ')}}
-                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
-
-                                <td></td>
-
-                            </tr>
-
-                            <tr class="position-relative">
-                                <td>Písně se štítky</td>
-
-                                <td>{{round(($songs_w_tags_count/$songs_count)*100)}}&nbsp;%</td>
-
-                                <td style="width: 50%">
-                                    <div class="progress rounded"
-                                         style="height: 15px">
-                                        <div class="progress-bar rounded"
-                                             role="progressbar"
-                                             style="width: {{round(($songs_w_tags_count/$songs_count)*100)}}%;"
-                                             aria-valuenow="{{round(($songs_w_tags_count/$songs_count)*100)}}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-
-                                <td><b>{{number_format($songs_w_tags_count, 0, ',', ' ')}}
-                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
-
-                                <td><a href="/admin/songs#no-tags" class="stretched-link">doplnit</a></td>
-
-                            </tr>
-
-                            {{--                            <tr>--}}
-                            {{--                                <td>Písně s notami</td>--}}
-                            {{--                                <td style="width: 50%">--}}
-                            {{--                                    <div class="progress rounded"--}}
-                            {{--                                         style="height: 15px">--}}
-                            {{--                                        <div class="progress-bar rounded bg-primary"--}}
-                            {{--                                             role="progressbar"--}}
-                            {{--                                             style="width: {{round(($songs_w_lilypond_count/$songs_w_license_count)*100)}}%;"--}}
-                            {{--                                             aria-valuenow="{{round(($songs_w_lilypond_count/$songs_w_license_count)*100)}}"--}}
-                            {{--                                             aria-valuemin="0"--}}
-                            {{--                                             aria-valuemax="100"></div>--}}
-                            {{--                                    </div>--}}
-                            {{--                                </td>--}}
-
-                            {{--                                <td>{{round(($songs_w_score_count/$songs_count)*100)}}&nbsp;%</td>--}}
-
-                            {{--                                <td><b>{{number_format($songs_w_score_count, 0, ',', ' ')}}--}}
-                            {{--                                        / {{number_format($songs_count, 0, ',', ' ')}}</b></td>--}}
-
-                            {{--                                <td></td>--}}
-
-                            {{--                            </tr>--}}
-
-
-                            {{--                            <tr>--}}
-                            {{--                                <td>Kompletní písně</td>--}}
-                            {{--                                <td style="width: 50%">--}}
-                            {{--                                    <div class="progress rounded"--}}
-                            {{--                                         style="height: 15px">--}}
-                            {{--                                        <div class="progress-bar rounded bg-primary"--}}
-                            {{--                                             role="progressbar"--}}
-                            {{--                                             style="width: {{round(($songs_w_all_count/$songs_count)*100)}}%;"--}}
-                            {{--                                             aria-valuenow="{{round(($songs_w_all_count/$songs_count)*100)}}"--}}
-                            {{--                                             aria-valuemin="0"--}}
-                            {{--                                             aria-valuemax="100"></div>--}}
-                            {{--                                    </div>--}}
-                            {{--                                </td>--}}
-                            {{--                                <td>{{round(($songs_w_all_count/$songs_count)*100)}}&nbsp;%</td>--}}
-                            {{--                                <td>--}}
-                            {{--                                    <b>{{number_format($songs_w_all_count, 0, ',', ' ')}}--}}
-                            {{--                                        / {{number_format($songs_count, 0, ',', ' ')}}</b>--}}
-                            {{--                                </td>--}}
-                            {{--                            </tr>--}}
-
-
-                            <tr class="position-relative">
-                                <td><a href="{{route('admin.author.index')}}" class="stretched-link">Autoři</a></td>
-                                <td colspan="3"><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
-                                <td></td>
-                            </tr>
-                            <tr class="position-relative">
-                                <td><a href="{{route('admin.external.index')}}" class="stretched-link">Materiály</a></td>
-                                <td colspan="3"><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
-                                <td></td>
-                            </tr>
+                            <tr is="progress-row"
+                                title="Všechny písně"
+                                link="songs"
+                                number="{{number_format($songs_count, 0, ',', ' ')}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="Písně s&nbsp;textem"
+                                link="songs#no-lyrics"
+                                number="{{number_format($songs_w_text_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_text_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="Písně s&nbsp;akordy"
+                                link="songs#no-chords"
+                                number="{{number_format($songs_w_chords_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_chords_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="Písně s&nbsp;notami"
+                                number="{{number_format($songs_w_score_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_score_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="LilyPond noty"
+                                number="{{number_format($songs_w_lilypond_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_lilypond_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="Písně s&nbsp;licencí"
+                                number="{{number_format($songs_w_license_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_license_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="Písně se štítky"
+                                link="songs#no-tags"
+                                number="{{number_format($songs_w_tags_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_tags_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            {{-- <tr is="progress-row"
+                                title="Kompletní písně"
+                                number="{{number_format($songs_w_all_count, 0, ',', ' ')}}"
+                                percent="{{round(($songs_w_all_count/$songs_count)*100)}}"
+                            ><td>{{$loading_text}}</td></tr> --}}
+                            <tr is="progress-row"
+                                title="Autoři"
+                                link="author"
+                                number="{{number_format($authors_count, 0, ',', ' ')}}"
+                            ><td>{{$loading_text}}</td></tr>
+                            <tr is="progress-row"
+                                title="Materiály"
+                                link="external"
+                                number="{{number_format($externals_count, 0, ',', ' ')}}"
+                            ><td>{{$loading_text}}</td></tr>
                         </table>
                     </div>
                 </div>
-
                 <div class="content-label">Důležité odkazy</div>
-
                 <div class="dash">
                     <div class="row">
                         <div class="col-sm-4">
@@ -243,7 +84,6 @@
                                 </div>
                             </a>
                         </div>
-
                         <div class="col-sm-4">
                             <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CGHL024DD"
                                target="_blank">
@@ -256,8 +96,6 @@
                                 </div>
                             </a>
                         </div>
-
-
                         <div class="col-sm-4">
                             <a href="tel:+420734791909">
                                 <div class="card">
@@ -270,7 +108,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-4">
                             <a href="https://docs.google.com/spreadsheets/d/1iE38u0TeK9nWgYKUZQt4YxnRPP-nL4ogLiplh4TJgk4/edit?usp=sharing"
@@ -306,12 +143,12 @@
                                          class="card-img-top"/>
                                     <div class="card-body">
                                         <h5 class="card-title">Informace o&nbsp;projektu</h5>
+                                        <p class="card-text text-muted">ProScholy.cz</p>
                                     </div>
                                 </div>
                             </a>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-4">
                             <a href="https://www.youtube.com/watch?list=PLXLfC_XTiu7qWXgsf-18mPu-IWFZ5o2xn&v=yZC-_uYhdvI"
@@ -339,7 +176,6 @@
                                 </div>
                             </a>
                         </div>
-
                         <div class="col-sm-4">
                             <a href="https://trello.com/b/IzNkczwd/redakce-proscholycz"
                                target="_blank">
@@ -356,40 +192,33 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <img src="{{asset('img/icons/profile.jpg')}}"
-                             style="height:150px"
-                             class="rounded-circle mt-2"
-                             alt="avatar">
-
+                            style="height:150px"
+                            class="rounded-circle mt-2"
+                            alt="avatar"
+                        />
                         <br>
-
                         <h3 class="mb-2">{{ Auth::user()->name }}</h3>
-                        {{--                        @if (Auth::user()->roles()->count() > 0)--}}
-                        {{--                            <span>({{Auth::user()->roles()->first()->name}})</span>--}}
-                        {{--                        @endif--}}
                         <h4 class="mx-2 mt-0 text-secondary">{{ Auth::user()->roles->count() > 0 ? Auth::user()->roles->first()->name : '' }}</h4>
-
-
                         <div class="card mb-0">
                             <div class="card-body mb-0">
-
                                 <span>Díky za dobře odvedenou práci!</span>
                                 <br>Tvé příspěvky si zobrazilo
-                                <b>
-                                    <user-stats user-id="{{ Auth::user()->id }}"
-                                                :embedded="true"></user-stats>
-                                    lidí</b>.
+                                <b><user-stats
+                                    user-id="{{ Auth::user()->id }}"
+                                    :embedded="true"
+                                ></user-stats>&nbsp;lidí</b>.
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <user-stats user-id="{{ Auth::user()->id }}"
-                            :embedded="false"></user-stats>
+                <user-stats
+                    user-id="{{ Auth::user()->id }}"
+                    :embedded="false"
+                ></user-stats>
             </div>
         </div>
     </div>

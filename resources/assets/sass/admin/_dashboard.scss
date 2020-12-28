@@ -2,63 +2,56 @@
 Admin homepage (dashboard) custom CSS.
  */
 .dash {
-    //padding-right: 5px;
-    //padding-left:  5px;
-
-
-    h5.card-title {
-        font-size:     1.1rem;
-        margin-bottom: 0.25rem;
-        font-weight:   normal;
+    .row {
+        margin: 0 -0.5rem;
     }
 
-    & > .card {
-        margin-left:  10px;
-        margin-right: 10px;
+    .col-sm-4 {
+        padding: 0 0.5rem;
     }
 
     a {
-        margin-bottom: 20px;
-
-        img,
-        .img-icon {
-            transition: opacity 0.2s;
-        }
+        margin-bottom: 1rem;
 
         &:hover,
         &:focus {
             text-decoration: none;
 
-            .card-title {
-                text-decoration: underline;
-            }
-
             img,
             .img-icon {
-                color:   #1d6dab;
+                color:   #3f51b5;
                 opacity: 0.75;
+            }
+
+            h5.card-title {
+                text-decoration: underline;
             }
         }
 
         .card {
-            //height:         100%;
             flex-direction: row;
-
-            margin-bottom: 2em;
+            margin-bottom: 1rem;
 
             img,
             .img-icon {
+                transition: opacity 0.2s;
                 height:      auto;
                 text-align:  center;
                 font-size:   calc(60px - 1.5rem);
                 line-height: 1;
                 width:       60px;
                 margin:      auto 0;
-                padding:     1rem 0 1rem 1.5rem;
+                padding:     1rem 0 1rem 1.15rem;
             }
 
             .fa-phone-square {
                 transform: scaleX(-1);
+            }
+
+            h5.card-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.25rem;
+                font-weight: normal;
             }
 
             .card-body {
@@ -80,16 +73,12 @@ Homepage user stats.
         border-radius: 50px !important;
     }
 
-    tr:first-child td {
-        border-top: none;
-    }
-
-    td:not(:first-child) {
-        text-align: right;
-    }
-
     td {
         padding: 0.75rem 1.25rem;
+
+        &:not(:first-child) {
+            text-align: right;
+        }
     }
 
     tr {
@@ -98,15 +87,19 @@ Homepage user stats.
         &:hover {
             background-color: rgba(128, 128, 128, 0.1);
         }
+
+        &:first-child td {
+            border-top: none;
+        }
     }
 
     // https://material.io/resources/color/
-    tr:nth-child(1) .progress-bar {background-color: #e53935;}
-    tr:nth-child(2) .progress-bar {background-color: #8e24aa;}
-    tr:nth-child(3) .progress-bar {background-color: #3949ab;}
-    tr:nth-child(4) .progress-bar {background-color: #039be5;}
-    tr:nth-child(5) .progress-bar {background-color: #00897b;}
-    tr:nth-child(6) .progress-bar {background-color: #7cb342;}
+    tr:nth-child(2) .progress-bar {background-color: #e53935;}
+    tr:nth-child(3) .progress-bar {background-color: #8e24aa;}
+    tr:nth-child(4) .progress-bar {background-color: #3949ab;}
+    tr:nth-child(5) .progress-bar {background-color: #039be5;}
+    tr:nth-child(6) .progress-bar {background-color: #00897b;}
+    tr:nth-child(7) .progress-bar {background-color: #7cb342;}
 
     .progress {
         background-color: rgba(128, 128, 128, 0.12);

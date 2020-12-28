@@ -31,9 +31,10 @@ input::placeholder {
 
 .error {
     text-align: center;
+    margin: 2rem;
 
     h1 {
-        font-size:     calc(2vw + 50px);
+        font-size:     calc(1vw + 50px);
         font-weight:   bold;
         margin-bottom: 0;
     }
@@ -96,6 +97,12 @@ textarea.form-control {
     opacity:    0.5;
     transition: 0.2s;
     padding:    0;
+    border:     none;
+    background-color: transparent;
+
+    .hide-report & {
+        display: none;
+    }
 }
 
 

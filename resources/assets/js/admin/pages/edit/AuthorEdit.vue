@@ -10,7 +10,7 @@
             ></v-progress-linear>
         </div>
         <v-container fluid grid-list-xs>
-            <h1 class="h2 mb-3">Úprava autora</h1>
+            <h1>Úprava autora</h1>
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <v-form ref="form">
@@ -71,7 +71,7 @@
                         <items-combo-box
                             v-bind:p-items="tags_period"
                             v-model="model.tags_period"
-                            label="Historické období (pro Regenschori)"
+                            label="Historické období (pro Regenschoriho)"
                             header-label="Vyberte štítek z nabídky nebo vytvořte nový"
                             create-label="Potvrďte enterem a vytvořte nový štítek"
                             :multiple="true"
