@@ -4,7 +4,7 @@
 
 @section('content-withmenu')
     <div class="__container-fluid">
-        <h1 class="h2 mb-3">Nový uživatel</h1>
+        <h1>Nový uživatel</h1>
         <div class="row">
             <div class="col-sm-12">
                 <form action="{{route('admin.user.store')}}" method="post">

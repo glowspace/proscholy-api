@@ -10,10 +10,8 @@
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
-        <div class="content-header content-header--bordered">
       <h1 v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 v-else>Úprava písně</h1>
-        </div>
 
       <v-layout row wrap>
         <v-flex grow>

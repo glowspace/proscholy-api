@@ -4,7 +4,7 @@
 
 @section('content-withmenu')
     <div class="__container-fluid">
-    <h1 class="h2 mb-3">Úprava uživatele</h1>
+        <h1>Úprava uživatele</h1>
         <div class="row">
             <div class="col-sm-6">
                 <form action="{{ route('admin.user.update', $user) }}" method="post">

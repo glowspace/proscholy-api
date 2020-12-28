@@ -4,9 +4,7 @@
 
 @section('content-withmenu')
     <div class="__container-fluid">
-        <div class="content-header content-header--bordered">
-            <h1>Uživatelé</h1>
-        </div>
+        <h1>Uživatelé</h1>
         <a class="btn btn-outline-primary" href="{{route('admin.user.create')}}">+ Nový uživatel</a>
         <div class="row mt-3">
             <div class="col-xs-12 col-md-8">

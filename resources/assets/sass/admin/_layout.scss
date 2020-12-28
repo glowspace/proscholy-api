@@ -12,36 +12,31 @@ body {
 
 // Content under navbar (sidebar + content)
 .layout-body {
-    height:     calc(100vh - 75px);
+    height: calc(100vh - 75px);
 
     .admin-content {
         overflow-y: scroll;
         height: calc(100vh - (47px + 1px + 1.64rem));
 
-        .content-header {
-            margin:        1.3rem 0 1rem;
-
-            h1 {
-                padding-left: 4px;
-                font-weight:  400;
-                font-size:    18px;
-            }
-        }
-
-        .content-header--bordered {
+        h1 {
+            margin: 1.3rem 0 1rem;
+            padding-bottom: 0.7em;
+            font-weight: 400;
+            font-size: 18px;
             border-bottom: 1px solid $main-grey-border;
+
+            .list &:not(.h1--bordered) {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
         }
 
         .content-label {
             margin:                 0.8rem 0 0.8rem;
-            padding-left:           4px;
-
-            font-family: 'Open Sans', sans-serif;
-
+            font-family:            'Open Sans', sans-serif;
             font-weight:            600;
             font-size:              14px;
             font-variant-ligatures: no-contextual;
-
             color:                  rgb(95, 99, 104);
         }
     }

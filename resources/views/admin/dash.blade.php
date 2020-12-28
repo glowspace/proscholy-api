@@ -4,18 +4,11 @@
 
 @section('content-withmenu')
     <div class="__container-fluid dashboard-container">
-
-        <div class="content-header content-header--bordered">
-            <h1>Nástěnka administrace</h1>
-        </div>
-
+        <h1>Nástěnka administrace</h1>
         <p>Vítej v administraci hudební databáze ProScholy.</p>
-
-
         <div class="row">
             <div class="col-md-8">
                 <div class="content-label">Statistika</div>
-
                 <div class="card">
                     <div class="card-body p-0">
                         <table class="table  mb-0 statistics-table">
@@ -75,9 +68,7 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="content-label">Důležité odkazy</div>
-
                 <div class="dash">
                     <div class="row">
                         <div class="col-sm-4">
@@ -93,7 +84,6 @@
                                 </div>
                             </a>
                         </div>
-
                         <div class="col-sm-4">
                             <a href="https://slack.com/app_redirect?team=TCC9MSFQA&channel=CGHL024DD"
                                target="_blank">
@@ -106,8 +96,6 @@
                                 </div>
                             </a>
                         </div>
-
-
                         <div class="col-sm-4">
                             <a href="tel:+420734791909">
                                 <div class="card">
@@ -120,7 +108,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-4">
                             <a href="https://docs.google.com/spreadsheets/d/1iE38u0TeK9nWgYKUZQt4YxnRPP-nL4ogLiplh4TJgk4/edit?usp=sharing"
@@ -161,7 +148,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-4">
                             <a href="https://www.youtube.com/watch?list=PLXLfC_XTiu7qWXgsf-18mPu-IWFZ5o2xn&v=yZC-_uYhdvI"
@@ -189,7 +175,6 @@
                                 </div>
                             </a>
                         </div>
-
                         <div class="col-sm-4">
                             <a href="https://trello.com/b/IzNkczwd/redakce-proscholycz"
                                target="_blank">
@@ -206,40 +191,33 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <img src="{{asset('img/icons/profile.jpg')}}"
-                             style="height:150px"
-                             class="rounded-circle mt-2"
-                             alt="avatar">
-
+                            style="height:150px"
+                            class="rounded-circle mt-2"
+                            alt="avatar"
+                        />
                         <br>
-
                         <h3 class="mb-2">{{ Auth::user()->name }}</h3>
-                        {{--                        @if (Auth::user()->roles()->count() > 0)--}}
-                        {{--                            <span>({{Auth::user()->roles()->first()->name}})</span>--}}
-                        {{--                        @endif--}}
                         <h4 class="mx-2 mt-0 text-secondary">{{ Auth::user()->roles->count() > 0 ? Auth::user()->roles->first()->name : '' }}</h4>
-
-
                         <div class="card mb-0">
                             <div class="card-body mb-0">
-
                                 <span>Díky za dobře odvedenou práci!</span>
                                 <br>Tvé příspěvky si zobrazilo
-                                <b>
-                                    <user-stats user-id="{{ Auth::user()->id }}"
-                                                :embedded="true"></user-stats>
-                                    lidí</b>.
+                                <b><user-stats
+                                    user-id="{{ Auth::user()->id }}"
+                                    :embedded="true"
+                                ></user-stats>&nbsp;lidí</b>.
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <user-stats user-id="{{ Auth::user()->id }}"
-                            :embedded="false"></user-stats>
+                <user-stats
+                    user-id="{{ Auth::user()->id }}"
+                    :embedded="false"
+                ></user-stats>
             </div>
         </div>
     </div>

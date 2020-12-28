@@ -3,9 +3,7 @@
     <v-app :dark="$root.dark">
         <notifications />
         <v-container fluid grid-list-xs>
-            <div class="content-header">
-                <h1>Zpěvníky</h1>
-            </div>
+            <h1>Zpěvníky</h1>
             <create-model
                 v-model="search_string"
                 class-name="Songbook"
