@@ -24,6 +24,7 @@ import SongLyricEdit from 'Admin/pages/edit/SongLyricEdit.vue';
 import SongbookEdit from 'Admin/pages/edit/SongbookEdit.vue';
 import NewsItemEdit from 'Admin/pages/edit/NewsItemEdit.vue';
 import UserStats from 'Admin/components/UserStats.vue';
+import ProgressRow from 'Admin/components/ProgressRow.vue';
 
 Vue.component('recaptcha', Recaptcha);
 
@@ -48,6 +49,7 @@ Vue.component('songbook-edit', SongbookEdit);
 Vue.component('news-item-edit', NewsItemEdit);
 
 Vue.component('user-stats', UserStats);
+Vue.component('progress-row', ProgressRow);
 
 import { ApolloClient } from 'apollo-client';
 import { createUploadLink } from 'apollo-upload-client';
