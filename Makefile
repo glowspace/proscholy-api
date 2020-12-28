@@ -11,7 +11,8 @@ production-deploy:
 	docker-compose -f docker-compose.prod.yml exec web yarn run production
 	
 	docker-compose -f docker-compose.prod.yml exec web php artisan config:cache
-	docker-compose -f docker-compose.prod.yml exec web php artisan route:cache
+	# this command is allowed to fail (- sign)
+	-docker-compose -f docker-compose.prod.yml exec web php artisan route:cache
 	docker-compose -f docker-compose.prod.yml exec web php artisan cache:clear
 	docker-compose -f docker-compose.prod.yml exec web php artisan view:clear
 	docker-compose -f docker-compose.prod.yml exec web php artisan migrate --force
@@ -30,9 +31,12 @@ staging-deploy:
 	docker-compose -f docker-compose.staging.yml exec web yarn install
 	docker-compose -f docker-compose.staging.yml exec web yarn run dev
 	docker-compose -f docker-compose.staging.yml exec web php artisan config:cache
-	docker-compose -f docker-compose.staging.yml exec web php artisan route:cache
+	# this command is allowed to fail (- sign)
+	-docker-compose -f docker-compose.staging.yml exec web php artisan route:cache
 	docker-compose -f docker-compose.staging.yml exec web php artisan cache:clear
 	docker-compose -f docker-compose.staging.yml exec web php artisan view:clear
 	docker-compose -f docker-compose.staging.yml exec web php artisan migrate --force
 	docker-compose -f docker-compose.staging.yml exec web php artisan lighthouse:clear-cache
-	docker-compose -f docker-compose.staging.yml exec web php artisan lighthouse:cache"
+	docker-compose -f docker-compose.staging.yml exec web php artisan lighthouse:cache
+	
+	docker-compose -f docker-compose.staging.yml exec web curl nginx/reset-cache
