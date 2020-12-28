@@ -111,15 +111,15 @@
 <body>
     <div id="app"
          class="@yield('wrapper-classes', 'page')">
-        <nav class="navbar justify-content-between">
+        <nav class="navbar justify-content-between align-items-center">
             <div>
-                <a class="navbar-brand"
+                <a class="navbar-brand mr-3"
                 href="{{route('admin.dashboard')}}">
                     <img src="{{asset('img/icons/logo.svg')}}"
                         class="admin-logo">
                     <span class="navbar-title">Administrace ProScholy.cz</span>
                 </a>
-                <button class="btn btn-secondary ml-3" id="dark-mode-button" onclick="toggleDarkMode();">
+                <button class="btn btn-secondary mr-3" id="dark-mode-button" onclick="toggleDarkMode();">
                     <i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i>
                     {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}
                     režim
