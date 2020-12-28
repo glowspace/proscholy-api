@@ -71,4 +71,8 @@ body.dark {
     .border-primary {
         border-color: $teal !important;
     }
+
+    .primary--text {
+        caret-color: $teal !important;
+    }
 }

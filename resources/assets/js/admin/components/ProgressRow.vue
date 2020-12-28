@@ -1,5 +1,5 @@
 <template>
-    <tr class="position-relative">
+    <tr style="transform:scale(1)">
         <td>
             <a v-if="!percent && link" :href="'/admin/' + link" class="stretched-link" v-html="title"></a>
             <span v-else v-html="title"></span>
