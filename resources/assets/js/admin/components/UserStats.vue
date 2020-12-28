@@ -3,7 +3,7 @@
         me ? our(me.from_start).toLocaleString() : '…' }}</span>
     <v-app v-else :dark="$root.dark">
         <div class="card">
-            <table class="table table-bordered mb-0 statistics-table">
+            <table class="table mb-0 statistics-table">
                 <tr>
                     <td><b>Nejlepší redaktoři</b></td>
                     <td>dosah za poslední 4 týdny</td>
