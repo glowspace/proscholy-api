@@ -10,7 +10,7 @@
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
-        <div class="content-header">
+        <div class="content-header content-header--bordered">
       <h1 v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 v-else>Úprava písně</h1>
         </div>
@@ -21,7 +21,6 @@
             label="Prostor pro interní poznámku"
             v-model="model.admin_note"
             rows="1"
-            auto-grow="1"
             :style="`opacity: ${model.admin_note ? 1 : 0.7}`"
           ></v-textarea>
         </v-flex>
@@ -72,11 +71,11 @@
 
                 <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
-                    label="Píseň určená pro Zpevnik.proscholy.cz + Regenschori.cz"
+                    label="Píseň určená pro Zpěvník ProScholy.cz + Regenschori"
                     :value="false"
                   ></v-radio>
                   <v-radio
-                    label="Skladba pouze pro Regenschori.cz"
+                    label="Skladba pouze pro Regenschori"
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
@@ -419,8 +418,10 @@
             </v-flex>
             <v-flex xs12 md6>
               <h4 class="mb-0">Strojově interpretované reference:</h4>
-              <p>- jednotný formát, slouží pro ověření správného zadání referencí<br/>
-                - klikem na odkaz se otevře bibleserver.com s daným úryvkem</p>
+              <p>
+                – jednotný formát, slouží pro ověření správného zadání referencí<br/>
+                – klikem na odkaz se otevře bibleserver.com s daným úryvkem
+              </p>
               <div style="font-size: 1.3em">
                 <span v-for="(reference, i) in bible_refs_czech" :key="i">
                   <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
@@ -479,7 +480,7 @@
           </v-layout>
         </v-tab-item>
       </v-tabs>
-      <div class="position-sticky fixed-bottom body-bg ml-n3 mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
+      <div class="position-sticky fixed-bottom body-bg mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
         <v-tooltip top>
             <template v-slot:activator="{ on }">
                 <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on"><i class="fas fa-save mr-2"></i> Uložit</v-btn>
@@ -487,8 +488,10 @@
             <span>Ctrl + S</span>
         </v-tooltip>
         <v-btn @click="reset" :disabled="!isDirty"><i class="fas fa-undo mr-2"></i> Vrátit změny do stavu posledního uložení</v-btn>
-        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="far fa-eye mr-2"></i> Zobrazit ve zpěvníku</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="fas fa-guitar mr-2"></i> Zpěvník</v-btn>
         <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="text-decoration-none mr-0" :disabled="isDirty"><i class="fas fa-church mr-2"></i> Regenschori</v-btn>
+        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
       </div>
       <div class="mt-2 mb-4 ml-n3 p-2">
         <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
@@ -525,7 +528,11 @@
 
 <style>
   .sealed {
-    opacity: 0.7;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .sealed > div {
     pointer-events: none;
   }
 </style>
@@ -675,7 +682,9 @@ export default {
         licence_type_cc: []
       },
 
-      active: 0
+      active: 0,
+
+      regenschori_url: ''
     };
   },
 
@@ -744,6 +753,10 @@ export default {
   mounted() {
     if (window.location.hash.length) {
       this.active = window.location.hash.replace('#', '') - 0;
+    }
+
+    if (document.getElementById('regenschoriUrl')) {
+        this.regenschori_url = document.getElementById('regenschoriUrl').getAttribute('value');
     }
   },
 

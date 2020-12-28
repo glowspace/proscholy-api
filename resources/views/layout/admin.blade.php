@@ -33,6 +33,9 @@
     <meta id="baseUrl"
           name="baseUrl"
           value="{{url('')}}">
+    <meta id="regenschoriUrl"
+          name="regenschoriUrl"
+          value="{{config('url.regenschori')}}">
     <meta id="userToken"
           name="userToken"
           value="{{ Auth::check() ? Auth::user()->getApiToken() : ''}}">
@@ -42,14 +45,14 @@
     <title>
         @if(View::hasSection('title-edit'))
 
-            ● @yield('title-edit') – Regenschori administrace
+            ● @yield('title-edit') – administrace ProScholy.cz
 
         @elseif(View::hasSection('title-suffixed'))
 
-            @yield('title-suffixed') – Regenschori administrace
+            @yield('title-suffixed') – administrace ProScholy.cz
 
         @else
-            Regenschori - administrace
+            Administrace ProScholy.cz
         @endif
     </title>
 
@@ -91,7 +94,9 @@
         <script>
             var dom_observer = new MutationObserver(function (mutation) {
                 // this runs (multiple times but most importantly), before the body is rendered
-                document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
+                if (document.getElementsByTagName('body')[0]) {
+                    document.getElementsByTagName('body')[0].setAttribute('class', 'dark');
+                }
             });
             var container = document.documentElement || document.body;
             var config = {attributes: true, childList: true, characterData: true};
@@ -107,27 +112,34 @@
     <div id="app"
          class="@yield('wrapper-classes', 'page')">
         <nav class="navbar justify-content-between">
-
-            <a class="navbar-brand"
-               href="{{route('admin.dashboard')}}">
-                <img src="{{asset('img/logo_v2.png')}}"
-                     class="admin-logo">
-                <span class="navbar-title">REGENSCHORI</span> - administrace
-            </a>
-
             <div>
-                {{--                <a class="btn btn-primary"--}}
-                {{--                   id="dark-mode-button"--}}
-                {{--                   onclick="toggleDarkMode();"><i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i> {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}--}}
-                {{--                    režim</a>--}}
+                <a class="navbar-brand"
+                href="{{route('admin.dashboard')}}">
+                    <img src="{{asset('img/logo_v2.png')}}"
+                        class="admin-logo">
+                    <span class="navbar-title">Administrace ProScholy.cz</span>
+                </a>
+                <button class="btn btn-secondary border ml-3" id="dark-mode-button" onclick="toggleDarkMode();">
+                    <i class="fas fa-{{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'sun' : 'moon' }}"></i>
+                    {{ (isset($_COOKIE['dark']) && $_COOKIE['dark'] == 'true') ? 'Světlý' : 'Tmavý' }}
+                    režim
+                </button>
+            </div>
+            <div>
+                <a class="btn btn-secondary border mr-2" href="{{route('client.home')}}">
+                    <i class="fas fa-guitar pr-2"></i>Zpěvník pro scholy
+                </a>
+                <a class="btn btn-secondary border mr-2" href="{{route('client.regenschori')}}">
+                    <i class="fas fa-church pr-2"></i>Regenschori
+                </a>
 
                 @auth
-                    <a class="btn btn-secondary"
-                       href="{{route('auth.logout')}}">
-                        <i class="fas fa-logout"></i>{{Auth::user()->name}} - Odhlásit se</a>
+                    <a class="btn btn-secondary border d-inline-flex align-items-center" href="{{route('auth.logout')}}">
+                        <img src="{{asset('img/icons/profile.jpg')}}" style="width:1rem" class="rounded-circle mr-2">
+                        <span>{{Auth::user()->name}} – odhlásit se</span>
+                    </a>
                 @endauth
             </div>
-
         </nav>
 
         <div class="container-fluid layout-body">
@@ -147,7 +159,7 @@
                     </div>
                 </div>
             @else
-                <div class="admin-content">
+                <div class="admin-content" style="margin:0 -15px;overflow:initial">
                     @yield('content-withmenu')
                 </div>
             @endauth
@@ -219,7 +231,7 @@
                 setCookie('dark', dark, 30);
             }
             if (dark) {
-                document.getElementsByTagName('body')[0].setAttribute('class', 'dark admin-dark');
+                document.getElementsByTagName('body')[0].setAttribute('class', 'dark');
                 document.getElementById('dark-mode-button').innerHTML = '<i class="fas fa-sun"></i> Světlý režim';
                 VueApp.$root.dark = true;
             }

@@ -1,5 +1,7 @@
 @php
-    $is_active = \Route::current()->getName() == $route;
+    $p = '/^([^.]+\.)([^.]+)(\.?.*)$/';
+    $r = '$2';
+    $is_active = preg_replace($p, $r, \Route::current()->getName()) == preg_replace($p, $r, $route);
 @endphp
 
 <div class="btn-group m-0 d-lg-flex" role="group" aria-label="Basic example">

@@ -3,11 +3,12 @@
     border-bottom: 1px solid $main-grey-border;
 
     .navbar-brand {
-        color:       grey !important;
         font-family: Nunito, Arial, sans-serif;
 
         .admin-logo {
             width:   47px;
+            height: 47px;
+            margin-right: 10px;
         }
 
         .navbar-title {

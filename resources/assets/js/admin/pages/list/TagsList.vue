@@ -2,7 +2,7 @@
     <!-- v-app must wrap all the components -->
     <v-app :dark="$root.dark">
         <notifications />
-        <div class="content-header">
+        <div class="content-header content-header--bordered">
             <h1>Štítky</h1>
         </div>
 
