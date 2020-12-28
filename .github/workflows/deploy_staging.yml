@@ -11,7 +11,7 @@ jobs:
       - name: SSH in staging server
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: COMPOSE_INTERACTIVE_NO_CLI=1 cd /var/www/html/staging/regenschori-api-staging && make staging-deploy --silent
+          command: cd /var/www/html/staging/regenschori-api-staging && make staging-deploy --silent
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
