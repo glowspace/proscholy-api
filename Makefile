@@ -1,8 +1,6 @@
 
 production-deploy:
 	# # echo "Updating docker using file $OPTARG"
-	export COMPOSE_INTERACTIVE_NO_CLI=1
-
 	git checkout master
 	git pull origin master
 
@@ -24,8 +22,6 @@ production-deploy:
 	docker-compose -f docker-compose.prod.yml exec web curl nginx/reset-cache
 
 staging-deploy:
-	export COMPOSE_INTERACTIVE_NO_CLI=1
-	
 	git checkout develop
 	git pull origin develop
 
