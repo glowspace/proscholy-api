@@ -21,26 +21,12 @@ input::placeholder {
     line-height: calc((2.3775rem + 2px) / 1.5);
 }
 
-
 .text-very-muted {
     color: #efefef;
 }
 
-
 .no-left-padding {
     padding-left: 2px !important;
-}
-
-.author-secondary-links a {
-    color: #6c757d !important;
-}
-
-.navbar-dark .navbar-text.user-logged-in-btn {
-    color: #aaa;
-
-    &:hover {
-        text-decoration: none;
-    }
 }
 
 .error {
@@ -97,7 +83,7 @@ textarea.form-control {
 .edit-description h5 {
     font-weight:    600;
     padding-bottom: 8px;
-    border-bottom:  1px #bec0c1 solid;
+    border-bottom:  1px $main-grey-border solid;
 }
 
 
@@ -128,8 +114,6 @@ textarea.form-control {
         padding-right: 15px;
     }
 }
-
-
 
 .v-datatable {
     tr:not(.v-datatable__progress) {

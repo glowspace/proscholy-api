@@ -10,7 +10,7 @@
 
     <!-- <v-fade-transition> -->
     <v-container fluid grid-list-xs>
-        <div class="content-header">
+        <div class="content-header content-header--bordered">
       <h1 v-if="is_arrangement_layout">Úprava aranže</h1>
       <h1 v-else>Úprava písně</h1>
         </div>
@@ -528,7 +528,11 @@
 
 <style>
   .sealed {
-    opacity: 0.7;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .sealed > div {
     pointer-events: none;
   }
 </style>

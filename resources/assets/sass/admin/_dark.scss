@@ -1,33 +1,61 @@
 body.dark {
-  h1 {
-    color: white;
-  }
-
-  .card-body,
-  .chord-text,
-  .card {
-    background-color: #111;
-    color: #ccc;
-  }
-
-  .border {
-    border-color: #222 !important;
-  }
-
-  .text-very-muted {
-    color: #222;
-  }
-
-  a, .btn.btn-primary, .btn-primary.custom-file-control::before {
-    color: #4dc0b5;
-
-    &:hover {
-      color: #328e85;
+    &,
+    .body-bg,
+    .admin-content {
+        background-color: #303030 !important;
+        color: #ccc;
     }
-  }
 
-  &,
-  .body-bg {
-      background-color: #303030 !important;
-  }
+    h1,
+    .navbar-title,
+    .content-label,
+    .table thead th {
+        color: #eee !important;
+    }
+
+    .card-body,
+    .chord-text,
+    .card {
+        background-color: #111;
+        color: #ccc;
+    }
+
+    .border {
+        border-color: #222 !important;
+    }
+
+    .text-very-muted {
+        color: #222;
+    }
+
+    a,
+    .btn.btn-primary,
+    .btn-primary.custom-file-control::before,
+    .sidebar a.active {
+        color: #4dc0b5;
+
+        &:hover {
+        color: #328e85;
+        }
+    }
+
+    .blue.lighten-3 {
+        background-color: #0065b8 !important;
+    }
+
+    .btn.admin-report {
+        &, &:hover {
+            color: #fff;
+        }
+    }
+
+    .sidebar a.active {
+        background-color: #222 !important;
+    }
+
+    .navbar,
+    .content-header--bordered,
+    .edit-description h5 {
+        border-bottom-color: $main-grey-border-dark !important;
+    }
 }

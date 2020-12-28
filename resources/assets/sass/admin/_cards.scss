@@ -7,5 +7,9 @@
         border: 1px $main-grey-border solid;
         border-radius: 5px;
         overflow: auto;
+
+        body.dark & {
+            border-color: $main-grey-border-dark;
+        }
     }
 }
