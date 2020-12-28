@@ -123,7 +123,7 @@ Route::get('/run-schedule', function () {
 });
 
 Route::get('/regenschori', function () {
-    return redirect('https://regenschori.cz');
+    return redirect(config('url.regenschori'));
 })->name('client.regenschori');
 
 // Route::get('/firebase-auth/me', function(Request $request) {

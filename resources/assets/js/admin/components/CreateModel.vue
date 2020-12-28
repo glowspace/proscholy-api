@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mb-2 px-4 py-3 d-inline-block">
+    <v-card class="mb-2 px-4 py-3 d-block">
         <v-layout row>
             <div class="text-nowrap pt-1" v-if="enableFileUpload">
                 <FileUploadDialog
@@ -27,7 +27,6 @@
                 @click:prepend="$refs.cmtf.focus()"
                 ref="cmtf"
                 class="mt-0 pb-0 pt-3"
-                style="max-width:600px;width:50vw"
                 @input="$validator.errors.clear()"
                 id="search"
                 :clearable="true"

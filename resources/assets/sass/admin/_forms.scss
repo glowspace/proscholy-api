@@ -21,44 +21,29 @@ input::placeholder {
     line-height: calc((2.3775rem + 2px) / 1.5);
 }
 
-
 .text-very-muted {
     color: #efefef;
 }
-
 
 .no-left-padding {
     padding-left: 2px !important;
 }
 
-.author-secondary-links a {
-    color: #6c757d !important;
-}
-
-.navbar-dark .navbar-text.user-logged-in-btn {
-    color: #aaa;
-
-    &:hover {
-        text-decoration: none;
-    }
-}
-
 .error {
-    color:      white;
     text-align: center;
 
     h1 {
-        font-size:     calc(4vw + 50px);
+        font-size:     calc(2vw + 50px);
         font-weight:   bold;
         margin-bottom: 0;
     }
 
     p {
-        font-size: calc(2vw + 10px);
+        font-size: calc(1vw + 10px);
     }
 
-    .display-all-songs {
-        font-size: calc(1vw + 10px);
+    .btn {
+        font-size: calc(0.7vw + 10px);
     }
 }
 
@@ -98,18 +83,19 @@ textarea.form-control {
 .edit-description h5 {
     font-weight:    600;
     padding-bottom: 8px;
-    border-bottom:  1px #bec0c1 solid;
+    border-bottom:  1px $main-grey-border solid;
 }
 
 
 // admin report button
 .btn.admin-report {
     position:   fixed;
-    bottom:     0;
-    right:      0;
+    bottom:     5px;
+    right:      20px;
     color:      #292929;
     opacity:    0.5;
     transition: 0.2s;
+    padding:    0;
 }
 
 
@@ -129,19 +115,33 @@ textarea.form-control {
     }
 }
 
+.v-datatable {
+    tr:not(.v-datatable__progress) {
+        td, th {
+            padding: 0 0.5rem !important;
 
+            &:last-child {
+                padding-right: 1.5rem !important;
+            }
 
-.v-datatable td:first-child a {
-    display:  inline-block;
-    position: relative;
+            &:first-child {
+                position: relative;
+                padding-left: 1.5rem !important;
 
-    &::before {
-        content:  '';
-        position: absolute;
-        top:      -4px;
-        bottom:   -4px;
-        left:     -24px;
-        right:    -48px;
+                a {
+                    display:  inline-block;
+
+                    &::before {
+                        content:  '';
+                        position: absolute;
+                        top:      0;
+                        bottom:   0;
+                        left:     0;
+                        right:    0;
+                    }
+                }
+            }
+        }
     }
 }
 

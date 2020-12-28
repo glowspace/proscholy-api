@@ -3,11 +3,11 @@
 @section('content-withmenu')
     <div class="__container-fluid dashboard-container">
 
-        <div class="content-header">
+        <div class="content-header content-header--bordered">
             <h1>Nástěnka administrace</h1>
         </div>
 
-        <p>Vítej v administraci hudební databáze Regenschori.</p>
+        <p>Vítej v administraci hudební databáze ProScholy.</p>
 
 
         <div class="row">
@@ -17,14 +17,14 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <table class="table  mb-0 statistics-table">
-                            <tr>
+                            <tr class="position-relative">
                                 <td>Písně s textem</td>
                                 <td>{{round(($songs_w_text_count/$songs_count)*100)}}&nbsp;%</td>
 
                                 <td style="width: 50%">
                                     <div class="progress rounded"
                                          style="height: 15px">
-                                        <div class="progress-bar rounded bg-primary"
+                                        <div class="progress-bar rounded"
                                              role="progressbar"
                                              style="width: {{round(($songs_w_text_count/$songs_count)*100)}}%;"
                                              aria-valuenow="{{round(($songs_w_text_count/$songs_count)*100)}}"
@@ -36,19 +36,19 @@
                                 <td><b>{{number_format($songs_w_text_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
                                 <td>
-                                    <a href="/admin/songs#no-lyrics">doplnit</a>
+                                    <a href="/admin/songs#no-lyrics" class="stretched-link">doplnit</a>
                                 </td>
 
                             </tr>
 
-                            <tr>
+                            <tr class="position-relative">
                                 <td>Písně s akordy</td>
                                 <td>{{round(($songs_w_chords_count/$songs_count)*100)}}&nbsp;%</td>
 
                                 <td style="width: 50%">
                                     <div class="progress rounded"
                                          style="height: 15px">
-                                        <div class="progress-bar rounded bg-primary"
+                                        <div class="progress-bar rounded"
                                              role="progressbar"
                                              style="width: {{round(($songs_w_chords_count/$songs_count)*100)}}%;"
                                              aria-valuenow="{{round(($songs_w_chords_count/$songs_count)*100)}}"
@@ -63,19 +63,19 @@
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
 
                                 <td>
-                                    <a href="/admin/songs#no-chords">doplnit</a>
+                                    <a href="/admin/songs#no-chords" class="stretched-link">doplnit</a>
                                 </td>
 
                             </tr>
 
-                            <tr>
+                            <tr class="position-relative">
                                 <td>Písně s notami</td>
                                 <td>{{round(($songs_w_score_count/$songs_count)*100)}}&nbsp;%</td>
 
                                 <td style="width: 50%">
                                     <div class="progress rounded"
                                          style="height: 15px">
-                                        <div class="progress-bar rounded bg-primary"
+                                        <div class="progress-bar rounded"
                                              role="progressbar"
                                              style="width: {{round(($songs_w_score_count/$songs_count)*100)}}%;"
                                              aria-valuenow="{{round(($songs_w_score_count/$songs_count)*100)}}"
@@ -93,14 +93,14 @@
 
                             </tr>
 
-                            <tr>
+                            <tr class="position-relative">
                                 <td>LilyPond noty</td>
                                 <td>{{round(($songs_w_lilypond_count/$songs_count)*100)}}&nbsp;%</td>
 
                                 <td style="width: 50%">
                                     <div class="progress rounded"
                                          style="height: 15px">
-                                        <div class="progress-bar rounded bg-primary"
+                                        <div class="progress-bar rounded"
                                              role="progressbar"
                                              style="width: {{round(($songs_w_lilypond_count/$songs_count)*100)}}%;"
                                              aria-valuenow="{{round(($songs_w_lilypond_count/$songs_count)*100)}}"
@@ -118,14 +118,14 @@
 
                             </tr>
 
-                            <tr>
+                            <tr class="position-relative">
                                 <td>Písně s licencí</td>
                                 <td>{{round(($songs_w_license_count/$songs_count)*100)}}&nbsp;%</td>
 
                                 <td style="width: 50%">
                                     <div class="progress rounded"
                                          style="height: 15px">
-                                        <div class="progress-bar rounded bg-primary"
+                                        <div class="progress-bar rounded"
                                              role="progressbar"
                                              style="width: {{round(($songs_w_license_count/$songs_count)*100)}}%;"
                                              aria-valuenow="{{round(($songs_w_license_count/$songs_count)*100)}}"
@@ -143,7 +143,7 @@
 
                             </tr>
 
-                            <tr>
+                            <tr class="position-relative">
                                 <td>Písně se štítky</td>
 
                                 <td>{{round(($songs_w_tags_count/$songs_count)*100)}}&nbsp;%</td>
@@ -151,7 +151,7 @@
                                 <td style="width: 50%">
                                     <div class="progress rounded"
                                          style="height: 15px">
-                                        <div class="progress-bar rounded bg-primary"
+                                        <div class="progress-bar rounded"
                                              role="progressbar"
                                              style="width: {{round(($songs_w_tags_count/$songs_count)*100)}}%;"
                                              aria-valuenow="{{round(($songs_w_tags_count/$songs_count)*100)}}"
@@ -163,7 +163,7 @@
                                 <td><b>{{number_format($songs_w_tags_count, 0, ',', ' ')}}
                                         / {{number_format($songs_count, 0, ',', ' ')}}</b></td>
 
-                                <td><a href="/admin/songs#no-tags">doplnit</a></td>
+                                <td><a href="/admin/songs#no-tags" class="stretched-link">doplnit</a></td>
 
                             </tr>
 
@@ -212,13 +212,15 @@
                             {{--                            </tr>--}}
 
 
-                            <tr>
-                                <td><a href="{{route('admin.author.index')}}">Autoři</a></td>
-                                <td colspan="4"><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
+                            <tr class="position-relative">
+                                <td><a href="{{route('admin.author.index')}}" class="stretched-link">Autoři</a></td>
+                                <td colspan="3"><b>{{number_format($authors_count, 0, ',', ' ')}}</b></td>
+                                <td></td>
                             </tr>
-                            <tr>
-                                <td><a href="{{route('admin.external.index')}}">Materiály</a></td>
-                                <td colspan="4"><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
+                            <tr class="position-relative">
+                                <td><a href="{{route('admin.external.index')}}" class="stretched-link">Materiály</a></td>
+                                <td colspan="3"><b>{{number_format($externals_count, 0, ',', ' ')}}</b></td>
+                                <td></td>
                             </tr>
                         </table>
                     </div>
@@ -303,8 +305,7 @@
                                     <img src="{{asset('img/icons/docs.png')}}"
                                          class="card-img-top"/>
                                     <div class="card-body">
-                                        <h5 class="card-title">Regenschori</h5>
-                                        <p class="card-text text-muted">informace o projektu</p>
+                                        <h5 class="card-title">Informace o&nbsp;projektu</h5>
                                     </div>
                                 </div>
                             </a>
@@ -360,20 +361,20 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <img src="{{asset('img/icons/profile.jpg')}}"
-                             style="width: 150px"
-                             class="rounded-circle"
+                             style="height:150px"
+                             class="rounded-circle mt-2"
                              alt="avatar">
 
                         <br>
 
-                        <h3>{{ Auth::user()->name }}</h3>
+                        <h3 class="mb-2">{{ Auth::user()->name }}</h3>
                         {{--                        @if (Auth::user()->roles()->count() > 0)--}}
                         {{--                            <span>({{Auth::user()->roles()->first()->name}})</span>--}}
                         {{--                        @endif--}}
-                        <h4 class="mx-2 text-secondary"></h4>
+                        <h4 class="mx-2 mt-0 text-secondary">{{ Auth::user()->roles->count() > 0 ? Auth::user()->roles->first()->name : '' }}</h4>
 
 
-                        <div class="card">
+                        <div class="card mb-0">
                             <div class="card-body mb-0">
 
                                 <span>Díky za dobře odvedenou práci!</span>

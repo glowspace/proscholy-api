@@ -80,6 +80,10 @@ Homepage user stats.
         border-radius: 50px !important;
     }
 
+    tr:first-child td {
+        border-top: none;
+    }
+
     td:not(:first-child) {
         text-align: right;
     }
@@ -94,5 +98,17 @@ Homepage user stats.
         &:hover {
             background-color: rgba(128, 128, 128, 0.1);
         }
+    }
+
+    // https://material.io/resources/color/
+    tr:nth-child(1) .progress-bar {background-color: #e53935;}
+    tr:nth-child(2) .progress-bar {background-color: #8e24aa;}
+    tr:nth-child(3) .progress-bar {background-color: #3949ab;}
+    tr:nth-child(4) .progress-bar {background-color: #039be5;}
+    tr:nth-child(5) .progress-bar {background-color: #00897b;}
+    tr:nth-child(6) .progress-bar {background-color: #7cb342;}
+
+    .progress {
+        background-color: rgba(128, 128, 128, 0.12);
     }
 }

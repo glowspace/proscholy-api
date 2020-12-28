@@ -32,6 +32,9 @@ class TagsSeeder extends Seeder
             10 => [
                 "Doba kamenná", "Doba bronzová", "Velký třesk"
             ],
+            40 => [
+                'Svátek sv. rodiny', 'Nějaká random památka', 'Dařbujána a Pandrholy'
+            ],
             50 => [
                 "Kazoo", "Fujara", "Citera"
             ],

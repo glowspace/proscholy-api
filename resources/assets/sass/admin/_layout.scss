@@ -3,7 +3,7 @@ body {
     height:                 100vh;
     max-height:             100vh;
 
-    overflow:               hidden;
+    overflow:               hidden !important;
 
     -webkit-font-smoothing: antialiased;
 
@@ -22,7 +22,6 @@ body {
         height: calc(100vh - 70px);
 
         .content-header {
-            border-bottom: 1px solid #dadce0;
             margin:        1.3rem 0 1rem;
 
             h1 {
@@ -30,6 +29,10 @@ body {
                 font-weight:  400;
                 font-size:    18px;
             }
+        }
+
+        .content-header--bordered {
+            border-bottom: 1px solid $main-grey-border;
         }
 
         .content-label {
@@ -79,3 +82,18 @@ Scrollbar design
     background: transparent !important;
 }
 
+.theme--dark {
+    .primary--text,
+    .accent--text {
+        color: #4dc0b5 !important;
+    }
+}
+
+// custom css
+.body-bg {
+    background-color: $body-bg;
+}
+
+.auto-grow-alt textarea {
+    height: 60vh;
+}

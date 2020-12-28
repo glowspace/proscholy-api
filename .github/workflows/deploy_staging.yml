@@ -1,0 +1,18 @@
+name: staging_deploy
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH in staging server
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: COMPOSE_INTERACTIVE_NO_CLI=1 cd /var/www/html/staging/regenschori-api-staging && make staging-deploy --silent
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          privateKey: ${{ secrets.PRIVATE_KEY}}

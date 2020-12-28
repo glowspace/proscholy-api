@@ -118,6 +118,19 @@
                 icon
                 ><i class="fas fa-external-link-alt"></i
             ></v-btn>
+            <v-btn
+                :href="regenschori_url + model.public_route"
+                class="text-decoration-none mr-0"
+                :disabled="isDirty"
+                >Zobrazit v Regenschorim</v-btn
+            >
+            <v-btn
+                :href="regenschori_url + model.public_route"
+                class="text-decoration-none ml-0"
+                target="_blank"
+                icon
+                ><i class="fas fa-external-link-alt"></i
+            ></v-btn>
             <br /><br />
             <delete-model-dialog
                 class-name="Author"
@@ -206,7 +219,8 @@ export default {
                 type: []
             },
             is_deleted: false,
-            fragment: Author.fragment
+            fragment: Author.fragment,
+            regenschori_url: ''
         };
     },
 
@@ -236,6 +250,9 @@ export default {
 
     mounted() {
         // console.log(Admin);
+        if (document.getElementById('regenschoriUrl')) {
+            this.regenschori_url = document.getElementById('regenschoriUrl').getAttribute('value');
+        }
     },
 
     methods: {

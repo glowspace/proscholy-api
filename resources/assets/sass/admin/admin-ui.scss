@@ -16,6 +16,7 @@ $main-green:  #098845;
 $main-yellow: #faa61b;
 
 $main-grey-border: #dadce0;
+$main-grey-border-dark: #555;
 
 /**
 CSS imports
@@ -25,8 +26,6 @@ CSS imports
 @import "dark";
 @import "navbar";
 @import "sidebar";
-@import "print";
-@import "search";
 @import "cards";
 @import "elements";
 @import "forms";
