@@ -35,32 +35,23 @@
         font-weight: 500;
 
         color:       rgb(95, 99, 104);
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
 
         &:hover,
         &:focus {
             text-decoration:            none;
-
-
             background-color: rgba(0,0,0,.04);
-
-            border-top-right-radius:    20px;
-            border-bottom-right-radius: 20px;
         }
 
         &.active {
-
-            color:                      rgb(25, 103, 210);
-            background-color:           rgb(231, 239, 252) !important;
-
             font-weight:                600;
 
-            border-top-right-radius:    20px;
-            border-bottom-right-radius: 20px;
-
+            &,
             &:hover,
             &:focus {
-                color:                      rgb(25, 103, 210);
-                background-color:           rgb(231, 239, 252) !important;
+                color:                  #3f51b5;
+                background-color:       #3f51b522 !important;
             }
         }
 
@@ -91,7 +82,6 @@
             width:         100%;
             padding:       0.66875rem 1rem 0.66875rem calc(2rem + 22px);
             margin-left:   0 !important;
-            border-radius: 0;
         }
     }
 }

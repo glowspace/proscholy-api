@@ -15,13 +15,14 @@ body.dark {
 
     .card-body,
     .chord-text,
-    .card {
-        background-color: #111;
+    .card,
+    .btn {
+        background-color: #222;
         color: #ccc;
     }
 
-    .border {
-        border-color: #222 !important;
+    .btn-secondary {
+        border-color: $main-grey-border-dark !important;
     }
 
     .text-very-muted {
@@ -57,5 +58,11 @@ body.dark {
     .content-header--bordered,
     .edit-description h5 {
         border-bottom-color: $main-grey-border-dark !important;
+    }
+
+    .primary,
+    .accent {
+        background-color: #4dc0b5 !important;
+        border-color: #4dc0b5 !important;
     }
 }
