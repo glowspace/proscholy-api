@@ -159,7 +159,7 @@
                     </div>
                 </div>
             @else
-                <div class="admin-content" style="margin:0 -15px;overflow:initial">
+                <div class="admin-content" style="margin:0 -15px;overflow:auto">
                     @yield('content-withmenu')
                 </div>
             @endauth

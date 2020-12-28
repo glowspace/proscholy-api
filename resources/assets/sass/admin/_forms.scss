@@ -31,9 +31,10 @@ input::placeholder {
 
 .error {
     text-align: center;
+    margin: 2rem;
 
     h1 {
-        font-size:     calc(2vw + 50px);
+        font-size:     calc(1vw + 50px);
         font-weight:   bold;
         margin-bottom: 0;
     }

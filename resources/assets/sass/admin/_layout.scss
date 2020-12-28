@@ -18,7 +18,7 @@ body {
         overflow-y: scroll;
         height: calc(100vh - (47px + 1px + 1.64rem));
 
-        h1 {
+        :not(.error) > h1 {
             margin: 1.3rem 0 1rem;
             padding-bottom: 0.7em;
             font-weight: 400;
