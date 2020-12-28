@@ -1,18 +1,15 @@
 .sidebar {
-    padding-top: 5px;
-    margin-left: -15px;
+    border-bottom: 1px solid $main-grey-border;
+    margin: 0 -15px;
+    padding: 0 15px;
 
     @include media-breakpoint-up(lg) {
-        height: calc(100vh - 70px);
+        padding-right: 1rem;
+        padding-left: 0;
+        padding-top: 1.3rem;
+        height: calc(100vh - (47px + 1px + 1.64rem));
         overflow: auto;
-    }
-
-    @include media-breakpoint-down(md) {
-        margin-right: -15px;
-
-        .navbar-brand {
-            display: none;
-        }
+        border-bottom: none;
     }
 
 
@@ -27,8 +24,6 @@
         font-weight: 500;
 
         color:       rgb(95, 99, 104);
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
 
         &:hover,
         &:focus {
@@ -74,6 +69,8 @@
             width:         100%;
             padding:       0.66875rem 1rem 0.66875rem calc(2rem + 22px);
             margin-left:   0 !important;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
     }
 }

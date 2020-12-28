@@ -113,7 +113,7 @@
          class="@yield('wrapper-classes', 'page')">
         <nav class="navbar justify-content-between align-items-center">
             <div>
-                <a class="navbar-brand mr-3"
+                <a class="navbar-brand mr-4"
                 href="{{route('admin.dashboard')}}">
                     <img src="{{asset('img/icons/logo.svg')}}"
                         class="admin-logo">

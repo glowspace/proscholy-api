@@ -38,8 +38,6 @@
 
 {{-- <div class="navbar-label material-shadow text-success">Úprava položek</div> --}}
 
-<div class="mt-lg-3"></div>
-
 @include('admin.components.menu-item', [
     'route' => 'admin.dashboard',
     'icon' => 'home',

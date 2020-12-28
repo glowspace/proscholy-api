@@ -1,9 +1,7 @@
 html,
 body {
     height:                 100vh;
-    max-height:             100vh;
-
-    overflow:               hidden !important;
+    overflow:               initial !important;
 
     -webkit-font-smoothing: antialiased;
 
@@ -14,12 +12,11 @@ body {
 
 // Content under navbar (sidebar + content)
 .layout-body {
-    max-height: calc(100vh - 75px);
     height:     calc(100vh - 75px);
 
     .admin-content {
         overflow-y: scroll;
-        height: calc(100vh - 70px);
+        height: calc(100vh - (47px + 1px + 1.64rem));
 
         .content-header {
             margin:        1.3rem 0 1rem;
