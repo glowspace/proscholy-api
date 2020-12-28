@@ -1,18 +1,10 @@
 .sidebar {
-    //height:      100%
     padding-top: 5px;
     margin-left: -15px;
 
     @include media-breakpoint-up(lg) {
-        height:     calc(100vh - 70px);
-
-        //& > div {
-        //    margin-top: calc(-60px - 1rem);
-        //    position:   sticky;
-        //    top:        0;
-        //    max-height: 100vh;
-        //    overflow:   auto;
-        //}
+        height: calc(100vh - 70px);
+        overflow: auto;
     }
 
     @include media-breakpoint-down(md) {
@@ -51,7 +43,7 @@
             &:hover,
             &:focus {
                 color:                  #3f51b5;
-                background-color:       #3f51b522 !important;
+                background-color:       #3f51b519 !important;
             }
         }
 
