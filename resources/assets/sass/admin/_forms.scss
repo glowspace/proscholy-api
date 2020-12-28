@@ -99,6 +99,10 @@ textarea.form-control {
     padding:    0;
     border:     none;
     background-color: transparent;
+
+    .hide-report & {
+        display: none;
+    }
 }
 
 

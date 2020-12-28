@@ -9,7 +9,8 @@ body.dark {
     h1,
     .navbar-title,
     .content-label,
-    .table thead th {
+    .table thead th,
+    .form-control {
         color: #eee !important;
     }
 
@@ -33,7 +34,7 @@ body.dark {
     .btn.btn-primary,
     .btn-primary.custom-file-control::before,
     .sidebar a.active {
-        color: #4dc0b5;
+        color: $teal;
 
         &:hover {
         color: #328e85;
@@ -63,7 +64,11 @@ body.dark {
 
     .primary,
     .accent {
-        background-color: #4dc0b5 !important;
-        border-color: #4dc0b5 !important;
+        background-color: $teal !important;
+        border-color: $teal !important;
+    }
+
+    .border-primary {
+        border-color: $teal !important;
     }
 }

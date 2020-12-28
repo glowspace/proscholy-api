@@ -109,9 +109,8 @@
     @stack('head_links')
 </head>
 <body>
-    <div id="app"
-         class="@yield('wrapper-classes', 'page')">
-        <nav class="navbar justify-content-between align-items-center">
+    <div id="app" class="@yield('wrapper-classes', 'page')">
+        <nav class="navbar justify-content-between align-items-center overflow-hidden">
             <div>
                 <a class="navbar-brand mr-4"
                 href="{{route('admin.dashboard')}}">
