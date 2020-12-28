@@ -143,6 +143,7 @@
                                          class="card-img-top"/>
                                     <div class="card-body">
                                         <h5 class="card-title">Informace o&nbsp;projektu</h5>
+                                        <p class="card-text text-muted">ProScholy.cz</p>
                                     </div>
                                 </div>
                             </a>
