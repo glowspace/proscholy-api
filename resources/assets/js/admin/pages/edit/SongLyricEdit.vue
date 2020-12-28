@@ -71,11 +71,11 @@
 
                 <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
                   <v-radio
-                    label="Píseň určená pro Zpěvník ProScholy.cz + Regenschori"
+                    label="Píseň určená pro Zpěvník ProScholy.cz a Regenschoriho"
                     :value="false"
                   ></v-radio>
                   <v-radio
-                    label="Skladba pouze pro Regenschori"
+                    label="Skladba pouze pro Regenschoriho"
                     :value="true"
                   ></v-radio>
                 </v-radio-group>
@@ -245,7 +245,7 @@
                 <items-combo-box
                   v-bind:p-items="tags_history_period"
                   v-model="model.tags_history_period"
-                  label="Historické období (pro Regenschori)"
+                  label="Historické období (pro Regenschoriho)"
                   header-label="Vyberte štítek z nabídky nebo vytvořte nový"
                   create-label="Potvrďte enterem a vytvořte nový štítek"
                   :multiple="true"

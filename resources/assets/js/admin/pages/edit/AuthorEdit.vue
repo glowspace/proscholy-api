@@ -71,7 +71,7 @@
                         <items-combo-box
                             v-bind:p-items="tags_period"
                             v-model="model.tags_period"
-                            label="Historické období (pro Regenschori)"
+                            label="Historické období (pro Regenschoriho)"
                             header-label="Vyberte štítek z nabídky nebo vytvořte nový"
                             create-label="Potvrďte enterem a vytvořte nový štítek"
                             :multiple="true"

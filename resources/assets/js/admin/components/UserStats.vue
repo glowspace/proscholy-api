@@ -6,7 +6,7 @@
             <table class="table mb-0 statistics-table">
                 <tr>
                     <td><b>Nejlepší redaktoři</b></td>
-                    <td>dosah za poslední 4 týdny</td>
+                    <td>dosah za poslední 4&nbsp;týdny</td>
                     <td title="oproti předchozím 4 týdnům" style="text-decoration:underline dotted">změna</td>
                 </tr>
                 <tr v-for="(row, key) in top" :key="row.id" v-if="top && (key < 5 || row.id == userId)">
