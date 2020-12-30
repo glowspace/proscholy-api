@@ -33,6 +33,7 @@
                                 title="Písně s&nbsp;notami"
                                 number="{{number_format($songs_w_score_count, 0, ',', ' ')}}"
                                 percent="{{round(($songs_w_score_count/$songs_count)*100)}}"
+                                link="songs#no-scores"
                             ><td>{{$loading_text}}</td></tr>
                             <tr is="progress-row"
                                 title="LilyPond noty"
@@ -44,6 +45,7 @@
                                 title="Písně s&nbsp;licencí"
                                 number="{{number_format($songs_w_license_count, 0, ',', ' ')}}"
                                 percent="{{round(($songs_w_license_count/$songs_count)*100)}}"
+                                link="songs#no-license"
                             ><td>{{$loading_text}}</td></tr>
                             <tr is="progress-row"
                                 title="Písně se štítky"
