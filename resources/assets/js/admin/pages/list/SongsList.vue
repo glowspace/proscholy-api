@@ -18,6 +18,7 @@
                     <v-radio label="Bez akordů" value="no-chords"></v-radio>
                     <v-radio label="Bez autora" value="no-author"></v-radio>
                     <v-radio label="Bez štítků" value="no-tags"></v-radio>
+                    <v-radio label="LilyPond sazba" value="needs-lilypond"></v-radio>
                 </v-radio-group>
             </v-layout>
             <v-layout row>
@@ -149,12 +150,14 @@ const fetch_items = gql`
         $has_authors: Boolean
         $has_chords: Boolean
         $has_tags: Boolean
+        $needs_lilypond: Boolean
     ) {
         song_lyrics(
             has_lyrics: $has_lyrics
             has_authors: $has_authors
             has_chords: $has_chords
             has_tags: $has_tags
+            needs_lilypond: $needs_lilypond
         ) {
             id
             name
@@ -235,7 +238,10 @@ export default {
                         this.filter_mode == 'no-author' ? false : undefined,
                     has_chords:
                         this.filter_mode == 'no-chords' ? false : undefined,
-                    has_tags: this.filter_mode == 'no-tags' ? false : undefined
+                    has_tags:
+                        this.filter_mode == 'no-tags' ? false : undefined,
+                    needs_lilypond:
+                        this.filter_mode == 'needs-lilypond' ? true : undefined
                 };
             },
             result(result) {
