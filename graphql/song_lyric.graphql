@@ -32,8 +32,8 @@ type SongLyric {
     Raw unparsed lyrics of the song, including:
     - ChordPro chord tags: `[C], [Dmi]` ...
     - chord 'repeater' symbols in verses: `[%]`
-    - verse/refrain/.. marks: `1.`, `2.`, `R:`, `R2:` ... 
-    - other stuff: `@předehra:`, `@mezihra:`     
+    - verse/refrain/.. marks: `1.`, `2.`, `R:`, `R2:` ...
+    - other stuff: `@předehra:`, `@mezihra:`
 
     Soon, there will hopefully be a PE grammar used and available for lyrics parsing
     """
@@ -137,7 +137,7 @@ type SongLyric {
     arrangements: [SongLyric] @hasMany
     arrangement_source: SongLyric @belongsTo
     is_arrangement: Boolean
-    
+
     files(id: Int @eq, type: Int @eq): [File] @hasMany @deprecated(reason:"Files have moved under Extrernals")
     type: Int @deprecated(reason: "Use the `type_enum` field instead")
     is_original: Boolean! @deprecated(reason: "Use the `type_enum` field instead")
@@ -192,6 +192,7 @@ extend type Query {
         has_authors: Boolean
         has_tags: Boolean
         has_chords: Boolean
+        needs_lilypond: Boolean
         order_abc: Boolean
         updated_after: DateTime
     ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php

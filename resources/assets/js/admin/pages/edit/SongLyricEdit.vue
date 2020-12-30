@@ -36,7 +36,7 @@
         <v-tab>Materiály</v-tab>
         <v-tab>Zpěvníky</v-tab>
         <v-tab>Biblické reference</v-tab>
-        <v-tab>Lilypond (beta)</v-tab>
+        <v-tab>Lilypond noty</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap pt-2>
