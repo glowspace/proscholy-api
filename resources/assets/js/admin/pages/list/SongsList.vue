@@ -1,7 +1,7 @@
 <template>
     <!-- v-app must wrap all the components -->
     <v-app :dark="$root.dark">
-        <notifications />
+        <notifications/>
         <v-container fluid grid-list-xs>
             <h1>Písně</h1>
             <create-model
@@ -18,8 +18,23 @@
                     <v-radio label="Bez akordů" value="no-chords"></v-radio>
                     <v-radio label="Bez autora" value="no-author"></v-radio>
                     <v-radio label="Bez štítků" value="no-tags"></v-radio>
+                    <v-radio label="LilyPond noty" value="needs-lilypond"></v-radio>
                 </v-radio-group>
             </v-layout>
+
+            <v-layout row v-if="filter_mode == 'needs-lilypond'">
+                <v-flex xs12>
+                    <div class="card">
+                        <div class="card-header h5">Doplňování LilyPond notových sazeb</div>
+                        <div class="card-body">
+                            LilyPond lze doplnit pouze k písním s přidanou licencí.<br>
+                            Písně, ke kterým je potřeba dosázet LilyPond noty
+                            a zároveň mají vyřešenou licenci, jsou vypsané níže.
+                        </div>
+                    </div>
+                </v-flex>
+            </v-layout>
+
             <v-layout row>
                 <v-flex xs12>
                     <v-card>
@@ -52,44 +67,46 @@
                                                 props.item.id +
                                                 '/edit'
                                         "
-                                        ><song-name :song="props.item"
-                                    /></a>
+                                    >
+                                        <song-name :song="props.item"
+                                        />
+                                    </a>
                                 </td>
                                 <td>
                                     <span v-if="props.item.type === 0"
-                                        >Orig.</span
+                                    >Orig.</span
                                     >
                                     <span v-if="props.item.type === 1"
-                                        >Překl.</span
+                                    >Překl.</span
                                     >
                                     <span v-if="props.item.type === 2"
-                                        >Aut.&nbsp;p.</span
+                                    >Aut.&nbsp;p.</span
                                     >
                                     <span
                                         v-if="
                                             props.item.is_arrangement === true
                                         "
                                     >
-                                        Aranž<br />{{
+                                        Aranž<br/>{{
                                             props.item.arrangement_source.name
                                         }}
                                     </span>
                                 </td>
                                 <td>
                                     {{
-                                        props.item.authors
-                                            .map(a => a.name)
-                                            .join(', ') ||
-                                            (props.item.has_anonymous_author
-                                                ? '(anonymní)'
-                                                : '–')
+                                    props.item.authors
+                                    .map(a => a.name)
+                                    .join(', ') ||
+                                    (props.item.has_anonymous_author
+                                    ? '(anonymní)'
+                                    : '–')
                                     }}
                                 </td>
                                 <td>
                                     {{
-                                        new Date(
-                                            props.item.updated_at
-                                        ).toLocaleString()
+                                    new Date(
+                                    props.item.updated_at
+                                    ).toLocaleString()
                                     }}
                                 </td>
                                 <!-- <td>
@@ -101,7 +118,7 @@
                                 </td>
                                 <td>
                                     <span v-if="props.item.only_regenschori"
-                                        >jen R</span
+                                    >jen R</span
                                     >
                                     <span v-else>R + PS</span>
                                 </td>
@@ -114,12 +131,12 @@
                                                 props.item.id +
                                                 '/edit'
                                         "
-                                        ><i class="fas fa-pen"></i></a
+                                    ><i class="fas fa-pen"></i></a
                                     ><a
-                                        class="text-secondary"
-                                        v-on:click="askForm(props.item.id)"
-                                        ><i class="fas fa-trash"></i
-                                    ></a>
+                                    class="text-secondary"
+                                    v-on:click="askForm(props.item.id)"
+                                ><i class="fas fa-trash"></i
+                                ></a>
                                 </td>
                             </template>
                         </v-data-table>
@@ -149,12 +166,14 @@ const fetch_items = gql`
         $has_authors: Boolean
         $has_chords: Boolean
         $has_tags: Boolean
+        $needs_lilypond: Boolean
     ) {
         song_lyrics(
             has_lyrics: $has_lyrics
             has_authors: $has_authors
             has_chords: $has_chords
             has_tags: $has_tags
+            needs_lilypond: $needs_lilypond
         ) {
             id
             name
@@ -201,15 +220,15 @@ export default {
     data() {
         return {
             headers: [
-                { text: 'Název písničky', value: 'name' },
-                { text: 'Typ', value: 'type' },
-                { text: 'Autoři', value: 'authors', sortable: false },
-                { text: 'Naposledy upraveno', value: 'updated_at' },
+                {text: 'Název písničky', value: 'name'},
+                {text: 'Typ', value: 'type'},
+                {text: 'Autoři', value: 'authors', sortable: false},
+                {text: 'Naposledy upraveno', value: 'updated_at'},
                 // { text: 'Publikováno', value: 'is_published' },
-                { text: 'Zobrazení', value: 'visits' },
-                { text: 'Zveřejnění', value: 'only_regenschori' },
-                { text: 'Pečeť', value: 'is_sealed' },
-                { text: 'Akce', value: 'actions', sortable: false }
+                {text: 'Zobrazení', value: 'visits'},
+                {text: 'Zveřejnění', value: 'only_regenschori'},
+                {text: 'Pečeť', value: 'is_sealed'},
+                {text: 'Akce', value: 'actions', sortable: false}
             ],
             search_string: '',
             filter_mode: 'no-filter',
@@ -235,7 +254,10 @@ export default {
                         this.filter_mode == 'no-author' ? false : undefined,
                     has_chords:
                         this.filter_mode == 'no-chords' ? false : undefined,
-                    has_tags: this.filter_mode == 'no-tags' ? false : undefined
+                    has_tags:
+                        this.filter_mode == 'no-tags' ? false : undefined,
+                    needs_lilypond:
+                        this.filter_mode == 'needs-lilypond' ? true : undefined
                 };
             },
             result(result) {
@@ -265,7 +287,7 @@ export default {
             this.$apollo
                 .mutate({
                     mutation: delete_item,
-                    variables: { id: id },
+                    variables: {id: id},
                     refetchQueries: [
                         {
                             query: fetch_items
@@ -289,7 +311,7 @@ export default {
                     item.secondary_name_1,
                     item.secondary_name_2,
                     item.authors.map(a => a.name).join(' ') ||
-                        (item.has_anonymous_author ? 'anonymni' : ''), // authors
+                    (item.has_anonymous_author ? 'anonymni' : ''), // authors
                     types[item.type]
                 ];
 
