@@ -18,8 +18,35 @@
                     <v-radio label="Bez akordů" value="no-chords"></v-radio>
                     <v-radio label="Bez autora" value="no-author"></v-radio>
                     <v-radio label="Bez štítků" value="no-tags"></v-radio>
+                    <v-radio label="Bez licence" value="no-license"></v-radio>
+                    <v-radio label="Bez not" value="no-scores"></v-radio>
                     <v-radio label="LilyPond noty" value="needs-lilypond"></v-radio>
                 </v-radio-group>
+            </v-layout>
+
+            <v-layout row v-if="filter_mode == 'no-license'">
+                <v-flex xs12>
+                    <div class="card">
+                        <div class="card-header h5">Doplňování licencí</div>
+                        <div class="card-body">
+                            Zobrazeny všechny písně bez uvedené licence.
+                            K takovým je potřeba získat čestné prohlášení Creative Commons od autora.
+                        </div>
+                    </div>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row v-if="filter_mode == 'no-scores'">
+                <v-flex xs12>
+                    <div class="card">
+                        <div class="card-header h5">Doplňování not</div>
+                        <div class="card-body">
+                            Zobrazeny všechny písně, ke kterým je potřeba dodat noty.<br>
+                            <b>Upozornění:</b> U písní bez licence lze přidávat pouze externí noty (odkaz)!
+                            K písním bez licence zatím nenahávejte LilyPond ani soubory.
+                        </div>
+                    </div>
+                </v-flex>
             </v-layout>
 
             <v-layout row v-if="filter_mode == 'needs-lilypond'">
@@ -166,6 +193,8 @@ const fetch_items = gql`
         $has_authors: Boolean
         $has_chords: Boolean
         $has_tags: Boolean
+        $has_license: Boolean
+        $has_scores: Boolean
         $needs_lilypond: Boolean
     ) {
         song_lyrics(
@@ -173,6 +202,8 @@ const fetch_items = gql`
             has_authors: $has_authors
             has_chords: $has_chords
             has_tags: $has_tags
+            has_license: $has_license
+            has_scores: $has_scores
             needs_lilypond: $needs_lilypond
         ) {
             id
@@ -256,6 +287,10 @@ export default {
                         this.filter_mode == 'no-chords' ? false : undefined,
                     has_tags:
                         this.filter_mode == 'no-tags' ? false : undefined,
+                    has_license:
+                        this.filter_mode == 'no-license' ? false : undefined,
+                    has_scores:
+                        this.filter_mode == 'no-scores' ? false : undefined,
                     needs_lilypond:
                         this.filter_mode == 'needs-lilypond' ? true : undefined
                 };
