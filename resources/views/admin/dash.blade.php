@@ -38,6 +38,7 @@
                                 title="LilyPond noty"
                                 number="{{number_format($songs_w_lilypond_count, 0, ',', ' ')}}"
                                 percent="{{round(($songs_w_lilypond_count/$songs_count)*100)}}"
+                                link="songs#needs-lilypond"
                             ><td>{{$loading_text}}</td></tr>
                             <tr is="progress-row"
                                 title="Písně s&nbsp;licencí"
