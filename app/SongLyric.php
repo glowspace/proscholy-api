@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Notifications\SongLyricUpdated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
@@ -25,19 +27,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * App\SongLyric
  *
- * @property int                                                           $id
- * @property string|null                                                   $name
- * @property string|null                                                   $description
- * @property string|null                                                   $lyrics
- * @property int|null                                                      $is_opensong
- * @property int|null                                                      $lang_id
- * @property int|null                                                      $song_id
- * @property int|null                                                      $licence_type
- * @property string|null                                                   $licence_content
- * @property \Carbon\Carbon|null                                           $created_at
- * @property \Carbon\Carbon|null                                           $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[]   $authors
- * @property-read \App\Song|null                                           $song
+ * @property int $id
+ * @property string|null $name
+ * @property string|null $description
+ * @property string|null $lyrics
+ * @property int|null $is_opensong
+ * @property int|null $lang_id
+ * @property int|null $song_id
+ * @property int|null $licence_type
+ * @property string|null $licence_content
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Author[] $authors
+ * @property-read \App\Song|null $song
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereId($value)
@@ -52,9 +54,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereSongId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property int|null                                                      $visits
+ * @property int|null $visits
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereVisits($value)
- * @property string                                                        $lang
+ * @property string $lang
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
  */
@@ -66,7 +68,9 @@ class SongLyric extends Model
         Lockable,
         SoftDeletes,
         RevisionableTrait,
-        HasFactory;
+        HasFactory,
+        Notifiable;
+
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
@@ -156,38 +160,38 @@ class SongLyric extends Model
     ];
 
     protected $fillable
-    = [
-        'name',
-        'song_id',
-        'lyrics',
-        'id',
-        // 'is_original',
-        // 'is_authorized',
-        'type',
-        'lang',
-        'creating_at',
-        'has_anonymous_author',
-        'has_chords',
-        'is_published',
-        'is_approved_by_author',
-        'user_creator_id',
-        'licence_type',
-        'only_regenschori',
-        'capo',
-        'visits',
-        'liturgy_approval_status',
-        'arrangement_of',
-        'lilypond',
-        'lilypond_svg',
-        'song_number',
-        'bible_refs_src',
-        'bible_refs_osis',
-        'secondary_name_1',
-        'secondary_name_2',
-        'licence_type_cc',
-        'admin_note',
-        'is_sealed'
-    ];
+        = [
+            'name',
+            'song_id',
+            'lyrics',
+            'id',
+            // 'is_original',
+            // 'is_authorized',
+            'type',
+            'lang',
+            'creating_at',
+            'has_anonymous_author',
+            'has_chords',
+            'is_published',
+            'is_approved_by_author',
+            'user_creator_id',
+            'licence_type',
+            'only_regenschori',
+            'capo',
+            'visits',
+            'liturgy_approval_status',
+            'arrangement_of',
+            'lilypond',
+            'lilypond_svg',
+            'song_number',
+            'bible_refs_src',
+            'bible_refs_osis',
+            'secondary_name_1',
+            'secondary_name_2',
+            'licence_type_cc',
+            'admin_note',
+            'is_sealed'
+        ];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
@@ -240,8 +244,8 @@ class SongLyric extends Model
     public function getLyricsNoChordsAttribute()
     {
         $str = preg_replace(
-            array('/-/',    '/\[[^\]]+\]/', '/@[^\s]+/',    '/^\s*#.*/m'),
-            array("",       "",             "",             ""),
+            array('/-/', '/\[[^\]]+\]/', '/@[^\s]+/', '/^\s*#.*/m'),
+            array("", "", "", ""),
             $this->lyrics
         );
 
@@ -251,10 +255,10 @@ class SongLyric extends Model
     // TODO: implement
     public function getIsEmptyAttribute()
     {
-        // return $this->lyrics == null 
+        // return $this->lyrics == null
         //     && $this->externals()->count() +
         //     $this->files()->count() == 0
-        //     && 
+        //     &&
     }
 
     public function getHasLyricsAttribute(): bool
@@ -264,14 +268,14 @@ class SongLyric extends Model
 
     // public function getHasMediaAttribute() : bool
     // {
-    //     return 
-    //         $this->externals()->media()->exists() || 
+    //     return
+    //         $this->externals()->media()->exists() ||
     //         $this->files()->audio()->exists();
     // }
 
     // public function getHasSheetMusicAttribute() : bool
     // {
-    //     return 
+    //     return
     //         $this->externals()->scores()->exists() ||
     //         $this->files()->scores()->exists();
     // }
@@ -432,7 +436,7 @@ class SongLyric extends Model
 
     public function scopeForceRestricted($query)
     {
-        // show songs, where there is at least one common author 
+        // show songs, where there is at least one common author
         // of song authors and to-user-assigned authors
         return $query->whereHas('authors', function ($q) {
             $q->whereIn('authors.id', Auth::user()->getAssignedAuthorIds());
@@ -505,7 +509,7 @@ class SongLyric extends Model
                 'songbook_id' => $sb->id,
                 'songbook_number' => $sb->pivot->number,
                 'songbook_number_integer' => (int)preg_replace('/\D/', '', $sb->pivot->number),
-                'songbook_full_number' => [$sb->pivot->songbook->shortcut . $sb->pivot->number,  $sb->pivot->songbook->shortcut . ' ' . $sb->pivot->number],
+                'songbook_full_number' => [$sb->pivot->songbook->shortcut . $sb->pivot->number, $sb->pivot->songbook->shortcut . ' ' . $sb->pivot->number],
             ];
         });
 
@@ -648,7 +652,7 @@ class SongLyric extends Model
                 return $double;
             }
 
-            $song       = Song::create(['name' => $identificator]);
+            $song = Song::create(['name' => $identificator]);
             $song_lyric = SongLyric::create([
                 'name' => $identificator,
                 'song_id' => $song->id
@@ -656,5 +660,10 @@ class SongLyric extends Model
 
             return $song_lyric;
         }
+    }
+
+    public function routeNotificationForSlack($notification)
+    {
+        return env('SLACK_WEBHOOK_URL');
     }
 }

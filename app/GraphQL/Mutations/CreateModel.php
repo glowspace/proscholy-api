@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations;
 
+use App\Notifications\SongLyricCreated;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class CreateModel
         $input = $args["input"];
         $attr = $input["required_attribute"];
 
-        // create a Nuawe custom-made validation error buffer 
+        // create a Nuawe custom-made validation error buffer
         // this is needed for proper returning of validation errors
         // as for usage, see Nuwave\Lighthouse\Schema\Factories\FieldFactory
         $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
@@ -89,6 +90,10 @@ class CreateModel
                 "class_name" => "SongLyric",
                 "edit_url" => route("admin.song.edit", $song_lyric)
             ];
+
+            // Send create notification to Slack
+            $song_lyric->notify(new SongLyricCreated());
+
         } elseif ($input["class_name"] == "NewsItem") {
             $news_item = NewsItem::create(['link' => $attr]);
 
@@ -119,7 +124,7 @@ class CreateModel
 
         // perform the validation with the help of Nuawe validation error buffer
         if (isset($validator)) {
-            // validator has already been tested for fail, so here ->failed() is needed 
+            // validator has already been tested for fail, so here ->failed() is needed
             // in order not to perform the validation again
             if ($validator->failed()) {
                 foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
