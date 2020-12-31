@@ -664,6 +664,6 @@ class SongLyric extends Model
 
     public function routeNotificationForSlack($notification)
     {
-        return env('SLACK_WEBHOOK_URL');
+        return config('slack.slack_webhook_url');
     }
 }
