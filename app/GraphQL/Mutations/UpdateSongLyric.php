@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations;
 
+use App\Notifications\SongLyricUpdated;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
@@ -102,6 +103,9 @@ class UpdateSongLyric
         // }
 
         $song_lyric->save();
+
+        // Send update notification to Slack
+        $song_lyric->notify(new SongLyricUpdated());
 
         // reload from database
         return SongLyric::find($input["id"]);

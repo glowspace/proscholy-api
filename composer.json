@@ -18,6 +18,7 @@
         "kreait/firebase-tokens": "^1.9",
         "laravel/framework": "^8.0",
         "laravel/scout": "^8.2",
+        "laravel/slack-notification-channel": "^2.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "mll-lab/graphql-php-scalars": "^3.0",
