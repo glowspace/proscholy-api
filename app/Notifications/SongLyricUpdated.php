@@ -47,6 +47,6 @@ class SongLyricUpdated extends Notification
         $emoji = (new NotificationHelper())->getRandomEmoji();
 
         return (new SlackMessage)
-            ->content($user_name . " doplnil(a) píseň :zpevnik:$song_id - <$song_url|$song_name>. $emoji");
+            ->content($user_name . " doplnil(a) píseň :zpevnik: $song_id – <$song_url|$song_name>. $emoji");
     }
 }
