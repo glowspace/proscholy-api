@@ -38,13 +38,13 @@ class UpdateSongLyric
 
         $song_lyric = SongLyric::find($input["id"]);
 
-        if ($input["lilypond"] !== $song_lyric->lilypond) {
-            try {
-                $input['lilypond_svg'] = $this->sl_service->getLilypondSvg($input['lilypond']);
-            } catch (\Exception $e) {
-                logger($e);
-            }
-        }
+        // if ($input["lilypond"] !== $song_lyric->lilypond) {
+        //     try {
+        //         $input['lilypond_svg'] = $this->sl_service->getLilypondSvg($input['lilypond']);
+        //     } catch (\Exception $e) {
+        //         logger($e);
+        //     }
+        // }
 
         $song_lyric->update($input);
 

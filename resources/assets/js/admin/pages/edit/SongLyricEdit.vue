@@ -443,7 +443,7 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" style="max-height: 70vh; overflow: scroll;"></div>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; padding: 0 20%; white-space: pre;"></div>
                 <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>
@@ -659,7 +659,9 @@ export default {
         lilypond: "",
         bible_refs_src: "",
         bible_refs_osis: "",
-        admin_note: undefined
+        admin_note: undefined,
+        // this is actually not very nice
+        lilypond_svg: null
       },
 
       selected_thumbnail_external: undefined,
@@ -743,7 +745,25 @@ export default {
       query: FETCH_LILYPOND,
       debounce: 200,
       variables() {
-        return { lilypond: this.model.lilypond }
+        return { lilypond: this.model.lilypond, a0: true }
+      },
+      result(result) {
+        Vue.nextTick()
+        .then(() => {
+            var svgelem = this.$refs.lilypond_src_div.childNodes[0];
+            var bbox = svgelem.getBBox();
+            if (bbox && bbox.width && bbox.height) {
+              console.log('cropping the svg')
+    
+              svgelem.setAttribute('viewBox', [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
+              svgelem.removeAttribute('width');
+              svgelem.removeAttribute('height');
+
+              this.model.lilypond_svg = svgelem.outerHTML;
+            } else {
+              this.model.lilypond_svg = null;
+            }
+        })
       }
     }
   },
@@ -835,6 +855,10 @@ export default {
         this.bible_refs_czech = [];
       }
     },
+
+    // "this.lilypond_parse.svg": {
+    //   console.log('lilypond changed')
+    // },
 
     active(val) {
       window.location.hash = val ? val : '';
