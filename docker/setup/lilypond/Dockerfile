@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 
 # RUN locale-gen en_US.UTF-8 && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 # ENV LANG en_US.UTF-8
@@ -8,11 +8,12 @@ FROM ubuntu:xenial
 # install the lilypond package
 
 RUN apt-get update
-RUN apt-get -y install lilypond
+RUN apt-get -y install bzip2 unzip wget
 
+RUN wget https://lilypond.org/download/binaries/linux-64/lilypond-2.22.0-1.linux-64.sh
+RUN sh lilypond-2.22.0-1.linux-64.sh && rm lilypond-2.22.0-1.linux-64.sh
+# bzip2
 
-# download and install simple http server utility for bash commands
-RUN apt-get -y install wget unzip
 
 RUN wget https://github.com/msoap/shell2http/releases/download/1.13/shell2http-1.13.linux.amd64.tar.gz && \
     tar -xf shell2http-1.13.linux.amd64.tar.gz
