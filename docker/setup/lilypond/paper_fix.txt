@@ -1,4 +1,10 @@
 #(set! paper-alist (cons '("my size" . (cons (* 148 mm) (* 3000 in))) paper-alist))
 \paper {
   #(set-paper-size "my size")
+  indent = 0
+}
+
+% disable footer 
+\header {
+  tagline = ""
 }
