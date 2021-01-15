@@ -24,4 +24,4 @@ COPY paper_fix.txt .
 # file_lilypond -> contents of lilypond formatted file
 
 ENTRYPOINT ./shell2http -form \
-    POST:/svg_a0 'cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=score -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>score.log && cat score.svg && rm score.svg) || cat score.log'
+    POST:/svg_a0 'TMPFILE=`mktemp scoreXXXX` && cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=$TMPFILE -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>$TMPFILE.log && cat $TMPFILE.svg && rm $TMPFILE.svg) || cat $TMPFILE.log'

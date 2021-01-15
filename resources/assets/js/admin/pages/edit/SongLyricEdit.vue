@@ -744,6 +744,7 @@ export default {
     lilypond_parse: {
       query: FETCH_LILYPOND,
       debounce: 200,
+      fetchPolicy: 'no-cache',
       variables() {
         return { lilypond: this.model.lilypond, a0: true }
       },
