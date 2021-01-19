@@ -15,3 +15,10 @@ fi
 # lilypond -dbackend=eps -dno-point-and-click -dgs-load-fonts --format=eps a.ly
 
 # cp *.otf /usr/local/lilypond/usr/share/lilypond/current/fonts/otf/
+
+
+# lilypond --format=ps a.ly (with paper setup)
+# gs -sDEVICE=bbox -q -dBATCH -dNOPAUSE a.ps
+
+# convert to svg bbox (x2, y2 to width, height)
+# test..?
