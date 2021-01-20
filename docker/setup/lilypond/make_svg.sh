@@ -22,3 +22,10 @@ fi
 
 # convert to svg bbox (x2, y2 to width, height)
 # test..?
+
+# lilypond -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 a.ly
+
+
+# ----------------------------------------------------
+# found solution
+# ly > eps, get bbox = (a,b,c,d), svg_viewbox = (a, -d, c-a, d-b)/5, add some units to height and width, remove svg width and height
