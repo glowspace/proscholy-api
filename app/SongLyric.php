@@ -74,7 +74,7 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id', 'bible_refs_osis', 'lilypond_svg'];
+    protected $dontKeepRevisionOf = ['creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id', 'bible_refs_osis', 'lilypond_svg'];
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
@@ -154,9 +154,7 @@ class SongLyric extends Model
     ];
 
     protected $dispatchesEvents = [
-        'saved' => \App\Events\SongLyricSaved::class,
-        'updated' => \App\Events\SongLyricSaved::class,
-        'created' => \App\Events\SongLyricCreated::class,
+        'created' => \App\Events\SongLyricCreated::class
     ];
 
     protected $fillable
@@ -190,7 +188,10 @@ class SongLyric extends Model
         'secondary_name_2',
         'licence_type_cc',
         'admin_note',
-        'is_sealed'
+        'is_sealed',
+        'revision_n_tags',
+        'revision_n_authors',
+        'revision_n_songbook_records'
     ];
 
     private static $lang_string_values = [

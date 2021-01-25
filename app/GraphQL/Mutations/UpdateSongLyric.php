@@ -6,13 +6,8 @@ use App\Notifications\SongLyricUpdated;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-use Log;
 use App\SongLyric;
 use App\Services\SongLyricService;
-use App\Song;
-use App\Author;
-use App\Songbook;
-use function Safe\array_combine;
 
 class UpdateSongLyric
 {
@@ -37,70 +32,19 @@ class UpdateSongLyric
         $input = $args["input"];
 
         $song_lyric = SongLyric::find($input["id"]);
+        $song_lyric_old = $song_lyric->replicate();
 
-        // if ($input["lilypond"] !== $song_lyric->lilypond) {
-        //     try {
-        //         $input['lilypond_svg'] = $this->sl_service->getLilypondSvg($input['lilypond']);
-        //     } catch (\Exception $e) {
-        //         logger($e);
-        //     }
-        // }
+        // $this->sl_service->handleLilypond($song_lyric, $input["lilypond"]);
 
         $song_lyric->update($input);
 
         // todo if has key
         $this->sl_service->handleArrangementSourceUpdate($song_lyric, $input["arrangement_source"]);
         $this->sl_service->handleSongGroup($song_lyric, $input["song"]);
-
-        // HANDLE AUTHORS
-        $syncAuthors = [];
-
-        if (isset($input["authors"]["create"])) {
-            foreach ($input["authors"]["create"] as $author) {
-                $a = Author::create([
-                    'name' => $author['author_name']
-                ]);
-
-                $syncAuthors[$a->id] = [
-                    'authorship_type' => $author['authorship_type']
-                ];
-            }
-        }
-
-        if (isset($input["authors"]["sync"])) {
-            foreach ($input['authors']['sync'] as $author) {
-                $syncAuthors[$author["author_id"]] = [
-                    'authorship_type' => $author["authorship_type"]
-                ];
-            }
-        }
-
-        $song_lyric->authors_pivot()->sync($syncAuthors);
-        $song_lyric->save();
-
-        // HANDLE SONGBOOK RECORDS
-        if (isset($input["songbook_records"]["sync"])) {
-            $syncModels = [];
-            foreach ($input["songbook_records"]["sync"] as $record) {
-                $syncModels[$record["songbook_id"]] = [
-                    'number' => $record["number"]
-                ];
-            }
-            $song_lyric->songbook_records()->sync($syncModels);
-        }
-        // if (isset($input["songbook_records"]["create"])) {
-        //     foreach ($input["songbook_records"]["create"] as $record) {
-        //         // $songbook = Songbook::create(["name" => $record["songbook"]]);
-
-        //         \Log::info($song_lyric);
-
-        //         $song_lyric->songbook_records()->create([
-        //             'name' => $record["songbook"]
-        //         ], [
-        //             'number' => $record["number"]
-        //         ]);
-        //     }
-        // }
+        $this->sl_service->handleHasChords($song_lyric);
+        $this->sl_service->handleAuthors($song_lyric, $input["authors"]);
+        $this->sl_service->handleSongbookRecords($song_lyric, $input["songbook_records"]);
+        $this->sl_service->handleRevisionAssociacionsStats($song_lyric);
 
         $song_lyric->save();
 
