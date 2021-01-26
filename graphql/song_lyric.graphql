@@ -189,12 +189,13 @@ extend type Query {
         is_published: Boolean
         is_approved_by_author: Boolean
         has_lyrics: Boolean
-        has_authors: Boolean
+        has_authors: Boolean    
         has_tags: Boolean
         has_chords: Boolean
         has_scores: Boolean
         has_license: Boolean
         needs_lilypond: Boolean
+        has_lilypond: Boolean
         order_abc: Boolean
         updated_after: DateTime
     ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php
@@ -246,6 +247,7 @@ input UpdateSongLyricInput {
     songbook_records: SyncSongbookRecordsForSongLyricRelation
     lyrics: String
     lilypond: String
+    lilypond_svg: String
     song: SongInput
     only_regenschori: Boolean
     capo: Int

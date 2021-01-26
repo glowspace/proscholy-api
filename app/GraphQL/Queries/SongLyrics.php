@@ -47,6 +47,9 @@ class SongLyrics
             $query = $query->where('lilypond', '=', null)
                 ->where('licence_type_cc', '!=', 0);
 
+        if (isset($args['has_lilypond']) && $args['has_lilypond'] === true)
+            $query = $query->where('lilypond', '!=', null);
+
         if (isset($args['has_authors']) && $args['has_authors'] === true)
             $query = $query->whereHas('authors');
         if (isset($args['has_authors']) && $args['has_authors'] === false)

@@ -246,6 +246,7 @@ export default {
             only_regenschori: vueModel.only_regenschori,
             lyrics: vueModel.lyrics,
             lilypond: vueModel.lilypond,
+            lilypond_svg: vueModel.lilypond_svg,
             song: vueModel.song,
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,

@@ -56,3 +56,10 @@ RUN apt-get -y install software-properties-common
 RUN add-apt-repository ppa:jonathonf/texlive-2019
 RUN apt-get update
 RUN apt-get -y install texlive
+COPY paper_fix.txt .
+
+# run a simple http server that listens on /svg route for a POST request with a multipart form data:
+# file_lilypond -> contents of lilypond formatted file
+
+ENTRYPOINT ./shell2http -form \
+    POST:/svg_a0 'TMPFILE=`mktemp scoreXXXX` && cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=$TMPFILE -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>$TMPFILE.log && cat $TMPFILE.svg && rm $TMPFILE.svg) || cat $TMPFILE.log'

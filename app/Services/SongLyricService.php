@@ -11,9 +11,13 @@ use Exception;
 
 class SongLyricService
 {
-    public function getLilypondSvg($lilypond)
+    public function getLilypondSvg($lilypond, $use_a0 = false)
     {
         $endpoint = config('lilypond.host') . ":" . config('lilypond.port') . '/svg';
+
+        if ($use_a0) {
+            $endpoint .= '_a0';
+        }
 
         $client = new Client();
         $res = $client->post($endpoint, [
@@ -31,6 +35,17 @@ class SongLyricService
         }
 
         throw new Exception("Error getting svg", $res->getStatusCode());
+    }
+
+    public function handleLilypond($song_lyric, $lilypond_input)
+    {
+        if ($lilypond_input !== $song_lyric->lilypond) {
+            try {
+                $input['lilypond_svg'] = $this->getLilypondSvg($lilypond_input);
+            } catch (\Exception $e) {
+                logger($e);
+            }
+        }
     }
 
     public function handleSongGroup(SongLyric $song_lyric, $song_input_data)
@@ -94,5 +109,89 @@ class SongLyricService
 
             $song_lyric->arrangement_source()->associate($arrangement_source);
         }
+    }
+
+    public function handleHasChords(SongLyric $song_lyric)
+    {
+        $song_lyric->update(['has_chords' => $this->songLyricHasChords($song_lyric)]);
+    }
+
+    public function handleAuthors(SongLyric $song_lyric, $authors_data)
+    {
+        // HANDLE AUTHORS
+        $syncAuthors = [];
+
+        if (isset($authors_data["create"])) {
+            foreach ($authors_data["create"] as $author) {
+                $a = Author::create([
+                    'name' => $author['author_name']
+                ]);
+
+                $syncAuthors[$a->id] = [
+                    'authorship_type' => $author['authorship_type']
+                ];
+            }
+        }
+
+        if (isset($authors_data["sync"])) {
+            foreach ($authors_data['sync'] as $author) {
+                $syncAuthors[$author["author_id"]] = [
+                    'authorship_type' => $author["authorship_type"]
+                ];
+            }
+        }
+
+        $song_lyric->authors_pivot()->sync($syncAuthors);
+        $song_lyric->save();
+    }
+
+    public function handleSongbookRecords(SongLyric $song_lyric, $songbooks_data)
+    {
+        // HANDLE SONGBOOK RECORDS
+        if (isset($songbooks_data["sync"])) {
+            $syncModels = [];
+            foreach ($songbooks_data["sync"] as $record) {
+                $syncModels[$record["songbook_id"]] = [
+                    'number' => $record["number"]
+                ];
+            }
+            $song_lyric->songbook_records()->sync($syncModels);
+        }
+
+        // OLD CODE (kept for legacy)
+        // if (isset($input["songbook_records"]["create"])) {
+        //     foreach ($input["songbook_records"]["create"] as $record) {
+        //         // $songbook = Songbook::create(["name" => $record["songbook"]]);
+
+        //         \Log::info($song_lyric);
+
+        //         $song_lyric->songbook_records()->create([
+        //             'name' => $record["songbook"]
+        //         ], [
+        //             'number' => $record["number"]
+        //         ]);
+        //     }
+        // }
+    }
+
+    public function handleRevisionAssociacionsStats(SongLyric $song_lyric)
+    {
+        // handle tags count
+        $song_lyric->update([
+            'revision_n_tags' => $song_lyric->tags->count(),
+            'revision_n_authors' => $song_lyric->authors->count(),
+            'revision_n_songbook_records' => $song_lyric->songbook_records()->count(),
+        ]);
+
+        // externals are handled differently
+    }
+
+    public function songLyricHasChords($song_lyric)
+    {
+        if (strpos($song_lyric->lyrics, '[') === false) {
+            return false;
+        }
+
+        return true;
     }
 }

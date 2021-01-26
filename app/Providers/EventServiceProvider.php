@@ -16,9 +16,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ExternalDeleting' => [
             'App\Listeners\ExternalDeleting'
         ],
-        'App\Events\SongLyricSaved' => [
-            'App\Listeners\SongLyricSaved'
-        ],
         'App\Events\SongLyricCreated' => [
             'App\Listeners\SongLyricCreated'
         ],

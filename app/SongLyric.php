@@ -74,7 +74,7 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['has_chords', 'creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id', 'bible_refs_osis'];
+    protected $dontKeepRevisionOf = ['creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id', 'bible_refs_osis', 'lilypond_svg'];
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
@@ -154,44 +154,45 @@ class SongLyric extends Model
     ];
 
     protected $dispatchesEvents = [
-        'saved' => \App\Events\SongLyricSaved::class,
-        'updated' => \App\Events\SongLyricSaved::class,
-        'created' => \App\Events\SongLyricCreated::class,
+        'created' => \App\Events\SongLyricCreated::class
     ];
 
     protected $fillable
-        = [
-            'name',
-            'song_id',
-            'lyrics',
-            'id',
-            // 'is_original',
-            // 'is_authorized',
-            'type',
-            'lang',
-            'creating_at',
-            'has_anonymous_author',
-            'has_chords',
-            'is_published',
-            'is_approved_by_author',
-            'user_creator_id',
-            'licence_type',
-            'only_regenschori',
-            'capo',
-            'visits',
-            'liturgy_approval_status',
-            'arrangement_of',
-            'lilypond',
-            'lilypond_svg',
-            'song_number',
-            'bible_refs_src',
-            'bible_refs_osis',
-            'secondary_name_1',
-            'secondary_name_2',
-            'licence_type_cc',
-            'admin_note',
-            'is_sealed'
-        ];
+    = [
+        'name',
+        'song_id',
+        'lyrics',
+        'id',
+        // 'is_original',
+        // 'is_authorized',
+        'type',
+        'lang',
+        'creating_at',
+        'has_anonymous_author',
+        'has_chords',
+        'is_published',
+        'is_approved_by_author',
+        'user_creator_id',
+        'licence_type',
+        'only_regenschori',
+        'capo',
+        'visits',
+        'liturgy_approval_status',
+        'arrangement_of',
+        'lilypond',
+        'lilypond_svg',
+        'song_number',
+        'bible_refs_src',
+        'bible_refs_osis',
+        'secondary_name_1',
+        'secondary_name_2',
+        'licence_type_cc',
+        'admin_note',
+        'is_sealed',
+        'revision_n_tags',
+        'revision_n_authors',
+        'revision_n_songbook_records'
+    ];
 
     private static $lang_string_values = [
         'cs' => 'čeština',
