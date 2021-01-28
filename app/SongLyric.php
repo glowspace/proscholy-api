@@ -203,6 +203,7 @@ class SongLyric extends Model
         'de' => 'němčina',
         'fr' => 'francouzština',
         'es' => 'španělština',
+        'pt' => 'portugalština',
         'it' => 'italština',
         'sv' => 'svahilština',
         'he' => 'hebrejština',
