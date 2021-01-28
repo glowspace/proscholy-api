@@ -31,6 +31,8 @@ services:
       - bcloud-network
     ports:
       - 3100:8080
+    volumes:
+      - ./docker/setup/lilypond:/lilypond_src
   bible-matcher:
     extends:
       file: docker/addons.yml
