@@ -110,13 +110,14 @@
             <v-btn
                 v-if="model.song_lyric"
                 :disabled="isDirty"
-                @click="goToAdminPage('song/' + model.song_lyric.id + '/edit')"
+                :href="'/admin/song/' + model.song_lyric.id + '/edit'"
+                @click.prevent="goToAdminPage('song/' + model.song_lyric.id + '/edit')"
                 >Přejít na editaci písničky</v-btn
             >
             <v-btn
                 v-if="model.song_lyric"
                 :disabled="isDirty"
-                @click="showSong()"
+                :href="model_database.song_lyric.public_url"
                 >Zobrazit píseň ve zpěvníku</v-btn
             >
             <br />
@@ -323,10 +324,6 @@ export default {
         onFileDialogSubmit(url) {
             this.model.url = url;
             this.model.is_uploaded = true;
-        },
-
-        showSong() {
-            window.location.href = this.model_database.song_lyric.public_url;
         }
     }
 };

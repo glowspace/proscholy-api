@@ -7,7 +7,7 @@
             }}</span>
         </v-flex>
         <v-flex>
-            <v-btn color="info" outline @click="updateExternal(external.id)"
+            <v-btn color="info" outline @click.prevent="updateExternal(external.id)" :href="'/admin/external/' + external.id + '/edit'"
                 >Upravit</v-btn
             >
         </v-flex>
