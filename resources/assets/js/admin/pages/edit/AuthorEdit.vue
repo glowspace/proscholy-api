@@ -78,14 +78,51 @@
                             :enable-custom="false"
                         ></items-combo-box>
                     </v-form>
+                    <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
+                    <v-btn
+                        :href="model.public_url"
+                        class="mr-0"
+                        :disabled="isDirty"
+                        >Zobrazit ve zpěvníku</v-btn
+                    >
+                    <v-btn
+                        :href="model.public_url"
+                        class="ml-0"
+                        target="_blank"
+                        icon
+                        ><i class="fas fa-external-link-alt"></i
+                    ></v-btn>
+                    <v-btn
+                        :href="regenschori_url + model.public_route"
+                        class="mr-0"
+                        :disabled="isDirty"
+                        >Zobrazit v Regenschorim</v-btn
+                    >
+                    <v-btn
+                        :href="regenschori_url + model.public_route"
+                        class="ml-0"
+                        target="_blank"
+                        icon
+                        ><i class="fas fa-external-link-alt"></i
+                    ></v-btn>
+                    <div class="mt-3 mb-5">
+                        <delete-model-dialog
+                            class-name="Author"
+                            :model-id="model.id"
+                            @deleted="is_deleted = true"
+                            delete-msg="Opravdu chcete vymazat tohoto autora?"
+                            >Vymazat</delete-model-dialog
+                        >
+                    </div>
                 </v-flex>
-                <v-flex xs12 md6 class="edit-description pl-md-4">
+                <v-flex xs12 md6 class="edit-description pl-md-4 mb-5">
                     <h5>Seznam autorských písní</h5>
                     <v-btn
                         v-for="song_lyric in model.song_lyrics"
-                        v-bind:key="song_lyric.id"
+                        v-bind:key="'sl' + song_lyric.id"
                         class="text-none"
-                        @click="
+                        :href="'/admin/song/' + song_lyric.id + '/edit'"
+                        @click.prevent="
                             goToAdminPage('song/' + song_lyric.id + '/edit')
                         "
                         >{{ song_lyric.name }}</v-btn
@@ -95,50 +132,16 @@
                     <h5>Seznam materiálů</h5>
                     <v-btn
                         v-for="external in model.externals"
-                        v-bind:key="external.id"
+                        v-bind:key="'e' + external.id"
                         class="text-none"
-                        @click="
+                        :href="'/admin/external/' + external.id + '/edit'"
+                        @click.prevent="
                             goToAdminPage('external/' + external.id + '/edit')
                         "
                         >{{ external.public_name }}</v-btn
                     >
                 </v-flex>
             </v-layout>
-            <v-btn @click="submit" :disabled="!isDirty">Uložit</v-btn>
-            <v-btn
-                :href="model.public_url"
-                class="text-decoration-none mr-0"
-                :disabled="isDirty"
-                >Zobrazit ve zpěvníku</v-btn
-            >
-            <v-btn
-                :href="model.public_url"
-                class="text-decoration-none ml-0"
-                target="_blank"
-                icon
-                ><i class="fas fa-external-link-alt"></i
-            ></v-btn>
-            <v-btn
-                :href="regenschori_url + model.public_route"
-                class="text-decoration-none mr-0"
-                :disabled="isDirty"
-                >Zobrazit v Regenschorim</v-btn
-            >
-            <v-btn
-                :href="regenschori_url + model.public_route"
-                class="text-decoration-none ml-0"
-                target="_blank"
-                icon
-                ><i class="fas fa-external-link-alt"></i
-            ></v-btn>
-            <br /><br />
-            <delete-model-dialog
-                class-name="Author"
-                :model-id="model.id"
-                @deleted="is_deleted = true"
-                delete-msg="Opravdu chcete vymazat tohoto autora?"
-                >Vymazat</delete-model-dialog
-            >
             <!-- model deleted dialog -->
             <v-dialog v-model="is_deleted" persistent max-width="290">
                 <v-card>

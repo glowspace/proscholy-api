@@ -95,10 +95,11 @@
                   </v-flex>
                   <v-flex xs12 lg6>
                     <v-btn
-                          @click="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
-                          :disabled="!model.arrangement_source"
-                          color="info" outline
-                        >Přejít na editaci aranžované písně</v-btn>
+                      :href="'/admin/song/' + model.arrangement_source.id + '/edit'"
+                      @click.prevent="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
+                      :disabled="!model.arrangement_source"
+                      color="info" outline
+                    >Přejít na editaci aranžované písně</v-btn>
                   </v-flex>
                 </v-layout>
 
@@ -457,7 +458,8 @@
                 v-for="arrangement in [...model_database.arrangements, ...created_arrangements]"
                 v-bind:key="arrangement.id"
                 class="text-none"
-                @click="goToAdminPage('song/' + arrangement.id + '/edit')"
+                :href="'/admin/song/' + arrangement.id + '/edit'"
+                @click.prevent="goToAdminPage('song/' + arrangement.id + '/edit')"
               >{{ arrangement.name }}
               <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
               </v-btn>
@@ -486,10 +488,10 @@
             <span>Ctrl + S</span>
         </v-tooltip>
         <v-btn @click="reset" :disabled="!isDirty"><i class="fas fa-undo mr-2"></i> Vrátit změny do stavu posledního uložení</v-btn>
-        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none mr-0" :disabled="isDirty"><i class="fas fa-guitar mr-2"></i> Zpěvník</v-btn>
-        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
-        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="text-decoration-none mr-0" :disabled="isDirty"><i class="fas fa-church mr-2"></i> Regenschori</v-btn>
-        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="text-decoration-none ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="mr-0" :disabled="isDirty"><i class="fas fa-guitar mr-2"></i> Zpěvník</v-btn>
+        <v-btn v-if="model_database && model_database.public_url" :href="model_database.public_url" class="ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
+        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="mr-0" :disabled="isDirty"><i class="fas fa-church mr-2"></i> Regenschori</v-btn>
+        <v-btn v-if="model_database && model_database.public_route && regenschori_url" :href="regenschori_url + model_database.public_route" class="ml-0" target="_blank" icon><i class="fas fa-external-link-alt"></i></v-btn>
       </div>
       <div class="mt-2 mb-4 ml-n3 p-2">
         <!-- <v-btn @click="destroy" class="error">Vymazat</v-btn> -->
