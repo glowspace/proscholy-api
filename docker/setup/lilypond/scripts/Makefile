@@ -3,6 +3,9 @@ NAME=template
 
 SHELL=/bin/bash
 
+# todo: add gzip and svg optimalizations
+# todo: add logfiles
+
 # V .PHONY uvádíme „falešné“ cíle, tzn. naše symbolická jména pro cíle, které 
 # neprodukují stejně pojmenované soubory jako výsledek své činnosti.
 .PHONY: svg eps svgcrop clean
@@ -25,12 +28,14 @@ clean:
 
 ${NAME}.svg: ${NAME}.ly
 	@echo -e "\n\n### SVG ###\n\n"
-	lilypond -dbackend=svg -dno-point-and-click -djob-count=4 --format=svg ${NAME}.ly
+	lilypond -dbackend=svg -dno-point-and-click -djob-count=4 --format=svg ${NAME}.ly > log.txt 2>&1
 
 ${NAME}.eps: ${NAME}.ly
 	@echo -e "\n\n### EPS ###\n\n"
-	lilypond -dbackend=eps -dno-point-and-click --format=eps ${NAME}.ly
+	lilypond -dbackend=eps -dno-point-and-click --format=eps ${NAME}.ly > log.txt 2>&1
 
 ${NAME}_cropped.svg: ${NAME}.svg ${NAME}.eps
 	@echo -e "\n\n### SVG cropped ###\n\n"
-	/bin/scripts/crop_svg.sh ${NAME}
+
+	svgbox="$(shell cat -v ${NAME}.eps | grep %%BoundingBox | /bin/scripts/svg_bbox.py)" && \
+	xmlstarlet ed -N svg='http://www.w3.org/2000/svg' -d '//svg:svg/@width' -d '//svg:svg/@height' -u '//svg:svg/@viewBox' -v "$$svgbox" ${NAME}.svg > ${NAME}_cropped.svg

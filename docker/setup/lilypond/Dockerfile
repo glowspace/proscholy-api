@@ -25,7 +25,9 @@ RUN wget https://github.com/msoap/shell2http/releases/download/1.13/shell2http-1
 RUN apt-get -y install xmlstarlet
 RUN apt-get -y install python3
 RUN apt-get -y install make
+RUN apt-get -y install tree
 
+# todo: move this logic to python preprocessing step
 COPY paper_fix.txt .
 
 COPY scripts/* /bin/scripts/
@@ -33,8 +35,20 @@ RUN chmod +x /bin/scripts/*
 
 COPY fonts/*.otf /usr/local/lilypond/usr/share/lilypond/current/fonts/otf/
 
-ENTRYPOINT ./shell2http -form \
-    POST:/svg_a0 'TMPFILE=`mktemp scoreXXXX` && cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=$TMPFILE -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>$TMPFILE.log && cat $TMPFILE.svg && rm $TMPFILE.svg) || cat $TMPFILE.log'
+
+
+WORKDIR /lilywork
+
+RUN adduser --disabled-password --gecos '' lilyponder && \
+    chown -R lilyponder /lilywork 
+
+USER lilyponder
+
+ENTRYPOINT /shell2http -form \
+    GET:/make 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cp /scoresl/template.ly . && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    GET:/get 'cd $v_dir && cat $v_file' \
+    GET:/del 'rm -r $v_dir && echo "ok" || echo "not deleted"'
+# POST:/make/svg 'TMPDIR=`mktemp XXXX -d` && cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=$TMPFILE -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>$TMPFILE.log && cat $TMPFILE.svg && rm $TMPFILE.svg) || cat $TMPFILE.log'
 
 
 
