@@ -14,12 +14,14 @@ class AuthorTest extends BaseTestCase
     use CreatesApplication;
     use MakesGraphQLRequests;
     use RefreshDatabase;
- 
+
     public function testQueriesAuthors(): void
     {
-        $author = factory(Author::class)->create();
+        $author = Author::factory()->create();
 
-        $this->graphQL(/** @lang GraphQL */ '
+        $this->graphQL(
+            /** @lang GraphQL */
+            '
         {
             authors {
                 id 
@@ -27,7 +29,8 @@ class AuthorTest extends BaseTestCase
                 description
             }
         }
-        ')->assertJson([
+        '
+        )->assertJson([
             'data' => [
                 'authors' => [
                     [
