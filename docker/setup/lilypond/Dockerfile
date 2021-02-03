@@ -45,7 +45,7 @@ RUN adduser --disabled-password --gecos '' lilyponder && \
 USER lilyponder
 
 ENTRYPOINT /shell2http -form \
-    GET:/make 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cp /scoresl/template.ly . && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    POST:/make 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cat $filepath_file_lilypond /paper_fix.txt > score.ly && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
     GET:/get 'cd $v_dir && cat $v_file' \
     GET:/del 'rm -r $v_dir && echo "ok" || echo "not deleted"'
 # POST:/make/svg 'TMPDIR=`mktemp XXXX -d` && cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=$TMPFILE -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>$TMPFILE.log && cat $TMPFILE.svg && rm $TMPFILE.svg) || cat $TMPFILE.log'

@@ -1,5 +1,5 @@
 #   make NAME=<jiné_jméno> <cíle>
-NAME=template
+NAME=score
 
 SHELL=/bin/bash
 

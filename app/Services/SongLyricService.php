@@ -11,13 +11,9 @@ use Exception;
 
 class SongLyricService
 {
-    public function getLilypondSvg($lilypond, $use_a0 = false)
+    public function getLilypondSvg($lilypond)
     {
-        $endpoint = config('lilypond.host') . ":" . config('lilypond.port') . '/svg';
-
-        if ($use_a0) {
-            $endpoint .= '_a0';
-        }
+        $endpoint = config('lilypond.host') . ":" . config('lilypond.port') . '/make?recipe=svgcrop';
 
         $client = new Client();
         $res = $client->post($endpoint, [
