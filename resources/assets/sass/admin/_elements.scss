@@ -9,3 +9,7 @@ a:focus {
     text-decoration: underline;
     outline: dotted 1px rgba(128, 128, 128, 0.5);
 }
+
+a.v-btn:hover {
+    text-decoration: none;
+}

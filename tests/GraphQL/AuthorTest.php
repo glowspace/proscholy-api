@@ -17,7 +17,7 @@ class AuthorTest extends BaseTestCase
 
     public function testQueriesAuthors(): void
     {
-        $author = factory(Author::class)->create();
+        $author = Author::factory()->create();
 
         $this->graphQL(
             /** @lang GraphQL */
