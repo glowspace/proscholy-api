@@ -7,15 +7,19 @@ use App\Services\LilypondService;
 
 class LilypondServiceTest extends TestCase
 {
-    protected LilypondService $llservice;
-
-    public function boot()
+    public function testSvg()
     {
         $llservice = new LilypondService();
+        $res = $llservice->makeSvg('{ c }', false);
+
+        logger($res);
     }
 
-    public function testMake()
+    public function testSvgCrop()
     {
-        $this->llservice->getLilypondSvg('{ c }');
+        $llservice = new LilypondService();
+        $res = $llservice->makeSvg('{ c }');
+
+        logger($res);
     }
 }

@@ -2,32 +2,28 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
-use Exception;
+use ProScholy\LilypondRenderer\Client;
+use ProScholy\LilypondRenderer\LilypondSrc;
 
 class LilypondService
 {
-    public function getLilypondSvg($lilypond)
+    protected $client;
+
+    public function __construct()
     {
-        $endpoint = config('lilypond.host') . ":" . config('lilypond.port') . '/make?recipe=svgcrop';
+        $this->client = new Client();
+    }
 
-        $client = new Client();
-        $res = $client->post($endpoint, [
-            'multipart' => [
-                [
-                    'name'     => 'file_lilypond', // input name, needs to stay the same
-                    'contents' => $lilypond,
-                    'filename' => 'score.ly' // doesn't matter
-                ]
-            ]
-        ]);
+    public function makeSvg($lilypond, $crop = true)
+    {
+        $res = $this->client->renderSvg(LilypondSrc::withLayout($lilypond, true), $crop);
 
-        // gets the JSON
-
-        if ($res->getStatusCode() == 200) {
-            return $res->getBody();
+        if ($res->isSuccessful()) {
+            $svg = $this->client->getResultOutputFile($res);
+            return $svg;
+        } else {
+            $log = $this->client->getResultLog($res);
+            return $log;
         }
-
-        throw new Exception("Error getting svg", $res->getStatusCode());
     }
 }
