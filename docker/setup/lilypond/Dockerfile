@@ -26,16 +26,20 @@ RUN apt-get -y install xmlstarlet
 RUN apt-get -y install python3
 RUN apt-get -y install make
 RUN apt-get -y install tree
+RUN apt-get -y install pdf2svg
+RUN apt-get -y install curl
 
-# todo: move this logic to python preprocessing step
-COPY paper_fix.txt .
+# Node.js 12 (for svgo)
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
+RUN apt-get install -y nodejs
+
+# svg optimalization module
+RUN npm install -g svgo
 
 COPY scripts/* /bin/scripts/
 RUN chmod +x /bin/scripts/*
 
 COPY fonts/*.otf /usr/local/lilypond/usr/share/lilypond/current/fonts/otf/
-
-
 
 WORKDIR /lilywork
 
@@ -45,9 +49,18 @@ RUN adduser --disabled-password --gecos '' lilyponder && \
 USER lilyponder
 
 ENTRYPOINT /shell2http -form \
-    POST:/make 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cat $filepath_file_lilypond /paper_fix.txt > score.ly && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    POST:/make 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cp $filepath_file_lilypond score.ly && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    GET:/make_test 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cp /scoresl/template.ly score.ly && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
     GET:/get 'cd $v_dir && cat $v_file' \
     GET:/del 'rm -r $v_dir && echo "ok" || echo "not deleted"'
+
+
+
+
+
+
+
+
 # POST:/make/svg 'TMPDIR=`mktemp XXXX -d` && cat $filepath_file_lilypond paper_fix.txt | (lilypond --output=$TMPFILE -dbackend=svg --format=svg -dno-point-and-click -djob-count=4 - 2>$TMPFILE.log && cat $TMPFILE.svg && rm $TMPFILE.svg) || cat $TMPFILE.log'
 
 
