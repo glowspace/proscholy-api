@@ -28,7 +28,8 @@
         "spatie/flysystem-dropbox": "^1.2",
         "spatie/laravel-backup": "^6.9",
         "spatie/laravel-permission": "^3.0",
-        "venturecraft/revisionable": "^1.30"
+        "venturecraft/revisionable": "^1.30",
+        "proscholy/lilypond-renderer-client": "0.1.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -41,6 +42,12 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/proscholy/lilypond-renderer-client"
+        }
+    ],
     "autoload": {
         "classmap": [
             "database/seeds",
