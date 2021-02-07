@@ -5,6 +5,8 @@ services:
       file: docker/server.yml
       service: web
     restart: always
+    volumes:
+      - "./docker/config/fpm/www2.conf:/usr/local/etc/php-fpm.d/www2.conf"
     depends_on:
       - db
     networks:
