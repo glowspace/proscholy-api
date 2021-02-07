@@ -19,11 +19,13 @@ class LilypondService
         $res = $this->client->renderSvg(LilypondSrc::withLayout($lilypond, true), $crop);
 
         if ($res->isSuccessful()) {
-            $svg = $this->client->getResultOutputFile($res);
-            return $svg;
+            $output = $this->client->getResultOutputFile($res);
         } else {
-            $log = $this->client->getResultLog($res);
-            return $log;
+            $output = $this->client->getResultLog($res);
         }
+
+        $this->client->deleteResultAsync($res);
+
+        return $output;
     }
 }

@@ -444,7 +444,7 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; padding: 0 20%; white-space: pre;"></div>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
                 <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>

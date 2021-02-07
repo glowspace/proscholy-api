@@ -15,11 +15,20 @@ class LilypondServiceTest extends TestCase
         logger($res);
     }
 
-    public function testSvgCrop()
+    public function testSvgLog()
     {
         $llservice = new LilypondService();
-        $res = $llservice->makeSvg('{ c }');
+        $res = $llservice->makeSvg('{ c ', false);
 
         logger($res);
     }
+
+
+    // public function testSvgCrop()
+    // {
+    //     $llservice = new LilypondService();
+    //     $res = $llservice->makeSvg('{ c }');
+
+    //     logger($res);
+    // }
 }
