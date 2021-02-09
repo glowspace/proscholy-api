@@ -29,7 +29,7 @@
         "spatie/laravel-backup": "^6.9",
         "spatie/laravel-permission": "^3.0",
         "venturecraft/revisionable": "^1.30",
-        "proscholy/lilypond-renderer-client": "0.1.*"
+        "proscholy/lilypond-renderer-client": "0.2.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

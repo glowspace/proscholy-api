@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6433123b051e3b91093e4f22d165f17f",
+    "content-hash": "5deecf26c82e4656b049347111517894",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -2907,16 +2907,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.44.0",
+            "version": "2.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd"
+                "reference": "e2ba3174ce869da1713c38340dbb36572dfacd5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
-                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e2ba3174ce869da1713c38340dbb36572dfacd5a",
+                "reference": "e2ba3174ce869da1713c38340dbb36572dfacd5a",
                 "shasum": ""
             },
             "require": {
@@ -2996,7 +2996,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-26T20:46:41+00:00"
+            "time": "2021-02-07T21:35:59+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3698,16 +3698,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/proscholy/lilypond-renderer-client.git",
-                "reference": "1df5ff92c74cea80d7c3d0f22f9f2bd52fddeee2"
+                "reference": "b2f28223f5ec34ef054f887727a00378f37bc452"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/1df5ff92c74cea80d7c3d0f22f9f2bd52fddeee2",
-                "reference": "1df5ff92c74cea80d7c3d0f22f9f2bd52fddeee2",
+                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/b2f28223f5ec34ef054f887727a00378f37bc452",
+                "reference": "b2f28223f5ec34ef054f887727a00378f37bc452",
                 "shasum": ""
             },
             "require": {
@@ -3742,10 +3742,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.1.1",
+                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.2.0",
                 "issues": "https://github.com/proscholy/lilypond-renderer-client/issues"
             },
-            "time": "2021-02-06T16:10:57+00:00"
+            "time": "2021-02-09T11:22:31+00:00"
         },
         {
             "name": "psr/cache",
