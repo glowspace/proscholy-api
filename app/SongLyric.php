@@ -180,6 +180,7 @@ class SongLyric extends Model
         'liturgy_approval_status',
         'arrangement_of',
         'lilypond',
+        'lilypond_key_major',
         'lilypond_svg',
         'song_number',
         'bible_refs_src',
@@ -228,6 +229,24 @@ class SongLyric extends Model
         'BY_NC_SA' => 'BY-NC-SA (uv. původ, ne-komerčně, zach. licenci)',
         'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
         'PROPRIETARY' => 'proprietární (smlouva s MS)',
+    ];
+
+    private static $lilypond_key_major_string_values = [
+        "c" => '0 (C / a)',
+        "g" => '1# (G / e)',
+        "d" => '2# (D / h)',
+        "a" => '3# (A / fis)',
+        "e" => '4# (E / cis)',
+        "h" => '5# (H / gis)',
+        "fis" => '6# (Fis / dis)',
+        "cis" => '7# (Cis / ais)',
+        "ces" => '7b (Ces / as)',
+        "ges" => '6b (Ges / es)',
+        "des" => '5b (Des / b)',
+        "as" => '4b (As / f)',
+        "es" => '3b (Es / c)',
+        "b" => '2b (B / g)',
+        "f" => '1b (F / d)'
     ];
 
     public function getPublicUrlAttribute()
@@ -329,6 +348,11 @@ class SongLyric extends Model
     public function getLicenceTypeCCStringValuesAttribute()
     {
         return self::$licence_type_cc_string_values;
+    }
+
+    public function getLilypondKeyMajorStringValuesAttribute()
+    {
+        return self::$lilypond_key_major_string_values;
     }
 
     public function song(): BelongsTo
