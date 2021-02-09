@@ -251,10 +251,9 @@ class SongLyric extends Model
 
     public function getPublicUrlAttribute()
     {
-        return route('client.song.text', [
-            'song_lyric' => $this,
-            'name' => Str::slug($this->name)
-        ]);
+        $slug = Str::slug($this->name);
+
+        return url("/pisen/$this->id/$slug");
     }
 
     public function getPublicRouteAttribute()

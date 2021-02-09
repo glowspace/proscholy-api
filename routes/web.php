@@ -15,38 +15,6 @@
  * Public routes.
  */
 Route::get('/', 'Client\HomeController@renderHome')->name('client.home');
-Route::get('/o-zpevniku', 'Client\HomeController@renderAboutSongbook')->name('client.about');
-
-
-// Redirects to real search route.
-Route::post('/vyhledavani/send_search', 'Client\SearchController@searchSend')->name('client.search');
-// The real user search route
-// Route::get('/vyhledavani/', 'Client\SearchController@searchResults')->name('client.search_results');
-// Route::get('/vyhledavani/{phrase?}', 'Client\SearchController@searchResults')->name('client.search_results');
-Route::get('/search', 'Client\HomeController@renderHome')->name('client.search_results');
-
-Route::get('/seznam-pisni', 'Client\ListController@renderSongListAlphabetical')->name('client.song.list');
-Route::get('/seznam-autoru', 'Client\ListController@renderAuthorListAlphabetical')->name('client.author.list');
-
-// Client single model views
-// Route::get('/pisen/{song_lyric}/noty', 'Client\SongLyricsController@songScore')->name('client.song.score');
-// Route::get('/pisen/{song_lyric}/preklady', 'Client\SongLyricsController@songOtherTranslations')->name('client.song.translations');
-// Route::get('/pisen/{song_lyric}/nahravky', 'Client\SongLyricsController@songAudioRecords')->name('client.song.audio_records');
-// Route::get('/pisen/{song_lyric}/videa', 'Client\SongLyricsController@songVideos')->name('client.song.videos');
-// Route::get('/pisen/{song_lyric}/soubory', 'Client\SongLyricsController@songFiles')->name('client.song.files');
-Route::get('/pisen/{song_lyric}/{name?}', 'Client\SongLyricsController@songText')->name('client.song.text');
-Route::get('/autor/{author}', 'Client\AuthorController@renderAuthor')->name('client.author');
-// TODO: Songbook view
-Route::get('/zpevnik/{songbook}', 'Client\SongbookController@renderSongbook')->name('client.songbook');
-
-// Client forms
-// TODO: Public content request
-Route::get('/navrh/{id}', 'RequestController@request')->name('client.request');
-Route::post('/navrh/{id}', 'RequestController@storeRequest')->name('client.request');
-
-// TODO: Report song licence abuse
-Route::get('/report', 'Client\ReportController@report')->name('client.report');
-Route::post('/report', 'Client\ReportController@storeReport')->name('client.report');
 
 /**
  * Administrace.
@@ -59,13 +27,8 @@ Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFileOld')
 Route::get('/preview/{file}/{filename?}', 'DownloadController@downloadFileOld')->name('preview.file');
 // todo: create a preview route..?
 Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download');
-
 Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('external.proxy');
 
-
-// Thumbnails for pdf files
-Route::get('/thumbnail/external/{external}', 'DownloadController@getThumbnailExternal')->name('external.thumbnail');
-Route::get('/thumbnail/{file}/{filename?}', 'DownloadController@getThumbnailFile')->name('file.thumbnail');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role:admin|editor|autor', 'namespace' => 'Admin'], function () {
@@ -90,10 +53,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
 // refreshing
 Route::get('/refresh-updating/{type}/{id}', 'Api\LockController@refresh_updating');
-
-Route::get('/ucet', function () {
-    return view('client.account');
-})->name('client.account');
 
 // routes for propagation
 Route::get('/advent', function () {
@@ -125,7 +84,3 @@ Route::get('/run-schedule', function () {
 Route::get('/regenschori', function () {
     return redirect(config('url.regenschori'));
 })->name('client.regenschori');
-
-// Route::get('/firebase-auth/me', function(Request $request) {
-//     return (array) $request->public_user();
-// })->middleware('auth:web_firebase');
