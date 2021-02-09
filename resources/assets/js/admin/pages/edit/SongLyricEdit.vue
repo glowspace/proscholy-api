@@ -444,6 +444,8 @@
                 v-on:keydown.tab.prevent="preventTextareaTab($event)"
                 style="font-family: monospace; tab-size: 2;"
               ></v-textarea>
+
+              <a :href="lilypond_src_download_url">Stáhnout zdrojový lilypond</a>
             </v-flex>
             <v-flex xs12 md6>
                 <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
@@ -836,6 +838,16 @@ export default {
     externals_scores(){
       return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE'].includes(ext.content_type));
     },
+
+    lilypond_src_download_url() {
+      if (this.model && this.model_database) {
+        const fileName = this.model_database.public_route.split('/')[3];
+  
+        return `/api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
+      }
+
+      return '';
+    }
   },
 
   watch: {

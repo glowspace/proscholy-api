@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\File;
 use App\External;
 
+use App\Services\LilypondService;
+
 class DownloadController extends Controller
 {
     public function downloadFileOld(Request $request, $db_file_id, $filename)
@@ -30,6 +32,24 @@ class DownloadController extends Controller
         }
 
         return response()->file($path);
+    }
+
+    public function downloadLilypondSource(Request $request)
+    {
+        $filename = $request->get('filename');
+        $lilypond = $request->get('lilypond_src');
+        $key_major = $request->get('lylipond_key_major');
+
+        $ly_s = new LilypondService();
+        $src = $ly_s->makeLilypondSource($lilypond, $key_major);
+
+        $headers = [
+            'Content-Type' => 'text/*'
+        ];
+
+        return response()->streamDownload(function () use ($src) {
+            echo $src;
+        }, "$filename.ly", $headers);
     }
 
     public function proxyExternal(External $external)
