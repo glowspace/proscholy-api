@@ -57,7 +57,9 @@ ${NAME}_cropped.svg: ${NAME}.svg ${NAME}.eps
 
 # 1. compute new svg box from EPS file
 # 2. replace it within the svg file (and remove width and height attributes)
-# 3. optimize the svg with the svgo tool
+# 3. remove redundant tspan nodes causing font rendering trouble on Flutter
+# 4. optimize the svg with the svgo tool
 	svgbox="$(shell cat -v ${NAME}.eps | grep %%BoundingBox | /bin/scripts/svg_bbox.py)" && \
 	xmlstarlet ed -N svg='http://www.w3.org/2000/svg' -d '//svg:svg/@width' -d '//svg:svg/@height' -u '//svg:svg/@viewBox' -v "$$svgbox" ${NAME}.svg | \
-	svgo -i - -o ${NAME}_cropped.svg
+	sed 's/<tspan>//g; s/<\/tspan>//g' | \
+	svgo --enable=removeStyleElement -i - -o ${NAME}_cropped.svg
