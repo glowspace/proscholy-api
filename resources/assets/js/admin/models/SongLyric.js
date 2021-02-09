@@ -21,6 +21,7 @@ const fragment = gql`
         only_regenschori
         lyrics
         lilypond
+        lilypond_key_major
         song {
             id
             song_lyrics {
@@ -113,6 +114,7 @@ const QUERY = gql`
             liturgy_approval_status_string_values
             authorship_type_string_values
             licence_type_cc_string_values
+            lilypond_key_major_string_values
 
             is_arrangement
 
@@ -246,7 +248,8 @@ export default {
             only_regenschori: vueModel.only_regenschori,
             lyrics: vueModel.lyrics,
             lilypond: vueModel.lilypond,
-            lilypond_svg: vueModel.lilypond_svg,
+            // lilypond_svg: vueModel.lilypond_svg,
+            lilypond_key_major: vueModel.lilypond_key_major,
             song: vueModel.song,
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,

@@ -432,6 +432,8 @@
         <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap class="pt-2">
             <v-flex xs12 md6>
+              <v-select :items="enums.lilypond_key_major" v-model="model.lilypond_key_major" label="Předznamenání"></v-select>
+
               <v-textarea
                 class="auto-grow-alt"
                 outline
@@ -444,7 +446,7 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; padding: 0 20%; white-space: pre;"></div>
+                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
                 <div v-else>Náhled lilypondu není dostupný</div>
             </v-flex>
           </v-layout>
@@ -612,8 +614,8 @@ const CREATE_ARRANGEMENT = gql`
 `;
 
 const FETCH_LILYPOND = gql`
-  query ($lilypond: String) {
-    lilypond_parse (lilypond: $lilypond) {
+  query ($lilypond: String, $lilypond_key_major: String) {
+    lilypond_parse (lilypond: $lilypond, lilypond_key_major: $lilypond_key_major) {
       svg
     }
   }
@@ -681,7 +683,8 @@ export default {
         lang: [],
         liturgy_approval_status: [],
         authorship_type: [],
-        licence_type_cc: []
+        licence_type_cc: [],
+        lilypond_key_major: []
       },
 
       active: 0,
@@ -702,6 +705,7 @@ export default {
         this.loadEnumJsonFromResult(result, "liturgy_approval_status_string_values", this.enums.liturgy_approval_status);
         this.loadEnumJsonFromResult(result, "authorship_type_string_values", this.enums.authorship_type);
         this.loadEnumJsonFromResult(result, "licence_type_cc_string_values", this.enums.licence_type_cc);
+        this.loadEnumJsonFromResult(result, "lilypond_key_major_string_values", this.enums.lilypond_key_major);
 
         // if there are any thumbnailables, then select the first one
         if (this.thumbnailables.length) {
@@ -748,7 +752,7 @@ export default {
       debounce: 200,
       fetchPolicy: 'no-cache',
       variables() {
-        return { lilypond: this.model.lilypond, a0: true }
+        return { lilypond: this.model.lilypond, lilypond_key_major: this.model.lilypond_key_major }
       },
       result(result) {
         Vue.nextTick()

@@ -32,12 +32,11 @@ class UpdateSongLyric
         $input = $args["input"];
 
         $song_lyric = SongLyric::find($input["id"]);
-        $song_lyric_old = $song_lyric->replicate();
+        // $song_lyric_old = $song_lyric->replicate();
 
-        // $this->sl_service->handleLilypond($song_lyric, $input["lilypond"]);
+        $this->sl_service->handleLilypond($song_lyric, $input["lilypond"], $input["lilypond_key_major"]);
 
         $song_lyric->update($input);
-
         // todo if has key
         $this->sl_service->handleArrangementSourceUpdate($song_lyric, $input["arrangement_source"]);
         $this->sl_service->handleSongGroup($song_lyric, $input["song"]);

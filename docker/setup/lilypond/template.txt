@@ -1,0 +1,102 @@
+%LilyPond proscholy.cz
+\version "2.22.0"
+
+%nastavení papíru
+\paper {
+  print-page-number = ##f	
+  indent = 0
+}
+
+\header {
+  tagline = #ff		% ruší řádek s popiskem dole
+}
+
+%přizpůsobení vzhledu
+% bylo by dobré tohle umístit do samostatného souboru, aby se snáz dalo měnit
+\layout {
+    \context {
+      \Score \remove "Bar_number_engraver"		% ruší čísla taktů na kraji osnovy      
+    }
+    \context {
+      \ChordNames {
+        \set chordRootNamer = #(chord-name->german-markup #t)		% Přepíná B na H
+        \set majorSevenSymbol = \markup { maj7 }		% mění zobrazení maj akordů
+        \override VerticalAxisGroup.nonstaff-relatedstaff-spacing.padding = #0.7		% posunuje akordy výš (defaultně 0.5)
+        \set chordChanges = ##t		% když je vícekrát za sebou stejný akord, zobrazí se jen jednou
+      }
+    }
+    \context {
+      \Lyrics {
+        %\override LyricHyphen.minimum-distance = #1	% vynucení pomlček mezi slabikami
+                                                        % docela jsem si zvyknul to nepoužívat
+      }
+    }
+    \context {
+      \Staff \RemoveAllEmptyStaves      
+    }
+}
+  
+% hodnoty z frontendu, načítat z "proscholy-web/pages/song/store.js" nebo tak nějak
+tonina = e		% tónina do které se transponuje 
+                        % hodnoty: c cis des d dis es e f fis ges g gis as a b c
+
+showChords = ##t	% přepínač zobrazení akordů 
+                        % hodnoty: ##f ##t
+                        
+
+%%%%%% k vyplnění v redakci >>>
+
+defaultniTonina = e	% vyplňuje redaktor, ideálně formou <select>
+                        % hodnoty: c cis des d dis es e f fis ges g gis as a b c
+
+%objekt s notama
+% vyplňuje redaktor ideálně do textového pole
+% \relative c' {  \key "\defaultníTonina" \major \time 4/4  c1 \bar "|." } by bylo vhodné přednačíst, ale nechat k úpravě
+melodie = \relative c' {
+  \key e \minor
+  \time 6/8      
+  \partial 4. { e8 g a | } b c b ~ b4. |
+  r b8 a g | a b a ~ a4. |
+  r a8 g fis | g fis g ~ g4. |
+  r g8 e g | fis4. r |
+  r e8 e fis | g4. ~ g |
+  r g8 fis e | c4. c |
+  r c8 c d | e4. ~ e4 (f8) |
+  e4 r8 e e c | b2. | R2. \bar "|."
+}
+
+%objekt s textem písně
+% vyplňuje redaktor ideálně do textového pole
+text = \lyricmode {
+  Mé dla -- ně zved -- nu -- té při -- jmi teď, Bo -- že můj, 
+  tak ja -- ko ve -- čer -- ní o -- bět -- ní dar.
+  Mod -- lit -- ba má ať "k to" -- bě stou -- pá 
+  tak, ja -- ko vů -- ně ka -- did -- lo -- vá.
+}
+
+%objekt s akordama
+% vyplňuje redaktor ideálně do textového pole
+akordy = \chordmode  {
+  s4. e1.:m a:m c b:7
+  e:m a:m c b2.:7 b:7
+}
+
+%%%%%% <<< k vyplnění v redakci
+
+%poskládání objektů melodie, textu a akordů do jedněch not
+% transponuje celé noty z defaultní toniny do výstupní toniny
+% zobrazí akordy, pokud je showChords = ##t (True)
+\score { \transpose \defaultniTonina \tonina
+  <<
+    \new ChordNames { #(if showChords #{ { \akordy } #}) }
+    \new Voice = "one" {  \melodie }
+    \new Lyrics \lyricsto "one" \text
+  >>
+}
+
+% můj návrh na rozložení v redakci pro jednoduché zadávání: nastavení tóniny + 3x samostatné textové pole 
+% + asi jedno textové pole mimo objekty, kde by bylo možné vkládat vlastní layout, scripty a pod.
+
+% Taky by bylo super, kdyby se v redakci dal vygenerovat soubor, který by celou aktuální šablonu 
+%	tak jak jde k svg backendu vyexportoval jako .ly k načtení do Frescobaldi
+%šablona 2.1 @F. Kratoš

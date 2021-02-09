@@ -6,42 +6,24 @@ use Log;
 use App\Author;
 use App\SongLyric;
 use App\Song;
-use GuzzleHttp\Client;
-use Exception;
 
 class SongLyricService
 {
-    public function getLilypondSvg($lilypond, $use_a0 = false)
+    protected $ly_service;
+
+    public function __construct()
     {
-        $endpoint = config('lilypond.host') . ":" . config('lilypond.port') . '/svg';
-
-        if ($use_a0) {
-            $endpoint .= '_a0';
-        }
-
-        $client = new Client();
-        $res = $client->post($endpoint, [
-            'multipart' => [
-                [
-                    'name'     => 'file_lilypond', // input name, needs to stay the same
-                    'contents' => $lilypond,
-                    'filename' => 'score.ly' // doesn't matter
-                ]
-            ]
-        ]);
-
-        if ($res->getStatusCode() == 200) {
-            return $res->getBody();
-        }
-
-        throw new Exception("Error getting svg", $res->getStatusCode());
+        $this->ly_service = new LilypondService();
     }
 
-    public function handleLilypond($song_lyric, $lilypond_input)
+    public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major)
     {
-        if ($lilypond_input !== $song_lyric->lilypond) {
+        if ($lilypond_input !== $song_lyric->lilypond || $lilypond_key_major !== $song_lyric->lilypond_key_major) {
             try {
-                $input['lilypond_svg'] = $this->getLilypondSvg($lilypond_input);
+                $song_lyric->update([
+                    'lilypond_svg' => $this->ly_service->makeSvg($lilypond_input, $lilypond_key_major, true)
+                ]);
+                logger('lilypond rendering finished');
             } catch (\Exception $e) {
                 logger($e);
             }

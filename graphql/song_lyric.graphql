@@ -46,6 +46,7 @@ type SongLyric {
     SVG output of lilypond parsing
     """
     lilypond_svg: String
+    lilypond_key_major: String
     type_enum: SongType @rename(attribute: "type")
     is_approved_by_author: Boolean!
     is_published: Boolean!
@@ -115,6 +116,7 @@ type SongLyric {
     liturgy_approval_status_string_values: JSON @guard
     authorship_type_string_values: JSON
     licence_type_cc_string_values: JSON
+    lilypond_key_major_string_values: JSON
 
     tags_official: [Tag]
         @morphMany(relation: "tags", scopes: ["liturgyPart"])
@@ -149,6 +151,7 @@ type SongLyric {
     bible_refs_osis: String
     admin_note: String @guard
     is_sealed: Boolean
+    base_key: SheetMusicKey @rename(attribute: "lilypond_key_major")
 }
 
 enum SongType {
@@ -166,6 +169,25 @@ enum LicenseTypeCC {
     BY_NC_SA @enum(value: 5)
     BY_NC_ND @enum(value: 6)
     PROPRIETARY @enum(value: 7)
+}
+
+enum SheetMusicKey {
+    UNSET @enum(value: null)
+    ZERO @enum(value: "c")
+    SHARP_1 @enum(value: "g")
+    SHARP_2 @enum(value: "d")
+    SHARP_3 @enum(value: "a")
+    SHARP_4 @enum(value: "e")
+    SHARP_5 @enum(value: "h")
+    SHARP_6 @enum(value: "fis")
+    SHARP_7 @enum(value: "cis")
+    FLAT_7 @enum(value: "ces")
+    FLAT_6 @enum(value: "ges")
+    FLAT_5 @enum(value: "des")
+    FLAT_4 @enum(value: "as")
+    FLAT_3 @enum(value: "es")
+    FLAT_2 @enum(value: "b")
+    FLAT_1 @enum(value: "f")
 }
 
 type SongLyricPaginator {
@@ -247,7 +269,7 @@ input UpdateSongLyricInput {
     songbook_records: SyncSongbookRecordsForSongLyricRelation
     lyrics: String
     lilypond: String
-    lilypond_svg: String
+    lilypond_key_major: String
     song: SongInput
     only_regenschori: Boolean
     capo: Int
