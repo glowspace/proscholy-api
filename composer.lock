@@ -1887,16 +1887,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.26.1",
+            "version": "v8.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94"
+                "reference": "a6680d98f9dadaa363aa7d5218517a08706cee64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
-                "reference": "275c78c97e007e4a9d771d4d1caa1c77ebfdcf94",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a6680d98f9dadaa363aa7d5218517a08706cee64",
+                "reference": "a6680d98f9dadaa363aa7d5218517a08706cee64",
                 "shasum": ""
             },
             "require": {
@@ -2051,7 +2051,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-02-02T14:07:24+00:00"
+            "time": "2021-02-09T15:14:54+00:00"
         },
         {
             "name": "laravel/scout",
@@ -3698,16 +3698,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/proscholy/lilypond-renderer-client.git",
-                "reference": "b2f28223f5ec34ef054f887727a00378f37bc452"
+                "reference": "99036d9591cb5e07790484be5e1912c3aa1cfe93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/b2f28223f5ec34ef054f887727a00378f37bc452",
-                "reference": "b2f28223f5ec34ef054f887727a00378f37bc452",
+                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/99036d9591cb5e07790484be5e1912c3aa1cfe93",
+                "reference": "99036d9591cb5e07790484be5e1912c3aa1cfe93",
                 "shasum": ""
             },
             "require": {
@@ -3742,10 +3742,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.2.0",
+                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.2.1",
                 "issues": "https://github.com/proscholy/lilypond-renderer-client/issues"
             },
-            "time": "2021-02-09T11:22:31+00:00"
+            "time": "2021-02-09T17:03:13+00:00"
         },
         {
             "name": "psr/cache",
