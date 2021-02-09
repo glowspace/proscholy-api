@@ -14,9 +14,16 @@ class LilypondService
         $this->client = new Client();
     }
 
-    public function makeSvg($lilypond, $crop = true)
+    public function makeSvg($lilypond, $key_major = null, $crop = true)
     {
-        $res = $this->client->renderSvg(LilypondSrc::withLayout($lilypond, true), $crop);
+        $src = new LilypondSrc($lilypond);
+        $src->applyLayout()->applyInfinitePaper();
+
+        if ($key_major) {
+            $src->setOriginalKey($key_major);
+        }
+
+        $res = $this->client->renderSvg($src, $crop);
 
         if ($res->isSuccessful()) {
             $output = $this->client->getResultOutputFile($res);

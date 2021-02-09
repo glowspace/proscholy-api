@@ -3,5 +3,5 @@ type LilypondOutput {
 }
 
 extend type Query @middleware(checks: ["auth:api"]) {
-    lilypond_parse(lilypond: String, a0: Boolean): LilypondOutput 
+    lilypond_parse(lilypond: String, lilypond_key_major: String): LilypondOutput 
 }

@@ -16,11 +16,14 @@ class SongLyricService
         $this->ly_service = new LilypondService();
     }
 
-    public function handleLilypond($song_lyric, $lilypond_input)
+    public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major)
     {
-        if ($lilypond_input !== $song_lyric->lilypond) {
+        if ($lilypond_input !== $song_lyric->lilypond || $lilypond_key_major !== $song_lyric->lilypond_key_major) {
             try {
-                $input['lilypond_svg'] = $this->ly_service->makeSvg($lilypond_input, true);
+                $song_lyric->update([
+                    'lilypond_svg' => $this->ly_service->makeSvg($lilypond_input, $lilypond_key_major, true)
+                ]);
+                logger('lilypond rendering finished');
             } catch (\Exception $e) {
                 logger($e);
             }
