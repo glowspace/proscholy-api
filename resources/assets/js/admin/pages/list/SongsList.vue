@@ -21,8 +21,12 @@
                     <v-radio label="Bez licence" value="no-license"></v-radio>
                     <v-radio label="Bez not" value="no-scores"></v-radio>
                     <v-radio
-                        label="LilyPond noty"
+                        label="Bez LP not"
                         value="needs-lilypond"
+                    ></v-radio>
+                    <v-radio
+                        label="LP noty k aktualizaci"
+                        value="needs-lilypond-update"
                     ></v-radio>
                 </v-radio-group>
             </v-layout>
@@ -206,6 +210,7 @@ const fetch_items = gql`
         $has_license: Boolean
         $has_scores: Boolean
         $needs_lilypond: Boolean
+        $needs_lilypond_update: Boolean
     ) {
         song_lyrics(
             has_lyrics: $has_lyrics
@@ -215,6 +220,7 @@ const fetch_items = gql`
             has_license: $has_license
             has_scores: $has_scores
             needs_lilypond: $needs_lilypond
+            needs_lilypond_update: $needs_lilypond_update
         ) {
             id
             name
@@ -301,7 +307,11 @@ export default {
                     has_scores:
                         this.filter_mode == 'no-scores' ? false : undefined,
                     needs_lilypond:
-                        this.filter_mode == 'needs-lilypond' ? true : undefined
+                        this.filter_mode == 'needs-lilypond' ? true : undefined,
+                    needs_lilypond_update:
+                        this.filter_mode == 'needs-lilypond-update'
+                            ? true
+                            : undefined
                 };
             },
             result(result) {

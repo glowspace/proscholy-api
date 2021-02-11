@@ -5,6 +5,8 @@ namespace App\Services;
 use ProScholy\LilypondRenderer\Client;
 use ProScholy\LilypondRenderer\LilypondSrc;
 
+use Illuminate\Support\Str;
+
 class LilypondService
 {
     protected $client;
@@ -39,5 +41,15 @@ class LilypondService
         }
 
         return $src;
+    }
+
+    public function needsLilypondUpdate($lilypond): bool
+    {
+        $lp_no_spaces = str_replace(' ', '', $lilypond);
+
+        return (!Str::contains($lp_no_spaces, ['melodie={']) &&
+            !Str::contains($lp_no_spaces, ['text=\lyricmode{']) &&
+            Str::contains($lp_no_spaces, 'indent=0') &&
+            Str::contains($lp_no_spaces, 'tagline=""'));
     }
 }

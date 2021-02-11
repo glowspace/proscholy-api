@@ -217,6 +217,7 @@ extend type Query {
         has_scores: Boolean
         has_license: Boolean
         needs_lilypond: Boolean
+        needs_lilypond_update: Boolean
         has_lilypond: Boolean
         order_abc: Boolean
         updated_after: DateTime

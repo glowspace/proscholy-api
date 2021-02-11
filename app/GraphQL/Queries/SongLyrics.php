@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Services\LilypondService;
 use App\SongLyric;
 use Log;
 
@@ -50,6 +51,9 @@ class SongLyrics
         if (isset($args['has_lilypond']) && $args['has_lilypond'] === true)
             $query = $query->where('lilypond', '!=', null);
 
+        if (isset($args['needs_lilypond_update']) && $args['needs_lilypond_update'] === true)
+            $query = $query->where('lilypond', '!=', null);
+
         if (isset($args['has_authors']) && $args['has_authors'] === true)
             $query = $query->whereHas('authors');
         if (isset($args['has_authors']) && $args['has_authors'] === false)
@@ -72,6 +76,15 @@ class SongLyrics
         if (isset($args['updated_after']))
             $query = $query->where('updated_at', '>', $args['updated_after']);
 
-        return $query->get();
+        $res = $query->get();
+
+        if (isset($args['needs_lilypond_update']) && $args['needs_lilypond_update'] === true) {
+            $serv = new LilypondService();
+            $res = $res->filter(function ($sl) use ($serv) {
+                return $serv->needsLilypondUpdate($sl->lilypond);
+            });
+        }
+
+        return $res;
     }
 }
