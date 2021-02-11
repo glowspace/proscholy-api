@@ -5,14 +5,14 @@
                 >Přidat k písni nebo skupině písní</v-btn
             >
         </template>
-        <v-card>
+        <v-card style="margin: 0">
             <v-card-title class="headline">Výběr </v-card-title>
             <v-card-text>
                 <v-combobox
                     v-model="song"
-                    :items="songs"
-                    item-value="id"
-                    :item-text="getSongLyricNames"
+                    :items="songs_flat"
+                    item-value="song_id"
+                    item-text="name_display"
                     :filter="filter"
                     label="Vyberte píseň resp. skupinu písní"
                 ></v-combobox>
@@ -45,11 +45,27 @@ const FETCH_SONGS = gql`
             song_lyrics {
                 id
                 name
+                secondary_name_1
+                secondary_name_2
                 type
             }
         }
     }
 `;
+
+const songLyricFullName = sl => {
+    var name = sl.name;
+    if (sl.secondary_name_1) {
+        name += '(' + sl.secondary_name_1;
+        if (sl.secondary_name_2) {
+            name += ', ' + sl.secondary_name_2;
+        }
+        name += ')';
+    }
+    return name;
+};
+
+const stringToSearchable = str => removeDiacritics(str ?? '').toLowerCase();
 
 export default {
     props: ['outline'],
@@ -57,27 +73,29 @@ export default {
     data() {
         return {
             dialog: false,
-            song: undefined
+            song: undefined,
+            songs_flat: []
         };
     },
 
     apollo: {
         songs: {
-            query: FETCH_SONGS
+            query: FETCH_SONGS,
+            result() {
+                this.songs_flat = this.songs.map(song => ({
+                    song_id: song.id,
+                    name_search: stringToSearchable(
+                        song.song_lyrics.map(songLyricFullName).join(', ')
+                    ),
+                    name_display: song.song_lyrics
+                        .map(songLyricFullName)
+                        .join(', ')
+                }));
+            }
         }
     },
 
     methods: {
-        getSongLyricNames(song) {
-            let name = '';
-            for (let sl of song.song_lyrics) {
-                name += sl.name + ', ';
-            }
-
-            return name.slice(0, name.length - 2);
-            // return song.song_lyrics[0].name;
-        },
-
         onCancel() {
             this.dialog = false;
         },
@@ -87,20 +105,10 @@ export default {
             this.$emit('submit', this.song);
         },
 
-        filter(item, queryText, itemText) {
+        filter(item, queryText) {
             if (item.header) return false;
 
-            const hasValue = val => (val != null ? val : '');
-
-            const text = removeDiacritics(hasValue(itemText));
-            const query = removeDiacritics(hasValue(queryText));
-
-            return (
-                text
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toString().toLowerCase()) > -1
-            );
+            return item.name_search.indexOf(stringToSearchable(queryText)) > -1;
         }
     }
 };
