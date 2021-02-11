@@ -1,7 +1,7 @@
 <template>
     <!-- v-app must wrap all the components -->
     <v-app :dark="$root.dark">
-        <notifications/>
+        <notifications />
         <v-container fluid grid-list-xs>
             <h1>Písně</h1>
             <create-model
@@ -20,7 +20,10 @@
                     <v-radio label="Bez štítků" value="no-tags"></v-radio>
                     <v-radio label="Bez licence" value="no-license"></v-radio>
                     <v-radio label="Bez not" value="no-scores"></v-radio>
-                    <v-radio label="LilyPond noty" value="needs-lilypond"></v-radio>
+                    <v-radio
+                        label="LilyPond noty"
+                        value="needs-lilypond"
+                    ></v-radio>
                 </v-radio-group>
             </v-layout>
 
@@ -29,8 +32,9 @@
                     <div class="card">
                         <div class="card-header h5">Doplňování licencí</div>
                         <div class="card-body">
-                            Zobrazeny všechny písně bez uvedené licence.
-                            K takovým je potřeba získat čestné prohlášení Creative Commons od autora.
+                            Zobrazeny všechny písně bez uvedené licence. K
+                            takovým je potřeba získat čestné prohlášení Creative
+                            Commons od autora.
                         </div>
                     </div>
                 </v-flex>
@@ -41,9 +45,11 @@
                     <div class="card">
                         <div class="card-header h5">Doplňování not</div>
                         <div class="card-body">
-                            Zobrazeny všechny písně, ke kterým je potřeba dodat noty.<br>
-                            <b>Upozornění:</b> U písní bez licence lze přidávat pouze externí noty (odkaz)!
-                            K písním bez licence zatím nenahávejte LilyPond ani soubory.
+                            Zobrazeny všechny písně, ke kterým je potřeba dodat
+                            noty.<br />
+                            <b>Upozornění:</b> U písní bez licence lze přidávat
+                            pouze externí noty (odkaz)! K písním bez licence
+                            zatím nenahávejte LilyPond ani soubory.
                         </div>
                     </div>
                 </v-flex>
@@ -52,11 +58,14 @@
             <v-layout row v-if="filter_mode == 'needs-lilypond'">
                 <v-flex xs12>
                     <div class="card">
-                        <div class="card-header h5">Doplňování LilyPond notových sazeb</div>
+                        <div class="card-header h5">
+                            Doplňování LilyPond notových sazeb
+                        </div>
                         <div class="card-body">
-                            LilyPond lze doplnit pouze k písním s přidanou licencí.<br>
-                            Písně, ke kterým je potřeba dosázet LilyPond noty
-                            a zároveň mají vyřešenou licenci, jsou vypsané níže.
+                            LilyPond lze doplnit pouze k písním s přidanou
+                            licencí.<br />
+                            Písně, ke kterým je potřeba dosázet LilyPond noty a
+                            zároveň mají vyřešenou licenci, jsou vypsané níže.
                         </div>
                     </div>
                 </v-flex>
@@ -95,45 +104,44 @@
                                                 '/edit'
                                         "
                                     >
-                                        <song-name :song="props.item"
-                                        />
+                                        <song-name :song="props.item" />
                                     </a>
                                 </td>
                                 <td>
                                     <span v-if="props.item.type === 0"
-                                    >Orig.</span
+                                        >Orig.</span
                                     >
                                     <span v-if="props.item.type === 1"
-                                    >Překl.</span
+                                        >Překl.</span
                                     >
                                     <span v-if="props.item.type === 2"
-                                    >Aut.&nbsp;p.</span
+                                        >Aut.&nbsp;p.</span
                                     >
                                     <span
                                         v-if="
                                             props.item.is_arrangement === true
                                         "
                                     >
-                                        Aranž<br/>{{
+                                        Aranž<br />{{
                                             props.item.arrangement_source.name
                                         }}
                                     </span>
                                 </td>
                                 <td>
                                     {{
-                                    props.item.authors
-                                    .map(a => a.name)
-                                    .join(', ') ||
-                                    (props.item.has_anonymous_author
-                                    ? '(anonymní)'
-                                    : '–')
+                                        props.item.authors
+                                            .map(a => a.name)
+                                            .join(', ') ||
+                                            (props.item.has_anonymous_author
+                                                ? '(anonymní)'
+                                                : '–')
                                     }}
                                 </td>
                                 <td>
                                     {{
-                                    new Date(
-                                    props.item.updated_at
-                                    ).toLocaleString()
+                                        new Date(
+                                            props.item.updated_at
+                                        ).toLocaleString()
                                     }}
                                 </td>
                                 <!-- <td>
@@ -145,11 +153,13 @@
                                 </td>
                                 <td>
                                     <span v-if="props.item.only_regenschori"
-                                    >jen R</span
+                                        >jen R</span
                                     >
                                     <span v-else>R + PS</span>
                                 </td>
-                                <td><span v-if="props.item.is_sealed">✓</span></td>
+                                <td>
+                                    <span v-if="props.item.is_sealed">✓</span>
+                                </td>
                                 <td class="text-nowrap">
                                     <a
                                         class="text-secondary mr-3"
@@ -158,12 +168,12 @@
                                                 props.item.id +
                                                 '/edit'
                                         "
-                                    ><i class="fas fa-pen"></i></a
+                                        ><i class="fas fa-pen"></i></a
                                     ><a
-                                    class="text-secondary"
-                                    v-on:click="askForm(props.item.id)"
-                                ><i class="fas fa-trash"></i
-                                ></a>
+                                        class="text-secondary"
+                                        v-on:click="askForm(props.item.id)"
+                                        ><i class="fas fa-trash"></i
+                                    ></a>
                                 </td>
                             </template>
                         </v-data-table>
@@ -251,15 +261,15 @@ export default {
     data() {
         return {
             headers: [
-                {text: 'Název písničky', value: 'name'},
-                {text: 'Typ', value: 'type'},
-                {text: 'Autoři', value: 'authors', sortable: false},
-                {text: 'Naposledy upraveno', value: 'updated_at'},
+                { text: 'Název písničky', value: 'name' },
+                { text: 'Typ', value: 'type' },
+                { text: 'Autoři', value: 'authors', sortable: false },
+                { text: 'Naposledy upraveno', value: 'updated_at' },
                 // { text: 'Publikováno', value: 'is_published' },
-                {text: 'Zobrazení', value: 'visits'},
-                {text: 'Zveřejnění', value: 'only_regenschori'},
-                {text: 'Pečeť', value: 'is_sealed'},
-                {text: 'Akce', value: 'actions', sortable: false}
+                { text: 'Zobrazení', value: 'visits' },
+                { text: 'Zveřejnění', value: 'only_regenschori' },
+                { text: 'Pečeť', value: 'is_sealed' },
+                { text: 'Akce', value: 'actions', sortable: false }
             ],
             search_string: '',
             filter_mode: 'no-filter',
@@ -285,8 +295,7 @@ export default {
                         this.filter_mode == 'no-author' ? false : undefined,
                     has_chords:
                         this.filter_mode == 'no-chords' ? false : undefined,
-                    has_tags:
-                        this.filter_mode == 'no-tags' ? false : undefined,
+                    has_tags: this.filter_mode == 'no-tags' ? false : undefined,
                     has_license:
                         this.filter_mode == 'no-license' ? false : undefined,
                     has_scores:
@@ -322,7 +331,7 @@ export default {
             this.$apollo
                 .mutate({
                     mutation: delete_item,
-                    variables: {id: id},
+                    variables: { id: id },
                     refetchQueries: [
                         {
                             query: fetch_items
@@ -346,7 +355,7 @@ export default {
                     item.secondary_name_1,
                     item.secondary_name_2,
                     item.authors.map(a => a.name).join(' ') ||
-                    (item.has_anonymous_author ? 'anonymni' : ''), // authors
+                        (item.has_anonymous_author ? 'anonymni' : ''), // authors
                     types[item.type]
                 ];
 
