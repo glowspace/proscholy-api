@@ -448,7 +448,7 @@
               ></v-textarea>
 
               <div class="mb-3">
-                <a :href="lilypond_src_download_url" target="_blank">Stáhnout zdrojový lilypond</a>
+                <a :href="lilypond_src_download_url" target="_blank">Stáhnout finální lilypond</a>
               </div>
             </v-flex>
             <v-flex xs12 md6>
