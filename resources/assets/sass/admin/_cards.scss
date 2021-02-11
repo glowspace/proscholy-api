@@ -1,4 +1,6 @@
-.theme--light, .theme--dark, div {
+.theme--light,
+.theme--dark,
+div {
     .card,
     div.v-card {
         margin-bottom: 20px;
@@ -13,6 +15,7 @@
         }
     }
 
+    // fix vuetify select list bottom margin (overriden by some styles)
     div.v-select-list {
         margin-bottom: 0;
     }

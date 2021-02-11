@@ -30,9 +30,3 @@ CSS imports
 @import 'elements';
 @import 'forms';
 @import 'dashboard';
-
-// fix vuetify select list bottom margin
-
-div.v-select-list.v-card {
-    margin-bottom: 0;
-}
