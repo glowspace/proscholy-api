@@ -434,6 +434,8 @@
             <v-flex xs12 md6>
               <v-select :items="enums.lilypond_key_major" v-model="model.lilypond_key_major" label="Předznamenání"></v-select>
 
+              <v-btn :disabled="model && model.lilypond != ''" @click="model.lilypond = lilypond_template">Vložit základní Lilypond vzor</v-btn>
+
               <v-textarea
                 class="auto-grow-alt"
                 outline
@@ -442,10 +444,12 @@
                 ref="textarea"
                 v-model="model.lilypond"
                 v-on:keydown.tab.prevent="preventTextareaTab($event)"
-                style="font-family: monospace; tab-size: 2;"
+                style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
               ></v-textarea>
 
-              <a :href="lilypond_src_download_url">Stáhnout zdrojový lilypond</a>
+              <div class="mb-3">
+                <a :href="lilypond_src_download_url" target="_blank">Stáhnout zdrojový lilypond</a>
+              </div>
             </v-flex>
             <v-flex xs12 md6>
                 <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
@@ -559,6 +563,20 @@ import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 // import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
 import BibleReference from "bible-reference/bible_reference";
+
+const LP_TEMPLATE = `\\version "2.22.0"
+
+melodie = {
+\tc
+}
+
+text = \\lyricmode {
+\t
+}
+
+akordy = \\chordmode {
+\t
+}`;
 
 const FETCH_DATA = gql`
   query {
@@ -691,7 +709,9 @@ export default {
 
       active: 0,
 
-      regenschori_url: ''
+      regenschori_url: '',
+
+      lilypond_template:LP_TEMPLATE
     };
   },
 
@@ -752,7 +772,7 @@ export default {
     lilypond_parse: {
       query: FETCH_LILYPOND,
       debounce: 200,
-      fetchPolicy: 'no-cache',
+      // fetchPolicy: 'no-cache',
       variables() {
         return { lilypond: this.model.lilypond, lilypond_key_major: this.model.lilypond_key_major }
       },
@@ -847,7 +867,7 @@ export default {
       }
 
       return '';
-    }
+    },
   },
 
   watch: {
