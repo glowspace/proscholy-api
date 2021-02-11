@@ -27,6 +27,8 @@ class SongLyricFactory extends Factory
             'name' => function (array $attributes) {
                 return Song::find($attributes['song_id'])->name;
             },
+            'secondary_name_1' => $this->faker->firstNameFemale,
+            'secondary_name_2' => $this->faker->firstNameFemale,
             'lyrics' => $this->faker->text,
         ];
     }
