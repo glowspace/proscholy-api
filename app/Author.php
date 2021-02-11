@@ -197,11 +197,11 @@ class Author extends Model
 
     public function getPublicUrlAttribute()
     {
-        return route('client.author', $this);
+        return url($this->public_route);
     }
 
     public function getPublicRouteAttribute()
     {
-        return str_replace(url(""), "", $this->public_url);
+        return "/autor/$this->id";
     }
 }
