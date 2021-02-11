@@ -46,11 +46,7 @@
                                     >
                                 </td>
                                 <td>
-                                    {{
-                                        props.item.song_lyrics_count +
-                                            props.item.externals_count +
-                                            props.item.authors_count
-                                    }}
+                                    {{ props.item.count }}
                                 </td>
                                 <td class="text-nowrap">
                                     <a
@@ -145,6 +141,12 @@ export default {
             },
             result(result) {
                 this.buildSearchIndex();
+                for (var tag of this.tags) {
+                    tag.count =
+                        tag.song_lyrics_count +
+                        tag.externals_count +
+                        tag.authors_count;
+                }
             }
         }
     },
