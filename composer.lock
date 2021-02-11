@@ -3698,16 +3698,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/proscholy/lilypond-renderer-client.git",
-                "reference": "9b8baf645bad28072976de1fdaf9649bc97240e5"
+                "reference": "71df13690405f771d39d6908989b91545bac2f4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/9b8baf645bad28072976de1fdaf9649bc97240e5",
-                "reference": "9b8baf645bad28072976de1fdaf9649bc97240e5",
+                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/71df13690405f771d39d6908989b91545bac2f4b",
+                "reference": "71df13690405f771d39d6908989b91545bac2f4b",
                 "shasum": ""
             },
             "require": {
@@ -3742,10 +3742,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.2.2",
+                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.2.3",
                 "issues": "https://github.com/proscholy/lilypond-renderer-client/issues"
             },
-            "time": "2021-02-09T17:36:20+00:00"
+            "time": "2021-02-11T15:35:43+00:00"
         },
         {
             "name": "psr/cache",
@@ -9235,16 +9235,16 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v6.11.2",
+            "version": "v6.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "be45bc6e6e3cec6f617a422aa0bd92877afc8695"
+                "reference": "040c8ee2b8fae416843973565dbbcee75b6e84f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/be45bc6e6e3cec6f617a422aa0bd92877afc8695",
-                "reference": "be45bc6e6e3cec6f617a422aa0bd92877afc8695",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/040c8ee2b8fae416843973565dbbcee75b6e84f4",
+                "reference": "040c8ee2b8fae416843973565dbbcee75b6e84f4",
                 "shasum": ""
             },
             "require": {
@@ -9301,9 +9301,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/dusk/issues",
-                "source": "https://github.com/laravel/dusk/tree/v6.11.2"
+                "source": "https://github.com/laravel/dusk/tree/v6.11.3"
             },
-            "time": "2021-01-26T19:22:07+00:00"
+            "time": "2021-02-09T16:14:48+00:00"
         },
         {
             "name": "maximebf/debugbar",
