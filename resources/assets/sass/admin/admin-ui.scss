@@ -1,18 +1,18 @@
 /**
 Imports
  */
-@import url("https://fonts.googleapis.com/css?family=Roboto");
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 /**
 SASS variables config
  */
-@import "variables";
+@import 'variables';
 
-$main-red:    #d83027;
-$main-blue:   #3961ad;
-$main-green:  #098845;
+$main-red: #d83027;
+$main-blue: #3961ad;
+$main-green: #098845;
 $main-yellow: #faa61b;
 
 $main-grey-border: #dadce0;
@@ -21,12 +21,18 @@ $main-grey-border-dark: #555;
 /**
 CSS imports
  */
-@import "~bootstrap-material-design/scss/bootstrap-material-design"; // Materialize.css
-@import "layout";
-@import "dark";
-@import "navbar";
-@import "sidebar";
-@import "cards";
-@import "elements";
-@import "forms";
-@import "dashboard";
+@import '~bootstrap-material-design/scss/bootstrap-material-design'; // Materialize.css
+@import 'layout';
+@import 'dark';
+@import 'navbar';
+@import 'sidebar';
+@import 'cards';
+@import 'elements';
+@import 'forms';
+@import 'dashboard';
+
+// fix vuetify select list bottom margin
+
+div.v-select-list.v-card {
+    margin-bottom: 0;
+}
