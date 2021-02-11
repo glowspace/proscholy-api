@@ -875,10 +875,6 @@ export default {
       }
     },
 
-    // "this.lilypond_parse.svg": {
-    //   console.log('lilypond changed')
-    // },
-
     active(val) {
       window.location.hash = val ? val : '';
     }

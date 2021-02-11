@@ -221,7 +221,6 @@ export default {
 
         loadEnumJsonFromResult(result, enumName, vueEnumModel) {
             const data = JSON.parse(result.data.model_database[enumName]);
-            console.log(data);
 
             for (const [key, value] of Object.entries(data)) {
                 let key_parsed = parseInt(key);
