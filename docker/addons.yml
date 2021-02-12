@@ -32,3 +32,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./logs:/var/log
+
+  php-queue:
+    build:
+      context: ./setup/php-queue
+      dockerfile: Dockerfile
+    command: php artisan queue:work --tries=3 --timeout=90
+    volumes:
+        - '..:/var/www/html'

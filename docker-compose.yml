@@ -9,6 +9,13 @@ services:
     ports:
       - 3306:3306
 
+  php-queue:
+    extends:
+      file: docker/addons.yml
+      service: php-queue
+    networks:
+      - bcloud-network
+
   adminer:
     extends:
       file: docker/database.yml
