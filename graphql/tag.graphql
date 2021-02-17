@@ -12,6 +12,10 @@ type Tag {
     externals_count: Int @count(relation: "externals")
     authors_count: Int @count(relation: "authors")
 
+    song_lyrics: [SongLyric] @morphMany
+    externals: [External] @morphMany
+    authors: [Author] @morphMany
+
     is_for_songs: Boolean
     is_for_externals: Boolean
     is_for_authors: Boolean
