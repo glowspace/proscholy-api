@@ -40,6 +40,7 @@ COPY scripts/* /bin/scripts/
 RUN chmod +x /bin/scripts/*
 
 COPY fonts/*.otf /usr/local/lilypond/usr/share/lilypond/current/fonts/otf/
+COPY fonts/*.woff /usr/local/lilypond/usr/share/lilypond/current/fonts/svg/
 
 WORKDIR /lilywork
 
