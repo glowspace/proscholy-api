@@ -25,3 +25,11 @@ services:
       - "/var/www/html/vendor"
       - "./config/nginx:/etc/nginx/conf.d"
       - "./logs/nginx:/var/log/nginx"
+
+  web-devel:
+    build:
+      context: ./setup/php-base
+      dockerfile: Dockerfile
+    command: php artisan serv
+    volumes:
+      - "..:/var/www/html"

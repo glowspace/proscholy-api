@@ -10,7 +10,7 @@ class LilypondServiceTest extends TestCase
     public function testSvg()
     {
         $llservice = new LilypondService();
-        $res = $llservice->makeSvg('{ c }', false);
+        $res = $llservice->makeSvgFast('{ c }');
 
         logger($res);
     }
@@ -18,7 +18,7 @@ class LilypondServiceTest extends TestCase
     public function testSvgLog()
     {
         $llservice = new LilypondService();
-        $res = $llservice->makeSvg('{ c ', false);
+        $res = $llservice->makeSvgFast('{ c ');
 
         logger($res);
     }

@@ -1,5 +1,14 @@
 version: "3"
 services:
+  serv:
+    extends:
+      file: docker/server.yml
+      service: web-devel
+    networks:
+      - bcloud-network
+    ports:
+      - 8000:8000
+
   db:
     extends:
       file: docker/database.yml
@@ -15,6 +24,9 @@ services:
       service: php-queue
     networks:
       - bcloud-network
+    depends_on:
+      - db
+      - serv
 
   adminer:
     extends:

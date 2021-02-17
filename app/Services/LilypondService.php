@@ -16,14 +16,29 @@ class LilypondService
         $this->client = new Client();
     }
 
-    public function makeSvg($lilypond, $key_major = null, $crop = true)
+    public function makeSvgFast($lilypond, $key_major = null)
     {
-        $res = $this->client->renderSvg($this->makeLilypondSource($lilypond, $key_major), $crop);
+        $res = $this->client->renderSvg($this->makeLilypondSource($lilypond, $key_major), false);
 
         if ($res->isSuccessful()) {
             $output = $this->client->getResultOutputFile($res);
         } else {
             $output = $this->client->getResultLog($res);
+        }
+
+        $this->client->deleteResultAsync($res);
+
+        return $output;
+    }
+
+    public function makeSvg($lilypond, $key_major = null)
+    {
+        $res = $this->client->renderSvg($this->makeLilypondSource($lilypond, $key_major), true);
+
+        if ($res->isSuccessful()) {
+            $output = $this->client->getResultOutputFile($res);
+        } else {
+            $output = false;
         }
 
         $this->client->deleteResultAsync($res);

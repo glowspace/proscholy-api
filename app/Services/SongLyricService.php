@@ -7,6 +7,8 @@ use App\Author;
 use App\SongLyric;
 use App\Song;
 
+use App\Jobs\UpdateSongLyricLilypond;
+
 class SongLyricService
 {
     protected $ly_service;
@@ -18,16 +20,10 @@ class SongLyricService
 
     public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major)
     {
-        if ($lilypond_input !== $song_lyric->lilypond || $lilypond_key_major !== $song_lyric->lilypond_key_major) {
-            try {
-                $song_lyric->update([
-                    'lilypond_svg' => $this->ly_service->makeSvg($lilypond_input, $lilypond_key_major, true)
-                ]);
-                logger('lilypond rendering finished');
-            } catch (\Exception $e) {
-                logger($e);
-            }
-        }
+        UpdateSongLyricLilypond::dispatchUnless(
+            $lilypond_input == $song_lyric->lilypond && $lilypond_key_major == $song_lyric->lilypond_key_major,
+            $song_lyric->id
+        );
     }
 
     public function handleSongGroup(SongLyric $song_lyric, $song_input_data)
