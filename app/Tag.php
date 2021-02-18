@@ -83,7 +83,7 @@ class Tag extends Model
         ]
     ];
 
-    public static $song_lyric_types = [0, 1, 2, 3, 4, 10, 40];
+    public static $song_lyric_types = [0, 1, 2, 3, 4, 5, 10, 40];
     public static $external_types = [50];
     public static $file_types = [50];
     public static $author_types = [10];
