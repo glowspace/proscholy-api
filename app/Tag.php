@@ -15,44 +15,44 @@ class Tag extends Model
     // when updating this, do not forget to update TagSeeder.php
     protected static $groups_info = [
         0 => [
-            'name' => 'příležitosti',
+            'name' => 'K příležitostem',
             'type' => 0,
             'is_editable' => true,
             'is_regenschori' => false
         ],
         1 => [
-            'name' => 'litugie (část)',
+            'name' => 'Mše svatá',
             'type' => 1,
             'is_editable' => false,
             'is_regenschori' => false
         ],
         2 => [
-            'name' => 'liturgická doba',
+            'name' => 'Liturgický rok',
             'type' => 2,
             'is_editable' => false,
             'is_regenschori' => false
         ],
         3 => [
-            'name' => 'ke svatým',
+            'name' => 'Ke svatým',
             'type' => 3,
             'is_editable' => true,
             'is_regenschori' => false
 
         ],
         4 => [
-            'name' => 'hudební forma',
+            'name' => 'Hudební forma',
             'type' => 4,
             'is_editable' => true,
             'is_regenschori' => true
         ],
         5 => [
-            'name' => 'svátosti a pobožnosti',
+            'name' => 'Svátosti a pobožnosti',
             'type' => 5,
             'is_editable' => true,
             'is_regenschori' => false
         ],
         10 => [
-            'name' => 'historické období',
+            'name' => 'Historické období',
             'type' => 10,
             'is_editable' => true,
             'is_regenschori' => true
@@ -70,13 +70,13 @@ class Tag extends Model
         //     'is_regenschori' => true
         // ],
         50 => [
-            'name' => 'instrumentace',
+            'name' => 'Instrumentace',
             'type' => 50,
             'is_editable' => true,
             'is_regenschori' => true
         ],
         100 => [
-            'name' => 'žánr',
+            'name' => 'Źánr',
             'type' => 100,
             'is_editable' => true,
             'is_regenschori' => true
