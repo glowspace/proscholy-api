@@ -15,12 +15,6 @@ class SongLyrics
         if (isset($args['search_string']))
             return SongLyric::search($args['search_string'])->get();
 
-        if (isset($args['is_published']))
-            $query = $query->where('is_published', $args['is_published']);
-
-        if (isset($args['is_approved_by_author']))
-            $query = $query->where('is_approved_by_author', $args['is_approved_by_author']);
-
         if (isset($args['has_lyrics']) && $args['has_lyrics'] === true)
             $query = $query->where('lyrics', '!=', '');
         if (isset($args['has_lyrics']) && $args['has_lyrics'] === false)
@@ -66,9 +60,6 @@ class SongLyrics
 
         if (isset($args['has_chords']))
             $query = $query->where('has_chords', $args['has_chords']);
-
-        if (isset($args['only_apk']) && $args['only_apk'] === true)
-            $query = $query->where('is_approved_by_author', 1)->where('is_published', 1)->where('lyrics', '!=', '');
 
         if (isset($args['order_abc']))
             $query = $query->orderBy('name', 'asc');

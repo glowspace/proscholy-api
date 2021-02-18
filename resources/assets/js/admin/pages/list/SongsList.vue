@@ -148,10 +148,6 @@
                                         ).toLocaleString()
                                     }}
                                 </td>
-                                <!-- <td>
-                                    <span v-if="props.item.is_published">Ano</span>
-                                    <span v-else>Ne</span>
-                                </td> -->
                                 <td>
                                     <span>{{ props.item.visits }}</span>
                                 </td>
@@ -229,7 +225,6 @@ const fetch_items = gql`
             updated_at
             visits
             type
-            is_published
             authors {
                 name
             }
@@ -271,7 +266,6 @@ export default {
                 { text: 'Typ', value: 'type' },
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
-                // { text: 'Publikováno', value: 'is_published' },
                 { text: 'Zobrazení', value: 'visits' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Pečeť', value: 'is_sealed' },
