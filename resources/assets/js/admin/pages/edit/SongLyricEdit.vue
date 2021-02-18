@@ -197,80 +197,91 @@
                   </v-card-actions>
                 </v-card>
 
-                <items-combo-box
-                  v-bind:p-items="tags_generic"
-                  v-model="model.tags_generic"
-                  label="Štítky (příležitosti)"
-                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                  create-label="Potvrďte enterem a vytvořte nový štítek"
-                  :multiple="true"
-                  :enable-custom="true"
-                ></items-combo-box>
-                <items-combo-box
-                  v-bind:p-items="tags_sacred_occasion"
-                  v-model="model.tags_sacred_occasion"
-                  label="Svátosti a pobožnosti"
-                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                  create-label="Potvrďte enterem a vytvořte nový štítek"
-                  :multiple="true"
-                  :enable-custom="true"
-                ></items-combo-box>
-                <items-combo-box
-                  v-bind:p-items="tags_saints"
-                  v-model="model.tags_saints"
-                  label="Štitky ke svatým"
-                  header-label="Vyberte část liturgie z nabídky"
-                  :multiple="true"
-                ></items-combo-box>
-                <items-combo-box
-                  v-if="!is_arrangement_layout"
-                  v-bind:p-items="tags_liturgy_part"
-                  v-model="model.tags_liturgy_part"
-                  label="Části liturgie"
-                  header-label="Vyberte část liturgie z nabídky"
-                  :multiple="true"
-                  :disabled="model.liturgy_approval_status == 1"
-                ></items-combo-box>
-                <p class="mt-0" v-if="model.liturgy_approval_status == 1">
-                  <i>lit. štítky nelze upravovat, když je písnička označená jako schválená ČBK pro liturgii (viz níže)</i>
-                </p>
-                <items-combo-box
-                  v-if="!is_arrangement_layout"
-                  v-bind:p-items="tags_liturgy_period"
-                  v-model="model.tags_liturgy_period"
-                  label="Liturgický rok"
-                  header-label="Vyberte část liturgie z nabídky"
-                  :multiple="true"
-                ></items-combo-box>
-                <items-combo-box
-                  v-if="!is_arrangement_layout"
-                  v-bind:p-items="tags_liturgy_day"
-                  v-model="model.tags_liturgy_day"
-                  label="Dny liturgického kalendáře"
-                  header-label="Vyberte dny liturgického kalendáře"
-                  :multiple="true"
-                ></items-combo-box>
-                <items-combo-box
-                  v-bind:p-items="tags_history_period"
-                  v-model="model.tags_history_period"
-                  label="Historické období (pro Regenschoriho)"
-                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                  create-label="Potvrďte enterem a vytvořte nový štítek"
-                  :multiple="true"
-                  :enable-custom="false"
-                ></items-combo-box>
-                <items-combo-box
-                  v-bind:p-items="tags_musical_form"
-                  v-model="model.tags_musical_form"
-                  label="Hudební forma"
-                  header-label="Vyberte odpovídající hudební (liturgické) formy"
-                  :multiple="true"
-                  :enable-custom="false"
-                ></items-combo-box>
+                <v-card class="mb-3 px-4">
+                  <v-card-title class="p-0">
+                    <h3>Štítky</h3>
+                  </v-card-title>
+
+                  <v-card-text class="py-0 px-2">
+                    <items-combo-box
+                      v-bind:p-items="tags_generic"
+                      v-model="model.tags_generic"
+                      label="K příležitostem"
+                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                      create-label="Potvrďte enterem a vytvořte nový štítek"
+                      :multiple="true"
+                      :enable-custom="true"
+                    ></items-combo-box>
+                    <items-combo-box
+                      v-bind:p-items="tags_sacred_occasion"
+                      v-model="model.tags_sacred_occasion"
+                      label="Svátosti a pobožnosti"
+                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                      create-label="Potvrďte enterem a vytvořte nový štítek"
+                      :multiple="true"
+                      :enable-custom="true"
+                    ></items-combo-box>
+                    <items-combo-box
+                      v-bind:p-items="tags_saints"
+                      v-model="model.tags_saints"
+                      label="Ke svatým"
+                      header-label="Vyberte část liturgie z nabídky"
+                      :multiple="true"
+                    ></items-combo-box>
+                    <items-combo-box
+                      v-if="!is_arrangement_layout"
+                      v-bind:p-items="tags_liturgy_part"
+                      v-model="model.tags_liturgy_part"
+                      label="Mše svatá"
+                      header-label="Vyberte část liturgie z nabídky"
+                      :multiple="true"
+                      :disabled="model.liturgy_approval_status == 1"
+                    ></items-combo-box>
+                    <p class="mt-0" v-if="model.liturgy_approval_status == 1">
+                      <i>lit. štítky nelze upravovat, když je písnička označená jako schválená ČBK pro liturgii (viz níže)</i>
+                    </p>
+                    <items-combo-box
+                      v-if="!is_arrangement_layout"
+                      v-bind:p-items="tags_liturgy_period"
+                      v-model="model.tags_liturgy_period"
+                      label="Liturgický rok"
+                      header-label="Vyberte část liturgie z nabídky"
+                      :multiple="true"
+                    ></items-combo-box>
+
+                    <items-combo-box
+                      v-if="!is_arrangement_layout"
+                      v-bind:p-items="tags_liturgy_day"
+                      v-model="model.tags_liturgy_day"
+                      label="Dny liturgického kalendáře (bez lit. cyklu)"
+                      header-label="Vyberte dny liturgického kalendáře"
+                      :multiple="true"
+                    ></items-combo-box>
+
+                    <items-combo-box
+                      v-bind:p-items="tags_history_period"
+                      v-model="model.tags_history_period"
+                      label="Historické období"
+                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                      create-label="Potvrďte enterem a vytvořte nový štítek"
+                      :multiple="true"
+                      :enable-custom="false"
+                    ></items-combo-box>
+                    <items-combo-box
+                      v-bind:p-items="tags_musical_form"
+                      v-model="model.tags_musical_form"
+                      label="Hudební forma"
+                      header-label="Vyberte odpovídající hudební (liturgické) formy"
+                      :multiple="true"
+                      :enable-custom="false"
+                    ></items-combo-box>
+                  </v-card-text>
+                </v-card>
 
                 <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
               </v-form>
             </v-flex>
+
             <v-flex xs12 md6 class="edit-description pl-md-4">
               <h5>Název (povinná položka)</h5>
               <p>
