@@ -12,6 +12,7 @@ class Tag extends Model
 {
     protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy'];
 
+    // when updating this, do not forget to update TagSeeder.php
     protected static $groups_info = [
         0 => [
             'name' => 'příležitosti',
@@ -82,23 +83,6 @@ class Tag extends Model
         ]
     ];
 
-    // todo: make obsolete???
-    // when updating this, do not forget to update TagSeeder.php
-    public static $type_string_values = [
-        0 => 'příležitosti',
-        1 => 'litugie (část)',
-        2 => 'liturgická doba',
-        3 => 'ke svatým',
-        4 => 'hudební forma',
-        4 => 'svátosti a pobožnosti',
-        10 => 'historické období',
-        40 => 'liturgický den',
-        // these will be connected only to other tags (of type 40)
-        // 41 => 'atribut svatého',
-        50 => 'instrumentace',
-        100 => 'žánr'
-    ];
-
     public static $song_lyric_types = [0, 1, 2, 3, 4, 10, 40];
     public static $external_types = [50];
     public static $file_types = [50];
@@ -106,12 +90,14 @@ class Tag extends Model
 
     public function getTypeStringAttribute()
     {
-        return self::$type_string_values[$this->type];
+        return $this->type_string_values[$this->type];
     }
 
     public function getTypeStringValuesAttribute()
     {
-        return $this->type_string_values;
+        return array_map(function ($val) {
+            return $val['name'];
+        }, $this->groups_info);
     }
 
     public function getGroupsInfoAttribute()
