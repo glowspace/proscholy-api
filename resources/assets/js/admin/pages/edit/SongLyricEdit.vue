@@ -207,6 +207,15 @@
                   :enable-custom="true"
                 ></items-combo-box>
                 <items-combo-box
+                  v-bind:p-items="tags_sacred_occasion"
+                  v-model="model.tags_sacred_occasion"
+                  label="Svátosti a pobožnosti"
+                  header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                  create-label="Potvrďte enterem a vytvořte nový štítek"
+                  :multiple="true"
+                  :enable-custom="true"
+                ></items-combo-box>
+                <items-combo-box
                   v-bind:p-items="tags_saints"
                   v-model="model.tags_saints"
                   label="Štitky ke svatým"
@@ -617,6 +626,10 @@ const FETCH_DATA = gql`
       id
       name
     }
+    tags_sacred_occasion: tags_enum(type: SACRED_OCCASION) {
+      id
+      name
+    }
     tags_liturgy_day: tags_enum(type: LITURGY_DAY) {
       id
       name
@@ -672,6 +685,7 @@ export default {
         tags_history_period: [],
         tags_saints: [],
         tags_musical_form: [],
+        tags_sacred_occasion: [],
         tags_liturgy_day: [],
         authors_pivot: [],
         externals: [],
@@ -758,6 +772,9 @@ export default {
       query: FETCH_DATA
     },
     tags_musical_form: {
+      query: FETCH_DATA
+    },
+    tags_sacred_occasion: {
       query: FETCH_DATA
     },
     tags_liturgy_day: {

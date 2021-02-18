@@ -44,6 +44,12 @@ class Tag extends Model
             'is_editable' => true,
             'is_regenschori' => true
         ],
+        5 => [
+            'name' => 'svátosti a pobožnosti',
+            'type' => 5,
+            'is_editable' => true,
+            'is_regenschori' => false
+        ],
         10 => [
             'name' => 'historické období',
             'type' => 10,
@@ -84,6 +90,7 @@ class Tag extends Model
         2 => 'liturgická doba',
         3 => 'ke svatým',
         4 => 'hudební forma',
+        4 => 'svátosti a pobožnosti',
         10 => 'historické období',
         40 => 'liturgický den',
         // these will be connected only to other tags (of type 40)
@@ -171,6 +178,11 @@ class Tag extends Model
     public function scopeMusicalForm($query)
     {
         return $query->where('type', 4);
+    }
+
+    public function scopeSacredOccasion($query)
+    {
+        return $query->where('type', 5);
     }
 
     public function scopeLiturgyDay($query)
