@@ -21,6 +21,9 @@ type Tag {
     is_for_authors: Boolean
 
     groups_info: [TagTypeGroupInfo]
+
+    type_string_values: JSON
+    type_string: String
 }
 
 type TagTypeGroupInfo {
