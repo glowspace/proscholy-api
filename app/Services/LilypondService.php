@@ -34,7 +34,7 @@ class LilypondService
     public function makeLilypondSource($lilypond, $key_major = null): LilypondSrc
     {
         $src = new LilypondSrc($lilypond);
-        $src->applyLayout()->applyInfinitePaper();
+        $src->applyLayout('default_layout', 'amiri', 2.5, 'amiri', 3)->applyInfinitePaper();
 
         if ($key_major) {
             $src->setOriginalKey($key_major);
