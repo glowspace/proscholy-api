@@ -454,7 +454,7 @@
             <v-flex xs12 md6>
               <v-select :items="enums.lilypond_key_major" v-model="model.lilypond_key_major" label="Předznamenání"></v-select>
 
-              <v-btn :disabled="model && model.lilypond != ''" @click="model.lilypond = lilypond_template">Vložit základní Lilypond vzor</v-btn>
+              <v-btn :disabled="model && !!(model.lilypond)" @click="model.lilypond = lilypond_template">Vložit základní Lilypond vzor</v-btn>
 
               <v-textarea
                 class="auto-grow-alt"
