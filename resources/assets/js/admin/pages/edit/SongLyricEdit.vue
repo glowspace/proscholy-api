@@ -590,11 +590,11 @@ melodie = {
 \tc
 }
 
-text = \\lyricmode {
+text = \\lyrics {
 \t
 }
 
-akordy = \\chordmode {
+akordy = \\chords {
 \t
 }`;
 
