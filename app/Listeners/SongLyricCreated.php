@@ -24,7 +24,7 @@ class SongLyricCreated
     {
         //
     }
-    
+
     /**
      * Handle the event.
      *
@@ -33,17 +33,16 @@ class SongLyricCreated
      */
     public function handle(SongLyricCreatedEvent $event)
     {
+        // todo: move to a Service/Manager class
+
         $event->song_lyric->update([
             'song_number' => $event->song_lyric->id
         ]);
 
-        // if current user cannot publish songs-> the song is not published yet
-        // and is waiting for approval
         $user = Auth::user();
 
         if ($user) {
             $event->song_lyric->update([
-                'is_published' => $user->can('publish songs'),
                 'user_creator_id' => $user->id
             ]);
         }

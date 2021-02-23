@@ -15,7 +15,7 @@ class TagsSeeder extends Seeder
 
         $tags_by_types = [
             0 => [
-                "život s Ježíšem", "život s Duchem Svatým", "život s Bohem"
+                "za jednu notu křesťanů", "po dobrém jídle"
             ],
             1 => [
                 "vstup", "výstup", "závěrečné požehnání"
@@ -28,6 +28,9 @@ class TagsSeeder extends Seeder
             ],
             4 => [
                 "evangelijní moteto", "státní hymna"
+            ],
+            5 => [
+                "obřízka", "žarošická pouť"
             ],
             10 => [
                 "Doba kamenná", "Doba bronzová", "Velký třesk"

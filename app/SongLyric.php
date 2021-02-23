@@ -170,8 +170,6 @@ class SongLyric extends Model
         'creating_at',
         'has_anonymous_author',
         'has_chords',
-        'is_published',
-        'is_approved_by_author',
         'user_creator_id',
         'licence_type',
         'only_regenschori',
@@ -442,11 +440,6 @@ class SongLyric extends Model
     public function scopeOriginals($query)
     {
         return $query->where('type', 0);
-    }
-
-    public function scopePublished($query)
-    {
-        return $query->where('is_published', 1);
     }
 
     public function scopeRestricted($query)

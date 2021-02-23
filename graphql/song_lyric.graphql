@@ -48,8 +48,6 @@ type SongLyric {
     lilypond_svg: String
     lilypond_key_major: String
     type_enum: SongType @rename(attribute: "type")
-    is_approved_by_author: Boolean!
-    is_published: Boolean!
     """
     Marks that the song doesn't have any known author
     """
@@ -134,6 +132,7 @@ type SongLyric {
         @morphMany(relation: "tags", scopes: ["historyPeriod"])
     tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
     tags_musical_form: [Tag] @morphMany(relation: "tags", scopes: ["musicalForm"])
+    tags_sacred_occasion: [Tag] @morphMany(relation: "tags", scopes: ["sacredOccasion"])
     tags_liturgy_day: [Tag] @morphMany(relation: "tags", scopes: ["liturgyDay"])
 
     arrangements: [SongLyric] @hasMany
@@ -206,10 +205,7 @@ extend type Query {
     song_lyric_number(song_number: Int! @eq): SongLyric @find
 
     song_lyrics(
-        only_apk: Boolean
         search_string: String
-        is_published: Boolean
-        is_approved_by_author: Boolean
         has_lyrics: Boolean
         has_authors: Boolean    
         has_tags: Boolean
