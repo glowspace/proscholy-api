@@ -60,16 +60,16 @@ services:
         ports:
             - 3200:3000
 
-    # redis:
-    #     image: "redis:alpine"
-    #     ports:
-    #         - "${FORWARD_REDIS_PORT:-6379}:6379"
-    #     volumes:
-    #         - "sailredis:/data"
-    #     networks:
-    #         - sail
-    #     healthcheck:
-    #         test: ["CMD", "redis-cli", "ping"]
+    redis:
+        image: "redis:alpine"
+        ports:
+            - "${FORWARD_REDIS_PORT:-6379}:6379"
+        volumes:
+            - "sailredis:/data"
+        networks:
+            - sail
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
     # mysql:
     #     image: "mysql:8.0"
     #     ports:
@@ -90,5 +90,5 @@ networks:
     sail:
         driver: bridge
 volumes:
-    sailmysql:
+    sailredis:
         driver: local
