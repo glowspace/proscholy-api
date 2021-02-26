@@ -3,7 +3,7 @@ version: "3"
 services:
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/7.4
+            context: docker/7.4
             dockerfile: Dockerfile
             args:
                 WWWGROUP: "${WWWGROUP}"
@@ -28,16 +28,6 @@ services:
             - sail
         ports:
             - 3306:3306
-
-    # php-queue:
-    #     extends:
-    #         file: docker/addons.yml
-    #         service: php-queue
-    #     networks:
-    #         - sail
-    #     depends_on:
-    #         - db
-    #         - web
 
     adminer:
         extends:
@@ -69,6 +59,17 @@ services:
             - sail
         ports:
             - 3200:3000
+
+    # redis:
+    #     image: "redis:alpine"
+    #     ports:
+    #         - "${FORWARD_REDIS_PORT:-6379}:6379"
+    #     volumes:
+    #         - "sailredis:/data"
+    #     networks:
+    #         - sail
+    #     healthcheck:
+    #         test: ["CMD", "redis-cli", "ping"]
     # mysql:
     #     image: "mysql:8.0"
     #     ports:
