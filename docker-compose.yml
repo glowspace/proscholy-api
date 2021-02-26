@@ -1,13 +1,26 @@
 version: "3"
 services:
-  serv:
+  web:
     extends:
       file: docker/server.yml
-      service: web-devel
+      service: web
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - bcloud-network
+
+  nginx:
+    extends:
+      file: docker/server.yml
+      service: nginx
+    restart: always
+    links:
+      - web
     networks:
       - bcloud-network
     ports:
-      - 8000:8000
+      - 8000:80
 
   db:
     extends:
@@ -26,7 +39,7 @@ services:
       - bcloud-network
     depends_on:
       - db
-      - serv
+      - web
 
   adminer:
     extends:
