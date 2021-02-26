@@ -1,86 +1,93 @@
+# For more information: https://laravel.com/docs/sail
 version: "3"
 services:
-  web:
-    extends:
-      file: docker/server.yml
-      service: web
-    restart: always
-    depends_on:
-      - db
-    networks:
-      - bcloud-network
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/7.4
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: "${WWWGROUP}"
+        image: sail-7.4/app
+        ports:
+            - "${APP_PORT:-80}:80"
+        environment:
+            WWWUSER: "${WWWUSER}"
+            LARAVEL_SAIL: 1
+        volumes:
+            - ".:/var/www/html"
+        networks:
+            - sail
+        depends_on:
+            - db
 
-  nginx:
-    extends:
-      file: docker/server.yml
-      service: nginx
-    restart: always
-    links:
-      - web
-    networks:
-      - bcloud-network
-    ports:
-      - 8000:80
+    db:
+        extends:
+            file: docker/database.yml
+            service: db
+        networks:
+            - sail
+        ports:
+            - 3306:3306
 
-  db:
-    extends:
-      file: docker/database.yml
-      service: db
-    networks:
-      - bcloud-network
-    ports:
-      - 3306:3306
+    # php-queue:
+    #     extends:
+    #         file: docker/addons.yml
+    #         service: php-queue
+    #     networks:
+    #         - sail
+    #     depends_on:
+    #         - db
+    #         - web
 
-  php-queue:
-    extends:
-      file: docker/addons.yml
-      service: php-queue
-    networks:
-      - bcloud-network
-    depends_on:
-      - db
-      - web
-
-  adminer:
-    extends:
-      file: docker/database.yml
-      service: adminer
-    networks:
-      - bcloud-network
-    ports:
-      - 8001:8080
-  cron:
-    extends:
-      file: docker/addons.yml
-      service: cron
-    networks:
-      - bcloud-network
-  lilypond:
-    extends:
-      file: docker/addons.yml
-      service: lilypond
-    networks:
-      - bcloud-network
-    ports:
-      - 3100:8080
-  bible-matcher:
-    extends:
-      file: docker/addons.yml
-      service: bible-matcher
-    networks:
-      - bcloud-network
-    ports:
-      - 3200:3000
-
-  # elastic:
-  #   extends:
-  #     file: docker/elastic.yml
-  #     service: elasticsearch
-  #   restart: always
-  #   networks:
-  #     - bcloud-network
-  #   ports:
-  #     - 9200:9200
-
+    adminer:
+        extends:
+            file: docker/database.yml
+            service: adminer
+        networks:
+            - sail
+        ports:
+            - 8001:8080
+    cron:
+        extends:
+            file: docker/addons.yml
+            service: cron
+        networks:
+            - sail
+    lilypond:
+        extends:
+            file: docker/addons.yml
+            service: lilypond
+        networks:
+            - sail
+        ports:
+            - 3100:8080
+    bible-matcher:
+        extends:
+            file: docker/addons.yml
+            service: bible-matcher
+        networks:
+            - sail
+        ports:
+            - 3200:3000
+    # mysql:
+    #     image: "mysql:8.0"
+    #     ports:
+    #         - "${FORWARD_DB_PORT:-3306}:3306"
+    #     environment:
+    #         MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+    #         MYSQL_DATABASE: "${DB_DATABASE}"
+    #         MYSQL_USER: "${DB_USERNAME}"
+    #         MYSQL_PASSWORD: "${DB_PASSWORD}"
+    #         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    #     volumes:
+    #         - "sailmysql:/var/lib/mysql"
+    #     networks:
+    #         - sail
+    #     healthcheck:
+    #         test: ["CMD", "mysqladmin", "ping"]
 networks:
-  bcloud-network:
+    sail:
+        driver: bridge
+volumes:
+    sailmysql:
+        driver: local
