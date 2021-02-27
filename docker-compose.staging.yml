@@ -59,6 +59,18 @@ services:
     networks:
       - bcloud-network-staging
 
+  # kibana:
+  #   extends:
+  #     file: docker/elastic.yml
+  #     service: kibana
+  #   restart: always
+  #   networks:
+  #     - bcloud-network-staging
+  #   depends_on:
+  #     - elastic
+  #   ports:
+  #     - "9010:5601"
+
   lilypond:
     extends:
       file: docker/addons.yml
