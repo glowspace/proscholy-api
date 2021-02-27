@@ -40,6 +40,17 @@ services:
     ports:
       - 8201:8080
 
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "${FORWARD_REDIS_PORT:-6379}:6379"
+    volumes:
+      - "stagingredis:/data"
+    networks:
+      - bcloud-network-staging
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+
   # elastic:
   #   extends:
   #     file: docker/elastic.yml
@@ -74,3 +85,7 @@ services:
 
 networks:
   bcloud-network-staging:
+
+volumes:
+  stagingredis:
+    driver: local

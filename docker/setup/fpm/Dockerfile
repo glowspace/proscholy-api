@@ -34,8 +34,8 @@ COPY crontab /etc/cron.d/laravel-cron
 RUN chmod 0644 /etc/cron.d/laravel-cron
 RUN touch /var/log/cron.log
 
+CMD printenv > /etc/environment
+
 EXPOSE 8000
 
 ENTRYPOINT ["start-container"]
-
-# CMD printenv > /etc/environment
