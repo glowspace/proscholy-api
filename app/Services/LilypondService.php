@@ -62,9 +62,14 @@ class LilypondService
     {
         $lp_no_spaces = str_replace(' ', '', $lilypond);
 
-        return (!Str::contains($lp_no_spaces, ['melodie={']) &&
-            !Str::contains($lp_no_spaces, ['text=\lyricmode{']) &&
-            Str::contains($lp_no_spaces, 'indent=0') &&
-            Str::contains($lp_no_spaces, 'tagline=""'));
+        if (!Str::contains($lp_no_spaces, 'melodie=')) {
+            return true;
+        }
+
+        if (Str::contains($lp_no_spaces, 'indent=0') || Str::contains($lp_no_spaces, 'tagline=""')) {
+            return true;
+        }
+
+        return false;
     }
 }
