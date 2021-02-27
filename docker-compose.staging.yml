@@ -40,21 +40,21 @@ services:
     ports:
       - 8201:8080
 
-  elastic:
-    extends:
-      file: docker/elastic.yml
-      service: elasticsearch
-    restart: always
-    networks:
-      - bcloud-network-staging
+  # elastic:
+  #   extends:
+  #     file: docker/elastic.yml
+  #     service: elasticsearch
+  #   restart: always
+  #   networks:
+  #     - bcloud-network-staging
 
-  cron:
-    extends:
-      file: docker/addons.yml
-      service: cron
-    restart: always
-    networks:
-      - bcloud-network-staging
+  # cron:
+  #   extends:
+  #     file: docker/addons.yml
+  #     service: cron
+  #   restart: always
+  #   networks:
+  #     - bcloud-network-staging
 
   lilypond:
     extends:

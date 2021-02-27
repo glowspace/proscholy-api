@@ -2,17 +2,13 @@ version: "3"
 services:
   web:
     build:
-      context: ./setup/web
+      context: ./setup/fpm
       dockerfile: Dockerfile
     volumes:
       - "..:/var/www/html"
       # this causes node_modules to be ignored from mount
       - "/var/www/html/node_modules"
       - "/var/www/html/vendor"
-      - "./config/cron.d:/etc/cron.d"
-      - "./config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini"
-      - "./config/php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini"
-    entrypoint: "/var/www/html/run_fpm.sh"
     dns:
       - 8.8.8.8
       - 4.4.4.4
@@ -25,11 +21,3 @@ services:
       - "/var/www/html/vendor"
       - "./config/nginx:/etc/nginx/conf.d"
       - "./logs/nginx:/var/log/nginx"
-
-  web-devel:
-    build:
-      context: ./setup/php-base
-      dockerfile: Dockerfile
-    command: php artisan serv
-    volumes:
-      - "..:/var/www/html"

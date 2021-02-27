@@ -78,10 +78,10 @@ Route::get('/reset-cache', function () {
     }
 });
 
-Route::get('/run-schedule', function () {
-    Artisan::call('schedule:run --no-ansi');
-    return response("Scheduled tasks have run");
-});
+// Route::get('/run-schedule', function () {
+//     Artisan::call('schedule:run --no-ansi');
+//     return response("Scheduled tasks have run");
+// });
 
 Route::get('/regenschori', function () {
     return redirect(config('url.regenschori'));
