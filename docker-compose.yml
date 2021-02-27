@@ -1,24 +1,17 @@
 # For more information: https://laravel.com/docs/sail
 version: "3"
 services:
+    # this needs to be named `laravel.test` because of sail commands
     laravel.test:
-        build:
-            context: docker/7.4
-            dockerfile: Dockerfile
-            args:
-                WWWGROUP: "${WWWGROUP}"
-        image: sail-7.4/app
-        ports:
-            - "${APP_PORT:-80}:80"
-        environment:
-            WWWUSER: "${WWWUSER}"
-            LARAVEL_SAIL: 1
-        volumes:
-            - ".:/var/www/html"
+        extends:
+            file: docker/server.yml
+            service: web.local
         networks:
             - sail
         depends_on:
             - db
+        ports:
+            - "${APP_PORT:-80}:80"
 
     db:
         extends:
@@ -37,12 +30,7 @@ services:
             - sail
         ports:
             - 8001:8080
-    cron:
-        extends:
-            file: docker/addons.yml
-            service: cron
-        networks:
-            - sail
+
     lilypond:
         extends:
             file: docker/addons.yml
@@ -70,22 +58,7 @@ services:
             - sail
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
-    # mysql:
-    #     image: "mysql:8.0"
-    #     ports:
-    #         - "${FORWARD_DB_PORT:-3306}:3306"
-    #     environment:
-    #         MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-    #         MYSQL_DATABASE: "${DB_DATABASE}"
-    #         MYSQL_USER: "${DB_USERNAME}"
-    #         MYSQL_PASSWORD: "${DB_PASSWORD}"
-    #         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    #     volumes:
-    #         - "sailmysql:/var/lib/mysql"
-    #     networks:
-    #         - sail
-    #     healthcheck:
-    #         test: ["CMD", "mysqladmin", "ping"]
+
 networks:
     sail:
         driver: bridge

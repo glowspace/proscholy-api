@@ -21,3 +21,18 @@ services:
       - "/var/www/html/vendor"
       - "./config/nginx:/etc/nginx/conf.d"
       - "./logs/nginx:/var/log/nginx"
+
+  web.local:
+    build:
+      context: ./setup/php-local-7.4
+      dockerfile: Dockerfile
+      args:
+        WWWGROUP: "${WWWGROUP}"
+    image: sail-7.4/app
+    ports:
+      - "${APP_PORT:-80}:80"
+    environment:
+      WWWUSER: "${WWWUSER}"
+      LARAVEL_SAIL: 1
+    volumes:
+      - "..:/var/www/html"

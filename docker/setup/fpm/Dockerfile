@@ -33,8 +33,8 @@ COPY php-fpm.conf /usr/local/etc/php-fpm.d/www2.conf
 COPY crontab /etc/cron.d/laravel-cron
 RUN chmod 0644 /etc/cron.d/laravel-cron
 RUN touch /var/log/cron.log
-
 CMD printenv > /etc/environment
+
 
 EXPOSE 8000
 
