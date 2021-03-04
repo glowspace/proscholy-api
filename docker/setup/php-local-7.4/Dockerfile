@@ -12,7 +12,7 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
-    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 \
+    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git sqlite3 libcap2-bin libpng-dev python2 \
     && mkdir -p ~/.gnupg \
     && chmod 600 ~/.gnupg \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
@@ -42,9 +42,14 @@ RUN apt-get update \
 
 RUN apt-get update && apt-get install -y cron
 
+RUN apt-get update && apt-get install -y python3 python3-pip
+RUN pip3 install git+https://github.com/Supervisor/supervisor \ 
+    && pip3 install superfsmon
+
 COPY crontab /etc/cron.d/laravel-cron
 RUN chmod 0644 /etc/cron.d/laravel-cron
 RUN touch /var/log/cron.log
+RUN mkdir /var/log/supervisor
 
 # not sure if this is necessary for the cron..??
 # CMD printenv > /etc/environment
