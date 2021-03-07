@@ -33,7 +33,7 @@
         "apollo-link-http": "^1.5.14",
         "apollo-upload-client": "^14.1.1",
         "axios": "^0.18",
-        "bible-reference": "https://github.com/proscholy/bible-reference#1.0.5",
+        "bible-reference": "https://github.com/proscholy/bible-reference#1.0.6",
         "bootstrap": "4.2.1",
         "bootstrap-material-design": "4.1.1",
         "bowser": "^2.4.0",
