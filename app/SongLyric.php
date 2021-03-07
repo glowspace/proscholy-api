@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // use App\Helpers\ChordQueue;
 // use App\Helpers\SongPart;
 use App\Helpers\SongLyricHelper;
+use App\Jobs\UpdateSongLyricLilypond;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -513,6 +514,11 @@ class SongLyric extends Model
     public function hasSiblings()
     {
         return $this->getSiblings()->count() > 0;
+    }
+
+    public function renderLilypond()
+    {
+        UpdateSongLyricLilypond::dispatch($this->id);
     }
 
     /**
