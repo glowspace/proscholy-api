@@ -30,6 +30,8 @@ RUN chmod +x /usr/local/bin/start-container
 COPY php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY php-fpm.conf /usr/local/etc/php-fpm.d/www2.conf
 
+RUN touch /var/log/fpm-php.www.log && chmod 666 /var/log/fpm-php.www.log
+
 COPY crontab /etc/cron.d/laravel-cron
 RUN chmod 0644 /etc/cron.d/laravel-cron
 RUN touch /var/log/cron.log
