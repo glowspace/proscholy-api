@@ -799,7 +799,7 @@ export default {
     },
     lilypond_parse: {
       query: FETCH_LILYPOND,
-      debounce: 200,
+      debounce: 500,
       // fetchPolicy: 'no-cache',
       variables() {
         return { lilypond: this.model.lilypond, lilypond_key_major: this.model.lilypond_key_major }
