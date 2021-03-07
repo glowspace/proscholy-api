@@ -20,9 +20,9 @@ bible-passage-reference-parser@^2.0.1:
   resolved "https://registry.yarnpkg.com/bible-passage-reference-parser/-/bible-passage-reference-parser-2.0.1.tgz#1f2339645a88c4a52bea45ae36b4745be539085b"
   integrity sha1-HyM5ZFqIxKUr6kWuNrR0W+U5CFs=
 
-"bible-reference@https://github.com/proscholy/bible-reference#1.0.5":
-  version "1.0.5"
-  resolved "https://github.com/proscholy/bible-reference#c1dcd400741adaf4daffd9bfbc8f3e248e180c37"
+"bible-reference@https://github.com/proscholy/bible-reference#1.0.6":
+  version "1.0.6"
+  resolved "https://github.com/proscholy/bible-reference#d0d9623704739b8a4d4c22c7c6a99eaf177d9bbf"
   dependencies:
     bible-passage-reference-parser "^2.0.1"
 
