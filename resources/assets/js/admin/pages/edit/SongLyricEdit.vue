@@ -569,8 +569,6 @@ import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
 import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
-
-// import { bcv_parser } from "bible-passage-reference-parser/js/cs_bcv_parser";
 import BibleReference from "bible-reference/bible_reference";
 
 const LP_TEMPLATE = `\\version "2.22.0"
