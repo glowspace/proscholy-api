@@ -579,7 +579,7 @@ melodie = {
 \tc
 }
 
-text = \\lyrics {
+\\addlyrics {
 \t
 }
 
