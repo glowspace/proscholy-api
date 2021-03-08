@@ -67,17 +67,6 @@
                   </v-flex>
                 </v-layout>
 
-                <v-radio-group v-model="model.only_regenschori" class="pt-0 mt-0 mb-3" :hide-details="true">
-                  <v-radio
-                    label="Píseň určená pro Zpěvník ProScholy.cz a Regenschoriho"
-                    :value="false"
-                  ></v-radio>
-                  <v-radio
-                    label="Skladba pouze pro Regenschoriho"
-                    :value="true"
-                  ></v-radio>
-                </v-radio-group>
-
                 <v-select :items="enums.licence_type_cc" v-model="model.licence_type_cc" label="Licence"></v-select>
 
                 <v-layout row mb-2 v-if="is_arrangement_layout">
