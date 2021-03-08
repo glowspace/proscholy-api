@@ -574,7 +574,7 @@ import BibleReference from "bible-reference/bible_reference";
 const LP_TEMPLATE = `\\version "2.22.0"
 
 melodie = {
-\tc
+\tc'
 }
 
 \\addlyrics {
