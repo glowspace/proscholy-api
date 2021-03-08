@@ -39,7 +39,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .browserSync({
         // proxy settings for php artisan serve
         // if you are using docker then change proxy to 'nginx:80'
-        proxy: 'localhost:80',
+        proxy: 'localhost:8000',
         files: [
             'public/css/app.css',
             'public/js/app.js',
