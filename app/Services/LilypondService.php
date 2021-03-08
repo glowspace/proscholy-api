@@ -49,7 +49,7 @@ class LilypondService
     public function makeLilypondSource($lilypond, $key_major = null): LilypondSrc
     {
         $src = new LilypondSrc($lilypond);
-        $src->applyLayout('default_layout', 'amiri', 2.5, 'amiri', 3)->applyInfinitePaper();
+        $src->applyLayout('default_layout', 'amiri', 2.5, 'amiri', 3)->applyInfinitePaper()->applyTinynotes();
 
         if ($key_major) {
             $src->setOriginalKey($key_major);
