@@ -5,8 +5,6 @@ services:
       file: docker/server.yml
       service: web
     restart: always
-    volumes:
-      - "./docker/config/fpm/www2.conf:/usr/local/etc/php-fpm.d/www2.conf"
     depends_on:
       - db
     networks:
@@ -43,6 +41,13 @@ services:
     ports:
       - 8200:8080
 
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - "productionredis:/data"
+    networks:
+      - bcloud-network
+
   elastic:
     extends:
       file: docker/elastic.yml
@@ -51,13 +56,6 @@ services:
     networks:
       - bcloud-network
 
-  cron:
-    extends:
-      file: docker/addons.yml
-      service: cron
-    restart: always
-    networks:
-      - bcloud-network
   lilypond:
     extends:
       file: docker/addons.yml
@@ -76,3 +74,7 @@ services:
 
 networks:
   bcloud-network:
+
+volumes:
+  productionredis:
+    driver: local
