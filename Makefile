@@ -1,7 +1,7 @@
 
 production-deploy:
 	# # echo "Updating docker using file $OPTARG"
-	git checkout master
+	git checkout master -f
 	git pull origin master
 
 	docker-compose -f docker-compose.prod.yml up --build -d
@@ -23,7 +23,7 @@ production-deploy:
 	docker-compose -f docker-compose.prod.yml exec -T web curl nginx/reset-cache
 
 staging-deploy:
-	git checkout develop
+	git checkout develop -f
 	git pull origin develop
 
 	docker-compose -f docker-compose.staging.yml up --build -d
