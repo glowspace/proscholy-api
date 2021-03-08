@@ -177,7 +177,7 @@ enum SheetMusicKey {
     SHARP_2 @enum(value: "d")
     SHARP_3 @enum(value: "a")
     SHARP_4 @enum(value: "e")
-    SHARP_5 @enum(value: "h")
+    SHARP_5 @enum(value: "b")
     SHARP_6 @enum(value: "fis")
     SHARP_7 @enum(value: "cis")
     FLAT_7 @enum(value: "ces")
@@ -185,7 +185,7 @@ enum SheetMusicKey {
     FLAT_5 @enum(value: "des")
     FLAT_4 @enum(value: "as")
     FLAT_3 @enum(value: "es")
-    FLAT_2 @enum(value: "b")
+    FLAT_2 @enum(value: "bes")
     FLAT_1 @enum(value: "f")
 }
 
