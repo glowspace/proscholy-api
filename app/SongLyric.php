@@ -236,7 +236,7 @@ class SongLyric extends Model
         "d" => '2# (D / h)',
         "a" => '3# (A / fis)',
         "e" => '4# (E / cis)',
-        "h" => '5# (H / gis)',
+        "b" => '5# (H / gis)',
         "fis" => '6# (Fis / dis)',
         "cis" => '7# (Cis / ais)',
         "ces" => '7b (Ces / as)',
@@ -244,7 +244,7 @@ class SongLyric extends Model
         "des" => '5b (Des / b)',
         "as" => '4b (As / f)',
         "es" => '3b (Es / c)',
-        "b" => '2b (B / g)',
+        "bes" => '2b (B / g)',
         "f" => '1b (F / d)'
     ];
 
