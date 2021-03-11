@@ -878,7 +878,7 @@ export default {
       if (this.model && this.model_database) {
         const fileName = this.model_database.public_route.split('/')[3];
   
-        return `/api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
+        return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
       }
 
       return '';
