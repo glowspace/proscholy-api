@@ -37,7 +37,7 @@ extend type Query {
     tag(id: ID! @eq): Tag @find
     tags(type: Int @eq): [Tag] @all @deprecated
 
-    tags_enum(type: TagType @eq, hide_in_liturgy: Boolean @eq): [Tag] @all
+    tags_enum(type: TagType @eq, hide_in_liturgy: Boolean @eq): [Tag]
 }
 
 enum TagType {
