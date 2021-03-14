@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\SongLyricHelper;
 use App\Jobs\UpdateSongLyricLilypond;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -55,8 +56,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereSongId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property int|null $visits
- * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereVisits($value)
  * @property string $lang
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\External[] $externals
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SongLyric whereLang($value)
@@ -75,7 +74,7 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['creating_at', 'created_at', 'visits', 'updating_at', 'updating_user_id', 'bible_refs_osis', 'lilypond_svg'];
+    protected $dontKeepRevisionOf = ['creating_at', 'created_at', 'updating_at', 'updating_user_id', 'bible_refs_osis', 'lilypond_svg'];
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
@@ -175,7 +174,6 @@ class SongLyric extends Model
         'licence_type',
         'only_regenschori',
         'capo',
-        'visits',
         'liturgy_approval_status',
         'arrangement_of',
         'lilypond',
@@ -384,6 +382,11 @@ class SongLyric extends Model
     public function files(): HasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function visits(): MorphMany
+    {
+        return $this->morphMany(Visit::class, 'visitable');
     }
 
     public function arrangements(): HasMany

@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Visit extends Model
 {
-    protected $fillable = ['visitable', 'visitable_id', 'visit_type', 'is_mobile', 'public_user_id', 'source'];
+    protected $fillable = ['visitable_type', 'visitable_id', 'visit_type', 'is_mobile', 'public_user_id', 'source'];
+
+    public function setUpdatedAtAttribute($value)
+    {
+        // do nothing -- to disable updated_at
+    }
 
     // public $visit_types = [
     //     0 => 'generic',

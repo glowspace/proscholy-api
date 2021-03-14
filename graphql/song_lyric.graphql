@@ -106,7 +106,7 @@ type SongLyric {
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
     capo: Int
-    visits: Int
+    visits: Int @count(relation: "visits")
     has_lyrics: Boolean
     is_approved_for_liturgy: Boolean
 
