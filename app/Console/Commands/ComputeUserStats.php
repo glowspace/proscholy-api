@@ -54,7 +54,7 @@ class ComputeUserStats extends Command
         $this->storeResults($res_month, 'month');
         $this->storeResults($res_prev_month, 'prev_month');
 
-        return 1;
+        return 0;
     }
 
     private function storeResults($results, $name)
@@ -104,9 +104,9 @@ class ComputeUserStats extends Command
                         revisions.created_at as revision_time,
                         date(visits.created_at) as visit_time, # date() strips timestamp, which effectively unifies edits on the same song from the same day (SELECT DISTINCT)
                         visit_type,
-                        visitable,
+                        visitable_type,
                         revisionable_type FROM `revisions`
-                    join `visits` on visitable_id = revisionable_id and visitable = revisionable_type and visits.created_at > revisions.created_at
+                    join `visits` on visitable_id = revisionable_id and visitable_type = revisionable_type and visits.created_at > revisions.created_at
                     where revisions.created_at > :datetime and visits.created_at < :datetime_max
                 ) as stats
                 right join users on user_id = users.id
