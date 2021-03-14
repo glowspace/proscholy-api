@@ -19,7 +19,7 @@ class AdminController extends Controller
         return view('admin.dash', [
             'songs_count' => SongLyric::count(),
 
-            'songs_w_text_count' => SongLyric::where('lyrics', '!=', '')->count(),
+            'songs_w_text_count' => SongLyric::whereHas('lyrics')->count(),
             'songs_w_chords_count' => SongLyric::where('has_chords', '=', true)->count(),
             'songs_w_score_count' => $this->countSongsWithScore(),
             'songs_w_lilypond_count' => $this->countSongsWithLilyPond(),
@@ -36,7 +36,7 @@ class AdminController extends Controller
 
     private function countSongsWithAll(): int
     {
-        return SongLyric::where('lyrics', '!=', '')
+        return SongLyric::whereHas('lyrics')
             ->where('has_chords', '=', true)
             ->where(function ($query) {
                 $query->whereHas('authors', null)
@@ -47,7 +47,7 @@ class AdminController extends Controller
 
     private function countEmptySongs(): int
     {
-        return SongLyric::whereNull('lyrics')
+        return SongLyric::whereDoesntHave('lyrics')
             ->where(function ($query) {
                 $query->whereDoesntHave('authors', null)->where('has_anonymous_author', 0);
             })
@@ -70,7 +70,7 @@ class AdminController extends Controller
             # External must be score
             $q->where('content_type', '2');
         })
-            ->orWhere('lilypond', '!=', null) # or song has lilypond score
+            ->orWhereHas('lilypond_src') # or song has lilypond score
             ->count();
     }
 
@@ -81,8 +81,8 @@ class AdminController extends Controller
      */
     private function countSongsWithLilyPond(): int
     {
-        return SongLyric::where('lilypond', '!=', null) # or song has lilypond score
-        ->count();
+        return SongLyric::whereHas('lilypond_src') # or song has lilypond score
+            ->count();
     }
 
     /**
@@ -91,7 +91,7 @@ class AdminController extends Controller
     private function countSongsWithLicense(): int
     {
         return SongLyric::where('licence_type_cc', '!=', 0) # or song has lilypond score
-        ->count();
+            ->count();
     }
 
     private function countSongsWithTags()

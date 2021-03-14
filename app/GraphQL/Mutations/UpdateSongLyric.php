@@ -38,6 +38,7 @@ class UpdateSongLyric
 
         $song_lyric->update($input);
         // todo if has key
+        $this->sl_service->handleLyrics($song_lyric, $input["lyrics"]);
         $this->sl_service->handleArrangementSourceUpdate($song_lyric, $input["arrangement_source"]);
         $this->sl_service->handleSongGroup($song_lyric, $input["song"]);
         $this->sl_service->handleHasChords($song_lyric);

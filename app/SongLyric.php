@@ -23,6 +23,7 @@ use App\Helpers\SongLyricHelper;
 use App\Jobs\UpdateSongLyricLilypond;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -74,7 +75,7 @@ class SongLyric extends Model
     protected $revisionCleanup = true;
     protected $historyLimit = 200;
     protected $revisionCreationsEnabled = true;
-    protected $dontKeepRevisionOf = ['creating_at', 'created_at', 'updating_at', 'updating_user_id', 'bible_refs_osis', 'lilypond_svg'];
+    protected $dontKeepRevisionOf = ['creating_at', 'created_at', 'updating_at', 'updating_user_id', 'bible_refs_osis'];
 
     protected $indexConfigurator = SongLyricIndexConfigurator::class;
 
@@ -161,7 +162,6 @@ class SongLyric extends Model
     = [
         'name',
         'song_id',
-        'lyrics',
         'id',
         // 'is_original',
         // 'is_authorized',
@@ -176,9 +176,7 @@ class SongLyric extends Model
         'capo',
         'liturgy_approval_status',
         'arrangement_of',
-        'lilypond',
         'lilypond_key_major',
-        'lilypond_svg',
         'song_number',
         'bible_refs_src',
         'bible_refs_osis',
@@ -389,6 +387,25 @@ class SongLyric extends Model
         return $this->morphMany(Visit::class, 'visitable');
     }
 
+    // has one relations (for performance boost)
+
+    public function lyrics(): HasOne
+    {
+        return $this->hasOne(SongLyricLyrics::class);
+    }
+
+    public function lilypond_src(): HasOne
+    {
+        return $this->hasOne(SongLyricLilypondSrc::class);
+    }
+
+    public function lilypond_svg(): HasOne
+    {
+        return $this->hasOne(SongLyricLilypondSvg::class);
+    }
+
+    //  -----------
+
     public function arrangements(): HasMany
     {
         return $this->hasMany(SongLyric::class, 'arrangement_of', 'id');
@@ -473,7 +490,7 @@ class SongLyric extends Model
 
         return $query->whereHas('scoreExternals')
             ->orWhereHas('scoreFiles')
-            ->orWhere('lyrics', '!=', '');
+            ->orWhereHas('lyrics');
     }
 
     /*

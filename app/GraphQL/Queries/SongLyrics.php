@@ -16,37 +16,32 @@ class SongLyrics
             return SongLyric::search($args['search_string'])->get();
 
         if (isset($args['has_lyrics']) && $args['has_lyrics'] === true)
-            $query = $query->where('lyrics', '!=', '');
+            $query = $query->whereHas('lyrics');
         if (isset($args['has_lyrics']) && $args['has_lyrics'] === false)
-            $query = $query->where('lyrics', null);
+            $query = $query->whereDoesntHave('lyrics');
 
         if (isset($args['has_license']) && $args['has_license'] === true)
             $query = $query->where('licence_type_cc', '!=', 0);;
         if (isset($args['has_license']) && $args['has_license'] === false)
             $query = $query->where('licence_type_cc', '=', 0);
 
-        if (isset($args['has_lyrics']) && $args['has_lyrics'] === true)
-            $query = $query->where('lyrics', '!=', '');
-        if (isset($args['has_lyrics']) && $args['has_lyrics'] === false)
-            $query = $query->where('lyrics', null);
-
         if (isset($args['has_scores']) && $args['has_scores'] === false)
             $query = $query->whereDoesntHave('externals', function ($q) { # Song has score in external
                 # External must be score
                 $q->where('content_type', '2');
             })
-                ->where('lilypond', '=', null);
+                ->whereHas('lilypond_src');
 
 
         if (isset($args['needs_lilypond']) && $args['needs_lilypond'] === true)
-            $query = $query->where('lilypond', '=', null)
+            $query = $query->whereDoesntHave('lilypond_src')
                 ->where('licence_type_cc', '!=', 0);
 
         if (isset($args['has_lilypond']) && $args['has_lilypond'] === true)
-            $query = $query->where('lilypond', '!=', null);
+            $query = $query->whereHas('lilypond_src');
 
         if (isset($args['needs_lilypond_update']) && $args['needs_lilypond_update'] === true)
-            $query = $query->where('lilypond', '!=', null);
+            $query = $query->whereHas('lilypond_src');
 
         if (isset($args['has_authors']) && $args['has_authors'] === true)
             $query = $query->whereHas('authors');
@@ -72,7 +67,7 @@ class SongLyrics
         if (isset($args['needs_lilypond_update']) && $args['needs_lilypond_update'] === true) {
             $serv = new LilypondService();
             $res = $res->filter(function ($sl) use ($serv) {
-                return $serv->needsLilypondUpdate($sl->lilypond);
+                return $serv->needsLilypondUpdate($sl->lilypond_src);
             });
         }
 
