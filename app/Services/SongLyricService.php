@@ -8,6 +8,9 @@ use App\SongLyric;
 use App\Song;
 
 use App\Jobs\UpdateSongLyricLilypond;
+use App\SongLyricLilypondSrc;
+use App\SongLyricLilypondSvg;
+use App\SongLyricLyrics;
 
 class SongLyricService
 {
@@ -18,12 +21,68 @@ class SongLyricService
         $this->ly_service = new LilypondService();
     }
 
+    public function handleLyrics($song_lyric, $lyrics)
+    {
+        $wasEmpty = $song_lyric->lyrics === null;
+        $isEmpty = $lyrics === null && $lyrics === '';
+
+        if ($wasEmpty && !$isEmpty) {
+            $lyrics = new SongLyricLyrics(['lyrics' => $lyrics]);
+            $song_lyric->lyrics()->save($lyrics);
+        } else if (!$wasEmpty && !$isEmpty) {
+            $song_lyric->lyrics()->update(['lyrics' => $lyrics]);
+        } else if (!$wasEmpty && $isEmpty) {
+            $song_lyric->lyrics()->delete();
+        }
+
+        $song_lyric->touch();
+    }
+
+    public function handleLilypondSrc($song_lyric, $lilypond_src)
+    {
+        $wasEmpty = $song_lyric->lilypond_src === null;
+        $isEmpty = $lilypond_src === null && $lilypond_src === '';
+
+        if ($wasEmpty && !$isEmpty) {
+            $lilypond_src = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
+            $song_lyric->lilypond_src()->save($lilypond_src);
+        } else if (!$wasEmpty && !$isEmpty) {
+            $song_lyric->lilypond_src()->update(['lilypond_src' => $lilypond_src]);
+        } else if (!$wasEmpty && $isEmpty) {
+            $song_lyric->lilypond_src()->delete();
+        }
+
+        $song_lyric->touch();
+    }
+
+    public function handleLilypondSvg($song_lyric, $lilypond_svg)
+    {
+        $wasEmpty = $song_lyric->lilypond_svg === null;
+        $isEmpty = $lilypond_svg === null && $lilypond_svg === '';
+
+        if ($wasEmpty && !$isEmpty) {
+            $lilypond_svg = new SongLyricLilypondSvg(['lilypond_svg' => $lilypond_svg]);
+            $song_lyric->lilypond_svg()->save($lilypond_svg);
+        } else if (!$wasEmpty && !$isEmpty) {
+            $song_lyric->lilypond_svg()->update(['lilypond_svg' => $lilypond_svg]);
+        } else if (!$wasEmpty && $isEmpty) {
+            $song_lyric->lilypond_svg()->delete();
+        }
+
+        $song_lyric->touch();
+    }
+
     public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major)
     {
+        $this->handleLilypondSrc($song_lyric, $lilypond_input);
+
+        // this task then calls handleLilypondSvg in this class
         UpdateSongLyricLilypond::dispatchUnless(
             $lilypond_input == $song_lyric->lilypond && $lilypond_key_major == $song_lyric->lilypond_key_major,
             $song_lyric->id
         );
+
+        // with that, the lilypond is updated
     }
 
     public function handleSongGroup(SongLyric $song_lyric, $song_input_data)

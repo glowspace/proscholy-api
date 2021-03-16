@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class AuthorSongLyric extends Pivot
@@ -16,12 +17,12 @@ class AuthorSongLyric extends Pivot
         'MUSIC' => 'Hudba',
     ];
 
-    public function song_lyric()
+    public function song_lyric(): BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
     }

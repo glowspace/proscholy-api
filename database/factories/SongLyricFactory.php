@@ -29,7 +29,8 @@ class SongLyricFactory extends Factory
             },
             'secondary_name_1' => $this->faker->firstNameFemale,
             'secondary_name_2' => $this->faker->firstNameFemale,
-            'lyrics' => $this->faker->text,
+            // todo: change to HasOne relation
+            // 'lyrics' => $this->faker->text,
         ];
     }
 }

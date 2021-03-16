@@ -5,15 +5,19 @@ enum AuthorshipType {
 }
 
 type AuthorSongLyric {
-    id: ID! @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@id")
+    pivot: AuthorSongLyricPivot
+
+    id: ID! @rename(attribute:"pivot.id") @deprecated(reason: "Use pivot.id instead on this type")
+    authorship_type: AuthorshipType @rename(attribute:"pivot.authorship_type") @deprecated(reason: "Use pivot.authorship_type instead on this type")
+    song_lyric: SongLyric @rename(attribute:"pivot.song_lyric") @deprecated(reason: "Use pivot.song_lyric instead on this type")
+    author: Author @rename(attribute:"pivot.author") @deprecated(reason: "Use pivot.author instead on this type")      
+}
+
+type AuthorSongLyricPivot {
+    id: ID!
     authorship_type: AuthorshipType
-        @field(
-            resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@authorship_type"
-        )
-    song_lyric: SongLyric
-        @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@song_lyric")
-    author: Author
-        @field(resolver: "App\\GraphQL\\Types\\AuthorSongLyricType@author")
+    song_lyric: SongLyric @belongsTo
+    author: Author @belongsTo
 }
 
 input SyncAuthorsSongLyricRelation {

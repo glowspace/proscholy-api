@@ -37,15 +37,15 @@ type SongLyric {
 
     Soon, there will hopefully be a PE grammar used and available for lyrics parsing
     """
-    lyrics: String
+    lyrics: String @hasOne(relation:"lyrics")
     """
     Raw lilypond source
     """
-    lilypond: String
+    lilypond: String @hasOne(relation:"lilypond_src")
     """
     SVG output of lilypond parsing
     """
-    lilypond_svg: String
+    lilypond_svg: String @hasOne(relation:"lilypond_svg")
     lilypond_key_major: String
     type_enum: SongType @rename(attribute: "type")
     """
@@ -106,7 +106,7 @@ type SongLyric {
     trashed: Boolean @method(name: "trashed")
     only_regenschori: Boolean
     capo: Int
-    visits: Int @count(relation: "visits")
+    visit_info: VisitInfo @morphOne(relation: "visit_aggregate")
     has_lyrics: Boolean
     is_approved_for_liturgy: Boolean
 

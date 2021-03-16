@@ -1,7 +1,17 @@
 type SongbookRecord {
-    id: ID! @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@id")
-    number: String @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@number")
-    placeholder: String @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@placeholder")
-    song_lyric: SongLyric @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@song_lyric")
-    songbook: Songbook @field(resolver: "App\\GraphQL\\Types\\SongbookRecordType@songbook")
+    pivot: SongbookRecordPivot
+
+    id: ID! @rename(attribute:"pivot.id") @deprecated(reason: "Use pivot.id instead on this type")
+    number: String @rename(attribute:"pivot.number") @deprecated(reason: "Use pivot.number instead on this type")
+    placeholder: String @rename(attribute:"pivot.placeholder") @deprecated(reason: "Use pivot.placeholder instead on this type")
+    song_lyric: SongLyric @rename(attribute:"pivot.song_lyric") @deprecated(reason: "Use pivot.song_lyric instead on this type")
+    songbook: Songbook @rename(attribute:"pivot.songbook") @deprecated(reason: "Use pivot.songbook instead on this type")
+}
+
+type SongbookRecordPivot {
+    id: ID!
+    number: String
+    placeholder: String
+    song_lyric: SongLyric @belongsTo
+    songbook: Songbook @belongsTo
 }
