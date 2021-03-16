@@ -149,7 +149,14 @@
                                     }}
                                 </td>
                                 <td>
-                                    <span>{{ props.item.visits }}</span>
+                                    <span>{{
+                                        props.item.visit_info.count_total
+                                    }}</span>
+                                </td>
+                                <td>
+                                    <span>{{
+                                        props.item.visit_info.count_week
+                                    }}</span>
                                 </td>
                                 <td>
                                     <span v-if="props.item.only_regenschori"
@@ -223,7 +230,10 @@ const fetch_items = gql`
             secondary_name_1
             secondary_name_2
             updated_at
-            visits
+            visit_info {
+                count_total
+                count_week
+            }
             type
             authors {
                 name
@@ -266,7 +276,8 @@ export default {
                 { text: 'Typ', value: 'type' },
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
-                { text: 'Zobrazení', value: 'visits' },
+                { text: 'Zobrazení', value: 'visit_info.count_total' },
+                { text: 'Zobrazení (týden)', value: 'visit_info.count_week' },
                 { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Pečeť', value: 'is_sealed' },
                 { text: 'Akce', value: 'actions', sortable: false }
