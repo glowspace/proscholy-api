@@ -25,12 +25,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('compute:stats')
-            ->everyFiveMinutes()
-            ->appendOutputTo(storage_path('logs/schedule.log'));
+            ->dailyAt('22:00');
 
-        $schedule->command('backup:run')
-            ->weekly()
-            ->appendOutputTo(storage_path('logs/schedule.log'));
+        $schedule->command('compute:visits')
+            ->hourly();
+
+        // temporary disabled
+        // todo: fix
+        // $schedule->command('backup:run')
+        //     ->weekly()
+        //     ->appendOutputTo(storage_path('logs/schedule.log'));
 
         $schedule->exec('curl ' . config('bible-matcher.host') . ':' . config('bible-matcher.port') . '/match-songs')
             ->everyFiveMinutes();
