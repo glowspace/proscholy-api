@@ -21,6 +21,8 @@ class SongLyricService
         $this->ly_service = new LilypondService();
     }
 
+    // todo: rewrite following (three) methods to use `upsert`
+
     public function handleLyrics($song_lyric, $lyrics)
     {
         $wasEmpty = $song_lyric->lyrics === null;
