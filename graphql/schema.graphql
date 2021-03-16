@@ -6,6 +6,7 @@ scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 "Import graphql schema files"
+#import visit_info.graphql
 #import author_song_lyric.graphql
 #import author.graphql
 #import user.graphql

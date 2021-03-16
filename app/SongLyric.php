@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * App\SongLyric
@@ -382,9 +383,9 @@ class SongLyric extends Model
         return $this->hasMany(File::class);
     }
 
-    public function visits(): MorphMany
+    public function visit_aggregate(): MorphOne
     {
-        return $this->morphMany(Visit::class, 'visitable');
+        return $this->morphOne(VisitAggregate::class, 'visitable');
     }
 
     // has one relations (for performance boost)
