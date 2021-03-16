@@ -53,6 +53,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
         Route::group(['middleware' => ['permission:manage users']], function () {
             Route::resource('user', 'UserController')->except(['show']);
         });
+
+        Route::get('testdb', 'AdminController@testDb');
     });
 });
 

@@ -99,4 +99,11 @@ class AdminController extends Controller
         return SongLyric::whereHas('tags')
             ->count();
     }
+
+    public function testDb()
+    {
+        // do sth here
+
+        return view('admin.test', ['result' => true]);
+    }
 }
