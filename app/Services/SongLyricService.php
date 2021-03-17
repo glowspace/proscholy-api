@@ -21,6 +21,33 @@ class SongLyricService
         $this->ly_service = new LilypondService();
     }
 
+    public function createSongLyric(string $name): SongLyric
+    {
+        $song       = Song::create(['name' => $name]);
+
+        $song_lyric = SongLyric::create([
+            'name' => $name,
+            'song_id' => $song->id
+        ]);
+
+        $song_lyric->visit_aggregate()->create([
+            'count_week' => 0,
+            'count_total' => 0
+        ]);
+
+        return $song_lyric;
+    }
+
+    public function createArrangement(string $name, int $arrangement_of_id): SongLyric
+    {
+        return SongLyric::create([
+            'name' => $name,
+            'arrangement_of' => $arrangement_of_id,
+            'type' => null,
+            'song_id' => null // arrangement has no `song` - meaning belongs to no song group per definition
+        ]);
+    }
+
     // todo: rewrite following (three) methods to use `upsert`
 
     public function handleLyrics($song_lyric, $lyrics)

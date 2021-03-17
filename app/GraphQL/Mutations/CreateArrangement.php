@@ -4,17 +4,7 @@ namespace App\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use Illuminate\Support\Facades\Auth;
-// use Validator;
-use Validator;
-use Illuminate\Validation\ValidationException;
-use Nuwave\Lighthouse\Execution\ErrorBuffer;
-
-use App\Author;
-use App\SongLyric;
-use App\Song;
-use App\External;
-use App\Songbook;
+use App\Services\SongLyricService;
 
 class CreateArrangement
 {
@@ -29,13 +19,6 @@ class CreateArrangement
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        // $input = $args["input"];
-
-        return SongLyric::create([
-            'name' => $args["name"],
-            'arrangement_of' => $args["arrangement_of"],
-            'type' => null,
-            'song_id' => null // arrangement has no `song` - meaning belongs to no song group per definition
-        ]);
+        return app(SongLyricService::class)->createArrangement($args['name'], $args['arrangement_of']);
     }
 }
