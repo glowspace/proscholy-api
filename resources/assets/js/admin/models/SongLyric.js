@@ -266,7 +266,14 @@ export default {
             lilypond: vueModel.lilypond,
             // lilypond_svg: vueModel.lilypond_svg,
             lilypond_key_major: vueModel.lilypond_key_major,
-            song: vueModel.song,
+            song: {
+                id: vueModel.song.id,
+                song_lyrics: vueModel.song.song_lyrics.map(sl => ({
+                    id: sl.id,
+                    name: sl.name,
+                    type: sl.type
+                }))
+            },
             capo: vueModel.capo,
             liturgy_approval_status: vueModel.liturgy_approval_status,
             bible_refs_src: vueModel.bible_refs_src,

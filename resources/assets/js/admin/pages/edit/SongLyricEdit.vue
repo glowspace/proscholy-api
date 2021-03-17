@@ -1006,18 +1006,17 @@ export default {
       );
     },
 
-    addToGroup(song) {
-      // check if there is original in the group and then
-      if (
-        song.song_lyrics.filter(sl => {
-          return sl.type == 0;
-        }).length > 0
-      )
-        this.model.song.song_lyrics[0].type = 1;
+    addToGroup(groupingSong) {
+      const n_originals_in_group = groupingSong.song_lyrics.filter(sl => sl.type == 0).length;
 
-      this.model.song.song_lyrics = this.model.song.song_lyrics.concat(
-        song.song_lyrics
-      );
+      if (n_originals_in_group > 0) {
+        this.model.song.song_lyrics[0].type = 1;
+      }
+
+      this.model.song.song_lyrics = [
+        ...this.model.song.song_lyrics,
+        ...groupingSong.song_lyrics
+      ]
     },
 
     onNameChange(name) {

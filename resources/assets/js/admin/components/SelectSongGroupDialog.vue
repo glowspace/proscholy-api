@@ -9,9 +9,9 @@
             <v-card-title class="headline">Výběr </v-card-title>
             <v-card-text>
                 <v-combobox
-                    v-model="song"
-                    :items="songs_flat"
-                    item-value="song_id"
+                    v-model="selected_song"
+                    :items="songs_augmented"
+                    item-value="id"
                     item-text="name_display"
                     :filter="filter"
                     label="Vyberte píseň resp. skupinu písní"
@@ -24,7 +24,10 @@
                 >
                 <v-btn
                     color="green darken-1"
-                    :disabled="song == undefined || song.song_id == undefined"
+                    :disabled="
+                        selected_song == undefined ||
+                            selected_song.id == undefined
+                    "
                     flat
                     @click="onSubmit"
                     >OK</v-btn
@@ -73,8 +76,8 @@ export default {
     data() {
         return {
             dialog: false,
-            song: undefined,
-            songs_flat: []
+            selected_song: undefined,
+            songs_augmented: []
         };
     },
 
@@ -82,8 +85,8 @@ export default {
         songs: {
             query: FETCH_SONGS,
             result() {
-                this.songs_flat = this.songs.map(song => ({
-                    song_id: song.id,
+                this.songs_augmented = this.songs.map(song => ({
+                    ...song,
                     name_search: stringToSearchable(
                         song.song_lyrics.map(songLyricFullName).join(', ')
                     ),
@@ -102,7 +105,7 @@ export default {
 
         onSubmit() {
             this.dialog = false;
-            this.$emit('submit', this.song);
+            this.$emit('submit', this.selected_song);
         },
 
         filter(item, queryText) {
