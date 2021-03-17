@@ -24,7 +24,7 @@
                 >
                 <v-btn
                     color="green darken-1"
-                    :disabled="song == undefined || song.id == undefined"
+                    :disabled="song == undefined || song.song_id == undefined"
                     flat
                     @click="onSubmit"
                     >OK</v-btn
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import gql, { disableFragmentWarnings } from 'graphql-tag';
+import gql from 'graphql-tag';
 import removeDiacritics from '../helpers/removeDiacritics';
 
 const FETCH_SONGS = gql`
