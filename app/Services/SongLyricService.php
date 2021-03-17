@@ -26,7 +26,7 @@ class SongLyricService
     public function handleLyrics($song_lyric, $lyrics)
     {
         $wasEmpty = $song_lyric->lyrics === null;
-        $isEmpty = $lyrics === null && $lyrics === '';
+        $isEmpty = $lyrics === null || $lyrics === '';
 
         if ($wasEmpty && !$isEmpty) {
             $lyrics = new SongLyricLyrics(['lyrics' => $lyrics]);
@@ -43,7 +43,7 @@ class SongLyricService
     public function handleLilypondSrc($song_lyric, $lilypond_src)
     {
         $wasEmpty = $song_lyric->lilypond_src === null;
-        $isEmpty = $lilypond_src === null && $lilypond_src === '';
+        $isEmpty = $lilypond_src === null || $lilypond_src === '';
 
         if ($wasEmpty && !$isEmpty) {
             $lilypond_src = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
@@ -60,7 +60,7 @@ class SongLyricService
     public function handleLilypondSvg($song_lyric, $lilypond_svg)
     {
         $wasEmpty = $song_lyric->lilypond_svg === null;
-        $isEmpty = $lilypond_svg === null && $lilypond_svg === '';
+        $isEmpty = $lilypond_svg === null || $lilypond_svg === '';
 
         if ($wasEmpty && !$isEmpty) {
             $lilypond_svg = new SongLyricLilypondSvg(['lilypond_svg' => $lilypond_svg]);
