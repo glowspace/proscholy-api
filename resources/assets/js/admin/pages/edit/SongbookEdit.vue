@@ -278,6 +278,14 @@ export default {
             result(result) {
                 this.loadModelDataFromResult(result);
 
+                for (let record of this.model_database.records) {
+                    Vue.set(
+                        record.song_lyric,
+                        'name_display',
+                        getSongLyricFullName(record.song_lyric)
+                    );
+                }
+
                 for (let record of this.model.records) {
                     Vue.set(
                         record.song_lyric,
