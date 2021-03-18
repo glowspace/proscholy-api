@@ -72,50 +72,48 @@ services:
     networks:
       - bcloud-network
 
-  # grafana used for graphing mysql data
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3123:3000"
-    environment:
-      GF_INSTALL_PLUGINS: percona-percona-app
-    networks:
-      - bcloud-network
-
-  # tool to connect to mysql instance, and allow prometheus to collect mysql stats
-  prom_mysql_exporter:
-    image: prom/mysqld-exporter
-    links:
-      - db
-    ports:
-      - "9104:9104"
-    environment:
-      - DATA_SOURCE_NAME=${DB_USERNAME}:${DB_PASSWORD}@(${DB_HOST}:${DB_PORT})/${DB_DATABASE}
-      - collect.info_schema.tablestats=true
-      - collect.info_schema.userstats=true
-      - collect.info_schema.query_response_time=true
-      - collect.auto_increment.columns=true
-      - collect.binlog_size=true
-      - collect.perf_schema.eventsstatements=true
-      - collect.perf_schema.eventswaits=true
-      - collect.perf_schema.file_events=true
-      - collect.perf_schema.indexiowaits=true
-      - collect.perf_schema.tableiowaits=true
-      - collect.perf_schema.tablelocks=true
-    networks:
-      - bcloud-network
-
-  # prometheus stores and handles timeseries data for statistics around mysql
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - ./docker/config/prometheus:/etc/prometheus
-    links:
-      - prom_mysql_exporter
-    ports:
-      - 9090
-    networks:
-      - bcloud-network
+  # # grafana used for graphing mysql data
+  # grafana:
+  #   image: grafana/grafana
+  #   ports:
+  #     - "3123:3000"
+  #   environment:
+  #     GF_INSTALL_PLUGINS: percona-percona-app
+  #   networks:
+  #     - bcloud-network
+  # # tool to connect to mysql instance, and allow prometheus to collect mysql stats
+  # prom_mysql_exporter:
+  #   image: prom/mysqld-exporter
+  #   links:
+  #     - db
+  #   ports:
+  #     - "9104:9104"
+  #   environment:
+  #     - DATA_SOURCE_NAME=${DB_USERNAME}:${DB_PASSWORD}@(${DB_HOST}:${DB_PORT})/${DB_DATABASE}
+  #     - collect.info_schema.tablestats=true
+  #     - collect.info_schema.userstats=true
+  #     - collect.info_schema.query_response_time=true
+  #     - collect.auto_increment.columns=true
+  #     - collect.binlog_size=true
+  #     - collect.perf_schema.eventsstatements=true
+  #     - collect.perf_schema.eventswaits=true
+  #     - collect.perf_schema.file_events=true
+  #     - collect.perf_schema.indexiowaits=true
+  #     - collect.perf_schema.tableiowaits=true
+  #     - collect.perf_schema.tablelocks=true
+  #   networks:
+  #     - bcloud-network
+  # # prometheus stores and handles timeseries data for statistics around mysql
+  # prometheus:
+  #   image: prom/prometheus
+  #   volumes:
+  #     - ./docker/config/prometheus:/etc/prometheus
+  #   links:
+  #     - prom_mysql_exporter
+  #   ports:
+  #     - 9090
+  #   networks:
+  #     - bcloud-network
 
 networks:
   bcloud-network:
