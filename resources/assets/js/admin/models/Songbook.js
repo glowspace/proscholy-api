@@ -10,7 +10,9 @@ const fragment = gql`
             number
             song_lyric {
                 id
-                name: rich_name
+                name
+                secondary_name_1
+                secondary_name_2
             }
         }
         songs_count
@@ -78,7 +80,7 @@ export default {
                             !r.song_lyric.hasOwnProperty('id')
                     )
                     .map(m => ({
-                        song_lyric_name: m.song_lyric.name,
+                        song_lyric_name: m.song_lyric.name_display,
                         number: m.number
                     }))
             }

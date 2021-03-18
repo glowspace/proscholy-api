@@ -1,11 +1,11 @@
 <template>
     <v-combobox
         v-model="internalValue"
-        :filter="filter"
+        :filter="filter || defaultFilter"
         :hide-no-data="!search"
         :items="allItems"
         :search-input.sync="search"
-        item-text="name"
+        :item-text="itemText"
         hide-selected
         :label="label"
         :multiple="multiple"
@@ -29,7 +29,7 @@
                 label
                 small
             >
-                <span class="pr-2">{{ item.name }}</span>
+                <span class="pr-2">{{ item[itemText] }}</span>
                 <v-icon small @click="removeItem(item, parent)">close</v-icon>
             </v-chip>
         </template>
@@ -53,7 +53,7 @@
                     dark
                     label
                     small
-                    >{{ item.name }}</v-chip
+                    >{{ item[itemText] }}</v-chip
                 >
             </v-list-tile-content>
             <v-spacer></v-spacer>
@@ -71,17 +71,24 @@ import removeDiacritics from '../helpers/removeDiacritics';
 
 export default {
     // todo: 'enable-custom set to false' not working for multiple entry
-    props: [
-        'p-items',
-        'value',
-        'label',
-        'header-label',
-        'create-label',
-        'multiple',
-        'enable-custom',
-        'disabled',
-        'no-label'
-    ],
+    props: {
+        pItems: {},
+        value: {},
+        label: {},
+        headerLabel: {},
+        createLabel: {},
+        multiple: {},
+        enableCustom: {},
+        disabled: {},
+        noLabel: {},
+        itemText: {
+            type: String,
+            default: 'name'
+        },
+        filter: {
+            type: Function
+        }
+    },
 
     data: () => ({
         colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
@@ -114,11 +121,11 @@ export default {
 
             const handleNewItem = item => {
                 if (typeof item === 'string') {
-                    item = {
-                        name: item
-                    };
+                    let itemObj = {};
+                    itemObj[this.itemText] = item;
 
-                    this.createdItems.push(item);
+                    this.createdItems.push(itemObj);
+                    return itemObj;
                 }
 
                 return item;
@@ -158,7 +165,7 @@ export default {
                 this.index = -1;
             }
         },
-        filter(item, queryText, itemText) {
+        defaultFilter(item, queryText, itemText) {
             if (item.header) return false;
 
             const hasValue = val => (val != null ? val : '');
