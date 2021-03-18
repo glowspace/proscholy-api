@@ -39,7 +39,10 @@
 
 <script>
 import gql from 'graphql-tag';
-import removeDiacritics from '../helpers/removeDiacritics';
+import {
+    getSongLyricFullName,
+    stringToSearchable
+} from '../helpers/search_indexing';
 
 const FETCH_SONGS = gql`
     query {
@@ -55,20 +58,6 @@ const FETCH_SONGS = gql`
         }
     }
 `;
-
-const songLyricFullName = sl => {
-    var name = sl.name;
-    if (sl.secondary_name_1) {
-        name += '(' + sl.secondary_name_1;
-        if (sl.secondary_name_2) {
-            name += ', ' + sl.secondary_name_2;
-        }
-        name += ')';
-    }
-    return name;
-};
-
-const stringToSearchable = str => removeDiacritics(str ?? '').toLowerCase();
 
 export default {
     props: ['outline'],
@@ -88,10 +77,10 @@ export default {
                 this.songs_augmented = this.songs.map(song => ({
                     ...song,
                     name_search: stringToSearchable(
-                        song.song_lyrics.map(songLyricFullName).join(', ')
+                        song.song_lyrics.map(getSongLyricFullName).join(', ')
                     ),
                     name_display: song.song_lyrics
-                        .map(songLyricFullName)
+                        .map(getSongLyricFullName)
                         .join(', ')
                 }));
             }

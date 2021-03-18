@@ -129,7 +129,7 @@
                             <td>{{ props.item.number }}</td>
                             <td>
                                 <items-combo-box
-                                    v-bind:p-items="song_lyrics"
+                                    v-bind:p-items="song_lyrics_augmented"
                                     v-bind:value="props.item.song_lyric"
                                     @input="
                                         val => {
@@ -145,6 +145,8 @@
                                     :enable-custom="true"
                                     create-label="Potvrďte enterem a vytvořte novou píseň"
                                     :no-label="true"
+                                    item-text="name_display"
+                                    :filter="song_lyric_filter"
                                 ></items-combo-box>
                             </td>
                             <td>
@@ -210,12 +212,24 @@ import FileUploadDialog from 'Admin/components/FileUploadDialog';
 import EditForm from './EditForm';
 import Songbook from 'Admin/models/Songbook';
 import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
+import {
+    getSongLyricFullName,
+    stringToSearchable
+} from '../../helpers/search_indexing';
+
+const augmentedSongLyric = sl => ({
+    ...sl,
+    name_search: stringToSearchable(getSongLyricFullName(sl)),
+    name_display: getSongLyricFullName(sl)
+});
 
 const FETCH_SONG_LYRICS = gql`
     query {
         song_lyrics {
             id
-            name: rich_name
+            name
+            secondary_name_1
+            secondary_name_2
         }
     }
 `;
@@ -250,7 +264,8 @@ export default {
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
             hide_empty: false,
-            fragment: Songbook.fragment
+            fragment: Songbook.fragment,
+            song_lyrics_augmented: []
         };
     },
 
@@ -262,10 +277,23 @@ export default {
             },
             result(result) {
                 this.loadModelDataFromResult(result);
+
+                for (let record of this.model.records) {
+                    Vue.set(
+                        record.song_lyric,
+                        'name_display',
+                        getSongLyricFullName(record.song_lyric)
+                    );
+                }
             }
         },
         song_lyrics: {
-            query: FETCH_SONG_LYRICS
+            query: FETCH_SONG_LYRICS,
+            result() {
+                this.song_lyrics_augmented = this.song_lyrics.map(
+                    augmentedSongLyric
+                );
+            }
         }
     },
 
@@ -398,6 +426,12 @@ export default {
 
         onFileDialogSubmit(url) {
             this.model.songbook_img_url = url;
+        },
+
+        song_lyric_filter(item, queryText) {
+            if (item.header) return false;
+
+            return item.name_search.indexOf(stringToSearchable(queryText)) > -1;
         }
     }
 };
