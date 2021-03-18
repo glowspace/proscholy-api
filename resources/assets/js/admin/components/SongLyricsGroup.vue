@@ -8,13 +8,14 @@
             v-model="song_lyric.type"
             v-on:input="updated(song_lyric)"
         >
-            {{ song_lyric.name }}
+            {{ getSongLyricFullName(song_lyric) }}
         </button-color-toggle>
     </div>
 </template>
 
 <script>
 import ButtonColorToggle from '../components/ButtonColorToggle.vue';
+import { getSongLyricFullName } from '../helpers/search_indexing';
 
 export default {
     components: {
@@ -59,7 +60,8 @@ export default {
                     }
                 }
             }
-        }
+        },
+        getSongLyricFullName: getSongLyricFullName
     }
 };
 </script>
