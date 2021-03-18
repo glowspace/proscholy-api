@@ -278,6 +278,11 @@ export default {
             result(result) {
                 this.loadModelDataFromResult(result);
 
+                // do the following,
+                // so that the ItemComboBox can properly display the name
+                // of the selected song_lyric
+
+                // needs to be updated also on model_database because of dirty check
                 for (let record of this.model_database.records) {
                     Vue.set(
                         record.song_lyric,
