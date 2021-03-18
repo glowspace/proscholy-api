@@ -16,6 +16,10 @@
                     :filter="filter"
                     label="Vyberte píseň resp. skupinu písní"
                 ></v-combobox>
+
+                <p v-if="$apollo.loading">
+                    Chvilku strpení, načítám seznam skupin písní...
+                </p>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
