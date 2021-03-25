@@ -43,6 +43,7 @@ COPY fonts/*.otf /usr/local/lilypond/usr/share/lilypond/current/fonts/otf/
 # COPY fonts/*.woff /usr/local/lilypond/usr/share/lilypond/current/fonts/svg/
 
 WORKDIR /lilywork
+COPY ly_includes/satb_parts/* /lilywork/src/satb_parts/
 
 RUN adduser --disabled-password --gecos '' lilyponder && \
     chown -R lilyponder /lilywork 
@@ -50,8 +51,19 @@ RUN adduser --disabled-password --gecos '' lilyponder && \
 USER lilyponder
 
 ENTRYPOINT /shell2http -form \
-    POST:/make 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cp $filepath_file_lilypond score.ly && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
-    GET:/make_test 'TMPDIR=`mktemp XXXX -d` && cd $TMPDIR && ln -s /bin/scripts/Makefile && cp /scoresl/template.ly score.ly && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    POST:/make 'TMPDIR=`mktemp XXXX -d` \
+    && cd $TMPDIR \
+    && ln -s /bin/scripts/Makefile \
+    && ln -s /lilywork/src/satb_parts \
+    && cp $filepath_file_lilypond score.ly \
+    && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    \   
+    GET:/make_test 'TMPDIR=`mktemp XXXX -d` \
+    && cd $TMPDIR \
+    && ln -s /bin/scripts/Makefile \
+    && cp /scoresl/template.ly score.ly \
+    && make $v_recipe > /dev/null; rm Makefile; cd ..; tree $TMPDIR -J -L 1 --noreport' \
+    \
     GET:/get 'cd $v_dir && cat $v_file' \
     GET:/del 'rm -r $v_dir && echo "ok" || echo "not deleted"'
 
