@@ -62,4 +62,4 @@ ${NAME}_cropped.svg: ${NAME}.svg ${NAME}.eps
 	svgbox="$(shell cat -v ${NAME}.eps | grep %%BoundingBox | /bin/scripts/svg_bbox.py)" && \
 	xmlstarlet ed -N svg='http://www.w3.org/2000/svg' -d '//svg:svg/@width' -d '//svg:svg/@height' -u '//svg:svg/@viewBox' -v "$$svgbox" ${NAME}.svg | \
 	sed 's/<tspan>//g; s/<\/tspan>//g' | \
-	svgo --enable=removeStyleElement -i - -o ${NAME}_cropped.svg
+	svgo -i - -o ${NAME}_cropped.svg
