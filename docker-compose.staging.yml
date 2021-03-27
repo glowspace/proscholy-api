@@ -9,18 +9,20 @@ services:
       - db
     networks:
       - bcloud-network-staging
-
-  nginx:
-    extends:
-      file: docker/server.yml
-      service: nginx
-    restart: always
-    links:
-      - web
-    networks:
-      - bcloud-network-staging
     ports:
-      - 8001:80
+      - 9000:9000
+
+  # nginx:
+  #   extends:
+  #     file: docker/server.yml
+  #     service: nginx
+  #   restart: always
+  #   links:
+  #     - web
+  #   networks:
+  #     - bcloud-network-staging
+  #   ports:
+  #     - 8001:80
 
   db:
     extends:
