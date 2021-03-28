@@ -41,7 +41,7 @@ class DownloadController extends Controller
         $key_major = $request->get('lylipond_key_major');
 
         $ly_s = new LilypondService();
-        $src = $ly_s->makeLilypondSource($lilypond, $key_major);
+        $src = $ly_s->makeLilypondBasicTemplate($lilypond, $key_major);
 
         $headers = [
             'Content-Type' => 'text/*'

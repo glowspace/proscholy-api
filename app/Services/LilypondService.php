@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use ProScholy\LilypondRenderer\Client;
-use ProScholy\LilypondRenderer\LilypondSrc;
+use ProScholy\LilypondRenderer\LilypondBasicTemplate;
+use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
 use Illuminate\Support\Str;
 
@@ -16,9 +17,9 @@ class LilypondService
         $this->client = new Client();
     }
 
-    public function makeSvgFast($lilypond, $key_major = null)
+    private function doClientRenderSvg($src, $crop)
     {
-        $res = $this->client->renderSvg($this->makeLilypondSource($lilypond, $key_major), false);
+        $res = $this->client->renderSvg($src, $crop);
 
         if ($res->isSuccessful()) {
             $output = $this->client->getResultOutputFile($res);
@@ -31,28 +32,44 @@ class LilypondService
         return $output;
     }
 
-    public function makeSvg($lilypond, $key_major = null)
+    public function makePartSvgFast($part, $global_src)
     {
-        $res = $this->client->renderSvg($this->makeLilypondSource($lilypond, $key_major), true);
-
-        if ($res->isSuccessful()) {
-            $output = $this->client->getResultOutputFile($res);
-        } else {
-            $output = false;
-        }
-
-        $this->client->deleteResultAsync($res);
-
-        return $output;
+        return $this->doClientRenderSvg($this->makeLilypondPartsTamplate([$part], $global_src), false);
     }
 
-    public function makeLilypondSource($lilypond, $key_major = null): LilypondSrc
+    public function makeTotalSvgFast($parts, $global_src)
     {
-        $src = new LilypondSrc($lilypond);
-        $src->applyLayout('default_layout', 'amiri', 2.5, 'amiri', 3)->applyInfinitePaper()->applyTinynotes();
+        return $this->doClientRenderSvg($this->makeLilypondPartsTamplate($parts, $global_src), false);
+    }
+
+    public function makeSvgFast($lilypond, $key_major = null)
+    {
+        return $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), false);
+    }
+
+    public function makeSvg($lilypond, $key_major = null)
+    {
+        return $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), true);
+    }
+
+    public function makeLilypondBasicTemplate($lilypond, $key_major = null): LilypondBasicTemplate
+    {
+        $src = new LilypondBasicTemplate($lilypond);
+        $src->applyDefaultLayout('amiri', 2.5, 'amiri', 3)->applyInfinitePaper()->applyTinynotes();
 
         if ($key_major) {
             $src->setOriginalKey($key_major);
+        }
+
+        return $src;
+    }
+
+    public function makeLilypondPartsTamplate($parts, $global_src): LilypondPartsTemplate
+    {
+        $src = new LilypondPartsTemplate($global_src);
+
+        foreach ($parts as $part) {
+            $src->withPart($part['name'], $part['src'], $part['key_major'] ?? 'c', $part['time_signature'] ?? '4/4');
         }
 
         return $src;
