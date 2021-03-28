@@ -2,6 +2,22 @@ type LilypondOutput {
     svg: String
 }
 
+input LilypondPartInput {
+    name: String
+    src: String
+    key_major: String
+    time_signature: String
+    # end_key_major: String
+}
+
+input LilypondTotalInput {
+    parts: [LilypondPartInput]
+    global_src: String
+}
+
 extend type Query @middleware(checks: ["auth:api"]) {
     lilypond_parse(lilypond: String, lilypond_key_major: String): LilypondOutput 
+
+    lilypond_preview_part(lilypond_part: LilypondPartInput, global_src: String) : LilypondOutput
+    lilypond_preview_total(lilypond_total: LilypondTotalInput) : LilypondOutput
 }

@@ -37,6 +37,7 @@
         <v-tab>Zpěvníky</v-tab>
         <v-tab>Biblické reference</v-tab>
         <v-tab>Lilypond noty</v-tab>
+        <v-tab>Lilypond noty NEW (beta)</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
         <v-tab-item :class="{'sealed' : model.is_sealed}">
           <v-layout row wrap pt-2>
@@ -466,6 +467,10 @@
             </v-flex>
           </v-layout>
         </v-tab-item>
+
+        <v-tab-item>
+          <LilypondPartsTab/>
+        </v-tab-item>
         <v-tab-item v-if="!is_arrangement_layout && model_database">
           <v-layout row wrap mb-4>
             <v-flex xs12>
@@ -565,6 +570,7 @@ import CreateExternal from "Admin/components/CreateExternal.vue";
 import ExternalListItem from "Admin/components/ExternalListItem.vue";
 import ExternalComponent from '@bit/proscholy.utilities.external/External.vue';
 
+import LilypondPartsTab from 'Admin/pages/edit/SongLyric/LilypondParts/LilypondPartsTab.vue';
 import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
 import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
@@ -660,7 +666,8 @@ export default {
     NumberInput,
     CreateExternal,
     ExternalListItem,
-    ExternalComponent
+    ExternalComponent,
+    LilypondPartsTab
   },
   extends: EditForm,
 
