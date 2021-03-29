@@ -7,7 +7,6 @@
                 name="input-global"
                 label="Pomocný kód"
                 ref="textarea"
-                rows="10"
                 v-model="global.src"
                 v-on:keydown.tab.prevent="preventTextareaTab($event, global)"
                 style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
@@ -15,7 +14,7 @@
         </v-flex>
 
         <template v-for="(part, i) in parts">
-            <v-flex xs12 md6 :key="i">
+            <v-flex xs12 md6 :key="i * 2">
                 <v-select
                     :items="['c', 'd']"
                     v-model="part.key_major"
@@ -43,7 +42,7 @@
                     >
                 </div> -->
             </v-flex>
-            <v-flex xs12 md6 :key="i">
+            <v-flex xs12 md6 :key="i * 2 + 1">
                 <ApolloQuery
                     :query="gql => queries.fetch_lilypond_part"
                     :variables="{ lilypond_part: part, global_src: global.src }"
@@ -112,8 +111,8 @@ export default {
     methods: {
         preventTextareaTab(event, src_obj) {
             let originalSelectionStart = event.target.selectionStart,
-                textStart = text.slice(0, originalSelectionStart),
-                textEnd = text.slice(originalSelectionStart);
+                textStart = src_obj.src.slice(0, originalSelectionStart),
+                textEnd = src_obj.src.slice(originalSelectionStart);
 
             Vue.set(src_obj, 'src', `${textStart}\t${textEnd}`);
             event.target.value = src_obj.src; // required to make the cursor stay in place.
@@ -125,6 +124,28 @@ export default {
             // do the svg
 
             return data;
+        },
+
+        cropSvg(svgelem) {
+            Vue.nextTick().then(() => {
+                // var svgelem = this.$refs.lilypond_src_div.childNodes[0];
+                var bbox = svgelem.getBBox();
+                if (bbox && bbox.width && bbox.height) {
+                    console.log('cropping the svg');
+
+                    svgelem.setAttribute(
+                        'viewBox',
+                        [
+                            bbox.x,
+                            bbox.y,
+                            Math.max(60, bbox.width),
+                            bbox.height
+                        ].join(' ')
+                    );
+                    svgelem.removeAttribute('width');
+                    svgelem.removeAttribute('height');
+                }
+            });
         }
     }
 };
