@@ -11,12 +11,14 @@
                 v-on:keydown.tab.prevent="preventTextareaTab($event, global)"
                 style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
             ></v-textarea>
+
+            <v-btn @click="addPart">Přidat část písně</v-btn>
         </v-flex>
 
         <template v-for="(part, i) in parts">
             <v-flex xs12 md6 :key="i * 2">
                 <v-select
-                    :items="['c', 'd']"
+                    :items="enums.key_major"
                     v-model="part.key_major"
                     label="Předznamenání"
                 ></v-select>
@@ -44,9 +46,10 @@
             </v-flex>
             <v-flex xs12 md6 :key="i * 2 + 1">
                 <ApolloQuery
-                    :query="gql => queries.fetch_lilypond_part"
+                    :query="gql => fetch_lilypond_part_query"
                     :variables="{ lilypond_part: part, global_src: global.src }"
-                    :update="partLoaded"
+                    :debounce="400"
+                    @result="cropSvg(`lilypond_src_div_${i}`)"
                 >
                     <template v-slot="{ result: { error, data }, isLoading }">
                         <!-- Loading -->
@@ -59,7 +62,7 @@
 
                         <div
                             v-else-if="data"
-                            v-html="data.svg"
+                            v-html="data.lilypond_preview_part.svg"
                             :ref="`lilypond_src_div_${i}`"
                             style="max-height: 70vh; overflow: scroll; white-space: pre;"
                         ></div>
@@ -70,22 +73,16 @@
                 </ApolloQuery>
             </v-flex>
         </template>
+
+        <v-flex xs12>
+            <v-btn @click="renderFinal">Zobrazit finální noty</v-btn>
+            <div v-html="global.svg" ref="lilypond_src_div_total"></div>
+        </v-flex>
     </v-layout>
 </template>
 
 <script>
-import gql from 'graphql-tag';
-
-const FETCH_LILYPOND_PART = gql`
-    query($lilypond_part: LilypondPartInput, $global_src: String) {
-        lilypond_preview_part(
-            lilypond_part: $lilypond_part
-            global_src: $global_src
-        ) {
-            svg
-        }
-    }
-`;
+import lilypond_helper from 'Admin/helpers/lilypond.js';
 
 export default {
     data() {
@@ -100,11 +97,12 @@ export default {
             ],
             global: {
                 src: '',
-                config: {}
+                config: {},
+                svg: ''
             },
-            queries: {
-                fetch_lilypond_part: FETCH_LILYPOND_PART
-            }
+            fetch_lilypond_part_query: lilypond_helper.queries.part,
+            enums: lilypond_helper.enums,
+            templates: lilypond_helper.templates
         };
     },
 
@@ -120,19 +118,13 @@ export default {
                 originalSelectionStart + 1;
         },
 
-        partLoaded(data) {
-            // do the svg
-
-            return data;
-        },
-
-        cropSvg(svgelem) {
+        cropSvg(src_div) {
             Vue.nextTick().then(() => {
+                const svgelem = this.$refs[src_div][0].childNodes[0];
+
                 // var svgelem = this.$refs.lilypond_src_div.childNodes[0];
                 var bbox = svgelem.getBBox();
                 if (bbox && bbox.width && bbox.height) {
-                    console.log('cropping the svg');
-
                     svgelem.setAttribute(
                         'viewBox',
                         [
@@ -146,6 +138,36 @@ export default {
                     svgelem.removeAttribute('height');
                 }
             });
+        },
+
+        addPart() {
+            this.parts.push({
+                src: '',
+                name: `part${this.parts.length}`,
+                key_major: 'c',
+                time_signature: '4/4'
+            });
+        },
+
+        renderFinal() {
+            this.$apollo
+                .query({
+                    query: lilypond_helper.queries.total,
+                    variables: {
+                        lilypond_total: {
+                            parts: this.parts,
+                            global_src: this.global.src
+                        }
+                    }
+                })
+                .then(response => {
+                    this.global.svg = response.data.lilypond_preview_total.svg;
+
+                    this.cropSvg('lilypond_src_div_total');
+                })
+                .catch(err => {
+                    // this.songLoading = false;
+                });
         }
     }
 };
