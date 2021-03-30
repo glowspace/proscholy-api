@@ -87,25 +87,25 @@ class SongLyricService
     public function handleLilypondPartsSheetMusic($song_lyric, array $lilypond_parts_sheet_music)
     {
         // note: the input is validated by graphql types
-        $lilypond_parts = $lilypond_parts_sheet_music['parts'];
+        $lilypond_parts = $lilypond_parts_sheet_music['lilypond_parts'];
         $global_src = $lilypond_parts_sheet_music['global_src'];
+        $global_config = $lilypond_parts_sheet_music['global_config'];
 
         $wasEmpty = $song_lyric->lilypond_parts_sheet_music === null;
-        $isEmpty = empty($lilypond_parts) && empty($global_src);
 
-        if ($wasEmpty && !$isEmpty) {
+        if ($wasEmpty) {
             $lp_parts_sm = new SongLyricLilypondSrc([
-                'parts' => $lilypond_parts,
-                'global_src' => $global_src
+                'lilypond_parts' => $lilypond_parts,
+                'global_src' => $global_src,
+                'global_config' => $global_config,
             ]);
             $song_lyric->lilypond_parts_sheet_music()->save($lp_parts_sm);
-        } else if (!$wasEmpty && !$isEmpty) {
+        } else {
             $song_lyric->lilypond_parts_sheet_music()->update([
-                'parts' => $lilypond_parts,
-                'global_src' => $global_src
+                'lilypond_parts' => $lilypond_parts,
+                'global_src' => $global_src,
+                'global_config' => $global_config
             ]);
-        } else if (!$wasEmpty && $isEmpty) {
-            $song_lyric->lilypond_parts_sheet_music()->delete();
         }
 
         $song_lyric->touch();

@@ -49,7 +49,7 @@ const FETCH_LILYPOND_PART = gql`
 import gql from 'graphql-tag';
 
 const FETCH_LILYPOND_TOTAL = gql`
-    query($lilypond_total: LilypondTotalInput) {
+    query($lilypond_total: LilypondPartsSheetMusicInput) {
         lilypond_preview_total(lilypond_total: $lilypond_total) {
             svg
         }

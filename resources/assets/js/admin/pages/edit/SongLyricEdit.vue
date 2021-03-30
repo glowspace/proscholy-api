@@ -469,7 +469,7 @@
         </v-tab-item>
 
         <v-tab-item>
-          <LilypondPartsTab/>
+          <LilypondPartsTab v-model="model.lilypond_parts_sheet_music"/>
         </v-tab-item>
         <v-tab-item v-if="!is_arrangement_layout && model_database">
           <v-layout row wrap mb-4>
@@ -700,6 +700,7 @@ export default {
         liturgy_approval_status: undefined,
         arrangement_source: undefined,
         lilypond: "",
+        lilypond_parts_sheet_music: undefined,
         bible_refs_src: "",
         bible_refs_osis: "",
         admin_note: undefined,
