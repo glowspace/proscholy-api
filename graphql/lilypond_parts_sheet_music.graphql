@@ -1,13 +1,38 @@
 type LilypondPartsSheetMusic {
-    parts: JSON
+    lilypond_parts: [LilypondPart]
     global_src: String
-    global_config: JSON
+    global_config: LilypondGlobalConfig
     
     song_lyric: SongLyric
 }
 
+type LilypondPart {
+    name: String
+    src: String
+    key_major: String
+    time_signature: String
+    # end_key_major: String
+}
+
+type LilypondGlobalConfig {
+    two_voices_per_staff: Boolean
+}
+
+
 input LilypondPartsSheetMusicInput {
-    parts: [LilypondPartInput]
+    lilypond_parts: [LilypondPartInput]
     global_src: String
-    global_config: JSON
+    global_config: LilypondGlobalConfigInput
+}
+
+input LilypondPartInput {
+    name: String
+    src: String
+    key_major: String
+    time_signature: String
+    # end_key_major: String
+}
+
+input LilypondGlobalConfigInput {
+    two_voices_per_staff: Boolean
 }

@@ -22,6 +22,18 @@ const fragment = gql`
         lyrics
         lilypond
         lilypond_key_major
+        lilypond_parts_sheet_music {
+            lilypond_parts {
+                name
+                src
+                key_major
+                time_signature
+            }
+            global_src
+            global_config {
+                two_voices_per_staff
+            }
+        }
         song {
             id
             song_lyrics {
@@ -266,6 +278,7 @@ export default {
             lilypond: vueModel.lilypond,
             // lilypond_svg: vueModel.lilypond_svg,
             lilypond_key_major: vueModel.lilypond_key_major,
+            lilypond_parts_sheet_music: vueModel.lilypond_parts_sheet_music,
             song: {
                 id: vueModel.song.id,
                 song_lyrics: vueModel.song.song_lyrics.map(sl => ({

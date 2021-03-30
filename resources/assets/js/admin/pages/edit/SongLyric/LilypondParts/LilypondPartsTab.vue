@@ -7,15 +7,21 @@
                 name="input-global"
                 label="Pomocný kód"
                 ref="textarea"
-                v-model="global.src"
-                v-on:keydown.tab.prevent="preventTextareaTab($event, global)"
+                v-model="lilypondPartsSheetMusic.global_src"
+                v-on:keydown.tab.prevent="
+                    preventTextareaTab(
+                        $event,
+                        lilypondPartsSheetMusic,
+                        'global_src'
+                    )
+                "
                 style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
             ></v-textarea>
 
             <v-btn @click="addPart">Přidat část písně</v-btn>
         </v-flex>
 
-        <template v-for="(part, i) in parts">
+        <template v-for="(part, i) in lilypondPartsSheetMusic.lilypond_parts">
             <v-flex xs12 md6 :key="i * 2">
                 <v-select
                     :items="enums.key_major"
@@ -34,7 +40,9 @@
                     label="Notový zápis ve formátu Lilypond"
                     ref="textarea"
                     v-model="part.src"
-                    v-on:keydown.tab.prevent="preventTextareaTab($event, part)"
+                    v-on:keydown.tab.prevent="
+                        preventTextareaTab($event, part, 'src')
+                    "
                     style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
                 ></v-textarea>
 
@@ -47,7 +55,10 @@
             <v-flex xs12 md6 :key="i * 2 + 1">
                 <ApolloQuery
                     :query="gql => fetch_lilypond_part_query"
-                    :variables="{ lilypond_part: part, global_src: global.src }"
+                    :variables="{
+                        lilypond_part: part,
+                        global_src: lilypondPartsSheetMusic.global_src
+                    }"
                     :debounce="400"
                     @result="cropSvg(`lilypond_src_div_${i}`)"
                 >
@@ -76,7 +87,7 @@
 
         <v-flex xs12>
             <v-btn @click="renderFinal">Zobrazit finální noty</v-btn>
-            <div v-html="global.svg" ref="lilypond_src_div_total"></div>
+            <div v-html="global_svg" ref="lilypond_src_div_total"></div>
         </v-flex>
     </v-layout>
 </template>
@@ -85,21 +96,28 @@
 import lilypond_helper from 'Admin/helpers/lilypond.js';
 
 export default {
+    props: {
+        value: {}
+    },
+
     data() {
         return {
-            parts: [
-                {
-                    src: '',
-                    name: 'part',
-                    key_major: 'c',
-                    time_signature: '4/4'
+            lilypondPartsSheetMusic: {
+                lilypond_parts: [
+                    {
+                        src: '',
+                        name: 'part',
+                        key_major: 'c',
+                        time_signature: '4/4'
+                    }
+                ],
+                global_src: '',
+                global_config: {
+                    two_voices_per_staff: false
                 }
-            ],
-            global: {
-                src: '',
-                config: {},
-                svg: ''
             },
+
+            global_svg: '',
             fetch_lilypond_part_query: lilypond_helper.queries.part,
             enums: lilypond_helper.enums,
             templates: lilypond_helper.templates
@@ -107,13 +125,13 @@ export default {
     },
 
     methods: {
-        preventTextareaTab(event, src_obj) {
+        preventTextareaTab(event, src_obj, src_prop) {
             let originalSelectionStart = event.target.selectionStart,
-                textStart = src_obj.src.slice(0, originalSelectionStart),
-                textEnd = src_obj.src.slice(originalSelectionStart);
+                textStart = src_obj[src_prop].slice(0, originalSelectionStart),
+                textEnd = src_obj[src_prop].slice(originalSelectionStart);
 
-            Vue.set(src_obj, 'src', `${textStart}\t${textEnd}`);
-            event.target.value = src_obj.src; // required to make the cursor stay in place.
+            Vue.set(src_obj, src_prop, `${textStart}\t${textEnd}`);
+            event.target.value = src_obj[src_prop]; // required to make the cursor stay in place.
             event.target.selectionEnd = event.target.selectionStart =
                 originalSelectionStart + 1;
         },
@@ -141,9 +159,9 @@ export default {
         },
 
         addPart() {
-            this.parts.push({
+            this.lilypondPartsSheetMusic.lilypond_parts.push({
                 src: '',
-                name: `part${this.parts.length}`,
+                name: `part${this.lilypondPartsSheetMusic.lilypond_parts.length}`,
                 key_major: 'c',
                 time_signature: '4/4'
             });
@@ -155,19 +173,29 @@ export default {
                     query: lilypond_helper.queries.total,
                     variables: {
                         lilypond_total: {
-                            parts: this.parts,
-                            global_src: this.global.src
+                            lilypond_parts: this.lilypondPartsSheetMusic
+                                .lilypond_parts,
+                            global_src: this.lilypondPartsSheetMusic.global_src
                         }
                     }
                 })
                 .then(response => {
-                    this.global.svg = response.data.lilypond_preview_total.svg;
+                    this.global_svg = response.data.lilypond_preview_total.svg;
 
                     this.cropSvg('lilypond_src_div_total');
                 })
                 .catch(err => {
                     // this.songLoading = false;
                 });
+        }
+    },
+
+    watch: {
+        lilypondPartsSheetMusic: {
+            deep: true,
+            handler(val) {
+                this.$emit('input', val);
+            }
         }
     }
 };
