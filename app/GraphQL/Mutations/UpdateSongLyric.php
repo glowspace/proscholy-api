@@ -35,6 +35,7 @@ class UpdateSongLyric
         // $song_lyric_old = $song_lyric->replicate();
 
         $this->sl_service->handleLilypond($song_lyric, $input["lilypond"], $input["lilypond_key_major"]);
+        $this->sl_service->handleLilypondPartsSheetMusic($song_lyric, $input["lilypond_parts_sheet_music"]);
 
         $song_lyric->update($input);
         // todo if has key

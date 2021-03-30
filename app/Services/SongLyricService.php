@@ -56,8 +56,8 @@ class SongLyricService
         $isEmpty = $lyrics === null || $lyrics === '';
 
         if ($wasEmpty && !$isEmpty) {
-            $lyrics = new SongLyricLyrics(['lyrics' => $lyrics]);
-            $song_lyric->lyrics()->save($lyrics);
+            $lyrics_obj = new SongLyricLyrics(['lyrics' => $lyrics]);
+            $song_lyric->lyrics()->save($lyrics_obj);
         } else if (!$wasEmpty && !$isEmpty) {
             $song_lyric->lyrics()->update(['lyrics' => $lyrics]);
         } else if (!$wasEmpty && $isEmpty) {
@@ -73,12 +73,39 @@ class SongLyricService
         $isEmpty = $lilypond_src === null || $lilypond_src === '';
 
         if ($wasEmpty && !$isEmpty) {
-            $lilypond_src = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
-            $song_lyric->lilypond_src()->save($lilypond_src);
+            $lilypond_src_obj = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
+            $song_lyric->lilypond_src()->save($lilypond_src_obj);
         } else if (!$wasEmpty && !$isEmpty) {
             $song_lyric->lilypond_src()->update(['lilypond_src' => $lilypond_src]);
         } else if (!$wasEmpty && $isEmpty) {
             $song_lyric->lilypond_src()->delete();
+        }
+
+        $song_lyric->touch();
+    }
+
+    public function handleLilypondPartsSheetMusic($song_lyric, array $lilypond_parts_sheet_music)
+    {
+        // note: the input is validated by graphql types
+        $lilypond_parts = $lilypond_parts_sheet_music['parts'];
+        $global_src = $lilypond_parts_sheet_music['global_src'];
+
+        $wasEmpty = $song_lyric->lilypond_parts_sheet_music === null;
+        $isEmpty = empty($lilypond_parts) && empty($global_src);
+
+        if ($wasEmpty && !$isEmpty) {
+            $lp_parts_sm = new SongLyricLilypondSrc([
+                'parts' => $lilypond_parts,
+                'global_src' => $global_src
+            ]);
+            $song_lyric->lilypond_parts_sheet_music()->save($lp_parts_sm);
+        } else if (!$wasEmpty && !$isEmpty) {
+            $song_lyric->lilypond_parts_sheet_music()->update([
+                'parts' => $lilypond_parts,
+                'global_src' => $global_src
+            ]);
+        } else if (!$wasEmpty && $isEmpty) {
+            $song_lyric->lilypond_parts_sheet_music()->delete();
         }
 
         $song_lyric->touch();
@@ -90,8 +117,8 @@ class SongLyricService
         $isEmpty = $lilypond_svg === null || $lilypond_svg === '';
 
         if ($wasEmpty && !$isEmpty) {
-            $lilypond_svg = new SongLyricLilypondSvg(['lilypond_svg' => $lilypond_svg]);
-            $song_lyric->lilypond_svg()->save($lilypond_svg);
+            $lilypond_svg_obj = new SongLyricLilypondSvg(['lilypond_svg' => $lilypond_svg]);
+            $song_lyric->lilypond_svg()->save($lilypond_svg_obj);
         } else if (!$wasEmpty && !$isEmpty) {
             $song_lyric->lilypond_svg()->update(['lilypond_svg' => $lilypond_svg]);
         } else if (!$wasEmpty && $isEmpty) {

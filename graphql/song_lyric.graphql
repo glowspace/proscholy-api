@@ -46,6 +46,9 @@ type SongLyric {
     SVG output of lilypond parsing
     """
     lilypond_svg: String @hasOne(relation:"lilypond_svg")
+
+    lilypond_parts_sheet_music: LilypondPartsSheetMusic @hasOne(relation:"lilypond_parts_sheet_music")
+
     lilypond_key_major: String
     type_enum: SongType @rename(attribute: "type")
     """
@@ -267,6 +270,7 @@ input UpdateSongLyricInput {
     lyrics: String
     lilypond: String
     lilypond_key_major: String
+    lilypond_parts_sheet_music: LilypondPartsSheetMusicInput
     song: SongInput
     only_regenschori: Boolean
     capo: Int
