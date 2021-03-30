@@ -1,0 +1,13 @@
+type LilypondPartsSheetMusic {
+    parts: JSON
+    global_src: String
+    global_config: JSON
+    
+    song_lyric: SongLyric
+}
+
+input LilypondPartsSheetMusicInput {
+    parts: [LilypondPartInput]
+    global_src: String
+    global_config: JSON
+}

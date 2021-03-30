@@ -400,6 +400,11 @@ class SongLyric extends Model
         return $this->hasOne(SongLyricLilypondSrc::class);
     }
 
+    public function lilypond_parts_sheet_music(): HasOne
+    {
+        return $this->hasOne(LilypondPartsSheetMusic::class);
+    }
+
     public function lilypond_svg(): HasOne
     {
         return $this->hasOne(SongLyricLilypondSvg::class);
