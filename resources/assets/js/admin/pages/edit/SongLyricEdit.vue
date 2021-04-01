@@ -957,7 +957,7 @@ export default {
 
     isDirtyChecker() {
       for (let field of ["tags_generic", "tags_liturgy_part"]) {
-        if (!_.isEqual(this.model[field], this.model_database[field])) {
+        if (!_.isEqual(this.model[field], this.filteredModelDatabase[field])) {
           return true;
         }
       }

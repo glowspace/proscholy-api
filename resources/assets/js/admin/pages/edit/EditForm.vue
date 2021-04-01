@@ -21,6 +21,8 @@
  *
  */
 
+import { filter } from 'graphql-anywhere';
+
 export default {
     props: ['preset-id'],
 
@@ -32,60 +34,26 @@ export default {
     },
 
     computed: {
+        filteredModelDatabase() {
+            return filter(this.fragment, this.model_database);
+        },
+
         isDirty() {
             if (this.is_deleted) return false;
             if (!this.model_database) return false;
             //   if (!this.model.url) return true;
 
-            for (let field of this._getFieldsFromFragment(this.fragment)) {
-                if (field === 'authors_pivot') {
-                    let model_authors = this.model[field];
-                    let ml_db_authors = this.model_database[field];
-                    model_authors = model_authors.filter(
-                        el => el.author != null
+            for (let key of Object.keys(this.model)) {
+                let model_val = this.model[key];
+                if (key === 'authors_pivot') {
+                    model_val = model_val.filter(
+                        a_pivot => a_pivot.author !== null
                     );
-                    ml_db_authors = ml_db_authors.filter(
-                        el => el.author != null
-                    );
-                    model_authors.sort((a, b) =>
-                        a.author.name > b.author.name
-                            ? 1
-                            : b.author.name > a.author.name
-                            ? -1
-                            : 0
-                    );
-                    ml_db_authors.sort((a, b) =>
-                        a.author.name > b.author.name
-                            ? 1
-                            : b.author.name > a.author.name
-                            ? -1
-                            : 0
-                    );
-                    model_authors.forEach(function(v) {
-                        delete v.id;
-                        delete v.__typename;
-                    });
-                    ml_db_authors.forEach(function(v) {
-                        delete v.id;
-                        delete v.__typename;
-                    });
-
-                    if (!_.isEqual(model_authors, ml_db_authors)) {
-                        console.log(
-                            'Dirty check found mismatch on the field ' + field
-                        );
-                        return true;
-                    }
-
-                    continue;
                 }
 
-                let model_field = this.model[field];
-                model_field = model_field === '' ? null : model_field;
-
-                if (!_.isEqual(model_field, this.model_database[field])) {
+                if (!_.isEqual(model_val, this.filteredModelDatabase[key])) {
                     console.log(
-                        'Dirty check found mismatch on the field ' + field
+                        'Dirty check found mismatch on the field ' + key
                     );
                     return true;
                 }
@@ -198,25 +166,11 @@ export default {
         },
 
         reset() {
-            for (let field of this._getFieldsFromFragment(this.fragment, {
-                includeId: false
-            })) {
-                let clone = _.cloneDeep(this.model_database[field]);
-                Vue.set(this.model, field, clone);
-            }
+            this.model = this.filteredModelDatabase;
         },
 
         loadModelDataFromResult(result) {
-            // load the requested fields to the vue data.model property
-            for (let field of this._getFieldsFromFragment(this.fragment, {
-                includeId: false
-            })) {
-                Vue.set(
-                    this.model,
-                    field,
-                    _.cloneDeep(result.data.model_database[field]) // necessary for nested models
-                );
-            }
+            this.model = filter(this.fragment, result.data.model_database);
         },
 
         loadEnumJsonFromResult(result, enumName, vueEnumModel) {
@@ -240,27 +194,6 @@ export default {
                     this.model_database[field]
                 );
             }
-        },
-
-        _getFieldsFromFragment(fragment, options = { includeId: true }) {
-            if (!fragment) {
-                throw new Error('Expected a fragment, but got none.');
-            }
-
-            // here, all the fragments' definitions must be on same data type (see SongLyric.js for example)
-            let fieldDefs = fragment.definitions.flatMap(
-                def => def.selectionSet.selections
-            );
-
-            let fieldNames = fieldDefs.map(field =>
-                field.alias ? field.alias.value : field.name.value
-            );
-            // console.log(fieldNames);
-
-            if (!options.includeId)
-                fieldNames = fieldNames.filter(field => field != 'id');
-
-            return fieldNames;
         },
 
         refreshUpdating() {
