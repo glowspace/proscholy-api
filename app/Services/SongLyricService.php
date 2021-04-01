@@ -9,6 +9,7 @@ use App\Song;
 
 use App\Jobs\UpdateSongLyricLilypond;
 use App\SongLyricLilypondSrc;
+use App\LilypondPartsSheetMusic;
 use App\SongLyricLilypondSvg;
 use App\SongLyricLyrics;
 
@@ -74,6 +75,7 @@ class SongLyricService
 
         if ($wasEmpty && !$isEmpty) {
             $lilypond_src_obj = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
+            logger($lilypond_src_obj);
             $song_lyric->lilypond_src()->save($lilypond_src_obj);
         } else if (!$wasEmpty && !$isEmpty) {
             $song_lyric->lilypond_src()->update(['lilypond_src' => $lilypond_src]);
@@ -94,7 +96,7 @@ class SongLyricService
         $wasEmpty = $song_lyric->lilypond_parts_sheet_music === null;
 
         if ($wasEmpty) {
-            $lp_parts_sm = new SongLyricLilypondSrc([
+            $lp_parts_sm = new LilypondPartsSheetMusic([
                 'lilypond_parts' => $lilypond_parts,
                 'global_src' => $global_src,
                 'global_config' => $global_config,

@@ -1,6 +1,21 @@
 import gql from 'graphql-tag';
 import { belongsToManyMutator, belongsToMutator } from './relations';
 
+const lilypond_parts_sheet_music_fragment = gql`
+    fragment LilypondPartsSheetMusicFragment on LilypondPartsSheetMusic {
+        lilypond_parts {
+            name
+            src
+            key_major
+            time_signature
+        }
+        global_src
+        global_config {
+            two_voices_per_staff
+        }
+    }
+`;
+
 const fragment = gql`
     fragment SongLyricFillableFragment on SongLyric {
         id
@@ -23,16 +38,7 @@ const fragment = gql`
         lilypond
         lilypond_key_major
         lilypond_parts_sheet_music {
-            lilypond_parts {
-                name
-                src
-                key_major
-                time_signature
-            }
-            global_src
-            global_config {
-                two_voices_per_staff
-            }
+            ...LilypondPartsSheetMusicFragment
         }
         song {
             id
@@ -105,6 +111,7 @@ const fragment = gql`
         admin_note
         is_sealed
     }
+    ${lilypond_parts_sheet_music_fragment}
 `;
 
 const external_fragment = gql`
@@ -258,6 +265,7 @@ const MUTATION = gql`
 export default {
     fragment,
     external_fragment,
+    lilypond_parts_sheet_music_fragment,
     QUERY,
     MUTATION,
 

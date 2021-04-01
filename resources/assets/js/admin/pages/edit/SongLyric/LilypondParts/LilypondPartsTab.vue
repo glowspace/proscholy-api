@@ -101,6 +101,7 @@ export default {
     },
 
     data() {
+        // do not forget to update SongLyric.js
         return {
             lilypondPartsSheetMusic: {
                 lilypond_parts: [
@@ -196,6 +197,11 @@ export default {
             handler(val) {
                 this.$emit('input', val);
             }
+        },
+
+        value(val) {
+            console.log(val);
+            this.lilypondPartsSheetMusic = val;
         }
     }
 };
