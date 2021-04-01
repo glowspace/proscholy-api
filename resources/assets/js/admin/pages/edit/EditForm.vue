@@ -50,11 +50,17 @@ export default {
                         a_pivot => a_pivot.author !== null
                     );
                 }
+                if (model_val === '') {
+                    model_val = null;
+                }
 
                 if (!_.isEqual(model_val, this.filteredModelDatabase[key])) {
                     console.log(
                         'Dirty check found mismatch on the field ' + key
                     );
+                    console.log(model_val);
+                    console.log('model database:');
+                    console.log(this.filteredModelDatabase[key]);
                     return true;
                 }
             }
@@ -166,11 +172,13 @@ export default {
         },
 
         reset() {
-            this.model = this.filteredModelDatabase;
+            this.model = _.cloneDeep(this.filteredModelDatabase);
         },
 
         loadModelDataFromResult(result) {
-            this.model = filter(this.fragment, result.data.model_database);
+            this.model = _.cloneDeep(
+                filter(this.fragment, result.data.model_database)
+            );
         },
 
         loadEnumJsonFromResult(result, enumName, vueEnumModel) {
