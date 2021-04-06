@@ -67,32 +67,32 @@ const templates = {
 }
 
 soloText = \\lyricmode {
-    oh!
+\toh!
 }
 
 akordy = \\chordmode {
-    c1:maj
+\tc1:maj
 }
 `,
 
     parts_all: `solo = \\relative {
-    c'4 e4. g8
+\tc'4 e4. g8
 }
 
 soloDruhy = \\relative { f' b c }
 
 soloText = \\lyricmode {
-    \\set stanza = #"1."
-    S_tex -- tem
+\t\\set stanza = #"1."
+\tS_tex -- tem
 }
 
 soloTextI = \\lyricmode {
-    \\set stanza = #"2."
-    S_dal -- ším
+\t\\set stanza = #"2."
+\tS_dal -- ším
 }
 
 akordy = \\chordmode {
-    c4:dim e:maj9^7
+\tc4:dim e:maj9^7
 }
 
 sopran = \\relative {}

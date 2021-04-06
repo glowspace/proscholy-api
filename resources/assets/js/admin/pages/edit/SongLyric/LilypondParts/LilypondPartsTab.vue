@@ -179,7 +179,7 @@
             </v-flex>
         </template>
 
-        <v-btn @click="addPart">Přidat část písně</v-btn>
+        <v-btn @click="addPart" color="info" outline>Přidat část písně</v-btn>
 
         <v-flex xs12>
             <v-select
@@ -192,7 +192,7 @@
             ></v-select>
 
             <v-text-field
-                label="Globální transpozice z c do:"
+                label="Globální transpozice relativně k c:"
                 v-model="global_transpose_relative_c"
             ></v-text-field>
 
@@ -216,6 +216,7 @@
                     'lilypond-preview': true,
                     loading: global_svg_loading
                 }"
+                :style="`max-width: ${globalSrcMaxPixelWidth}px`"
             ></div>
         </v-flex>
     </v-layout>
@@ -440,6 +441,14 @@ export default {
                 (str, part) => str + ` ${part.name}[${part.key_major}]`,
                 ''
             );
+        },
+
+        globalSrcMaxPixelWidth() {
+            const width_mm =
+                this.total_variants_configs[this.selected_total_variant]
+                    .paper_width_mm ?? 120;
+
+            return width_mm * 4;
         }
     },
 
