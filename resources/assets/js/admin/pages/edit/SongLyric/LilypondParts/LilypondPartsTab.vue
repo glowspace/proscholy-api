@@ -191,6 +191,17 @@
                 "
             ></v-select>
 
+            <v-text-field
+                label="Globální transpozice z c do:"
+                v-model="global_transpose_relative_c"
+            ></v-text-field>
+
+            <v-text-field
+                label="Zobrazení po částech"
+                v-model="global_parts_string"
+                :placeholder="partsStringPlaceholder"
+            ></v-text-field>
+
             <v-btn
                 class="mb-3"
                 @click="
@@ -282,11 +293,15 @@ export default {
                     hide_voices: ['tenor', 'bas', 'muzi']
                 },
                 all_wide: {
-                    paper_width_mm: 240
+                    paper_width_mm: 240,
+                    hide_bar_numbers: false
                 }
             },
 
-            selected_total_variant: 'bare_solo'
+            selected_total_variant: 'bare_solo',
+
+            global_transpose_relative_c: 'c',
+            global_parts_string: ''
         };
     },
 
@@ -350,19 +365,25 @@ export default {
         renderFinal(additional_global_config = {}) {
             this.global_svg_loading = true;
 
+            const combined_parts =
+                this.global_parts_string == ''
+                    ? this.lilypondPartsSheetMusic.lilypond_parts
+                    : this.getCombinedParts();
+
             this.$apollo
                 .query({
                     query: lilypond_helper.queries.total,
                     variables: {
                         lilypond_total: {
-                            lilypond_parts: this.lilypondPartsSheetMusic
-                                .lilypond_parts,
+                            lilypond_parts: combined_parts,
                             global_src: this.show_global_src_input
                                 ? this.lilypondPartsSheetMusic.global_src
                                 : '',
                             global_config: {
                                 ...this.lilypondPartsSheetMusic.global_config,
-                                ...additional_global_config
+                                ...additional_global_config,
+                                global_transpose_relative_c: this
+                                    .global_transpose_relative_c
                             }
                         }
                     },
@@ -380,11 +401,45 @@ export default {
                 });
         },
 
+        getCombinedParts() {
+            let part_ids = this.global_parts_string.split(' ');
+            let parts_arr = [];
+
+            const part_re = /([\d\w]+)(\[(.{1,2})\])?/;
+
+            const findPart = name =>
+                this.lilypondPartsSheetMusic.lilypond_parts.find(
+                    p => p.name == name
+                );
+
+            for (const part_id of part_ids) {
+                const [, name, _, transpose_key] = part_id.match(part_re);
+                let part = { ...findPart(name) };
+                if (transpose_key) {
+                    part.part_transpose = transpose_key;
+                }
+                parts_arr.push(part);
+            }
+
+            console.log(parts_arr);
+
+            return parts_arr;
+        },
+
         isPartNameUsed(name, part_i) {
             return this.lilypondPartsSheetMusic.lilypond_parts
                 .filter((_, i) => i !== part_i)
                 .map(p => p.name)
                 .includes(name);
+        }
+    },
+
+    computed: {
+        partsStringPlaceholder() {
+            return this.lilypondPartsSheetMusic.lilypond_parts.reduce(
+                (str, part) => str + ` ${part.name}[${part.key_major}]`,
+                ''
+            );
         }
     },
 

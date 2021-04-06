@@ -102,7 +102,8 @@ class LilypondService
                 $part['end_key_major'] ?? $key_major,
                 $time_signature,
                 $part['end_time_signature'] ?? $time_signature,
-                $part['break_before'] ?? false
+                $part['break_before'] ?? false,
+                $part['part_transpose'] ?? false
             );
         }
 

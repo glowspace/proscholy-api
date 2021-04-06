@@ -41,6 +41,7 @@ input LilypondPartInput {
     time_signature: String
     end_time_signature: String
     break_before: Boolean
+    part_transpose: String
 }
 
 input LilypondGlobalConfigInput {
@@ -51,4 +52,5 @@ input LilypondGlobalConfigInput {
     version: String
     paper_width_mm: Int
     hide_voices: [String]
+    hide_bar_numbers: Boolean
 }
