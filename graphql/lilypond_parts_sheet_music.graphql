@@ -10,12 +10,19 @@ type LilypondPart {
     name: String
     src: String
     key_major: String
+    end_key_major: String
     time_signature: String
-    # end_key_major: String
+    end_time_signature: String
 }
 
 type LilypondGlobalConfig {
     two_voices_per_staff: Boolean
+    # global_transpose_relative_c: String
+    # force_part_breaks: Boolean
+    merge_rests: Boolean
+    version: String
+    # paper_width_mm: Int
+    # hide_voices: [String]
 }
 
 
@@ -29,10 +36,17 @@ input LilypondPartInput {
     name: String
     src: String
     key_major: String
+    end_key_major: String
     time_signature: String
-    # end_key_major: String
+    end_time_signature: String
 }
 
 input LilypondGlobalConfigInput {
     two_voices_per_staff: Boolean
+    global_transpose_relative_c: String
+    force_part_breaks: Boolean
+    merge_rests: Boolean
+    version: String
+    paper_width_mm: Int
+    hide_voices: [String]
 }

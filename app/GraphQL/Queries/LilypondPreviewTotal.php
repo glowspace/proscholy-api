@@ -9,8 +9,11 @@ class LilypondPreviewTotal
     public function resolve($rootValue, array $args)
     {
         $ly_service = new LilypondService();
-        $svg = $ly_service->makeTotalSvgFast($args['lilypond_total']['parts'], $args['lilypond_total']['global_src'] ?? '');
-
+        $svg = $ly_service->makeTotalSvgFast(
+            $args['lilypond_total']['lilypond_parts'],
+            $args['lilypond_total']['global_src'] ?? '',
+            $args['lilypond_total']['global_config'] ?? []
+        );
 
         return compact('svg');
     }

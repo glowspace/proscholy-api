@@ -36,10 +36,15 @@ const enums = {
 };
 
 const FETCH_LILYPOND_PART = gql`
-    query($lilypond_part: LilypondPartInput, $global_src: String) {
+    query(
+        $lilypond_part: LilypondPartInput
+        $global_src: String
+        $global_config: LilypondGlobalConfigInput
+    ) {
         lilypond_preview_part(
             lilypond_part: $lilypond_part
             global_src: $global_src
+            global_config: $global_config
         ) {
             svg
         }

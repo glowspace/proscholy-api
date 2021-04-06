@@ -57,7 +57,8 @@
                     :query="gql => fetch_lilypond_part_query"
                     :variables="{
                         lilypond_part: part,
-                        global_src: lilypondPartsSheetMusic.global_src
+                        global_src: lilypondPartsSheetMusic.global_src,
+                        global_config: lilypondPartsSheetMusic.global_config
                     }"
                     :debounce="400"
                     @result="cropSvg(`lilypond_src_div_${i}`)"
@@ -86,7 +87,9 @@
         </template>
 
         <v-flex xs12>
-            <v-btn @click="renderFinal">Zobrazit finální noty</v-btn>
+            <v-btn @click="renderFinal(total_variants_configs.bare_solo)"
+                >Zobrazit finální noty (pouze solo)</v-btn
+            >
             <div v-html="global_svg" ref="lilypond_src_div_total"></div>
         </v-flex>
     </v-layout>
@@ -114,14 +117,38 @@ export default {
                 ],
                 global_src: '',
                 global_config: {
-                    two_voices_per_staff: false
+                    two_voices_per_staff: false,
+                    merge_rests: true,
+                    version: '2.22.0'
                 }
             },
 
             global_svg: '',
             fetch_lilypond_part_query: lilypond_helper.queries.part,
             enums: lilypond_helper.enums,
-            templates: lilypond_helper.templates
+            templates: lilypond_helper.templates,
+
+            total_variants_configs: {
+                bare_solo: {
+                    hide_voices: [
+                        'sopran',
+                        'alt',
+                        'tenor',
+                        'bas',
+                        'zeny',
+                        'muzi'
+                    ]
+                },
+                solo_men: {
+                    hide_voices: ['sopran', 'alt', 'zeny']
+                },
+                solo_women: {
+                    hide_voices: ['tenor', 'bas', 'muzi']
+                },
+                all_wide: {
+                    paper_width_mm: 240
+                }
+            }
         };
     },
 
@@ -168,7 +195,7 @@ export default {
             });
         },
 
-        renderFinal() {
+        renderFinal(additional_global_config = {}) {
             this.$apollo
                 .query({
                     query: lilypond_helper.queries.total,
@@ -176,7 +203,11 @@ export default {
                         lilypond_total: {
                             lilypond_parts: this.lilypondPartsSheetMusic
                                 .lilypond_parts,
-                            global_src: this.lilypondPartsSheetMusic.global_src
+                            global_src: this.lilypondPartsSheetMusic.global_src,
+                            global_config: {
+                                ...this.lilypondPartsSheetMusic.global_config,
+                                ...additional_global_config
+                            }
                         }
                     }
                 })

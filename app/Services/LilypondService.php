@@ -7,6 +7,7 @@ use ProScholy\LilypondRenderer\LilypondBasicTemplate;
 use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
 use Illuminate\Support\Str;
+use ProScholy\LilypondRenderer\LilypondPartsGlobalConfig;
 
 class LilypondService
 {
@@ -34,12 +35,27 @@ class LilypondService
 
     public function makePartSvgFast($part, $global_src)
     {
-        return $this->doClientRenderSvg($this->makeLilypondPartsTamplate([$part], $global_src), false);
+        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src), false);
     }
 
-    public function makeTotalSvgFast($parts, $global_src)
+    public function makeTotalSvgFast($parts, $global_src, $global_config_input)
     {
-        return $this->doClientRenderSvg($this->makeLilypondPartsTamplate($parts, $global_src), false);
+        $config = new LilypondPartsGlobalConfig(
+            $global_config_input['version'] ?? '2.22.0',
+            $global_config_input['two_voices_per_staff'] ?? true,
+            $global_config_input['global_transpose_relative_c'] ?? false,
+            $global_config_input['merge_rests'] ?? true,
+            $global_config_input['hide_bar_numbers'] ?? true,
+            $global_config_input['force_part_breaks'] ?? false
+        );
+
+        $hide_voices = $global_config_input['hide_voices'] ?? [];
+
+        if (count($hide_voices) > 0) {
+            $config->setVoicesHidden($hide_voices);
+        }
+
+        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $config), false);
     }
 
     public function makeSvgFast($lilypond, $key_major = null)
@@ -64,12 +80,22 @@ class LilypondService
         return $src;
     }
 
-    public function makeLilypondPartsTamplate($parts, $global_src): LilypondPartsTemplate
+    public function makeLilypondPartsTemplate($parts, $global_src, ?LilypondPartsGlobalConfig $global_config = null): LilypondPartsTemplate
     {
-        $src = new LilypondPartsTemplate($global_src);
+        $src = new LilypondPartsTemplate($global_src, $global_config);
 
         foreach ($parts as $part) {
-            $src->withPart($part['name'], $part['src'], $part['key_major'] ?? 'c', $part['time_signature'] ?? '4/4');
+            $key_major = $part['key_major'] ?? 'c';
+            $time_signature = $part['time_signature'] ?? '4/4';
+
+            $src->withPart(
+                $part['name'],
+                $part['src'] ?? '',
+                $key_major,
+                $part['end_key_major'] ?? $key_major,
+                $time_signature,
+                $part['end_time_signature'] ?? $time_signature
+            );
         }
 
         return $src;
