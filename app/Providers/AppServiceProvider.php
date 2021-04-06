@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+
+use App\Services\SongLyricService;
+use App\Services\LilypondService;
+
 use Blade;
 use Validator;
 use URL;
@@ -46,6 +50,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(SongLyricService::class, function () {
+            return new SongLyricService();
+        });
+        $this->app->singleton(LilypondService::class, function () {
+            return new LilypondService();
+        });
     }
 }

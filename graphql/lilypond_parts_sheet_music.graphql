@@ -13,6 +13,7 @@ type LilypondPart {
     end_key_major: String
     time_signature: String
     end_time_signature: String
+    break_before: Boolean
 }
 
 type LilypondGlobalConfig {
@@ -39,6 +40,7 @@ input LilypondPartInput {
     end_key_major: String
     time_signature: String
     end_time_signature: String
+    break_before: Boolean
 }
 
 input LilypondGlobalConfigInput {

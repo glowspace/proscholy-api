@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Services\LilypondService;
+
 // use App\Helpers\Chord;
 // use App\Helpers\ChordSign;
 // use App\Helpers\ChordQueue;
@@ -402,7 +404,18 @@ class SongLyric extends Model
 
     public function lilypond_parts_sheet_music(): HasOne
     {
-        return $this->hasOne(LilypondPartsSheetMusic::class);
+        return $this->hasOne(LilypondPartsSheetMusic::class)->withDefault(function ($lp_sheet_music, $song_lyric) {
+            $lp_sheet_music->lilypond_parts = [[
+                'src' => '',
+                'name' => '1',
+                'key_major' => $song_lyric->lilypond_key_major ?? 'c',
+                'time_signature' => '4/4',
+                'break_before' => false
+            ]];
+
+            $lp_sheet_music->global_config = app(LilypondService::class)->getDefaultGlobalConfigData(false);
+            $lp_sheet_music->global_src = '';
+        });
     }
 
     public function lilypond_svg(): HasOne

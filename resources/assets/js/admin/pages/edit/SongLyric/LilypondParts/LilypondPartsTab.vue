@@ -1,12 +1,42 @@
 <template>
     <v-layout row wrap class="pt-2">
         <v-flex xs12>
+            <v-select
+                :items="['2.22.0']"
+                v-model="lilypondPartsSheetMusic.global_config.version"
+                label="Verze LilyPondu"
+            ></v-select>
+
+            <v-checkbox
+                class="mt-0"
+                v-model="
+                    lilypondPartsSheetMusic.global_config.two_voices_per_staff
+                "
+                label="Sloučit dva hlasy do jedné osnovy (soprán + alt, tenor + bas)"
+            ></v-checkbox>
+
+            <v-checkbox
+                class="mt-0"
+                v-model="lilypondPartsSheetMusic.global_config.merge_rests"
+                :disabled="
+                    !lilypondPartsSheetMusic.global_config.two_voices_per_staff
+                "
+                label="Sloučit pomlky u dvouhlasných osnov"
+            ></v-checkbox>
+
+            <v-checkbox
+                class="mt-0"
+                v-model="show_global_src_input"
+                label="Použít pomocný kód"
+            ></v-checkbox>
+
             <v-textarea
-                class="auto-grow-alt"
+                class="lilypond-input"
                 outline
-                name="input-global"
+                v-show="show_global_src_input"
                 label="Pomocný kód"
                 ref="textarea"
+                :rows="10"
                 v-model="lilypondPartsSheetMusic.global_src"
                 v-on:keydown.tab.prevent="
                     preventTextareaTab(
@@ -15,35 +45,89 @@
                         'global_src'
                     )
                 "
-                style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
             ></v-textarea>
-
-            <v-btn @click="addPart">Přidat část písně</v-btn>
         </v-flex>
 
         <template v-for="(part, i) in lilypondPartsSheetMusic.lilypond_parts">
             <v-flex xs12 md6 :key="i * 2">
-                <v-select
-                    :items="enums.key_major"
-                    v-model="part.key_major"
-                    label="Předznamenání"
-                ></v-select>
+                <v-layout row wrap>
+                    <v-flex xs12 md4>
+                        <v-text-field
+                            label="Část (ozn.)"
+                            v-model="part.name"
+                            :error-messages="
+                                isPartNameUsed(part.name, i)
+                                    ? 'Duplicitní jméno části'
+                                    : null
+                            "
+                        ></v-text-field>
+                    </v-flex>
 
-                <v-btn :disabled="!!part.src" @click="part.src = 'ahoj'"
-                    >Vložit základní Lilypond vzor</v-btn
-                >
+                    <v-flex xs12 md4>
+                        <v-select
+                            :items="enums.key_major"
+                            v-model="part.key_major"
+                            label="Předznamenání"
+                        ></v-select>
+                    </v-flex>
+
+                    <v-flex xs12 md4>
+                        <v-combobox
+                            v-model="part.time_signature"
+                            :items="enums.time_signature"
+                            label="Takt"
+                        ></v-combobox>
+                    </v-flex>
+
+                    <v-flex xs12 md4>
+                        <v-checkbox
+                            class="mt-0"
+                            v-model="part.break_before"
+                            label="Vždy zalomit na nový řádek"
+                        ></v-checkbox>
+                    </v-flex>
+                </v-layout>
+
+                <v-layout row wrap>
+                    <v-flex xs12 md4>
+                        <v-btn
+                            :disabled="!!part.src"
+                            @click="part.src = lilypond_templates.parts_basic"
+                            class="m-0 mb-2 mr-2"
+                            >Vložit základní LP</v-btn
+                        >
+                    </v-flex>
+                    <v-flex xs12 md4>
+                        <v-btn
+                            :disabled="!!part.src"
+                            @click="part.src = lilypond_templates.parts_all"
+                            class="m-0 mb-2 mr-2"
+                            >Vložit LP showcase</v-btn
+                        >
+                    </v-flex>
+                    <v-flex xs12 md4>
+                        <v-btn
+                            class="m-0 mb-2"
+                            :disabled="
+                                lilypondPartsSheetMusic.lilypond_parts.length ==
+                                    1 && i == 0
+                            "
+                            @click="deletePart(i)"
+                            color="error"
+                            outline
+                            >Odstranit část</v-btn
+                        >
+                    </v-flex>
+                </v-layout>
 
                 <v-textarea
-                    class="auto-grow-alt"
+                    class="lilypond-input auto-grow-alt"
                     outline
-                    name="input-7-4"
                     label="Notový zápis ve formátu Lilypond"
-                    ref="textarea"
                     v-model="part.src"
                     v-on:keydown.tab.prevent="
                         preventTextareaTab($event, part, 'src')
                     "
-                    style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
                 ></v-textarea>
 
                 <!-- <div class="mb-3">
@@ -53,47 +137,97 @@
                 </div> -->
             </v-flex>
             <v-flex xs12 md6 :key="i * 2 + 1">
+                <!-- notifyOnNetworkStatusChange fixes the loading state, see https://github.com/vuejs/vue-apollo/issues/263#issuecomment-555326798 -->
                 <ApolloQuery
-                    :query="gql => fetch_lilypond_part_query"
+                    :query="fetch_lilypond_part_query"
                     :variables="{
                         lilypond_part: part,
-                        global_src: lilypondPartsSheetMusic.global_src,
+                        global_src: show_global_src_input
+                            ? lilypondPartsSheetMusic.global_src
+                            : '',
                         global_config: lilypondPartsSheetMusic.global_config
                     }"
-                    :debounce="400"
+                    :debounce="1000"
+                    fetchPolicy="no-cache"
+                    :options="{ notifyOnNetworkStatusChange: true }"
                     @result="cropSvg(`lilypond_src_div_${i}`)"
                 >
-                    <template v-slot="{ result: { error, data }, isLoading }">
-                        <!-- Loading -->
-                        <div v-if="isLoading">Načítání...</div>
-
-                        <!-- Error -->
-                        <div v-else-if="error">
-                            Náhled lilypondu není dostupný
+                    <template v-slot="{ result: { loading, error, data } }">
+                        <div v-if="part.src.length == 0">
+                            Začněte psát Lilypond kód pro zobrazení not
                         </div>
 
-                        <div
-                            v-else-if="data"
-                            v-html="data.lilypond_preview_part.svg"
-                            :ref="`lilypond_src_div_${i}`"
-                            style="max-height: 70vh; overflow: scroll; white-space: pre;"
-                        ></div>
+                        <template v-else>
+                            <div v-if="error">
+                                Náhled lilypondu není dostupný (chyba)
+                            </div>
 
-                        <!-- No result -->
-                        <div v-else>Náhled lilypondu není dostupný</div>
+                            <div
+                                v-else-if="data"
+                                v-html="data.lilypond_preview_part.svg"
+                                :ref="`lilypond_src_div_${i}`"
+                                :class="{
+                                    'lilypond-preview': true,
+                                    loading: loading
+                                }"
+                            ></div>
+
+                            <div v-else>Náhled lilypondu není dostupný</div>
+                        </template>
                     </template>
                 </ApolloQuery>
             </v-flex>
         </template>
 
+        <v-btn @click="addPart">Přidat část písně</v-btn>
+
         <v-flex xs12>
-            <v-btn @click="renderFinal(total_variants_configs.bare_solo)"
-                >Zobrazit finální noty (pouze solo)</v-btn
+            <v-select
+                :items="total_variants_select_items"
+                v-model="selected_total_variant"
+                label="Typ zobrazení"
+                @input="
+                    renderFinal(total_variants_configs[selected_total_variant])
+                "
+            ></v-select>
+
+            <v-btn
+                class="mb-3"
+                @click="
+                    renderFinal(total_variants_configs[selected_total_variant])
+                "
+                >Zobrazit/aktualizovat spojené noty</v-btn
             >
-            <div v-html="global_svg" ref="lilypond_src_div_total"></div>
+            <div
+                v-html="global_svg"
+                ref="lilypond_src_div_total"
+                :class="{
+                    'lilypond-preview': true,
+                    loading: global_svg_loading
+                }"
+            ></div>
         </v-flex>
     </v-layout>
 </template>
+
+<style>
+.lilypond-preview {
+    max-height: 70vh;
+    overflow: scroll;
+    white-space: pre;
+    transition: 200ms opacity;
+}
+
+.lilypond-preview.loading {
+    opacity: 0.6;
+}
+
+.lilypond-input {
+    font-family: monospace;
+    tab-size: 2;
+    margin-bottom: 5px;
+}
+</style>
 
 <script>
 import lilypond_helper from 'Admin/helpers/lilypond.js';
@@ -107,26 +241,28 @@ export default {
         // do not forget to update SongLyric.js
         return {
             lilypondPartsSheetMusic: {
-                lilypond_parts: [
-                    {
-                        src: '',
-                        name: 'part',
-                        key_major: 'c',
-                        time_signature: '4/4'
-                    }
-                ],
+                lilypond_parts: [],
                 global_src: '',
-                global_config: {
-                    two_voices_per_staff: false,
-                    merge_rests: true,
-                    version: '2.22.0'
-                }
+                global_config: {}
             },
 
+            show_global_src_input: false,
+
+            global_svg_loading: false,
             global_svg: '',
             fetch_lilypond_part_query: lilypond_helper.queries.part,
             enums: lilypond_helper.enums,
-            templates: lilypond_helper.templates,
+            lilypond_templates: lilypond_helper.templates,
+
+            total_variants_select_items: [
+                {
+                    text: 'Výchozí mobilní zobrazení (pouze solo)',
+                    value: 'bare_solo'
+                },
+                { text: 'Mobilní zobrazení solo + muži', value: 'solo_men' },
+                { text: 'Mobilní zobrazení solo + ženy', value: 'solo_women' },
+                { text: 'Široké zobrazení (všechny hlasy)', value: 'all_wide' }
+            ],
 
             total_variants_configs: {
                 bare_solo: {
@@ -148,7 +284,9 @@ export default {
                 all_wide: {
                     paper_width_mm: 240
                 }
-            }
+            },
+
+            selected_total_variant: 'bare_solo'
         };
     },
 
@@ -166,7 +304,12 @@ export default {
 
         cropSvg(src_div) {
             Vue.nextTick().then(() => {
-                const svgelem = this.$refs[src_div][0].childNodes[0];
+                // console.log(this.$refs);
+
+                const divelem = Array.isArray(this.$refs[src_div])
+                    ? this.$refs[src_div][0]
+                    : this.$refs[src_div];
+                const svgelem = divelem.childNodes[0];
 
                 // var svgelem = this.$refs.lilypond_src_div.childNodes[0];
                 var bbox = svgelem.getBBox();
@@ -187,15 +330,26 @@ export default {
         },
 
         addPart() {
+            const last = this.lilypondPartsSheetMusic.lilypond_parts[
+                this.lilypondPartsSheetMusic.lilypond_parts.length - 1
+            ];
+
             this.lilypondPartsSheetMusic.lilypond_parts.push({
                 src: '',
-                name: `part${this.lilypondPartsSheetMusic.lilypond_parts.length}`,
-                key_major: 'c',
-                time_signature: '4/4'
+                name: `${this.lilypondPartsSheetMusic.lilypond_parts.length +
+                    1}`,
+                key_major: last.key_major,
+                time_signature: last.time_signature
             });
         },
 
+        deletePart(i) {
+            Vue.delete(this.lilypondPartsSheetMusic.lilypond_parts, i);
+        },
+
         renderFinal(additional_global_config = {}) {
+            this.global_svg_loading = true;
+
             this.$apollo
                 .query({
                     query: lilypond_helper.queries.total,
@@ -203,22 +357,34 @@ export default {
                         lilypond_total: {
                             lilypond_parts: this.lilypondPartsSheetMusic
                                 .lilypond_parts,
-                            global_src: this.lilypondPartsSheetMusic.global_src,
+                            global_src: this.show_global_src_input
+                                ? this.lilypondPartsSheetMusic.global_src
+                                : '',
                             global_config: {
                                 ...this.lilypondPartsSheetMusic.global_config,
                                 ...additional_global_config
                             }
                         }
-                    }
+                    },
+                    fetchPolicy: 'no-cache'
                 })
                 .then(response => {
                     this.global_svg = response.data.lilypond_preview_total.svg;
 
                     this.cropSvg('lilypond_src_div_total');
+                    this.global_svg_loading = false;
                 })
                 .catch(err => {
-                    // this.songLoading = false;
+                    this.global_svg_loading = false;
+                    console.log(err);
                 });
+        },
+
+        isPartNameUsed(name, part_i) {
+            return this.lilypondPartsSheetMusic.lilypond_parts
+                .filter((_, i) => i !== part_i)
+                .map(p => p.name)
+                .includes(name);
         }
     },
 
@@ -231,8 +397,11 @@ export default {
         },
 
         value(val) {
-            console.log(val);
+            // console.log(val);
             this.lilypondPartsSheetMusic = val;
+
+            this.show_global_src_input =
+                this.lilypondPartsSheetMusic.global_src.length > 0;
         }
     }
 };

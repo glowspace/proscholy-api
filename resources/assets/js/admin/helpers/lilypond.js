@@ -62,15 +62,45 @@ const FETCH_LILYPOND_TOTAL = gql`
 `;
 
 const templates = {
-    parts_basic: `\\version "2.22.0"
+    parts_basic: `solo = \\relative {
+    c'4
+}
 
-    solo = \\relative {
-    \tc'
-    }
-    
-    soloText = \\lyricmode {
-    \t
-    }`
+soloText = \\lyricmode {
+    oh!
+}
+
+akordy = \\chordmode {
+    c1:maj
+}
+`,
+
+    parts_all: `solo = \\relative {
+    c'4 e4. g8
+}
+
+soloDruhy = \\relative { f' b c }
+
+soloText = \\lyricmode {
+    \\set stanza = #"1."
+    S_tex -- tem
+}
+
+soloTextI = \\lyricmode {
+    \\set stanza = #"2."
+    S_dal -- ším
+}
+
+akordy = \\chordmode {
+    c4:dim e:maj9^7
+}
+
+sopran = \\relative {}
+alt = \\relative { c'2 ~ c }
+altText = \\lyricmode { ú __ }
+
+tenor = \\relative {}
+bas = \\relative {}`
 };
 
 export default {

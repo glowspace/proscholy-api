@@ -93,7 +93,7 @@ class SongLyricService
         $global_src = $lilypond_parts_sheet_music['global_src'];
         $global_config = $lilypond_parts_sheet_music['global_config'];
 
-        $wasEmpty = $song_lyric->lilypond_parts_sheet_music === null;
+        $wasEmpty = !$song_lyric->lilypond_parts_sheet_music()->exists();
 
         if ($wasEmpty) {
             $lp_parts_sm = new LilypondPartsSheetMusic([

@@ -33,29 +33,14 @@ class LilypondService
         return $output;
     }
 
-    public function makePartSvgFast($part, $global_src)
+    public function makePartSvgFast($part, $global_src, $global_config_input)
     {
-        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src), false);
+        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src, $global_config_input), false);
     }
 
     public function makeTotalSvgFast($parts, $global_src, $global_config_input)
     {
-        $config = new LilypondPartsGlobalConfig(
-            $global_config_input['version'] ?? '2.22.0',
-            $global_config_input['two_voices_per_staff'] ?? true,
-            $global_config_input['global_transpose_relative_c'] ?? false,
-            $global_config_input['merge_rests'] ?? true,
-            $global_config_input['hide_bar_numbers'] ?? true,
-            $global_config_input['force_part_breaks'] ?? false
-        );
-
-        $hide_voices = $global_config_input['hide_voices'] ?? [];
-
-        if (count($hide_voices) > 0) {
-            $config->setVoicesHidden($hide_voices);
-        }
-
-        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $config), false);
+        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $global_config_input), false);
     }
 
     public function makeSvgFast($lilypond, $key_major = null)
@@ -80,8 +65,30 @@ class LilypondService
         return $src;
     }
 
-    public function makeLilypondPartsTemplate($parts, $global_src, ?LilypondPartsGlobalConfig $global_config = null): LilypondPartsTemplate
+    public function makeLilypondPartsTemplate($parts, $global_src, $global_config_input = []): LilypondPartsTemplate
     {
+        $global_config_input_with_defaults = array_merge(
+            $this->getDefaultGlobalConfigData(true),
+            $global_config_input
+        );
+
+        $global_config = new LilypondPartsGlobalConfig(
+            $global_config_input_with_defaults['version'],
+            $global_config_input_with_defaults['two_voices_per_staff'],
+            $global_config_input_with_defaults['global_transpose_relative_c'],
+            $global_config_input_with_defaults['merge_rests'],
+            $global_config_input_with_defaults['hide_bar_numbers'],
+            $global_config_input_with_defaults['force_part_breaks']
+        );
+
+        if (count($global_config_input_with_defaults['hide_voices']) > 0) {
+            $global_config->setVoicesHidden($global_config_input_with_defaults['hide_voices']);
+        }
+
+        if (isset($global_config_input_with_defaults['paper_width_mm'])) {
+            $global_config->setCustomPaper($global_config_input_with_defaults['paper_width_mm']);
+        }
+
         $src = new LilypondPartsTemplate($global_src, $global_config);
 
         foreach ($parts as $part) {
@@ -94,11 +101,32 @@ class LilypondService
                 $key_major,
                 $part['end_key_major'] ?? $key_major,
                 $time_signature,
-                $part['end_time_signature'] ?? $time_signature
+                $part['end_time_signature'] ?? $time_signature,
+                $part['break_before'] ?? false
             );
         }
 
         return $src;
+    }
+
+    public function getDefaultGlobalConfigData(bool $include_onetime)
+    {
+        $arr = [
+            'version' => '2.22.0',
+            'two_voices_per_staff' => true,
+            'merge_rests' => true
+        ];
+
+        if ($include_onetime) {
+            $arr = array_merge($arr, [
+                'global_transpose_relative_c' => false,
+                'hide_bar_numbers' => true,
+                'force_part_breaks' => false,
+                'hide_voices' => []
+            ]);
+        }
+
+        return $arr;
     }
 
     public function needsLilypondUpdate($lilypond): bool

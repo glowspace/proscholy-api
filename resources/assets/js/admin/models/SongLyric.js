@@ -8,10 +8,13 @@ const lilypond_parts_sheet_music_fragment = gql`
             src
             key_major
             time_signature
+            break_before
         }
         global_src
         global_config {
             two_voices_per_staff
+            merge_rests
+            version
         }
     }
 `;
