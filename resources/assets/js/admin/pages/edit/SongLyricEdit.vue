@@ -194,6 +194,15 @@
 
                   <v-card-text class="py-0 px-2">
                     <items-combo-box
+                      v-bind:p-items="tags_topic"
+                      v-model="model.tags_topic"
+                      label="Témata a motivy"
+                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                      create-label="Potvrďte enterem a vytvořte nový štítek"
+                      :multiple="true"
+                      :enable-custom="true"
+                    ></items-combo-box>
+                    <items-combo-box
                       v-bind:p-items="tags_generic"
                       v-model="model.tags_generic"
                       label="K příležitostem"
@@ -634,6 +643,10 @@ const FETCH_DATA = gql`
       id
       name
     }
+    tags_topic: tags_enum(type: TOPIC) {
+      id
+      name
+    }
     tags_liturgy_day: tags_enum(type: LITURGY_DAY) {
       id
       name
@@ -691,6 +704,7 @@ export default {
         tags_saints: [],
         tags_musical_form: [],
         tags_sacred_occasion: [],
+        tags_topic: [],
         tags_liturgy_day: [],
         authors_pivot: [],
         externals: [],
@@ -781,6 +795,9 @@ export default {
       query: FETCH_DATA
     },
     tags_sacred_occasion: {
+      query: FETCH_DATA
+    },
+    tags_topic: {
       query: FETCH_DATA
     },
     tags_liturgy_day: {

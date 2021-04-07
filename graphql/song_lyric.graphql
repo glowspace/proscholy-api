@@ -136,6 +136,7 @@ type SongLyric {
     tags_saints: [Tag] @morphMany(relation: "tags", scopes: ["saints"])
     tags_musical_form: [Tag] @morphMany(relation: "tags", scopes: ["musicalForm"])
     tags_sacred_occasion: [Tag] @morphMany(relation: "tags", scopes: ["sacredOccasion"])
+    tags_topic: [Tag] @morphMany(relation: "tags", scopes: ["topic"])
     tags_liturgy_day: [Tag] @morphMany(relation: "tags", scopes: ["liturgyDay"])
 
     arrangements: [SongLyric] @hasMany

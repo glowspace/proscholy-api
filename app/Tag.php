@@ -171,6 +171,11 @@ class Tag extends Model
         return $query->where('type', 5);
     }
 
+    public function scopeTopic($query)
+    {
+        return $query->where('type', 6);
+    }
+
     public function scopeLiturgyDay($query)
     {
         return $query->where('type', 40);

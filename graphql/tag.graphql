@@ -50,6 +50,7 @@ enum TagType {
     GENRE @enum(value: 100)
     MUSICAL_FORM @enum(value: 4)
     SACRED_OCCASION @enum(value: 5)
+    TOPIC @enum(value: 6)
 
     # these will be connected to (calendar) days
     LITURGY_DAY @enum(value: 40)
