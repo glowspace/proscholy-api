@@ -6,7 +6,7 @@
                     <v-select
                         :items="['2.22.0']"
                         v-model="lilypondPartsSheetMusic.global_config.version"
-                        label="Verze LilyPondu"
+                        label="Verze Lilypond kódu"
                     ></v-select>
 
                     <v-checkbox
@@ -14,6 +14,11 @@
                         v-model="show_global_src_input"
                         label="Použít pomocný kód"
                     ></v-checkbox>
+
+                    <p v-if="show_global_src_input" style="color: red">
+                        POZOR: Pomocný kód se ve výsledném spojeném kódu
+                        includuje vícekrát
+                    </p>
                 </v-flex>
 
                 <v-flex xs12 md6 offset-md3>
@@ -305,9 +310,19 @@ export default {
                     text: 'Výchozí mobilní zobrazení (pouze solo)',
                     value: 'bare_solo'
                 },
-                { text: 'Mobilní zobrazení solo + muži', value: 'solo_men' },
-                { text: 'Mobilní zobrazení solo + ženy', value: 'solo_women' },
-                { text: 'Široké zobrazení (všechny hlasy)', value: 'all_wide' }
+                {
+                    text: 'Mobilní zobrazení solo + muži -- zatím pouze náhled',
+                    value: 'solo_men'
+                },
+                {
+                    text: 'Mobilní zobrazení solo + ženy -- zatím pouze náhled',
+                    value: 'solo_women'
+                },
+                {
+                    text:
+                        'Široké zobrazení (všechny hlasy) -- zatím pouze náhled',
+                    value: 'all_wide'
+                }
             ],
 
             total_variants_configs: {
