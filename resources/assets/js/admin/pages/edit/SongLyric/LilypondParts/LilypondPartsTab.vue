@@ -431,7 +431,7 @@ export default {
         },
 
         getCombinedParts() {
-            let part_ids = this.global_parts_string.split(' ');
+            let part_ids = this.global_parts_string.trim().split(' ');
             let parts_arr = [];
 
             const part_re = /([\d\w]+)(\[(.{1,2})\])?/;
