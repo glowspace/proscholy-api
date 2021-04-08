@@ -467,7 +467,7 @@
               ></v-textarea>
 
               <div class="mb-3">
-                <a :href="lilypond_src_download_url" target="_blank">Stáhnout finální lilypond</a>
+                <a href="#5" @click="downloadLilypondSrc">Stáhnout finální lilypond</a>
               </div>
             </v-flex>
             <v-flex xs12 md6>
@@ -898,16 +898,6 @@ export default {
     externals_scores(){
       return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE'].includes(ext.content_type));
     },
-
-    lilypond_src_download_url() {
-      if (this.model && this.model_database) {
-        const fileName = this.model_database.public_route.split('/')[3];
-  
-        return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
-      }
-
-      return '';
-    },
   },
 
   watch: {
@@ -998,6 +988,13 @@ export default {
       event.target.value = this.model.lilypond // required to make the cursor stay in place.
       event.target.selectionEnd = event.target.selectionStart = originalSelectionStart + 1
     },
+
+    downloadLilypondSrc() {
+      const fileName = this.model_database.public_route.split('/')[3];
+      const url = `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
+
+      window.open(url, '_blank');
+    },   
 
     // todo: rewrite from jquery to graphql
 

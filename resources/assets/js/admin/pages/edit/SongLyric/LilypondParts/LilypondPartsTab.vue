@@ -17,7 +17,7 @@
                 </v-flex>
 
                 <v-flex xs12 md6 offset-md3>
-                    <v-card>
+                    <v-card class="mb-2">
                         <v-card-title class="py-0 px-3">
                             <h3>Nastavení šablony</h3>
                         </v-card-title>
@@ -53,6 +53,12 @@
                                 "
                                 label="Automaticky opravit přetékání taktů"
                             ></v-checkbox>
+
+                            <div class="mb-2">
+                                <a href="#6" @click="downloadLilypondSource"
+                                    >Stáhnout finální Lilypond (zip)</a
+                                >
+                            </div>
                         </v-card-text>
                     </v-card>
                 </v-flex>
@@ -460,6 +466,24 @@ export default {
                 .filter((_, i) => i !== part_i)
                 .map(p => p.name)
                 .includes(name);
+        },
+
+        getLilypondDownloadUrl() {
+            const parts_data = encodeURIComponent(
+                JSON.stringify(this.lilypondPartsSheetMusic.lilypond_parts)
+            );
+            const global_src = encodeURIComponent(
+                this.lilypondPartsSheetMusic.global_src
+            );
+            const global_config = encodeURIComponent(
+                JSON.stringify(this.lilypondPartsSheetMusic.global_config)
+            );
+
+            return `/be-api/lilypond-download-parts-source?lilypond_parts=${parts_data}&global_src=${global_src}&global_config=${global_config}`;
+        },
+
+        downloadLilypondSource() {
+            window.open(this.getLilypondDownloadUrl(), '_blank');
         }
     },
 
@@ -478,6 +502,22 @@ export default {
 
             return width_mm * 4;
         }
+
+        // lilypond_src_download_url() {
+        //     return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(
+        //             this.model.lilypond
+        //         )}&lilypond_key_major=${this.model.lilypond_key_major}`;
+
+        //     // if (this.model && this.model_database) {
+        //     //     const fileName = this.model_database.public_route.split('/')[3];
+
+        //     //     return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(
+        //     //         this.model.lilypond
+        //     //     )}&lilypond_key_major=${this.model.lilypond_key_major}`;
+        //     // }
+
+        //     // return '';
+        // }
     },
 
     watch: {
