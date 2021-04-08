@@ -30,7 +30,9 @@ class SongLyrics
                 # External must be score
                 $q->where('content_type', '2');
             })
-                ->whereHas('lilypond_src');
+                ->whereDoesntHave('lilypond_src')->whereDoesntHave('lilypond_parts_sheet_music', function ($q_lp) {
+                    return $q_lp->renderable();
+                });
 
 
         if (isset($args['needs_lilypond']) && $args['needs_lilypond'] === true)
@@ -38,10 +40,16 @@ class SongLyrics
                 ->where('licence_type_cc', '!=', 0);
 
         if (isset($args['has_lilypond']) && $args['has_lilypond'] === true)
-            $query = $query->whereHas('lilypond_src');
+            $query = $query->where(function ($q) {
+                return $q->whereHas('lilypond_src')->orWhereHas('lilypond_parts_sheet_music', function ($q_lp) {
+                    return $q_lp->renderable();
+                });
+            });
 
         if (isset($args['needs_lilypond_update']) && $args['needs_lilypond_update'] === true)
-            $query = $query->whereHas('lilypond_src');
+            $query = $query->whereHas('lilypond_src')->whereDoesntHave('lilypond_parts_sheet_music', function ($q_lp) {
+                return $q_lp->renderable();
+            });
 
         if (isset($args['has_authors']) && $args['has_authors'] === true)
             $query = $query->whereHas('authors');
@@ -63,13 +71,6 @@ class SongLyrics
             $query = $query->where('updated_at', '>', $args['updated_after']);
 
         $res = $query->get();
-
-        if (isset($args['needs_lilypond_update']) && $args['needs_lilypond_update'] === true) {
-            $serv = new LilypondService();
-            $res = $res->filter(function ($sl) use ($serv) {
-                return $serv->needsLilypondUpdate($sl->lilypond_src);
-            });
-        }
 
         return $res;
     }

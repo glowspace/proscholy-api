@@ -109,6 +109,11 @@ class SongLyricService
             ]);
         }
 
+        // used later to filter out empty sheet music that do not produce a render result
+        $song_lyric->lilypond_parts_sheet_music()->update([
+            'is_empty' => $song_lyric->lilypond_parts_sheet_music->fresh()->getSrcIsEmpty()
+        ]);
+
         $song_lyric->touch();
     }
 
