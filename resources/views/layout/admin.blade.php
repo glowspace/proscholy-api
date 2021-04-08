@@ -57,12 +57,12 @@
     </title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-
     <!-- Import Google Icon Font -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" type="text/css">
+          
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Nunito:wght@200;600&display=swap" rel="stylesheet" type="text/css">
+
 
     <!-- Fonts awesome -->
     <link rel="stylesheet"
