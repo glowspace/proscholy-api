@@ -21,4 +21,17 @@ class LilypondPartsSheetMusic extends Model
     {
         return $this->belongsTo(SongLyric::class);
     }
+
+    public function getIsEmptyAttribute()
+    {
+        $src = '';
+
+        foreach ($this->lilypond_parts as $part) {
+            if (isset($part['src'])) {
+                $src .= $part['src'];
+            }
+        }
+
+        return empty(trim($src));
+    }
 }

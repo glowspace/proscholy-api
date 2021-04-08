@@ -39,7 +39,19 @@ class UpdateSongLyricLilypond implements ShouldQueue
     {
         $sl = SongLyric::find($this->song_lyric_id);
 
-        $svg = $lily_service->makeSvg($sl->lilypond_src, $sl->lilypond_key_major);
+        $svg = false;
+
+        if ($sl->lilypond_parts_sheet_music()->exists() && !$sl->lilypond_parts_sheet_music->is_empty) {
+            // new LP exists, render these
+            logger('Rendering the new LP code');
+            $svg = $lily_service->makeTotalSvgMobile($sl->lilypond_parts_sheet_music);
+        } else if ($sl->lilypond_src()->exists()) {
+            logger('Rendering the old LP code');
+            $svg = $lily_service->makeSvg($sl->lilypond_src, $sl->lilypond_key_major);
+        } else {
+            logger("SongLyric ID: $sl->id Lilypond rendering requested but no LP exists");
+        }
+
 
         if ($svg === false) {
             logger('Unsuccessful Lilypond render');

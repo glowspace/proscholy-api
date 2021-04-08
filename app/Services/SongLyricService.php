@@ -68,14 +68,13 @@ class SongLyricService
         $song_lyric->touch();
     }
 
-    public function handleLilypondSrc($song_lyric, $lilypond_src)
+    private function handleLilypondSrc($song_lyric, $lilypond_src)
     {
         $wasEmpty = $song_lyric->lilypond_src === null;
         $isEmpty = $lilypond_src === null || $lilypond_src === '';
 
         if ($wasEmpty && !$isEmpty) {
             $lilypond_src_obj = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
-            logger($lilypond_src_obj);
             $song_lyric->lilypond_src()->save($lilypond_src_obj);
         } else if (!$wasEmpty && !$isEmpty) {
             $song_lyric->lilypond_src()->update(['lilypond_src' => $lilypond_src]);
@@ -86,7 +85,7 @@ class SongLyricService
         $song_lyric->touch();
     }
 
-    public function handleLilypondPartsSheetMusic($song_lyric, array $lilypond_parts_sheet_music)
+    private function handleLilypondPartsSheetMusic($song_lyric, array $lilypond_parts_sheet_music)
     {
         // note: the input is validated by graphql types
         $lilypond_parts = $lilypond_parts_sheet_music['lilypond_parts'];
@@ -130,13 +129,23 @@ class SongLyricService
         $song_lyric->touch();
     }
 
-    public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major)
+    public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major, array $lilypond_parts_sheet_music)
     {
+        $old_lilypond_updated = (string)$song_lyric->lilypond_src != $lilypond_input || $lilypond_key_major != $song_lyric->lilypond_key_major;
+        $new_lilypond_updated =
+            $song_lyric->lilypond_parts_sheet_music->lilypond_parts != $lilypond_parts_sheet_music['lilypond_parts'] ||
+            $song_lyric->lilypond_parts_sheet_music->global_config != $lilypond_parts_sheet_music['global_config'] ||
+            $song_lyric->lilypond_parts_sheet_music->global_src != $lilypond_parts_sheet_music['global_src'];
+
+        logger("Old lilypond updated: $old_lilypond_updated");
+        logger("New lilypond updated: $new_lilypond_updated");
+
         $this->handleLilypondSrc($song_lyric, $lilypond_input);
+        $this->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
 
         // this task then calls handleLilypondSvg in this class
-        UpdateSongLyricLilypond::dispatchUnless(
-            $lilypond_input == $song_lyric->lilypond && $lilypond_key_major == $song_lyric->lilypond_key_major,
+        UpdateSongLyricLilypond::dispatchIf(
+            $old_lilypond_updated || $new_lilypond_updated,
             $song_lyric->id
         );
 

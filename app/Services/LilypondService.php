@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\LilypondPartsSheetMusic;
 use ProScholy\LilypondRenderer\Client;
 use ProScholy\LilypondRenderer\LilypondBasicTemplate;
 use ProScholy\LilypondRenderer\LilypondPartsTemplate;
@@ -51,6 +52,19 @@ class LilypondService
     public function makeSvg($lilypond, $key_major = null)
     {
         return $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), true);
+    }
+
+    public function makeTotalSvgMobile(LilypondPartsSheetMusic $lp_sheet_music)
+    {
+        $global_config = array_merge($lp_sheet_music->global_config, [
+            'hide_voices' => ['sopran', 'alt', 'tenor', 'bas', 'zeny', 'muzi']
+        ]);
+
+        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate(
+            $lp_sheet_music->lilypond_parts,
+            $lp_sheet_music->global_src ?? '',
+            $global_config
+        ), true);
     }
 
     public function makeLilypondBasicTemplate($lilypond, $key_major = null): LilypondBasicTemplate

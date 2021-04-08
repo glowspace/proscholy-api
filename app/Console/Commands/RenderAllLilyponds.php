@@ -38,7 +38,7 @@ class RenderAllLilyponds extends Command
      */
     public function handle()
     {
-        SongLyric::whereHas('lilypond_src')->get()->each(function ($song_lyric) {
+        SongLyric::whereHas('lilypond_src')->orWhereHas('lilypond_parts_sheet_music')->get()->each(function ($song_lyric) {
             $song_lyric->renderLilypond();
         });
     }
