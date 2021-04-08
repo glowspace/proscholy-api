@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 use Venturecraft\Revisionable\RevisionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\External
@@ -251,6 +252,11 @@ class External extends Model
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function rendered_scores(): HasMany
+    {
+        return $this->hasMany(RenderedScore::class);
     }
 
     public function scopeRestricted($query)

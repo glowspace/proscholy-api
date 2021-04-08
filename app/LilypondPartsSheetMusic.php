@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LilypondPartsSheetMusic extends Model
 {
@@ -20,5 +21,10 @@ class LilypondPartsSheetMusic extends Model
     public function song_lyric(): BelongsTo
     {
         return $this->belongsTo(SongLyric::class);
+    }
+
+    public function rendered_scores(): HasMany
+    {
+        return $this->hasMany(RenderedScore::class, 'lilypond_parts_sheet_music_id');
     }
 }
