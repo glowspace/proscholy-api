@@ -22,6 +22,7 @@ type LilypondGlobalConfig {
     # force_part_breaks: Boolean
     merge_rests: Boolean
     version: String
+    note_splitting: Boolean
     # paper_width_mm: Int
     # hide_voices: [String]
 }
@@ -53,4 +54,5 @@ input LilypondGlobalConfigInput {
     paper_width_mm: Int
     hide_voices: [String]
     hide_bar_numbers: Boolean
+    note_splitting: Boolean
 }

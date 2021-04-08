@@ -1,34 +1,62 @@
 <template>
     <v-layout row wrap class="pt-2">
         <v-flex xs12>
-            <v-select
-                :items="['2.22.0']"
-                v-model="lilypondPartsSheetMusic.global_config.version"
-                label="Verze LilyPondu"
-            ></v-select>
+            <v-layout row wrap>
+                <v-flex xs12 md3>
+                    <v-select
+                        :items="['2.22.0']"
+                        v-model="lilypondPartsSheetMusic.global_config.version"
+                        label="Verze LilyPondu"
+                    ></v-select>
 
-            <v-checkbox
-                class="mt-0"
-                v-model="
-                    lilypondPartsSheetMusic.global_config.two_voices_per_staff
-                "
-                label="Sloučit dva hlasy do jedné osnovy (soprán + alt, tenor + bas)"
-            ></v-checkbox>
+                    <v-checkbox
+                        class="mt-0"
+                        v-model="show_global_src_input"
+                        label="Použít pomocný kód"
+                    ></v-checkbox>
+                </v-flex>
 
-            <v-checkbox
-                class="mt-0"
-                v-model="lilypondPartsSheetMusic.global_config.merge_rests"
-                :disabled="
-                    !lilypondPartsSheetMusic.global_config.two_voices_per_staff
-                "
-                label="Sloučit pomlky u dvouhlasných osnov"
-            ></v-checkbox>
+                <v-flex xs12 md6 offset-md3>
+                    <v-card>
+                        <v-card-title class="py-0 px-3">
+                            <h3>Nastavení šablony</h3>
+                        </v-card-title>
 
-            <v-checkbox
-                class="mt-0"
-                v-model="show_global_src_input"
-                label="Použít pomocný kód"
-            ></v-checkbox>
+                        <v-card-text class="py-0 px-3">
+                            <v-checkbox
+                                class="mt-0"
+                                v-model="
+                                    lilypondPartsSheetMusic.global_config
+                                        .two_voices_per_staff
+                                "
+                                label="Sloučit dva hlasy do jedné osnovy (soprán + alt, tenor + bas)"
+                            ></v-checkbox>
+
+                            <v-checkbox
+                                class="mt-0"
+                                v-model="
+                                    lilypondPartsSheetMusic.global_config
+                                        .merge_rests
+                                "
+                                :disabled="
+                                    !lilypondPartsSheetMusic.global_config
+                                        .two_voices_per_staff
+                                "
+                                label="Sloučit pomlky u dvouhlasných osnov"
+                            ></v-checkbox>
+
+                            <v-checkbox
+                                class="mt-0"
+                                v-model="
+                                    lilypondPartsSheetMusic.global_config
+                                        .note_splitting
+                                "
+                                label="Automaticky opravit přetékání taktů"
+                            ></v-checkbox>
+                        </v-card-text>
+                    </v-card>
+                </v-flex>
+            </v-layout>
 
             <v-textarea
                 class="lilypond-input"

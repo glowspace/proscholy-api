@@ -78,7 +78,8 @@ class LilypondService
             $global_config_input_with_defaults['global_transpose_relative_c'],
             $global_config_input_with_defaults['merge_rests'],
             $global_config_input_with_defaults['hide_bar_numbers'],
-            $global_config_input_with_defaults['force_part_breaks']
+            $global_config_input_with_defaults['force_part_breaks'],
+            $global_config_input_with_defaults['note_splitting']
         );
 
         if (count($global_config_input_with_defaults['hide_voices']) > 0) {
@@ -115,7 +116,8 @@ class LilypondService
         $arr = [
             'version' => '2.22.0',
             'two_voices_per_staff' => true,
-            'merge_rests' => true
+            'merge_rests' => true,
+            'note_splitting' => true
         ];
 
         if ($include_onetime) {
