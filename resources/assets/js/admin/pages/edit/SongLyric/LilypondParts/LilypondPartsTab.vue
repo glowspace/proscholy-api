@@ -207,6 +207,7 @@
                                 :ref="`lilypond_src_div_${i}`"
                                 :class="{
                                     'lilypond-preview': true,
+                                    'ml-4': true,
                                     loading: loading
                                 }"
                             ></div>
@@ -267,6 +268,10 @@
     overflow: scroll;
     white-space: pre;
     transition: 200ms opacity;
+}
+
+.lilypond-preview svg {
+    white-space: normal;
 }
 
 .lilypond-preview.loading {
