@@ -27,6 +27,7 @@
             fetchPolicy="no-cache"
             :options="{ notifyOnNetworkStatusChange: true }"
             @result="cropSvg"
+            :skip="!shouldRender"
         >
             <template v-slot="{ result: { loading, error, data } }">
                 <div v-if="src.length == 0">
@@ -67,7 +68,8 @@ export default {
         'key-major',
         'time-signature',
         'global-src',
-        'global-config'
+        'global-config',
+        'should-render'
     ],
 
     data() {
@@ -87,7 +89,10 @@ export default {
     methods: {
         cropSvg() {
             Vue.nextTick().then(() => {
-                if (this.$refs['lilypond_src_div'].childNodes.length) {
+                if (
+                    this.$refs['lilypond_src_div'] &&
+                    this.$refs['lilypond_src_div'].childNodes.length
+                ) {
                     cropSvgElem(this.$refs['lilypond_src_div'].childNodes[0]);
                 }
             });

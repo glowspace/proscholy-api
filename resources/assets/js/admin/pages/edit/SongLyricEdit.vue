@@ -480,7 +480,7 @@
           </v-tab-item>
 
           <v-tab-item>
-            <LilypondPartsTab v-model="model.lilypond_parts_sheet_music"/>
+            <LilypondPartsTab v-model="model.lilypond_parts_sheet_music" :is-displayed="active === 6"/>
           </v-tab-item>
           <v-tab-item v-if="!is_arrangement_layout && model_database">
             <v-layout row wrap mb-4>
@@ -825,7 +825,6 @@ export default {
             var svgelem = this.$refs.lilypond_src_div.childNodes[0];
             var bbox = svgelem.getBBox();
             if (bbox && bbox.width && bbox.height) {
-              console.log('cropping the svg')
 
               svgelem.setAttribute('viewBox', [bbox.x, bbox.y, Math.max(60, bbox.width), bbox.height].join(" "));
               svgelem.removeAttribute('width');

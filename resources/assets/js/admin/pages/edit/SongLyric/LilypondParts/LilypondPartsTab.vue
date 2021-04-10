@@ -186,6 +186,7 @@
                         : ''
                 "
                 :global-config="lilypondPartsSheetMusic.global_config"
+                :should-render="isDisplayed"
             ></LilypondPartRender>
 
             <div style="margin-bottom: 24px; margin-top: -24px;">
@@ -266,7 +267,8 @@ import cropSvgElem from './svgcrop.js';
 
 export default {
     props: {
-        value: {}
+        value: {},
+        isDisplayed: false
     },
 
     components: { LilypondPartRender },
@@ -350,11 +352,14 @@ export default {
         },
 
         cropTotalSvg() {
-            // console.log(this.$refs['lilypond_src_div_total']);
-
             Vue.nextTick().then(() => {
-                if (this.$refs['lilypond_src_div_total'].childNodes.length) {
-                    cropSvgElem(this.$refs['lilypond_src_div_total'].childNodes[0]);
+                if (
+                    this.$refs['lilypond_src_div_total'] &&
+                    this.$refs['lilypond_src_div_total'].childNodes.length
+                ) {
+                    cropSvgElem(
+                        this.$refs['lilypond_src_div_total'].childNodes[0]
+                    );
                 }
             });
         },
@@ -433,8 +438,6 @@ export default {
                 }
                 parts_arr.push(part);
             }
-
-            // console.log(parts_arr);
 
             return parts_arr;
         },
