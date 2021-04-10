@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Services\LilypondPartsTemplateService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,7 +36,7 @@ class UpdateSongLyricLilypond implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondService $lily_service, SongLyricService $sl_service)
+    public function handle(LilypondService $lily_service, LilypondPartsTemplateService $lilyparts_service, SongLyricService $sl_service)
     {
         $sl = SongLyric::find($this->song_lyric_id);
 
@@ -44,7 +45,7 @@ class UpdateSongLyricLilypond implements ShouldQueue
         if ($sl->lilypond_parts_sheet_music()->exists() && !$sl->lilypond_parts_sheet_music->is_empty) {
             // new LP exists, render these
             logger('Rendering the new LP code');
-            $svg = $lily_service->makeTotalSvgMobile($sl->lilypond_parts_sheet_music);
+            $svg = $lilyparts_service->makeTotalSvgMobile($sl->lilypond_parts_sheet_music);
         } else if ($sl->lilypond_src()->exists()) {
             logger('Rendering the old LP code');
             $svg = $lily_service->makeSvg($sl->lilypond_src, $sl->lilypond_key_major);

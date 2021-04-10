@@ -19,10 +19,11 @@ class CreateRenderedScoresTable extends Migration
             $table->unsignedBigInteger('lilypond_parts_sheet_music_id')->nullable();
             $table->unsignedBigInteger('external_id')->nullable();
 
-            $table->json('layout_config')->nullable();
-            $table->string('filename');
-            $table->string('filetype');
+            $table->json('render_config')->nullable();
+            $table->string('filename', 50);
+            $table->string('filetype', 6);
             $table->json('secondary_filetypes')->nullable();
+            $table->boolean('is_rendered')->default(false);
 
             $table->timestamps();
         });
