@@ -87,7 +87,12 @@
             ></v-textarea>
         </v-flex>
 
-        <template v-for="(part, i) in lilypondPartsSheetMusic.lilypond_parts">
+        <v-layout
+            row
+            wrap
+            v-for="(part, i) in lilypondPartsSheetMusic.lilypond_parts"
+            :key="i"
+        >
             <v-flex xs12 md6 :key="i * 2">
                 <v-layout row wrap>
                     <v-flex xs12 md4>
@@ -168,58 +173,27 @@
                         preventTextareaTab($event, part, 'src')
                     "
                 ></v-textarea>
-
-                <!-- <div class="mb-3">
-                    <a :href="lilypond_src_download_url" target="_blank"
-                        >Stáhnout finální lilypond</a
-                    >
-                </div> -->
             </v-flex>
-            <v-flex xs12 md6 :key="i * 2 + 1">
-                <!-- notifyOnNetworkStatusChange fixes the loading state, see https://github.com/vuejs/vue-apollo/issues/263#issuecomment-555326798 -->
-                <ApolloQuery
-                    :query="fetch_lilypond_part_query"
-                    :variables="{
-                        lilypond_part: part,
-                        global_src: show_global_src_input
-                            ? lilypondPartsSheetMusic.global_src
-                            : '',
-                        global_config: lilypondPartsSheetMusic.global_config
-                    }"
-                    :debounce="1000"
-                    fetchPolicy="no-cache"
-                    :options="{ notifyOnNetworkStatusChange: true }"
-                    @result="cropSvg(`lilypond_src_div_${i}`)"
+
+            <LilypondPartRender
+                :name="part.name"
+                :src="part.src"
+                :key-major="part.key_major"
+                :time-signature="part.time_signature"
+                :global-src="
+                    show_global_src_input
+                        ? lilypondPartsSheetMusic.global_src
+                        : ''
+                "
+                :global-config="lilypondPartsSheetMusic.global_config"
+            ></LilypondPartRender>
+
+            <div style="margin-bottom: 24px; margin-top: -24px;">
+                <v-btn @click="insertPart(i)" color="info" outline
+                    >Přidat část písně</v-btn
                 >
-                    <template v-slot="{ result: { loading, error, data } }">
-                        <div v-if="part.src.length == 0">
-                            Začněte psát Lilypond kód pro zobrazení not
-                        </div>
-
-                        <template v-else>
-                            <div v-if="error">
-                                Náhled lilypondu není dostupný (chyba)
-                            </div>
-
-                            <div
-                                v-else-if="data"
-                                v-html="data.lilypond_preview_part.svg"
-                                :ref="`lilypond_src_div_${i}`"
-                                :class="{
-                                    'lilypond-preview': true,
-                                    'ml-4': true,
-                                    loading: loading
-                                }"
-                            ></div>
-
-                            <div v-else>Náhled lilypondu není dostupný</div>
-                        </template>
-                    </template>
-                </ApolloQuery>
-            </v-flex>
-        </template>
-
-        <v-btn @click="addPart" color="info" outline>Přidat část písně</v-btn>
+            </div>
+        </v-layout>
 
         <v-flex xs12>
             <v-select
@@ -287,11 +261,15 @@
 
 <script>
 import lilypond_helper from 'Admin/helpers/lilypond.js';
+import LilypondPartRender from './LilypondPartRender';
+import cropSvgElem from './svgcrop.js';
 
 export default {
     props: {
         value: {}
     },
+
+    components: { LilypondPartRender },
 
     data() {
         // do not forget to update SongLyric.js
@@ -306,7 +284,6 @@ export default {
 
             global_svg_loading: false,
             global_svg: '',
-            fetch_lilypond_part_query: lilypond_helper.queries.part,
             enums: lilypond_helper.enums,
             lilypond_templates: lilypond_helper.templates,
 
@@ -372,44 +349,25 @@ export default {
                 originalSelectionStart + 1;
         },
 
-        cropSvg(src_div) {
+        cropTotalSvg() {
+            // console.log(this.$refs['lilypond_src_div_total']);
+
             Vue.nextTick().then(() => {
-                // console.log(this.$refs);
-
-                const divelem = Array.isArray(this.$refs[src_div])
-                    ? this.$refs[src_div][0]
-                    : this.$refs[src_div];
-                const svgelem = divelem.childNodes[0];
-
-                // var svgelem = this.$refs.lilypond_src_div.childNodes[0];
-                var bbox = svgelem.getBBox();
-                if (bbox && bbox.width && bbox.height) {
-                    svgelem.setAttribute(
-                        'viewBox',
-                        [
-                            bbox.x,
-                            bbox.y,
-                            Math.max(60, bbox.width),
-                            bbox.height
-                        ].join(' ')
-                    );
-                    svgelem.removeAttribute('width');
-                    svgelem.removeAttribute('height');
+                if (this.$refs['lilypond_src_div_total'].childNodes.length) {
+                    cropSvgElem(this.$refs['lilypond_src_div_total'].childNodes[0]);
                 }
             });
         },
 
-        addPart() {
-            const last = this.lilypondPartsSheetMusic.lilypond_parts[
-                this.lilypondPartsSheetMusic.lilypond_parts.length - 1
-            ];
+        insertPart(i) {
+            const previous = this.lilypondPartsSheetMusic.lilypond_parts[i];
 
-            this.lilypondPartsSheetMusic.lilypond_parts.push({
+            this.lilypondPartsSheetMusic.lilypond_parts.splice(i + 1, 0, {
                 src: '',
                 name: `${this.lilypondPartsSheetMusic.lilypond_parts.length +
                     1}`,
-                key_major: last.key_major,
-                time_signature: last.time_signature
+                key_major: previous.key_major,
+                time_signature: previous.time_signature
             });
         },
 
@@ -447,7 +405,7 @@ export default {
                 .then(response => {
                     this.global_svg = response.data.lilypond_preview_total.svg;
 
-                    this.cropSvg('lilypond_src_div_total');
+                    this.cropTotalSvg();
                     this.global_svg_loading = false;
                 })
                 .catch(err => {
@@ -476,7 +434,7 @@ export default {
                 parts_arr.push(part);
             }
 
-            console.log(parts_arr);
+            // console.log(parts_arr);
 
             return parts_arr;
         },
@@ -522,22 +480,6 @@ export default {
 
             return width_mm * 4;
         }
-
-        // lilypond_src_download_url() {
-        //     return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(
-        //             this.model.lilypond
-        //         )}&lilypond_key_major=${this.model.lilypond_key_major}`;
-
-        //     // if (this.model && this.model_database) {
-        //     //     const fileName = this.model_database.public_route.split('/')[3];
-
-        //     //     return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(
-        //     //         this.model.lilypond
-        //     //     )}&lilypond_key_major=${this.model.lilypond_key_major}`;
-        //     // }
-
-        //     // return '';
-        // }
     },
 
     watch: {
@@ -549,7 +491,6 @@ export default {
         },
 
         value(val) {
-            // console.log(val);
             this.lilypondPartsSheetMusic = val;
 
             this.show_global_src_input =
