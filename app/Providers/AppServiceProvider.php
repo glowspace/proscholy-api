@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(LilypondService::class, function () {
             return new LilypondService();
         });
-        $this->app->singleton(LilypondService::class, function () {
+        $this->app->singleton(RenderedScoreService::class, function () {
             return new RenderedScoreService();
         });
     }

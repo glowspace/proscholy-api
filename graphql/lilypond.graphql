@@ -6,5 +6,5 @@ extend type Query @middleware(checks: ["auth:api"]) {
     lilypond_parse(lilypond: String, lilypond_key_major: String): LilypondOutput 
 
     lilypond_preview_part(lilypond_part: LilypondPartInput, global_src: String, render_config: LilypondRenderConfigInput) : LilypondOutput
-    lilypond_preview_total(lilypond_total: LilypondPartsSheetMusicInput) : LilypondOutput
+    lilypond_preview_total(lilypond_total: LilypondPartsSheetMusicRenderInput) : LilypondOutput
 }

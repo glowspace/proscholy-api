@@ -27,11 +27,16 @@ type LilypondScoreConfig {
     # hide_voices: [String]
 }
 
+input LilypondPartsSheetMusicRenderInput {
+    lilypond_parts: [LilypondPartInput]
+    global_src: String
+    render_config: LilypondRenderConfigInput
+}
 
 input LilypondPartsSheetMusicInput {
     lilypond_parts: [LilypondPartInput]
     global_src: String
-    render_config: LilypondRenderConfigInput
+    score_config: LilypondRenderConfigInput
 }
 
 input LilypondPartInput {
@@ -43,6 +48,13 @@ input LilypondPartInput {
     end_time_signature: String
     break_before: Boolean
     part_transpose: String
+}
+
+input LilypondScoreConfigInput {
+    two_voices_per_staff: Boolean
+    merge_rests: Boolean
+    version: String
+    note_splitting: Boolean
 }
 
 input LilypondRenderConfigInput {

@@ -11,7 +11,7 @@ const lilypond_parts_sheet_music_fragment = gql`
             break_before
         }
         global_src
-        render_config {
+        score_config {
             two_voices_per_staff
             merge_rests
             version
