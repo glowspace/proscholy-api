@@ -94,6 +94,8 @@ class SongLyricService
 
         $wasEmpty = !$song_lyric->lilypond_parts_sheet_music()->exists();
 
+        $lp_parts_sm = null;
+
         if ($wasEmpty) {
             $lp_parts_sm = new LilypondPartsSheetMusic([
                 'lilypond_parts' => $lilypond_parts,
@@ -107,11 +109,12 @@ class SongLyricService
                 'global_src' => $global_src,
                 'global_config' => $global_config
             ]);
+            $lp_parts_sm = $song_lyric->lilypond_parts_sheet_music->fresh();
         }
 
         // used later to filter out empty sheet music that do not produce a render result
         $song_lyric->lilypond_parts_sheet_music()->update([
-            'is_empty' => $song_lyric->lilypond_parts_sheet_music->fresh()->getSrcIsEmpty()
+            'is_empty' => $lp_parts_sm->getSrcIsEmpty()
         ]);
 
         $song_lyric->touch();
