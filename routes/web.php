@@ -31,6 +31,7 @@ Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('ex
 
 Route::group(['prefix' => 'be-api'], function () {
     Route::get('lilypond-download-source', 'DownloadController@downloadLilypondSource');
+    Route::get('lilypond-download-parts-source', 'DownloadController@downloadLilypondPartsSource');
 });
 
 

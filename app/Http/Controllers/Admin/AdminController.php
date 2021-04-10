@@ -71,6 +71,9 @@ class AdminController extends Controller
             $q->where('content_type', '2');
         })
             ->orWhereHas('lilypond_src') # or song has lilypond score
+            ->orWhereHas('lilypond_parts_sheet_music', function ($q_lp) {
+                return $q_lp->renderable();
+            })
             ->count();
     }
 
@@ -81,7 +84,10 @@ class AdminController extends Controller
      */
     private function countSongsWithLilyPond(): int
     {
-        return SongLyric::whereHas('lilypond_src') # or song has lilypond score
+        return SongLyric::whereHas('lilypond_src')
+            ->orWhereHas('lilypond_parts_sheet_music', function ($q_lp) {
+                return $q_lp->renderable();
+            })
             ->count();
     }
 

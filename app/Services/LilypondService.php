@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\LilypondPartsSheetMusic;
 use ProScholy\LilypondRenderer\Client;
 use ProScholy\LilypondRenderer\LilypondBasicTemplate;
 use ProScholy\LilypondRenderer\LilypondPartsTemplate;
@@ -53,6 +54,19 @@ class LilypondService
         return $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), true);
     }
 
+    public function makeTotalSvgMobile(LilypondPartsSheetMusic $lp_sheet_music)
+    {
+        $global_config = array_merge($lp_sheet_music->global_config, [
+            'hide_voices' => ['sopran', 'alt', 'tenor', 'bas', 'zeny', 'muzi']
+        ]);
+
+        return $this->doClientRenderSvg($this->makeLilypondPartsTemplate(
+            $lp_sheet_music->lilypond_parts,
+            $lp_sheet_music->global_src ?? '',
+            $global_config
+        ), true);
+    }
+
     public function makeLilypondBasicTemplate($lilypond, $key_major = null): LilypondBasicTemplate
     {
         $src = new LilypondBasicTemplate($lilypond);
@@ -78,7 +92,8 @@ class LilypondService
             $global_config_input_with_defaults['global_transpose_relative_c'],
             $global_config_input_with_defaults['merge_rests'],
             $global_config_input_with_defaults['hide_bar_numbers'],
-            $global_config_input_with_defaults['force_part_breaks']
+            $global_config_input_with_defaults['force_part_breaks'],
+            $global_config_input_with_defaults['note_splitting']
         );
 
         if (count($global_config_input_with_defaults['hide_voices']) > 0) {
@@ -115,7 +130,8 @@ class LilypondService
         $arr = [
             'version' => '2.22.0',
             'two_voices_per_staff' => true,
-            'merge_rests' => true
+            'merge_rests' => true,
+            'note_splitting' => true
         ];
 
         if ($include_onetime) {
@@ -130,18 +146,19 @@ class LilypondService
         return $arr;
     }
 
-    public function needsLilypondUpdate($lilypond): bool
-    {
-        $lp_no_spaces = str_replace(' ', '', $lilypond);
 
-        if (!Str::contains($lp_no_spaces, 'melodie=')) {
-            return true;
-        }
+    // public function needsLilypondUpdate($lilypond): bool
+    // {
+    //     $lp_no_spaces = str_replace(' ', '', $lilypond);
 
-        if (Str::contains($lp_no_spaces, 'indent=0') || Str::contains($lp_no_spaces, 'tagline=""')) {
-            return true;
-        }
+    //     if (!Str::contains($lp_no_spaces, 'melodie=')) {
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     if (Str::contains($lp_no_spaces, 'indent=0') || Str::contains($lp_no_spaces, 'tagline=""')) {
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
 }

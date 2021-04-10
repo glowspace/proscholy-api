@@ -39,479 +39,482 @@
         <v-tab>Lilypond noty</v-tab>
         <v-tab>Lilypond noty NEW (beta)</v-tab>
         <v-tab v-if="!is_arrangement_layout && model_database">Aranže</v-tab>
-        <v-tab-item :class="{'sealed' : model.is_sealed}">
-          <v-layout row wrap pt-2>
-            <v-flex xs12 md6>
-              <v-form ref="form">
-                <v-text-field
-                  label="Název písně"
-                  required
-                  v-model="model.name"
-                  data-vv-name="input.name"
-                  :error-messages="errors.collect('input.name')"
-                  v-on:input="onNameChange"
-                ></v-text-field>
 
-                <span>pokud má píseň alternativní názvy nebo označení (např. Hymna CSM Ždár 2012), zadejte je zde:</span>
-                <v-layout row wrap>
-                  <v-flex xs12 md6>
-                    <v-text-field
-                      label="2. název písně"
-                      v-model="model.secondary_name_1"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md6>
-                    <v-text-field
-                      label="3. název písně"
-                      v-model="model.secondary_name_2"
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
+        <v-tabs-items touchless>
+          <v-tab-item :class="{'sealed' : model.is_sealed}">
+            <v-layout row wrap pt-2>
+              <v-flex xs12 md6>
+                <v-form ref="form">
+                  <v-text-field
+                    label="Název písně"
+                    required
+                    v-model="model.name"
+                    data-vv-name="input.name"
+                    :error-messages="errors.collect('input.name')"
+                    v-on:input="onNameChange"
+                  ></v-text-field>
 
-                <v-select :items="enums.licence_type_cc" v-model="model.licence_type_cc" label="Licence"></v-select>
+                  <span>pokud má píseň alternativní názvy nebo označení (např. Hymna CSM Ždár 2012), zadejte je zde:</span>
+                  <v-layout row wrap>
+                    <v-flex xs12 md6>
+                      <v-text-field
+                        label="2. název písně"
+                        v-model="model.secondary_name_1"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md6>
+                      <v-text-field
+                        label="3. název písně"
+                        v-model="model.secondary_name_2"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
 
-                <v-layout row mb-2 v-if="is_arrangement_layout">
-                  <v-flex xs12 lg6>
-                    <items-combo-box
-                      v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
-                      v-model="model.arrangement_source"
-                      disabled
-                      label="Aranžovaná píseň"
-                      header-label="Vyberte původní píseň pro tuto aranž"
-                      create-label="Potvrďte enterem a vytvořte novou píseň"
-                      :multiple="false"
-                      :enable-custom="false"
-                    ></items-combo-box>
-                  </v-flex>
-                  <v-flex xs12 lg6>
-                    <v-btn
-                      :href="'/admin/song/' + model.arrangement_source.id + '/edit'"
-                      @click.prevent="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
-                      :disabled="!model.arrangement_source"
-                      color="info" outline
-                    >Přejít na editaci aranžované písně</v-btn>
-                  </v-flex>
-                </v-layout>
+                  <v-select :items="enums.licence_type_cc" v-model="model.licence_type_cc" label="Licence"></v-select>
 
-                <v-card class="mb-4 px-4">
-                  <v-card-title class="p-0">
-                    <h3>Autoři<span v-if="is_arrangement_layout"> aranže</span>
-                    <span v-if="!is_original"> překladu</span>
-                    </h3>
-                  </v-card-title>
+                  <v-layout row mb-2 v-if="is_arrangement_layout">
+                    <v-flex xs12 lg6>
+                      <items-combo-box
+                        v-bind:p-items="song_lyrics.filter(sl => !sl.is_arrangement)"
+                        v-model="model.arrangement_source"
+                        disabled
+                        label="Aranžovaná píseň"
+                        header-label="Vyberte původní píseň pro tuto aranž"
+                        create-label="Potvrďte enterem a vytvořte novou píseň"
+                        :multiple="false"
+                        :enable-custom="false"
+                      ></items-combo-box>
+                    </v-flex>
+                    <v-flex xs12 lg6>
+                      <v-btn
+                        :href="'/admin/song/' + model.arrangement_source.id + '/edit'"
+                        @click.prevent="goToAdminPage('song/' + model.arrangement_source.id + '/edit')"
+                        :disabled="!model.arrangement_source"
+                        color="info" outline
+                      >Přejít na editaci aranžované písně</v-btn>
+                    </v-flex>
+                  </v-layout>
 
-                  <v-card-text class="p-0">
-                    <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
-                      <v-flex xs12 sm8>
-                        <items-combo-box
-                          v-model="author_pivot.author"
-                          v-bind:p-items="authors"
-                          item-text="name"
-                          label="Jméno autora"
-                          :multiple="false"
-                          :enable-custom="true"
-                          :disabled="model.has_anonymous_author"
-                        ></items-combo-box>
-                      </v-flex>
-                      <v-flex xs10 sm3>
-                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                        <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
-                        <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
-                      </v-flex>
-                      <v-flex xs2 sm1>
-                        <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-                        <v-btn icon @click="removeAuthor(i)" :disabled="model.has_anonymous_author" class="text-secondary"><i class="fas fa-trash"></i></v-btn>
-                      </v-flex>
-                    </v-layout>
-                  </v-card-text>
+                  <v-card class="mb-4 px-4">
+                    <v-card-title class="p-0">
+                      <h3>Autoři<span v-if="is_arrangement_layout"> aranže</span>
+                      <span v-if="!is_original"> překladu</span>
+                      </h3>
+                    </v-card-title>
 
-                  <v-card-text class="p-0" v-if="model.authors_pivot.filter((el) => el.author != null).length === 0">
-                    <span v-if="!model.has_anonymous_author">
-                      Zatím k písni nikdo nepřiřadil autora (u písně je označení „autor<span v-if="!is_original"> překladu </span> neznámý“).
-                    </span>
-                    <span v-else>U písně je označení „anonymní autor“.</span>
-                  </v-card-text>
+                    <v-card-text class="p-0">
+                      <v-layout row wrap v-for="(author_pivot, i) in model.authors_pivot || []" :key="i">
+                        <v-flex xs12 sm8>
+                          <items-combo-box
+                            v-model="author_pivot.author"
+                            v-bind:p-items="authors"
+                            item-text="name"
+                            label="Jméno autora"
+                            :multiple="false"
+                            :enable-custom="true"
+                            :disabled="model.has_anonymous_author"
+                          ></items-combo-box>
+                        </v-flex>
+                        <v-flex xs10 sm3>
+                          <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                          <v-select v-if="!is_arrangement_layout" :items="enums.authorship_type" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
+                          <v-select v-else :items="[{text: 'Aranžér', value:'GENERIC'}]" v-model="author_pivot.authorship_type" label="Typ autora" :disabled="model.has_anonymous_author"></v-select>
+                        </v-flex>
+                        <v-flex xs2 sm1>
+                          <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                          <v-btn icon @click="removeAuthor(i)" :disabled="model.has_anonymous_author" class="text-secondary"><i class="fas fa-trash"></i></v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-card-text>
 
-                  <v-card-actions class="p-0">
-                      <!-- <v-flex shrink mr-1>
-                        <v-btn
-                          :disabled="model.has_anonymous_author"
-                          color="info"
-                          outline
-                          @click="addEmptyAuthor()"
-                        >Přidat autora</v-btn>
-                      </v-flex> -->
-                      <v-flex grow mb-3>
-                         <v-checkbox
-                          :disabled="model.authors_pivot.filter((el) => el.author != null).length > 0"
-                          class="mt-1"
-                          v-model="model.has_anonymous_author"
-                          label="Píseň má anonymního autora"
-                          :hide-details="true"
-                        ></v-checkbox>
-                      </v-flex>
-                  </v-card-actions>
-                </v-card>
+                    <v-card-text class="p-0" v-if="model.authors_pivot.filter((el) => el.author != null).length === 0">
+                      <span v-if="!model.has_anonymous_author">
+                        Zatím k písni nikdo nepřiřadil autora (u písně je označení „autor<span v-if="!is_original"> překladu </span> neznámý“).
+                      </span>
+                      <span v-else>U písně je označení „anonymní autor“.</span>
+                    </v-card-text>
 
-                <!-- <h3>Autoři</h3>
+                    <v-card-actions class="p-0">
+                        <!-- <v-flex shrink mr-1>
+                          <v-btn
+                            :disabled="model.has_anonymous_author"
+                            color="info"
+                            outline
+                            @click="addEmptyAuthor()"
+                          >Přidat autora</v-btn>
+                        </v-flex> -->
+                        <v-flex grow mb-3>
+                          <v-checkbox
+                            :disabled="model.authors_pivot.filter((el) => el.author != null).length > 0"
+                            class="mt-1"
+                            v-model="model.has_anonymous_author"
+                            label="Píseň má anonymního autora"
+                            :hide-details="true"
+                          ></v-checkbox>
+                        </v-flex>
+                    </v-card-actions>
+                  </v-card>
 
-                <v-layout row wrap>
-                  <v-flex xs12 class="mb-5">
-                    <v-btn
-                      color="info"
-                      outline
-                      @click="addEmptyAuthor()"
-                    >Přidat autora</v-btn>
-                  </v-flex>
-                </v-layout> -->
+                  <!-- <h3>Autoři</h3>
 
-                <v-card v-if="model.song && model_database.song" class="mb-3 px-4">
-                  <v-card-title class="p-0"><h3>Skupina písní</h3></v-card-title>
+                  <v-layout row wrap>
+                    <v-flex xs12 class="mb-5">
+                      <v-btn
+                        color="info"
+                        outline
+                        @click="addEmptyAuthor()"
+                      >Přidat autora</v-btn>
+                    </v-flex>
+                  </v-layout> -->
 
-                  <v-card-text class="py-0 px-2">
-                    <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
-                  </v-card-text>
+                  <v-card v-if="model.song && model_database.song" class="mb-3 px-4">
+                    <v-card-title class="p-0"><h3>Skupina písní</h3></v-card-title>
 
-                  <v-card-actions class="px-0 py-3">
-                    <v-btn
-                      color="error"
-                      outline
-                      @click="resetGroup"
-                      v-if="model.song.song_lyrics.length > 1"
-                    >Odstranit píseň ze skupiny</v-btn>
-                    <select-song-group-dialog
-                      outline
-                      v-if="model_database.song.song_lyrics.length == 1 && model.song.song_lyrics.length == 1"
-                      v-on:submit="addToGroup"
-                    ></select-song-group-dialog>
-                  </v-card-actions>
-                </v-card>
+                    <v-card-text class="py-0 px-2">
+                      <song-lyrics-group v-model="model.song.song_lyrics" :edit-id="model.id"></song-lyrics-group>
+                    </v-card-text>
 
-                <v-card class="mb-3 px-4">
-                  <v-card-title class="p-0">
-                    <h3>Štítky</h3>
-                  </v-card-title>
+                    <v-card-actions class="px-0 py-3">
+                      <v-btn
+                        color="error"
+                        outline
+                        @click="resetGroup"
+                        v-if="model.song.song_lyrics.length > 1"
+                      >Odstranit píseň ze skupiny</v-btn>
+                      <select-song-group-dialog
+                        outline
+                        v-if="model_database.song.song_lyrics.length == 1 && model.song.song_lyrics.length == 1"
+                        v-on:submit="addToGroup"
+                      ></select-song-group-dialog>
+                    </v-card-actions>
+                  </v-card>
 
-                  <v-card-text class="py-0 px-2">
-                    <items-combo-box
-                      v-bind:p-items="tags_topic"
-                      v-model="model.tags_topic"
-                      label="Témata a motivy"
-                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                      create-label="Potvrďte enterem a vytvořte nový štítek"
-                      :multiple="true"
-                      :enable-custom="true"
-                    ></items-combo-box>
-                    <items-combo-box
-                      v-bind:p-items="tags_generic"
-                      v-model="model.tags_generic"
-                      label="K příležitostem"
-                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                      create-label="Potvrďte enterem a vytvořte nový štítek"
-                      :multiple="true"
-                      :enable-custom="true"
-                    ></items-combo-box>
-                    <items-combo-box
-                      v-bind:p-items="tags_sacred_occasion"
-                      v-model="model.tags_sacred_occasion"
-                      label="Svátosti a pobožnosti"
-                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                      create-label="Potvrďte enterem a vytvořte nový štítek"
-                      :multiple="true"
-                      :enable-custom="true"
-                    ></items-combo-box>
-                    <items-combo-box
-                      v-bind:p-items="tags_saints"
-                      v-model="model.tags_saints"
-                      label="Ke svatým"
-                      header-label="Vyberte část liturgie z nabídky"
-                      :multiple="true"
-                    ></items-combo-box>
-                    <items-combo-box
-                      v-if="!is_arrangement_layout"
-                      v-bind:p-items="tags_liturgy_part"
-                      v-model="model.tags_liturgy_part"
-                      label="Mše svatá"
-                      header-label="Vyberte část liturgie z nabídky"
-                      :multiple="true"
-                      :disabled="model.liturgy_approval_status == 1"
-                    ></items-combo-box>
-                    <p class="mt-0" v-if="model.liturgy_approval_status == 1">
-                      <i>lit. štítky nelze upravovat, když je písnička označená jako schválená ČBK pro liturgii (viz níže)</i>
-                    </p>
-                    <items-combo-box
-                      v-if="!is_arrangement_layout"
-                      v-bind:p-items="tags_liturgy_period"
-                      v-model="model.tags_liturgy_period"
-                      label="Liturgický rok"
-                      header-label="Vyberte část liturgie z nabídky"
-                      :multiple="true"
-                    ></items-combo-box>
+                  <v-card class="mb-3 px-4">
+                    <v-card-title class="p-0">
+                      <h3>Štítky</h3>
+                    </v-card-title>
 
-                    <items-combo-box
-                      v-if="!is_arrangement_layout"
-                      v-bind:p-items="tags_liturgy_day"
-                      v-model="model.tags_liturgy_day"
-                      label="Dny liturgického kalendáře (bez lit. cyklu)"
-                      header-label="Vyberte dny liturgického kalendáře"
-                      :multiple="true"
-                    ></items-combo-box>
+                    <v-card-text class="py-0 px-2">
+                      <items-combo-box
+                        v-bind:p-items="tags_topic"
+                        v-model="model.tags_topic"
+                        label="Témata a motivy"
+                        header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                        create-label="Potvrďte enterem a vytvořte nový štítek"
+                        :multiple="true"
+                        :enable-custom="true"
+                      ></items-combo-box>
+                      <items-combo-box
+                        v-bind:p-items="tags_generic"
+                        v-model="model.tags_generic"
+                        label="K příležitostem"
+                        header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                        create-label="Potvrďte enterem a vytvořte nový štítek"
+                        :multiple="true"
+                        :enable-custom="true"
+                      ></items-combo-box>
+                      <items-combo-box
+                        v-bind:p-items="tags_sacred_occasion"
+                        v-model="model.tags_sacred_occasion"
+                        label="Svátosti a pobožnosti"
+                        header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                        create-label="Potvrďte enterem a vytvořte nový štítek"
+                        :multiple="true"
+                        :enable-custom="true"
+                      ></items-combo-box>
+                      <items-combo-box
+                        v-bind:p-items="tags_saints"
+                        v-model="model.tags_saints"
+                        label="Ke svatým"
+                        header-label="Vyberte část liturgie z nabídky"
+                        :multiple="true"
+                      ></items-combo-box>
+                      <items-combo-box
+                        v-if="!is_arrangement_layout"
+                        v-bind:p-items="tags_liturgy_part"
+                        v-model="model.tags_liturgy_part"
+                        label="Mše svatá"
+                        header-label="Vyberte část liturgie z nabídky"
+                        :multiple="true"
+                        :disabled="model.liturgy_approval_status == 1"
+                      ></items-combo-box>
+                      <p class="mt-0" v-if="model.liturgy_approval_status == 1">
+                        <i>lit. štítky nelze upravovat, když je písnička označená jako schválená ČBK pro liturgii (viz níže)</i>
+                      </p>
+                      <items-combo-box
+                        v-if="!is_arrangement_layout"
+                        v-bind:p-items="tags_liturgy_period"
+                        v-model="model.tags_liturgy_period"
+                        label="Liturgický rok"
+                        header-label="Vyberte část liturgie z nabídky"
+                        :multiple="true"
+                      ></items-combo-box>
 
-                    <items-combo-box
-                      v-bind:p-items="tags_history_period"
-                      v-model="model.tags_history_period"
-                      label="Historické období"
-                      header-label="Vyberte štítek z nabídky nebo vytvořte nový"
-                      create-label="Potvrďte enterem a vytvořte nový štítek"
-                      :multiple="true"
-                      :enable-custom="false"
-                    ></items-combo-box>
-                    <items-combo-box
-                      v-bind:p-items="tags_musical_form"
-                      v-model="model.tags_musical_form"
-                      label="Hudební forma"
-                      header-label="Vyberte odpovídající hudební (liturgické) formy"
-                      :multiple="true"
-                      :enable-custom="false"
-                    ></items-combo-box>
-                  </v-card-text>
-                </v-card>
+                      <items-combo-box
+                        v-if="!is_arrangement_layout"
+                        v-bind:p-items="tags_liturgy_day"
+                        v-model="model.tags_liturgy_day"
+                        label="Dny liturgického kalendáře (bez lit. cyklu)"
+                        header-label="Vyberte dny liturgického kalendáře"
+                        :multiple="true"
+                      ></items-combo-box>
 
-                <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
-              </v-form>
-            </v-flex>
+                      <items-combo-box
+                        v-bind:p-items="tags_history_period"
+                        v-model="model.tags_history_period"
+                        label="Historické období"
+                        header-label="Vyberte štítek z nabídky nebo vytvořte nový"
+                        create-label="Potvrďte enterem a vytvořte nový štítek"
+                        :multiple="true"
+                        :enable-custom="false"
+                      ></items-combo-box>
+                      <items-combo-box
+                        v-bind:p-items="tags_musical_form"
+                        v-model="model.tags_musical_form"
+                        label="Hudební forma"
+                        header-label="Vyberte odpovídající hudební (liturgické) formy"
+                        :multiple="true"
+                        :enable-custom="false"
+                      ></items-combo-box>
+                    </v-card-text>
+                  </v-card>
 
-            <v-flex xs12 md6 class="edit-description pl-md-4">
-              <h5>Název (povinná položka)</h5>
-              <p>
-                Zadejte název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název).
-                <br>Může obsahovat název interpreta v závorkách, pokud existuje více písní se stejným názvem.
-                <br>Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
-              </p>
+                  <v-select :items="enums.liturgy_approval_status" v-model="model.liturgy_approval_status" label="Liturgické schválení" v-if="!is_arrangement_layout"></v-select>
+                </v-form>
+              </v-flex>
 
-              <h5 class="mt-4">Autoři</h5>
-              <p>
-                Po kliknutí do pole Jméno autora začněte zadávat autorovo jméno. Pokud se nenachází ve vyskakovací nabídce,
-                stačí napsat jeho celé jméno a stisknout Enter. Tak se přidá nový autor (zeleně označený).
-                Změna v databázi (tzn. samotné vytvoření autora) se provede až po uložení celé písně.
-              </p>
-              <h5 class="mt-4">Licence</h5>
-              <p>
-                Typ licence podle vzoru <a href="https://www.creativecommons.cz/licence-cc/varianty-licence/">Creative Commons</a>, případně proprietární smlouva.
-                Pole s licencí vyplňte, pokud máte k dispozici písemný souhlas s konkrétní podobou otevřené licence, popř. podepsanou smlouvu s Musica Sacra.
-              </p>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item :class="{'sealed' : model.is_sealed}">
-          <v-layout row wrap>
-            <v-flex xs12 md6>
-              <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!is_arrangement_layout"></v-select>
+              <v-flex xs12 md6 class="edit-description pl-md-4">
+                <h5>Název (povinná položka)</h5>
+                <p>
+                  Zadejte název písně ve zvoleném jazyce (anglická píseň tedy bude mít anglický název).
+                  <br>Může obsahovat název interpreta v závorkách, pokud existuje více písní se stejným názvem.
+                  <br>Konvence u anglických názvů je psaní všech slov kromě předložek velkými písmeny.
+                </p>
 
-              <!-- todo: re-enable when handleOpensongFile has been reimplemented to graphql -->
-              <!-- <a
-                id="file_select"
-                class="btn btn-primary"
-                v-on:click="$refs.fileinput.click()"
-              >Nahrát ze souboru OpenSong</a>
-              <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile"> -->
+                <h5 class="mt-4">Autoři</h5>
+                <p>
+                  Po kliknutí do pole Jméno autora začněte zadávat autorovo jméno. Pokud se nenachází ve vyskakovací nabídce,
+                  stačí napsat jeho celé jméno a stisknout Enter. Tak se přidá nový autor (zeleně označený).
+                  Změna v databázi (tzn. samotné vytvoření autora) se provede až po uložení celé písně.
+                </p>
+                <h5 class="mt-4">Licence</h5>
+                <p>
+                  Typ licence podle vzoru <a href="https://www.creativecommons.cz/licence-cc/varianty-licence/">Creative Commons</a>, případně proprietární smlouva.
+                  Pole s licencí vyplňte, pokud máte k dispozici písemný souhlas s konkrétní podobou otevřené licence, popř. podepsanou smlouvu s Musica Sacra.
+                </p>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
+          <v-tab-item :class="{'sealed' : model.is_sealed}">
+            <v-layout row wrap>
+              <v-flex xs12 md6>
+                <v-select :items="enums.lang" v-model="model.lang" label="Jazyk" v-if="!is_arrangement_layout"></v-select>
 
-              <v-textarea
-                class="auto-grow-alt"
-                outline
-                name="input-7-4"
-                label="Text"
-                ref="textarea"
-                v-model="model.lyrics"
-              ></v-textarea>
-              <number-input
-                label="Kapodastr"
-                v-model="model.capo"
-                vv-name="input.capo"
-                :min-value="0"
-                :max-value="11"
-                >
-              </number-input>
-              <p>
-                <ul>
-                  <li>text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E]</b>, <b>[C#m]</b> nebo <b>[Cism]</b>, <b>[Fmaj7]</b> apod.</li>
-                  <li>akordy pište českými značkami – H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b></li>
-                  <li>akordy v pozdějších slokách nepište přímo – můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
-                  <li>sloky označujte číslicí, tečkou a mezerou: <b>1. Text první sloky</b></li>
-                  <li>refrén velkým R, dvojtečkou a mezerou – <b>R: Text refrénu</b> (při opakování už nepsat znovu text)</li>
-                  <li>pokud je naprosto zřejmé, že na dané místo patří refrén (např. se opakuje po každé sloce písně), umisťuje se R: do závorky – <b>(R:)</b></li>
-                  <li>R: nebo (R:) je nezbytné psát všude, kam v písni refrén patří (výrazně tak usnadníme práci hudebníkům)</li>
-                  <li>bridge velkým B, dvojtečkou a mezerou – <b>B: Text bridge</b></li>
-                  <li>coda velkým C, dvojtečkou a mezerou – <b>C: Text cody</b></li>
-                  <li>předehra se značí pomocí zavináče – <b>@předehra: [Dm][C][F][C][B]</b></li>
-                  <li>podobně se značí mezihra – <b>@mezihra: [Dm][C][F][C][B]</b></li>
-                </ul>
-              </p>
-            </v-flex>
-            <v-flex xs12 md6>
-              <!-- externals view -->
-              <template v-if="thumbnailables">
+                <!-- todo: re-enable when handleOpensongFile has been reimplemented to graphql -->
+                <!-- <a
+                  id="file_select"
+                  class="btn btn-primary"
+                  v-on:click="$refs.fileinput.click()"
+                >Nahrát ze souboru OpenSong</a>
+                <input type="file" class="d-none" ref="fileinput" v-on:change="handleOpensongFile"> -->
+
+                <v-textarea
+                  class="auto-grow-alt"
+                  outline
+                  name="input-7-4"
+                  label="Text"
+                  ref="textarea"
+                  v-model="model.lyrics"
+                ></v-textarea>
+                <number-input
+                  label="Kapodastr"
+                  v-model="model.capo"
+                  vv-name="input.capo"
+                  :min-value="0"
+                  :max-value="11"
+                  >
+                </number-input>
+                <p>
+                  <ul>
+                    <li>text písně je možné zadávat i s akordy v tzv. formátu ChordPro. Tedy např. <b>[E]</b>, <b>[C#m]</b> nebo <b>[Cism]</b>, <b>[Fmaj7]</b> apod.</li>
+                    <li>akordy pište českými značkami – H dur: <b>[H]</b>, B dur: <b>[B]</b>, B moll: <b>[Bm]</b></li>
+                    <li>akordy v pozdějších slokách nepište přímo – můžete je označovat zástupným znakem <b>[%]</b>, nakopírují se automaticky z první sloky</li>
+                    <li>sloky označujte číslicí, tečkou a mezerou: <b>1. Text první sloky</b></li>
+                    <li>refrén velkým R, dvojtečkou a mezerou – <b>R: Text refrénu</b> (při opakování už nepsat znovu text)</li>
+                    <li>pokud je naprosto zřejmé, že na dané místo patří refrén (např. se opakuje po každé sloce písně), umisťuje se R: do závorky – <b>(R:)</b></li>
+                    <li>R: nebo (R:) je nezbytné psát všude, kam v písni refrén patří (výrazně tak usnadníme práci hudebníkům)</li>
+                    <li>bridge velkým B, dvojtečkou a mezerou – <b>B: Text bridge</b></li>
+                    <li>coda velkým C, dvojtečkou a mezerou – <b>C: Text cody</b></li>
+                    <li>předehra se značí pomocí zavináče – <b>@předehra: [Dm][C][F][C][B]</b></li>
+                    <li>podobně se značí mezihra – <b>@mezihra: [Dm][C][F][C][B]</b></li>
+                  </ul>
+                </p>
+              </v-flex>
+              <v-flex xs12 md6>
+                <!-- externals view -->
+                <template v-if="thumbnailables">
+                  <v-select
+                    :items="thumbnailables"
+                    return-object
+                    item-text="url"
+                    label="Náhled not (volba materiálu)"
+                    v-model="selected_thumbnail_external"
+                  ></v-select>
+
+                  <external-component
+                    v-if="selected_thumbnail_external"
+                    :external="selected_thumbnail_external"
+                    height="55vh"
+                  ></external-component>
+
+                  <!-- <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img> -->
+                  <!-- <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe> -->
+                </template>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
+          <v-tab-item :class="{'sealed' : model.is_sealed}">
+            <v-layout row wrap mb-4 v-if="model_database">
+              <v-flex xs12>
+                <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
+
+                <h4 v-if="externals_recordings.length">Nahrávky</h4>
+                <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+                <h4 v-if="externals_scores.length">Noty</h4>
+                <ExternalListItem v-for="ext in externals_scores" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+                <h4 v-if="externals_others.length">Ostatní materiály</h4>
+                <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
+          <v-tab-item :class="{'sealed' : model.is_sealed}">
+            <v-layout row wrap>
+              <v-flex xs12>
+                <h4 v-if="(model.songbook_records || []).length">Přiřazené zpěvníky</h4>
+              </v-flex>
+
+            </v-layout>
+
+            <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
+              <v-flex xs4>
                 <v-select
-                  :items="thumbnailables"
+                  v-model="record.songbook"
+                  :items="[...songbooks].sort((one, two) => one.name.localeCompare(two.name))"
+                  item-text="name"
                   return-object
-                  item-text="url"
-                  label="Náhled not (volba materiálu)"
-                  v-model="selected_thumbnail_external"
+                  label="Název zpěvníku"
                 ></v-select>
+              </v-flex>
+              <v-flex xs2>
+                <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
+                <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn>
+              </v-flex>
+            </v-layout>
 
-                <external-component
-                  v-if="selected_thumbnail_external"
-                  :external="selected_thumbnail_external"
-                  height="55vh"
-                ></external-component>
+            <v-layout row wrap>
+              <v-flex xs12 class="mb-5">
+                <v-btn
+                  color="info"
+                  outline
+                  @click="addSongbookRecord()"
+                >Přidat nový záznam ve zpěvníku</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
+          <v-tab-item :class="{'sealed' : model.is_sealed}">
+            <v-layout row wrap class="pt-2">
+              <v-flex xs12 md6 class="pr-2">
+                <v-textarea
+                  class="auto-grow-alt"
+                  outline
+                  name="input-bible"
+                  label="Biblické reference (v běžném formátu)"
+                  ref="textarea-bible"
+                  v-model="model.bible_refs_src"
+                ></v-textarea>
+              </v-flex>
+              <v-flex xs12 md6>
+                <h4 class="mb-0">Strojově interpretované reference:</h4>
+                <p>
+                  – jednotný formát, slouží pro ověření správného zadání referencí<br/>
+                  – klikem na odkaz se otevře bibleserver.com s daným úryvkem
+                </p>
+                <div style="font-size: 1.3em">
+                  <span v-for="(reference, i) in bible_refs_czech" :key="i">
+                    <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
+                  </span>
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
+          <v-tab-item :class="{'sealed' : model.is_sealed}">
+            <v-layout row wrap class="pt-2">
+              <v-flex xs12 md6>
+                <v-select :items="enums.lilypond_key_major" v-model="model.lilypond_key_major" label="Předznamenání"></v-select>
 
-                <!-- <v-img v-bind:src="selected_thumbnail_url" class="grey lighten-2"></v-img> -->
-                <!-- <iframe :src="selected_thumbnail_url" frameborder="0" width="100%" height="500"></iframe> -->
-              </template>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item :class="{'sealed' : model.is_sealed}">
-          <v-layout row wrap mb-4 v-if="model_database">
-            <v-flex xs12>
-              <CreateExternal :song-lyric-id="Number(model.id)" v-on:create="onExternalCreated"/>
+                <v-btn :disabled="model && !!(model.lilypond)" @click="model.lilypond = lilypond_template">Vložit základní Lilypond vzor</v-btn>
 
-              <h4 v-if="externals_recordings.length">Nahrávky</h4>
-              <ExternalListItem v-for="ext in externals_recordings" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4 v-if="externals_scores.length">Noty</h4>
-              <ExternalListItem v-for="ext in externals_scores" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-              <h4 v-if="externals_others.length">Ostatní materiály</h4>
-              <ExternalListItem v-for="ext in externals_others" :key="ext.id" :external="ext" @delete="onExternalDeleted" @update="id => goToAdminPage('external/' + id + '/edit')"/>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item :class="{'sealed' : model.is_sealed}">
-          <v-layout row wrap>
-            <v-flex xs12>
-              <h4 v-if="(model.songbook_records || []).length">Přiřazené zpěvníky</h4>
-            </v-flex>
+                <v-textarea
+                  class="auto-grow-alt"
+                  outline
+                  name="input-7-4"
+                  label="Notový zápis ve formátu Lilypond"
+                  ref="textarea"
+                  v-model="model.lilypond"
+                  v-on:keydown.tab.prevent="preventTextareaTab($event)"
+                  style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
+                ></v-textarea>
 
-          </v-layout>
+                <div class="mb-3">
+                  <a href="#5" @click="downloadLilypondSrc">Stáhnout finální lilypond</a>
+                </div>
+              </v-flex>
+              <v-flex xs12 md6>
+                  <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
+                  <div v-else>Náhled lilypondu není dostupný</div>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
 
-          <v-layout row wrap v-for="(record, i) in model.songbook_records || []" :key="i">
-            <v-flex xs4>
-              <v-select
-                v-model="record.songbook"
-                :items="[...songbooks].sort((one, two) => one.name.localeCompare(two.name))"
-                item-text="name"
-                return-object
-                label="Název zpěvníku"
-              ></v-select>
-            </v-flex>
-            <v-flex xs2>
-              <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
-            </v-flex>
-            <v-flex xs2>
-              <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
-              <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn>
-            </v-flex>
-          </v-layout>
+          <v-tab-item>
+            <LilypondPartsTab v-model="model.lilypond_parts_sheet_music" :is-displayed="active === 6"/>
+          </v-tab-item>
+          <v-tab-item v-if="!is_arrangement_layout && model_database">
+            <v-layout row wrap mb-4>
+              <v-flex xs12>
+                <h4 v-if="[...model_database.arrangements, ...created_arrangements].length">Přidružené aranže</h4>
 
-          <v-layout row wrap>
-            <v-flex xs12 class="mb-5">
-              <v-btn
-                color="info"
-                outline
-                @click="addSongbookRecord()"
-              >Přidat nový záznam ve zpěvníku</v-btn>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item :class="{'sealed' : model.is_sealed}">
-          <v-layout row wrap class="pt-2">
-            <v-flex xs12 md6 class="pr-2">
-              <v-textarea
-                class="auto-grow-alt"
-                outline
-                name="input-bible"
-                label="Biblické reference (v běžném formátu)"
-                ref="textarea-bible"
-                v-model="model.bible_refs_src"
-              ></v-textarea>
-            </v-flex>
-            <v-flex xs12 md6>
-              <h4 class="mb-0">Strojově interpretované reference:</h4>
-              <p>
-                – jednotný formát, slouží pro ověření správného zadání referencí<br/>
-                – klikem na odkaz se otevře bibleserver.com s daným úryvkem
-              </p>
-              <div style="font-size: 1.3em">
-                <span v-for="(reference, i) in bible_refs_czech" :key="i">
-                  <a :href="`https://www.bibleserver.com/CEP/${reference}`" target="_blank">{{ reference }}</a><br/>
-                </span>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-        <v-tab-item :class="{'sealed' : model.is_sealed}">
-          <v-layout row wrap class="pt-2">
-            <v-flex xs12 md6>
-              <v-select :items="enums.lilypond_key_major" v-model="model.lilypond_key_major" label="Předznamenání"></v-select>
-
-              <v-btn :disabled="model && !!(model.lilypond)" @click="model.lilypond = lilypond_template">Vložit základní Lilypond vzor</v-btn>
-
-              <v-textarea
-                class="auto-grow-alt"
-                outline
-                name="input-7-4"
-                label="Notový zápis ve formátu Lilypond"
-                ref="textarea"
-                v-model="model.lilypond"
-                v-on:keydown.tab.prevent="preventTextareaTab($event)"
-                style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
-              ></v-textarea>
-
-              <div class="mb-3">
-                <a :href="lilypond_src_download_url" target="_blank">Stáhnout finální lilypond</a>
-              </div>
-            </v-flex>
-            <v-flex xs12 md6>
-                <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
-                <div v-else>Náhled lilypondu není dostupný</div>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-
-        <v-tab-item>
-          <LilypondPartsTab v-model="model.lilypond_parts_sheet_music"/>
-        </v-tab-item>
-        <v-tab-item v-if="!is_arrangement_layout && model_database">
-          <v-layout row wrap mb-4>
-            <v-flex xs12>
-              <h4 v-if="[...model_database.arrangements, ...created_arrangements].length">Přidružené aranže</h4>
-
-              <v-btn
-                v-for="arrangement in [...model_database.arrangements, ...created_arrangements]"
-                v-bind:key="arrangement.id"
-                class="text-none"
-                :href="'/admin/song/' + arrangement.id + '/edit'"
-                @click.prevent="goToAdminPage('song/' + arrangement.id + '/edit')"
-              >{{ arrangement.name }}
-              <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
-              </v-btn>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs4>
-              <v-text-field label="Název nové aranže" v-model="new_arrangement_name"></v-text-field>
-            </v-flex>
-            <v-flex xs4>
-              <v-btn
-                color="info"
-                outline
-                @click="createNewArrangement()"
-                :disabled="new_arrangement_name.length == 0"
-              >Přidat novou aranž písně</v-btn>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
+                <v-btn
+                  v-for="arrangement in [...model_database.arrangements, ...created_arrangements]"
+                  v-bind:key="arrangement.id"
+                  class="text-none"
+                  :href="'/admin/song/' + arrangement.id + '/edit'"
+                  @click.prevent="goToAdminPage('song/' + arrangement.id + '/edit')"
+                >{{ arrangement.name }}
+                <span v-if="arrangement.authors && arrangement.authors.length">&nbsp;(autoři: {{ arrangement.authors.map(a => a.name).join(', ') }})</span>
+                </v-btn>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs4>
+                <v-text-field label="Název nové aranže" v-model="new_arrangement_name"></v-text-field>
+              </v-flex>
+              <v-flex xs4>
+                <v-btn
+                  color="info"
+                  outline
+                  @click="createNewArrangement()"
+                  :disabled="new_arrangement_name.length == 0"
+                >Přidat novou aranž písně</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-tab-item>
+        </v-tabs-items>
       </v-tabs>
-      <div class="position-sticky fixed-bottom body-bg mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2">
+      <div class="position-sticky fixed-bottom body-bg mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2 max-width: 90vw;">
         <v-tooltip top>
             <template v-slot:activator="{ on }">
                 <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on"><i class="fas fa-save mr-2"></i> Uložit</v-btn>
@@ -822,7 +825,6 @@ export default {
             var svgelem = this.$refs.lilypond_src_div.childNodes[0];
             var bbox = svgelem.getBBox();
             if (bbox && bbox.width && bbox.height) {
-              console.log('cropping the svg')
 
               svgelem.setAttribute('viewBox', [bbox.x, bbox.y, Math.max(60, bbox.width), bbox.height].join(" "));
               svgelem.removeAttribute('width');
@@ -897,16 +899,6 @@ export default {
     },
     externals_scores(){
       return [...this.model_database.externals, ...this.created_externals].filter(ext => ['SCORE'].includes(ext.content_type));
-    },
-
-    lilypond_src_download_url() {
-      if (this.model && this.model_database) {
-        const fileName = this.model_database.public_route.split('/')[3];
-  
-        return `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
-      }
-
-      return '';
     },
   },
 
@@ -998,6 +990,13 @@ export default {
       event.target.value = this.model.lilypond // required to make the cursor stay in place.
       event.target.selectionEnd = event.target.selectionStart = originalSelectionStart + 1
     },
+
+    downloadLilypondSrc() {
+      const fileName = this.model_database.public_route.split('/')[3];
+      const url = `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
+
+      window.open(url, '_blank');
+    },   
 
     // todo: rewrite from jquery to graphql
 

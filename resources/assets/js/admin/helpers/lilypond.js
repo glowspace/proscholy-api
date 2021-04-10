@@ -63,7 +63,7 @@ const FETCH_LILYPOND_TOTAL = gql`
 
 const templates = {
     parts_basic: `solo = \\relative {
-    c'4
+\tc'4
 }
 
 soloText = \\lyricmode {
@@ -79,7 +79,7 @@ akordy = \\chordmode {
 \tc'4 e4. g8
 }
 
-soloDruhy = \\relative { f' b c }
+soloMale = \\relative { f' b <c e> }
 
 soloText = \\lyricmode {
 \t\\set stanza = #"1."

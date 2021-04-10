@@ -15,6 +15,7 @@ const lilypond_parts_sheet_music_fragment = gql`
             two_voices_per_staff
             merge_rests
             version
+            note_splitting
         }
     }
 `;

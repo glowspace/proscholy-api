@@ -19,8 +19,9 @@ production-deploy:
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan lighthouse:clear-cache
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan lighthouse:cache
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan queue:restart
-
 	docker-compose -f docker-compose.prod.yml exec -T web curl nginx/reset-cache
+	
+	docker-compose -f docker-compose.prod.yml exec -T web php artisan queue:restart
 
 staging-deploy:
 	git checkout develop -f

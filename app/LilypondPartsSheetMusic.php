@@ -11,11 +11,12 @@ class LilypondPartsSheetMusic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lilypond_parts', 'global_config', 'global_src'];
+    protected $fillable = ['lilypond_parts', 'global_config', 'global_src', 'is_empty'];
 
     protected $casts = [
         'lilypond_parts' => 'array',
-        'global_config' => 'array'
+        'global_config' => 'array',
+        'is_empty' => 'boolean'
     ];
 
     public function song_lyric(): BelongsTo
@@ -26,5 +27,25 @@ class LilypondPartsSheetMusic extends Model
     public function rendered_scores(): HasMany
     {
         return $this->hasMany(RenderedScore::class, 'lilypond_parts_sheet_music_id');
+    }
+
+    public function scopeRenderable($query)
+    {
+        return $query->where('is_empty', false);
+    }
+
+    public function getSrcIsEmpty()
+    {
+        $src = '';
+
+        logger($this->lilypond_parts);
+
+        foreach ($this->lilypond_parts as $part) {
+            if (isset($part['src'])) {
+                $src .= $part['src'];
+            }
+        }
+
+        return empty(trim($src));
     }
 }

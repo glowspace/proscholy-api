@@ -34,6 +34,7 @@ class DownloadController extends Controller
         return response()->file($path);
     }
 
+    // todo: refactor this to graphql
     public function downloadLilypondSource(Request $request)
     {
         $filename = $request->get('filename');
@@ -50,6 +51,25 @@ class DownloadController extends Controller
         return response()->streamDownload(function () use ($src) {
             echo $src;
         }, "$filename.ly", $headers);
+    }
+
+    // todo: refactor this to graphql
+    public function downloadLilypondPartsSource(Request $request)
+    {
+        $parts = json_decode($request->get('lilypond_parts'), true);
+        $global_src = $request->get('global_src') ?? '';
+        $global_config = json_decode($request->get('global_config'), true);
+
+        $ly_s = new LilypondService();
+        $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $global_config);
+
+        $headers = [
+            'Content-Type' => '	application/zip'
+        ];
+
+        return response()->streamDownload(function () use ($src) {
+            echo stream_get_contents($src->getZippedSrcStream());
+        }, "score.zip", $headers);
     }
 
     public function proxyExternal(External $external)
