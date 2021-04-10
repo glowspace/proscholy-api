@@ -1,7 +1,7 @@
 type LilypondPartsSheetMusic {
     lilypond_parts: [LilypondPart]
     global_src: String
-    global_config: LilypondGlobalConfig
+    score_config: LilypondScoreConfig
     
     song_lyric: SongLyric
 }
@@ -16,7 +16,7 @@ type LilypondPart {
     break_before: Boolean
 }
 
-type LilypondGlobalConfig {
+type LilypondScoreConfig {
     two_voices_per_staff: Boolean
     # global_transpose_relative_c: String
     # force_part_breaks: Boolean
@@ -31,7 +31,7 @@ type LilypondGlobalConfig {
 input LilypondPartsSheetMusicInput {
     lilypond_parts: [LilypondPartInput]
     global_src: String
-    global_config: LilypondGlobalConfigInput
+    render_config: LilypondRenderConfigInput
 }
 
 input LilypondPartInput {
@@ -45,7 +45,7 @@ input LilypondPartInput {
     part_transpose: String
 }
 
-input LilypondGlobalConfigInput {
+input LilypondRenderConfigInput {
     two_voices_per_staff: Boolean
     global_transpose_relative_c: String
     force_part_breaks: Boolean

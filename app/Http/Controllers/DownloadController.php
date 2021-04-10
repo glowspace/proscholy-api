@@ -58,10 +58,10 @@ class DownloadController extends Controller
     {
         $parts = json_decode($request->get('lilypond_parts'), true);
         $global_src = $request->get('global_src') ?? '';
-        $global_config = json_decode($request->get('global_config'), true);
+        $score_config = json_decode($request->get('score_config'), true);
 
         $ly_s = new LilypondService();
-        $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $global_config);
+        $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $score_config);
 
         $headers = [
             'Content-Type' => '	application/zip'

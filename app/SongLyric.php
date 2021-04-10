@@ -413,7 +413,7 @@ class SongLyric extends Model
                 'break_before' => false
             ]];
 
-            $lp_sheet_music->global_config = app(LilypondService::class)->getDefaultGlobalConfigData(false);
+            $lp_sheet_music->score_config = app(LilypondService::class)->getDefaultScoreConfigData(false);
             $lp_sheet_music->global_src = '';
         });
     }

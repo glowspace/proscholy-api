@@ -18,8 +18,8 @@
                     time_signature: timeSignature
                 },
                 global_src: globalSrc,
-                global_config: {
-                    ...globalConfig,
+                render_config: {
+                    ...scoreConfig,
                     hide_voices: render_configs[selected_render_config]
                 }
             }"
@@ -68,7 +68,7 @@ export default {
         'key-major',
         'time-signature',
         'global-src',
-        'global-config',
+        'score-config',
         'should-render'
     ],
 

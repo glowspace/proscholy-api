@@ -21,53 +21,53 @@ class LilypondPartsTemplateService
     // todo: deprecate
     public function makeTotalSvgMobile(LilypondPartsSheetMusic $lp_sheet_music)
     {
-        $global_config = array_merge($lp_sheet_music->global_config, [
+        $score_config = array_merge($lp_sheet_music->score_config, [
             'hide_voices' => ['sopran', 'alt', 'tenor', 'bas', 'zeny', 'muzi']
         ]);
 
         return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate(
             $lp_sheet_music->lilypond_parts,
             $lp_sheet_music->global_src ?? '',
-            $global_config
+            $score_config
         ), true);
     }
 
-    public function makePartSvgFast($part, $global_src, $global_config_input)
+    public function makePartSvgFast($part, $global_src, $score_config_input)
     {
-        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src, $global_config_input), false);
+        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src, $score_config_input), false);
     }
 
-    public function makeTotalSvgFast($parts, $global_src, $global_config_input)
+    public function makeTotalSvgFast($parts, $global_src, $score_config_input)
     {
-        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $global_config_input), false);
+        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $score_config_input), false);
     }
 
-    public function makeLilypondPartsTemplate($parts, $global_src, $global_config_input = []): LilypondPartsTemplate
+    public function makeLilypondPartsTemplate($parts, $global_src, $score_config_input = []): LilypondPartsTemplate
     {
-        $global_config_input_with_defaults = array_merge(
-            $this->getDefaultGlobalConfigData(true),
-            $global_config_input
+        $score_config_input_with_defaults = array_merge(
+            $this->getDefaultScoreConfigData(true),
+            $score_config_input
         );
 
-        $global_config = new LilypondPartsGlobalConfig(
-            $global_config_input_with_defaults['version'],
-            $global_config_input_with_defaults['two_voices_per_staff'],
-            $global_config_input_with_defaults['global_transpose_relative_c'],
-            $global_config_input_with_defaults['merge_rests'],
-            $global_config_input_with_defaults['hide_bar_numbers'],
-            $global_config_input_with_defaults['force_part_breaks'],
-            $global_config_input_with_defaults['note_splitting']
+        $score_config = new LilypondPartsGlobalConfig(
+            $score_config_input_with_defaults['version'],
+            $score_config_input_with_defaults['two_voices_per_staff'],
+            $score_config_input_with_defaults['global_transpose_relative_c'],
+            $score_config_input_with_defaults['merge_rests'],
+            $score_config_input_with_defaults['hide_bar_numbers'],
+            $score_config_input_with_defaults['force_part_breaks'],
+            $score_config_input_with_defaults['note_splitting']
         );
 
-        if (count($global_config_input_with_defaults['hide_voices']) > 0) {
-            $global_config->setVoicesHidden($global_config_input_with_defaults['hide_voices']);
+        if (count($score_config_input_with_defaults['hide_voices']) > 0) {
+            $score_config->setVoicesHidden($score_config_input_with_defaults['hide_voices']);
         }
 
-        if (isset($global_config_input_with_defaults['paper_width_mm'])) {
-            $global_config->setCustomPaper($global_config_input_with_defaults['paper_width_mm']);
+        if (isset($score_config_input_with_defaults['paper_width_mm'])) {
+            $score_config->setCustomPaper($score_config_input_with_defaults['paper_width_mm']);
         }
 
-        $src = new LilypondPartsTemplate($global_src, $global_config);
+        $src = new LilypondPartsTemplate($global_src, $score_config);
 
         foreach ($parts as $part) {
             $key_major = $part['key_major'] ?? 'c';
@@ -88,7 +88,7 @@ class LilypondPartsTemplateService
         return $src;
     }
 
-    public function getDefaultGlobalConfigData(bool $include_render_config)
+    public function getDefaultScoreConfigData(bool $include_render_config)
     {
         $arr = [
             'version' => '2.22.0',

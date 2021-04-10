@@ -5,7 +5,7 @@
                 <v-flex xs12 md3>
                     <v-select
                         :items="['2.22.0']"
-                        v-model="lilypondPartsSheetMusic.global_config.version"
+                        v-model="lilypondPartsSheetMusic.score_config.version"
                         label="Verze Lilypond kódu"
                     ></v-select>
 
@@ -31,7 +31,7 @@
                             <v-checkbox
                                 class="mt-0"
                                 v-model="
-                                    lilypondPartsSheetMusic.global_config
+                                    lilypondPartsSheetMusic.score_config
                                         .two_voices_per_staff
                                 "
                                 label="Sloučit dva hlasy do jedné osnovy (soprán + alt, tenor + bas)"
@@ -40,11 +40,11 @@
                             <v-checkbox
                                 class="mt-0"
                                 v-model="
-                                    lilypondPartsSheetMusic.global_config
+                                    lilypondPartsSheetMusic.score_config
                                         .merge_rests
                                 "
                                 :disabled="
-                                    !lilypondPartsSheetMusic.global_config
+                                    !lilypondPartsSheetMusic.score_config
                                         .two_voices_per_staff
                                 "
                                 label="Sloučit pomlky u dvouhlasných osnov"
@@ -53,7 +53,7 @@
                             <v-checkbox
                                 class="mt-0"
                                 v-model="
-                                    lilypondPartsSheetMusic.global_config
+                                    lilypondPartsSheetMusic.score_config
                                         .note_splitting
                                 "
                                 label="Automaticky opravit přetékání taktů"
@@ -187,7 +187,7 @@
                         ? lilypondPartsSheetMusic.global_src
                         : ''
                 "
-                :global-config="lilypondPartsSheetMusic.global_config"
+                :score-config="lilypondPartsSheetMusic.score_config"
                 :should-render="isDisplayed"
             ></LilypondPartRender>
 
@@ -281,7 +281,7 @@ export default {
             lilypondPartsSheetMusic: {
                 lilypond_parts: [],
                 global_src: '',
-                global_config: {}
+                score_config: {}
             },
 
             show_global_src_input: false,
@@ -382,7 +382,7 @@ export default {
             Vue.delete(this.lilypondPartsSheetMusic.lilypond_parts, i);
         },
 
-        renderFinal(additional_global_config = {}) {
+        renderFinal(add_render_config = {}) {
             this.global_svg_loading = true;
 
             const combined_parts =
@@ -399,9 +399,9 @@ export default {
                             global_src: this.show_global_src_input
                                 ? this.lilypondPartsSheetMusic.global_src
                                 : '',
-                            global_config: {
-                                ...this.lilypondPartsSheetMusic.global_config,
-                                ...additional_global_config,
+                            render_config: {
+                                ...this.lilypondPartsSheetMusic.score_config,
+                                ...add_render_config,
                                 global_transpose_relative_c: this
                                     .global_transpose_relative_c
                             }
@@ -458,11 +458,11 @@ export default {
             const global_src = encodeURIComponent(
                 this.lilypondPartsSheetMusic.global_src
             );
-            const global_config = encodeURIComponent(
-                JSON.stringify(this.lilypondPartsSheetMusic.global_config)
+            const score_config = encodeURIComponent(
+                JSON.stringify(this.lilypondPartsSheetMusic.score_config)
             );
 
-            return `/be-api/lilypond-download-parts-source?lilypond_parts=${parts_data}&global_src=${global_src}&global_config=${global_config}`;
+            return `/be-api/lilypond-download-parts-source?lilypond_parts=${parts_data}&global_src=${global_src}&score_config=${score_config}`;
         },
 
         downloadLilypondSource() {

@@ -90,7 +90,7 @@ class SongLyricService
         // note: the input is validated by graphql types
         $lilypond_parts = $lilypond_parts_sheet_music['lilypond_parts'];
         $global_src = $lilypond_parts_sheet_music['global_src'];
-        $global_config = $lilypond_parts_sheet_music['global_config'];
+        $score_config = $lilypond_parts_sheet_music['score_config'];
 
         $wasEmpty = !$song_lyric->lilypond_parts_sheet_music()->exists();
 
@@ -100,14 +100,14 @@ class SongLyricService
             $lp_parts_sm = new LilypondPartsSheetMusic([
                 'lilypond_parts' => $lilypond_parts,
                 'global_src' => $global_src,
-                'global_config' => $global_config,
+                'score_config' => $score_config,
             ]);
             $song_lyric->lilypond_parts_sheet_music()->save($lp_parts_sm);
         } else {
             $song_lyric->lilypond_parts_sheet_music()->update([
                 'lilypond_parts' => $lilypond_parts,
                 'global_src' => $global_src,
-                'global_config' => $global_config
+                'score_config' => $score_config
             ]);
             $lp_parts_sm = $song_lyric->lilypond_parts_sheet_music->fresh();
         }
@@ -142,7 +142,7 @@ class SongLyricService
         $old_lilypond_updated = (string)$song_lyric->lilypond_src != $lilypond_input || $lilypond_key_major != $song_lyric->lilypond_key_major;
         $new_lilypond_updated =
             $song_lyric->lilypond_parts_sheet_music->lilypond_parts != $lilypond_parts_sheet_music['lilypond_parts'] ||
-            $song_lyric->lilypond_parts_sheet_music->global_config != $lilypond_parts_sheet_music['global_config'] ||
+            $song_lyric->lilypond_parts_sheet_music->score_config != $lilypond_parts_sheet_music['score_config'] ||
             $song_lyric->lilypond_parts_sheet_music->global_src != $lilypond_parts_sheet_music['global_src'];
 
         logger("Old lilypond updated: $old_lilypond_updated");
