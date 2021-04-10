@@ -84,6 +84,7 @@
                         'global_src'
                     )
                 "
+                browser-autocomplete="off"
             ></v-textarea>
         </v-flex>
 
@@ -172,6 +173,7 @@
                     v-on:keydown.tab.prevent="
                         preventTextareaTab($event, part, 'src')
                     "
+                    browser-autocomplete="off"
                 ></v-textarea>
             </v-flex>
 
