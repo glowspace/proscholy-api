@@ -12,7 +12,7 @@ class LilypondPreviewTotal
         $svg = $lpt_service->makeTotalSvgFast(
             $args['lilypond_total']['lilypond_parts'],
             $args['lilypond_total']['global_src'] ?? '',
-            $args['lilypond_total']['score_config'] ?? []
+            $args['lilypond_total']['render_config'] ?? []
         );
 
         return compact('svg');
