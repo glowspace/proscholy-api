@@ -120,6 +120,8 @@ class SongLyricService
         ]);
 
         $song_lyric->touch();
+
+        return $lp_parts_sm;
     }
 
     public function handleLilypondSvg($song_lyric, $lilypond_svg)
@@ -151,7 +153,7 @@ class SongLyricService
         logger("New lilypond updated: $new_lilypond_updated");
 
         $this->handleLilypondSrc($song_lyric, $lilypond_input);
-        $this->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
+        $lp_parts_sm = $this->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
 
         // this task then calls handleLilypondSvg in this class
         // todo: uncomment back 
@@ -165,12 +167,23 @@ class SongLyricService
             logger("Song lyric LP Parts Sheet music updated, doing the render");
 
             $configs = [
+                // default solo
                 [
                     'hide_voices' => ['muzi', 'tenor', 'bas', 'zeny', 'sopran', 'alt']
+                ],
+                [
+                    'hide_voices' => ['zeny', 'sopran', 'alt']
+                ],
+                [
+                    'hide_voices' => ['muzi', 'tenor', 'bas']
+                ],
+                [
+                    'hide_voices' => [],
+                    'paper_width_mm' => 200
                 ]
             ];
 
-            $this->lpsm_service->renderLilypondPartsSheetMusic($song_lyric->lilypond_parts_sheet_music, $configs);
+            $this->lpsm_service->renderLilypondPartsSheetMusic($lp_parts_sm, $configs);
         }
 
         // with that, the lilypond is updated
