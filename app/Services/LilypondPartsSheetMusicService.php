@@ -118,12 +118,9 @@ class LilypondPartsSheetMusicService
 
     public function renderLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm)
     {
-        if (!$lpsm->renderable) {
-            logger("LilypondParts ID $lpsm->id is not renderable, deleting all its RenderedScores");
-            foreach ($lpsm->rendered_scores() as $score) {
-                $this->rs_service->destroyRenderedScore($score);
-            }
-            return;
+        logger("Deleting old RenderedScores for LP sheet music $lpsm->id");
+        foreach ($lpsm->rendered_scores as $score) {
+            $this->rs_service->destroyRenderedScore($score);
         }
 
         foreach ($this->getLilypondPartsRenderData($lpsm) as $data) {

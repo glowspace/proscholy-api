@@ -64,11 +64,6 @@ class RenderedScoreService
             $this->makeFile($contents, $extension, $primary_filename);
         }
 
-        // delete the old RenderedScore
-        if ($lp->rendered_scores()->renderConfig($render_config_data)->count()) {
-            $this->destroyRenderedScore($lp->rendered_scores()->renderConfig($render_config_data)->first());
-        }
-
         // and save the new one into db
         $rs = new RenderedScore([
             'render_config' => $render_config_data,
