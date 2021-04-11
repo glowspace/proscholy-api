@@ -23,8 +23,8 @@ class CreateRenderedScoresTable extends Migration
             $table->string('filename', 50);
             $table->string('filetype', 6);
             $table->json('secondary_filetypes')->nullable();
-
             $table->string('render_config_hash', 8)->nullable(); //cr32 algorithm
+            $table->unsignedSmallInteger('frontend_display_order')->nullable();
 
             $table->timestamps();
         });

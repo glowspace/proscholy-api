@@ -55,7 +55,7 @@ class RenderedScoreService
         return hash('crc32', json_encode($render_config_data));
     }
 
-    public function createLilypondRenderedScore(LilypondPartsSheetMusic $lp, $render_config_data, string $primary_filetype, $data, array $secondary_filetypes_data)
+    public function createLilypondRenderedScore(LilypondPartsSheetMusic $lp, $render_config_data, string $primary_filetype, $data, array $secondary_filetypes_data, ?int $frontend_display_order)
     {
         $primary_filename = $this->makeFile($data, $primary_filetype);
 
@@ -75,7 +75,8 @@ class RenderedScoreService
             'render_config_hash' => $this->getRenderConfigHash($render_config_data),
             'filename' => $primary_filename,
             'filetype' => $primary_filetype,
-            'secondary_filetypes' => array_keys($secondary_filetypes_data)
+            'secondary_filetypes' => array_keys($secondary_filetypes_data),
+            'frontend_display_order' => $frontend_display_order
         ]);
 
         $lp->rendered_scores()->save($rs);

@@ -116,7 +116,7 @@ class SongLyricService
 
         // used later to filter out empty sheet music that do not produce a render result
         $song_lyric->lilypond_parts_sheet_music()->update([
-            'is_empty' => $lp_parts_sm->getSrcIsEmpty()
+            'is_empty' => empty(trim($lp_parts_sm->getPartsSrc()))
         ]);
 
         $song_lyric->touch();
@@ -166,24 +166,7 @@ class SongLyricService
         if ($new_lilypond_updated) {
             logger("Song lyric LP Parts Sheet music updated, doing the render");
 
-            $configs = [
-                // default solo
-                [
-                    'hide_voices' => ['muzi', 'tenor', 'bas', 'zeny', 'sopran', 'alt']
-                ],
-                [
-                    'hide_voices' => ['zeny', 'sopran', 'alt']
-                ],
-                [
-                    'hide_voices' => ['muzi', 'tenor', 'bas']
-                ],
-                [
-                    'hide_voices' => [],
-                    'paper_width_mm' => 200
-                ]
-            ];
-
-            $this->lpsm_service->renderLilypondPartsSheetMusic($lp_parts_sm, $configs);
+            $this->lpsm_service->renderLilypondPartsSheetMusic($lp_parts_sm);
         }
 
         // with that, the lilypond is updated

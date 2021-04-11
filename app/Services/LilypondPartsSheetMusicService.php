@@ -116,7 +116,7 @@ class LilypondPartsSheetMusicService
         return $arr;
     }
 
-    public function renderLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm, $add_render_configs)
+    public function renderLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm)
     {
         if (!$lpsm->renderable) {
             logger("LilypondParts ID $lpsm->id is not renderable, deleting all its RenderedScores");
@@ -126,9 +126,67 @@ class LilypondPartsSheetMusicService
             return;
         }
 
-        foreach ($add_render_configs as $rc) {
+        foreach ($this->getLilypondPartsRenderData($lpsm) as $data) {
             logger("Dispatching jobs for LilypondParts ID $lpsm->id");
-            RenderLilypondPart::dispatch($lpsm->id, $rc);
+            RenderLilypondPart::dispatch($lpsm->id, $data['render_config'], $data['frontend_display_order']);
         }
+    }
+
+    protected function getLilypondPartsRenderData(LilypondPartsSheetMusic $lpsm): array
+    {
+        $men_voices = ['muzi', 'tenor', 'bas'];
+        $women_voices = ['zeny', 'sopran', 'alt'];
+
+        $render_data = [];
+
+        // solo + optional SATB choir
+        if ($lpsm->hasAnyVoice('solo')) {
+            $render_data[] = [
+                'render_config' => ['hide_voices' => [...$men_voices, ...$women_voices]],
+                'frontend_display_order' => 0
+            ];
+
+            if ($lpsm->hasAnyVoice($women_voices)) {
+                $render_data[] = [
+                    'render_config' => ['hide_voices' => [...$men_voices, 'akordy']],
+                    'frontend_display_order' => 1
+                ];
+            }
+
+            if ($lpsm->hasAnyVoice($men_voices)) {
+                $render_data[] = [
+                    'render_config' => ['hide_voices' => [...$women_voices, 'akordy']],
+                    'frontend_display_order' => 2
+                ];
+            }
+        } else {
+            // only SATB template
+
+            // two voices per staff, do one joint file
+            if ($lpsm->score_config->two_voices_per_staff) {
+                $render_data[] = [
+                    'render_config' => [],
+                    'frontend_display_order' => 0
+                ];
+            } else {
+                $render_data = [
+                    [
+                        'render_config' => ['hide_voices' => [...$men_voices, 'akordy']],
+                        'frontend_display_order' => 1
+                    ],
+                    [
+                        'render_config' => ['hide_voices' => [...$women_voices, 'akordy']],
+                        'frontend_display_order' => 2
+                    ]
+                ];
+            }
+        }
+
+        $render_data[] = [
+            'render_config' => ['paper_width' => 220],
+            'frontend_display_order' => 3
+        ];
+
+        return $render_data;
     }
 }

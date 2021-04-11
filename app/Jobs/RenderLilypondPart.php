@@ -23,16 +23,18 @@ class RenderLilypondPart implements ShouldQueue
 
     protected $lpsm_id;
     protected $render_config;
+    protected $frontend_display_order;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($lilypond_parts_sheet_music_id, $render_config)
+    public function __construct($lilypond_parts_sheet_music_id, $render_config, $frontend_display_order)
     {
         $this->lpsm_id = $lilypond_parts_sheet_music_id;
         $this->render_config = $render_config;
+        $this->frontend_display_order = $frontend_display_order;
     }
 
     /**
@@ -57,7 +59,8 @@ class RenderLilypondPart implements ShouldQueue
             $data['svg'],
             [
                 'midi' => $data['midi']
-            ]
+            ],
+            $this->frontend_display_order
         );
     }
 }

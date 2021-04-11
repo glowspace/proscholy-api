@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+use Illuminate\Support\Str;
+
 class LilypondPartsSheetMusic extends Model
 {
     use HasFactory;
@@ -39,11 +41,9 @@ class LilypondPartsSheetMusic extends Model
         return !$this->is_empty;
     }
 
-    public function getSrcIsEmpty()
+    public function getPartsSrc()
     {
         $src = '';
-
-        logger($this->lilypond_parts);
 
         foreach ($this->lilypond_parts as $part) {
             if (isset($part['src'])) {
@@ -51,6 +51,11 @@ class LilypondPartsSheetMusic extends Model
             }
         }
 
-        return empty(trim($src));
+        return $src;
+    }
+
+    public function hasAnyVoice($voicenames)
+    {
+        return Str::contains($this->getPartsSrc(), $voicenames);
     }
 }

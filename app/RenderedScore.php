@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RenderedScore extends Model
 {
-    protected $fillable = ['render_config', 'filename', 'filetype', 'secondary_filetypes', 'render_config_hash'];
+    protected $fillable = ['render_config', 'filename', 'filetype', 'secondary_filetypes', 'render_config_hash', 'frontend_display_order'];
 
     protected $casts = [
         'render_config' => 'array',
