@@ -49,7 +49,7 @@ class LilypondPartsSheetMusicService
         return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
-    public function makeLilypondPartsTemplate($parts, $global_src, $render_config_input = []): LilypondPartsTemplate
+    public function makeLilypondPartsTemplate($parts, ?string $global_src, $render_config_input = []): LilypondPartsTemplate
     {
         $render_config_data = array_merge(
             $this->getDefaultScoreConfigData(true),
@@ -74,7 +74,7 @@ class LilypondPartsSheetMusicService
             $render_config->setCustomPaper($render_config_data['paper_width_mm']);
         }
 
-        $src = new LilypondPartsTemplate($global_src, $render_config);
+        $src = new LilypondPartsTemplate($global_src ?? '', $render_config);
 
         foreach ($parts as $part) {
             $key_major = $part['key_major'] ?? 'c';
