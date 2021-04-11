@@ -23,13 +23,15 @@ class CreateRenderedScoresTable extends Migration
             $table->string('filename', 50);
             $table->string('filetype', 6);
             $table->json('secondary_filetypes')->nullable();
-            $table->boolean('is_rendered')->default(false);
+
+            $table->string('render_config_hash', 8)->nullable(); //cr32 algorithm
 
             $table->timestamps();
         });
 
         Schema::table('rendered_scores', function (Blueprint $table) {
             $table->index('lilypond_parts_sheet_music_id');
+            $table->index('render_config_hash');
             $table->index('external_id');
         });
     }

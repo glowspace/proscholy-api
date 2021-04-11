@@ -47,7 +47,17 @@ class RenderLilypondPart implements ShouldQueue
         $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $this->render_config);
 
         // render the template and get the files' data from lp_service
+        $data = $lp_service->doClientRenderSvg($lp_template, true);
 
         // call rs_service to store the RenderedScore with its data
+        $rs_service->createLilypondRenderedScore(
+            $lpsm,
+            $this->render_config,
+            'svg',
+            $data['svg'],
+            [
+                'midi' => $data['midi']
+            ]
+        );
     }
 }

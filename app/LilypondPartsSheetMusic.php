@@ -34,6 +34,11 @@ class LilypondPartsSheetMusic extends Model
         return $query->where('is_empty', false);
     }
 
+    public function getRenderableAttribute()
+    {
+        return !$this->is_empty;
+    }
+
     public function getSrcIsEmpty()
     {
         $src = '';

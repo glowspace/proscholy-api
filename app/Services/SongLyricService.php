@@ -15,11 +15,13 @@ use App\SongLyricLyrics;
 
 class SongLyricService
 {
-    protected $ly_service;
+    protected LilypondService $ly_service;
+    protected LilypondPartsSheetMusicService $lpsm_service;
 
-    public function __construct()
+    public function __construct(LilypondService $ly_service, LilypondPartsSheetMusicService $lpsm_service)
     {
-        $this->ly_service = new LilypondService();
+        $this->ly_service = $ly_service;
+        $this->lpsm_service = $lpsm_service;
     }
 
     public function createSongLyric(string $name): SongLyric
@@ -152,10 +154,22 @@ class SongLyricService
         $this->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
 
         // this task then calls handleLilypondSvg in this class
-        UpdateSongLyricLilypond::dispatchIf(
-            $old_lilypond_updated || $new_lilypond_updated,
-            $song_lyric->id
-        );
+        // todo: uncomment back 
+        // UpdateSongLyricLilypond::dispatchIf(
+        //     $old_lilypond_updated || $new_lilypond_updated,
+        //     $song_lyric->id
+        // );
+
+        // new way of rendering
+        if ($new_lilypond_updated) {
+            $configs = [
+                [
+                    'hide_voices' => ['muzi', 'tenor', 'bas', 'zeny', 'sopran', 'alt']
+                ]
+            ];
+
+            $this->lpsm_service->renderLilypondPartsSheetMusic($song_lyric->lilypond_parts_sheet_music, $configs);
+        }
 
         // with that, the lilypond is updated
     }

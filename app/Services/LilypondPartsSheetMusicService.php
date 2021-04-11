@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\RenderLilypondPart;
 use App\LilypondPartsSheetMusic;
 use ProScholy\LilypondRenderer\Client;
 use ProScholy\LilypondRenderer\LilypondBasicTemplate;
@@ -12,10 +13,12 @@ use ProScholy\LilypondRenderer\LilypondPartsGlobalConfig;
 class LilypondPartsSheetMusicService
 {
     protected LilypondService $lp_service;
+    protected RenderedScoreService $rs_service;
 
-    public function __construct(LilypondService $lp_service)
+    public function __construct(LilypondService $lp_service, RenderedScoreService $rs_service)
     {
         $this->lp_service = $lp_service;
+        $this->rs_service = $rs_service;
     }
 
     // todo: deprecate
@@ -113,10 +116,30 @@ class LilypondPartsSheetMusicService
         return $arr;
     }
 
-    public function renderLilypondParts(RenderedScoreService $rs)
+    public function renderLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm, $add_render_configs)
     {
-        // get render_configs .. but where from?
+        if (!$lpsm->renderable) {
+            logger("LilypondParts ID $lpsm->id is not renderable, deleting all its RenderedScores");
+            foreach ($lpsm->rendered_scores() as $score) {
+                $this->rs_service->destroyRenderedScore($score);
+            }
+            return;
+        }
 
-        // dispatch jobs 
+        foreach ($add_render_configs as $rc) {
+            logger("Dispatching jobs for LilypondParts ID $lpsm->id");
+            RenderLilypondPart::dispatch($lpsm->id, $rc);
+        }
     }
+
+    // public function renderAllLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm)
+    // {
+    //     $configs = [
+    //         [
+    //             'hide_voices' => ['muzi', 'tenor', 'bas', 'zeny', 'sopran', 'alt']
+    //         ]
+    //     ];
+
+    //     $this->renderLilypondParts
+    // }
 }

@@ -2,17 +2,17 @@
 
 namespace App;
 
+use App\Services\RenderedScoreService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RenderedScore extends Model
 {
-    protected $fillable = ['render_config', 'filename', 'filetype', 'secondary_filetypes', 'is_rendered'];
+    protected $fillable = ['render_config', 'filename', 'filetype', 'secondary_filetypes', 'render_config_hash'];
 
     protected $casts = [
-        'layout_config' => 'array',
+        'render_config' => 'array',
         'secondary_filetypes' => 'array',
-        'is_rendered' => 'boolean'
     ];
 
     public function lilypond_parts_sheet_music(): BelongsTo
@@ -25,9 +25,10 @@ class RenderedScore extends Model
         return $this->belongsTo(External::class);
     }
 
-    public function scopeRendered($query)
+    public function scopeRenderConfig($query, $render_config_data)
     {
-        return $query->where('is_rendered', true);
+        $rs_service = app(RenderedScoreService::class);
+        return $query->where('render_config_hash', $rs_service->getRenderConfigHash($render_config_data));
     }
 
     public function scopePdf($query)
@@ -38,15 +39,5 @@ class RenderedScore extends Model
     public function scopeSvg($query)
     {
         return $query->where('filetype', 'svg');
-    }
-
-    public function getFilepathWithoutExtensionAttribute()
-    {
-        // $filepaths = [];
-        // # code...
-        // $filetypes = [$this->filetype, ...($secondary_filetypes ?? [])];
-        // foreach ($filetypes as $ft) {
-        //     // $filepaths[] = 
-        // }
     }
 }
