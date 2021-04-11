@@ -13,6 +13,6 @@ b=int(vals[2])/5
 c=int(vals[3])/5
 d=int(vals[4])/5
 
-print(" ".join(str(x) for x in [a, -d, (c-a)+1, (d-b)+1]))
+print(" ".join(str(x) for x in [a, -d-1, (c-a)+1, (d-b)+2]))
 
-# output: 25.4 3.8 68.19999999999999 48.6
+# output: 25.4 2.8 68.19999999999999 49.6
