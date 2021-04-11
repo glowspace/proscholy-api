@@ -27,7 +27,7 @@ class LilypondService
             $data['midi'] = $this->client->getProcessedFile($res->getTmp(), 'score.midi');
         }
 
-        $this->client->deleteResultAsync($res);
+        $this->client->deleteResult($res);
 
         return $data;
     }
