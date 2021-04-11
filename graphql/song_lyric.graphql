@@ -50,6 +50,7 @@ type SongLyric {
     lilypond_parts_sheet_music: LilypondPartsSheetMusic @hasOne(relation:"lilypond_parts_sheet_music")
     lilypond_rendered_scores(
         filetype: String @eq
+        wide: Boolean @scope(name: "wide")
     ): [LilypondRenderedScore] @hasMany
 
     lilypond_key_major: String

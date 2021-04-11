@@ -3,7 +3,7 @@ type LilypondRenderedScore {
     filename: String
     filetype: String
     frontend_display_order: Int
-    public_url: String
+    public_url_prefix: String
 
     render_config: RenderConfig
     secondary_filetypes: [String]

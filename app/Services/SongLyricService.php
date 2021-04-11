@@ -141,6 +141,7 @@ class SongLyricService
         $song_lyric->touch();
     }
 
+    // todo: handle this in LilypondService and LilypondPartsSheetMusicService
     public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major, array $lilypond_parts_sheet_music)
     {
         $old_lilypond_updated = (string)$song_lyric->lilypond_src != $lilypond_input || $lilypond_key_major != $song_lyric->lilypond_key_major;
@@ -156,14 +157,15 @@ class SongLyricService
         $lp_parts_sm = $this->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
 
         // this task then calls handleLilypondSvg in this class
-        // todo: uncomment back 
-        // UpdateSongLyricLilypond::dispatchIf(
-        //     $old_lilypond_updated || $new_lilypond_updated,
-        //     $song_lyric->id
-        // );
+        // todo: remove in favour of servings svg files
+        UpdateSongLyricLilypond::dispatchIf(
+            $old_lilypond_updated || $new_lilypond_updated,
+            $song_lyric->id
+        );
 
         // new way of rendering
-        if ($new_lilypond_updated) {
+        // needs to be allowed in .env with USE_RENDERED_SCORES=true
+        if ($new_lilypond_updated && config('lilypond.use_rendered_scores')) {
             logger("Song lyric LP Parts Sheet music updated, doing the render");
 
             $this->lpsm_service->renderLilypondPartsSheetMusic($lp_parts_sm);

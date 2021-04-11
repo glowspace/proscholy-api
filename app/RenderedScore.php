@@ -31,6 +31,11 @@ class RenderedScore extends Model
         return $query->where('render_config_hash', $rs_service->getRenderConfigHash($render_config_data));
     }
 
+    public function scopeWide($query, $wide)
+    {
+        return $query->where('render_config->paper_width_mm', $wide ? 240 : null);
+    }
+
     public function scopePdf($query)
     {
         return $query->where('filetype', 'pdf');
@@ -41,8 +46,9 @@ class RenderedScore extends Model
         return $query->where('filetype', 'svg');
     }
 
-    public function getPublicUrlAttribute()
+    public function getPublicUrlPrefixAttribute()
     {
-        return 'todo';
+        // this is actually served by nginx
+        return url("/rendered_scores/$this->filename");
     }
 }
