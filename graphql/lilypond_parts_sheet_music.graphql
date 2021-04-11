@@ -18,13 +18,9 @@ type LilypondPart {
 
 type LilypondScoreConfig {
     two_voices_per_staff: Boolean
-    # global_transpose_relative_c: String
-    # force_part_breaks: Boolean
     merge_rests: Boolean
     version: String
     note_splitting: Boolean
-    # paper_width_mm: Int
-    # hide_voices: [String]
 }
 
 input LilypondPartsSheetMusicRenderInput {

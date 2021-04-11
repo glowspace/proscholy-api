@@ -9,7 +9,7 @@ use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
 use ProScholy\LilypondRenderer\LilypondPartsGlobalConfig;
 
-class LilypondPartsTemplateService
+class LilypondPartsSheetMusicService
 {
     protected LilypondService $lp_service;
 
@@ -25,49 +25,53 @@ class LilypondPartsTemplateService
             'hide_voices' => ['sopran', 'alt', 'tenor', 'bas', 'zeny', 'muzi']
         ]);
 
-        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate(
+        $data = $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate(
             $lp_sheet_music->lilypond_parts,
             $lp_sheet_music->global_src ?? '',
             $score_config
         ), true);
+
+        return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
     public function makePartSvgFast($part, $global_src, $score_config_input)
     {
-        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src, $score_config_input), false);
+        $data = $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate([$part], $global_src, $score_config_input), false);
+        return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
     public function makeTotalSvgFast($parts, $global_src, $score_config_input)
     {
-        return $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $score_config_input), false);
+        $data =  $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $score_config_input), false);
+        return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
-    public function makeLilypondPartsTemplate($parts, $global_src, $score_config_input = []): LilypondPartsTemplate
+    public function makeLilypondPartsTemplate($parts, $global_src, $render_config_input = []): LilypondPartsTemplate
     {
-        $score_config_input_with_defaults = array_merge(
+        $render_config_data = array_merge(
             $this->getDefaultScoreConfigData(true),
-            $score_config_input
+            $render_config_input
         );
 
-        $score_config = new LilypondPartsGlobalConfig(
-            $score_config_input_with_defaults['version'],
-            $score_config_input_with_defaults['two_voices_per_staff'],
-            $score_config_input_with_defaults['global_transpose_relative_c'],
-            $score_config_input_with_defaults['merge_rests'],
-            $score_config_input_with_defaults['hide_bar_numbers'],
-            $score_config_input_with_defaults['force_part_breaks'],
-            $score_config_input_with_defaults['note_splitting']
+        $render_config = new LilypondPartsGlobalConfig(
+            $render_config_data['version'],
+            $render_config_data['two_voices_per_staff'],
+            $render_config_data['global_transpose_relative_c'],
+            $render_config_data['merge_rests'],
+            $render_config_data['hide_bar_numbers'],
+            $render_config_data['force_part_breaks'],
+            $render_config_data['note_splitting']
         );
 
-        if (count($score_config_input_with_defaults['hide_voices']) > 0) {
-            $score_config->setVoicesHidden($score_config_input_with_defaults['hide_voices']);
+        if (count($render_config_data['hide_voices']) > 0) {
+            $render_config->setVoicesHidden($render_config_data['hide_voices']);
         }
 
-        if (isset($score_config_input_with_defaults['paper_width_mm'])) {
-            $score_config->setCustomPaper($score_config_input_with_defaults['paper_width_mm']);
+        if (isset($render_config_data['paper_width_mm'])) {
+            $render_config->setCustomPaper($render_config_data['paper_width_mm']);
         }
 
-        $src = new LilypondPartsTemplate($global_src, $score_config);
+        $src = new LilypondPartsTemplate($global_src, $render_config);
 
         foreach ($parts as $part) {
             $key_major = $part['key_major'] ?? 'c';
@@ -111,5 +115,8 @@ class LilypondPartsTemplateService
 
     public function renderLilypondParts(RenderedScoreService $rs)
     {
+        // get render_configs .. but where from?
+
+        // dispatch jobs 
     }
 }

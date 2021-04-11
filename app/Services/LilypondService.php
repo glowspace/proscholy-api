@@ -18,25 +18,30 @@ class LilypondService
     {
         $res = $this->client->renderSvg($src, $crop);
 
-        if ($res->isSuccessful()) {
-            $output = $this->client->getResultOutputFile($res);
-        } else {
-            $output = $this->client->getResultLog($res);
+        $data = [
+            'svg' => $res->isSuccessful() ? $this->client->getResultOutputFile($res) : '',
+            'log' => $this->client->getResultLog($res)
+        ];
+
+        if ($res->contentsHasFile('score.midi')) {
+            $data['midi'] = $this->client->getProcessedFile($res->getTmp(), 'score.midi');
         }
 
         $this->client->deleteResultAsync($res);
 
-        return $output;
+        return $data;
     }
 
     public function makeSvgFast($lilypond, $key_major = null)
     {
-        return $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), false);
+        $data = $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), false);
+        return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
     public function makeSvg($lilypond, $key_major = null)
     {
-        return $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), true);
+        $data = $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), true);
+        return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
     public function makeLilypondBasicTemplate($lilypond, $key_major = null): LilypondBasicTemplate

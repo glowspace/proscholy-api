@@ -23,7 +23,7 @@ use App\Services\LilypondService;
 // use App\Helpers\SongPart;
 use App\Helpers\SongLyricHelper;
 use App\Jobs\UpdateSongLyricLilypond;
-use App\Services\LilypondPartsTemplateService;
+use App\Services\LilypondPartsSheetMusicService;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -414,7 +414,7 @@ class SongLyric extends Model
                 'break_before' => false
             ]];
 
-            $lp_sheet_music->score_config = app(LilypondPartsTemplateService::class)->getDefaultScoreConfigData(false);
+            $lp_sheet_music->score_config = app(LilypondPartsSheetMusicService::class)->getDefaultScoreConfigData(false);
             $lp_sheet_music->global_src = '';
         });
     }

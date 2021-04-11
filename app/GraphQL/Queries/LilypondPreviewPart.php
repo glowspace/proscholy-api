@@ -2,13 +2,13 @@
 
 namespace App\GraphQL\Queries;
 
-use App\Services\LilypondPartsTemplateService;
+use App\Services\LilypondPartsSheetMusicService;
 
 class LilypondPreviewPart
 {
     public function resolve($rootValue, array $args)
     {
-        $lpt_service = app(LilypondPartsTemplateService::class);
+        $lpt_service = app(LilypondPartsSheetMusicService::class);
         $svg = $lpt_service->makePartSvgFast($args['lilypond_part'], $args['global_src'] ?? '', $args['score_config'] ?? []);
 
         return compact('svg');
