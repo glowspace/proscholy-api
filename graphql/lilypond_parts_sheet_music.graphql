@@ -1,4 +1,5 @@
 type LilypondPartsSheetMusic {
+    id: Int
     lilypond_parts: [LilypondPart]
     global_src: String
     score_config: LilypondScoreConfig

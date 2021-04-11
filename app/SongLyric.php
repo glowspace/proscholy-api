@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
@@ -422,6 +423,11 @@ class SongLyric extends Model
     public function lilypond_svg(): HasOne
     {
         return $this->hasOne(SongLyricLilypondSvg::class);
+    }
+
+    public function lilypond_rendered_scores(): HasManyThrough
+    {
+        return $this->hasManyThrough(RenderedScore::class, LilypondPartsSheetMusic::class, null, 'lilypond_parts_sheet_music_id');
     }
 
     //  -----------

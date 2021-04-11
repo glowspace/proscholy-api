@@ -48,6 +48,9 @@ type SongLyric {
     lilypond_svg: String @hasOne(relation:"lilypond_svg")
 
     lilypond_parts_sheet_music: LilypondPartsSheetMusic @hasOne(relation:"lilypond_parts_sheet_music")
+    lilypond_rendered_scores(
+        filetype: String @eq
+    ): [LilypondRenderedScore] @hasMany
 
     lilypond_key_major: String
     type_enum: SongType @rename(attribute: "type")

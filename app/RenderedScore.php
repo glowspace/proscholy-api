@@ -40,4 +40,9 @@ class RenderedScore extends Model
     {
         return $query->where('filetype', 'svg');
     }
+
+    public function getPublicUrlAttribute()
+    {
+        return 'todo';
+    }
 }

@@ -1,0 +1,17 @@
+type LilypondRenderedScore {
+    id: Int
+    filename: String
+    filetype: String
+    frontend_display_order: Int
+    public_url: String
+
+    render_config: RenderConfig
+    secondary_filetypes: [String]
+
+    lilypond_parts_sheet_music: LilypondPartsSheetMusic
+}
+
+type RenderConfig {
+    hide_voices: [String]
+    paper_width_mm: Int
+}
