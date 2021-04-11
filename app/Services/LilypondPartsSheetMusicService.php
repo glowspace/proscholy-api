@@ -8,7 +8,7 @@ use ProScholy\LilypondRenderer\Client;
 use ProScholy\LilypondRenderer\LilypondBasicTemplate;
 use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
-use ProScholy\LilypondRenderer\LilypondPartsGlobalConfig;
+use ProScholy\LilypondRenderer\LilypondPartsRenderConfig;
 
 class LilypondPartsSheetMusicService
 {
@@ -56,7 +56,7 @@ class LilypondPartsSheetMusicService
             $render_config_input
         );
 
-        $render_config = new LilypondPartsGlobalConfig(
+        $render_config = new LilypondPartsRenderConfig(
             $render_config_data['version'],
             $render_config_data['two_voices_per_staff'],
             $render_config_data['global_transpose_relative_c'],
