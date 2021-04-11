@@ -84,6 +84,8 @@ class RenderedScoreService
     // todo: call this on soft deleting SongLyric
     public function destroyRenderedScore(RenderedScore $score)
     {
+        logger("Deleting rendered score ID $score->id");
+
         // delete all associated filetypes
         $extensions = [$score->filetype, ...$score->secondary_filetypes];
 

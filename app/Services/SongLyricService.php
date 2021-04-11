@@ -162,6 +162,8 @@ class SongLyricService
 
         // new way of rendering
         if ($new_lilypond_updated) {
+            logger("Song lyric LP Parts Sheet music updated, doing the render");
+
             $configs = [
                 [
                     'hide_voices' => ['muzi', 'tenor', 'bas', 'zeny', 'sopran', 'alt']

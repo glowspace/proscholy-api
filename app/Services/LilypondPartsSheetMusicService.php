@@ -131,15 +131,4 @@ class LilypondPartsSheetMusicService
             RenderLilypondPart::dispatch($lpsm->id, $rc);
         }
     }
-
-    // public function renderAllLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm)
-    // {
-    //     $configs = [
-    //         [
-    //             'hide_voices' => ['muzi', 'tenor', 'bas', 'zeny', 'sopran', 'alt']
-    //         ]
-    //     ];
-
-    //     $this->renderLilypondParts
-    // }
 }
