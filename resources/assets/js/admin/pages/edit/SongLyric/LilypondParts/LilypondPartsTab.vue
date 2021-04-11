@@ -323,10 +323,10 @@ export default {
                     ]
                 },
                 solo_men: {
-                    hide_voices: ['sopran', 'alt', 'zeny']
+                    hide_voices: ['sopran', 'alt', 'zeny', 'akordy']
                 },
                 solo_women: {
-                    hide_voices: ['tenor', 'bas', 'muzi']
+                    hide_voices: ['tenor', 'bas', 'muzi', 'akordy']
                 },
                 all_wide: {
                     paper_width_mm: 240,

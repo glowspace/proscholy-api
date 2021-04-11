@@ -22,7 +22,7 @@ class RenderLilypondPart implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $lpsm_id;
-    protected $render_config;
+    protected $add_render_config;
     protected $frontend_display_order;
 
     /**
@@ -30,10 +30,10 @@ class RenderLilypondPart implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($lilypond_parts_sheet_music_id, $render_config, $frontend_display_order)
+    public function __construct($lilypond_parts_sheet_music_id, $add_render_config, $frontend_display_order)
     {
         $this->lpsm_id = $lilypond_parts_sheet_music_id;
-        $this->render_config = $render_config;
+        $this->add_render_config = $add_render_config;
         $this->frontend_display_order = $frontend_display_order;
     }
 
@@ -46,7 +46,12 @@ class RenderLilypondPart implements ShouldQueue
     {
         $lpsm = LilypondPartsSheetMusic::find($this->lpsm_id);
 
-        $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $this->render_config);
+        $final_render_config = array_merge(
+            $lpsm->score_config,
+            $this->add_render_config
+        );
+
+        $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $final_render_config);
 
         // render the template and get the files' data from lp_service
         $data = $lp_service->doClientRenderSvg($lp_template, true);
@@ -54,7 +59,7 @@ class RenderLilypondPart implements ShouldQueue
         // call rs_service to store the RenderedScore with its data
         $rs_service->createLilypondRenderedScore(
             $lpsm,
-            $this->render_config,
+            $this->add_render_config,
             'svg',
             $data['svg'],
             [

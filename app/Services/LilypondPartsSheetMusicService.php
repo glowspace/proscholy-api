@@ -180,7 +180,7 @@ class LilypondPartsSheetMusicService
         }
 
         $render_data[] = [
-            'render_config' => ['paper_width_mm' => 220],
+            'render_config' => ['paper_width_mm' => 240],
             'frontend_display_order' => 3
         ];
 
