@@ -4,8 +4,6 @@ namespace App\Services;
 
 use App\Jobs\RenderLilypondPart;
 use App\LilypondPartsSheetMusic;
-use ProScholy\LilypondRenderer\Client;
-use ProScholy\LilypondRenderer\LilypondBasicTemplate;
 use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
 use ProScholy\LilypondRenderer\LilypondPartsRenderConfig;

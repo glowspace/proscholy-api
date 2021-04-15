@@ -5,17 +5,13 @@ namespace App\Jobs;
 use App\LilypondPartsSheetMusic;
 use App\Services\LilypondPartsSheetMusicService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use App\SongLyric;
 use App\Services\LilypondService;
 use App\Services\RenderedScoreService;
-use App\Services\SongLyricService;
-use App\Song;
 
 class RenderLilypondPart implements ShouldQueue
 {
