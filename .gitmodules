@@ -1,3 +1,3 @@
-  [submodule "lilypond-renderer-server"]
+[submodule "docker/setup/lilypond"]
 	path = docker/setup/lilypond
 	url = https://github.com/proscholy/lilypond-renderer-server
