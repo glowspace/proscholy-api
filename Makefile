@@ -2,7 +2,9 @@
 production-deploy:
 	# # echo "Updating docker using file $OPTARG"
 	git checkout master -f
-	git pull origin master --recurse-submodules
+	git pull origin master
+	git submodule init
+	git submodule update
 
 	docker-compose -f docker-compose.prod.yml up --build -d
 	docker-compose -f docker-compose.prod.yml exec -T web composer install --optimize-autoloader --no-dev 
@@ -25,7 +27,9 @@ production-deploy:
 
 staging-deploy:
 	git checkout develop -f
-	git pull origin develop --recurse-submodules
+	git pull origin develop
+	git submodule init
+	git submodule update
 
 	docker-compose -f docker-compose.staging.yml up --build -d
 	docker-compose -f docker-compose.staging.yml exec -T web composer install
