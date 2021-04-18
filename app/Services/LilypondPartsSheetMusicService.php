@@ -82,9 +82,7 @@ class LilypondPartsSheetMusicService
                 $part['name'],
                 $part['src'] ?? '',
                 $key_major,
-                $part['end_key_major'] ?? $key_major,
                 $time_signature,
-                $part['end_time_signature'] ?? $time_signature,
                 $part['break_before'] ?? false,
                 $part['part_transpose'] ?? false
             );
@@ -158,7 +156,7 @@ class LilypondPartsSheetMusicService
             // only SATB template
 
             // two voices per staff, do one joint file
-            if ($lpsm->score_config->two_voices_per_staff) {
+            if ($lpsm->score_config['two_voices_per_staff']) {
                 $render_data[] = [
                     'render_config' => [],
                     'frontend_display_order' => 0
