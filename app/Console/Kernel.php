@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
         $scores_zip = Storage::path(config('lilypond.rendered_scores_zip'));
 
         // create a zip of rendered svg scores
-        $schedule->exec("find $scores_dir -name \"*.svg\" | tar -zcf $scores_zip -T -")->hourly();
+        $schedule->exec("cd $scores_dir && find -name \"*.svg\" -printf '%f\n' | tar -zcf $scores_zip -T -")->hourly();
     }
 
     /**
