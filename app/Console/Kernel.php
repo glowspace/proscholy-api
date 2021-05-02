@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,14 +31,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('compute:visits')
             ->hourly();
 
-        // temporary disabled
-        // todo: fix
-        // $schedule->command('backup:run')
-        //     ->weekly()
-        //     ->appendOutputTo(storage_path('logs/schedule.log'));
-
         $schedule->exec('curl ' . config('bible-matcher.host') . ':' . config('bible-matcher.port') . '/match-songs')
             ->everyFiveMinutes();
+
+        $scores_dir = Storage::path(config('lilypond.rendered_scores_dir'));
+        $scores_zip = Storage::path(config('lilypond.rendered_scores_zip'));
+
+        // create a zip of rendered svg scores
+        $schedule->exec("find $scores_dir -name \"*.svg\" | tar -zcf $scores_zip -T -")->hourly();
     }
 
     /**

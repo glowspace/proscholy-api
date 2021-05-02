@@ -12,7 +12,12 @@ use Exception;
 
 class RenderedScoreService
 {
-    protected $dir = 'rendered_scores';
+    protected $dir;
+
+    public function __construct()
+    {
+        $this->dir = config('lilypond.rendered_scores_dir');
+    }
 
     public function makeFile($contents, string $extension, ?string $filename = null): string
     {
