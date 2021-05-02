@@ -1,5 +1,5 @@
-# Regenschori API server
-API server databáze projektu Regenschori. Ze serveru čerpají webové frontend aplikace
+# ProScholy.cz API server
+API server databáze projektu ProScholy.cz. Ze serveru čerpají webové frontend aplikace
  https://zpevnik.proscholy.cz, https://regenschori.cz, 
  a mobilní aplikace Zpěvník ProScholy.cz pro Android a iOS.
 
