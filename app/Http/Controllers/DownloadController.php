@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\File;
 use App\External;
-use App\Services\LilypondPartsSheetMusicService;
+use App\Services\LilypondPartsService;
 use App\Services\LilypondService;
 
 class DownloadController extends Controller
@@ -60,7 +60,7 @@ class DownloadController extends Controller
         $global_src = $request->get('global_src') ?? '';
         $score_config = json_decode($request->get('score_config'), true);
 
-        $ly_s = app(LilypondPartsSheetMusicService::class);
+        $ly_s = app(LilypondPartsService::class);
         $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $score_config);
 
         $headers = [

@@ -16,9 +16,9 @@ use App\SongLyricLyrics;
 class SongLyricService
 {
     protected LilypondService $ly_service;
-    protected LilypondPartsSheetMusicService $lpsm_service;
+    protected LilypondPartsService $lpsm_service;
 
-    public function __construct(LilypondService $ly_service, LilypondPartsSheetMusicService $lpsm_service)
+    public function __construct(LilypondService $ly_service, LilypondPartsService $lpsm_service)
     {
         $this->ly_service = $ly_service;
         $this->lpsm_service = $lpsm_service;
@@ -141,7 +141,7 @@ class SongLyricService
         $song_lyric->touch();
     }
 
-    // todo: handle this in LilypondService and LilypondPartsSheetMusicService
+    // todo: handle this in LilypondService and LilypondPartsService
     public function handleLilypond($song_lyric, $lilypond_input, $lilypond_key_major, array $lilypond_parts_sheet_music)
     {
         $old_lilypond_updated = (string)$song_lyric->lilypond_src != $lilypond_input || $lilypond_key_major != $song_lyric->lilypond_key_major;

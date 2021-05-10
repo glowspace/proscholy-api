@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\LilypondPartsSheetMusicService;
+use App\Services\LilypondPartsService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
             return new RenderedScoreService();
         });
         $this->app->singleton(SongLyricService::class, function () {
-            return new SongLyricService(app(LilypondService::class), app(LilypondPartsSheetMusicService::class));
+            return new SongLyricService(app(LilypondService::class), app(LilypondPartsService::class));
         });
     }
 }

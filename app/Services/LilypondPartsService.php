@@ -8,7 +8,7 @@ use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
 use ProScholy\LilypondRenderer\LilypondPartsRenderConfig;
 
-class LilypondPartsSheetMusicService
+class LilypondPartsService
 {
     protected LilypondService $lp_service;
     protected RenderedScoreService $rs_service;
@@ -49,28 +49,7 @@ class LilypondPartsSheetMusicService
 
     public function makeLilypondPartsTemplate($parts, ?string $global_src, $render_config_input = []): LilypondPartsTemplate
     {
-        $render_config_data = array_merge(
-            $this->getDefaultScoreConfigData(true),
-            $render_config_input
-        );
-
-        $render_config = new LilypondPartsRenderConfig(
-            $render_config_data['version'],
-            $render_config_data['two_voices_per_staff'],
-            $render_config_data['global_transpose_relative_c'],
-            $render_config_data['merge_rests'],
-            $render_config_data['hide_bar_numbers'],
-            $render_config_data['force_part_breaks'],
-            $render_config_data['note_splitting']
-        );
-
-        if (count($render_config_data['hide_voices']) > 0) {
-            $render_config->setVoicesHidden($render_config_data['hide_voices']);
-        }
-
-        if (isset($render_config_data['paper_width_mm'])) {
-            $render_config->setCustomPaper($render_config_data['paper_width_mm']);
-        }
+        $render_config = new LilypondPartsRenderConfig($render_config_input);
 
         $src = new LilypondPartsTemplate($global_src ?? '', $render_config);
 
@@ -91,25 +70,15 @@ class LilypondPartsSheetMusicService
         return $src;
     }
 
-    public function getDefaultScoreConfigData(bool $include_render_config)
+    public function getDefaultScoreConfigData()
     {
-        $arr = [
-            'version' => '2.22.0',
-            'two_voices_per_staff' => true,
-            'merge_rests' => true,
-            'note_splitting' => true
-        ];
-
-        if ($include_render_config) {
-            $arr = array_merge($arr, [
-                'global_transpose_relative_c' => false,
-                'hide_bar_numbers' => true,
-                'force_part_breaks' => false,
-                'hide_voices' => []
-            ]);
-        }
-
-        return $arr;
+        $tp = new LilypondPartsRenderConfig();
+        
+        // filter the default config values for only score_config
+        return array_intersect_key(
+            $tp->getDefaultConfigData(),
+            array_flip(['version', 'two_voices_per_staff', 'merge_rests', 'note_splitting'])
+        );
     }
 
     public function renderLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm)

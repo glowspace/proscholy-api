@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\LilypondPartsSheetMusicService;
+use App\Services\LilypondPartsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,7 +36,7 @@ class UpdateSongLyricLilypond implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondService $lily_service, LilypondPartsSheetMusicService $lilyparts_service, SongLyricService $sl_service)
+    public function handle(LilypondService $lily_service, LilypondPartsService $lilyparts_service, SongLyricService $sl_service)
     {
         $sl = SongLyric::find($this->song_lyric_id);
 

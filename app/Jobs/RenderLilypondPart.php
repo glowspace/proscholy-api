@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\LilypondPartsSheetMusic;
-use App\Services\LilypondPartsSheetMusicService;
+use App\Services\LilypondPartsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -38,7 +38,7 @@ class RenderLilypondPart implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondService $lp_service, LilypondPartsSheetMusicService $lpsm_service, RenderedScoreService $rs_service)
+    public function handle(LilypondService $lp_service, LilypondPartsService $lpsm_service, RenderedScoreService $rs_service)
     {
         $lpsm = LilypondPartsSheetMusic::find($this->lpsm_id);
 
