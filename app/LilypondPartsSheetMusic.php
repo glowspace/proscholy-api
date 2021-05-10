@@ -13,7 +13,7 @@ class LilypondPartsSheetMusic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lilypond_parts', 'score_config', 'global_src', 'is_empty'];
+    protected $fillable = ['lilypond_parts', 'score_config', 'global_src', 'is_empty', 'sequence_string'];
 
     protected $casts = [
         'lilypond_parts' => 'array',

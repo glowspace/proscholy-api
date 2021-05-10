@@ -41,16 +41,17 @@ class LilypondPartsService
         return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
-    public function makeTotalSvgFast($parts, $global_src, $score_config_input)
+    public function makeTotalSvgFast($parts, $global_src, $score_config_input, $sequence_string)
     {
-        $data =  $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $score_config_input), false);
+        $data =  $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate($parts, $global_src, $score_config_input, $sequence_string), false);
         return $data['svg'] === '' ? $data['log'] : $data['svg'];
     }
 
-    public function makeLilypondPartsTemplate($parts, ?string $global_src, $render_config_input = []): LilypondPartsTemplate
+    public function makeLilypondPartsTemplate($parts, ?string $global_src, $render_config_input = [], ?string $sequence_string = null): LilypondPartsTemplate
     {
-        $render_config = new LilypondPartsRenderConfig($render_config_input);
+        // todo: process the sequence string
 
+        $render_config = new LilypondPartsRenderConfig($render_config_input);
         $src = new LilypondPartsTemplate($global_src ?? '', $render_config);
 
         foreach ($parts as $part) {
@@ -62,7 +63,6 @@ class LilypondPartsService
                 $part['src'] ?? '',
                 $key_major,
                 $time_signature,
-                $part['break_before'] ?? false,
                 $part['part_transpose'] ?? false
             );
         }

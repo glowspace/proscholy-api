@@ -47,7 +47,7 @@ class RenderLilypondPart implements ShouldQueue
             $this->add_render_config
         );
 
-        $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $final_render_config);
+        $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $final_render_config, $lpsm->sequence_string);
 
         // render the template and get the files' data from lp_service
         $data = $lp_service->doClientRenderSvg($lp_template, true);

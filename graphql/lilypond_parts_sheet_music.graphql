@@ -2,6 +2,7 @@ type LilypondPartsSheetMusic {
     id: Int
     lilypond_parts: [LilypondPart]
     global_src: String
+    sequence_string: String
     score_config: LilypondScoreConfig
     
     song_lyric: SongLyric
@@ -14,7 +15,6 @@ type LilypondPart {
     end_key_major: String
     time_signature: String
     end_time_signature: String
-    break_before: Boolean
 }
 
 type LilypondScoreConfig {
@@ -27,12 +27,14 @@ type LilypondScoreConfig {
 input LilypondPartsSheetMusicRenderInput {
     lilypond_parts: [LilypondPartInput]
     global_src: String
+    sequence_string: String
     render_config: LilypondRenderConfigInput
 }
 
 input LilypondPartsSheetMusicInput {
     lilypond_parts: [LilypondPartInput]
     global_src: String
+    sequence_string: String
     score_config: LilypondRenderConfigInput
 }
 
@@ -43,7 +45,6 @@ input LilypondPartInput {
     end_key_major: String
     time_signature: String
     end_time_signature: String
-    break_before: Boolean
     part_transpose: String
 }
 

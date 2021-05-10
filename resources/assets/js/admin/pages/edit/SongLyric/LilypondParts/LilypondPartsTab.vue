@@ -123,14 +123,6 @@
                             label="Takt"
                         ></v-combobox>
                     </v-flex>
-
-                    <v-flex xs12 md4>
-                        <v-checkbox
-                            class="mt-0"
-                            v-model="part.break_before"
-                            label="Vždy zalomit na nový řádek"
-                        ></v-checkbox>
-                    </v-flex>
                 </v-layout>
 
                 <v-layout row wrap>
@@ -199,6 +191,12 @@
         </v-layout>
 
         <v-flex xs12>
+            <v-textarea
+                label="Zobrazení po částech"
+                v-model="lilypondPartsSheetMusic.sequence_string"
+                :placeholder="partsStringPlaceholder"
+            ></v-textarea>
+
             <v-select
                 :items="total_variants_select_items"
                 v-model="selected_total_variant"
@@ -208,16 +206,10 @@
                 "
             ></v-select>
 
-            <v-text-field
+            <!-- <v-text-field
                 label="Globální transpozice relativně k c:"
                 v-model="global_transpose_relative_c"
-            ></v-text-field>
-
-            <v-text-field
-                label="Zobrazení po částech"
-                v-model="global_parts_string"
-                :placeholder="partsStringPlaceholder"
-            ></v-text-field>
+            ></v-text-field> -->
 
             <v-btn
                 class="mb-3"
@@ -281,6 +273,7 @@ export default {
             lilypondPartsSheetMusic: {
                 lilypond_parts: [],
                 global_src: '',
+                sequence_string: '',
                 score_config: {}
             },
 
@@ -336,8 +329,7 @@ export default {
 
             selected_total_variant: 'bare_solo',
 
-            global_transpose_relative_c: 'c',
-            global_parts_string: ''
+            global_transpose_relative_c: 'c'
         };
     },
 
@@ -385,20 +377,18 @@ export default {
         renderFinal(add_render_config = {}) {
             this.global_svg_loading = true;
 
-            const combined_parts =
-                this.global_parts_string == ''
-                    ? this.lilypondPartsSheetMusic.lilypond_parts
-                    : this.getCombinedParts();
-
             this.$apollo
                 .query({
                     query: lilypond_helper.queries.total,
                     variables: {
                         lilypond_total: {
-                            lilypond_parts: combined_parts,
+                            lilypond_parts: this.lilypondPartsSheetMusic
+                                .lilypond_parts,
                             global_src: this.show_global_src_input
                                 ? this.lilypondPartsSheetMusic.global_src
                                 : '',
+                            sequence_string: this.lilypondPartsSheetMusic
+                                .sequence_string,
                             render_config: {
                                 ...this.lilypondPartsSheetMusic.score_config,
                                 ...add_render_config,
@@ -421,28 +411,28 @@ export default {
                 });
         },
 
-        getCombinedParts() {
-            let part_ids = this.global_parts_string.trim().split(' ');
-            let parts_arr = [];
+        // getCombinedParts() {
+        //     let part_ids = this.lilypondPartsSheetMusic.sequence_string.trim().split(' ');
+        //     let parts_arr = [];
 
-            const part_re = /([\d\w]+)(\[(.{1,2})\])?/;
+        //     const part_re = /([\d\w]+)(\[(.{1,2})\])?/;
 
-            const findPart = name =>
-                this.lilypondPartsSheetMusic.lilypond_parts.find(
-                    p => p.name == name
-                );
+        //     const findPart = name =>
+        //         this.lilypondPartsSheetMusic.lilypond_parts.find(
+        //             p => p.name == name
+        //         );
 
-            for (const part_id of part_ids) {
-                const [, name, _, transpose_key] = part_id.match(part_re);
-                let part = { ...findPart(name) };
-                if (transpose_key) {
-                    part.part_transpose = transpose_key;
-                }
-                parts_arr.push(part);
-            }
+        //     for (const part_id of part_ids) {
+        //         const [, name, _, transpose_key] = part_id.match(part_re);
+        //         let part = { ...findPart(name) };
+        //         if (transpose_key) {
+        //             part.part_transpose = transpose_key;
+        //         }
+        //         parts_arr.push(part);
+        //     }
 
-            return parts_arr;
-        },
+        //     return parts_arr;
+        // },
 
         isPartNameUsed(name, part_i) {
             return this.lilypondPartsSheetMusic.lilypond_parts
@@ -458,11 +448,14 @@ export default {
             const global_src = encodeURIComponent(
                 this.lilypondPartsSheetMusic.global_src
             );
+            const sequence_string = encodeURIComponent(
+                this.lilypondPartsSheetMusic.sequence_string
+            );
             const score_config = encodeURIComponent(
                 JSON.stringify(this.lilypondPartsSheetMusic.score_config)
             );
 
-            return `/be-api/lilypond-download-parts-source?lilypond_parts=${parts_data}&global_src=${global_src}&score_config=${score_config}`;
+            return `/be-api/lilypond-download-parts-source?lilypond_parts=${parts_data}&global_src=${global_src}&score_config=${score_config}&sequence_string=${sequence_string}`;
         },
 
         downloadLilypondSource() {

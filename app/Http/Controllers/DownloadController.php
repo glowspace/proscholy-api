@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\File;
 use App\External;
 use App\Services\LilypondPartsService;
 use App\Services\LilypondService;
@@ -58,10 +57,12 @@ class DownloadController extends Controller
     {
         $parts = json_decode($request->get('lilypond_parts'), true);
         $global_src = $request->get('global_src') ?? '';
+        $sequence_string = $request->get('sequence_string') ?? '';
         $score_config = json_decode($request->get('score_config'), true);
 
+        /** @var LilypondPartsService */
         $ly_s = app(LilypondPartsService::class);
-        $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $score_config);
+        $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $score_config, $sequence_string);
 
         $headers = [
             'Content-Type' => '	application/zip'

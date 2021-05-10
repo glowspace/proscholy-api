@@ -411,12 +411,12 @@ class SongLyric extends Model
                 'src' => '',
                 'name' => '1',
                 'key_major' => $song_lyric->lilypond_key_major ?? 'c',
-                'time_signature' => '4/4',
-                'break_before' => false
+                'time_signature' => '4/4'
             ]];
 
             $lp_sheet_music->score_config = app(LilypondPartsService::class)->getDefaultScoreConfigData(false);
             $lp_sheet_music->global_src = '';
+            $lp_sheet_music->sequence_string = '';
         });
     }
 

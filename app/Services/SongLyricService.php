@@ -92,6 +92,7 @@ class SongLyricService
         // note: the input is validated by graphql types
         $lilypond_parts = $lilypond_parts_sheet_music['lilypond_parts'];
         $global_src = $lilypond_parts_sheet_music['global_src'];
+        $sequence_string = $lilypond_parts_sheet_music['sequence_string'];
         $score_config = $lilypond_parts_sheet_music['score_config'];
 
         $wasEmpty = !$song_lyric->lilypond_parts_sheet_music()->exists();
@@ -102,6 +103,7 @@ class SongLyricService
             $lp_parts_sm = new LilypondPartsSheetMusic([
                 'lilypond_parts' => $lilypond_parts,
                 'global_src' => $global_src,
+                'sequence_string' => $sequence_string,
                 'score_config' => $score_config,
             ]);
             $song_lyric->lilypond_parts_sheet_music()->save($lp_parts_sm);
@@ -109,6 +111,7 @@ class SongLyricService
             $song_lyric->lilypond_parts_sheet_music()->update([
                 'lilypond_parts' => $lilypond_parts,
                 'global_src' => $global_src,
+                'sequence_string' => $sequence_string,
                 'score_config' => $score_config
             ]);
             $lp_parts_sm = $song_lyric->lilypond_parts_sheet_music->fresh();
@@ -148,7 +151,8 @@ class SongLyricService
         $new_lilypond_updated =
             $song_lyric->lilypond_parts_sheet_music->lilypond_parts != $lilypond_parts_sheet_music['lilypond_parts'] ||
             $song_lyric->lilypond_parts_sheet_music->score_config != $lilypond_parts_sheet_music['score_config'] ||
-            $song_lyric->lilypond_parts_sheet_music->global_src != $lilypond_parts_sheet_music['global_src'];
+            $song_lyric->lilypond_parts_sheet_music->global_src != $lilypond_parts_sheet_music['global_src'] ||
+            $song_lyric->lilypond_parts_sheet_music->sequence_string != $lilypond_parts_sheet_music['sequence_string'];
 
         logger("Old lilypond updated: $old_lilypond_updated");
         logger("New lilypond updated: $new_lilypond_updated");
