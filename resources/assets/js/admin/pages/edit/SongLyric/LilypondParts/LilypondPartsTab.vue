@@ -411,29 +411,6 @@ export default {
                 });
         },
 
-        // getCombinedParts() {
-        //     let part_ids = this.lilypondPartsSheetMusic.sequence_string.trim().split(' ');
-        //     let parts_arr = [];
-
-        //     const part_re = /([\d\w]+)(\[(.{1,2})\])?/;
-
-        //     const findPart = name =>
-        //         this.lilypondPartsSheetMusic.lilypond_parts.find(
-        //             p => p.name == name
-        //         );
-
-        //     for (const part_id of part_ids) {
-        //         const [, name, _, transpose_key] = part_id.match(part_re);
-        //         let part = { ...findPart(name) };
-        //         if (transpose_key) {
-        //             part.part_transpose = transpose_key;
-        //         }
-        //         parts_arr.push(part);
-        //     }
-
-        //     return parts_arr;
-        // },
-
         isPartNameUsed(name, part_i) {
             return this.lilypondPartsSheetMusic.lilypond_parts
                 .filter((_, i) => i !== part_i)
@@ -466,7 +443,7 @@ export default {
     computed: {
         partsStringPlaceholder() {
             return this.lilypondPartsSheetMusic.lilypond_parts.reduce(
-                (str, part) => str + ` ${part.name}[${part.key_major}]`,
+                (str, part) => str + ` ${part.name}`,
                 ''
             );
         },

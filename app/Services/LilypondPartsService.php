@@ -49,22 +49,45 @@ class LilypondPartsService
 
     public function makeLilypondPartsTemplate($parts, ?string $global_src, $render_config_input = [], ?string $sequence_string = null): LilypondPartsTemplate
     {
-        // todo: process the sequence string
-
         $render_config = new LilypondPartsRenderConfig($render_config_input);
         $src = new LilypondPartsTemplate($global_src ?? '', $render_config);
 
-        foreach ($parts as $part) {
-            $key_major = $part['key_major'] ?? 'c';
-            $time_signature = $part['time_signature'] ?? '4/4';
+        $part_names_tokens = array_map(function ($part) { return $part['name']; }, $parts);
 
-            $src->withPart(
-                $part['name'],
-                $part['src'] ?? '',
-                $key_major,
-                $time_signature,
-                $part['part_transpose'] ?? false
-            );
+        if (empty($sequence_string)) {
+            $sequence = $part_names_tokens;
+        } else {
+            // $sequence_string = "1 1 R .";
+            $sequence_string = str_replace("\n", ' BREAK ', $sequence_string);
+            $sequence_string = str_replace('.', ' . ', $sequence_string);
+            $sequence_string = str_replace('|', ' | ', $sequence_string);
+    
+            $sequence = explode(' ', $sequence_string);
+        }
+
+        $special_tokens = [
+            '.' => '\bar "|."', 
+            '|' => '\bar "||"', 
+            'BREAK' => '\break'
+        ];
+
+        foreach ($sequence as $token) {
+            if (!empty($token)) {
+                // special token => use preconfigured array
+                if (array_key_exists($token, $special_tokens)) {
+                    $src->withInlineCode($special_tokens[$token]);
+                } else {
+                    // the token is a part name, retrieve the part from the part list
+                    $part = $parts[array_search($token, $part_names_tokens)];
+                    $src->withPart(
+                        $part['name'],
+                        $part['src'] ?? '',
+                        $part['key_major'] ?? 'c',
+                        $part['time_signature'] ?? '4/4',
+                        $part['part_transpose'] ?? false
+                    );
+                }
+            }
         }
 
         return $src;
