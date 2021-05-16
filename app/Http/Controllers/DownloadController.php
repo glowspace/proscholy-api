@@ -60,6 +60,10 @@ class DownloadController extends Controller
         $sequence_string = $request->get('sequence_string') ?? '';
         $score_config = json_decode($request->get('score_config'), true);
 
+        $score_config = array_merge($score_config, [
+            'include_font_files' => true
+        ]);
+
         /** @var LilypondPartsService */
         $ly_s = app(LilypondPartsService::class);
         $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $score_config, $sequence_string);
