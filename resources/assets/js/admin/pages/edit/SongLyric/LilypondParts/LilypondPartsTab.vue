@@ -58,12 +58,6 @@
                                 "
                                 label="Automaticky opravit přetékání taktů"
                             ></v-checkbox>
-
-                            <div class="mb-2">
-                                <a href="#6" @click="downloadLilypondSource"
-                                    >Stáhnout finální Lilypond (zip)</a
-                                >
-                            </div>
                         </v-card-text>
                     </v-card>
                 </v-flex>
@@ -196,6 +190,12 @@
                 v-model="lilypondPartsSheetMusic.sequence_string"
                 :placeholder="partsStringPlaceholder"
             ></v-textarea>
+
+            <div class="mb-2">
+                <a href="#6" @click="downloadLilypondSource"
+                    >Stáhnout finální Lilypond (zip)</a
+                >
+            </div>
 
             <v-select
                 :items="total_variants_select_items"
@@ -423,7 +423,7 @@ export default {
                 JSON.stringify(this.lilypondPartsSheetMusic.lilypond_parts)
             );
             const global_src = encodeURIComponent(
-                this.lilypondPartsSheetMusic.global_src
+                this.lilypondPartsSheetMusic.global_src ?? ''
             );
             const sequence_string = encodeURIComponent(
                 this.lilypondPartsSheetMusic.sequence_string
