@@ -23,16 +23,17 @@ class LilypondPartsService
     public function makeTotalSvgMobile(LilypondPartsSheetMusic $lp_sheet_music)
     {
         $score_config = array_merge($lp_sheet_music->score_config, [
-            'hide_voices' => ['sopran', 'alt', 'tenor', 'bas', 'zeny', 'muzi']
+            // 'hide_voices' => ['sopran', 'alt', 'tenor', 'bas', 'zeny', 'muzi']
         ]);
 
         $data = $this->lp_service->doClientRenderSvg($this->makeLilypondPartsTemplate(
             $lp_sheet_music->lilypond_parts,
             $lp_sheet_music->global_src ?? '',
-            $score_config
+            $score_config,
+            $lp_sheet_music->sequence_string
         ), true);
 
-        return $data['svg'] === '' ? $data['log'] : $data['svg'];
+        return $data['svg'];
     }
 
     public function makePartSvgFast($part, $global_src, $score_config_input)

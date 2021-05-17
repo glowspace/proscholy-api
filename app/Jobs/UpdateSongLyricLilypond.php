@@ -54,7 +54,7 @@ class UpdateSongLyricLilypond implements ShouldQueue
         }
 
 
-        if ($svg === false) {
+        if ($svg === false || empty($svg)) {
             logger('Unsuccessful Lilypond render');
             return;
         }
