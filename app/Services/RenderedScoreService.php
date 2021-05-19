@@ -79,6 +79,8 @@ class RenderedScoreService
             'frontend_display_order' => $frontend_display_order
         ]);
 
+        logger("Saving rendered score ($primary_filename.$primary_filetype)");
+
         $lp->rendered_scores()->save($rs);
     }
 

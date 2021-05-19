@@ -32,6 +32,24 @@ class LilypondService
         return $data;
     }
 
+    public function doClientRenderPdf($src)
+    {
+        $res = $this->client->render($src, 'pdf');
+
+        $data = [
+            'pdf' => $res->isSuccessful() ? $this->client->getResultOutputFile($res) : '',
+            'log' => $this->client->getResultLog($res)
+        ];
+
+        if ($res->contentsHasFile('score.midi')) {
+            $data['midi'] = $this->client->getProcessedFile($res->getTmp(), 'score.midi');
+        }
+
+        $this->client->deleteResult($res);
+
+        return $data;
+    }
+
     public function makeSvgFast($lilypond, $key_major = null)
     {
         $data = $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), false);

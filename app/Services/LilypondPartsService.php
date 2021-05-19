@@ -114,7 +114,7 @@ class LilypondPartsService
 
         foreach ($this->getLilypondPartsRenderData($lpsm) as $data) {
             logger("Dispatching jobs for LilypondParts ID $lpsm->id");
-            RenderLilypondPart::dispatch($lpsm->id, $data['render_config'], $data['frontend_display_order']);
+            RenderLilypondPart::dispatch($lpsm->id, $data['render_config'], $data['frontend_display_order'] ?? null);
         }
     }
 
@@ -172,6 +172,12 @@ class LilypondPartsService
             'render_config' => ['paper_width_mm' => 240],
             'frontend_display_order' => 3
         ];
+
+        // setting the paper type causes to render PDF
+        $render_data[] = [
+            'render_config' => ['paper_type' => 'a4']
+        ];
+
 
         return $render_data;
     }

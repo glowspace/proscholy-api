@@ -12,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Services\LilypondService;
 use App\Services\RenderedScoreService;
+use Illuminate\Support\Arr;
 
 class RenderLilypondPart implements ShouldQueue
 {
@@ -49,15 +50,20 @@ class RenderLilypondPart implements ShouldQueue
 
         $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $final_render_config, $lpsm->sequence_string);
 
+        $filetype = Arr::has($this->add_render_config, 'paper_type') ? 'pdf' : 'svg';
+
+        logger("Dispatched score render with config:");
+        logger($this->add_render_config);
+
         // render the template and get the files' data from lp_service
-        $data = $lp_service->doClientRenderSvg($lp_template, true);
+        $data = $filetype === 'pdf' ? $lp_service->doClientRenderPdf($lp_template) : $lp_service->doClientRenderSvg($lp_template, true);
 
         // call rs_service to store the RenderedScore with its data
         $rs_service->createLilypondRenderedScore(
             $lpsm,
             $this->add_render_config,
-            'svg',
-            $data['svg'],
+            $filetype,
+            $data[$filetype],
             [
                 'midi' => $data['midi']
             ],
