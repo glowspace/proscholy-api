@@ -34,8 +34,6 @@ class UpdateSongLyric
         $song_lyric = SongLyric::find($input["id"]);
         // $song_lyric_old = $song_lyric->replicate();
 
-        logger($input);
-
         $this->sl_service->handleLilypond($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
 
         $song_lyric->update($input);
