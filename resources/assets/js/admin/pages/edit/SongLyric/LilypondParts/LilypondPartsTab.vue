@@ -191,8 +191,11 @@
             ></v-textarea>
 
             <div class="mb-2">
-                <a href="#6" @click="downloadLilypondSource"
-                    >Stáhnout finální Lilypond (zip)</a
+                <a href="#6" @click="downloadLilyPond('ZIP')"
+                    >Stáhnout finální Lilypond kód (ZIP)</a
+                >
+                <a href="#6" @click="downloadLilyPond('PDF')"
+                    >Vygenerovat a stáhnout PDF</a
                 >
             </div>
 
@@ -361,21 +364,9 @@ export default {
                 .query({
                     query: lilypond_helper.queries.total,
                     variables: {
-                        lilypond_total: {
-                            lilypond_parts: this.lilypondPartsSheetMusic
-                                .lilypond_parts,
-                            global_src: this.show_global_src_input
-                                ? this.lilypondPartsSheetMusic.global_src
-                                : '',
-                            sequence_string: this.lilypondPartsSheetMusic
-                                .sequence_string,
-                            render_config: {
-                                ...this.lilypondPartsSheetMusic.score_config,
-                                ...add_render_config,
-                                global_transpose_relative_c: this
-                                    .global_transpose_relative_c
-                            }
-                        }
+                        lilypond_total: this.getLilyPondTotalDataObject(
+                            add_render_config
+                        )
                     },
                     fetchPolicy: 'no-cache'
                 })
@@ -387,6 +378,44 @@ export default {
                     this.global_svg_loading = false;
                     console.log(err);
                 });
+        },
+
+        downloadLilyPond(filetype = 'ZIP') {
+            this.$apollo
+                .query({
+                    query: lilypond_helper.queries.get_file,
+                    variables: {
+                        lilypond_total: this.getLilyPondTotalDataObject(
+                            {
+                                'paper_type' : 'a4',
+                                'disable_prefilling': true
+                            }),
+                        file_type: filetype
+                    }
+                })
+                .then(response => {
+                    window.open('data:application/octet-stream;base64,' +
+                        response.data.lilypond_get_file.base64, '_blank');
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+
+        getLilyPondTotalDataObject(add_render_config = {}) {
+            return {
+                lilypond_parts: this.lilypondPartsSheetMusic.lilypond_parts,
+                global_src: this.show_global_src_input
+                    ? this.lilypondPartsSheetMusic.global_src
+                    : '',
+                sequence_string: this.lilypondPartsSheetMusic.sequence_string,
+                render_config: {
+                    ...this.lilypondPartsSheetMusic.score_config,
+                    ...add_render_config,
+                    global_transpose_relative_c: this
+                        .global_transpose_relative_c
+                }
+            };
         },
 
         partNameError(name, part_i) {
@@ -429,27 +458,6 @@ export default {
                 }
             }
             return null;
-        },
-
-        getLilypondDownloadUrl() {
-            const parts_data = encodeURIComponent(
-                JSON.stringify(this.lilypondPartsSheetMusic.lilypond_parts)
-            );
-            const global_src = encodeURIComponent(
-                this.lilypondPartsSheetMusic.global_src ?? ''
-            );
-            const sequence_string = encodeURIComponent(
-                this.lilypondPartsSheetMusic.sequence_string
-            );
-            const score_config = encodeURIComponent(
-                JSON.stringify(this.lilypondPartsSheetMusic.score_config)
-            );
-
-            return `/be-api/lilypond-download-parts-source?lilypond_parts=${parts_data}&global_src=${global_src}&score_config=${score_config}&sequence_string=${sequence_string}`;
-        },
-
-        downloadLilypondSource() {
-            window.open(this.getLilypondDownloadUrl(), '_blank');
         }
     },
 

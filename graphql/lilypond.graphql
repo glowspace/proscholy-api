@@ -2,9 +2,20 @@ type LilypondOutput {
     svg: String
 }
 
+enum RequestedFileType {
+    ZIP @enum(value: "zip")
+    PDF @enum(value: "pdf")
+}
+
+type FileOutput {
+    base64: String
+}
+
 extend type Query @middleware(checks: ["auth:api"]) {
     lilypond_parse(lilypond: String, lilypond_key_major: String): LilypondOutput 
 
     lilypond_preview_part(lilypond_part: LilypondPartInput, global_src: String, render_config: LilypondRenderConfigInput) : LilypondOutput
     lilypond_preview_total(lilypond_total: LilypondPartsSheetMusicRenderInput) : LilypondOutput
+
+    lilypond_get_file(lilypond_total: LilypondPartsSheetMusicRenderInput, file_type: RequestedFileType) : FileOutput
 }

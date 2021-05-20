@@ -65,4 +65,7 @@ input LilypondRenderConfigInput {
     hide_voices: [String]
     hide_bar_numbers: Boolean
     note_splitting: Boolean
+    paper_type: String
+    disable_prefilling: Boolean
+    include_font_files: Boolean
 }

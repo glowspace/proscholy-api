@@ -32,51 +32,7 @@ class DownloadController extends Controller
 
         return response()->file($path);
     }
-
-    // todo: refactor this to graphql
-    public function downloadLilypondSource(Request $request)
-    {
-        $filename = $request->get('filename');
-        $lilypond = $request->get('lilypond_src');
-        $key_major = $request->get('lylipond_key_major');
-
-        $ly_s = new LilypondService();
-        $src = $ly_s->makeLilypondBasicTemplate($lilypond, $key_major);
-
-        $headers = [
-            'Content-Type' => 'text/*'
-        ];
-
-        return response()->streamDownload(function () use ($src) {
-            echo $src;
-        }, "$filename.ly", $headers);
-    }
-
-    // todo: refactor this to graphql
-    public function downloadLilypondPartsSource(Request $request)
-    {
-        $parts = json_decode($request->get('lilypond_parts'), true);
-        $global_src = $request->get('global_src') ?? '';
-        $sequence_string = $request->get('sequence_string') ?? '';
-        $score_config = json_decode($request->get('score_config'), true);
-
-        $score_config = array_merge($score_config, [
-            'include_font_files' => true
-        ]);
-
-        /** @var LilypondPartsService */
-        $ly_s = app(LilypondPartsService::class);
-        $src = $ly_s->makeLilypondPartsTemplate($parts, $global_src, $score_config, $sequence_string);
-
-        $headers = [
-            'Content-Type' => '	application/zip'
-        ];
-
-        return response()->streamDownload(function () use ($src) {
-            echo stream_get_contents($src->getZippedSrcStream());
-        }, "score.zip", $headers);
-    }
-
+    
     public function proxyExternal(External $external)
     {
         if ($external->mime_type == "") {

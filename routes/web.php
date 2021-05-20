@@ -29,11 +29,6 @@ Route::get('/preview/{file}/{filename?}', 'DownloadController@downloadFileOld')-
 Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download');
 Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('external.proxy');
 
-Route::group(['prefix' => 'be-api'], function () {
-    Route::get('lilypond-download-source', 'DownloadController@downloadLilypondSource');
-    Route::get('lilypond-download-parts-source', 'DownloadController@downloadLilypondPartsSource');
-});
-
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {

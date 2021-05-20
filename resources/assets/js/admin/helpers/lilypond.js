@@ -61,6 +61,20 @@ const FETCH_LILYPOND_TOTAL = gql`
     }
 `;
 
+const GET_LILYPOND_FILE = gql`
+    query(
+        $lilypond_total: LilypondPartsSheetMusicRenderInput
+        $file_type: RequestedFileType
+    ) {
+        lilypond_get_file(
+            lilypond_total: $lilypond_total
+            file_type: $file_type
+        ) {
+            base64
+        }
+    }
+`;
+
 const templates = {
     parts_basic: `solo = \\relative {
 \tc'4
@@ -108,6 +122,7 @@ export default {
     enums,
     queries: {
         part: FETCH_LILYPOND_PART,
-        total: FETCH_LILYPOND_TOTAL
+        total: FETCH_LILYPOND_TOTAL,
+        get_file: GET_LILYPOND_FILE
     }
 };
