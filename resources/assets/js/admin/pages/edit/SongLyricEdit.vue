@@ -514,7 +514,7 @@
           </v-tab-item>
         </v-tabs-items>
       </v-tabs>
-      <div class="position-sticky fixed-bottom body-bg mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:2 max-width: 90vw;">
+      <div class="position-sticky fixed-bottom body-bg mb-0 p-2 card d-inline-block overflow-auto" style="max-height:15vh;z-index:0; max-width: 90vw;">
         <v-tooltip top>
             <template v-slot:activator="{ on }">
                 <v-btn @click="submit" :disabled="!isDirty" class="success" v-on="on"><i class="fas fa-save mr-2"></i> Uložit</v-btn>
