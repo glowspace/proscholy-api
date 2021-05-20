@@ -463,14 +463,11 @@
                   name="input-7-4"
                   label="Notový zápis ve formátu Lilypond"
                   ref="textarea"
+                  :readonly="true"
                   v-model="model.lilypond"
-                  v-on:keydown.tab.prevent="preventTextareaTab($event)"
+                  placeholder="Pro vytváření nových LilyPond záznamů použijte nový způsob zápisu"
                   style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
                 ></v-textarea>
-
-                <div class="mb-3">
-                  <a href="#5" @click="downloadLilypondSrc">Stáhnout finální lilypond</a>
-                </div>
               </v-flex>
               <v-flex xs12 md6>
                   <div v-if="lilypond_parse" v-html="lilypond_parse.svg" v-show="model.lilypond" ref="lilypond_src_div" style="max-height: 70vh; overflow: scroll; white-space: pre;"></div>
@@ -979,24 +976,6 @@ export default {
         }
       }
     },
-
-    preventTextareaTab(event) {
-      let text = this.model.lilypond,
-              originalSelectionStart = event.target.selectionStart,
-              textStart = text.slice(0, originalSelectionStart),
-              textEnd =  text.slice(originalSelectionStart);
-
-      this.model.lilypond = `${textStart}\t${textEnd}`
-      event.target.value = this.model.lilypond // required to make the cursor stay in place.
-      event.target.selectionEnd = event.target.selectionStart = originalSelectionStart + 1
-    },
-
-    downloadLilypondSrc() {
-      const fileName = this.model_database.public_route.split('/')[3];
-      const url = `/be-api/lilypond-download-source?filename=${fileName}&lilypond_src=${encodeURIComponent(this.model.lilypond)}&lilypond_key_major=${this.model.lilypond_key_major}`;
-
-      window.open(url, '_blank');
-    },   
 
     // todo: rewrite from jquery to graphql
 
