@@ -94,11 +94,7 @@
                         <v-text-field
                             label="Část (ozn.)"
                             v-model="part.name"
-                            :error-messages="
-                                isPartNameUsed(part.name, i)
-                                    ? 'Duplicitní jméno části'
-                                    : null
-                            "
+                            :error-messages="partNameError(part.name, i)"
                         ></v-text-field>
                     </v-flex>
 
@@ -390,11 +386,18 @@ export default {
                 });
         },
 
-        isPartNameUsed(name, part_i) {
-            return this.lilypondPartsSheetMusic.lilypond_parts
+        partNameError(name, part_i) {
+            const is_used = this.lilypondPartsSheetMusic.lilypond_parts
                 .filter((_, i) => i !== part_i)
                 .map(p => p.name)
                 .includes(name);
+
+            if (is_used) { return 'Duplicitní jméno části'; }
+            if (name.indexOf(' ') >= 0) { return 'Jméno části nesmí obsahovat mezery.'; }
+            if (name.indexOf('|') >= 0) { return 'Jméno části nesmí obsahovat svislítka.'; }
+            if (name.indexOf('.') >= 0) { return 'Jméno části nesmí obsahovat tečky.'; }
+
+            return null;
         },
 
         getLilypondDownloadUrl() {
