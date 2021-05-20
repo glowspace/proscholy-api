@@ -26,7 +26,6 @@
             :debounce="1000"
             fetchPolicy="no-cache"
             :options="{ notifyOnNetworkStatusChange: true }"
-            @result="cropSvg"
             :skip="!shouldRender"
         >
             <template v-slot="{ result: { loading, error, data } }">
@@ -59,7 +58,6 @@
 
 <script>
 import lilypond_helper from 'Admin/helpers/lilypond.js';
-import cropSvgElem from './svgcrop.js';
 
 export default {
     props: [
@@ -84,19 +82,6 @@ export default {
 
             fetch_lilypond_part_query: lilypond_helper.queries.part
         };
-    },
-
-    methods: {
-        cropSvg() {
-            Vue.nextTick().then(() => {
-                if (
-                    this.$refs['lilypond_src_div'] &&
-                    this.$refs['lilypond_src_div'].childNodes.length
-                ) {
-                    cropSvgElem(this.$refs['lilypond_src_div'].childNodes[0]);
-                }
-            });
-        }
     }
 };
 </script>

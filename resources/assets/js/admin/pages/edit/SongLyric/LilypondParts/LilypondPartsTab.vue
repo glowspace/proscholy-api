@@ -241,6 +241,8 @@
 
 .lilypond-preview svg {
     white-space: normal;
+    width: 100%;
+    height: auto;
 }
 
 .lilypond-preview.loading {
@@ -257,7 +259,6 @@
 <script>
 import lilypond_helper from 'Admin/helpers/lilypond.js';
 import LilypondPartRender from './LilypondPartRender';
-import cropSvgElem from './svgcrop.js';
 
 export default {
     props: {
@@ -286,8 +287,8 @@ export default {
 
             total_variants_select_items: [
                 {
-                    text: 'Výchozí mobilní zobrazení (pouze solo)',
-                    value: 'bare_solo'
+                    text: 'Mobilní zobrazení -- všechny hlasy',
+                    value: 'all_voices'
                 },
                 {
                     text: 'Mobilní zobrazení solo + muži -- zatím pouze náhled',
@@ -305,15 +306,8 @@ export default {
             ],
 
             total_variants_configs: {
-                bare_solo: {
-                    hide_voices: [
-                        'sopran',
-                        'alt',
-                        'tenor',
-                        'bas',
-                        'zeny',
-                        'muzi'
-                    ]
+                all_voices: {
+                    hide_voices: []
                 },
                 solo_men: {
                     hide_voices: ['sopran', 'alt', 'zeny', 'akordy']
@@ -327,7 +321,7 @@ export default {
                 }
             },
 
-            selected_total_variant: 'bare_solo',
+            selected_total_variant: 'all_voices',
 
             global_transpose_relative_c: 'c'
         };
@@ -343,19 +337,6 @@ export default {
             event.target.value = src_obj[src_prop]; // required to make the cursor stay in place.
             event.target.selectionEnd = event.target.selectionStart =
                 originalSelectionStart + 1;
-        },
-
-        cropTotalSvg() {
-            Vue.nextTick().then(() => {
-                if (
-                    this.$refs['lilypond_src_div_total'] &&
-                    this.$refs['lilypond_src_div_total'].childNodes.length
-                ) {
-                    cropSvgElem(
-                        this.$refs['lilypond_src_div_total'].childNodes[0]
-                    );
-                }
-            });
         },
 
         insertPart(i) {
@@ -401,8 +382,6 @@ export default {
                 })
                 .then(response => {
                     this.global_svg = response.data.lilypond_preview_total.svg;
-
-                    this.cropTotalSvg();
                     this.global_svg_loading = false;
                 })
                 .catch(err => {
