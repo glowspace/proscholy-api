@@ -184,7 +184,10 @@
             <v-textarea
                 label="Zobrazení po částech"
                 v-model="lilypondPartsSheetMusic.sequence_string"
-                :placeholder="partsStringPlaceholder"
+                :error-messages="
+                    sequenceStringError(lilypondPartsSheetMusic.sequence_string)
+                "
+                :placeholder="sequenceStringPlaceholder"
             ></v-textarea>
 
             <div class="mb-2">
@@ -392,11 +395,39 @@ export default {
                 .map(p => p.name)
                 .includes(name);
 
-            if (is_used) { return 'Duplicitní jméno části'; }
-            if (name.indexOf(' ') >= 0) { return 'Jméno části nesmí obsahovat mezery.'; }
-            if (name.indexOf('|') >= 0) { return 'Jméno části nesmí obsahovat svislítka.'; }
-            if (name.indexOf('.') >= 0) { return 'Jméno části nesmí obsahovat tečky.'; }
+            if (is_used) {
+                return 'Duplicitní jméno části';
+            }
+            if (name.indexOf(' ') >= 0) {
+                return 'Jméno části nesmí obsahovat mezery.';
+            }
+            if (name.indexOf('|') >= 0) {
+                return 'Jméno části nesmí obsahovat svislítka.';
+            }
+            if (name.indexOf('.') >= 0) {
+                return 'Jméno části nesmí obsahovat tečky.';
+            }
 
+            return null;
+        },
+
+        sequenceStringError(str) {
+            const tokens = str
+                .replace(/\./g, ' . ')
+                .replace(/\|/g, ' | ')
+                .replace(/\n/g, ' ')
+                .split(' ');
+
+            let allowedNames = this.partNamesMap;
+            allowedNames.set('|', true);
+            allowedNames.set('.', true);
+
+            for (let token of tokens) {
+                const trimmed = token.trim();
+                if (trimmed.length > 0 && !allowedNames.has(trimmed)) {
+                    return 'Neplatný symbol nebo název části: ' + trimmed;
+                }
+            }
             return null;
         },
 
@@ -423,7 +454,7 @@ export default {
     },
 
     computed: {
-        partsStringPlaceholder() {
+        sequenceStringPlaceholder() {
             return this.lilypondPartsSheetMusic.lilypond_parts.reduce(
                 (str, part) => str + ` ${part.name}`,
                 ''
@@ -436,6 +467,14 @@ export default {
                     .paper_width_mm ?? 120;
 
             return width_mm * 4;
+        },
+
+        partNamesMap() {
+            let m = new Map();
+            for (const part of this.lilypondPartsSheetMusic.lilypond_parts) {
+                m.set(part.name, true);
+            }
+            return m;
         }
     },
 
