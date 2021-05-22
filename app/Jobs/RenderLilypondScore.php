@@ -14,7 +14,7 @@ use App\Services\LilypondService;
 use App\Services\RenderedScoreService;
 use Illuminate\Support\Arr;
 
-class RenderLilypondPart implements ShouldQueue
+class RenderLilypondScore implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

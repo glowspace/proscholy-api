@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Jobs\RenderLilypondPart;
+use App\Jobs\RenderLilypondScore;
 use App\LilypondPartsSheetMusic;
 use ProScholy\LilypondRenderer\LilypondPartsTemplate;
 
@@ -105,7 +105,7 @@ class LilypondPartsService
         );
     }
 
-    public function renderLilypondPartsSheetMusic(LilypondPartsSheetMusic $lpsm)
+    public function RenderLilypondScoresSheetMusic(LilypondPartsSheetMusic $lpsm)
     {
         logger("Deleting old RenderedScores for LP sheet music $lpsm->id");
         foreach ($lpsm->rendered_scores as $score) {
@@ -114,7 +114,7 @@ class LilypondPartsService
 
         foreach ($this->getLilypondPartsRenderData($lpsm) as $data) {
             logger("Dispatching jobs for LilypondParts ID $lpsm->id");
-            RenderLilypondPart::dispatch($lpsm->id, $data['render_config'], $data['frontend_display_order'] ?? null);
+            RenderLilypondScore::dispatch($lpsm->id, $data['render_config'], $data['frontend_display_order'] ?? null);
         }
     }
 

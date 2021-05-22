@@ -172,7 +172,7 @@ class SongLyricService
         if ($new_lilypond_updated && config('lilypond.use_rendered_scores')) {
             logger("Song lyric LP Parts Sheet music updated, doing the render");
 
-            $this->lpsm_service->renderLilypondPartsSheetMusic($lp_parts_sm);
+            $this->lpsm_service->RenderLilypondScoresSheetMusic($lp_parts_sm);
         }
 
         // with that, the lilypond is updated
