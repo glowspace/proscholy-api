@@ -173,7 +173,7 @@
                 :should-render="isDisplayed"
             ></LilypondPartRender>
 
-            <div style="margin-bottom: 24px; margin-top: -24px;">
+            <div class="btn-add-segment">
                 <v-btn @click="insertPart(i)" color="info" outline
                     >Přidat část písně</v-btn
                 >
@@ -190,15 +190,6 @@
                 :placeholder="sequenceStringPlaceholder"
             ></v-textarea>
 
-            <div class="mb-2">
-                <a href="#6" @click="downloadLilyPond('ZIP')"
-                    >Stáhnout finální Lilypond kód (ZIP)</a
-                >
-                <a href="#6" @click="downloadLilyPond('PDF')"
-                    >Vygenerovat a stáhnout PDF</a
-                >
-            </div>
-
             <v-select
                 :items="total_variants_select_items"
                 v-model="selected_total_variant"
@@ -208,25 +199,42 @@
                 "
             ></v-select>
 
-            <!-- <v-text-field
+            <v-text-field
                 label="Globální transpozice relativně k c:"
                 v-model="global_transpose_relative_c"
-            ></v-text-field> -->
+            ></v-text-field>
 
-            <v-btn
-                class="mb-3"
-                @click="
-                    renderFinal(total_variants_configs[selected_total_variant])
-                "
-                >Zobrazit/aktualizovat spojené noty</v-btn
-            >
+            <v-flex class="mb-3">
+                <v-btn
+                    class="mr-2"
+                    @click="
+                        renderFinal(
+                            total_variants_configs[selected_total_variant]
+                        )
+                    "
+                    >Zobrazit/aktualizovat finální noty</v-btn
+                >
+
+                <v-btn @click="downloadLilyPond('ZIP')"
+                    ><i class="fas fa-file-archive mr-2"></i> Stáhnout finální
+                    Lilypond kód (ZIP)</v-btn
+                >
+                <v-btn @click="downloadLilyPond('PDF')"
+                    ><i class="fas fa-file-pdf mr-2"></i>Vygenerovat a stáhnout
+                    finální PDF</v-btn
+                >
+
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    v-show="is_global_loading"
+                ></v-progress-circular>
+            </v-flex>
+
             <div
                 v-html="global_svg"
                 ref="lilypond_src_div_total"
-                :class="{
-                    'lilypond-preview': true,
-                    loading: global_svg_loading
-                }"
+                class="lilypond-preview"
                 :style="`max-width: ${globalSrcMaxPixelWidth}px`"
             ></div>
         </v-flex>
@@ -256,10 +264,18 @@
     tab-size: 2;
     margin-bottom: 5px;
 }
+
+@media screen and (min-width: 989px) {
+    .btn-add-segment {
+        margin-bottom: 24px;
+        margin-top: -24px;
+    }
+}
 </style>
 
 <script>
 import lilypond_helper from 'Admin/helpers/lilypond.js';
+import downloadFile from 'Admin/helpers/downloadBase64.js';
 import LilypondPartRender from './LilypondPartRender';
 
 export default {
@@ -282,7 +298,7 @@ export default {
 
             show_global_src_input: false,
 
-            global_svg_loading: false,
+            is_global_loading: false,
             global_svg: '',
             enums: lilypond_helper.enums,
             lilypond_templates: lilypond_helper.templates,
@@ -358,7 +374,7 @@ export default {
         },
 
         renderFinal(add_render_config = {}) {
-            this.global_svg_loading = true;
+            this.is_global_loading = true;
 
             this.$apollo
                 .query({
@@ -372,33 +388,38 @@ export default {
                 })
                 .then(response => {
                     this.global_svg = response.data.lilypond_preview_total.svg;
-                    this.global_svg_loading = false;
+                    this.is_global_loading = false;
                 })
                 .catch(err => {
-                    this.global_svg_loading = false;
+                    this.is_global_loading = false;
                     console.log(err);
                 });
         },
 
         downloadLilyPond(filetype = 'ZIP') {
+            this.is_global_loading = true;
+
             this.$apollo
                 .query({
                     query: lilypond_helper.queries.get_file,
                     variables: {
-                        lilypond_total: this.getLilyPondTotalDataObject(
-                            {
-                                'paper_type' : 'a4',
-                                'disable_prefilling': true
-                            }),
+                        lilypond_total: this.getLilyPondTotalDataObject({
+                            paper_type: 'a4',
+                            disable_prefilling: true
+                        }),
                         file_type: filetype
                     }
                 })
                 .then(response => {
-                    window.open('data:application/octet-stream;base64,' +
-                        response.data.lilypond_get_file.base64, '_blank');
+                    downloadFile(
+                        response.data.lilypond_get_file.base64,
+                        `export.${filetype.toLowerCase()}`
+                    );
+                    this.is_global_loading = false;
                 })
                 .catch(err => {
                     console.log(err);
+                    this.is_global_loading = false;
                 });
         },
 
