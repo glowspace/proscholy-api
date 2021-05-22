@@ -156,7 +156,14 @@
                         preventTextareaTab($event, part, 'src')
                     "
                     browser-autocomplete="off"
+                    :error-messages="partInputError(part.src)"
                 ></v-textarea>
+
+                <div class="btn-add-segment">
+                    <v-btn @click="insertPart(i)" color="info" outline
+                        >Přidat část písně</v-btn
+                    >
+                </div>
             </v-flex>
 
             <LilypondPartRender
@@ -172,12 +179,6 @@
                 :score-config="lilypondPartsSheetMusic.score_config"
                 :should-render="isDisplayed"
             ></LilypondPartRender>
-
-            <div class="btn-add-segment">
-                <v-btn @click="insertPart(i)" color="info" outline
-                    >Přidat část písně</v-btn
-                >
-            </div>
         </v-layout>
 
         <v-flex xs12>
@@ -269,6 +270,11 @@
     .btn-add-segment {
         margin-bottom: 24px;
         margin-top: -24px;
+    }
+
+    .error--text + .btn-add-segment {
+        margin-bottom: 0;
+        margin-top: 0;
     }
 }
 </style>
@@ -459,6 +465,14 @@ export default {
             }
 
             return null;
+        },
+
+        partInputError(part_src) {
+            if (part_src.trim() == '') return null;
+
+            if (!part_src.match(/(solo|sopran|alt|zeny|tenor|bas|muzi)/)) {
+                return 'Kód musí obsahovat proměnnou solo, sopran, alt, zeny, tenor, bas nebo muzi';
+            }
         },
 
         sequenceStringError(str) {
