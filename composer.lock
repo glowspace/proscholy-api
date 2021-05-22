@@ -3860,16 +3860,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.9",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/proscholy/lilypond-renderer-client.git",
-                "reference": "668fa3849a712601e749e60b7cbceab284695a38"
+                "reference": "be30042792de923092f086d54bd9aff29d39d781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/668fa3849a712601e749e60b7cbceab284695a38",
-                "reference": "668fa3849a712601e749e60b7cbceab284695a38",
+                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/be30042792de923092f086d54bd9aff29d39d781",
+                "reference": "be30042792de923092f086d54bd9aff29d39d781",
                 "shasum": ""
             },
             "require": {
@@ -3905,10 +3905,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.9",
+                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.9.1",
                 "issues": "https://github.com/proscholy/lilypond-renderer-client/issues"
             },
-            "time": "2021-05-22T09:06:04+00:00"
+            "time": "2021-05-22T12:49:30+00:00"
         },
         {
             "name": "psr/cache",
