@@ -191,53 +191,58 @@
                 :placeholder="sequenceStringPlaceholder"
             ></v-textarea>
 
-            <v-select
-                :items="total_variants_select_items"
-                v-model="selected_total_variant"
-                label="Typ zobrazení"
-                @input="
-                    renderFinal(total_variants_configs[selected_total_variant])
-                "
-            ></v-select>
+            <v-layout>
+                <v-flex md6>
+                    <v-select
+                        :items="total_variants_select_items"
+                        v-model="selected_total_variant"
+                        label="Typ zobrazení"
+                        @input="
+                            renderFinal(
+                                total_variants_configs[selected_total_variant]
+                            )
+                        "
+                    ></v-select>
 
-            <v-text-field
-                label="Globální transpozice relativně k c:"
-                v-model="global_transpose_relative_c"
-            ></v-text-field>
+                    <v-text-field
+                        label="Globální transpozice relativně k c:"
+                        v-model="global_transpose_relative_c"
+                    ></v-text-field>
 
-            <v-flex class="mb-3">
-                <v-btn
-                    class="mr-2"
-                    @click="
-                        renderFinal(
-                            total_variants_configs[selected_total_variant]
-                        )
-                    "
-                    >Zobrazit/aktualizovat finální noty</v-btn
-                >
+                    <v-btn
+                        class="mr-2"
+                        @click="
+                            renderFinal(
+                                total_variants_configs[selected_total_variant]
+                            )
+                        "
+                        >Zobrazit/aktualizovat finální noty</v-btn
+                    >
 
-                <v-btn @click="downloadLilyPond('ZIP')"
-                    ><i class="fas fa-file-archive mr-2"></i> Stáhnout finální
-                    Lilypond kód (ZIP)</v-btn
-                >
-                <v-btn @click="downloadLilyPond('PDF')"
-                    ><i class="fas fa-file-pdf mr-2"></i>Vygenerovat a stáhnout
-                    finální PDF</v-btn
-                >
+                    <div
+                        v-html="global_svg"
+                        ref="lilypond_src_div_total"
+                        class="lilypond-preview"
+                        :style="`max-width: ${globalSrcMaxPixelWidth}px`"
+                    ></div>
+                </v-flex>
 
-                <v-progress-circular
-                    indeterminate
-                    color="primary"
-                    v-show="is_global_loading"
-                ></v-progress-circular>
-            </v-flex>
-
-            <div
-                v-html="global_svg"
-                ref="lilypond_src_div_total"
-                class="lilypond-preview"
-                :style="`max-width: ${globalSrcMaxPixelWidth}px`"
-            ></div>
+                <v-flex md6>
+                    <v-btn @click="downloadLilyPond('ZIP')"
+                        ><i class="fas fa-file-archive mr-2"></i> Stáhnout
+                        finální Lilypond kód (ZIP)</v-btn
+                    >
+                    <v-btn @click="downloadLilyPond('PDF')"
+                        ><i class="fas fa-file-pdf mr-2"></i>Vygenerovat a
+                        stáhnout finální PDF</v-btn
+                    >
+                    <v-progress-circular
+                        indeterminate
+                        color="primary"
+                        v-show="is_global_loading"
+                    ></v-progress-circular>
+                </v-flex>
+            </v-layout>
         </v-flex>
     </v-layout>
 </template>
@@ -463,12 +468,10 @@ export default {
             if (name.indexOf('.') >= 0) {
                 return 'Jméno části nesmí obsahovat tečky.';
             }
-
-            return null;
         },
 
         partInputError(part_src) {
-            if (part_src.trim() == '') return null;
+            if (!part_src || part_src.trim() == '') return;
 
             if (!part_src.match(/(solo|sopran|alt|zeny|tenor|bas|muzi)/)) {
                 return 'Kód musí obsahovat proměnnou solo, sopran, alt, zeny, tenor, bas nebo muzi';
@@ -476,6 +479,8 @@ export default {
         },
 
         sequenceStringError(str) {
+            if (!str) return;
+
             const tokens = str
                 .replace(/\./g, ' . ')
                 .replace(/\|/g, ' | ')
@@ -492,7 +497,6 @@ export default {
                     return 'Neplatný symbol nebo název části: ' + trimmed;
                 }
             }
-            return null;
         }
     },
 
@@ -533,6 +537,7 @@ export default {
             this.lilypondPartsSheetMusic = val;
 
             this.show_global_src_input =
+                this.lilypondPartsSheetMusic.global_src &&
                 this.lilypondPartsSheetMusic.global_src.length > 0;
         }
     }
