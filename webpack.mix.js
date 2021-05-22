@@ -90,4 +90,6 @@ if (mix.inProduction()) {
     //     ],
     //   })
     // .version(); // File hash suffix in production (to bust old caches)
+} else {
+    mix.sourceMaps(true, 'source-map');
 }
