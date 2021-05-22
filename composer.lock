@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d1d18bbeff99a4f60817498a8896a09",
+    "content-hash": "2b4540e8f695ac88ee7ed94bc3d88c39",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -3860,16 +3860,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.8.7",
+            "version": "0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/proscholy/lilypond-renderer-client.git",
-                "reference": "eeb63f34e16799874a065641a0e3823a86f8c13e"
+                "reference": "668fa3849a712601e749e60b7cbceab284695a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/eeb63f34e16799874a065641a0e3823a86f8c13e",
-                "reference": "eeb63f34e16799874a065641a0e3823a86f8c13e",
+                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/668fa3849a712601e749e60b7cbceab284695a38",
+                "reference": "668fa3849a712601e749e60b7cbceab284695a38",
                 "shasum": ""
             },
             "require": {
@@ -3905,10 +3905,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.8.7",
+                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.9",
                 "issues": "https://github.com/proscholy/lilypond-renderer-client/issues"
             },
-            "time": "2021-05-22T06:30:53+00:00"
+            "time": "2021-05-22T09:06:04+00:00"
         },
         {
             "name": "psr/cache",
