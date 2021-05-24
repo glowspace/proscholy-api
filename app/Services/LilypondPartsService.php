@@ -10,10 +10,10 @@ use ProScholy\LilypondRenderer\LilypondPartsRenderConfig;
 
 class LilypondPartsService
 {
-    protected LilypondService $lp_service;
+    protected LilypondClientService $lp_service;
     protected RenderedScoreService $rs_service;
 
-    public function __construct(LilypondService $lp_service, RenderedScoreService $rs_service)
+    public function __construct(LilypondClientService $lp_service, RenderedScoreService $rs_service)
     {
         $this->lp_service = $lp_service;
         $this->rs_service = $rs_service;

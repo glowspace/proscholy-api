@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\External;
 use App\Services\LilypondPartsService;
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 
 class DownloadController extends Controller
 {

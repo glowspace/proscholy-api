@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 use App\Services\SongLyricService;
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
 use Blade;
 use Validator;
@@ -51,14 +51,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(LilypondService::class, function () {
-            return new LilypondService();
+        $this->app->singleton(LilypondClientService::class, function () {
+            return new LilypondClientService();
         });
         $this->app->singleton(RenderedScoreService::class, function () {
             return new RenderedScoreService();
         });
         $this->app->singleton(SongLyricService::class, function () {
-            return new SongLyricService(app(LilypondService::class), app(LilypondPartsService::class));
+            return new SongLyricService(app(LilypondClientService::class), app(LilypondPartsService::class));
         });
     }
 }

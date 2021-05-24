@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 
 // use App\Helpers\Chord;
 // use App\Helpers\ChordSign;

@@ -5,7 +5,7 @@ namespace App\Services;
 use ProScholy\LilypondRenderer\Client as LilypondClient;
 use ProScholy\LilypondRenderer\LilypondBasicTemplate;
 
-class LilypondService
+class LilypondClientService
 {
     protected $client;
 

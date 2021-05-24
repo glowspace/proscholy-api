@@ -3,7 +3,7 @@
 namespace App\GraphQL\Queries;
 
 use App\Services\LilypondPartsService;
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 
 class LilypondGetFile
 {
@@ -11,8 +11,8 @@ class LilypondGetFile
     {
         /** @var LilypondPartsService */
         $lpt_service = app(LilypondPartsService::class);
-        /** @var LilypondService */
-        $lp_service = app(LilypondService::class);
+        /** @var LilypondClientService */
+        $lp_service = app(LilypondClientService::class);
 
         $template = $lpt_service->makeLilypondPartsTemplate(
             $args['lilypond_total']['lilypond_parts'],

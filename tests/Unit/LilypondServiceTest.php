@@ -3,13 +3,13 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 
-class LilypondServiceTest extends TestCase
+class LilypondClientServiceTest extends TestCase
 {
     public function testSvg()
     {
-        $llservice = new LilypondService();
+        $llservice = new LilypondClientService();
         $res = $llservice->makeSvgFast('{ c }');
 
         logger($res);
@@ -17,7 +17,7 @@ class LilypondServiceTest extends TestCase
 
     public function testSvgLog()
     {
-        $llservice = new LilypondService();
+        $llservice = new LilypondClientService();
         $res = $llservice->makeSvgFast('{ c ');
 
         logger($res);
@@ -26,7 +26,7 @@ class LilypondServiceTest extends TestCase
 
     // public function testSvgCrop()
     // {
-    //     $llservice = new LilypondService();
+    //     $llservice = new LilypondClientService();
     //     $res = $llservice->makeSvg('{ c }');
 
     //     logger($res);

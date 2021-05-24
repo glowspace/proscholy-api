@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
 
 use Illuminate\Support\Facades\Storage;
