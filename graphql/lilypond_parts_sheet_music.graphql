@@ -58,7 +58,6 @@ input LilypondScoreConfigInput {
 input LilypondRenderConfigInput {
     two_voices_per_staff: Boolean
     global_transpose_relative_c: String
-    force_part_breaks: Boolean
     merge_rests: Boolean
     version: String
     paper_width_mm: Int
