@@ -12,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\SongLyric;
 use App\Services\LilypondClientService;
+use App\Services\SongLyricLilypondService;
 use App\Services\SongLyricService;
 use App\Song;
 
@@ -36,7 +37,7 @@ class UpdateSongLyricLilypond implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondClientService $lily_service, LilypondPartsService $lilyparts_service, SongLyricService $sl_service)
+    public function handle(LilypondClientService $lily_service, LilypondPartsService $lilyparts_service, SongLyricLilypondService $sl_lily_service)
     {
         $sl = SongLyric::find($this->song_lyric_id);
 
@@ -60,6 +61,6 @@ class UpdateSongLyricLilypond implements ShouldQueue
         }
 
         logger('Successful Lilypond render');
-        $sl_service->handleLilypondSvg($sl, $svg);
+        $sl_lily_service->handleLilypondSvg($sl, $svg);
     }
 }

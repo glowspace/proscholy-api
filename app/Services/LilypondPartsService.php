@@ -105,7 +105,7 @@ class LilypondPartsService
         );
     }
 
-    public function RenderLilypondScoresSheetMusic(LilypondPartsSheetMusic $lpsm)
+    public function renderLilypondScoresSheetMusic(LilypondPartsSheetMusic $lpsm)
     {
         logger("Deleting old RenderedScores for LP sheet music $lpsm->id");
         foreach ($lpsm->rendered_scores as $score) {
