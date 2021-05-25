@@ -418,7 +418,7 @@ export default {
                     variables: {
                         lilypond_total: this.getLilyPondTotalDataObject({
                             paper_type: 'a4',
-                            disable_prefilling: true
+                            include_font_files: filetype === 'ZIP'
                         }),
                         file_type: filetype
                     }
