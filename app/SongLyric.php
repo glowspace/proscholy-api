@@ -253,7 +253,10 @@ class SongLyric extends Model
     {
         $slug = Str::slug($this->name);
 
-        return url("/pisen/$this->id/$slug");
+        $url = url("/pisen/$this->id/$slug");
+        $url = str_replace('api.proscholy', 'zpevnik.proscholy', $url);
+
+        return $url;
     }
 
     public function getPublicRouteAttribute()
