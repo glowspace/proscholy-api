@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\SongLyricService;
 use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
+use App\Services\SongLyricLilypondService;
 use Blade;
 use Validator;
 use URL;
@@ -57,8 +58,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RenderedScoreService::class, function () {
             return new RenderedScoreService();
         });
+        $this->app->singleton(SongLyricLilypondService::class, function () {
+            return new SongLyricLilypondService(app(LilypondClientService::class), app(LilypondPartsService::class));
+        });
         $this->app->singleton(SongLyricService::class, function () {
-            return new SongLyricService(app(LilypondClientService::class), app(LilypondPartsService::class));
+            return new SongLyricService(app(SongLyricLilypondService::class));
         });
     }
 }
