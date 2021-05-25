@@ -15,6 +15,8 @@
                         label="Použít pomocný kód"
                     ></v-checkbox>
 
+                    <a href="https://docs.google.com/document/d/1JD_y-V3IXimpXV8_QSrbq3MufD45d4JB3X8j1xE5ZFQ/edit?usp=sharing">Příručka k zadávání not po částech</a>
+
                     <p v-if="show_global_src_input" style="color: red">
                         POZOR: Pomocný kód se ve výsledném spojeném kódu
                         includuje vícekrát
