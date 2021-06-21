@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 use App\SongLyric;
 use Log;
 

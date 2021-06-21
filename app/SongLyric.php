@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 
 // use App\Helpers\Chord;
 // use App\Helpers\ChordSign;
@@ -253,7 +253,10 @@ class SongLyric extends Model
     {
         $slug = Str::slug($this->name);
 
-        return url("/pisen/$this->id/$slug");
+        $url = url("/pisen/$this->id/$slug");
+        $url = str_replace('api.proscholy', 'zpevnik.proscholy', $url);
+
+        return $url;
     }
 
     public function getPublicRouteAttribute()

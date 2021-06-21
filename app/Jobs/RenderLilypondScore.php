@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use App\Services\LilypondService;
+use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
 use Illuminate\Support\Arr;
 
@@ -39,7 +39,7 @@ class RenderLilypondScore implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondService $lp_service, LilypondPartsService $lpsm_service, RenderedScoreService $rs_service)
+    public function handle(LilypondClientService $lp_service, LilypondPartsService $lpsm_service, RenderedScoreService $rs_service)
     {
         $lpsm = LilypondPartsSheetMusic::find($this->lpsm_id);
 
