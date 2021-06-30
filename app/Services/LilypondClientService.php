@@ -16,18 +16,20 @@ class LilypondClientService
 
     public function doClientRenderSvg($src, $crop)
     {
-        $res = $this->client->renderSvg($src, $crop);
+        $timestamp_start = microtime(true);
 
+        $res = $this->client->renderSvg($src, $crop);
         $data = [
             'svg' => $res->isSuccessful() ? $this->client->getResultOutputFile($res) : '',
             'log' => $this->client->getResultLog($res)
         ];
-
         if ($res->contentsHasFile('score.midi')) {
             $data['midi'] = $this->client->getProcessedFile($res->getTmp(), 'score.midi');
         }
-
         $this->client->deleteResult($res);
+
+        $timestamp_end = microtime(true);
+        logger(sprintf('LP render; %s; %s; %s', $crop ? 'normal' : 'fast', config('lilypond_renderer.host'), $timestamp_end - $timestamp_start));
 
         return $data;
     }
