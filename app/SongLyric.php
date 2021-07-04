@@ -22,7 +22,7 @@ use App\Services\LilypondClientService;
 // use App\Helpers\ChordQueue;
 // use App\Helpers\SongPart;
 use App\Helpers\SongLyricHelper;
-use App\Jobs\UpdateSongLyricLilypond;
+use App\Jobs\RenderOldSongLyricLilypond;
 use App\Services\LilypondPartsService;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -565,11 +565,6 @@ class SongLyric extends Model
         return $this->getSiblings()->count() > 0;
     }
 
-    public function renderLilypond()
-    {
-        UpdateSongLyricLilypond::dispatch($this->id);
-    }
-
     /**
      * Get the indexable data array for the model.
      *
@@ -629,8 +624,12 @@ class SongLyric extends Model
         }
 
         $fullname = $this->name;
-        if ($this->secondary_name_1) $fullname .= ' ' . $this->secondary_name_1;
-        if ($this->secondary_name_2) $fullname .= ' ' . $this->secondary_name_2;
+        if ($this->secondary_name_1) {
+            $fullname .= ' ' . $this->secondary_name_1;
+        }
+        if ($this->secondary_name_2) {
+            $fullname .= ' ' . $this->secondary_name_2;
+        }
 
         $arr = [
             'name' => $fullname,

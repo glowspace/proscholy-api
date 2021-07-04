@@ -13,4 +13,5 @@ type Reading {
 
 extend type Query {
     liturgical_references(date: Date): [LiturgicalReference]
+    # day_readings(date: Date) [Reading]
 }

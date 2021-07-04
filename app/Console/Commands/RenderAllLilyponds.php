@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\SongLyricLilypondService;
 use Illuminate\Console\Command;
 use App\SongLyric;
 
@@ -36,12 +37,12 @@ class RenderAllLilyponds extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(SongLyricLilypondService $sll)
     {
         SongLyric::whereHas('lilypond_src')->orWhereHas('lilypond_parts_sheet_music', function ($q_lp) {
             return $q_lp->renderable();
-        })->get()->each(function ($song_lyric) {
-            $song_lyric->renderLilypond();
+        })->get()->each(function ($song_lyric) use ($sll) {
+            $sll->dispatchRenderJobs($song_lyric, $song_lyric->lilypond_parts_sheet_music);
         });
     }
 }
