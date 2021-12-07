@@ -5,9 +5,10 @@ namespace App\Notifications;
 use App\Song;
 use App\SongLyric;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use NotificationChannels\Discord\DiscordChannel;
+use NotificationChannels\Discord\DiscordMessage;
 
 class SongLyricUpdated extends Notification
 {
@@ -28,16 +29,13 @@ class SongLyricUpdated extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return [DiscordChannel::class];
     }
 
     /**
-     * Get the Slack representation of the notification.
-     *
-     * @param mixed $notifiable
-     * @return SlackMessage
-     */
-    public function toSlack($notifiable)
+     * Get the Discord representation of the notification.
+     * */
+    public function toDiscord($notifiable)
     {
         $user_name = Auth::user()->name;
         $song_id = $notifiable->id;
@@ -46,7 +44,6 @@ class SongLyricUpdated extends Notification
 
         $emoji = (new NotificationHelper())->getRandomEmoji();
 
-        return (new SlackMessage)
-            ->content($user_name . " doplnil(a) píseň :zpevnik: $song_id – <$song_url|$song_name>. $emoji");
+        return DiscordMessage::create(sprintf("%s doplnil(a) píspeň: :zpevnik: %s – <%s|%s>. %s", $user_name, $song_id, $song_url, $song_name, $emoji));
     }
 }

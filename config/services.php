@@ -37,6 +37,11 @@ return [
 
     'firebase' => [
         'project_name' => env('FIREBASE_PROJECT_ID')
-    ]
+    ],
+
+    'discord' => [
+        'token' => env('DISCORD_BOT_TOKEN'),
+        'channel_id' => env('DISCORD_CHANNEL_ID')
+    ],
 
 ];

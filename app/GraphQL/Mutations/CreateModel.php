@@ -88,7 +88,7 @@ class CreateModel
                 "edit_url" => route("admin.song.edit", $song_lyric)
             ];
 
-            // Send create notification to Slack
+            // Send create notifications
             $song_lyric->notify(new SongLyricCreated());
         } elseif ($input["class_name"] == "NewsItem") {
             $news_item = NewsItem::create(['link' => $attr]);
