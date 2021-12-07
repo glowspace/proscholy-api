@@ -229,6 +229,7 @@ class SongLyric extends Model
         'BY_NC_SA' => 'BY-NC-SA (uv. původ, ne-komerčně, zach. licenci)',
         'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
         'PROPRIETARY' => 'proprietární (smlouva s MS)',
+        'PUBLIC_DOMAIN' => 'volné dílo (uplynula doba trvání majetkových práv)',
     ];
 
     private static $lilypond_key_major_string_values = [
