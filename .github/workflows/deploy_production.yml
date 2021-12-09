@@ -16,15 +16,15 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_DEPLOYS_WEBHOOK_URL }}
-          SLACK_FOOTER: ""
-          MSG_MINIMAL: true
-          SLACK_TITLE: "${{ github.workflow }} – ${{ github.event.repository.name }}"
-          SLACK_MESSAGE: "Proběhlo produkční nasazení na api.proscholy.cz! :tada:"
-          SLACK_COLOR: "warning"
+      # - name: Slack Notification
+      #   uses: rtCamp/action-slack-notify@master
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_DEPLOYS_WEBHOOK_URL }}
+      #     SLACK_FOOTER: ""
+      #     MSG_MINIMAL: true
+      #     SLACK_TITLE: "${{ github.workflow }} – ${{ github.event.repository.name }}"
+      #     SLACK_MESSAGE: "Proběhlo produkční nasazení na api.proscholy.cz! :tada:"
+      #     SLACK_COLOR: "warning"
       - name: Discord notification
         uses: Ilshidur/action-discord@master
         env:
