@@ -30,5 +30,6 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
           DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
+          DISCORD_AVATAR: "https://zpevnik.proscholy.cz/img/icons/michalhappy.png"
         with:
           args: "Proběhlo produkční nasazení na api.proscholy.cz! :tada:"
