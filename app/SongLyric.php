@@ -735,8 +735,9 @@ class SongLyric extends Model
         }
     }
 
-    public function routeNotificationForSlack($notification)
+    // required for the laravel-notification-channels/discord package
+    public function routeNotificationForDiscord()
     {
-        return config('slack.slack_webhook_url');
+        return config('services.discord.webhook_url');
     }
 }

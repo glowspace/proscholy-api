@@ -51,7 +51,7 @@ class UpdateSongLyric
 
         $song_lyric->save();
 
-        // Send update notification to Slack
+        // Send update notification
         $song_lyric->notify(new SongLyricUpdated());
 
         // reload from database

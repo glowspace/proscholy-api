@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use SnoerenDevelopment\DiscordWebhook\DiscordMessage;
+use SnoerenDevelopment\DiscordWebhook\DiscordWebhookChannel;
 
 class SongLyricCreated extends Notification
 {
@@ -17,7 +19,6 @@ class SongLyricCreated extends Notification
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -28,16 +29,16 @@ class SongLyricCreated extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return [DiscordWebhookChannel::class];
     }
 
     /**
-     * Get the Slack representation of the notification.
+     * Get the Discord representation of the notification.
      *
      * @param mixed $notifiable
-     * @return SlackMessage
+     * @return DiscordMessage
      */
-    public function toSlack($notifiable)
+    public function toDiscord($notifiable)
     {
         $user_name = Auth::user()->name;
         $song_id = $notifiable->id;
@@ -46,7 +47,9 @@ class SongLyricCreated extends Notification
 
         $emoji = (new NotificationHelper())->getRandomEmoji();
 
-        return (new SlackMessage)
-            ->content($user_name . " přidal(a) píseň :zpevnik: $song_id – <$song_url|$song_name>. $emoji");
+        return DiscordMessage::create()
+            ->username('Redakční bot')
+            ->content(sprintf("%s přidal(a) píseň #%s [%s](%s). %s", $user_name, $song_id, $song_name, $song_url, $emoji))
+            ->tts(false);
     }
 }
