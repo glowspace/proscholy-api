@@ -22,7 +22,7 @@ use App\Services\LilypondClientService;
 // use App\Helpers\ChordQueue;
 // use App\Helpers\SongPart;
 use App\Helpers\SongLyricHelper;
-use App\Jobs\UpdateSongLyricLilypond;
+use App\Jobs\RenderOldSongLyricLilypond;
 use App\Services\LilypondPartsService;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -229,6 +229,7 @@ class SongLyric extends Model
         'BY_NC_SA' => 'BY-NC-SA (uv. původ, ne-komerčně, zach. licenci)',
         'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
         'PROPRIETARY' => 'proprietární (smlouva s MS)',
+        'PUBLIC_DOMAIN' => 'volné dílo (uplynula doba trvání majetkových práv)',
     ];
 
     private static $lilypond_key_major_string_values = [
@@ -565,11 +566,6 @@ class SongLyric extends Model
         return $this->getSiblings()->count() > 0;
     }
 
-    public function renderLilypond()
-    {
-        UpdateSongLyricLilypond::dispatch($this->id);
-    }
-
     /**
      * Get the indexable data array for the model.
      *
@@ -629,8 +625,12 @@ class SongLyric extends Model
         }
 
         $fullname = $this->name;
-        if ($this->secondary_name_1) $fullname .= ' ' . $this->secondary_name_1;
-        if ($this->secondary_name_2) $fullname .= ' ' . $this->secondary_name_2;
+        if ($this->secondary_name_1) {
+            $fullname .= ' ' . $this->secondary_name_1;
+        }
+        if ($this->secondary_name_2) {
+            $fullname .= ' ' . $this->secondary_name_2;
+        }
 
         $arr = [
             'name' => $fullname,
@@ -735,8 +735,9 @@ class SongLyric extends Model
         }
     }
 
-    public function routeNotificationForSlack($notification)
+    // required for the laravel-notification-channels/discord package
+    public function routeNotificationForDiscord()
     {
-        return config('slack.slack_webhook_url');
+        return config('services.discord.webhook_url');
     }
 }

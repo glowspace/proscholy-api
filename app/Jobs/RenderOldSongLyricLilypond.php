@@ -13,10 +13,10 @@ use Illuminate\Queue\SerializesModels;
 use App\SongLyric;
 use App\Services\LilypondClientService;
 use App\Services\SongLyricLilypondService;
-use App\Services\SongLyricService;
+use App\Services\SongLyricModelService;
 use App\Song;
 
-class UpdateSongLyricLilypond implements ShouldQueue
+class RenderOldSongLyricLilypond implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -37,7 +37,7 @@ class UpdateSongLyricLilypond implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondClientService $lily_service, LilypondPartsService $lilyparts_service, SongLyricLilypondService $sl_lily_service)
+    public function handle(LilypondClientService $lily_service, LilypondPartsService $lilyparts_service, SongLyricModelService $sl_service)
     {
         $sl = SongLyric::find($this->song_lyric_id);
 
@@ -45,10 +45,10 @@ class UpdateSongLyricLilypond implements ShouldQueue
 
         if ($sl->lilypond_parts_sheet_music()->exists() && !$sl->lilypond_parts_sheet_music->is_empty) {
             // new LP exists, render these
-            logger('Rendering the new LP code');
+            logger('Rendering the new LP code (old database entry)');
             $svg = $lilyparts_service->makeTotalSvgMobile($sl->lilypond_parts_sheet_music);
-        } else if ($sl->lilypond_src()->exists()) {
-            logger('Rendering the old LP code');
+        } elseif ($sl->lilypond_src()->exists()) {
+            logger('Rendering the old LP code (old database entry)');
             $svg = $lily_service->makeSvg($sl->lilypond_src, $sl->lilypond_key_major);
         } else {
             logger("SongLyric ID: $sl->id Lilypond rendering requested but no LP exists");
@@ -56,11 +56,11 @@ class UpdateSongLyricLilypond implements ShouldQueue
 
 
         if ($svg === false || empty($svg)) {
-            logger('Unsuccessful Lilypond render');
+            logger('Unsuccessful Lilypond render (old database entry)');
             return;
         }
 
-        logger('Successful Lilypond render');
-        $sl_lily_service->handleLilypondSvg($sl, $svg);
+        logger('Successful Lilypond render (old database entry)');
+        $sl_service->handleLilypondSvg($sl, $svg);
     }
 }

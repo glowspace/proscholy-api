@@ -176,6 +176,7 @@ enum LicenseTypeCC {
     BY_NC_SA @enum(value: 5)
     BY_NC_ND @enum(value: 6)
     PROPRIETARY @enum(value: 7)
+    PUBLIC_DOMAIN @enum(value: 8)
 }
 
 enum SheetMusicKey {

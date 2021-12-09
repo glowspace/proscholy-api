@@ -4,82 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b4540e8f695ac88ee7ed94bc3d88c39",
+    "content-hash": "643ab14e43bc6d5640ba991b7b2068ca",
     "packages": [
-        {
-            "name": "algolia/algoliasearch-client-php",
-            "version": "2.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/algolia/algoliasearch-client-php.git",
-                "reference": "d9781147ae433f5bdbfd902497d748d60e70d693"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/algolia/algoliasearch-client-php/zipball/d9781147ae433f5bdbfd902497d748d60e70d693",
-                "reference": "d9781147ae433f5bdbfd902497d748d60e70d693",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "php": "^5.3 || ^7.0 || ^8.0",
-                "psr/http-message": "^1.0",
-                "psr/log": "^1.0",
-                "psr/simple-cache": "^1.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "fzaninotto/faker": "^1.8",
-                "julienbourdeau/phpunit": "4.8.37",
-                "symfony/yaml": "^2.0 || ^4.0"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "If you prefer to use Guzzle HTTP client instead of the Http Client implementation provided by the package"
-            },
-            "bin": [
-                "bin/algolia-doctor"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.0": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Algolia\\AlgoliaSearch\\": "src/"
-                },
-                "files": [
-                    "src/Http/Psr7/functions.php",
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Algolia Team",
-                    "email": "contact@algolia.com"
-                }
-            ],
-            "description": "Algolia Search API Client for PHP",
-            "keywords": [
-                "algolia",
-                "api",
-                "client",
-                "php",
-                "search"
-            ],
-            "support": {
-                "issues": "https://github.com/algolia/algoliasearch-client-php/issues",
-                "source": "https://github.com/algolia/algoliasearch-client-php/tree/2.8.0"
-            },
-            "time": "2021-04-07T16:50:58+00:00"
-        },
         {
             "name": "babenkoivan/scout-elasticsearch-driver",
             "version": "v4.3.0",
@@ -2086,67 +2012,6 @@
             "time": "2021-04-06T14:35:41+00:00"
         },
         {
-            "name": "laravel/slack-notification-channel",
-            "version": "v2.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/slack-notification-channel.git",
-                "reference": "f428e76b8d0a0a2ff413ab225eeb829b9a8ffc20"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/slack-notification-channel/zipball/f428e76b8d0a0a2ff413ab225eeb829b9a8ffc20",
-                "reference": "f428e76b8d0a0a2ff413ab225eeb829b9a8ffc20",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.0|^7.0",
-                "illuminate/notifications": "~5.8.0|^6.0|^7.0|^8.0",
-                "php": "^7.1.3|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^7.0|^8.0|^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Illuminate\\Notifications\\SlackChannelServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Notifications\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Slack Notification Channel for laravel.",
-            "keywords": [
-                "laravel",
-                "notifications",
-                "slack"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel/slack-notification-channel/issues",
-                "source": "https://github.com/laravel/slack-notification-channel/tree/v2.3.1"
-            },
-            "time": "2021-01-26T20:04:54+00:00"
-        },
-        {
             "name": "laravel/tinker",
             "version": "v2.6.1",
             "source": {
@@ -3859,16 +3724,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.9.4",
+            "version": "0.9.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/proscholy/lilypond-renderer-client.git",
-                "reference": "7b406a3941bcbd4798bed39e14e881d9989ed54b"
+                "url": "https://github.com/glowspace/lilypond-renderer-client.git",
+                "reference": "32ea795d1f4be6d14d12ed136940e326e9f13193"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/proscholy/lilypond-renderer-client/zipball/7b406a3941bcbd4798bed39e14e881d9989ed54b",
-                "reference": "7b406a3941bcbd4798bed39e14e881d9989ed54b",
+                "url": "https://api.github.com/repos/glowspace/lilypond-renderer-client/zipball/32ea795d1f4be6d14d12ed136940e326e9f13193",
+                "reference": "32ea795d1f4be6d14d12ed136940e326e9f13193",
                 "shasum": ""
             },
             "require": {
@@ -3904,10 +3769,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/proscholy/lilypond-renderer-client/tree/0.9.4",
-                "issues": "https://github.com/proscholy/lilypond-renderer-client/issues"
+                "source": "https://github.com/glowspace/lilypond-renderer-client/tree/0.9.5",
+                "issues": "https://github.com/glowspace/lilypond-renderer-client/issues"
             },
-            "time": "2021-06-30T04:52:38+00:00"
+            "time": "2021-12-09T21:28:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -4894,6 +4759,68 @@
                 }
             ],
             "time": "2020-09-07T07:16:41+00:00"
+        },
+        {
+            "name": "snoeren-development/laravel-discord-webhook-channel",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/snoeren-development/laravel-discord-webhook-channel.git",
+                "reference": "8ea8bc14f4e14fcdbcdc59245d3b09f35e1c93ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/snoeren-development/laravel-discord-webhook-channel/zipball/8ea8bc14f4e14fcdbcdc59245d3b09f35e1c93ee",
+                "reference": "8ea8bc14f4e14fcdbcdc59245d3b09f35e1c93ee",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0|^6.5",
+                "illuminate/support": "^8.0|^7.0|^6.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.5",
+                "spatie/macroable": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SnoerenDevelopment\\DiscordWebhook\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Snoeren Development",
+                    "email": "info@snoerendevelopment.nl"
+                }
+            ],
+            "description": "Send notifications to a Discord webhook.",
+            "homepage": "https://github.com/snoeren-development/laravel-discord-webhook-channel",
+            "keywords": [
+                "discord",
+                "driver",
+                "laravel",
+                "notification",
+                "snoeren",
+                "webhook"
+            ],
+            "support": {
+                "issues": "https://github.com/snoeren-development/laravel-discord-webhook-channel/issues",
+                "source": "https://github.com/snoeren-development/laravel-discord-webhook-channel/tree/v1.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://useplink.com/payment/WS4WRCfCULr1tFHkVklT2/",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-10-12T19:36:20+00:00"
         },
         {
             "name": "spatie/db-dumper",

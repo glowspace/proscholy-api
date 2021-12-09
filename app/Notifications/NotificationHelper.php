@@ -7,7 +7,7 @@ namespace App\Notifications;
 class NotificationHelper
 {
     /**
-     * Generate random emoji for slack.
+     * Generate random emoji for discord.
      */
     public function getRandomEmoji()
     {

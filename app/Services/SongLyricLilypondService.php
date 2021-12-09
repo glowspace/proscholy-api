@@ -2,132 +2,116 @@
 
 namespace App\Services;
 
-use Log;
-use App\Author;
 use App\SongLyric;
-use App\Song;
-
-use App\Jobs\UpdateSongLyricLilypond;
-use App\SongLyricLilypondSrc;
+use App\Jobs\RenderOldSongLyricLilypond;
 use App\LilypondPartsSheetMusic;
-use App\SongLyricLilypondSvg;
-use App\SongLyricLyrics;
+use App\Services\SongLyricModelService;
+use Illuminate\Support\Arr;
 
 class SongLyricLilypondService
 {
     protected LilypondClientService $ly_service;
     protected LilypondPartsService $lpsm_service;
+    protected RenderedScoreService $rs_service;
+    protected SongLyricModelService $sl_rep;
 
-    public function __construct(LilypondClientService $ly_service, LilypondPartsService $lpsm_service)
+    public function __construct(LilypondClientService $ly_service, LilypondPartsService $lpsm_service, RenderedScoreService $rs_service, SongLyricModelService $sl_rep)
     {
         $this->ly_service = $ly_service;
         $this->lpsm_service = $lpsm_service;
+        $this->rs_service = $rs_service;
+        $this->sl_rep = $sl_rep;
     }
 
-    private function handleLilypondSrc(SongLyric $song_lyric, $lilypond_src)
+    // is called by the RenderLilyPondScore job
+    public function renderAndUpdateLilypondScoreNew(LilypondPartsSheetMusic $lpsm, array $add_render_config, $frontend_display_order)
     {
-        $wasEmpty = $song_lyric->lilypond_src === null;
-        $isEmpty = $lilypond_src === null || $lilypond_src === '';
+        $final_render_config = array_merge(
+            $lpsm->score_config,
+            $add_render_config
+        );
 
-        if ($wasEmpty && !$isEmpty) {
-            $lilypond_src_obj = new SongLyricLilypondSrc(['lilypond_src' => $lilypond_src]);
-            $song_lyric->lilypond_src()->save($lilypond_src_obj);
-        } else if (!$wasEmpty && !$isEmpty) {
-            $song_lyric->lilypond_src()->update(['lilypond_src' => $lilypond_src]);
-        } else if (!$wasEmpty && $isEmpty) {
-            $song_lyric->lilypond_src()->delete();
-        }
+        $lp_template = $this->lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $final_render_config, $lpsm->sequence_string);
 
-        $song_lyric->touch();
+        $filetype = Arr::has($add_render_config, 'paper_type') ? 'pdf' : 'svg';
+
+        logger("Dispatched score render with config:");
+        logger($add_render_config);
+
+        // render the template and get the files' data from ly_service
+        $data = $filetype === 'pdf' ? $this->ly_service->doClientRenderPdf($lp_template) : $this->ly_service->doClientRenderSvg($lp_template, true);
+
+        // call rs_service to store the RenderedScore with its data
+        $this->rs_service->createLilypondRenderedScore(
+            $lpsm,
+            $add_render_config,
+            $filetype,
+            $data[$filetype],
+            [
+                'midi' => $data['midi']
+            ],
+            $frontend_display_order
+        );
     }
 
-    private function handleLilypondPartsSheetMusic(SongLyric $song_lyric, array $lilypond_parts_sheet_music)
+    // to be deprecated in the future
+    public function renderAndUpdateLilyPondScoreOld(SongLyric $sl)
     {
-        // note: the input is validated by graphql types
-        $lilypond_parts = $lilypond_parts_sheet_music['lilypond_parts'];
-        $global_src = $lilypond_parts_sheet_music['global_src'];
-        $sequence_string = $lilypond_parts_sheet_music['sequence_string'];
-        $score_config = $lilypond_parts_sheet_music['score_config'];
+        $svg = false;
 
-        $wasEmpty = !$song_lyric->lilypond_parts_sheet_music()->exists();
-
-        $lp_parts_sm = null;
-
-        if ($wasEmpty) {
-            $lp_parts_sm = new LilypondPartsSheetMusic([
-                'lilypond_parts' => $lilypond_parts,
-                'global_src' => $global_src,
-                'sequence_string' => $sequence_string,
-                'score_config' => $score_config,
-            ]);
-            $song_lyric->lilypond_parts_sheet_music()->save($lp_parts_sm);
+        if ($sl->lilypond_parts_sheet_music()->exists() && !$sl->lilypond_parts_sheet_music->is_empty) {
+            // new LP exists, render these
+            logger('Rendering the new LP code (old database entry)');
+            $svg = $this->lpsm_service->makeTotalSvgMobile($sl->lilypond_parts_sheet_music);
+        } elseif ($sl->lilypond_src()->exists()) {
+            logger('Rendering the old LP code (old database entry)');
+            $svg = $this->ly_service->makeSvg($sl->lilypond_src, $sl->lilypond_key_major);
         } else {
-            $song_lyric->lilypond_parts_sheet_music()->update([
-                'lilypond_parts' => $lilypond_parts,
-                'global_src' => $global_src,
-                'sequence_string' => $sequence_string,
-                'score_config' => $score_config
-            ]);
-            $lp_parts_sm = $song_lyric->lilypond_parts_sheet_music->fresh();
+            logger("SongLyric ID: $sl->id Lilypond rendering requested but no LP exists");
         }
 
-        // used later to filter out empty sheet music that do not produce a render result
-        $song_lyric->lilypond_parts_sheet_music()->update([
-            'is_empty' => empty(trim($lp_parts_sm->getPartsSrc()))
-        ]);
 
-        $song_lyric->touch();
-
-        return $lp_parts_sm;
-    }
-
-    public function handleLilypondSvg(SongLyric $song_lyric, $lilypond_svg)
-    {
-        $wasEmpty = $song_lyric->lilypond_svg === null;
-        $isEmpty = $lilypond_svg === null || $lilypond_svg === '';
-
-        if ($wasEmpty && !$isEmpty) {
-            $lilypond_svg_obj = new SongLyricLilypondSvg(['lilypond_svg' => $lilypond_svg]);
-            $song_lyric->lilypond_svg()->save($lilypond_svg_obj);
-        } else if (!$wasEmpty && !$isEmpty) {
-            $song_lyric->lilypond_svg()->update(['lilypond_svg' => $lilypond_svg]);
-        } else if (!$wasEmpty && $isEmpty) {
-            $song_lyric->lilypond_svg()->delete();
+        if ($svg === false || empty($svg)) {
+            logger('Unsuccessful Lilypond render (old database entry)');
+            return;
         }
 
-        $song_lyric->touch();
+        logger('Successful Lilypond render (old database entry)');
+        $this->sl_rep->handleLilypondSvg($sl, $svg);
     }
 
-    public function handleLilypond(SongLyric $song_lyric, $lilypond_input, $lilypond_key_major, array $lilypond_parts_sheet_music)
+    public function dispatchRenderJobs($sl_id, LilypondPartsSheetMusic $sheet_parts_music)
     {
-        $old_lilypond_updated = (string)$song_lyric->lilypond_src != $lilypond_input || $lilypond_key_major != $song_lyric->lilypond_key_major;
+        logger("Doing LilyPond render (first the old way)");
+
+        // todo: remove in favour of serving svg files
+        RenderOldSongLyricLilypond::dispatch($sl_id);
+
+        // new way of rendering
+        // needs to be allowed in .env with USE_RENDERED_SCORES=true
+        if (config('lilypond.use_rendered_scores')) {
+            logger("New way of rendering LP is enabled, dispatching render score jobs");
+
+            $this->lpsm_service->dispatchRenderScoreJobs($sheet_parts_music);
+        }
+    }
+
+    // todo: remove lilypond_input and lilypond_key_major (from the old form)
+    public function handleLilypondOnUpdate(SongLyric $song_lyric, $lilypond_input, $lilypond_key_major, array $lilypond_parts_sheet_music)
+    {
         $new_lilypond_updated =
             $song_lyric->lilypond_parts_sheet_music->lilypond_parts != $lilypond_parts_sheet_music['lilypond_parts'] ||
             $song_lyric->lilypond_parts_sheet_music->score_config != $lilypond_parts_sheet_music['score_config'] ||
             $song_lyric->lilypond_parts_sheet_music->global_src != $lilypond_parts_sheet_music['global_src'] ||
             $song_lyric->lilypond_parts_sheet_music->sequence_string != $lilypond_parts_sheet_music['sequence_string'];
 
-        logger("Old lilypond updated: $old_lilypond_updated");
-        logger("New lilypond updated: $new_lilypond_updated");
+        
+        $this->sl_rep->handleLilypondSrc($song_lyric, $lilypond_input);
+        $lpsm = $this->sl_rep->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
 
-        $this->handleLilypondSrc($song_lyric, $lilypond_input);
-        $lp_parts_sm = $this->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
-
-        // this task then calls handleLilypondSvg in this class
-        // todo: remove in favour of serving svg files
-        UpdateSongLyricLilypond::dispatchIf(
-            $old_lilypond_updated || $new_lilypond_updated,
-            $song_lyric->id
-        );
-
-        // new way of rendering
-        // needs to be allowed in .env with USE_RENDERED_SCORES=true
-        if ($new_lilypond_updated && config('lilypond.use_rendered_scores')) {
-            logger("Song lyric LP Parts Sheet music updated, doing the render");
-
-            $this->lpsm_service->renderLilypondScoresSheetMusic($lp_parts_sm);
+        if ($new_lilypond_updated) {
+            logger("New lilypond updated");
+            $this->dispatchRenderJobs($song_lyric->id, $lpsm);
         }
-
-        // with that, the lilypond is updated
     }
 }

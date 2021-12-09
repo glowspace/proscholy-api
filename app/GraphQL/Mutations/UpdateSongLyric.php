@@ -8,14 +8,14 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 use App\SongLyric;
-use App\Services\SongLyricService;
+use App\Services\SongLyricModelService;
 
 class UpdateSongLyric
 {
     protected $sl_service;
     protected $sl_lily_service;
 
-    public function __construct(SongLyricService $sl_service, SongLyricLilypondService $sl_lily_service)
+    public function __construct(SongLyricModelService $sl_service, SongLyricLilypondService $sl_lily_service)
     {
         $this->sl_service = $sl_service;
         $this->sl_lily_service = $sl_lily_service;
@@ -37,7 +37,7 @@ class UpdateSongLyric
         $song_lyric = SongLyric::find($input["id"]);
         // $song_lyric_old = $song_lyric->replicate();
 
-        $this->sl_lily_service->handleLilypond($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
+        $this->sl_lily_service->handleLilypondOnUpdate($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
 
         $song_lyric->update($input);
         // todo if has key
@@ -51,7 +51,7 @@ class UpdateSongLyric
 
         $song_lyric->save();
 
-        // Send update notification to Slack
+        // Send update notification
         $song_lyric->notify(new SongLyricUpdated());
 
         // reload from database

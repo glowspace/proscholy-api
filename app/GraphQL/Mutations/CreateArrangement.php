@@ -4,7 +4,7 @@ namespace App\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use App\Services\SongLyricService;
+use App\Services\SongLyricModelService;
 
 class CreateArrangement
 {
@@ -19,6 +19,6 @@ class CreateArrangement
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return app(SongLyricService::class)->createArrangement($args['name'], $args['arrangement_of']);
+        return app(SongLyricModelService::class)->createArrangement($args['name'], $args['arrangement_of']);
     }
 }

@@ -16,7 +16,7 @@ use App\SongLyric;
 use App\Song;
 use App\External;
 use App\NewsItem;
-use App\Services\SongLyricService;
+use App\Services\SongLyricModelService;
 use App\Songbook;
 use App\Tag;
 
@@ -80,7 +80,7 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "SongLyric") {
-            $song_lyric = app(SongLyricService::class)->createSongLyric($attr);
+            $song_lyric = app(SongLyricModelService::class)->createSongLyric($attr);
 
             $returnValue = [
                 "id" => $song_lyric->id,
@@ -88,7 +88,7 @@ class CreateModel
                 "edit_url" => route("admin.song.edit", $song_lyric)
             ];
 
-            // Send create notification to Slack
+            // Send create notifications
             $song_lyric->notify(new SongLyricCreated());
         } elseif ($input["class_name"] == "NewsItem") {
             $news_item = NewsItem::create(['link' => $attr]);
