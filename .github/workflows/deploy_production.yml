@@ -28,7 +28,7 @@ jobs:
       - name: Discord notification
         uses: Ilshidur/action-discord@master
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
           DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
         with:
           args: "Proběhlo produkční nasazení na api.proscholy.cz! :tada:"
