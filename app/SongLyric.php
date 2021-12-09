@@ -738,6 +738,6 @@ class SongLyric extends Model
     // required for the laravel-notification-channels/discord package
     public function routeNotificationForDiscord()
     {
-        return config('services.discord.channel_id');
+        return config('services.discord.webhook_url');
     }
 }
