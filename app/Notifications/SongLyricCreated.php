@@ -33,10 +33,10 @@ class SongLyricCreated extends Notification
     }
 
     /**
-     * Get the Slack representation of the notification.
+     * Get the Discord representation of the notification.
      *
      * @param mixed $notifiable
-     * @return SlackMessage
+     * @return DiscordMessage
      */
     public function toDiscord($notifiable)
     {

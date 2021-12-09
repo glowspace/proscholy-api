@@ -20,7 +20,14 @@ jobs:
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_DEPLOYS_WEBHOOK_URL }}
-          SLACK_FOOTER: ''
+          SLACK_FOOTER: ""
           MSG_MINIMAL: true
-          SLACK_TITLE: '${{ github.workflow }} – ${{ github.event.repository.name }}'
-          SLACK_MESSAGE: 'Proběhlo vývojové nasazení na staging.api.proscholy.cz! :tada:'
+          SLACK_TITLE: "${{ github.workflow }} – ${{ github.event.repository.name }}"
+          SLACK_MESSAGE: "Proběhlo vývojové nasazení na staging.api.proscholy.cz! :tada:"
+      - name: Discord notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
+        with:
+          args: "Proběhlo vývojové nasazení na staging.api.proscholy.cz! :tada:"
