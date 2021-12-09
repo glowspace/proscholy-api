@@ -29,5 +29,6 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
           DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
+          DISCORD_AVATAR: "https://c.tenor.com/kiv30bAOYtEAAAAd/gandalf-yes.gif"
         with:
           args: "Proběhlo vývojové nasazení na staging.api.proscholy.cz! :tada:"
