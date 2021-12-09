@@ -9,13 +9,11 @@ extend type Query  {
 }
 
 input SongInput {
-    __typename: String
     id: ID
     song_lyrics: [SongLyricForSongInput]
 }
 
 input SongLyricForSongInput {
-    __typename: String
     id: ID
     name: String
     type: Int
