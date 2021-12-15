@@ -45,7 +45,7 @@ class SongLyricUpdated extends Notification
 
         return DiscordMessage::create()
             ->username('Redakční bot')
-            ->content(sprintf("%s doplnil(a) píspeň #%s [%s](%s). %s", $user_name, $song_id, $song_name, $song_url, $emoji))
+            ->content(sprintf("%s doplnil(a) píseň #%s [%s](%s). %s", $user_name, $song_id, $song_name, $song_url, $emoji))
             ->tts(false);
     }
 }
