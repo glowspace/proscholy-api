@@ -48,6 +48,7 @@ class UpdateSongLyric
         $this->sl_service->handleAuthors($song_lyric, $input["authors"]);
         $this->sl_service->handleSongbookRecords($song_lyric, $input["songbook_records"]);
         $this->sl_service->handleRevisionAssociacionsStats($song_lyric);
+        $this->sl_service->handleBibleReferences($song_lyric, $input['bible_refs_osis']);
 
         $song_lyric->save();
 

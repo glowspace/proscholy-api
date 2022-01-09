@@ -9,11 +9,20 @@ use App\Song;
 
 use App\SongLyricLilypondSrc;
 use App\LilypondPartsSheetMusic;
+use App\SongLyricBibleReference;
 use App\SongLyricLilypondSvg;
 use App\SongLyricLyrics;
 
 class SongLyricModelService
 {
+    protected SongLyricBibleReference $sl_ref_service;
+
+    public function __construct(SongLyricBibleReference $sl_ref_service)
+    {
+        $this->sl_ref_service = $sl_ref_service;
+    }
+
+
     public function createSongLyric(string $name): SongLyric
     {
         $song       = Song::create(['name' => $name]);
@@ -296,5 +305,20 @@ class SongLyricModelService
         }
 
         $song_lyric->touch();
+    }
+
+    public function handleBibleReferences(SongLyric $song_lyric, $osis)
+    {
+        // delete old associations
+        SongLyricBibleReference::where('song_lyric_id', $song_lyric->id)->delete();
+        
+        // parse osis
+        $ranges = $osis->explode(',');
+
+        foreach ($ranges as $r_osis) {
+            $reference = $this->sl_ref_service->createBibleReferenceFromOsis($r_osis);
+            $reference->song_lyric_id = $song_lyric->id;
+            $reference->save();
+        }
     }
 }
