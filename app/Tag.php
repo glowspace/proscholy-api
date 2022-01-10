@@ -82,7 +82,7 @@ class Tag extends Model
             'is_regenschori' => true
         ],
         100 => [
-            'name' => 'Źánr',
+            'name' => 'Žánr',
             'type' => 100,
             'is_editable' => true,
             'is_regenschori' => true
@@ -227,7 +227,7 @@ class Tag extends Model
             return Tag::find($identificator);
         } else {
             $samename = Tag::where('name', $identificator)->first();
-            if ($samename !== NULL) {
+            if ($samename !== null) {
                 return $samename;
             }
 
