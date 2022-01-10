@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\SongLyric;
 use App\SongLyricBibleReference;
 
 class SongLyricBibleReferenceService
 {
     public function createBibleReferenceFromOsis($osis)
     {
-        $start_end = $osis->explode('-');
-        $start = $start_end[0]->explode('.');
-        $end = count($start_end) > 1 ? $start_end[1]->explode('.') : [null, null, null];
+        $start_end = explode('-', $osis);
+        $start = explode('.', $start_end[0]);
+        $end = count($start_end) > 1 ? explode('.', $start_end[1]) : $start;
 
         return new SongLyricBibleReference([
             'book' => $start[0],
@@ -21,33 +22,23 @@ class SongLyricBibleReferenceService
         ]);
     }
 
-    public function findMatches($osis)
+    public function findMatchingSongLyricIds($osis)
     {
-        $start_end = $osis->explode('-');
-        // e1
-        $start = $start_end[0]->explode('.');
-        $end = count($start_end) > 1 ? $start_end[1]->explode('.') : [null, null, null];
+        $references = explode(',', $osis);
+        $query = SongLyricBibleReference::query();
 
-        // table row is e2
-        return SongLyricBibleReference::where('book', $start[0])
-            ->where(function ($q) use ($start, $end) {
-                // e2.start is between e1.start and end
-                $q->where('start_chapter', '>=', $start[1])
-                    ->where('start_verse', '>=', $start[2])
-                    ->where('start_chapter', '<=', $end[1])
-                    ->where('start_verse', '<=', $end[2]);
-            })->orWhere(function ($q) use ($start, $end) {
-                // e2.end is between e1.start and end
-                $q->where('end_chapter', '>=', $start[1])
-                ->where('end_verse', '>=', $start[2])
-                ->where('end_chapter', '<=', $end[1])
-                ->where('end_verse', '<=', $end[2]);
-            })->orWhere(function ($q) use ($start) {
-                // e1.start is between e2.start and end
-                $q->where('end_chapter', '>=', $start[1])
-                ->where('end_verse', '>=', $start[2])
-                ->where('start_chapter', '<=', $start[1])
-                ->where('start_verse', '<=', $start[2]);
+        foreach ($references as $reference) {
+            $start_end = explode('-', $reference);
+            $start = explode('.', $start_end[0]);
+            $end = count($start_end) > 1 ? explode('.', $start_end[1]) : $start;
+
+            $query->orWhere(function ($subq) use ($start, $end) {
+                $subq->where('book', $start[0])
+                    ->isIncludedIn($start[1], $start[2], $end[1], $end[2]);
             });
+        }
+
+        $sl_ids = $query->select('song_lyric_id')->get()->pluck('song_lyric_id');
+        return $sl_ids;
     }
 }

@@ -408,6 +408,11 @@ class SongLyric extends Model
         return $this->hasOne(SongLyricLilypondSrc::class);
     }
 
+    public function bible_reference(): HasMany
+    {
+        return $this->hasMany(SongLyricBibleReference::class);
+    }
+
     public function lilypond_parts_sheet_music(): HasOne
     {
         return $this->hasOne(LilypondPartsSheetMusic::class)->withDefault(function ($lp_sheet_music, $song_lyric) {

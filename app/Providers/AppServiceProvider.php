@@ -9,7 +9,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\SongLyricModelService;
 use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
+use App\Services\SongLyricBibleReferenceService;
 use App\Services\SongLyricLilypondService;
+use App\SongLyricBibleReference;
 use Blade;
 use Validator;
 use URL;
@@ -59,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
             return new RenderedScoreService();
         });
         $this->app->singleton(SongLyricModelService::class, function () {
-            return new SongLyricModelService();
+            return new SongLyricModelService(new SongLyricBibleReferenceService());
         });
         $this->app->singleton(RenderedScoreService::class, function () {
             return new RenderedScoreService();

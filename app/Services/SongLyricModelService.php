@@ -15,9 +15,9 @@ use App\SongLyricLyrics;
 
 class SongLyricModelService
 {
-    protected SongLyricBibleReference $sl_ref_service;
+    protected SongLyricBibleReferenceService $sl_ref_service;
 
-    public function __construct(SongLyricBibleReference $sl_ref_service)
+    public function __construct(SongLyricBibleReferenceService $sl_ref_service)
     {
         $this->sl_ref_service = $sl_ref_service;
     }
@@ -313,12 +313,14 @@ class SongLyricModelService
         SongLyricBibleReference::where('song_lyric_id', $song_lyric->id)->delete();
         
         // parse osis
-        $ranges = $osis->explode(',');
+        $ranges = explode(',', $osis);
 
         foreach ($ranges as $r_osis) {
-            $reference = $this->sl_ref_service->createBibleReferenceFromOsis($r_osis);
-            $reference->song_lyric_id = $song_lyric->id;
-            $reference->save();
+            if (!empty($r_osis)) {
+                $reference = $this->sl_ref_service->createBibleReferenceFromOsis($r_osis);
+                $reference->song_lyric_id = $song_lyric->id;
+                $reference->save();
+            }
         }
     }
 }
