@@ -1,0 +1,414 @@
+id;name;description;type;parent_tag_id;created_at;updated_at;hide_in_liturgy;order;lit_day_identificator
+120;2. neděle v mezidobí;;40;;;;0;;ordinary_time_1_sunday
+121;3. neděle v mezidobí;;40;;;;0;;ordinary_time_2_sunday
+122;4. neděle v mezidobí;;40;;;;0;;ordinary_time_3_sunday
+123;5. neděle v mezidobí;;40;;;;0;;ordinary_time_4_sunday
+124;6. neděle v mezidobí;;40;;;;0;;ordinary_time_5_sunday
+125;7. neděle v mezidobí;;40;;;;0;;ordinary_time_6_sunday
+126;8. neděle v mezidobí;;40;;;;0;;ordinary_time_7_sunday
+127;9. neděle v mezidobí;;40;;;;0;;ordinary_time_8_sunday
+128;10. neděle v mezidobí;;40;;;;0;;ordinary_time_9_sunday
+129;11. neděle v mezidobí;;40;;;;0;;ordinary_time_10_sunday
+130;12. neděle v mezidobí;;40;;;;0;;ordinary_time_11_sunday
+131;13. neděle v mezidobí;;40;;;;0;;ordinary_time_12_sunday
+132;14. neděle v mezidobí;;40;;;;0;;ordinary_time_13_sunday
+133;15. neděle v mezidobí;;40;;;;0;;ordinary_time_14_sunday
+134;16. neděle v mezidobí;;40;;;;0;;ordinary_time_15_sunday
+135;17. neděle v mezidobí;;40;;;;0;;ordinary_time_16_sunday
+136;18. neděle v mezidobí;;40;;;;0;;ordinary_time_17_sunday
+137;19. neděle v mezidobí;;40;;;;0;;ordinary_time_18_sunday
+138;20. neděle v mezidobí;;40;;;;0;;ordinary_time_19_sunday
+139;21. neděle v mezidobí;;40;;;;0;;ordinary_time_20_sunday
+140;22. neděle v mezidobí;;40;;;;0;;ordinary_time_21_sunday
+141;23. neděle v mezidobí;;40;;;;0;;ordinary_time_22_sunday
+142;24. neděle v mezidobí;;40;;;;0;;ordinary_time_23_sunday
+143;25. neděle v mezidobí;;40;;;;0;;ordinary_time_24_sunday
+144;26. neděle v mezidobí;;40;;;;0;;ordinary_time_25_sunday
+145;27. neděle v mezidobí;;40;;;;0;;ordinary_time_26_sunday
+146;28. neděle v mezidobí;;40;;;;0;;ordinary_time_27_sunday
+147;29. neděle v mezidobí;;40;;;;0;;ordinary_time_28_sunday
+148;30. neděle v mezidobí;;40;;;;0;;ordinary_time_29_sunday
+149;31. neděle v mezidobí;;40;;;;0;;ordinary_time_30_sunday
+150;32. neděle v mezidobí;;40;;;;0;;ordinary_time_31_sunday
+151;33. neděle v mezidobí;;40;;;;0;;ordinary_time_32_sunday
+152;Ježíše Krista Krále;;40;;;;0;;ordinary_time_33_sunday
+153;Velký pátek;;40;;;;0;;good_friday
+154;Bílá sobota;;40;;;;0;;holy_saturday
+155;Zmrtvýchvstání Páně;;40;;;;0;;easter_sunday
+156;1. neděle adventní;;40;;;;0;;advent_1_sunday
+157;2. neděle adventní;;40;;;;0;;advent_2_sunday
+158;3. neděle adventní;;40;;;;0;;advent_3_sunday
+159;4. neděle adventní;;40;;;;0;;advent_4_saturday
+160;Popeleční středa;;40;;;;0;;ash_wednesday
+161;1. neděle postní;;40;;;;0;;lent_1_sunday
+162;2. neděle postní;;40;;;;0;;lent_1_sunday
+163;3. neděle postní;;40;;;;0;;lent_2_sunday
+164;4. neděle postní;;40;;;;0;;lent_3_sunday
+165;5. neděle postní;;40;;;;0;;lent_4_sunday
+166;Květná neděle;;40;;;;0;;palm_sunday
+167;Pondělí Svatého týdne;;40;;;;0;;holy_monday
+168;Úterý Svatého týdne;;40;;;;0;;holy_tuesday
+169;Středa Svatého týdne;;40;;;;0;;holy_wednesday
+170;Čtvrtek Svatého týdne;;40;;;;0;;holy_thursday
+171;Pondělí v oktávu velikonočním;;40;;;;0;;easter_monday
+172;Úterý v oktávu velikonočním;;40;;;;0;;easter_tuesday
+173;Středa v oktávu velikonočním;;40;;;;0;;easter_wednesday
+174;Čtvrtek v oktávu velikonočním;;40;;;;0;;easter_thursday
+175;Pátek v oktávu velikonočním;;40;;;;0;;easter_friday
+176;Sobota v oktávu velikonočním;;40;;;;0;;easter_saturday
+177;2. neděle velikonoční (Božího milosrdenství);;40;;;;0;;divine_mercy_saturday
+178;3. neděle velikonoční;;40;;;;0;;easter_time_2_sunday
+179;4. neděle velikonoční;;40;;;;0;;easter_time_3_sunday
+180;5. neděle velikonoční;;40;;;;0;;easter_time_4_sunday
+181;6. neděle velikonoční;;40;;;;0;;easter_time_5_sunday
+182;Nanebevstoupení Páně;;40;;;;0;;ascension
+183;7. neděle velikonoční;;40;;;;0;;easter_time_6_sunday
+184;Seslání Ducha Svatého;;40;;;;0;;pentecost_sunday
+185;Matky Boží, Panny Marie;;40;;;;0;;mary_mother_of_god
+186;Rodiny Ježíše, Marie a Josefa;;40;;;;0;;holy_family
+187;Křtu Páně;;40;;;;0;;baptism_of_the_lord
+188;2. neděle po Narození Páně;;40;;;;0;;second_sunday_after_christmas
+189;17. prosince;;40;;;;0;;advent_december_17
+190;18. prosince;;40;;;;0;;advent_december_18
+191;19. prosince;;40;;;;0;;advent_december_19
+192;20. prosince;;40;;;;0;;advent_december_20
+193;21. prosince;;40;;;;0;;advent_december_21
+194;22. prosince;;40;;;;0;;advent_december_22
+195;23. prosince;;40;;;;0;;advent_december_23
+196;24. prosince;;40;;;;0;;advent_december_24
+197;Narození Páně;;40;;;;0;;christmas
+198;29. prosince;;40;;;;0;;christmas_octave_day_5
+199;30. prosince;;40;;;;0;;christmas_octave_day_6
+200;31. prosince;;40;;;;0;;christmas_octave_day_7
+201;Čtvrtek po Popeleční středě;;40;;;;0;;thursday_after_ash_wednesday
+202;Pátek po Popeleční středě;;40;;;;0;;friday_after_ash_wednesday
+203;Sobota po Popeleční středě;;40;;;;0;;saturday_after_ash_wednesday
+204;Pondělí po 1. neděli postní;;40;;;;0;;lent_1_monday
+205;Úterý po 1. neděli postní;;40;;;;0;;lent_1_tuesday
+206;Středa po 1. neděli postní;;40;;;;0;;lent_1_wednesday
+207;Čtvrtek po 1. neděli postní;;40;;;;0;;lent_1_thursday
+208;Pátek po 1. neděli postní;;40;;;;0;;lent_1_friday
+209;Sobota po 1. neděli postní;;40;;;;0;;lent_1_saturday
+210;Pondělí po 2. neděli postní;;40;;;;0;;lent_2_monday
+211;Úterý po 2. neděli postní;;40;;;;0;;lent_2_tuesday
+212;Středa po 2. neděli postní;;40;;;;0;;lent_2_wednesday
+213;Čtvrtek po 2. neděli postní;;40;;;;0;;lent_2_thursday
+214;Pátek po 2. neděli postní;;40;;;;0;;lent_2_friday
+215;Sobota po 2. neděli postní;;40;;;;0;;lent_2_saturday
+216;Pondělí po 3. neděli postní;;40;;;;0;;lent_3_monday
+217;Úterý po 3. neděli postní;;40;;;;0;;lent_3_tuesday
+218;Středa po 3. neděli postní;;40;;;;0;;lent_3_wednesday
+219;Čtvrtek po 3. neděli postní;;40;;;;0;;lent_3_thursday
+220;Pátek po 3. neděli postní;;40;;;;0;;lent_3_friday
+221;Sobota po 3. neděli postní;;40;;;;0;;lent_3_saturday
+222;Pondělí po 4. neděli postní;;40;;;;0;;lent_4_monday
+223;Úterý po 4. neděli postní;;40;;;;0;;lent_4_tuesday
+224;Středa po 4. neděli postní;;40;;;;0;;lent_4_wednesday
+225;Čtvrtek po 4. neděli postní;;40;;;;0;;lent_4_thursday
+226;Pátek po 4. neděli postní;;40;;;;0;;lent_4_friday
+227;Sobota po 4. neděli postní;;40;;;;0;;lent_4_saturday
+228;Pondělí po 5. neděli postní;;40;;;;0;;lent_5_monday
+229;Úterý po 5. neděli postní;;40;;;;0;;lent_5_tuesday
+230;Středa po 5. neděli postní;;40;;;;0;;lent_5_wednesday
+231;Čtvrtek po 5. neděli postní;;40;;;;0;;lent_5_thursday
+232;Pátek po 5. neděli postní;;40;;;;0;;lent_5_friday
+233;Sobota po 5. neděli postní;;40;;;;0;;lent_5_saturday
+234;pondělí po 1. neděli adventní;;40;;;;0;;advent_1_monday
+235;úterý po 1. neděli adventní;;40;;;;0;;advent_1_tuesday
+236;středa po 1. neděli adventní;;40;;;;0;;advent_1_wednesday
+237;čtvrtek po 1. neděli adventní;;40;;;;0;;advent_1_thursday
+238;pátek po 1. neděli adventní;;40;;;;0;;advent_1_friday
+239;sobota po 1. neděli adventní;;40;;;;0;;advent_1_saturday
+240;pondělí po 2. neděli adventní;;40;;;;0;;advent_2_monday
+241;úterý po 2. neděli adventní;;40;;;;0;;advent_2_tuesday
+242;středa po 2. neděli adventní;;40;;;;0;;advent_2_wednesday
+243;čtvrtek po 2. neděli adventní;;40;;;;0;;advent_2_thursday
+244;pátek po 2. neděli adventní;;40;;;;0;;advent_2_friday
+245;sobota po 2. neděli adventní;;40;;;;0;;advent_2_saturday
+246;pondělí po 3. neděli adventní;;40;;;;0;;advent_3_monday
+247;úterý po 3. neděli adventní;;40;;;;0;;advent_3_tuesday
+248;středa po 3. neděli adventní;;40;;;;0;;advent_3_wednesday
+249;čtvrtek po 3. neděli adventní;;40;;;;0;;advent_3_thursday
+250;pátek po 3. neděli adventní;;40;;;;0;;advent_3_friday
+251;3. ledna;;40;;;;0;;christmas_time_january_3
+252;4. ledna;;40;;;;0;;christmas_time_january_4
+253;5. ledna;;40;;;;0;;christmas_time_january_5
+254;Zjevení Páně;;40;;;;0;;epiphany
+255;7. ledna;;40;;;;0;;christmas_time_january_7
+256;8. ledna;;40;;;;0;;christmas_time_january_8
+257;9. ledna;;40;;;;0;;christmas_time_january_9
+258;10. ledna;;40;;;;0;;christmas_time_january_10
+259;11. ledna;;40;;;;0;;christmas_time_january_11
+260;12. ledna;;40;;;;0;;christmas_time_january_12
+261;Pondělí po 2. neděli velikonoční;;40;;;;0;;easter_time_2_monday
+262;Úterý po 2. neděli velikonoční;;40;;;;0;;easter_time_2_tuesday
+263;Středa po 2. neděli velikonoční;;40;;;;0;;easter_time_2_wednesday
+264;Čtvrtek po 2. neděli velikonoční;;40;;;;0;;easter_time_2_thursday
+265;Pátek po 2. neděli velikonoční;;40;;;;0;;easter_time_2_friday
+266;Sobota po 2. neděli velikonoční;;40;;;;0;;easter_time_2_saturday
+267;Pondělí po 3. neděli velikonoční;;40;;;;0;;easter_time_3_monday
+268;Úterý po 3. neděli velikonoční;;40;;;;0;;easter_time_3_tuesday
+269;Středa po 3. neděli velikonoční;;40;;;;0;;easter_time_3_wednesday
+270;Čtvrtek po 3. neděli velikonoční;;40;;;;0;;easter_time_3_thursday
+271;Pátek po 3. neděli velikonoční;;40;;;;0;;easter_time_3_friday
+272;Sobota po 3. neděli velikonoční;;40;;;;0;;easter_time_3_saturday
+273;Pondělí po 4. neděli velikonoční;;40;;;;0;;easter_time_4_monday
+274;Úterý po 4. neděli velikonoční;;40;;;;0;;easter_time_4_tuesday
+275;Středa po 4. neděli velikonoční;;40;;;;0;;easter_time_4_wednesday
+276;Čtvrtek po 4. neděli velikonoční;;40;;;;0;;easter_time_4_thursday
+277;Pátek po 4. neděli velikonoční;;40;;;;0;;easter_time_4_friday
+278;Sobota po 4. neděli velikonoční;;40;;;;0;;easter_time_4_saturday
+279;Pondělí po 5. neděli velikonoční;;40;;;;0;;easter_time_5_monday
+280;Úterý po 5. neděli velikonoční;;40;;;;0;;easter_time_5_tuesday
+281;Středa po 5. neděli velikonoční;;40;;;;0;;easter_time_5_wednesday
+282;Čtvrtek po 5. neděli velikonoční;;40;;;;0;;easter_time_5_thursday
+283;Pátek po 5. neděli velikonoční;;40;;;;0;;easter_time_5_friday
+284;Sobota po 5. neděli velikonoční;;40;;;;0;;easter_time_5_saturday
+285;Pondělí po 6. neděli velikonoční;;40;;;;0;;easter_time_6_monday
+286;Úterý po 6. neděli velikonoční;;40;;;;0;;easter_time_6_tuesday
+287;Středa po 6. neděli velikonoční;;40;;;;0;;easter_time_6_wednesday
+288;Pátek po 6. neděli velikonoční;;40;;;;0;;easter_time_6_friday
+289;Sobota po 6. neděli velikonoční;;40;;;;0;;easter_time_6_saturday
+290;Pondělí po 7. neděli velikonoční;;40;;;;0;;easter_time_7_monday
+291;Úterý po 7. neděli velikonoční;;40;;;;0;;easter_time_7_tuesday
+292;Středa po 7. neděli velikonoční;;40;;;;0;;easter_time_7_wednesday
+293;Čtvrtek po 7. neděli velikonoční;;40;;;;0;;easter_time_7_thursday
+294;Pátek po 7. neděli velikonoční;;40;;;;0;;easter_time_7_friday
+295;Sobota po 7. neděli velikonoční;;40;;;;0;;easter_time_7_saturday
+296;Matky Boží, Panny Marie;;40;;;;0;;mary_mother_of_god
+297;Obrácení sv. Pavla;;40;;;;0;;conversion_of_saint_paul_the_apostle
+298;sv. Basila Velikého a Řehoře Naziánského;;40;;;;0;;basil_the_great_and_gregory_nazianzen_bishops
+299;sv. Antonína;;40;;;;0;;anthony_of_egypt_abbot
+300;Panny Marie, Matky jednoty křesťanů;;40;;;;0;;our_lady_mother_of_christian_unity
+301;sv. Anežky;;40;;;;0;;agnes_of_rome_virgin
+302;sv. Františka Saleského;;40;;;;0;;francis_de_sales_bishop
+303;sv. Timoteje a Tita;;40;;;;0;;timothy_of_ephesus_and_titus_of_crete_bishops
+304;sv. Tomáše Akvinského;;40;;;;0;;thomas_aquinas_priest
+305;sv. Jana Boska;;40;;;;0;;john_bosco_priest
+306;Nejsvětějšího Jména Ježíš;;40;;;;0;;most_holy_name_of_jesus
+307;sv. Rajmunda z Penafortu;;40;;;;0;;raymond_of_penyafort_priest
+308;sv. Hilaria;;40;;;;0;;hilary_of_poitiers_bishop
+309;sv. Fabiána;;40;;;;0;;fabian_i_pope
+310;sv. Šebestiána;;40;;;;0;;sebastian_of_milan_martyr
+311;sv. Vincence;;40;;;;0;;vincent_of_saragossa_deacon
+312;sv. Anděly Mericiové;;40;;;;0;;angela_merici_virgin
+313;Uvedení Páně do chrámu ;;40;;;;0;;presentation_of_the_lord
+314;Stolce sv. Petra;;40;;;;0;;chair_of_saint_peter_the_apostle
+315;sv. Agáty;;40;;;;0;;agatha_of_sicily_virgin
+316;sv. Pavla Mikiho a druhů;;40;;;;0;;paul_miki_and_companions_martyrs
+317;sv. Scholastiky;;40;;;;0;;scholastica_of_nursia_virgin
+318;sv. Polykarpa;;40;;;;0;;polycarp_of_smyrna_bishop
+319;sv. Blažeje;;40;;;;0;;blaise_of_sebaste_bishop
+320;sv. Ansgara;;40;;;;0;;ansgar_of_hamburg_bishop
+321;sv. Jeronýma Emilianiho;;40;;;;0;;jerome_emiliani
+322;sv. Josefiny Bakhity;;40;;;;0;;josephine_bakhita_virgin
+323;Panny Marie Lurdské;;40;;;;0;;our_lady_of_lourdes
+324;sv. Alexia a druhů;;40;;;;0;;seven_holy_founders_of_the_servite_order
+325;sv. Petra Damianiho;;40;;;;0;;peter_damian_bishop
+326;sv. Josefa;;40;;;;0;;joseph_spouse_of_mary
+327;Zvěstování Páně;;40;;;;0;;annunciation
+328;sv. Perpetuy a Felicity;;40;;;;0;;perpetua_of_carthage_and_felicity_of_carthage_martyrs
+329;sv. Kazimíra;;40;;;;0;;casimir_of_poland
+330;sv. Jana z Boha;;40;;;;0;;john_of_god_duarte_cidade_religious
+331;sv. Františky Římské;;40;;;;0;;frances_of_rome_religious
+332;sv. Jana Ogilvie;;40;;;;0;;john_ogilvie_priest
+333;sv. Patrika;;40;;;;0;;patrick_of_ireland_bishop
+334;sv. Cyrila Jeruzalémského;;40;;;;0;;cyril_of_jerusalem_bishop
+335;sv. Turibia z Mongroveja;;40;;;;0;;turibius_of_mogrovejo_bishop
+336;sv. Vojtěcha;;40;;;;0;;adalbert_of_prague_bishop
+337;sv. Marka;;40;;;;0;;mark_evangelist
+338;sv. Kateřiny Sienské;;40;;;;0;;catherine_of_siena_virgin
+339;sv. Jana Křtitele de la Salle;;40;;;;0;;john_baptist_de_la_salle_priest
+340;sv. Stanislava;;40;;;;0;;stanislaus_of_szczepanow_bishop
+341;sv. Františka z Pauly;;40;;;;0;;francis_of_paola_hermit
+342;sv. Izidora;;40;;;;0;;isidore_of_seville_bishop
+343;sv. Vincence Ferrerského;;40;;;;0;;vincent_ferrer_priest
+344;sv. Martina I.;;40;;;;0;;martin_i_pope
+345;sv. Anselma;;40;;;;0;;anselm_of_canterbury_bishop
+346;sv. Jiřího;;40;;;;0;;george_of_lydda_martyr
+347;sv. Fidela ze Sigmaringy;;40;;;;0;;fidelis_of_sigmaringen_priest
+348;sv. Petra Chanela;;40;;;;0;;peter_chanel_priest
+349;sv. Ludvíka Marie Grigniona z Montfortu;;40;;;;0;;louis_grignion_de_montfort_priest
+350;sv. Zikmunda;;40;;;;0;;sigismund_of_burgundy_martyr
+351;sv. Pia V.;;40;;;;0;;pius_v_pope
+352;sv. Filipa a Jakuba;;40;;;;0;;philip_and_james_apostles
+353;sv. Matěje;;40;;;;0;;matthias_apostle
+354;sv. Jana Nepomuckého;;40;;;;0;;john_nepomucene_priest
+355;Navštívení Panny Marie;;40;;;;0;;visitation_of_mary
+356;sv. Atanáše;;40;;;;0;;athanasius_of_alexandria_bishop
+357;sv. Filipa Neriho;;40;;;;0;;philip_neri_priest
+358;sv. Zdislavy;;40;;;;0;;zdislava_of_lemberk
+359;sv. Josefa, Dělníka;;40;;;;0;;joseph_the_worker
+360;sv. Jana Sarkandra;;40;;;;0;;john_sarkander_priest
+361;Panny Marie, Prostřednice všech milostí;;40;;;;0;;our_lady_mediatrix_of_all_grace
+362;sv. Nerea a Achillea;;40;;;;0;;nereus_of_terracina_and_achilleus_of_terracina_martyrs
+363;sv. Pankráce;;40;;;;0;;pancras_of_rome_martyr
+364;Panny Marie Fatimské;;40;;;;0;;our_lady_of_fatima
+365;sv. Jana I.;;40;;;;0;;john_i_pope
+366;sv. Klementa Marie Hofbauera;;40;;;;0;;clement_mary_hofbauer_priest
+367;sv. Bernardina Sienského;;40;;;;0;;bernardine_of_siena_priest
+368;sv. Kryštofa Magallanese a druhů;;40;;;;0;;christopher_magallanes_priest_and_companions_martyrs
+369;sv. Rity z Cascie;;40;;;;0;;rita_of_cascia_religious
+370;sv. Augustina z Canterbury;;40;;;;0;;augustine_of_canterbury_bishop
+371;Narození sv. Jana Křtitele;;40;;;;0;;nativity_of_john_the_baptist
+372;sv. Petra a Pavla;;40;;;;0;;peter_and_paul_apostles
+373;sv. Justina;;40;;;;0;;justin_martyr
+374;sv. Karla Lwangy a druhů;;40;;;;0;;charles_lwanga_and_companions_martyrs
+375;sv. Bonifáce;;40;;;;0;;boniface_of_mainz_bishop
+376;sv. Barnabáše;;40;;;;0;;barnabas_apostle
+377;sv. Antonína z Padovy;;40;;;;0;;anthony_of_padua_priest
+378;sv. Aloise Gonzagy;;40;;;;0;;aloysius_gonzaga_religious
+379;sv. Ireneje;;40;;;;0;;irenaeus_of_lyon_bishop
+380;sv. Marcelina a Petra;;40;;;;0;;marcellinus_of_rome_and_peter_the_exorcist_martyrs
+381;sv. Norberta;;40;;;;0;;norbert_of_xanten_bishop
+382;sv. Efréma;;40;;;;0;;ephrem_the_syrian_deacon
+383;sv. Víta;;40;;;;0;;vitus_of_lucania_martyr
+384;sv. Jana Nepomuckého Neumanna;;40;;;;0;;john_nepomucene_neumann_bishop
+385;sv. Romualda;;40;;;;0;;romuald_of_ravenna_abbot
+386;sv. Paulina Nolánského;;40;;;;0;;paulinus_of_nola_bishop
+387;sv. Jana Fishera, kněze, a Tomáše Mora;;40;;;;0;;john_fisher_bishop_and_thomas_more_martyrs
+388;sv. Cyrila Alexandrijského;;40;;;;0;;cyril_of_alexandria_bishop
+389;Svatých prvomučedníků římských;;40;;;;0;;first_martyrs_of_the_holy_roman_church
+390;sv. Cyrila a Metoděje;;40;;;;0;;cyril_the_philosopher_monk_and_methodius_of_thessaloniki_bishop
+391;sv. Tomáše;;40;;;;0;;thomas_apostle
+392;sv. Benedikta;;40;;;;0;;benedict_of_nursia_abbot
+393;sv. Marie Magdalény;;40;;;;0;;mary_magdalene
+394;sv. Brigity;;40;;;;0;;bridget_of_sweden_religious
+395;sv. Jakuba;;40;;;;0;;james_apostle
+396;sv. Prokopa;;40;;;;0;;procopius_of_sazava_abbot
+397;sv. Bonaventury;;40;;;;0;;bonaventure_of_bagnoregio_bishop
+398;sv. Jáchyma a Anny;;40;;;;0;;joachim_and_anne_parents_of_mary
+399;sv. Marty;;40;;;;0;;martha_of_bethany_mary_of_bethany_and_lazarus_of_bethany
+400;sv. Ignáce z Loyoly;;40;;;;0;;ignatius_of_loyola_priest
+401;sv. Apolináře;;40;;;;0;;apollinaris_of_ravenna_bishop
+402;sv. Alžběty Portugalské;;40;;;;0;;elizabeth_of_portugal
+403;sv. Marie Gorettiové;;40;;;;0;;maria_goretti_virgin
+404;sv. Augustina Žao Ronga, kněze a druhů;;40;;;;0;;augustine_zhao_rong_priest_and_companions_martyrs
+405;sv. Jindřicha;;40;;;;0;;henry_ii_emperor
+406;bl. Hroznaty;;40;;;;0;;hroznata_of_bohemia_martyr
+407;sv. Kamila de Lellis;;40;;;;0;;camillus_de_lellis_priest
+408;Panny Marie Karmelské;;40;;;;0;;our_lady_of_mount_carmel
+409;bl. Česlava a sv. Hyacinta;;40;;;;0;;ceslaus_of_poland_and_hyacinth_of_poland_priests
+410;sv. Vavřince z Brindisi;;40;;;;0;;lawrence_of_brindisi_priest
+411;sv. Šarbela Machlúfa;;40;;;;0;;sharbel_makhluf_priest
+412;sv. Gorazda a druhů;;40;;;;0;;gorazd_of_moravia_and_companions
+413;sv. Petra Chryzologa;;40;;;;0;;peter_chrysologus_bishop
+414;Nanebevzetí Panny Marie;;40;;;;0;;assumption
+415;Proměnění Páně;;40;;;;0;;transfiguration
+416;sv. Terezie Benedikty od Kříže;;40;;;;0;;teresa_benedicta_of_the_cross_stein_virgin
+417;sv. Vavřince;;40;;;;0;;lawrence_of_rome_deacon
+418;sv. Bartoloměje;;40;;;;0;;bartholomew_apostle
+419;sv. Alfonsa Marie z Liguori;;40;;;;0;;alphonsus_liguori_bishop
+420;sv. Jana Marie Vianneye;;40;;;;0;;john_mary_vianney_priest
+421;sv. Dominika;;40;;;;0;;dominic_de_guzman_priest
+422;sv. Kláry;;40;;;;0;;clare_of_assisi_virgin
+423;sv. Maxmiliána Kolbeho;;40;;;;0;;maximilian_kolbe_priest
+424;sv. Bernarda;;40;;;;0;;bernard_of_clairvaux_abbot
+425;sv. Pia X.;;40;;;;0;;pius_x_pope
+426;Panny Marie Královny;;40;;;;0;;queenship_of_mary
+427;sv. Moniky;;40;;;;0;;monica_of_hippo
+428;sv. Augustina;;40;;;;0;;augustine_of_hippo_bishop
+429;Umučení sv. Jana Křtitele;;40;;;;0;;passion_of_saint_john_the_baptist
+430;sv. Eusebia z Vercelli;;40;;;;0;;eusebius_of_vercelli_bishop
+431;Petra Juliána Eymarda;;40;;;;0;;peter_julian_eymard_priest
+432;Posvěcení římské baziliky Panny Marie;;40;;;;0;;dedication_of_the_basilica_of_saint_mary_major
+433;sv. Sixta II., papeže, a druhů;;40;;;;0;;sixtus_ii_pope_and_companions_martyrs
+434;sv. Kajetána;;40;;;;0;;cajetan_of_thiene_priest
+435;sv. Jany Františky de Chantal;;40;;;;0;;jane_frances_de_chantal_religious
+436;sv. Ponciána, papeže, a Hippolyta, kněze;;40;;;;0;;pontian_i_pope_and_hippolytus_of_rome_priest
+437;sv. Štěpána Uherského;;40;;;;0;;stephen_i_of_hungary
+438;sv. Jana Eudese;;40;;;;0;;john_eudes_priest
+439;sv. Růženy z Limy;;40;;;;0;;rose_of_lima_virgin
+440;sv. Ludvíka;;40;;;;0;;louis_ix_of_france
+441;sv. Benedikta, Jana, Marouše, Izáka a Kristina;;40;;;;0;;first_polish_martyrs
+442;sv. Josefa Kalasanského;;40;;;;0;;joseph_of_calasanz_priest
+443;sv. Václava;;40;;;;0;;wenceslaus_i_of_bohemia_martyr
+444;Povýšení sv. Kříže;;40;;;;0;;exaltation_of_the_holy_cross
+445;Narození Panny Marie;;40;;;;0;;nativity_of_mary
+446;sv. Matouše;;40;;;;0;;matthew_apostle
+447;sv. Michaela, Gabriela a Rafaela;;40;;;;0;;michael_gabriel_and_raphael_archangels
+448;sv. Řehoře Velikého;;40;;;;0;;gregory_i_the_great_pope
+449;sv. Jana Zlatoústého;;40;;;;0;;john_chrysostom_bishop
+450;Panny Marie Bolestné ;;40;;;;0;;our_lady_of_sorrows
+451;sv. Ludmily;;40;;;;0;;ludmila_of_bohemia_martyr
+452;sv. Ondřeje Kim Taegona, Pavla Chong Hasanga a druhů;;40;;;;0;;andrew_kim_tae_gon_priest_paul_chong_ha_sang_and_companions_martyrs
+453;sv. Pia z Pietrelciny;;40;;;;0;;pius_of_pietrelcina_priest
+454;sv. Vincence z Pauly;;40;;;;0;;vincent_de_paul_priest
+455;sv. Jeronýma;;40;;;;0;;jerome_of_stridon_priest
+456;sv. Melichara Grodeckého;;40;;;;0;;melchior_grodziecki_priest
+457;sv. Petra Klavera;;40;;;;0;;peter_claver_priest
+458;bl. Karla Spinoly;;40;;;;0;;charles_spinola_priest
+459;Jména Panny Marie;;40;;;;0;;most_holy_name_of_mary
+460;sv. Kornélia a Cypriána;;40;;;;0;;cornelius_i_pope_and_cyprian_of_carthage_bishop_martyrs
+461;sv. Roberta Bellarmina;;40;;;;0;;robert_bellarmine_bishop
+462;sv. Januária;;40;;;;0;;januarius_i_of_benevento_bishop
+463;sv. Kosmy a Damiána;;40;;;;0;;cosmas_of_cilicia_and_damian_of_cilicia_martyrs
+464;sv. Lukáše;;40;;;;0;;luke_evangelist
+465;sv. Šimona a Judy;;40;;;;0;;simon_and_jude_apostles
+466;sv. Terezie od Dítěte Ježíše;;40;;;;0;;therese_of_the_child_jesus_and_the_holy_face_of_lisieux_virgin
+467;svatých andělů strážných;;40;;;;0;;guardian_angels
+468;sv. Františka z Assisi;;40;;;;0;;francis_of_assisi
+469;Panny Marie Růžencové;;40;;;;0;;our_lady_of_the_rosary
+470;sv. Terezie od Ježíše;;40;;;;0;;teresa_of_jesus_of_avila_virgin
+471;sv. Ignáce Antiochijského;;40;;;;0;;ignatius_of_antioch_bishop
+472;sv. Faustiny Kowalské;;40;;;;0;;faustina_kowalska_virgin
+473;sv. Bruna;;40;;;;0;;bruno_of_cologne_priest
+474;sv. Dionýsia a druhů;;40;;;;0;;denis_of_paris_bishop_and_companions_martyrs
+475;sv. Jana Leonardiho;;40;;;;0;;john_leonardi_priest
+476;sv. Jana XIII.;;40;;;;0;;john_xxiii_pope
+477;sv. Radima;;40;;;;0;;radim_of_gniezno_bishop
+478;sv. Kalista I.;;40;;;;0;;callistus_i_pope
+479;sv. Markéty Marie Alacoque;;40;;;;0;;margaret_mary_alacoque_virgin
+480;sv. Hedviky;;40;;;;0;;hedwig_of_silesia_religious
+481;sv. Jana de Brébeuf a Izáka Joguese a druhů;;40;;;;0;;john_de_brebeuf_isaac_jogues_priests_and_companions_martyrs
+482;sv. Pavla od Kříže;;40;;;;0;;paul_of_the_cross_priest
+483;bl. Karla Rakouského;;40;;;;0;;charles_i_of_austria
+484;sv. Jana Pavla II.;;40;;;;0;;john_paul_ii_pope
+485;sv. Jana Kapistránského;;40;;;;0;;john_of_capistrano_priest
+486;sv. Antonína Marie Klareta;;40;;;;0;;anthony_mary_claret_bishop
+487;sv. Wolfganga;;40;;;;0;;wolfgang_of_regensburg_bishop
+488;Všech svatých;;40;;;;0;;all_saints
+489;Vzpomínka na všechny věrné zemřelé;;40;;;;0;;all_souls
+490;Posvěcení lateránské baziliky;;40;;;;0;;dedication_of_the_lateran_basilica
+491;sv. Ondřeje;;40;;;;0;;andrew_apostle
+492;sv. Karla Boromejského;;40;;;;0;;charles_borromeo_bishop
+493;sv. Lva Velikého;;40;;;;0;;leo_i_the_great_pope
+494;sv. Martina;;40;;;;0;;martin_of_tours_bishop
+495;sv. Josafata;;40;;;;0;;josaphat_kuntsevych_bishop
+496;sv. Anežky České;;40;;;;0;;agnes_of_bohemia_virgin
+497;sv. Alžběty Uherské;;40;;;;0;;elizabeth_of_hungary_religious
+498;Zasvěcení Panny Marie v Jeruzalémě;;40;;;;0;;presentation_of_mary
+499;sv. Cecilie;;40;;;;0;;cecilia_of_rome_virgin
+500;sv. Ondřeje Dung-Laca a druhů;;40;;;;0;;andrew_dung_lac_priest_and_companions_martyrs
+501;sv. Martina de Porres;;40;;;;0;;martin_de_porres_religious
+502;sv. Alberta Velikého;;40;;;;0;;albert_the_great_bishop
+503;sv. Markéty Skotské;;40;;;;0;;margaret_of_scotland
+504;sv. Gertrudy;;40;;;;0;;gertrude_the_great_virgin
+505;Posvěcení římských bazilik svatých apoštolů Petra a Pavla;;40;;;;0;;dedication_of_the_basilicas_of_saints_peter_and_paul_apostles
+506;sv. Klementa I.;;40;;;;0;;clement_i_pope
+507;sv. Kolumbána;;40;;;;0;;columban_of_luxeuil_abbot
+508;sv. Kateřiny Alexandrijské;;40;;;;0;;catherine_of_alexandria_virgin
+509;Panny Marie, počaté bez poskrvny prvotního hříchu;;40;;;;0;;immaculate_conception_of_mary
+510;sv. Štěpána;;40;;;;0;;stephen_the_first_martyr
+511;sv. Jana;;40;;;;0;;john_apostle
+512;sv. Mláďátek;;40;;;;0;;holy_innocents_martyrs
+513;sv. Ambrože;;40;;;;0;;ambrose_of_milan_bishop
+514;sv. Lucie;;40;;;;0;;lucy_of_syracuse_virgin
+515;sv. Jana od Kříže;;40;;;;0;;john_of_the_cross_priest
+516;sv. Františka Xaverského;;40;;;;0;;francis_xavier_priest
+517;sv. Edmunda Kampiána;;40;;;;0;;edmund_campion_priest
+518;sv. Jana Damašského;;40;;;;0;;john_damascene_priest
+519;sv. Mikuláše;;40;;;;0;;nicholas_of_myra_bishop
+520;sv. Jana Didaka Cuauhtlatoatzina;;40;;;;0;;juan_diego_cuauhtlatoatzin
+521;sv. Damasa I.;;40;;;;0;;damasus_i_pope
+522;Panny Marie Guadalupské;;40;;;;0;;our_lady_of_guadalupe
+523;sv. Petra Kanisia;;40;;;;0;;peter_canisius_priest
+524;sv. Jana Kentského;;40;;;;0;;john_of_kanty_priest
+525;sv. Tomáše Becketa;;40;;;;0;;thomas_becket_bishop
+526;sv. Silvestra I.;;40;;;;0;;sylvester_i_pope
+527;Panny Marie, Matky církve;;40;;;;0;;our_lady_mother_of_christian_unity
+528;Ježíše Krista, nejvyššího a věčného kněze;;40;;;;0;;our_lord_jesus_christ_the_eternal_high_priest
+529;Nejsvětější Trojice;;40;;;;0;;trinity_sunday
+530;Těla a Krve Páně;;40;;;;0;;corpus_christi
+531;Nejsvětějšího Srdce Ježíšova;;40;;;;0;;most_sacred_heart_of_jesus
+532;Neposkvrněného Srdce Panny Marie;;40;;;;0;;immaculate_heart_of_mary

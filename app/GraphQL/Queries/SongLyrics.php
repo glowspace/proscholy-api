@@ -94,6 +94,12 @@ class SongLyrics
             $query = $query->where('updated_at', '>', $args['updated_after']);
         }
 
+        if (isset($args['liturgical_day_identificator'])) {
+            $query = $query->whereHas('tags', function ($q) use ($args) {
+                $q->where('lit_day_identificator', $args['liturgical_day_identificator']);
+            });
+        }
+
         if (isset($args['bible_reference_osis'])) {
             $sl_ids = $this->sl_ref_service->findMatchingSongLyricIds($args['bible_reference_osis']);
             $query = $query->whereIn('id', $sl_ids);

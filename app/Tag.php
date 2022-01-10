@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
-    protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy'];
+    protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy', 'lit_day_identificator'];
 
     // when updating this, do not forget to update TagSeeder.php
     protected static $groups_info = [
