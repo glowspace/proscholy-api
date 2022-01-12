@@ -49,7 +49,7 @@ id;name;description;type;parent_tag_id;created_at;updated_at;hide_in_liturgy;ord
 167;Pondělí Svatého týdne;;40;;;;0;;holy_monday
 168;Úterý Svatého týdne;;40;;;;0;;holy_tuesday
 169;Středa Svatého týdne;;40;;;;0;;holy_wednesday
-170;Čtvrtek Svatého týdne;;40;;;;0;;holy_thursday
+170;Čtvrtek Svatého týdne (Missa Chrismatis);;40;;;;0;;holy_thursday
 171;Pondělí v oktávu velikonočním;;40;;;;0;;easter_monday
 172;Úterý v oktávu velikonočním;;40;;;;0;;easter_tuesday
 173;Středa v oktávu velikonočním;;40;;;;0;;easter_wednesday
@@ -412,3 +412,6 @@ id;name;description;type;parent_tag_id;created_at;updated_at;hide_in_liturgy;ord
 530;Těla a Krve Páně;;40;;;;0;;corpus_christi
 531;Nejsvětějšího Srdce Ježíšova;;40;;;;0;;most_sacred_heart_of_jesus
 532;Neposkvrněného Srdce Panny Marie;;40;;;;0;;immaculate_heart_of_mary
+700;Seslání Ducha svatého (vigílie);;40;;;;0;;pentecost_sunday
+701;Zelený čtvrtek (Večeře Páně);;40;;;;0;;thursday_of_the_lord_s_supper
+702;Narození Páně (vigílie)	christmas;;40;;;;0;;christmas
