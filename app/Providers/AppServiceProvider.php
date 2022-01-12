@@ -6,10 +6,12 @@ use App\Services\LilypondPartsService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
-use App\Services\SongLyricService;
+use App\Services\SongLyricModelService;
 use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
+use App\Services\SongLyricBibleReferenceService;
 use App\Services\SongLyricLilypondService;
+use App\SongLyricBibleReference;
 use Blade;
 use Validator;
 use URL;
@@ -58,11 +60,19 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RenderedScoreService::class, function () {
             return new RenderedScoreService();
         });
-        $this->app->singleton(SongLyricLilypondService::class, function () {
-            return new SongLyricLilypondService(app(LilypondClientService::class), app(LilypondPartsService::class));
+        $this->app->singleton(SongLyricModelService::class, function () {
+            return new SongLyricModelService(new SongLyricBibleReferenceService());
         });
-        $this->app->singleton(SongLyricService::class, function () {
-            return new SongLyricService(app(SongLyricLilypondService::class));
+        $this->app->singleton(RenderedScoreService::class, function () {
+            return new RenderedScoreService();
+        });
+        $this->app->singleton(SongLyricLilypondService::class, function () {
+            return new SongLyricLilypondService(
+                app(LilypondClientService::class),
+                app(LilypondPartsService::class),
+                app(RenderedScoreService::class),
+                app(SongLyricModelService::class)
+            );
         });
     }
 }

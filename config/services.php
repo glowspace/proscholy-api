@@ -37,6 +37,10 @@ return [
 
     'firebase' => [
         'project_name' => env('FIREBASE_PROJECT_ID')
-    ]
+    ],
+
+    'discord' => [
+        'webhook_url' => env('DISCORD_WEBHOOK_URL'),
+    ],
 
 ];

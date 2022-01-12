@@ -176,6 +176,7 @@ enum LicenseTypeCC {
     BY_NC_SA @enum(value: 5)
     BY_NC_ND @enum(value: 6)
     PROPRIETARY @enum(value: 7)
+    PUBLIC_DOMAIN @enum(value: 8)
 }
 
 enum SheetMusicKey {
@@ -214,6 +215,8 @@ extend type Query {
 
     song_lyrics(
         search_string: String
+        bible_reference_osis: String
+        liturgical_day_identificator: String
         has_lyrics: Boolean
         has_authors: Boolean    
         has_tags: Boolean
@@ -232,6 +235,7 @@ extend type Query {
         per_page: Int
     ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
 
+    # todo: remove (and all other with this)
     song_lyrics_bible_reference(
         reference_str: String!
         reference_type: BibleReferenceType

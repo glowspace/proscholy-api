@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
-    protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy'];
+    protected $fillable = ['name', 'description', 'type', 'hide_in_liturgy', 'lit_day_identificator'];
 
     // when updating this, do not forget to update TagSeeder.php
     protected static $groups_info = [
@@ -82,7 +82,7 @@ class Tag extends Model
             'is_regenschori' => true
         ],
         100 => [
-            'name' => 'Źánr',
+            'name' => 'Žánr',
             'type' => 100,
             'is_editable' => true,
             'is_regenschori' => true
@@ -227,7 +227,7 @@ class Tag extends Model
             return Tag::find($identificator);
         } else {
             $samename = Tag::where('name', $identificator)->first();
-            if ($samename !== NULL) {
+            if ($samename !== null) {
                 return $samename;
             }
 

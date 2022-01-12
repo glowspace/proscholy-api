@@ -7,6 +7,7 @@ type Tag {
     child_tags: [Tag] @hasMany @deprecated
     description: String
     hide_in_liturgy: Boolean
+    lit_cal_identificator: String
 
     song_lyrics_count: Int @count(relation: "song_lyrics")
     externals_count: Int @count(relation: "externals")

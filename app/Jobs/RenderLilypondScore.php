@@ -10,9 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use App\Services\LilypondClientService;
-use App\Services\RenderedScoreService;
-use Illuminate\Support\Arr;
+use App\Services\SongLyricLilypondService;
 
 class RenderLilypondScore implements ShouldQueue
 {
@@ -39,35 +37,10 @@ class RenderLilypondScore implements ShouldQueue
      *
      * @return void
      */
-    public function handle(LilypondClientService $lp_service, LilypondPartsService $lpsm_service, RenderedScoreService $rs_service)
+    public function handle(SongLyricLilypondService $sll_service)
     {
         $lpsm = LilypondPartsSheetMusic::find($this->lpsm_id);
 
-        $final_render_config = array_merge(
-            $lpsm->score_config,
-            $this->add_render_config
-        );
-
-        $lp_template = $lpsm_service->makeLilypondPartsTemplate($lpsm->lilypond_parts, $lpsm->global_src, $final_render_config, $lpsm->sequence_string);
-
-        $filetype = Arr::has($this->add_render_config, 'paper_type') ? 'pdf' : 'svg';
-
-        logger("Dispatched score render with config:");
-        logger($this->add_render_config);
-
-        // render the template and get the files' data from lp_service
-        $data = $filetype === 'pdf' ? $lp_service->doClientRenderPdf($lp_template) : $lp_service->doClientRenderSvg($lp_template, true);
-
-        // call rs_service to store the RenderedScore with its data
-        $rs_service->createLilypondRenderedScore(
-            $lpsm,
-            $this->add_render_config,
-            $filetype,
-            $data[$filetype],
-            [
-                'midi' => $data['midi']
-            ],
-            $this->frontend_display_order
-        );
+        $sll_service->renderAndUpdateLilypondScoreNew($lpsm, $this->add_render_config, $this->frontend_display_order);
     }
 }

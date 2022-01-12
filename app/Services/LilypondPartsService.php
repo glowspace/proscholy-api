@@ -53,7 +53,9 @@ class LilypondPartsService
         $render_config = new LilypondPartsRenderConfig($render_config_input);
         $src = new LilypondPartsTemplate($global_src ?? '', $render_config);
 
-        $part_names_tokens = array_map(function ($part) { return $part['name']; }, $parts);
+        $part_names_tokens = array_map(function ($part) {
+            return $part['name'];
+        }, $parts);
 
         if (empty($sequence_string)) {
             $sequence = $part_names_tokens;
@@ -67,8 +69,8 @@ class LilypondPartsService
         }
 
         $special_tokens = [
-            '.' => '\bar "|."', 
-            '|' => '\bar "||"', 
+            '.' => '\bar "|."',
+            '|' => '\bar "||"',
             'BREAK' => '\break'
         ];
 
@@ -105,7 +107,7 @@ class LilypondPartsService
         );
     }
 
-    public function renderLilypondScoresSheetMusic(LilypondPartsSheetMusic $lpsm)
+    public function dispatchRenderScoreJobs(LilypondPartsSheetMusic $lpsm)
     {
         logger("Deleting old RenderedScores for LP sheet music $lpsm->id");
         foreach ($lpsm->rendered_scores as $score) {

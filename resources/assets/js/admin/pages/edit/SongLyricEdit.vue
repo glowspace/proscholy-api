@@ -953,6 +953,7 @@ export default {
               text: "Píseň nebyla uložena",
               type: "error"
             });
+            console.log(error.graphQLErrors[0].debugMessage)
             return;
           }
 
