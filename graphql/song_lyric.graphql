@@ -159,12 +159,18 @@ type SongLyric {
     admin_note: String @guard
     is_sealed: Boolean
     base_key: SheetMusicKey @rename(attribute: "lilypond_key_major")
+
+    is_for_band: Boolean
+    is_for_organ: Boolean
+    is_for_choir: Boolean
 }
 
 enum SongType {
     ORIGINAL @enum(value: 0)
     TRANSLATION @enum(value: 1)
     AUTHORIZED_TRANSLATION @enum(value: 2)
+    # todo: add new enum for Songs that copy the music, but the lyrics is different
+    # OVERRIDEN_LYRICS @enum(value: 3)
 }
 
 enum LicenseTypeCC {
@@ -228,6 +234,9 @@ extend type Query {
         has_lilypond: Boolean
         order_abc: Boolean
         updated_after: DateTime
+        is_for_band: Boolean
+        is_for_choir: Boolean
+        is_for_organ: Boolean
     ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php
     search_song_lyrics(
         search_params: String
@@ -283,6 +292,9 @@ input UpdateSongLyricInput {
     bible_refs_src: String
     admin_note: String
     is_sealed: Boolean
+    is_for_band: Boolean
+    is_for_choir: Boolean
+    is_for_organ: Boolean
 }
 
 input SyncOfficialTagsRelation {

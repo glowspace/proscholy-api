@@ -119,6 +119,10 @@ const fragment = gql`
 
         admin_note
         is_sealed
+
+        is_for_band
+        is_for_choir
+        is_for_organ
     }
     ${lilypond_parts_sheet_music_fragment}
 `;
@@ -322,6 +326,9 @@ export default {
             admin_note: vueModel.admin_note,
             licence_type_cc: vueModel.licence_type_cc,
             is_sealed: vueModel.is_sealed,
+            is_for_organ: vueModel.is_for_organ,
+            is_for_choir: vueModel.is_for_choir,
+            is_for_band: vueModel.is_for_band,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot

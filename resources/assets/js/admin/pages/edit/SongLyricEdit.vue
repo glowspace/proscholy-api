@@ -167,6 +167,25 @@
                     </v-flex>
                   </v-layout> -->
 
+                  <v-card class="mb-3 px-4">
+                    <v-card-title class="p-0"><h3 class="mb-0">Vhodnost</h3></v-card-title>
+
+                    <v-card-actions class="px-0 pb-1">
+                      <v-checkbox
+                        v-model="model.is_for_band"
+                        label="Pro scholu/kapelu"
+                      ></v-checkbox>
+                      <v-checkbox
+                        v-model="model.is_for_organ"
+                        label="Pro varhany"
+                      ></v-checkbox>
+                      <v-checkbox
+                        v-model="model.is_for_choir"
+                        label="Pro chrámový sbor"
+                      ></v-checkbox>
+                    </v-card-actions>
+                  </v-card>
+
                   <v-card v-if="model.song && model_database.song" class="mb-3 px-4">
                     <v-card-title class="p-0"><h3>Skupina písní</h3></v-card-title>
 

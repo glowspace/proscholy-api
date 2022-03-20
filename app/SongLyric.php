@@ -192,7 +192,10 @@ class SongLyric extends Model
         'is_sealed',
         'revision_n_tags',
         'revision_n_authors',
-        'revision_n_songbook_records'
+        'revision_n_songbook_records',
+        'is_for_band',
+        'is_for_choir',
+        'is_for_organ'
     ];
 
     private static $lang_string_values = [
@@ -526,6 +529,18 @@ class SongLyric extends Model
         return $query->whereHas('scoreExternals')
             ->orWhereHas('scoreFiles')
             ->orWhereHas('lyrics');
+    }
+
+    public function scopeInAnySongbook($query)
+    {
+        return $query->whereHas('songbook_records');
+    }
+
+    public function scopeInSongbook($query, $songbook_shortcut)
+    {
+        return $query->whereHas('songbook_records', function ($q) use ($songbook_shortcut) {
+            return $q->where('shortcut', $songbook_shortcut);
+        });
     }
 
     /*
