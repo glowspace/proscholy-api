@@ -582,7 +582,7 @@ import EditForm from './EditForm';
 import SongLyric from 'Admin/models/SongLyric';
 import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
-import BibleReference from "bible-reference/bible_reference";
+import bible from 'bible-liturgy-utils/bible/bible';
 
 const LP_TEMPLATE = `\\version "2.22.0"
 
@@ -910,7 +910,7 @@ export default {
     "model.bible_refs_src": function() {
       if (this.model.bible_refs_src) {
         const lines = this.model.bible_refs_src.split("\n");
-        const bib_refs = lines.map(l => BibleReference.fromEuropean(l));
+        const bib_refs = lines.map(l => bible.parseEuropean(l));
         const lines_osis = bib_refs.map(r => r.toString()).join(',');
         const lines_cz = bib_refs.flatMap(r => r.toCzechStrings());
 
