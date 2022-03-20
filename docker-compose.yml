@@ -41,14 +41,6 @@ services:
             - sail
         ports:
             - 3100:8080
-    bible-matcher:
-        extends:
-            file: docker/addons.yml
-            service: bible-matcher
-        networks:
-            - sail
-        ports:
-            - 3200:3000
 
     redis:
         image: "redis:alpine"
@@ -59,7 +51,7 @@ services:
         networks:
             - sail
         healthcheck:
-            test: ["CMD", "redis-cli", "ping"]
+            test: [ "CMD", "redis-cli", "ping" ]
 
 networks:
     sail:

@@ -235,12 +235,6 @@ extend type Query {
         per_page: Int
     ): SongLyricPaginator # see App/GraphQL/Queries/SearchSongLyrics.php
 
-    # todo: remove (and all other with this)
-    song_lyrics_bible_reference(
-        reference_str: String!
-        reference_type: BibleReferenceType
-    ): [SongLyric!]!
-
     song_lyric_songbook_number(number: String!): SongLyric # App/GraphQL/Queries/SongLyricSongbookNumber.php
 }
 

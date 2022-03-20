@@ -64,14 +64,6 @@ services:
     networks:
       - bcloud-network
 
-  bible-matcher:
-    extends:
-      file: docker/addons.yml
-      service: bible-matcher
-    restart: always
-    networks:
-      - bcloud-network
-
   # # grafana used for graphing mysql data
   # grafana:
   #   image: grafana/grafana
