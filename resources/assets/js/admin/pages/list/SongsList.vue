@@ -19,6 +19,7 @@
                     <v-radio label="Bez autora" value="no-author"></v-radio>
                     <v-radio label="Bez štítků" value="no-tags"></v-radio>
                     <v-radio label="Bez licence" value="no-license"></v-radio>
+                    <v-radio label="Bez kategorií vhodnosti" value="no-preference"></v-radio>
                     <v-radio label="Bez not" value="no-scores"></v-radio>
                     <v-radio
                         label="Bez LP not"
@@ -158,6 +159,9 @@
                                         props.item.visit_info.count_week
                                     }}</span>
                                 </td>
+                                <td><span v-if="props.item.is_for_band">✓</span></td>
+                                <td><span v-if="props.item.is_for_organ">✓</span></td>
+                                <td><span v-if="props.item.is_for_choir">✓</span></td>
                                 <td>
                                     <span v-if="props.item.is_sealed">✓</span>
                                 </td>
@@ -208,6 +212,9 @@ const fetch_items = gql`
         $has_scores: Boolean
         $needs_lilypond: Boolean
         $needs_lilypond_update: Boolean
+        $is_for_band: Boolean
+        $is_for_choir: Boolean
+        $is_for_organ: Boolean
     ) {
         song_lyrics(
             has_lyrics: $has_lyrics
@@ -218,6 +225,9 @@ const fetch_items = gql`
             has_scores: $has_scores
             needs_lilypond: $needs_lilypond
             needs_lilypond_update: $needs_lilypond_update
+            is_for_band: $is_for_band
+            is_for_choir: $is_for_choir
+            is_for_organ: $is_for_organ
         ) {
             id
             name
@@ -238,6 +248,9 @@ const fetch_items = gql`
             arrangement_source {
                 name
             }
+            is_for_band
+            is_for_choir
+            is_for_organ
         }
     }
 `;
@@ -271,6 +284,9 @@ export default {
                 { text: 'Naposledy upraveno', value: 'updated_at' },
                 { text: 'Zobrazení', value: 'visit_info.count_total' },
                 { text: 'Zobrazení (týden)', value: 'visit_info.count_week' },
+                { text: 'Sch', value: 'is_for_band' },
+                { text: 'Var', value: 'is_for_organ' },
+                { text: 'Sbor', value: 'is_for_choir' },
                 { text: 'Pečeť', value: 'is_sealed' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],
@@ -308,7 +324,11 @@ export default {
                     needs_lilypond_update:
                         this.filter_mode == 'needs-lilypond-update'
                             ? true
-                            : undefined
+                            : undefined,
+
+                    is_for_band: this.filter_mode == 'no-preference' ? false : undefined,
+                    is_for_choir: this.filter_mode == 'no-preference' ? false : undefined,
+                    is_for_organ: this.filter_mode == 'no-preference' ? false : undefined,
                 };
             },
             result(result) {
