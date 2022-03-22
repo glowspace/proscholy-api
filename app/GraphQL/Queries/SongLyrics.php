@@ -105,6 +105,18 @@ class SongLyrics
             $query = $query->whereIn('id', $sl_ids);
         }
 
+        if(isset($args['is_for_band'])) {
+            $query = $query->where('is_for_band', $args['is_for_band']);
+        }
+
+        if(isset($args['is_for_choir'])) {
+            $query = $query->where('is_for_choir', $args['is_for_choir']);
+        }
+
+        if(isset($args['is_for_organ'])) {
+            $query = $query->where('is_for_organ', $args['is_for_organ']);
+        }
+
         $res = $query->get();
 
         return $res;
