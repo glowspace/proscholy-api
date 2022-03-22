@@ -713,7 +713,6 @@ export default {
         has_anonymous_author: undefined,
         lang: undefined,
         lyrics: undefined,
-        only_regenschori: undefined,
         tags_generic: [],
         tags_liturgy_part: [],
         tags_liturgy_period: [],

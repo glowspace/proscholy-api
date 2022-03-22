@@ -159,12 +159,6 @@
                                     }}</span>
                                 </td>
                                 <td>
-                                    <span v-if="props.item.only_regenschori"
-                                        >jen R</span
-                                    >
-                                    <span v-else>R + PS</span>
-                                </td>
-                                <td>
                                     <span v-if="props.item.is_sealed">✓</span>
                                 </td>
                                 <td class="text-nowrap">
@@ -238,7 +232,6 @@ const fetch_items = gql`
             authors {
                 name
             }
-            only_regenschori
             is_sealed
             has_anonymous_author
             is_arrangement
@@ -278,7 +271,6 @@ export default {
                 { text: 'Naposledy upraveno', value: 'updated_at' },
                 { text: 'Zobrazení', value: 'visit_info.count_total' },
                 { text: 'Zobrazení (týden)', value: 'visit_info.count_week' },
-                { text: 'Zveřejnění', value: 'only_regenschori' },
                 { text: 'Pečeť', value: 'is_sealed' },
                 { text: 'Akce', value: 'actions', sortable: false }
             ],

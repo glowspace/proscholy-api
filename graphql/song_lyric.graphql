@@ -111,7 +111,8 @@ type SongLyric {
     """
     siblings: [SongLyric] @with(relation: "song") @method(name: "getSiblings")
     trashed: Boolean @method(name: "trashed")
-    only_regenschori: Boolean
+    # todo: delete this
+    only_regenschori: Boolean @deprecated(reason: "Use is_for_band, is_for_choir, is_for_organ instead")
     capo: Int
     visit_info: VisitInfo @morphOne(relation: "visit_aggregate")
     has_lyrics: Boolean
@@ -284,7 +285,6 @@ input UpdateSongLyricInput {
     lilypond_key_major: String
     lilypond_parts_sheet_music: LilypondPartsSheetMusicInput
     song: SongInput
-    only_regenschori: Boolean
     capo: Int
     liturgy_approval_status: Int
     arrangement_source: SyncSongLyricArrangementRelation

@@ -177,7 +177,7 @@ class SongLyric extends Model
         'has_chords',
         'user_creator_id',
         'licence_type',
-        'only_regenschori',
+        'only_regenschori', // deprecated
         'capo',
         'liturgy_approval_status',
         'arrangement_of',
@@ -663,7 +663,7 @@ class SongLyric extends Model
             'songbook_records' => $songbook_records,
             'lang' => $this->lang,
             'is_arrangement' => $this->is_arrangement,
-            'only_regenschori' => (bool)$this->only_regenschori,
+            'only_regenschori' => (bool)$this->only_regenschori, // deprecated
             'tag_ids' => $tag_ids,
             'has_media_files_externals' => $this->externals()->media()->count() + $this->files()->audio()->count() > 0,
             'has_score_files_externals' => $this->scoreExternals()->count() + $this->scoreFiles()->count() > 0,

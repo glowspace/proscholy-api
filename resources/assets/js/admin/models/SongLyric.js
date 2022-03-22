@@ -37,7 +37,6 @@ const fragment = gql`
         }
         has_anonymous_author
         lang
-        only_regenschori
         lyrics
         lilypond
         lilypond_key_major
@@ -305,7 +304,6 @@ export default {
             secondary_name_2: vueModel.secondary_name_2,
             lang: vueModel.lang,
             has_anonymous_author: vueModel.has_anonymous_author,
-            only_regenschori: vueModel.only_regenschori,
             lyrics: vueModel.lyrics,
             lilypond: vueModel.lilypond,
             // lilypond_svg: vueModel.lilypond_svg,
