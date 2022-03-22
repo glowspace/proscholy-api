@@ -60,6 +60,7 @@ services:
         restart: always
         networks:
             - sail
+        mem_limit: 1g
 
 networks:
     sail:
