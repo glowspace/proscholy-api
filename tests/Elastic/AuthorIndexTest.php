@@ -4,6 +4,7 @@ namespace Tests\Elastic;
 
 use Tests\TestCase;
 use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 
 use ScoutElastic\IndexConfigurator;
 use App\Elastic\AuthorIndexConfigurator;
@@ -19,7 +20,7 @@ class AuthorIndexTest extends TestCase
     {
         parent::setUp();
 
-        $this->client = app(Client::class);
+        $this->client = ClientBuilder::create()->setHosts(config('elastic.client.hosts'))->build();
         $this->author_index_config = app(AuthorIndexConfigurator::class);
     }
 
