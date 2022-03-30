@@ -3,16 +3,18 @@
 namespace Tests\Elastic;
 
 use Tests\TestCase;
-use Elasticsearch\Client;
-use Elasticsearch\ClientBuilder;
+use App\Factories\ElasticClientFactory;
 
 use ScoutElastic\IndexConfigurator;
 use App\Elastic\SongLyricIndexConfigurator;
 use App\SongLyric;
+use stdClass;
+
+use function PHPUnit\Framework\isReadable;
 
 class SongLyricIndexTest extends TestCase
 {
-    protected Client $client;
+    protected \Elasticsearch\Client $client;
     protected IndexConfigurator $index_config;
     protected array $mapping;
 
@@ -22,29 +24,23 @@ class SongLyricIndexTest extends TestCase
     {
         parent::setUp();
 
-        $this->client = ClientBuilder::create()->setHosts(config('elastic.client.hosts'))->build();
+        $this->client = (new ElasticClientFactory())->get();
         $this->index_config = app(SongLyricIndexConfigurator::class);
         $this->mapping = (new SongLyric())->getMapping();
-    }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testCreateIndex()
-    {
-        $index = $this->client->indices()->create([
+        $this->client->indices()->create([
             'index' => $this->index_name,
             'body' => [
                 'settings' => $this->index_config->getSettings()
             ]
         ]);
+    }
 
-        $this->assertIsArray($index);
-        $this->assertTrue($index['acknowledged']);
-        $this->assertTrue($index['shards_acknowledged']);
-        $this->assertEquals($index['index'], $this->index_name);
+    public function tearDown(): void
+    {
+        $this->client->indices()->delete([
+            'index' => $this->index_name
+        ]);
     }
 
     public function testSongLyricNameAnalyzer()
@@ -67,7 +63,7 @@ class SongLyricIndexTest extends TestCase
             'index' => $this->index_name,
             'body' => [
                 'analyzer' => 'name_analyzer',
-                'text' => ['10,000 reasons', '10,000 duvodu']
+                'text' => ['10000 reasons', '10,000 duvodu']
             ]
         ]);
 
@@ -104,7 +100,7 @@ class SongLyricIndexTest extends TestCase
             'index' => $this->index_name,
             'body'  => [
                 'name' => '10,000 reasons',
-                'name_keyword' => 'myname'
+                'name_raw' => ['myname', 'ahoj']
             ]
         ];
 
@@ -113,64 +109,87 @@ class SongLyricIndexTest extends TestCase
 
         $this->assertIsArray($res);
         $this->assertEquals($res['result'], 'created');
+
+        // We need to wait, until the documets are really searchable
+        $this->waitTillReady(1);
     }
 
+    public function waitTillReady($expected_n_documents)
+    {
+        $n = 0;
+
+        while ($n < $expected_n_documents) {
+            $params = [
+                'from' => 0,
+                'index'  => $this->index_name,
+                'body'   => [
+                    'query' => [
+                        'match_all' => new stdClass()
+                    ]
+                ]
+            ];
+    
+            $response = $this->client->search($params);
+            $n = intval($response['hits']['total']['value']);
+
+            logger("Waiting for records");
+            sleep(1);
+        }
+    }
+    
     public function testSearchName()
     {
+        $q = '100 raeson';
+
         $params = [
             'from' => 0,
             'index'  => $this->index_name,
-            // 'body'   => [
-            //     'query' => [
-            //         'multi_match' => [
-            //             'query' => 'reasons',
-            //             'type' => 'bool_prefix',
-            //             'fields' => [
-            //                 'name',
-            //                 'name._2grlllam',
-            //                 'name._3gram'
-            //             ]
-            //         ]
-            //     ]
-            // ]
-            'body' => [
+            'body'   => [
                 'query' => [
-                    'match_all' => new \stdClass()
+                    'bool' => [
+                        'should' => [
+                            // fuzzy search, word-by-word
+                            ['multi_match' => [
+                                'query' => $q,
+                                'fields' => ['name'],
+                                'fuzziness' => 'AUTO'
+                            ]],
+                            // search-as-you-type (exact match)
+                            ['multi_match' => [
+                                'query' => $q,
+                                'type' => 'bool_prefix',
+                                'fields' => ['name', 'name._2gram', 'name._3gram']
+                            ]],
+                            // phrase search
+                            ['match_phrase' => [
+                                'name' => [
+                                    'query' => $q,
+                                    'slop' => 2
+                                ],
+                            ]]
+                        ]
+                    ]
                 ]
             ]
         ];
 
         $response = $this->client->search($params);
 
-        logger($response);
+        // logger(sprintf("Searching '%s':", $q));
+        // logger($response);
     }
 
-    // public function testSongLyricTextAnalyzer()
-    // {
-    //     $res = $this->client->indices()->analyze([
-    //         'index' => $this->index_name,
-    //         'body' => [
-    //             'analyzer' => 'text_analyzer',
-    //             'text' => "Ať srdce mé Tebe vídá,\r\nať srdce mé Tebe zná,\r\nvidět Tě toužím, \r\nvidět Tě toužím.\r\n\r\nChci vidět Krále na trůnu,\r\nzářícího ve světle slávy.\r\nVylej svou lásku a moc,\r\nkdyž zpívám: Svatý, svatý, svatý.\r\n\r\nSvatý, svatý, svatý,\r\nsvatý, svatý, svatý,\r\nsvatý, svatý, svatý,\r\nvidět Tě toužím."
-    //         ]
-    //     ]);
-
-    //     $toks = array_map(fn ($tok) => $tok['token'], $res['tokens']);
-    //     logger($toks);
-
-    //     // $this->assertContains('chval', $toks);
-    //     // $this->assertContains('chval ho o', $toks);
-    //     // $this->assertContains('duse ma', $toks);
-    //     // $this->assertContains('duse', $toks);
-    // }
-
-    public function testDeleteIndex()
+    public function testSongLyricTextAnalyzer()
     {
-        $res = $this->client->indices()->delete([
-            'index' => $this->index_name
+        $res = $this->client->indices()->analyze([
+            'index' => $this->index_name,
+            'body' => [
+                'analyzer' => 'text_phrase_analyser',
+                'text' => "Ať srdce mé Tebe vídá,\r\nať srdce mé Tebe zná,\r\nvidět Tě toužím, \r\nvidět Tě toužím.\r\n\r\nChci vidět Krále na trůnu,\r\nzářícího ve světle slávy.\r\nVylej svou lásku a moc,\r\nkdyž zpívám: Svatý, svatý, svatý.\r\n\r\nSvatý, svatý, svatý,\r\nsvatý, svatý, svatý,\r\nsvatý, svatý, svatý,\r\nvidět Tě toužím."
+            ]
         ]);
 
-        $this->assertIsArray($res);
-        $this->assertTrue($res['acknowledged']);
+        $toks = array_map(fn ($tok) => $tok['token'], $res['tokens']);
+        logger($toks);
     }
 }

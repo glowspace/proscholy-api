@@ -19,22 +19,14 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                     'type' => 'stop',
                     'stopwords' => '_czech_'
                 ],
-                'czech_stemmer' => [
-                    'type' => 'stemmer',
-                    'language' => 'czech'
+                'czech_hunspell' => [
+                    'type' => 'hunspell',
+                    'language' => 'cs_CZ'
                 ],
                 'phrases' => [
                     'type' => 'shingle',
                     "min_shingle_size" => 2,
                     "max_shingle_size" => 3
-                ],
-                'name_edge_ngram' => [
-                    "type" => "edge_ngram",
-                    "max_gram" => 10,
-                    "token_chars" => [
-                        "letter",
-                        "digit"
-                    ]
                 ]
             ],
             'char_filter' => [
@@ -45,70 +37,49 @@ class SongLyricIndexConfigurator extends IndexConfigurator
                     ]
                 ]
             ],
-            'tokenizer' => [
-                "my_tokenizer" => [
-                    "type" => "edge_ngram",
-                    "max_gram" => 10,
-                    "token_chars" => [
-                        "letter",
-                        "digit"
-                    ]
-                ]
-            ],
 
             // each analyzer uses custom-defined filters, char_filters and tokenizers from above
             // or pre-defined elastic ones (such as 'standard', 'trim', 'unique', ...)
             // see the Elasticsearch docs for more
-
             // these analyzers can be referenced in the model mapping (see $mapping in <Model>SearchableTrait.php)
 
             'analyzer' => [
+                // czech analyzing inspired by https://www.ludekvesely.cz/serial-elasticsearch-4-fulltextove-vyhledavani-v-cestine/
                 'czech_analyzer' => [
                     'tokenizer' => 'standard',
                     'filter' => [
-                        'czech_stemmer',
-                        'asciifolding',
+                        // keyword "doubling" and stemming only non-keywords
+                        // https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-keyword-repeat-tokenfilter.html
+                        'keyword_repeat',
                         'lowercase',
-                        'czech_stop',
+                        // todo: make multilanguage indexes
+                        'czech_hunspell',
+                        'icu_folding',
+                        'remove_duplicates',
                     ]
                 ],
+
+                // 'multilanguage' analyzer, for matching up-to-three-word phrases
+                'text_phrase_analyser' => [
+                    'tokenizer' => 'standard',
+                    'filter' => [
+                        'lowercase',
+                        'icu_folding',
+                        'phrases',
+                        'unique' // some phrases like svaty, svaty, svaty repeat themselves.. we don't want to prioritize these songs over those that have it only once.. :D
+                    ]
+                ],
+
                 'name_analyzer' => [
                     'tokenizer' => 'whitespace',
                     'filter' => [
                         'lowercase',
-                        'asciifolding',
-                        'phrases',
-                        'name_edge_ngram',
-                        'trim',
-                        'unique'
+                        'icu_folding'
                     ],
                     'char_filter' => [
                         'remove_commas'
                     ]
                 ],
-
-                'name_analyzer_as_you_type' => [
-                    'tokenizer' => 'whitespace',
-                    'filter' => [
-                        'lowercase',
-                        'asciifolding'
-                    ],
-                    'char_filter' => [
-                        'remove_commas'
-                    ]
-                ],
-
-                'text_analyzer_phrases' => [
-                    'tokenizer' => 'standard',
-                    'filter' => [
-                        'lowercase',
-                        'keyword_repeat',
-                        'czech_stemmer',
-                        'remove_duplicates',
-                        // 'asciifolding',
-                        // 'phrases'
-                    ]
-                ]
             ]
         ]
     ];

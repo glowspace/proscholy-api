@@ -15,16 +15,22 @@ trait SongLyricSearchableTrait
     // the Elasticsearch metadata for attributes retrieved by toSearchableArray()
     protected $mapping = [
         'properties' => [
+            // we have the secondary names here in this field
             'name' => [
                 'type' => 'search_as_you_type',
-                'analyzer' => 'name_analyzer_as_you_type',
+                'analyzer' => 'name_analyzer',
             ],
+            'name_raw' => [
+                'type' => 'keyword'  
+            ],
+
+            // todo: multi-language indexing
             'lyrics' => [
                 'type' => 'text',
                 'analyzer' => 'czech_analyzer'
             ],
             'authors' => [
-                'type' => 'text',
+                'type' => 'search_as_you_type',
                 'analyzer' => 'name_analyzer'
             ],
             'songook_records' => [
@@ -50,27 +56,14 @@ trait SongLyricSearchableTrait
             'lang' => [
                 'type' => 'keyword'
             ],
-            // the 'text' type cannot be used for sorting, this is why a copy of name is included
-            'name_keyword' => [
-                'type' => 'keyword'
-            ],
             'is_arrangement' => [
                 'type' => 'boolean'
-            ],
-            'tag_instrumentation_ids' => [
-                'type' => 'keyword'
-            ],
-            'tag_period_ids' => [
-                'type' => 'keyword'
             ],
             'song_number' => [
                 'type' => 'keyword'
             ],
             'song_number_integer' => [
                 'type' => 'integer'
-            ],
-            'only_regenschori' => [
-                'type' => 'boolean'
             ],
             'has_media_files_externals' => [
                 'type' => 'boolean'
@@ -103,6 +96,8 @@ trait SongLyricSearchableTrait
             ];
         });
 
+        // todo: filter only 'associated' memberships
+        // todo: add externals' interpreters authors
         $all_authors = $this->authors()->with('memberships')->get();
         foreach ($all_authors as $author) {
             $all_authors = $all_authors->concat($author->memberships);
@@ -112,16 +107,6 @@ trait SongLyricSearchableTrait
         $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id');
 
         $interestingExternals = $this->externals()
-            ->with('tags')
-            ->whereHas(
-                'tags',
-                function ($q) {
-                    return $q->instrumentation();
-                }
-            )
-            ->get();
-
-        $interestingFiles = $this->files()
             ->with('tags')
             ->whereHas(
                 'tags',
@@ -145,7 +130,7 @@ trait SongLyricSearchableTrait
         $arr = [
             'name' => $names,
             // name_keyword is used for sorting
-            'name_keyword' => $this->name,
+            'name_raw' => join(' ', $names),
             'song_number' => $this->song_number,
             'song_number_integer' => (int)$this->song_number,
             'lyrics' => $this->lyrics_no_chords_no_comments,
@@ -158,8 +143,7 @@ trait SongLyricSearchableTrait
             'has_media_files_externals' => $this->externals()->media()->count() + $this->files()->audio()->count() > 0,
             'has_score_files_externals' => $this->scoreExternals()->count() + $this->scoreFiles()->count() > 0,
             'has_lyrics' => $this->has_lyrics, // a computed attribute
-            'has_chords' => (bool)$this->has_chords, // an actual field precomputed in SongLyricSaved event
-            'has_lilypond' => $this->lilypond != null
+            'has_chords' => (bool)$this->has_chords // an actual field precomputed in SongLyricSaved event
         ];
 
         return $arr;
