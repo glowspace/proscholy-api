@@ -1,10 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use App\Elastic\SongLyricIndexConfigurator;
 use App\SongLyric;
-use ElasticAdapter\Indices\Mapping;
-use ElasticAdapter\Indices\Settings;
 use ElasticMigrations\Facades\Index;
 use ElasticMigrations\MigrationInterface;
 

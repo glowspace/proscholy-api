@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-// use ScoutElastic\Searchable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Services\AuthorService;

@@ -4,13 +4,10 @@ namespace App\GraphQL\Queries;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use ScoutElastic\Payloads\TypePayload;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\SongLyric;
-use App\Author;
-use Log;
 
 class SearchSongLyrics
 {
@@ -38,26 +35,15 @@ class SearchSongLyrics
         }
 
         $searchParams = json_decode($args['search_params'], true);
+        logger($searchParams);
 
-        $searchParams['size'] = $args['per_page'];
-        $searchParams['from'] = $args['per_page'] * ($args['page'] - 1);
+        // https://github.com/babenkoivan/elastic-scout-driver-plus/blob/master/docs/available-methods.md
+        $queryResult = SongLyric::searchQuery($searchParams['query'])
+            ->sortRaw($searchParams['sort'])
+            ->load(['songbook_records'])
+            ->minScore(0.5)
+            ->paginate($args['per_page'], 'page', $args['page'])->onlyModels();
 
-        $query = SongLyric::search($searchParams, function ($client, $query) {
-            // this will override the default ::search behaviour so that a raw query is accepted
-            // for comparison, see ScoutElastic::search and ::searchRaw 
-            $model = new SongLyric();
-
-            $payload = (new TypePayload($model))
-                ->setIfNotEmpty('body', $query)
-                ->get();
-
-            return $client->search($payload);
-        });
-
-        $query->with('songbook_records');
-        // $query->with('externals');
-        // $query->with('files');
-
-        return $query->paginate($args['per_page'], 'page', $args['page']);
+        return $queryResult;
     }
 }
