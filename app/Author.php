@@ -8,8 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Services\AuthorService;
 
-use App\Elastic\AuthorSearchableTrait;
-
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -50,7 +48,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Author extends Model
 {
-    use AuthorSearchableTrait, RevisionableTrait, HasFactory;
+    use RevisionableTrait, HasFactory;
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['visits'];
 
