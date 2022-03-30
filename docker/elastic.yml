@@ -10,7 +10,6 @@ services:
       - xpack.security.enabled=false
     expose:
       - 9200
-  # todo: move depends_on and ports to docker-compose.stating.yml
   kibana:
     image: docker.elastic.co/kibana/kibana:7.2.0
   # cerebro:
