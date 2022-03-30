@@ -61,6 +61,19 @@ services:
         networks:
             - sail
         mem_limit: 1g
+        ports:
+            - 9200:9200
+
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.10.2
+        ports:
+            - 5601:5601
+        depends_on:
+            - elastic
+        environment:
+            - ELASTICSEARCH_HOSTS=http://elastic:9200
+        networks:
+            - sail
 
 networks:
     sail:
