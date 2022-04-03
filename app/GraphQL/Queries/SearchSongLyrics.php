@@ -35,12 +35,16 @@ class SearchSongLyrics
         }
 
         $searchParams = json_decode($args['search_params'], true);
+        $minScore = 0;
+        if(isset($searchParams['min_score'])) {
+            $minScore = floatval($searchParams['min_score']);
+        }
 
         // https://github.com/babenkoivan/elastic-scout-driver-plus/blob/master/docs/available-methods.md
         $queryResult = SongLyric::searchQuery($searchParams['query'])
             ->sortRaw($searchParams['sort'])
             ->load(['songbook_records'])
-            ->minScore(0.5)
+            ->minScore($minScore)
             ->paginate($args['per_page'], 'page', $args['page'])->onlyModels();
 
         return $queryResult;
