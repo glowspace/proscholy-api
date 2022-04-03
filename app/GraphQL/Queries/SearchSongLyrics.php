@@ -35,7 +35,6 @@ class SearchSongLyrics
         }
 
         $searchParams = json_decode($args['search_params'], true);
-        logger($searchParams);
 
         // https://github.com/babenkoivan/elastic-scout-driver-plus/blob/master/docs/available-methods.md
         $queryResult = SongLyric::searchQuery($searchParams['query'])
