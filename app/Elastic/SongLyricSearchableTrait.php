@@ -73,7 +73,7 @@ trait SongLyricSearchableTrait
                     'char_filter' => [
                         'remove_commas'
                     ]
-                ],
+                ]
             ]
         ]
     ];
@@ -87,10 +87,11 @@ trait SongLyricSearchableTrait
                 'analyzer' => 'name_analyzer',
             ],
             'name_raw' => [
-                'type' => 'keyword'  
+                'type' => 'icu_collation_keyword',
+                'index' => false,
+                'language' => 'cs_CZ'
             ],
 
-            // todo: multi-language indexing
             'lyrics' => [
                 'type' => 'text',
                 'analyzer' => 'czech_analyzer'
