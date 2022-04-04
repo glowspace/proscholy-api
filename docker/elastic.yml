@@ -10,15 +10,11 @@ services:
       - xpack.security.enabled=false
     expose:
       - 9200
-  # todo: move depends_on and ports to docker-compose.stating.yml
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.2.0
+    image: docker.elastic.co/kibana/kibana:7.10.2
   # cerebro:
   #   image: yannart/cerebro:0.8.1
   #   ports:
   #     - "9000:9000"
   #   depends_on:
   #     - elasticsearch
-
-networks:
-  bcloud-network:

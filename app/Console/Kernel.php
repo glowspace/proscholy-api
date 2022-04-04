@@ -31,9 +31,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('compute:visits')
             ->hourly();
 
-        $schedule->exec('curl ' . config('bible-matcher.host') . ':' . config('bible-matcher.port') . '/match-songs')
-            ->everyFiveMinutes();
-
         $scores_dir = Storage::path(config('lilypond.rendered_scores_dir'));
         $scores_zip = Storage::path(config('lilypond.rendered_scores_zip'));
 

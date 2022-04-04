@@ -1,21 +1,5 @@
 version: "3"
 services:
-  bible-matcher:
-    build:
-      context: ./setup/bible_matcher_node
-      dockerfile: Dockerfile
-    volumes:
-      - ./setup/bible_matcher_node:/var/www/html
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
-    entrypoint: "sh -c 'yarn && node index.js'"
-    expose:
-      - 3000
-
   lilypond:
     build:
       context: ./setup/lilypond
