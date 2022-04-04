@@ -12,7 +12,7 @@
     "devDependencies": {
         "browser-sync": "^2.26.3",
         "browser-sync-webpack-plugin": "^2.0.1",
-        "node-sass": "^6.0.0",
+        "node-sass": "^7.0.0",
         "postcss": "^8.2.1",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.30.0",
