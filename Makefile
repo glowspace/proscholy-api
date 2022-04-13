@@ -45,5 +45,6 @@ staging-deploy:
 	docker-compose -f docker-compose.staging.yml exec -T web php artisan lighthouse:clear-cache
 	docker-compose -f docker-compose.staging.yml exec -T web php artisan lighthouse:cache
 	docker-compose -f docker-compose.staging.yml exec -T web php artisan queue:restart
+	docker-compose -f docker-compose.staging.yml exec -T chmod +x elastic_update.sh && ./elastic_update
 
 	docker-compose -f docker-compose.staging.yml exec -T web curl nginx/reset-cache
