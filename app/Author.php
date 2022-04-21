@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Elastic\AuthorSearchableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Author extends Model
 {
-    use RevisionableTrait, HasFactory;
+    use RevisionableTrait, HasFactory, AuthorSearchableTrait;
     protected $revisionCreationsEnabled = true;
     protected $dontKeepRevisionOf = ['visits'];
 

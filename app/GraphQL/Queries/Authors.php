@@ -4,9 +4,29 @@ namespace App\GraphQL\Queries;
 
 use App\Author;
 use DB;
+use ElasticScoutDriverPlus\Support\Query;
 
 class Authors
 {
+    public function createElasticQuery($str)
+    {
+        return [
+            'bool' => [
+                'should' => [
+                    ['multi_match' => [
+                        'query' => $str,
+                        'type' => 'bool_prefix'
+                        ]],
+                    ['multi_match' => [
+                        'query' => $str,
+                        'fields' => ['name'],
+                        'fuzziness' => 'AUTO'
+                    ]]
+                ]
+            ]
+        ];
+    }
+
     public function resolve($rootValue, array $args)
     {
         $query = Author::query();
@@ -18,8 +38,9 @@ class Authors
                 ->groupBy("authors.id");
         }
 
-        if (isset($args['search_string']))
-            return Author::search($args['search_string'])->get();
+        if (isset($args['search_string'])) {
+            return Author::searchQuery($this->createElasticQuery($args['search_string']))->execute()->models();
+        }
 
         if (isset($args['order_abc']))
             $query = $query->orderBy('name', 'asc');

@@ -11,10 +11,10 @@ use App\Services\LilypondClientService;
 use App\Services\RenderedScoreService;
 use App\Services\SongLyricBibleReferenceService;
 use App\Services\SongLyricLilypondService;
-use App\SongLyricBibleReference;
-use Blade;
-use Validator;
-use URL;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +43,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('endpushonce', function ($expression) {
             return '<?php $__env->stopPush(); endif; ?>';
         });
+
+        // uncomment for sql dumping
+        // DB::listen(function($query) {
+        //     logger($query->time);
+        //     logger($query->sql, $query->bindings);
+        // });
 
         Validator::extend('recaptcha', '\App\Validators\ReCaptcha@validate');
     }

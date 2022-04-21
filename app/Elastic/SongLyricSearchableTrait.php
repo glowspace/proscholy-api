@@ -2,6 +2,8 @@
 
 namespace App\Elastic;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait SongLyricSearchableTrait
 {
     use \ElasticScoutDriverPlus\Searchable;
@@ -164,35 +166,27 @@ trait SongLyricSearchableTrait
      */
     public function toSearchableArray()
     {
-        $songbook_records = $this->songbook_records()->get()->map(function ($sb) {
+        $songbook_records = $this->songbook_records->map(function ($sb) {
             return [
                 'songbook_id' => $sb->id,
                 'songbook_number' => $sb->pivot->number,
                 'songbook_number_integer' => (int)preg_replace('/\D/', '', $sb->pivot->number),
-                'songbook_full_number' => [$sb->pivot->songbook->shortcut . $sb->pivot->number, $sb->pivot->songbook->shortcut . ' ' . $sb->pivot->number],
+                'songbook_full_number' => [$sb->shortcut . $sb->pivot->number, $sb->shortcut . ' ' . $sb->pivot->number],
             ];
         });
 
         // todo: filter only 'associated' memberships
         // todo: add externals' interpreters authors
-        $all_authors = $this->authors()->with('memberships')->get();
+        $all_authors = $this->authors;
         foreach ($all_authors as $author) {
             $all_authors = $all_authors->concat($author->memberships);
         }
 
         // get all song's tags
-        $tag_ids = $this->tags()->select('tags.id')->get()->pluck('id');
+        $tag_ids = $this->tags->pluck('id');
 
-        $interestingExternals = $this->externals()
-            ->with('tags')
-            ->whereHas(
-                'tags',
-                function ($q) {
-                    return $q->instrumentation();
-                }
-            )
-            ->get();
-
+        // interesting externals are filtered in the ->with eager loading
+        $interestingExternals = $this->externals;
         // adjoin externals' instrumentation tags
         foreach ($interestingExternals as $external) {
             $tag_ids = $tag_ids->concat(
@@ -217,17 +211,42 @@ trait SongLyricSearchableTrait
             'is_arrangement' => $this->is_arrangement,
             'only_regenschori' => (bool)$this->only_regenschori,
             'tag_ids' => $tag_ids,
-            'has_media_files_externals' => $this->externals()->media()->count() + $this->files()->audio()->count() > 0,
-            'has_score_files_externals' => $this->scoreExternals()->count() + $this->scoreFiles()->count() > 0,
+            'has_media_files_externals' => $this->media_externals_count > 0,
+            'has_score_files_externals' => $this->score_externals_count > 0,
             'has_lyrics' => $this->has_lyrics, // a computed attribute
             'has_chords' => (bool)$this->has_chords // an actual field precomputed in SongLyricSaved event
         ];
 
         return $arr;
     }
-
-    public function searchableWith()
+            
+    // eager loading for scout:import 
+    protected function makeAllSearchableUsing($query)
     {
-        return ['authors', 'authors.memberships', 'songbook_records', 'externals', 'externals.tags'];
+        $q = $query->with([
+            'lyrics', // has one relation
+            'authors', 'authors.memberships', 
+            'songbook_records', 
+            'tags:id',
+            'externals' => function ($qq) {
+                $qq->whereHas(
+                    'tags',
+                    function ($q) {
+                        return $q->instrumentation();
+                    }
+                );
+            },
+        ]);
+
+        $q = $q->withCount([
+            'externals as media_externals_count' => function (Builder $qq) {
+                $qq->media();
+            },
+            'externals as score_externals_count' => function (Builder $qq) {
+                $qq->scores();
+            },
+        ]);
+
+        return $q;
     }
 }
