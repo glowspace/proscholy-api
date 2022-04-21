@@ -1,11 +1,11 @@
-
-production-deploy:
-	# # echo "Updating docker using file $OPTARG"
+production-pull:
 	git checkout master -f
 	git pull origin master
 	git submodule init
 	git submodule update --recursive --remote
 
+production-deploy:
+	# # echo "Updating docker using file $OPTARG"
 	docker-compose -f docker-compose.prod.yml up --build -d
 	docker-compose -f docker-compose.prod.yml exec -T web composer install --optimize-autoloader --no-dev 
 
@@ -21,17 +21,18 @@ production-deploy:
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan lighthouse:clear-cache
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan lighthouse:cache
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan queue:restart
-	docker-compose -f docker-compose.prod.yml exec -T chmod +x elastic_update.sh && ./elastic_update
+	docker-compose -f docker-compose.prod.yml exec -T web ./elastic_update.sh
 	docker-compose -f docker-compose.prod.yml exec -T web curl nginx/reset-cache
 	
 	docker-compose -f docker-compose.prod.yml exec -T web php artisan queue:restart
 
-staging-deploy:
+staging-pull:
 	git checkout develop -f
 	git pull origin develop
 	git submodule init
 	git submodule update --recursive --remote
 
+staging-deploy:
 	docker-compose -f docker-compose.staging.yml up --build -d
 	docker-compose -f docker-compose.staging.yml exec -T web composer install
 	
@@ -46,6 +47,6 @@ staging-deploy:
 	docker-compose -f docker-compose.staging.yml exec -T web php artisan lighthouse:clear-cache
 	docker-compose -f docker-compose.staging.yml exec -T web php artisan lighthouse:cache
 	docker-compose -f docker-compose.staging.yml exec -T web php artisan queue:restart
-	docker-compose -f docker-compose.staging.yml exec -T chmod +x elastic_update.sh && ./elastic_update
+	docker-compose -f docker-compose.staging.yml exec -T web ./elastic_update.sh
 
 	docker-compose -f docker-compose.staging.yml exec -T web curl nginx/reset-cache

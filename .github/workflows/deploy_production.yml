@@ -11,7 +11,7 @@ jobs:
       - name: SSH in production server
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd /var/www/html/regenschori-api && make production-deploy --silent
+          command: cd /var/www/html/regenschori-api && make production-pull --silent && make production-deploy --silent
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
