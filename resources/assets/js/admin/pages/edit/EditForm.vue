@@ -38,13 +38,17 @@ export default {
             return filter(this.fragment, this.model_database);
         },
 
+        filteredModel() {
+            return filter(this.fragment, this.model);
+        },
+
         isDirty() {
             if (this.is_deleted) return false;
             if (!this.model_database) return false;
             //   if (!this.model.url) return true;
 
             for (let key of Object.keys(this.model)) {
-                let model_val = this.model[key];
+                let model_val = this.filteredModel[key];
                 if (key === 'authors_pivot') {
                     model_val = model_val.filter(
                         a_pivot => a_pivot.author !== null
