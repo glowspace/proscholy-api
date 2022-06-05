@@ -1,6 +1,6 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "glowspace/proscholy-api",
+    "description": "ProScholy.cz songbook API server.",
     "keywords": [
         "framework",
         "laravel"
