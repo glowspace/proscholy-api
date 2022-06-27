@@ -10,8 +10,11 @@ fi
 
 chmod -R ugo+rw /.composer
 
+chown -R $WWWUSER:$WWWUSER storage bootstrap/cache
+chmod -R ug+rwx storage bootstrap/cache
+
 if [ $# -gt 0 ];then
     exec gosu $WWWUSER "$@"
 else
-    /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi

@@ -24,11 +24,12 @@ services:
 
   web.local:
     build:
-      context: ./setup/php-local-7.4
+      # change 8.0. to 8.1
+      context: ./setup/php-local-8.0-future
       dockerfile: Dockerfile
       args:
         WWWGROUP: "1000"
-    image: sail-7.4/app
+    image: sail-8.0/app
     ports:
       - "${APP_PORT:-80}:80"
     environment:
