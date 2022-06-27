@@ -40,6 +40,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apt-get install -y php8.1-dom
+
 RUN apt-get update && apt-get install -y python3 python3-pip
 RUN pip3 install git+https://github.com/Supervisor/supervisor \ 
     && pip3 install superfsmon
