@@ -29,9 +29,7 @@ input UpdateSongbookInput {
     name: String
     shortcut: String
     records: SyncSongbookRecordsForSongbookRelation
-    """ this is string because of the validation message """
-    songs_count: String @rules(apply: ["integer"], messages: {
-        integer: "Zadejte číselnou hodnotu"})
+    songs_count: Int
     is_private: Boolean
     color: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: {
         regex: "Zadejte barvu v hexadecimálním formátu"})

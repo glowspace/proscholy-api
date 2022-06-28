@@ -377,7 +377,7 @@ export default {
         liturgyDayTagsInput: belongsToManyMutator(vueModel.tags_liturgy_day, {
             disableCreate: true
         }),
-        taggable_id: vueModel.id
+        taggable_id: parseInt(vueModel.id)
     })
 };
 
