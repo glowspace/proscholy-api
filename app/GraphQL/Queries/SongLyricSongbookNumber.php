@@ -9,7 +9,7 @@ use Log;
 
 class SongLyricSongbookNumber
 {
-	public function resolve($rootValue, array $args)
+	public function __invoke($rootValue, array $args)
 	{
 		$match_songbook_shortcut_lazy = "([\d\w]+?)";
 		$match_number = "(\d+\w*)";

@@ -6,7 +6,7 @@ use App\Song;
 
 class News
 {
-    public function resolve($rootValue, array $args)
+    public function __invoke($rootValue, array $args)
     {
         return [
             [

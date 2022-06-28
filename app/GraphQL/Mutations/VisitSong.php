@@ -7,7 +7,7 @@ use App\Visit;
 
 class VisitSong
 {
-    public function resolve($rootValue, array $args)
+    public function __invoke($rootValue, array $args)
     {
         Visit::create([
             'visitable_type' => SongLyric::class,
