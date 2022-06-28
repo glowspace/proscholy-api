@@ -5,20 +5,18 @@ namespace App\GraphQL\Mutations;
 use App\Notifications\SongLyricCreated;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use Illuminate\Support\Facades\Auth;
 // use Validator;
-use Validator;
-use Illuminate\Validation\ValidationException;
-use Nuwave\Lighthouse\Execution\ErrorBuffer;
+use Nuwave\Lighthouse\Execution\ErrorPool;
 
 use App\Author;
-use App\SongLyric;
-use App\Song;
 use App\External;
 use App\NewsItem;
 use App\Services\SongLyricModelService;
 use App\Songbook;
 use App\Tag;
+use Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class CreateModel
 {
@@ -36,18 +34,17 @@ class CreateModel
         $input = $args["input"];
         $attr = $input["required_attribute"];
 
-        // create a Nuawe custom-made validation error buffer
-        // this is needed for proper returning of validation errors
-        // as for usage, see Nuwave\Lighthouse\Schema\Factories\FieldFactory
-        $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
-        $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context, 'root' => $rootValue];
+        // perform the validation with the help of Nuawe validation error pool
+        /** @var ErrorPool */
+        $errorPool = app(ErrorPool::class);
 
         // until we check the data with Validator, store the return data here
-        $returnValue;
-        $validator;
-
+        $returnValue = null;
+        /** @var Validator|null */
+        $validator = null;
+        
         if ($input["class_name"] == "Author") {
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors'], ['unique' => 'Autor se stejným jménem již existuje'], $validatorCustomAttributes);
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:authors'], ['unique' => 'Autor se stejným jménem již existuje']);
             if (!$validator->fails()) {
                 $author = Author::create(['name' => $attr]);
 
@@ -58,7 +55,7 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "External") {
-            $validator = Validator::make(['url' => $attr], ['url' => 'unique:externals'], ['unique' => 'Materiál s daným URL již existuje'], $validatorCustomAttributes);
+            $validator = Validator::make(['url' => $attr], ['url' => 'unique:externals'], ['unique' => 'Materiál s daným URL již existuje']);
             if (!$validator->fails()) {
                 $external = External::create(['url' => $attr]);
 
@@ -69,7 +66,7 @@ class CreateModel
                 ];
             }
         } elseif ($input["class_name"] == "Songbook") {
-            $validator = Validator::make(['name' => $attr], ['name' => 'unique:songbooks'], ['unique' => 'Zpěvník se stejným jménem již existuje'], $validatorCustomAttributes);
+            $validator = Validator::make(['name' => $attr], ['name' => 'unique:songbooks'], ['unique' => 'Zpěvník se stejným jménem již existuje']);
             if (!$validator->fails()) {
                 $songbook = Songbook::create(['name' => $attr]);
 
@@ -100,42 +97,52 @@ class CreateModel
             ];
         } elseif ($input["class_name"] == "Tag") {
             if (Tag::where('type', $input['tag_type'])->where('name', $attr)->count() > 0) {
-                $validationErrorBuffer->push("Jméno štítku už je obsazené v rámci kategorie", "required_attribute");
-                $validationErrorBuffer->flush(
-                    "Validation failed for the field [input.required_attribute]."
-                );
+                // $validationErrorBuffer->push("Jméno štítku už je obsazené v rámci kategorie", "required_attribute");
+                // $validationErrorBuffer->flush(
+                //     "Validation failed for the field [input.required_attribute]."
+                // );
+
+                $errorPool->record(new Exception('Jméno štítku už je obsazené v rámci kategorie'));
+            } else {
+                $tag = Tag::create(['name' => $attr, 'type' => $input["tag_type"]]);
+    
+                $returnValue = [
+                    "id" => $tag->id,
+                    "class_name" => "Tag",
+                    "edit_url" => route("admin.tag.edit", $tag)
+                ];
             }
 
-            $tag = Tag::create(['name' => $attr, 'type' => $input["tag_type"]]);
-
-            $returnValue = [
-                "id" => $tag->id,
-                "class_name" => "Tag",
-                "edit_url" => route("admin.tag.edit", $tag)
-            ];
         } else {
             // todo throw an error?
             return;
         }
 
-        // perform the validation with the help of Nuawe validation error buffer
         if (isset($validator)) {
-            // validator has already been tested for fail, so here ->failed() is needed
-            // in order not to perform the validation again
-            if ($validator->failed()) {
-                foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
-                    foreach ($errorMessages as $errorMessage) {
-                        // we use only one attribute - required_attribute, for the sake of simplicity
-                        // every failure goes to required_attribute which is used then in generic view CreateModel.vue
-                        $validationErrorBuffer->push($errorMessage, "required_attribute");
-                    }
-                }
-            }
+            // // validator has already been tested for fail, so here ->failed() is needed
+            // // in order not to perform the validation again
+            // if ($validator->failed()) {
+            //     foreach ($validator->errors()->getMessages() as $key => $errorMessages) {
+            //         foreach ($errorMessages as $errorMessage) {
+            //             // we use only one attribute - required_attribute, for the sake of simplicity
+            //             // every failure goes to required_attribute which is used then in generic view CreateModel.vue
+            //             $validationErrorBuffer->push($errorMessage, "required_attribute");
 
-            $path = implode('.', $resolveInfo->path);
-            $validationErrorBuffer->flush(
-                "Validation failed for the field [$path]."
-            );
+            //             $errorPool->record()
+            //         }
+            //     }
+            // }
+
+            // $path = implode('.', $resolveInfo->path);
+            // $validationErrorBuffer->flush(
+            //     "Validation failed for the field [$path]."
+            // );
+
+            try {
+                $validator->validate();
+            } catch (ValidationException $e) {
+                $errorPool->record($e);
+            }
         }
 
         return $returnValue;
