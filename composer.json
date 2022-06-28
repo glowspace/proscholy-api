@@ -14,7 +14,6 @@
         "babenkoivan/elastic-scout-driver-plus": "^3.4",
         "doctrine/dbal": "3.3",
         "erjanmx/laravel-migrate-check": "^2.0",
-        "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
         "kreait/firebase-tokens": "^1.9",
         "laravel/framework": "^9.0",
