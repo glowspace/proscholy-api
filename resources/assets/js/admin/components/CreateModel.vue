@@ -146,7 +146,7 @@ export default {
                         return;
                     }
 
-                    graphqlErrorsToValidator(this.$validator, error);
+                    graphqlErrorsToValidator(this.$validator, error, 'required_attribute');
                 });
         },
 
