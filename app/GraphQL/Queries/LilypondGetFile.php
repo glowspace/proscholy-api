@@ -7,7 +7,7 @@ use App\Services\LilypondClientService;
 
 class LilypondGetFile
 {
-    public function resolve($rootValue, array $args)
+    public function __invoke($rootValue, array $args)
     {
         /** @var LilypondPartsService */
         $lpt_service = app(LilypondPartsService::class);

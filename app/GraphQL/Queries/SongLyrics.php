@@ -16,7 +16,7 @@ class SongLyrics
         $this->sl_ref_service = app(SongLyricBibleReferenceService::class);
     }
 
-    public function resolve($rootValue, array $args)
+    public function __invoke($rootValue, array $args)
     {
         $query = SongLyric::query();
 

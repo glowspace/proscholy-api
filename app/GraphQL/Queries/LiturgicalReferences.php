@@ -6,7 +6,7 @@ use App\LiturgicalReference;
 
 class LiturgicalReferences
 {
-    public function resolve($rootValue, array $args)
+    public function __invoke($rootValue, array $args)
     {
         $q = LiturgicalReference::with('song_lyric');
 

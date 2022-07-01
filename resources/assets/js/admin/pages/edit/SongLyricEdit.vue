@@ -1097,9 +1097,9 @@ export default {
           variables: {
             input: {
               name: this.new_arrangement_name,
-              arrangement_of: this.model.id
+              arrangement_of: parseInt(this.model.id)
             }
-          }
+          } 
         })
         .then(result => {
           this.$validator.errors.clear();

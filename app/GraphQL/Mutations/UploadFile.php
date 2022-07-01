@@ -4,10 +4,10 @@ namespace App\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use Nuwave\Lighthouse\Execution\ErrorBuffer;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class UploadFile
 {
@@ -22,9 +22,6 @@ class UploadFile
     {
         $allow_owerwrite = isset($args['allow_overwrite']) && $args['allow_overwrite'];
 
-        $validationErrorBuffer = (new ErrorBuffer)->setErrorType('validation');
-        // // $validatorCustomAttributes = ['resolveInfo' => $resolveInfo, 'context' => $context, 'root' => $root];
-
         /** @var \Illuminate\Http\UploadedFile $file */
         // file stored in tmp/tempname
         $tempfile = $args['file'];
@@ -33,10 +30,9 @@ class UploadFile
 
         if (isset($args['filename'])) {
             if (!preg_match('/^[A-Za-z0-9_.-]+$/', $args['filename'])) {
-                $validationErrorBuffer->push("Název souboru smí obsahovat pouze písmena bez diakritiky, čísla a znaky '-', '_', '.' (bez mezer)", "input.filename");
-                $validationErrorBuffer->flush(
-                    "Validation failed for the field [input.filename]"
-                );
+                throw ValidationException::withMessages([
+                    'input.filename' => "Název souboru smí obsahovat pouze písmena bez diakritiky, čísla a znaky '-', '_', '.' (bez mezer)"
+                ]);
             }
 
             $fname = $args['filename'];
@@ -47,11 +43,9 @@ class UploadFile
             if ($allow_owerwrite) {
                 Storage::delete(Storage::path("public_files/$fname"));
             } else {
-                // the file already exists, return error
-                $validationErrorBuffer->push("Soubor s daným jménem již existuje, prosím použijte jiné jméno, nebo přepište starý soubor", "input.filename");
-                $validationErrorBuffer->flush(
-                    "Validation failed for the field [input.filename]"
-                );
+                throw ValidationException::withMessages([
+                    'input.filename' => "Soubor s daným jménem již existuje, prosím použijte jiné jméno, nebo přepište starý soubor"
+                ]);
             }
         }
 

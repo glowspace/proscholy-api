@@ -54,9 +54,6 @@ export default {
                         a_pivot => a_pivot.author !== null
                     );
                 }
-                if (model_val === '') {
-                    model_val = null;
-                }
 
                 if (!_.isEqual(model_val, this.filteredModelDatabase[key])) {
                     console.log(

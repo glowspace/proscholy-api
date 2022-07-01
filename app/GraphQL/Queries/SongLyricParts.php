@@ -9,7 +9,7 @@ use Log;
 
 class SongLyricParts
 {
-	public function resolve($rootValue, array $args)
+	public function __invoke($rootValue, array $args)
 	{
 		$song_lyric = SongLyric::find($args['id']);
 

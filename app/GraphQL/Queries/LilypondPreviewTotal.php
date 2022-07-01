@@ -6,7 +6,7 @@ use App\Services\LilypondPartsService;
 
 class LilypondPreviewTotal
 {
-    public function resolve($rootValue, array $args)
+    public function __invoke($rootValue, array $args)
     {
         $lpt_service = app(LilypondPartsService::class);
         $svg = $lpt_service->makeTotalSvgFast(
