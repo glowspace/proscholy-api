@@ -306,7 +306,7 @@ export default {
             lilypond: vueModel.lilypond,
             // lilypond_svg: vueModel.lilypond_svg,
             lilypond_key_major: vueModel.lilypond_key_major,
-            song: {
+            song: vueModel.song === null ? null : {
                 id: vueModel.song.id,
                 song_lyrics: vueModel.song.song_lyrics.map(sl => ({
                     id: sl.id,
