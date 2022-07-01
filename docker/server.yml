@@ -24,8 +24,7 @@ services:
 
   web.local:
     build:
-      # change 8.0. to 8.1
-      context: ./setup/php-local-8.0-future
+      context: ./setup/php-local-8.1
       dockerfile: Dockerfile
       args:
         WWWGROUP: "1000"
