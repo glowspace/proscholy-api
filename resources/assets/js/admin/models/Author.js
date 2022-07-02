@@ -84,6 +84,6 @@ export default {
             members: belongsToManyMutator(vueModel.members)
         },
         historyPeriodTagsInput: belongsToManyMutator(vueModel.tags_period),
-        taggable_id: vueModel.id
+        taggable_id: parseInt(vueModel.id)
     })
 };

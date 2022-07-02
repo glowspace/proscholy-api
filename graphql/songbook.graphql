@@ -18,7 +18,7 @@ extend type Query {
     songbook(id: ID! @eq): Songbook @find
 }
 
-extend type Mutation @middleware(checks: ["auth:api"]) {
+extend type Mutation @guard {
     update_songbook(input: UpdateSongbookInput!): Songbook
 
     delete_songbook(id: ID!): Songbook @delete
@@ -29,9 +29,7 @@ input UpdateSongbookInput {
     name: String
     shortcut: String
     records: SyncSongbookRecordsForSongbookRelation
-    """ this is string because of the validation message """
-    songs_count: String @rules(apply: ["integer"], messages: {
-        integer: "Zadejte číselnou hodnotu"})
+    songs_count: Int
     is_private: Boolean
     color: String @rules(apply: ["nullable", "regex:/#[0-9A-Fa-f]{6}/"], messages: {
         regex: "Zadejte barvu v hexadecimálním formátu"})

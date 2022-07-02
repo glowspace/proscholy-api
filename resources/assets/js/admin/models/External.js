@@ -91,6 +91,6 @@ export default {
         instrumentationTagsInput: belongsToManyMutator(
             vueModel.tags_instrumentation
         ),
-        taggable_id: vueModel.id
+        taggable_id: parseInt(vueModel.id)
     })
 };

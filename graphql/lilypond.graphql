@@ -11,7 +11,7 @@ type FileOutput {
     base64: String
 }
 
-extend type Query @middleware(checks: ["auth:api"]) {
+extend type Query @guard {
     lilypond_parse(lilypond: String, lilypond_key_major: String): LilypondOutput 
 
     lilypond_preview_part(lilypond_part: LilypondPartInput, global_src: String, render_config: LilypondRenderConfigInput) : LilypondOutput

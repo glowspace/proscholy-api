@@ -69,7 +69,7 @@ enum Taggable {
     # TAG @enum(value: "App\\Tag")
 }
 
-extend type Mutation @middleware(checks: ["auth:api"]) {
+extend type Mutation @guard {
     update_tag(input: UpdateTagInput! @spread): Tag @update
     delete_tag(id: ID!): Tag @delete
 
