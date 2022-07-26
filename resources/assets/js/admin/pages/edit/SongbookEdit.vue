@@ -443,6 +443,7 @@ export default {
 
         song_lyric_filter(item, queryText) {
             if (item.header) return false;
+            if (!item.name_search) return false; 
 
             return item.name_search.indexOf(stringToSearchable(queryText)) > -1;
         }
