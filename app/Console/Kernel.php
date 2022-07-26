@@ -36,6 +36,11 @@ class Kernel extends ConsoleKernel
 
         // create a zip of rendered svg scores
         $schedule->exec("cd $scores_dir && find -name \"*.svg\" -printf '%f\n' | tar -zcf $scores_zip -T -")->hourly();
+
+        // update elastic data
+        // todo: make elastic update automatically after data edit
+        $schedule->exec('./elastic_update.sh')->daily();
+        
     }
 
     /**
