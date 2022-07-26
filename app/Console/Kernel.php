@@ -40,7 +40,6 @@ class Kernel extends ConsoleKernel
         // update elastic data
         // todo: make elastic update automatically after data edit
         $schedule->exec('./elastic_update.sh')->daily();
-        
     }
 
     /**
