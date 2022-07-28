@@ -31,6 +31,8 @@ class SongbookRecord extends Pivot
     protected $table = 'songbook_records';
     protected $fillable = ["placeholder", "number", "song_lyric_id", "songbook_id"];
     public $incrementing = true;
+    // automatically updates updated_at for song_lyric when the records are changed
+    protected $touches = ['song_lyric'];
 
     public function song_lyric(): BelongsTo
     {
