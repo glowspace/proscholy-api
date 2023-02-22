@@ -32,7 +32,7 @@
         "apollo-upload-client": "^14.1.1",
         "axios": "^0.21",
         "bible-liturgy-utils": "https://github.com/glowspace/bible-liturgy-utils#2.0.2",
-        "bootstrap": "4.2.1",
+        "bootstrap": "4.3.1",
         "bootstrap-material-design": "4.1.1",
         "bowser": "^2.4.0",
         "cross-env": "^5.1",
