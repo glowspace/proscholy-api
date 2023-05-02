@@ -290,6 +290,7 @@
 import lilypond_helper from 'Admin/helpers/lilypond.js';
 import downloadFile from 'Admin/helpers/downloadBase64.js';
 import LilypondPartRender from './LilypondPartRender';
+import Vue from 'vue';
 
 export default {
     props: {

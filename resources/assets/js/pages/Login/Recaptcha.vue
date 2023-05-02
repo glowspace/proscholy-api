@@ -11,6 +11,7 @@
 
 <script>
 import { VueReCaptcha } from 'vue-recaptcha-v3';
+import Vue from 'vue';
 
 export default {
     props: ['site-key'],
