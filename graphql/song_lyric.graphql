@@ -1,5 +1,6 @@
 type SongLyric {
     id: ID!
+    cez_number: String @with(relation: "songbook_records", scopes: ["cez"])
     name: String
     """
     Song name with autors and additional info (i.e. arrangement)
@@ -181,6 +182,7 @@ enum LicenseTypeCC {
     BY_NC_ND @enum(value: 6)
     PROPRIETARY @enum(value: 7)
     PUBLIC_DOMAIN @enum(value: 8)
+    PROPRIETARY_EVANGELICAL @enum(value: 9)
 }
 
 enum SheetMusicKey {
