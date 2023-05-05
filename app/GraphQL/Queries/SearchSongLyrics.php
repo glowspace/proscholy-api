@@ -6,7 +6,8 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Facades\Request;
+use App\Songbook;
 use App\SongLyric;
 
 class SearchSongLyrics
@@ -40,8 +41,19 @@ class SearchSongLyrics
             $minScore = floatval($searchParams['min_score']);
         }
 
+        $filter_ez = Request::header('Filter-Content') == 'ez';
+
         // https://github.com/babenkoivan/elastic-scout-driver-plus/blob/master/docs/available-methods.md
         $queryResult = SongLyric::searchQuery($searchParams['query'])
+            ->when($filter_ez, function($builder) {
+                // fix the problem when ElasticSearch returns different number of hits than actually are scoped by SongLyrics
+                // by applying a post-filter that corresponds to the global scope 
+                // - issue came from separation of Evangelicky Zpevnik / ZPS
+
+                $cez_songbook_id = Songbook::where('shortcut', 'ez')->first()->id;
+
+                return $builder->postFilter(['terms' => ['songbook_records.songbook_id' => $cez_songbook_id]]);           
+            })
             ->sortRaw($searchParams['sort'])
             ->load(['songbook_records'])
             ->minScore($minScore)
