@@ -52,7 +52,7 @@ class SearchSongLyrics
 
                 $cez_songbook_id = Songbook::where('shortcut', 'ez')->first()->id;
 
-                return $builder->postFilter(['terms' => ['songbook_records.songbook_id' => $cez_songbook_id]]);           
+                return $builder->postFilter(['terms' => ['songbook_records.songbook_id' => [$cez_songbook_id]]]);           
             })
             ->sortRaw($searchParams['sort'])
             ->load(['songbook_records'])
