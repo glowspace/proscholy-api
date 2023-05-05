@@ -1,6 +1,6 @@
 type SongLyric {
     id: ID!
-    cez_number: String @with(relation: "songbook_records", scopes: ["cez"])
+    ez_number: String @with(relation: "songbook_records", scopes: ["ez"])
     name: String
     """
     Song name with autors and additional info (i.e. arrangement)

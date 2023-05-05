@@ -183,7 +183,7 @@ class SongLyric extends Model
             return;
         }
 
-        if (Request::header('Filter-Content') == 'cez') {
+        if (Request::header('Filter-Content') == 'ez') {
             // limit the songs to only those that are in the Evangelical songbook
             static::addGlobalScope(new EvangelicalSongsScope);
         } else {
@@ -414,9 +414,9 @@ class SongLyric extends Model
     }
 
     // Czech Evangelical Songbook
-    public function getCezNumberAttribute(): string|null
+    public function getEzNumberAttribute(): string|null
     {
-        // only to be used with cez songbooks (see song_lyric.graphql, note a CEZ scope)
+        // only to be used with evangelicky zpevnik songbooks (see song_lyric.graphql, note a EZ scope)
         return $this->songbook_records->first()?->pivot->number;
     }
 

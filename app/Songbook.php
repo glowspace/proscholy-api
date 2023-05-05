@@ -38,8 +38,8 @@ class Songbook extends Model
         return $query->where('is_private', false);
     }
 
-    public function scopeCez($query)
+    public function scopeEz($query)
     {
-        return $query->where('name', 'ČEZ');
+        return $query->where('shortcut', 'EZ');
     }
 }
