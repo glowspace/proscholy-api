@@ -208,6 +208,7 @@ import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
 import NumberInput from 'Admin/components/NumberInput.vue';
 import FileUploadDialog from 'Admin/components/FileUploadDialog';
+import Vue from 'vue';
 
 import EditForm from './EditForm';
 import Songbook from 'Admin/models/Songbook';

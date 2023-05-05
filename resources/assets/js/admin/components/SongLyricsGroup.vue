@@ -16,6 +16,7 @@
 <script>
 import ButtonColorToggle from '../components/ButtonColorToggle.vue';
 import { getSongLyricFullName } from '../helpers/search_indexing';
+import Vue from 'vue';
 
 export default {
     components: {

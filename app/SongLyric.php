@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Lockable;
+use App\Scopes\ExcludeEvangelicalOnlySongsScope;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,6 +33,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 use App\Elastic\SongLyricSearchableTrait;
+use App\Scopes\EvangelicalSongsScope;
+use Illuminate\Support\Facades\Request;
 
 /**
  * App\SongLyric
@@ -153,6 +156,7 @@ class SongLyric extends Model
         'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
         'PROPRIETARY' => 'proprietární (smlouva s MS)',
         'PUBLIC_DOMAIN' => 'volné dílo (uplynula doba trvání majetkových práv)',
+        'PROPRIETARY_EVANGELICAL' => 'proprietární (pouze Evangelický zpěvník)'
     ];
 
     private static $lilypond_key_major_string_values = [
@@ -172,6 +176,20 @@ class SongLyric extends Model
         "bes" => '2b (B / g)',
         "f" => '1b (F / d)'
     ];
+
+    protected static function booted()
+    {
+        if (Auth::check()) {
+            return;
+        }
+
+        if (Request::header('Filter-Content') == 'cez') {
+            // limit the songs to only those that are in the Evangelical songbook
+            static::addGlobalScope(new EvangelicalSongsScope);
+        } else {
+            static::addGlobalScope(new ExcludeEvangelicalOnlySongsScope);
+        }
+    }
 
     public function getPublicUrlAttribute()
     {
@@ -393,6 +411,13 @@ class SongLyric extends Model
     public function getHasArrangementsAttribute(): bool
     {
         return $this->arrangements()->count() > 0;
+    }
+
+    // Czech Evangelical Songbook
+    public function getCezNumberAttribute(): string|null
+    {
+        // only to be used with cez songbooks (see song_lyric.graphql, note a CEZ scope)
+        return $this->songbook_records->first()?->pivot->number;
     }
 
     public function getRichNameAttribute(): string

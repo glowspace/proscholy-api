@@ -37,4 +37,9 @@ class Songbook extends Model
     {
         return $query->where('is_private', false);
     }
+
+    public function scopeCez($query)
+    {
+        return $query->where('name', 'ČEZ');
+    }
 }

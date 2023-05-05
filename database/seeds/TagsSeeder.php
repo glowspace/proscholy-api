@@ -32,6 +32,9 @@ class TagsSeeder extends Seeder
             5 => [
                 "obřízka", "žarošická pouť"
             ],
+            6 => [
+                "láska", "naděje", "víra"
+            ],
             10 => [
                 "Doba kamenná", "Doba bronzová", "Velký třesk"
             ],

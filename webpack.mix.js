@@ -29,11 +29,14 @@ mix.webpackConfig({
             Admin: path.resolve(__dirname, 'resources/assets/js/admin/'),
             Public: path.resolve(__dirname, 'resources/assets/js/'),
             Fragments: path.resolve(__dirname, 'graphql/client/')
-        }
+        },
+    },
+    output: {
+        hashFunction: 'sha512'
     }
 });
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.js('resources/assets/js/app.js', 'public/js').vue({ version: 2})
     .sass('resources/assets/sass/app.scss', 'public/css')
     .copyDirectory('resources/assets/vendor/ViewerJS', 'public/js/ViewerJS')
     .browserSync({
@@ -56,7 +59,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
  * Administration
  */
 mix.sass('resources/assets/sass/admin/admin-ui.scss', 'public/_admin/css')
-    .js('resources/assets/js/admin/app.js', 'public/_admin/js')
+    .js('resources/assets/js/admin/app.js', 'public/_admin/js').vue({ version: 2})
     .stylus('resources/assets/stylus/admin.styl', 'public/_admin/css');
 
 mix.sass(
@@ -66,7 +69,7 @@ mix.sass(
 mix.js(
     'resources/assets/vendor/magicsuggest/magicsuggest.js',
     'public/_admin/js'
-);
+).vue({ version: 2});
 
 if (mix.inProduction()) {
     mix.version();

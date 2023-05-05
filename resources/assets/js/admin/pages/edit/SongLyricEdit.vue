@@ -576,6 +576,7 @@ import NumberInput from "Admin/components/NumberInput.vue";
 import CreateExternal from "Admin/components/CreateExternal.vue";
 import ExternalListItem from "Admin/components/ExternalListItem.vue";
 import ExternalComponent from '@bit/proscholy.utilities.external/External.vue';
+import Vue from 'vue';
 
 import LilypondPartsTab from 'Admin/pages/edit/SongLyric/LilypondParts/LilypondPartsTab.vue';
 import EditForm from './EditForm';
