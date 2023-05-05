@@ -145,6 +145,9 @@ trait SongLyricSearchableTrait
             ],
             'has_chords' => [
                 'type' => 'boolean'
+            ],
+            'licence_type_cc' => [
+                'type' => 'integer'
             ]
         ]
     ];
@@ -214,7 +217,8 @@ trait SongLyricSearchableTrait
             'has_media_files_externals' => $this->media_externals_count > 0,
             'has_score_files_externals' => $this->score_externals_count > 0,
             'has_lyrics' => $this->has_lyrics, // a computed attribute
-            'has_chords' => (bool)$this->has_chords // an actual field precomputed in SongLyricSaved event
+            'has_chords' => (bool)$this->has_chords, // an actual field precomputed in SongLyricSaved event
+            'licence_type_cc' => $this->licence_type_cc
         ];
 
         return $arr;
