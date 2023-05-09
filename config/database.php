@@ -52,6 +52,10 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+
+            'dump' => [
+                'add_extra_option' => '--column-statistics=0 ',
+            ]
         ],
 
         'migrate' => [
