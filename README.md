@@ -25,3 +25,9 @@ a vytvářet komunitu expertních dobrovolníků v oblasti vývoje software a we
 
 ### Líbí se Vám naše práce?
 Staňte se naším sponzorem, abychom mohli dál tvořit weby a aplikace pro věřící.
+
+# Instalace
+## Produkční nasazení
+make production-pull
+
+make production-deploy
