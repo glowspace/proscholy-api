@@ -11,6 +11,9 @@ services:
       - 3306
     volumes:
       - ./data/mysql:/var/lib/mysql
+    command:
+      - "mysqld"
+      - "--innodb_buffer_pool_size=500M"
 
   adminer:
     image: adminer
