@@ -34,7 +34,8 @@ class SongLyricModelService
 
         $song_lyric->visit_aggregate()->create([
             'count_week' => 0,
-            'count_total' => 0
+            'count_after_prune' => 0,
+            'count_pruned' => 0
         ]);
 
         return $song_lyric;

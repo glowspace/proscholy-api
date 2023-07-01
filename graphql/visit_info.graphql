@@ -1,4 +1,7 @@
 type VisitInfo {
     count_week: Int
     count_total: Int
+
+    # count_pruned: Int
+    # count_after_prune: Int
 }
