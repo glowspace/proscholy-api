@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'laravel-backup'),
+        'name' => '',
 
         'source' => [
 
@@ -18,7 +18,7 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    storage_path('app'),
+                    storage_path('app/public_files'),
                 ],
 
                 /*
@@ -27,8 +27,8 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
-                    // base_path('vendor'),
-                    // base_path('node_modules'),
+                    storage_path('app/public_files/thumbnails'),
+                    storage_path('app/public_files/thumbnails_externals'),
                 ],
 
                 /*

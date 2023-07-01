@@ -55,6 +55,13 @@ return [
 
             'dump' => [
                 'add_extra_option' => '--column-statistics=0 ',
+                'excludeTables' => [
+                    'migrations',
+                    'revisions',
+                    'song_lyric_lilypond_svg',
+                    'visits',
+                ],
+                // 'useSingleTransaction' => true,
             ]
         ],
 
