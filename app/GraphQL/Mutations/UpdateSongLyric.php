@@ -37,18 +37,33 @@ class UpdateSongLyric
         $song_lyric = SongLyric::find($input["id"]);
         // $song_lyric_old = $song_lyric->replicate();
 
-        $this->sl_lily_service->handleLilypondOnUpdate($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
+        // if has key
+        if (isset($input["lilypond"])) {
+            $this->sl_lily_service->handleLilypondOnUpdate($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
+        }
 
         $song_lyric->update($input);
         // todo if has key
-        $this->sl_service->handleLyrics($song_lyric, $input["lyrics"]);
-        $this->sl_service->handleArrangementSourceUpdate($song_lyric, $input["arrangement_source"]);
-        $this->sl_service->handleSongGroup($song_lyric, $input["song"]);
+        if (isset($input["lyrics"])) {
+            $this->sl_service->handleLyrics($song_lyric, $input["lyrics"]);
+        }
+        if (isset($input["arrangement_source"])) {
+            $this->sl_service->handleArrangementSourceUpdate($song_lyric, $input["arrangement_source"]);
+        }
+        if (isset($input["song"])) {
+            $this->sl_service->handleSongGroup($song_lyric, $input["song"]);
+        }
         $this->sl_service->handleHasChords($song_lyric);
-        $this->sl_service->handleAuthors($song_lyric, $input["authors"]);
-        $this->sl_service->handleSongbookRecords($song_lyric, $input["songbook_records"]);
+        if (isset($input["authors"])) {
+            $this->sl_service->handleAuthors($song_lyric, $input["authors"]);
+        }
+        if (isset($input["songbook_records"])) {
+            $this->sl_service->handleSongbookRecords($song_lyric, $input["songbook_records"]);
+        }
         $this->sl_service->handleRevisionAssociacionsStats($song_lyric);
-        $this->sl_service->handleBibleReferences($song_lyric, $input['bible_refs_osis']);
+        if (isset($input["bible_refs_osis"])) {
+            $this->sl_service->handleBibleReferences($song_lyric, $input['bible_refs_osis']);
+        }
 
         $song_lyric->save();
 
