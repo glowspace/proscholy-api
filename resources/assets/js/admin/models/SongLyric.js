@@ -119,6 +119,7 @@ const fragment = gql`
 
         admin_note
         is_sealed
+        hymnology
     }
     ${lilypond_parts_sheet_music_fragment}
 `;
@@ -322,6 +323,7 @@ export default {
             admin_note: vueModel.admin_note,
             licence_type_cc: vueModel.licence_type_cc,
             is_sealed: vueModel.is_sealed,
+            hymnology: vueModel.hymnology,
             // a pivot mutator
             authors: {
                 sync: vueModel.authors_pivot
