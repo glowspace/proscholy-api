@@ -95,6 +95,14 @@
                     </v-flex>
                   </v-layout>
 
+                  <v-flex grow>
+                    <v-textarea
+                      label="Hymnologie"
+                      v-model="model.hymnology"
+                      rows="1"
+                    ></v-textarea>
+                  </v-flex>
+
                   <v-card class="mb-4 px-4">
                     <v-card-title class="p-0">
                       <h3>Autoři<span v-if="is_arrangement_layout"> aranže</span>

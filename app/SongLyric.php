@@ -118,7 +118,8 @@ class SongLyric extends Model
         'is_sealed',
         'revision_n_tags',
         'revision_n_authors',
-        'revision_n_songbook_records'
+        'revision_n_songbook_records',
+        'hymnology'
     ];
 
     private static $lang_string_values = [

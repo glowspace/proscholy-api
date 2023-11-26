@@ -164,6 +164,7 @@ type SongLyric {
     admin_note: String @guard
     is_sealed: Boolean
     base_key: SheetMusicKey @rename(attribute: "lilypond_key_major")
+    hymnology: String
 }
 
 enum SongType {
@@ -289,6 +290,7 @@ input UpdateSongLyricInput {
     bible_refs_src: String
     admin_note: String
     is_sealed: Boolean
+    hymnology: String
 }
 
 input SyncOfficialTagsRelation {
