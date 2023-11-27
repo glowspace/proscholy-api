@@ -30,6 +30,13 @@
                     ></v-radio>
                 </v-radio-group>
             </v-layout>
+            <v-layout row wrap>
+                <v-select
+                    :items="songbooks_select_options"
+                    v-model="filter_songbook"
+                    label="Zpěvník"
+                ></v-select>
+            </v-layout>
 
             <v-layout row v-if="filter_mode == 'no-license'">
                 <v-flex xs12>
@@ -245,6 +252,20 @@ const fetch_items = gql`
             arrangement_source {
                 name
             }
+            songbook_records {
+                songbook {
+                    id
+                }
+            }
+        }
+    }
+`;
+
+const fetch_songbooks = gql`
+    query {
+        songbooks {
+            id
+            name
         }
     }
 `;
@@ -284,7 +305,9 @@ export default {
             ],
             search_string: '',
             filter_mode: 'no-filter',
-            dtPagination: {}
+            dtPagination: {},
+            filter_songbook: '',
+            songbooks_select_options: [],
         };
     },
 
@@ -292,7 +315,7 @@ export default {
         filter_mode(val) {
             window.location.hash = val != 'no-filter' ? val : '';
             this.dtPagination.page = 1;
-        }
+        },
     },
 
     apollo: {
@@ -321,6 +344,18 @@ export default {
             },
             result(result) {
                 this.buildSearchIndex();
+            }
+        },
+
+        songbooks: {
+            query: fetch_songbooks,
+            result(result) {
+                console.log(result.data);
+                this.songbooks_select_options = result.data.songbooks.map(data => ({
+                    value: data.id,
+                    text: data.name
+                }));
+                console.log(this.songbooks_select_options);
             }
         }
     },
