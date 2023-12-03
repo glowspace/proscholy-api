@@ -100,6 +100,12 @@ class SongLyrics
             });
         }
 
+        if (isset($args['songbook_id'])) {
+            $query = $query->whereHas('songbook_records', function ($q) use ($args) {
+                $q->where('songbook_id', $args['songbook_id']);
+            });
+        }
+
         if (isset($args['bible_reference_osis'])) {
             $sl_ids = $this->sl_ref_service->findMatchingSongLyricIds($args['bible_reference_osis']);
             $query = $query->whereIn('id', $sl_ids);

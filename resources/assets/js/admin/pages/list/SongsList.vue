@@ -33,7 +33,7 @@
             <v-layout row wrap>
                 <v-select
                     :items="songbooks_select_options"
-                    v-model="filter_songbook"
+                    v-model="filter_songbook_id"
                     label="Zpěvník"
                 ></v-select>
             </v-layout>
@@ -221,6 +221,7 @@ const fetch_items = gql`
         $has_scores: Boolean
         $needs_lilypond: Boolean
         $needs_lilypond_update: Boolean
+        $songbook_id: ID
     ) {
         song_lyrics(
             has_lyrics: $has_lyrics
@@ -231,6 +232,7 @@ const fetch_items = gql`
             has_scores: $has_scores
             needs_lilypond: $needs_lilypond
             needs_lilypond_update: $needs_lilypond_update
+            songbook_id: $songbook_id
         ) {
             id
             name
@@ -251,11 +253,6 @@ const fetch_items = gql`
             is_arrangement
             arrangement_source {
                 name
-            }
-            songbook_records {
-                songbook {
-                    id
-                }
             }
         }
     }
@@ -306,7 +303,7 @@ export default {
             search_string: '',
             filter_mode: 'no-filter',
             dtPagination: {},
-            filter_songbook: '',
+            filter_songbook_id: '',
             songbooks_select_options: [],
         };
     },
@@ -339,6 +336,10 @@ export default {
                     needs_lilypond_update:
                         this.filter_mode == 'needs-lilypond-update'
                             ? true
+                            : undefined,
+                    songbook_id:
+                        this.filter_songbook_id !== ''
+                            ? this.filter_songbook_id
                             : undefined
                 };
             },
@@ -350,12 +351,13 @@ export default {
         songbooks: {
             query: fetch_songbooks,
             result(result) {
-                console.log(result.data);
-                this.songbooks_select_options = result.data.songbooks.map(data => ({
+                this.songbooks_select_options = [{
+                    value: '',
+                    text: 'Všechny zpěvníky',
+                }, ...result.data.songbooks.map(data => ({
                     value: data.id,
                     text: data.name
-                }));
-                console.log(this.songbooks_select_options);
+                }))];
             }
         }
     },
