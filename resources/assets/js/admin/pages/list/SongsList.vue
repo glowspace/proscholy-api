@@ -119,6 +119,17 @@
                                     </a>
                                 </td>
                                 <td>
+                                    <span v-if="filter_songbook_id === ''">
+                                        {{ props.item.id }}
+                                    </span>
+                                    <span v-else>
+                                    <!-- find the songbook number in songbook_records given the filtered songbook id -->
+                                        {{
+                                            props.item.number
+                                        }}
+                                    </span>
+                                </td>
+                                <td>
                                     <span v-if="props.item.type === 0"
                                         >Orig.</span
                                     >
@@ -254,6 +265,12 @@ const fetch_items = gql`
             arrangement_source {
                 name
             }
+            songbook_records {
+                songbook {
+                    id
+                }
+                number
+            }
         }
     }
 `;
@@ -291,6 +308,7 @@ export default {
         return {
             headers: [
                 { text: 'Název písničky', value: 'name' },
+                { text: 'ID', value: 'number' },
                 { text: 'Typ', value: 'type' },
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
@@ -313,6 +331,15 @@ export default {
             window.location.hash = val != 'no-filter' ? val : '';
             this.dtPagination.page = 1;
         },
+
+        filter_songbook_id(val) {
+            this.dtPagination.page = 1;
+            if (val === '') {
+                this.headers[1].text = 'ID';
+            } else {
+                this.headers[1].text = 'Č.';
+            }
+        }
     },
 
     apollo: {
@@ -345,6 +372,15 @@ export default {
             },
             result(result) {
                 this.buildSearchIndex();
+                for (const song_lyric of this.song_lyrics) {
+                    if (this.filter_songbook_id !== '') {
+                        song_lyric.number = song_lyric.songbook_records.find(
+                            r => r.songbook.id == this.filter_songbook_id
+                        ).number;
+                    } else {
+                        song_lyric.number = song_lyric.id;
+                    }     
+                }
             }
         },
 
@@ -402,8 +438,16 @@ export default {
             for (var item of this.song_lyrics) {
                 const types = ['original', 'preklad', 'autorizovany preklad'];
 
+                let number = item.id;
+                if (this.filter_songbook_id !== '') {
+                    number = item.songbook_records.find(
+                        r => r.songbook.id == this.filter_songbook_id
+                    ).number;
+                }
+
                 let searchableItems = [
                     item.name,
+                    number,
                     item.secondary_name_1,
                     item.secondary_name_2,
                     item.authors.map(a => a.name).join(' ') ||
