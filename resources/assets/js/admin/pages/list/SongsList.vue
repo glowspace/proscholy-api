@@ -30,6 +30,13 @@
                     ></v-radio>
                 </v-radio-group>
             </v-layout>
+            <v-layout row wrap>
+                <v-select
+                    :items="songbooks_select_options"
+                    v-model="filter_songbook_id"
+                    label="Zpěvník"
+                ></v-select>
+            </v-layout>
 
             <v-layout row v-if="filter_mode == 'no-license'">
                 <v-flex xs12>
@@ -110,6 +117,17 @@
                                     >
                                         <song-name :song="props.item" />
                                     </a>
+                                </td>
+                                <td>
+                                    <span v-if="filter_songbook_id === ''">
+                                        {{ props.item.id }}
+                                    </span>
+                                    <span v-else>
+                                    <!-- find the songbook number in songbook_records given the filtered songbook id -->
+                                        {{
+                                            props.item.number
+                                        }}
+                                    </span>
                                 </td>
                                 <td>
                                     <span v-if="props.item.type === 0"
@@ -214,6 +232,7 @@ const fetch_items = gql`
         $has_scores: Boolean
         $needs_lilypond: Boolean
         $needs_lilypond_update: Boolean
+        $songbook_id: ID
     ) {
         song_lyrics(
             has_lyrics: $has_lyrics
@@ -224,6 +243,7 @@ const fetch_items = gql`
             has_scores: $has_scores
             needs_lilypond: $needs_lilypond
             needs_lilypond_update: $needs_lilypond_update
+            songbook_id: $songbook_id
         ) {
             id
             name
@@ -245,6 +265,21 @@ const fetch_items = gql`
             arrangement_source {
                 name
             }
+            songbook_records {
+                songbook {
+                    id
+                }
+                number
+            }
+        }
+    }
+`;
+
+const fetch_songbooks = gql`
+    query {
+        songbooks {
+            id
+            name
         }
     }
 `;
@@ -273,6 +308,7 @@ export default {
         return {
             headers: [
                 { text: 'Název písničky', value: 'name' },
+                { text: 'ID', value: 'number' },
                 { text: 'Typ', value: 'type' },
                 { text: 'Autoři', value: 'authors', sortable: false },
                 { text: 'Naposledy upraveno', value: 'updated_at' },
@@ -284,7 +320,9 @@ export default {
             ],
             search_string: '',
             filter_mode: 'no-filter',
-            dtPagination: {}
+            dtPagination: {},
+            filter_songbook_id: '',
+            songbooks_select_options: [],
         };
     },
 
@@ -292,6 +330,15 @@ export default {
         filter_mode(val) {
             window.location.hash = val != 'no-filter' ? val : '';
             this.dtPagination.page = 1;
+        },
+
+        filter_songbook_id(val) {
+            this.dtPagination.page = 1;
+            if (val === '') {
+                this.headers[1].text = 'ID';
+            } else {
+                this.headers[1].text = 'Č.';
+            }
         }
     },
 
@@ -316,11 +363,37 @@ export default {
                     needs_lilypond_update:
                         this.filter_mode == 'needs-lilypond-update'
                             ? true
+                            : undefined,
+                    songbook_id:
+                        this.filter_songbook_id !== ''
+                            ? this.filter_songbook_id
                             : undefined
                 };
             },
             result(result) {
                 this.buildSearchIndex();
+                for (const song_lyric of this.song_lyrics) {
+                    if (this.filter_songbook_id !== '') {
+                        song_lyric.number = song_lyric.songbook_records.find(
+                            r => r.songbook.id == this.filter_songbook_id
+                        ).number;
+                    } else {
+                        song_lyric.number = song_lyric.id;
+                    }     
+                }
+            }
+        },
+
+        songbooks: {
+            query: fetch_songbooks,
+            result(result) {
+                this.songbooks_select_options = [{
+                    value: '',
+                    text: 'Všechny zpěvníky',
+                }, ...result.data.songbooks.map(data => ({
+                    value: data.id,
+                    text: data.name
+                }))];
             }
         }
     },
@@ -365,8 +438,16 @@ export default {
             for (var item of this.song_lyrics) {
                 const types = ['original', 'preklad', 'autorizovany preklad'];
 
+                let number = item.id;
+                if (this.filter_songbook_id !== '') {
+                    number = item.songbook_records.find(
+                        r => r.songbook.id == this.filter_songbook_id
+                    ).number;
+                }
+
                 let searchableItems = [
                     item.name,
+                    number,
                     item.secondary_name_1,
                     item.secondary_name_2,
                     item.authors.map(a => a.name).join(' ') ||

@@ -235,6 +235,7 @@ extend type Query {
         has_lilypond: Boolean
         order_abc: Boolean
         updated_after: DateTime
+        songbook_id: ID
     ): [SongLyric!]! # see App/GraphQL/Queries/SongLyrics.php
     search_song_lyrics(
         search_params: String
