@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Author;
+use App\External;
 use App\LilypondPartsSheetMusic;
 use App\SongLyric;
 use App\RenderedScore;
@@ -82,6 +83,25 @@ class RenderedScoreService
         logger("Saving rendered score ($primary_filename.$primary_filetype)");
 
         $lp->rendered_scores()->save($rs);
+    }
+
+    public function createMusicXmlRenderedScore(External $external, string $data) {
+        $primary_filetype = 'svg';
+        $primary_filename = $this->makeFile($data, $primary_filetype);
+
+        // and save the new one into db
+        $rs = new RenderedScore([
+            // currently the musicxml rendering provides no way to configure the render output
+            // (it is hardcoded in the lilypond server renderer)
+            'render_config' => [],
+            'render_config_hash' => $this->getRenderConfigHash([]),
+            'filename' => $primary_filename,
+            'filetype' => $primary_filetype,
+            'secondary_filetypes' => array_keys([]),
+            'frontend_display_order' => null
+        ]);
+
+        $external->rendered_scores()->save($rs);
     }
 
     // todo: call this on soft deleting SongLyric
