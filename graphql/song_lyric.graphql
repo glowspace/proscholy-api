@@ -56,7 +56,9 @@ type SongLyric {
     lilypond_rendered_scores(
         filetype: String @eq
         wide: Boolean @scope(name: "wide")
-    ): [LilypondRenderedScore] @hasMany
+    ): [RenderedScore] @hasMany
+
+    external_rendered_scores: [RenderedScore] @hasMany
 
     lilypond_key_major: String
     type_enum: SongType @rename(attribute: "type")
