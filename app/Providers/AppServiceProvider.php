@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\ExternalMusicXmlService;
 use App\Services\LilypondPartsService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -91,6 +92,12 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(RenderedScoreService::class, function () {
             return new RenderedScoreService();
+        });
+        $this->app->singleton(ExternalMusicXmlService::class, function () {
+            return new ExternalMusicXmlService(
+                app(LilypondClientService::class),
+                app(RenderedScoreService::class)
+            );
         });
         $this->app->singleton(SongLyricModelService::class, function () {
             return new SongLyricModelService(new SongLyricBibleReferenceService());

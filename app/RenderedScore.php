@@ -5,6 +5,7 @@ namespace App;
 use App\Services\RenderedScoreService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class RenderedScore extends Model
 {
@@ -46,9 +47,20 @@ class RenderedScore extends Model
         return $query->where('filetype', 'svg');
     }
 
-    public function getPublicUrlPrefixAttribute()
+    public function getPublicUrlAttribute()
     {
-        // this is actually served by nginx
-        return url("/rendered_scores/$this->filename");
+        // this should actually be served by nginx
+        return url("/$this->filepath");
+    }
+
+    public function getFilepathAttribute()
+    {
+        return "rendered_scores/$this->filename.$this->filetype";
+    }
+
+    public function getContentsAttribute()
+    {
+        $path = Storage::path($this->filepath);
+        return file_get_contents($path);
     }
 }

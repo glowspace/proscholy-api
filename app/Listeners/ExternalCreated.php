@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Events\ExternalCreated as ExternalCreatedEvent;
 use App\Helpers\ExternalMediaLink;
+use App\Jobs\RenderExternalMusicXml;
+use App\Services\ExternalMusicXmlService;
 use Illuminate\Support\Str;
 
 class ExternalCreated
@@ -30,11 +30,16 @@ class ExternalCreated
     public function handle(ExternalCreatedEvent $event)
     {
         $media_link = new ExternalMediaLink($event->external->url);
+        $media_type = $media_link->getExternalMediaType();
 
         $event->external->update([
             'is_uploaded' => Str::contains($event->external->url, url('')),
-            'media_type' => $media_link->getExternalMediaType(),
+            'media_type' => $media_type,
             'content_type' => $media_link->getExternalContentType()
         ]);
+
+        if (ExternalMusicXmlService::isMediaTypeRenderable($media_type)) {
+            RenderExternalMusicXml::dispatch($event->external->id);
+        }
     }
 }

@@ -52,6 +52,21 @@ class LilypondClientService
         return $data;
     }
 
+    // kind-of-beta support for rendering from XML (via Verovio)
+    public function doClientRenderSvgFromXml(string $src)
+    {  
+        $res = $this->client->renderXml($src);
+        $data = [
+            'svg' => $res->isSuccessful() ? $this->client->getResultOutputFile($res) : '',
+            'log' => $this->client->getResultLog($res)
+        ];
+        $this->client->deleteResult($res);
+
+        logger('Verovio MusicXML render, ' . config('lilypond_renderer.host'));
+
+        return $data;
+    }
+
     public function makeSvgFast($lilypond, $key_major = null)
     {
         $data = $this->doClientRenderSvg($this->makeLilypondBasicTemplate($lilypond, $key_major), false);

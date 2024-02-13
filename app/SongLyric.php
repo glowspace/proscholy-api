@@ -392,6 +392,11 @@ class SongLyric extends Model
         return $this->hasManyThrough(RenderedScore::class, LilypondPartsSheetMusic::class, null, 'lilypond_parts_sheet_music_id');
     }
 
+    public function external_rendered_scores(): HasManyThrough
+    {
+        return $this->hasManyThrough(RenderedScore::class, External::class, null, 'external_id');
+    }
+
     //  -----------
 
     public function arrangements(): HasMany

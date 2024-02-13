@@ -1,14 +1,17 @@
-type LilypondRenderedScore {
+type RenderedScore {
     id: Int
     filename: String
     filetype: String
     frontend_display_order: Int
-    public_url_prefix: String
+
+    public_url: String
+    contents: String
 
     render_config: RenderConfig
     secondary_filetypes: [String]
 
     lilypond_parts_sheet_music: LilypondPartsSheetMusic
+    external: External
 }
 
 type RenderConfig {
