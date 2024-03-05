@@ -723,7 +723,7 @@ export default {
         lilypond: "",
         lilypond_parts_sheet_music: undefined,
         bible_refs_src: "",
-        bible_refs_osis: "",
+        bible_refs_osis: null,
         admin_note: undefined,
         // this is actually not very nice
         lilypond_svg: null
@@ -926,7 +926,7 @@ export default {
         this.model.bible_refs_osis = lines_osis;
         this.bible_refs_czech = lines_cz;
       } else {
-        this.model.bible_refs_osis = "";
+        this.model.bible_refs_osis = null;
         this.bible_refs_czech = [];
       }
     },

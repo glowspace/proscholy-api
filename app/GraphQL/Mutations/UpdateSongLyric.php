@@ -38,9 +38,7 @@ class UpdateSongLyric
         // $song_lyric_old = $song_lyric->replicate();
 
         // if has key
-        if (isset($input["lilypond"])) {
-            $this->sl_lily_service->handleLilypondOnUpdate($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
-        }
+        $this->sl_lily_service->handleLilypondOnUpdate($song_lyric, $input["lilypond"], $input["lilypond_key_major"], $input["lilypond_parts_sheet_music"]);
 
         $song_lyric->update($input);
         // todo if has key
