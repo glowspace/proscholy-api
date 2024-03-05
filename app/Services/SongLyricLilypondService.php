@@ -106,7 +106,9 @@ class SongLyricLilypondService
             $song_lyric->lilypond_parts_sheet_music->sequence_string != $lilypond_parts_sheet_music['sequence_string'];
 
         
-        $this->sl_rep->handleLilypondSrc($song_lyric, $lilypond_input);
+        if (isset($lilypond_input)) {
+            $this->sl_rep->handleLilypondSrc($song_lyric, $lilypond_input);
+        }
         $lpsm = $this->sl_rep->handleLilypondPartsSheetMusic($song_lyric, $lilypond_parts_sheet_music);
 
         if ($new_lilypond_updated) {
