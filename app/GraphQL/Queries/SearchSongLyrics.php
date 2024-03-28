@@ -41,25 +41,23 @@ class SearchSongLyrics
             $minScore = floatval($searchParams['min_score']);
         }
 
+        // We need to manually apply the same filter that is implied by the song lyric (global) scope,
+        // (see ExcludeEvangelicalOnlySongsScope and EvangelicalSongsScope)
+        // because they work only for Eloquent, not Elasticsearch, which confuses Scout.
         $filter_ez = Request::header('Filter-Content') == 'ez';
+        if ($filter_ez) {
+            $ez_songbook_id = Songbook::where('shortcut', 'ez')->first()->id;
+            $searchParams['query']['bool']['filter'][] = [
+                'terms' => ['songbook_records.songbook_id' => [$ez_songbook_id]]
+            ];
+        } else {
+            $searchParams['query']['bool']['must_not'] = [
+                ['term' => ['licence_type_cc' => 9]]
+            ];
+        }
 
         // https://github.com/babenkoivan/elastic-scout-driver-plus/blob/master/docs/available-methods.md
         $queryResult = SongLyric::searchQuery($searchParams['query'])
-            ->when($filter_ez, function($builder) {
-                // hotfix the problem when ElasticSearch returns different number of hits than actually are scoped by SongLyrics
-                // by applying a post-filter that corresponds to the global scope 
-                // - issue came from separation of Evangelicky Zpevnik / ZPS
-
-                $cez_songbook_id = Songbook::where('shortcut', 'ez')->first()->id;
-
-                return $builder->postFilter(['terms' => ['songbook_records.songbook_id' => [$cez_songbook_id]]]);           
-            }, function ($builder) {
-                // todo: apply a post-filter that filters out the songs that are only for EZ
-
-                // see song_lyric.graphql
-                // $licence_type_only_ez = 9;
-                // return $builder->postFilter(['term' => ['licence_type_cc' => $licence_type_only_ez]]);
-            })
             ->sortRaw($searchParams['sort'])
             ->load(['songbook_records'])
             ->minScore($minScore)
