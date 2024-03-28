@@ -18,7 +18,7 @@ class EvangelicalSongsScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         $builder->whereHas('songbook_records', function ($q) {
-				$q->where('shortcut', "EZ");
-		});
+            $q->where('shortcut', "EZ");
+        });
     }
 }
