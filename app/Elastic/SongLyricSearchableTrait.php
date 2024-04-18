@@ -208,7 +208,7 @@ trait SongLyricSearchableTrait
         if ($this->secondary_name_1) $names[] = $this->secondary_name_1;
         if ($this->secondary_name_2) $names[] = $this->secondary_name_2;
 
-        $hymnology_processed = str_replace('T:', '', $hymnology);
+        $hymnology_processed = str_replace('T:', '', $this->hymnology ?? '');
         $hymnology_processed = str_replace('M:', '', $hymnology_processed);
         $hymnology_processed = str_replace('S:', '', $hymnology_processed);
 
