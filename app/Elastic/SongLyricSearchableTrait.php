@@ -151,7 +151,11 @@ trait SongLyricSearchableTrait
             ],
             'licence_type_cc' => [
                 'type' => 'integer'
-            ]
+            ],
+            'hymnology' => [
+                'type' => 'text',
+                'analyzer' => 'czech_analyzer'
+            ],
         ]
     ];
 
@@ -204,6 +208,10 @@ trait SongLyricSearchableTrait
         if ($this->secondary_name_1) $names[] = $this->secondary_name_1;
         if ($this->secondary_name_2) $names[] = $this->secondary_name_2;
 
+        $hymnology_processed = str_replace('T:', '', $this->hymnology ?? '');
+        $hymnology_processed = str_replace('M:', '', $hymnology_processed);
+        $hymnology_processed = str_replace('S:', '', $hymnology_processed);
+
         $arr = [
             'name' => $names,
             // name_keyword is used for sorting
@@ -221,7 +229,8 @@ trait SongLyricSearchableTrait
             'has_score_files_externals' => $this->score_externals_count > 0,
             'has_lyrics' => $this->has_lyrics, // a computed attribute
             'has_chords' => (bool)$this->has_chords, // an actual field precomputed in SongLyricSaved event
-            'licence_type_cc' => $this->licence_type_cc
+            'licence_type_cc' => $this->licence_type_cc,
+            'hymnology' => $hymnology_processed,
         ];
 
         return $arr;
