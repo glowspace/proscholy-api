@@ -190,4 +190,24 @@ class SongLyricIndexTest extends TestCase
         $toks = array_map(fn ($tok) => $tok['token'], $res['tokens']);
         logger($toks);
     }
+
+    public function testCzechAnalyzer()
+    {
+        $hymnology = "T: Miloslav Esterle\nM: Motherless Child, nápěv amerického spirituálu / Old Plantation Hymns, 1899 / Černošské spirituály, 1955 / Svítá, 1992 / 2018";
+
+        $hymnology_processed = str_replace('T:', '', $hymnology);
+        $hymnology_processed = str_replace('M:', '', $hymnology_processed);
+        $hymnology_processed = str_replace('S:', '', $hymnology_processed);
+
+        $res = $this->client->indices()->analyze([
+            'index' => $this->index_name,
+            'body' => [
+                'analyzer' => 'czech_analyzer',
+                'text' => $hymnology_processed,
+            ]
+        ]);
+
+        $toks = array_map(fn ($tok) => $tok['token'], $res['tokens']);
+        logger($toks);
+    }
 }
