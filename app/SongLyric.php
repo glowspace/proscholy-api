@@ -157,7 +157,8 @@ class SongLyric extends Model
         'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
         'PROPRIETARY' => 'proprietární (smlouva s MS)',
         'PUBLIC_DOMAIN' => 'volné dílo (uplynula doba trvání majetkových práv)',
-        'PROPRIETARY_EVANGELICAL' => 'proprietární (pouze Evangelický zpěvník)'
+        'PROPRIETARY_EVANGELICAL' => 'proprietární (pouze Evangelický zpěvník)',
+        'PUBLISHABLE_EVANGELICAL' => 'licence Evangelický zpěvník (dovoluje publikaci jinde)'
     ];
 
     private static $lilypond_key_major_string_values = [

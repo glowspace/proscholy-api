@@ -186,6 +186,7 @@ enum LicenseTypeCC {
     PROPRIETARY @enum(value: 7)
     PUBLIC_DOMAIN @enum(value: 8)
     PROPRIETARY_EVANGELICAL @enum(value: 9)
+    PUBLISHABLE_EVANGELICAL @enum(value: 10)
 }
 
 enum SheetMusicKey {
