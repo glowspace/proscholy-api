@@ -174,7 +174,8 @@ class SongLyricModelService
             $syncModels = [];
             foreach ($songbooks_data["sync"] as $record) {
                 $syncModels[$record["songbook_id"]] = [
-                    'number' => $record["number"]
+                    'number' => $record["number"],
+                    'song_name' => $record["song_name"]
                 ];
             }
             $song_lyric->songbook_records()->sync($syncModels);

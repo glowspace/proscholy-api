@@ -450,7 +450,7 @@ class SongLyric extends Model
     public function songbook_records(): BelongsToMany
     {
         return $this->belongsToMany(Songbook::class, "songbook_records")
-            ->withPivot('number', 'placeholder', 'id')
+            ->withPivot('number', 'placeholder', 'id', 'song_name')
             ->using(SongbookRecord::class);
     }
 

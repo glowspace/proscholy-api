@@ -55,6 +55,7 @@ const fragment = gql`
         songbook_records {
             id
             number
+            song_name
             songbook {
                 id
                 name
@@ -348,7 +349,8 @@ export default {
             songbook_records: {
                 sync: vueModel.songbook_records.map(m => ({
                     songbook_id: parseInt(m.songbook.id),
-                    number: m.number
+                    number: m.number,
+                    song_name: m.song_name,
                 }))
             }
         },
