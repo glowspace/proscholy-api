@@ -26,7 +26,7 @@ Auth::routes(['register' => false]);
 Route::get('/download/{file}/{filename?}', 'DownloadController@downloadFileOld')->name('download.file');
 Route::get('/preview/{file}/{filename?}', 'DownloadController@downloadFileOld')->name('preview.file');
 // todo: create a preview route..?
-Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download');
+Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download')->where('filename', '.*');
 Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('external.proxy');
 
 
