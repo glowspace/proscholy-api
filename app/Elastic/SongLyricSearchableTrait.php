@@ -241,8 +241,6 @@ trait SongLyricSearchableTrait
             'hymnology' => $hymnology_processed,
         ];
 
-        logger($arr);
-
         return $arr;
     }
             
