@@ -208,6 +208,14 @@ trait SongLyricSearchableTrait
         if ($this->secondary_name_1) $names[] = $this->secondary_name_1;
         if ($this->secondary_name_2) $names[] = $this->secondary_name_2;
 
+        // alternative songbook names
+        foreach ($this->songbook_records as $sb) {
+            $songbook_name = $sb->pivot->song_name;
+            if (strlen($songbook_name) > 0) {
+                $names[] = $songbook_name;
+            }
+        }
+
         $hymnology_processed = str_replace('T:', '', $this->hymnology ?? '');
         $hymnology_processed = str_replace('M:', '', $hymnology_processed);
         $hymnology_processed = str_replace('S:', '', $hymnology_processed);
@@ -232,6 +240,8 @@ trait SongLyricSearchableTrait
             'licence_type_cc' => $this->licence_type_cc,
             'hymnology' => $hymnology_processed,
         ];
+
+        logger($arr);
 
         return $arr;
     }

@@ -157,7 +157,8 @@ class SongLyric extends Model
         'BY_NC_ND' => 'BY-NC-ND (uv. původ, ne-komerčně, nezprac.)',
         'PROPRIETARY' => 'proprietární (smlouva s MS)',
         'PUBLIC_DOMAIN' => 'volné dílo (uplynula doba trvání majetkových práv)',
-        'PROPRIETARY_EVANGELICAL' => 'proprietární (pouze Evangelický zpěvník)'
+        'PROPRIETARY_EVANGELICAL' => 'proprietární (pouze Evangelický zpěvník)',
+        'PUBLISHABLE_EVANGELICAL' => 'licence Evangelický zpěvník (dovoluje publikaci jinde)'
     ];
 
     private static $lilypond_key_major_string_values = [
@@ -449,7 +450,7 @@ class SongLyric extends Model
     public function songbook_records(): BelongsToMany
     {
         return $this->belongsToMany(Songbook::class, "songbook_records")
-            ->withPivot('number', 'placeholder', 'id')
+            ->withPivot('number', 'placeholder', 'id', 'song_name')
             ->using(SongbookRecord::class);
     }
 

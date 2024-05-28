@@ -168,12 +168,12 @@
                                 </td>
                                 <td>
                                     <span>{{
-                                        props.item.visit_info.count_total
+                                        props.item.visit_info === null ? 0 : props.item.visit_info.count_total
                                     }}</span>
                                 </td>
                                 <td>
                                     <span>{{
-                                        props.item.visit_info.count_week
+                                        props.item.visit_info === null ? 0 : props.item.visit_info.count_week
                                     }}</span>
                                 </td>
                                 <td>
@@ -393,7 +393,7 @@ export default {
                 }, ...result.data.songbooks.map(data => ({
                     value: data.id,
                     text: data.name
-                }))];
+                })).sort((a, b) => a.text.localeCompare(b.text))];
             }
         }
     },

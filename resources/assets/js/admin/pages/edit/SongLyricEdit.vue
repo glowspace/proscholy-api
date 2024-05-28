@@ -417,6 +417,9 @@
                 <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field>
               </v-flex>
               <v-flex xs2>
+                <v-text-field label="Zpěvníkový název písně" v-model="record.song_name" placeholder="(stejný jako v údajích o písni)"></v-text-field>
+              </v-flex>
+              <v-flex xs2>
                 <!-- <v-text-field label="Číslo písně" required v-model="record.number"></v-text-field> -->
                 <v-btn color="error" outline @click="removeSongbookRecord(i)">Odstranit</v-btn>
               </v-flex>
@@ -1065,7 +1068,8 @@ export default {
         songbook: {
           id: null,
           name: ""
-        }
+        },
+        song_name: "",
       });
     },
 

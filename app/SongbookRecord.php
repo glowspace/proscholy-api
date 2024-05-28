@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class SongbookRecord extends Pivot
 {
     protected $table = 'songbook_records';
-    protected $fillable = ["placeholder", "number", "song_lyric_id", "songbook_id"];
+    protected $fillable = ["placeholder", "number", "song_lyric_id", "songbook_id", "song_name"];
     public $incrementing = true;
     // automatically updates updated_at for song_lyric when the records are changed
     protected $touches = ['song_lyric'];
