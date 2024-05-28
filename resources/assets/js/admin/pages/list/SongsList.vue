@@ -393,7 +393,7 @@ export default {
                 }, ...result.data.songbooks.map(data => ({
                     value: data.id,
                     text: data.name
-                }))];
+                })).sort((a, b) => a.text.localeCompare(b.text))];
             }
         }
     },
