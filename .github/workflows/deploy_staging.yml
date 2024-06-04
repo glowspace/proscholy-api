@@ -11,7 +11,7 @@ jobs:
       - name: SSH in staging server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          command: cd /var/www/html/staging/regenschori-api-staging && make staging-pull --silent && make staging-deploy --silent
+          script: cd /var/www/html/staging/regenschori-api-staging && make staging-pull --silent && make staging-deploy --silent
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
