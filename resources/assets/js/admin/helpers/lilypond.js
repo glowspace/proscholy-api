@@ -32,7 +32,7 @@ const enums = {
         { value: 'f', text: '1b (F / d)' }
     ],
 
-    time_signature: ['4/4', '3/4', '2/4', '6/8']
+    time_signature: ['4/4', '3/4', '2/4', '6/8', '2/2', '6/4']
 };
 
 const FETCH_LILYPOND_PART = gql`
