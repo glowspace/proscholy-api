@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use App\Services\ExternalMusicXmlService;
 use App\External;
 
-class RenderAllLilyponds extends Command
+class RenderAllMusicxml extends Command
 {
     /**
      * The name and signature of the console command.
