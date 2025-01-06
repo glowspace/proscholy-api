@@ -42,7 +42,7 @@ class RenderOldSongLyricLilypond implements ShouldQueue
     {
         $sl = SongLyric::withoutGlobalScope(ExcludeEvangelicalOnlySongsScope::class)::find($this->song_lyric_id);
 
-        logger("Old LP render for SL id", $sl->id);
+        // logger("Old LP render for SL id", $sl->id);
 
         $svg = false;
 
