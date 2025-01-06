@@ -596,7 +596,7 @@ import { graphqlErrorsToValidator } from 'Admin/helpers/graphValidation';
 
 import bible from 'bible-liturgy-utils/bible/bible';
 
-const LP_TEMPLATE = `\\version "2.22.0"
+const LP_TEMPLATE = `\\version "2.24.0"
 
 melodie = {
 \tc'
