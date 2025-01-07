@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: SSH in production server
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          command: cd /var/www/html/regenschori-api && make production-pull --silent && make production-deploy --silent
+          script: cd /var/www/html/regenschori-api && make production-pull --silent && make production-deploy --silent
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          key: ${{ secrets.PRIVATE_KEY}}
           passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE}}
       - name: Discord notification
         uses: Ilshidur/action-discord@master

@@ -24,7 +24,7 @@ services:
 
   web.local:
     build:
-      context: ./setup/php-local-8.1
+      context: ./setup/php-local-8.3
       dockerfile: Dockerfile
       args:
         WWWGROUP: "1000"

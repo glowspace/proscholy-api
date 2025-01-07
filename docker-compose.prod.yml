@@ -47,6 +47,7 @@ services:
       - "productionredis:/data"
     networks:
       - bcloud-network
+    restart: always
 
   elastic:
     extends:

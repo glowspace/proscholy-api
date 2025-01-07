@@ -4,7 +4,7 @@
             <v-layout row wrap>
                 <v-flex xs12 md3>
                     <v-select
-                        :items="['2.22.0']"
+                        :items="['2.24.0']"
                         v-model="lilypondPartsSheetMusic.score_config.version"
                         label="Verze Lilypond kódu"
                     ></v-select>
