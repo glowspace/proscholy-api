@@ -5538,16 +5538,16 @@
         },
         {
             "name": "proscholy/lilypond-renderer-client",
-            "version": "0.11.2",
+            "version": "0.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/glowspace/lilypond-renderer-client.git",
-                "reference": "e6f28ba04d3e99cae202be17af2dc9744e80397a"
+                "reference": "45a7ea3e068ab82a2345c3bafa479539769ca7ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glowspace/lilypond-renderer-client/zipball/e6f28ba04d3e99cae202be17af2dc9744e80397a",
-                "reference": "e6f28ba04d3e99cae202be17af2dc9744e80397a",
+                "url": "https://api.github.com/repos/glowspace/lilypond-renderer-client/zipball/45a7ea3e068ab82a2345c3bafa479539769ca7ef",
+                "reference": "45a7ea3e068ab82a2345c3bafa479539769ca7ef",
                 "shasum": ""
             },
             "require": {
@@ -5583,10 +5583,10 @@
             ],
             "description": "Laravel package providing a PHP client for the Lilypond renderer server",
             "support": {
-                "source": "https://github.com/glowspace/lilypond-renderer-client/tree/0.11.2",
+                "source": "https://github.com/glowspace/lilypond-renderer-client/tree/0.11.3",
                 "issues": "https://github.com/glowspace/lilypond-renderer-client/issues"
             },
-            "time": "2024-06-15T20:02:06+00:00"
+            "time": "2025-01-07T07:47:16+00:00"
         },
         {
             "name": "psr/cache",
@@ -6797,16 +6797,16 @@
         },
         {
             "name": "spatie/dropbox-api",
-            "version": "1.22.0",
+            "version": "1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/dropbox-api.git",
-                "reference": "5b012d68568a560d1cd8888c0be2c2805c4b7c65"
+                "reference": "120ff475d7b03d3700a884c295b3b9503c4ddf8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/dropbox-api/zipball/5b012d68568a560d1cd8888c0be2c2805c4b7c65",
-                "reference": "5b012d68568a560d1cd8888c0be2c2805c4b7c65",
+                "url": "https://api.github.com/repos/spatie/dropbox-api/zipball/120ff475d7b03d3700a884c295b3b9503c4ddf8d",
+                "reference": "120ff475d7b03d3700a884c295b3b9503c4ddf8d",
                 "shasum": ""
             },
             "require": {
@@ -6817,8 +6817,8 @@
             },
             "require-dev": {
                 "laravel/pint": "^1.10.1",
-                "phpstan/phpstan": "^1.10.16",
-                "phpunit/phpunit": "^9.4"
+                "pestphp/pest": "^2.6.3",
+                "phpstan/phpstan": "^1.10.16"
             },
             "type": "library",
             "autoload": {
@@ -6855,7 +6855,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/dropbox-api/issues",
-                "source": "https://github.com/spatie/dropbox-api/tree/1.22.0"
+                "source": "https://github.com/spatie/dropbox-api/tree/1.23.0"
             },
             "funding": [
                 {
@@ -6867,7 +6867,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-08T07:13:00+00:00"
+            "time": "2025-01-06T09:31:59+00:00"
         },
         {
             "name": "spatie/flysystem-dropbox",
