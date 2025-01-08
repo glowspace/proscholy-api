@@ -40,7 +40,7 @@ class RenderOldSongLyricLilypond implements ShouldQueue
      */
     public function handle(LilypondClientService $lily_service, LilypondPartsService $lilyparts_service, SongLyricModelService $sl_service)
     {
-        $sl = SongLyric::withoutGlobalScope(ExcludeEvangelicalOnlySongsScope::class)::find($this->song_lyric_id);
+        $sl = SongLyric::withoutGlobalScope(ExcludeEvangelicalOnlySongsScope::class)->find($this->song_lyric_id);
 
         // logger("Old LP render for SL id", $sl->id);
 
