@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\External;
 use App\Services\LilypondPartsService;
 use App\Services\LilypondClientService;
+use ZipStream;
 
 class DownloadController extends Controller
 {
@@ -31,6 +32,10 @@ class DownloadController extends Controller
         }
 
         return response()->file($path);
+    }
+
+    public function downloadLilyponds(Request $request) {
+        // TODO: use zipstream to create a zip with files of sheet music updated after some date
     }
     
     public function proxyExternal(External $external)
