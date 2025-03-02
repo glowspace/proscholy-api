@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Storage;
 use App\External;
 use App\Services\LilypondPartsService;
 use App\Services\LilypondClientService;
-use ZipStream;
+use Illuminate\Support\Facades\DB;
+use App\SongLyric;
+use ZipStream\ZipStream;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DownloadController extends Controller
 {
@@ -35,7 +38,34 @@ class DownloadController extends Controller
     }
 
     public function downloadLilyponds(Request $request) {
-        // TODO: use zipstream to create a zip with files of sheet music updated after some date
+        $updated_after = $request->get('updated_after');
+
+        $result = DB::table('song_lyrics')
+            ->select('song_lyrics.id', 'rendered_scores.filename')
+            ->join('lilypond_parts_sheet_music', 'song_lyrics.id', '=', 'lilypond_parts_sheet_music.song_lyric_id')
+            ->join('rendered_scores', 'lilypond_parts_sheet_music.id', '=', 'rendered_scores.lilypond_parts_sheet_music_id')
+            ->where('song_lyrics.updated_at', '>', $updated_after)
+            ->where('rendered_scores.filetype', 'svg')
+            ->where('render_config_hash', '491ed726') // {"hide_voices": ["muzi", "tenor", "bas", "zeny", "sopran", "alt"]}
+            ->get();
+            
+        $response = new StreamedResponse(function () use ($result) {
+            $zip = new ZipStream(
+                outputName: 'svgs.zip',
+                sendHttpHeaders: true,
+            );
+
+            foreach ($result as $row) {
+                $zip->addFileFromPath(
+                    fileName: "$row->id.svg.gz", // name the files according to the song lyric IDs
+                    path: Storage::path("rendered_scores/$row->filename.svg.gz"),
+                );
+            }
+
+            $zip->finish();
+        });
+
+        return $response;
     }
     
     public function proxyExternal(External $external)
