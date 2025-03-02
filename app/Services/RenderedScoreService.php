@@ -29,7 +29,13 @@ class RenderedScoreService
 
         $filename = isset($filename) ? $filename : uniqid();
 
-        $res = Storage::put($this->dir . "/$filename.$extension", $contents);
+        $filename_full = "/$filename.$extension";
+
+        $res = Storage::put($this->dir . $filename_full, $contents);
+
+        logger("Gzipping file $filename_full");
+        shell_exec("gzip $path/$filename_full");
+
         if (!$res) {
             throw new Exception("Storing of the rendered file $filename.$extension was not successful");
         }

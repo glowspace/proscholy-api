@@ -29,6 +29,8 @@ Route::get('/preview/{file}/{filename?}', 'DownloadController@downloadFileOld')-
 Route::get('/soubor/{filename}', 'DownloadController@downloadFile')->name('file.download')->where('filename', '.*');
 Route::get('/material/{external}', 'DownloadController@proxyExternal')->name('external.proxy');
 
+Route::get('/download-svgs', 'DownloadController@downloadLilyponds')->name('download.lilyponds');
+
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
