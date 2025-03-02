@@ -472,7 +472,7 @@
                   name="input-7-4"
                   label="Notový zápis ve formátu Lilypond"
                   ref="textarea"
-                  :readonly="model.lilypond.length === 0"
+                  :readonly="model.lilypond?.length === 0"
                   v-model="model.lilypond"
                   placeholder="Pro vytváření nových LilyPond záznamů použijte nový způsob zápisu"
                   style="font-family: monospace; tab-size: 2; margin-bottom: 5px;"
