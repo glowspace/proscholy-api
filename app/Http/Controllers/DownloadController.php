@@ -40,18 +40,27 @@ class DownloadController extends Controller
     public function downloadLilyponds(Request $request) {
         $updated_after = $request->get('updated_after');
 
-        $query = DB::table('song_lyrics')
+        $query_lilyponds = DB::table('song_lyrics')
             ->select('song_lyrics.id', 'rendered_scores.filename')
             ->join('lilypond_parts_sheet_music', 'song_lyrics.id', '=', 'lilypond_parts_sheet_music.song_lyric_id')
             ->join('rendered_scores', 'lilypond_parts_sheet_music.id', '=', 'rendered_scores.lilypond_parts_sheet_music_id')
             ->where('rendered_scores.filetype', 'svg')
             ->where('render_config_hash', '491ed726'); // {"hide_voices": ["muzi", "tenor", "bas", "zeny", "sopran", "alt"]}
 
+        $query_externals = DB::table('song_lyrics')
+            ->select('song_lyrics.id', 'rendered_scores.filename')
+            ->join('externals', 'song_lyrics.id', '=', 'externals.song_lyric_id')
+            ->join('rendered_scores', 'externals.id', '=', 'rendered_scores.external_id')
+            ->where('rendered_scores.filetype', 'svg')
+            ->where('externals.is_uploaded', 1)
+            ->where('render_config_hash', '885da61f'); // [];
+
         if (isset($updated_after)) {
-            $query = $query->where('song_lyrics.updated_at', '>', $updated_after);
+            $query_lilyponds = $query_lilyponds->where('song_lyrics.updated_at', '>', $updated_after);
+            $query_externals = $query_lilyponds->where('song_lyrics.updated_at', '>', $updated_after);
         }
 
-        $result = $query->get();
+        $result = $query_lilyponds->get()->concat($query_externals->get());
             
         $response = new StreamedResponse(function () use ($result) {
             $zip = new ZipStream(
