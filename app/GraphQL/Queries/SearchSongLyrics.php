@@ -45,7 +45,7 @@ class SearchSongLyrics
         // (see ExcludeEvangelicalOnlySongsScope and EvangelicalSongsScope)
         // because they work only for Eloquent, not Elasticsearch, which confuses Scout.
         $filter_shortcut = Request::header('Filter-Content');
-        if ($filter_shotcut == 'ez' || $filter_shortcut == 'ek') {
+        if ($filter_shortcut == 'ez' || $filter_shortcut == 'ek') {
             $songbook_id = Songbook::where('shortcut', $filter_shortcut)->first()->id;
             $searchParams['query']['bool']['filter'][] = [
                 'terms' => ['songbook_records.songbook_id' => [$songbook_id]]
