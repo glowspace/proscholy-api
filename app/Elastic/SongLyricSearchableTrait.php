@@ -4,6 +4,7 @@ namespace App\Elastic;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\EvangelicalSongsScope;
+use App\Scopes\EKSongsScope;
 use App\Scopes\ExcludeEvangelicalOnlySongsScope;
 
 
@@ -271,7 +272,9 @@ trait SongLyricSearchableTrait
             },
         ]);
 
-        $q = $q->withoutGlobalScope(ExcludeEvangelicalOnlySongsScope::class)->withoutGlobalScope(EvangelicalSongsScope::class);
+        $q = $q->withoutGlobalScope(ExcludeEvangelicalOnlySongsScope::class)
+            ->withoutGlobalScope(EvangelicalSongsScope::class)
+            ->withoutGlobalScope(EKSongsScope::class);
 
         return $q;
     }
