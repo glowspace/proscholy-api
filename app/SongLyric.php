@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 use App\Elastic\SongLyricSearchableTrait;
 use App\Scopes\EvangelicalSongsScope;
+use App\Scopes\EKSongsScope;
 use Illuminate\Support\Facades\Request;
 
 /**
@@ -188,6 +189,8 @@ class SongLyric extends Model
         if (Request::header('Filter-Content') == 'ez') {
             // limit the songs to only those that are in the Evangelical songbook
             static::addGlobalScope(new EvangelicalSongsScope);
+        } else if (Request::header('Filter-Content') == 'ek') {
+            static::addGlobalScope(new EKSongsScope);
         } else {
             static::addGlobalScope(new ExcludeEvangelicalOnlySongsScope);
         }
