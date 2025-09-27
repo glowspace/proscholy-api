@@ -173,7 +173,7 @@
 import gql from 'graphql-tag';
 import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
-import ExternalComponent from '@bit/proscholy.utilities.external/External.vue';
+import ExternalComponent from 'Admin/components/External.vue';
 import FileUploadDialog from 'Admin/components/FileUploadDialog.vue';
 
 import EditForm from './EditForm';

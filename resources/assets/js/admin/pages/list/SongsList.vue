@@ -220,7 +220,7 @@ import gql from 'graphql-tag';
 
 import removeDiacritics from 'Admin/helpers/removeDiacritics';
 import CreateModel from 'Admin/components/CreateModel.vue';
-import SongName from '@bit/proscholy.utilities.song-name/SongName.vue';
+import SongName from 'Admin/components/SongName.vue';
 
 const fetch_items = gql`
     query FetchSongLyrics(
@@ -379,7 +379,7 @@ export default {
                         ).number;
                     } else {
                         song_lyric.number = song_lyric.id;
-                    }     
+                    }
                 }
             }
         },
