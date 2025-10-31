@@ -138,6 +138,7 @@ class SongLyric extends Model
         'he' => 'hebrejština',
         'cr' => 'chorvatština',
         'cu' => 'staroslověnština',
+        'sq' => 'albánština',
         // 'wtf' => 'jazyk domorodých kmenů jižní Oceánie',
         'mixed' => 'vícejazyčná píseň'
     ];
