@@ -93,8 +93,7 @@
                             :rows-per-page-items="[
                                 50,
                                 {
-                                    text:
-                                        '$vuetify.dataIterator.rowsPerPageAll',
+                                    text: '$vuetify.dataIterator.rowsPerPageAll',
                                     value: -1
                                 }
                             ]"
@@ -111,8 +110,8 @@
                                     <a
                                         :href="
                                             '/admin/song/' +
-                                                props.item.id +
-                                                '/edit'
+                                            props.item.id +
+                                            '/edit'
                                         "
                                     >
                                         <song-name :song="props.item" />
@@ -123,10 +122,8 @@
                                         {{ props.item.id }}
                                     </span>
                                     <span v-else>
-                                    <!-- find the songbook number in songbook_records given the filtered songbook id -->
-                                        {{
-                                            props.item.number
-                                        }}
+                                        <!-- find the songbook number in songbook_records given the filtered songbook id -->
+                                        {{ props.item.number }}
                                     </span>
                                 </td>
                                 <td>
@@ -152,11 +149,11 @@
                                 <td>
                                     {{
                                         props.item.authors
-                                            .map(a => a.name)
+                                            .map((a) => a.name)
                                             .join(', ') ||
-                                            (props.item.has_anonymous_author
-                                                ? '(anonymní)'
-                                                : '–')
+                                        (props.item.has_anonymous_author
+                                            ? '(anonymní)'
+                                            : '–')
                                     }}
                                 </td>
                                 <td>
@@ -168,12 +165,16 @@
                                 </td>
                                 <td>
                                     <span>{{
-                                        props.item.visit_info === null ? 0 : props.item.visit_info.count_total
+                                        props.item.visit_info === null
+                                            ? 0
+                                            : props.item.visit_info.count_total
                                     }}</span>
                                 </td>
                                 <td>
                                     <span>{{
-                                        props.item.visit_info === null ? 0 : props.item.visit_info.count_week
+                                        props.item.visit_info === null
+                                            ? 0
+                                            : props.item.visit_info.count_week
                                     }}</span>
                                 </td>
                                 <td>
@@ -190,8 +191,8 @@
                                         class="text-secondary mr-3"
                                         :href="
                                             '/admin/song/' +
-                                                props.item.id +
-                                                '/edit'
+                                            props.item.id +
+                                            '/edit'
                                         "
                                         ><i class="fas fa-pen"></i></a
                                     ><a
@@ -220,7 +221,6 @@ import gql from 'graphql-tag';
 
 import removeDiacritics from 'Admin/helpers/removeDiacritics';
 import CreateModel from 'Admin/components/CreateModel.vue';
-import SongName from '@bit/proscholy.utilities.song-name/SongName.vue';
 
 const fetch_items = gql`
     query FetchSongLyrics(
@@ -292,7 +292,7 @@ const delete_item = gql`
     }
 `;
 
-const stringToSearchString = string => {
+const stringToSearchString = (string) => {
     return removeDiacritics(string)
         .toLowerCase()
         .replace(/[^a-zA-Z0-9 ]/g, '');
@@ -300,8 +300,7 @@ const stringToSearchString = string => {
 
 export default {
     components: {
-        CreateModel,
-        SongName
+        CreateModel
     },
 
     data() {
@@ -322,7 +321,7 @@ export default {
             filter_mode: 'no-filter',
             dtPagination: {},
             filter_songbook_id: '',
-            songbooks_select_options: [],
+            songbooks_select_options: []
         };
     },
 
@@ -375,11 +374,11 @@ export default {
                 for (const song_lyric of this.song_lyrics) {
                     if (this.filter_songbook_id !== '') {
                         song_lyric.number = song_lyric.songbook_records.find(
-                            r => r.songbook.id == this.filter_songbook_id
+                            (r) => r.songbook.id == this.filter_songbook_id
                         ).number;
                     } else {
                         song_lyric.number = song_lyric.id;
-                    }     
+                    }
                 }
             }
         },
@@ -387,13 +386,18 @@ export default {
         songbooks: {
             query: fetch_songbooks,
             result(result) {
-                this.songbooks_select_options = [{
-                    value: '',
-                    text: 'Všechny zpěvníky',
-                }, ...result.data.songbooks.map(data => ({
-                    value: data.id,
-                    text: data.name
-                })).sort((a, b) => a.text.localeCompare(b.text))];
+                this.songbooks_select_options = [
+                    {
+                        value: '',
+                        text: 'Všechny zpěvníky'
+                    },
+                    ...result.data.songbooks
+                        .map((data) => ({
+                            value: data.id,
+                            text: data.name
+                        }))
+                        .sort((a, b) => a.text.localeCompare(b.text))
+                ];
             }
         }
     },
@@ -426,10 +430,10 @@ export default {
                         }
                     ]
                 })
-                .then(result => {
+                .then((result) => {
                     console.log('uspesne vymazano');
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log('error');
                 });
         },
@@ -441,7 +445,7 @@ export default {
                 let number = item.id;
                 if (this.filter_songbook_id !== '') {
                     number = item.songbook_records.find(
-                        r => r.songbook.id == this.filter_songbook_id
+                        (r) => r.songbook.id == this.filter_songbook_id
                     ).number;
                 }
 
@@ -450,7 +454,7 @@ export default {
                     number,
                     item.secondary_name_1,
                     item.secondary_name_2,
-                    item.authors.map(a => a.name).join(' ') ||
+                    item.authors.map((a) => a.name).join(' ') ||
                         (item.has_anonymous_author ? 'anonymni' : ''), // authors
                     types[item.type]
                 ];
@@ -470,7 +474,7 @@ export default {
             const needle = stringToSearchString(search);
 
             return items.filter(
-                item => item.search_index.indexOf(needle) !== -1
+                (item) => item.search_index.indexOf(needle) !== -1
             );
         }
     }

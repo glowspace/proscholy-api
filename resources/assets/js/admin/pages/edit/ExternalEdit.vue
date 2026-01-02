@@ -43,7 +43,7 @@
                             v-model="model.caption"
                         ></v-text-field>
                         <v-combobox
-                            :items="enums.media_type.map(i => i.text)"
+                            :items="enums.media_type.map((i) => i.text)"
                             v-model="model.media_type"
                             label="Typ odkazu/souboru"
                         ></v-combobox>
@@ -111,7 +111,9 @@
                 v-if="model.song_lyric"
                 :disabled="isDirty"
                 :href="'/admin/song/' + model.song_lyric.id + '/edit'"
-                @click.prevent="goToAdminPage('song/' + model.song_lyric.id + '/edit')"
+                @click.prevent="
+                    goToAdminPage('song/' + model.song_lyric.id + '/edit')
+                "
                 >Přejít na editaci písničky</v-btn
             >
             <v-btn
@@ -173,7 +175,6 @@
 import gql from 'graphql-tag';
 import ItemsComboBox from 'Admin/components/ItemsComboBox.vue';
 import DeleteModelDialog from 'Admin/components/DeleteModelDialog.vue';
-import ExternalComponent from '@bit/proscholy.utilities.external/External.vue';
 import FileUploadDialog from 'Admin/components/FileUploadDialog.vue';
 
 import EditForm from './EditForm';
@@ -211,7 +212,6 @@ export default {
     components: {
         ItemsComboBox,
         DeleteModelDialog,
-        ExternalComponent,
         FileUploadDialog
     },
     extends: EditForm,
@@ -298,7 +298,7 @@ export default {
                     mutation: External.MUTATION,
                     variables: External.getMutationVariables(this.model)
                 })
-                .then(result => {
+                .then((result) => {
                     this.$validator.errors.clear();
                     this.$notify({
                         title: 'Úspěšně uloženo :)',
@@ -306,7 +306,7 @@ export default {
                         type: 'success'
                     });
                 })
-                .catch(error => {
+                .catch((error) => {
                     if (error.graphQLErrors.length == 0) {
                         // unknown error happened
                         this.$notify({
