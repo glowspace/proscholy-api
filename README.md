@@ -65,6 +65,17 @@ php artisan key:generate
 
 Dále je potřeba pořešit práva tak, aby dev kontejner mohl zapisovat do storage/.
 
+```sh
+# Např.
+# sudo chmod a+w -R storage
+```
+
+Nastavení env proměnných:
+
+-   správný db server (localhost/docker)
+-   `php artisan config:clear`
+-   automaticky se vytvoří user root se stejným heslem
+
 ## Produkční nasazení
 
 make production-pull
