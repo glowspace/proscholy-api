@@ -16,7 +16,7 @@ class ExternalMusicXmlService
         $this->rs_service = $rs_service;
     }
 
-    public static function isMediaTypeRenderable(string $media_type) {
+    public static function isMediaTypeRenderable(?string $media_type) {
         return $media_type == 'file/xml' || $media_type == 'file/mxml';
     }
 

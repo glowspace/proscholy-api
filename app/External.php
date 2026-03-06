@@ -181,7 +181,7 @@ class External extends Model
         if ($this->media_type == 'youtube') return $media_link->urlAsYoutube();
 
         if ($this->is_uploaded) {
-            return str_replace('public_files/', '', $this->filepath);
+            return str_replace('public/soubor/', '', $this->filepath);
         }
 
         return;
@@ -305,7 +305,7 @@ class External extends Model
             return null;
 
         $path = str_replace(url('') . '/', "", $this->url);
-        $path = str_replace('soubor', 'public_files', $path);
+        $path = str_replace('soubor', 'public/soubor', $path);
 
         return $path;
     }

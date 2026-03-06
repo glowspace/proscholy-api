@@ -24,7 +24,7 @@ class DownloadController extends Controller
 
     public function downloadFile(Request $request, $filename)
     {
-        $path = Storage::path("public_files/$filename");
+        $path = Storage::path("public/soubor/$filename");
 
         if (!file_exists($path)) {
             return response("Soubor nebyl nalezen", 404);
@@ -57,7 +57,7 @@ class DownloadController extends Controller
 
         if (isset($updated_after)) {
             $query_lilyponds = $query_lilyponds->where('song_lyrics.updated_at', '>', $updated_after);
-            $query_externals = $query_lilyponds->where('song_lyrics.updated_at', '>', $updated_after);
+            $query_externals = $query_externals->where('song_lyrics.updated_at', '>', $updated_after);
         }
 
         $result = $query_lilyponds->get()->concat($query_externals->get());
@@ -69,9 +69,16 @@ class DownloadController extends Controller
             );
 
             foreach ($result as $row) {
+                $relativePath = "rendered_scores/{$row->filename}.svg.gz";
+                $fullPath = Storage::path($relativePath);
+
+                if (!is_file($fullPath) || !is_readable($fullPath)) {
+                    continue;
+                }
+
                 $zip->addFileFromPath(
                     fileName: "$row->id.svg.gz", // name the files according to the song lyric IDs
-                    path: Storage::path("rendered_scores/$row->filename.svg.gz"),
+                    path: $fullPath,
                 );
             }
 

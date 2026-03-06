@@ -98,7 +98,7 @@ class File extends Model implements ISource
 
     protected static function getThubmnailsFolder()
     {
-        $relative = '/public_files/thumbnails';
+        $relative = '/public/soubor/thumbnails';
 
         // first create if doesn't exist
         if (!file_exists(Storage::path($relative)))

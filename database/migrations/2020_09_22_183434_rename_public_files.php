@@ -26,14 +26,14 @@ class RenamePublicFiles extends Migration
 
         foreach ($files as $f) {
             try {
-                Storage::move($f->path, 'public_files/' . $f->filename);
+                Storage::move($f->path, 'public/soubor/' . $f->filename);
             } catch (FileNotFoundException $exp) {
                 Log::error('File not found during migration at path ' . $f->path);
             }
         }
 
         // then update the db records
-        DB::update("update files set path = concat('public_files/', filename)");
+        DB::update("update files set path = concat('public/soubor/', filename)");
     }
 
     /**

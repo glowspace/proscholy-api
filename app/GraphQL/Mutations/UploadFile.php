@@ -39,9 +39,9 @@ class UploadFile
         }
 
 
-        if (file_exists(Storage::path("public_files/$fname"))) {
+        if (file_exists(Storage::path("public/soubor/$fname"))) {
             if ($allow_owerwrite) {
-                Storage::delete(Storage::path("public_files/$fname"));
+                Storage::delete(Storage::path("public/soubor/$fname"));
             } else {
                 throw ValidationException::withMessages([
                     'input.filename' => "Soubor s daným jménem již existuje, prosím použijte jiné jméno, nebo přepište starý soubor"
@@ -49,7 +49,7 @@ class UploadFile
             }
         }
 
-        return $tempfile->storePubliclyAs('public_files', $fname);
+        return $tempfile->storePubliclyAs('public/soubor', $fname);
     }
 
     private function getSlugifiedName($file)
