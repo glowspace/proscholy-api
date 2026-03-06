@@ -39,10 +39,17 @@ class RenderAllLilyponds extends Command
      */
     public function handle(SongLyricLilypondService $sll)
     {
-        SongLyric::whereHas('lilypond_src')->orWhereHas('lilypond_parts_sheet_music', function ($q_lp) {
-            return $q_lp->renderable();
-        })->get()->each(function ($song_lyric) use ($sll) {
-            $sll->dispatchRenderJobs($song_lyric, $song_lyric->lilypond_parts_sheet_music);
-        });
+        SongLyric::query()
+            ->with('lilypond_parts_sheet_music')
+            ->whereHas('lilypond_src')
+            ->orWhereHas('lilypond_parts_sheet_music', function ($q_lp) {
+                return $q_lp->renderable();
+            })
+            ->get()
+            ->each(function ($song_lyric) use ($sll) {
+                $sll->dispatchRenderJobs($song_lyric->id, $song_lyric->lilypond_parts_sheet_music);
+            });
+
+        return self::SUCCESS;
     }
 }

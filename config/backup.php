@@ -18,7 +18,7 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    storage_path('app/public_files'),
+                    storage_path('app/public/soubor'),
                 ],
 
                 /*
@@ -27,8 +27,8 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
-                    storage_path('app/public_files/thumbnails'),
-                    storage_path('app/public_files/thumbnails_externals'),
+                    storage_path('app/public/soubor/thumbnails'),
+                    storage_path('app/public/soubor/thumbnails_externals'),
                 ],
 
                 /*

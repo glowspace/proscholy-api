@@ -114,7 +114,8 @@
                                             '/edit'
                                         "
                                     >
-                                        <song-name :song="props.item" />
+                                        {{ props.item.name }}
+                                        <!-- <song-name :song="props.item" /> -->
                                     </a>
                                 </td>
                                 <td>
