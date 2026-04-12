@@ -586,6 +586,7 @@ import DeleteModelDialog from "Admin/components/DeleteModelDialog.vue";
 import NumberInput from "Admin/components/NumberInput.vue";
 import CreateExternal from "Admin/components/CreateExternal.vue";
 import ExternalListItem from "Admin/components/ExternalListItem.vue";
+import ExternalComponent from 'Admin/components/External.vue';
 import Vue from 'vue';
 
 import LilypondPartsTab from 'Admin/pages/edit/SongLyric/LilypondParts/LilypondPartsTab.vue';
@@ -688,6 +689,7 @@ export default {
     NumberInput,
     CreateExternal,
     ExternalListItem,
+    ExternalComponent,
     LilypondPartsTab
   },
   extends: EditForm,
@@ -1110,7 +1112,7 @@ export default {
               name: this.new_arrangement_name,
               arrangement_of: parseInt(this.model.id)
             }
-          } 
+          }
         })
         .then(result => {
           this.$validator.errors.clear();

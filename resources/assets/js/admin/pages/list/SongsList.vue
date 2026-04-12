@@ -114,8 +114,7 @@
                                             '/edit'
                                         "
                                     >
-                                        {{ props.item.name }}
-                                        <!-- <song-name :song="props.item" /> -->
+                                        {{ getFullName(props.item) }}
                                     </a>
                                 </td>
                                 <td>
@@ -298,6 +297,14 @@ const stringToSearchString = (string) => {
         .toLowerCase()
         .replace(/[^a-zA-Z0-9 ]/g, '');
 };
+
+function getFullName(song) {
+    return (
+        song.secondary_name_1
+        ? `${song.name} (${song.secondary_name_1}${song.secondary_name_2 ? ', ' + song.secondary_name_2 : ''})`
+        : song.name
+    );
+}
 
 export default {
     components: {
