@@ -298,14 +298,6 @@ const stringToSearchString = (string) => {
         .replace(/[^a-zA-Z0-9 ]/g, '');
 };
 
-function getFullName(song) {
-    return (
-        song.secondary_name_1
-        ? `${song.name} (${song.secondary_name_1}${song.secondary_name_2 ? ', ' + song.secondary_name_2 : ''})`
-        : song.name
-    );
-}
-
 export default {
     components: {
         CreateModel
@@ -425,6 +417,14 @@ export default {
             if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteSong(id);
             }
+        },
+
+        getFullName(song) {
+            return song.secondary_name_1
+                ? `${song.name} (${song.secondary_name_1}${
+                      song.secondary_name_2 ? ', ' + song.secondary_name_2 : ''
+                  })`
+                : song.name;
         },
 
         deleteSong(id) {
