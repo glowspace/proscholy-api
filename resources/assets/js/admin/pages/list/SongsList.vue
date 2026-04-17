@@ -114,8 +114,7 @@
                                             '/edit'
                                         "
                                     >
-                                        {{ props.item.name }}
-                                        <!-- <song-name :song="props.item" /> -->
+                                        {{ getFullName(props.item) }}
                                     </a>
                                 </td>
                                 <td>
@@ -418,6 +417,14 @@ export default {
             if (confirm('Opravdu chcete smazat daný záznam?')) {
                 this.deleteSong(id);
             }
+        },
+
+        getFullName(song) {
+            return song.secondary_name_1
+                ? `${song.name} (${song.secondary_name_1}${
+                      song.secondary_name_2 ? ', ' + song.secondary_name_2 : ''
+                  })`
+                : song.name;
         },
 
         deleteSong(id) {

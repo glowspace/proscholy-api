@@ -10,7 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update \
     && apt-get install -y git zip libicu-dev libpng-dev libzip-dev cron \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && curl -sL https://deb.nodesource.com/setup_22.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs
 
 RUN npm install --global yarn
