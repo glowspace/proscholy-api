@@ -18,10 +18,14 @@
                 :href="downloadUrl"
                 title="Stáhnout"
                 class="p-2"
-            ><i class="fas fa-download p-0"></i></a>
+                ><i class="fas fa-download p-0"></i
+            ></a>
         </td>
         <td class="p-2 pl-md-5 align-middle">
-            <span v-for="(author, authorIndex) in external.authors" :key="author.id">
+            <span
+                v-for="(author, authorIndex) in external.authors"
+                :key="author.id"
+            >
                 <span v-if="authorIndex">,</span>
                 <nuxt-link :to="author.public_route" class="text-secondary">{{
                     author.name
@@ -29,17 +33,23 @@
             </span>
         </td>
     </tr>
-    <div v-else :class="['card', 'mb-3', {'card-green': !isRegenschori}]">
+    <div v-else :class="['card', 'mb-3', { 'card-green': !isRegenschori }]">
         <div class="card-header py-2" v-if="!isRegenschori">
             <a
                 :href="mediaLink"
                 target="_blank"
                 title="Otevřít v novém okně"
                 @click="openPreview($event)"
-            ><i :class="typeClass"></i></a>
-            <span v-for="(author, authorIndex) in external.authors" :key="author.id">
+                ><i :class="typeClass"></i
+            ></a>
+            <span
+                v-for="(author, authorIndex) in external.authors"
+                :key="author.id"
+            >
                 <span v-if="authorIndex">,</span>
-                <nuxt-link :to="author.public_route">{{ author.name }}</nuxt-link>
+                <nuxt-link :to="author.public_route">{{
+                    author.name
+                }}</nuxt-link>
             </span>
             <span class="float-right">
                 <a
@@ -47,13 +57,14 @@
                     :href="downloadUrl"
                     title="Stáhnout"
                     class="mr-2"
-                ><i class="fas fa-download"></i></a
+                    ><i class="fas fa-download"></i></a
                 ><a
                     :href="mediaLink"
                     target="_blank"
                     title="Otevřít v novém okně"
                     @click="openPreview($event)"
-                ><i class="fas fa-external-link-alt pr-0"></i></a>
+                    ><i class="fas fa-external-link-alt pr-0"></i
+                ></a>
             </span>
         </div>
 
@@ -63,11 +74,14 @@
                     tabindex="0"
                     :class="[
                         'btn btn-secondary rounded-circle drawer-button',
-                        {'drawer-button--opened': showIframe},
-                        supportsIframe ? 'text-secondary' : 'text-very-muted disabled'
+                        { 'drawer-button--opened': showIframe },
+                        supportsIframe
+                            ? 'text-secondary'
+                            : 'text-very-muted disabled'
                     ]"
                     @click="showIframe = !showIframe"
-                ><i class="fas fa-plus"></i></a>
+                    ><i class="fas fa-plus"></i
+                ></a>
             </div>
             <div class="flex-grow-1">
                 <table class="w-100 external-table">
@@ -81,37 +95,57 @@
                                         target="_blank"
                                         @click="openPreview($event)"
                                     >
-                                        <span class="px-0"><i :class="typeClass"></i></span>
-                                        <span class="pl-2 pr-3 w-100 font-weight-bold">{{ displayName }}</span>
-                                        <span><i class="fas fa-external-link-alt"></i></span>
+                                        <span class="px-0"
+                                            ><i :class="typeClass"></i
+                                        ></span>
+                                        <span
+                                            class="pl-2 pr-3 w-100 font-weight-bold"
+                                            >{{ displayName }}</span
+                                        >
+                                        <span
+                                            ><i
+                                                class="fas fa-external-link-alt"
+                                            ></i
+                                        ></span>
                                     </a>
                                     <a
                                         v-if="downloadUrl"
                                         :href="downloadUrl"
                                         title="Stáhnout"
                                         class="pl-3"
-                                    ><i class="fas fa-download p-0"></i></a>
+                                        ><i class="fas fa-download p-0"></i
+                                    ></a>
                                 </span>
                             </td>
                         </tr>
                         <tr v-if="external.tags_instrumentation.length">
                             <td>Instrum.</td>
                             <td>
-                                <span v-for="(tag, tagIndex) in external.tags_instrumentation" :key="tag.id">
+                                <span
+                                    v-for="(
+                                        tag, tagIndex
+                                    ) in external.tags_instrumentation"
+                                    :key="tag.id"
+                                >
                                     <span v-if="tagIndex">,</span>
                                     <span>{{ tag.name }}</span>
                                 </span>
                             </td>
                         </tr>
                         <tr v-if="external.catalog_number">
-                            <td>Kat. č.</td>
+                            <td>Kat. č.</td>
                             <td>{{ external.catalog_number }}</td>
                         </tr>
                         <tr v-if="external.authors.length">
                             <td v-if="external.authors.length == 1">Autor</td>
                             <td v-else>Autoři</td>
                             <td>
-                                <span v-for="(author, authorIndex) in external.authors" :key="author.id">
+                                <span
+                                    v-for="(
+                                        author, authorIndex
+                                    ) in external.authors"
+                                    :key="author.id"
+                                >
                                     <span v-if="authorIndex">,</span>
                                     <nuxt-link :to="author.public_route">{{
                                         author.name
@@ -136,16 +170,22 @@
             </div>
         </div>
         <div
-            style="font-size:0"
+            style="font-size: 0"
             v-if="supportsIframe && (showIframe || !isRegenschori)"
         >
             <div v-if="!supportsIframe"></div>
             <iframe
-                v-else-if="['spotify', 'soundcloud'].includes(external.media_type)"
+                v-else-if="
+                    ['spotify', 'soundcloud'].includes(external.media_type)
+                "
                 :src="source"
                 width="100%"
                 :height="external.media_type == 'spotify' ? 80 : 120"
-                :style="external.media_type == 'spotify' ? 'background-color: #282828;' : ''"
+                :style="
+                    external.media_type == 'spotify'
+                        ? 'background-color: #282828;'
+                        : ''
+                "
                 frameborder="0"
                 scrolling="no"
                 allowtransparency="true"
@@ -158,20 +198,27 @@
                 <iframe :src="source" frameborder="0" allowfullscreen></iframe>
             </div>
             <audio
-                v-else-if="['file/mp3', 'file/wav', 'file/aac', 'file/flac'].includes(external.media_type)"
+                v-else-if="
+                    ['file/mp3', 'file/wav', 'file/aac', 'file/flac'].includes(
+                        external.media_type
+                    )
+                "
                 :src="source"
                 controls
                 class="w-100"
-            >Váš prohlížeč bohužel nepodporuje přehrávání zvukových souborů.</audio>
+            >
+                Váš prohlížeč bohužel nepodporuje přehrávání zvukových souborů.
+            </audio>
             <div
-                v-else-if="['file/jpeg', 'file/png', 'file/gif'].includes(external.media_type)"
+                v-else-if="
+                    ['file/jpeg', 'file/png', 'file/gif'].includes(
+                        external.media_type
+                    )
+                "
                 class="overflow-auto"
                 :style="'height:' + height"
             >
-                <img
-                    :src="source"
-                    class="w-100"
-                />
+                <img :src="source" class="w-100" />
             </div>
             <iframe
                 v-else
@@ -221,7 +268,11 @@ export default {
     computed: {
         source() {
             if (this.external.media_type == 'spotify') {
-                return 'https://open.spotify.com/embed/track/' + this.external.media_id + "?theme=0";
+                return (
+                    'https://open.spotify.com/embed/track/' +
+                    this.external.media_id +
+                    '?theme=0'
+                );
             } else if (this.external.media_type == 'soundcloud') {
                 return (
                     'https://w.soundcloud.com/player/?url=' +
@@ -229,9 +280,18 @@ export default {
                     '&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true'
                 );
             } else if (this.external.media_type == 'youtube') {
-                return 'https://www.youtube-nocookie.com/embed/' + this.external.media_id + (this.external.media_id.includes('?') ? '&' : '?') + 'rel=0';
+                return (
+                    'https://www.youtube-nocookie.com/embed/' +
+                    this.external.media_id +
+                    (this.external.media_id.includes('?') ? '&' : '?') +
+                    'rel=0'
+                );
             } else if (this.external.media_type == 'file/pdf') {
-                return 'https://zpevnik.proscholy.cz/js/ViewerJS/#/material/' + this.external.id + '.pdf';
+                return (
+                    'https://zpevnik.proscholy.cz/js/ViewerJS/#/material/' +
+                    this.external.id +
+                    '.pdf'
+                );
             }
 
             return this.external.url;
@@ -239,7 +299,9 @@ export default {
 
         mediaLink() {
             if (this.external.media_type == 'spotify') {
-                return 'https://open.spotify.com/track/' + this.external.media_id;
+                return (
+                    'https://open.spotify.com/track/' + this.external.media_id
+                );
             }
 
             return this.external.url;
@@ -258,16 +320,32 @@ export default {
 
             if (this.external.caption) {
                 name += this.external.caption;
-            } else if (this.external.media_type && this.external.media_type.substring(0, 4) == 'file' && this.external.media_id) {
+            } else if (
+                this.external.media_type &&
+                this.external.media_type.substring(0, 4) == 'file' &&
+                this.external.media_id
+            ) {
                 name += this.external.media_id;
             } else {
-                name += this.songName + ' – ' + this.external.content_type_string + ' č. ' + (this.index + 1);
+                name +=
+                    this.songName +
+                    ' - ' +
+                    this.external.content_type_string +
+                    ' č. ' +
+                    (this.index + 1);
             }
 
-            if (this.external.tags_instrumentation.length && !this.isRegenschori) {
+            if (
+                this.external.tags_instrumentation.length &&
+                !this.isRegenschori
+            ) {
                 name += ' (';
 
-                for (let i = 0; i < this.external.tags_instrumentation.length; i++) {
+                for (
+                    let i = 0;
+                    i < this.external.tags_instrumentation.length;
+                    i++
+                ) {
                     const tag = this.external.tags_instrumentation[i];
                     name += i ? ', ' + tag.name : tag.name;
                 }
@@ -304,7 +382,10 @@ export default {
                     return 'fas fa-file-word';
             }
 
-            if (this.external.media_type && this.external.media_type.substring(0, 4) == 'file') {
+            if (
+                this.external.media_type &&
+                this.external.media_type.substring(0, 4) == 'file'
+            ) {
                 return 'fas fa-file-alt';
             }
 
@@ -321,10 +402,17 @@ export default {
 
         supportsIframe() {
             return [
-                'spotify', 'soundcloud', 'youtube',
-                'file/mp3', 'file/wav', 'file/aac', 'file/flac',
+                'spotify',
+                'soundcloud',
+                'youtube',
+                'file/mp3',
+                'file/wav',
+                'file/aac',
+                'file/flac',
                 'file/pdf',
-                'file/jpeg', 'file/png', 'file/gif',
+                'file/jpeg',
+                'file/png',
+                'file/gif'
             ].includes(this.external.media_type);
         }
     },
